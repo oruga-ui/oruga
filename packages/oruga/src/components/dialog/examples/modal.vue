@@ -19,9 +19,12 @@ culpa ratione quam perferendis esse, cupiditate neque quas!`;
             label="Open Modal Dialog"
             size="medium"
             variant="primary"
+            :aria-expanded="isActive"
+            aria-controls="modal-dialog"
             @click="isActive = true" />
 
         <o-dialog
+            id="modal-dialog"
             v-model:active="isActive"
             backdrop
             :loading="isLoading"

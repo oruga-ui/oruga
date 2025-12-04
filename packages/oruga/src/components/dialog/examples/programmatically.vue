@@ -23,6 +23,8 @@ function openImageDialog(): void {
 
     oruga.dialog.open({
         component: vnode,
+        closeOnBackdrop: true,
+        closeOnEscape: true,
         imageAlt: "Oruga logo",
         imageSrc: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
     });

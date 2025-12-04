@@ -6,7 +6,6 @@ const oruga = useOruga();
 const promptDialog = async (): Promise<void> => {
     const instance = oruga.dialog.open({
         backdrop: true,
-        closeable: true,
         title: "Ship sprockets?",
         content: "Do you really want me to ship the selected sprockets?",
         cancelButton: "No",
@@ -15,12 +14,12 @@ const promptDialog = async (): Promise<void> => {
         closeOnConfirm: true,
     });
 
-    // wait until the modal got closed
-    const result = await instance.promise;
+    // wait until the dialog got closed
+    await instance.promise;
 
     oruga.notification.open({
         duration: 5000,
-        message: "Dialog returned " + JSON.stringify(result),
+        message: "Dialog closed",
         variant: "info",
         position: "top",
         closeable: true,
@@ -31,23 +30,20 @@ const promptTimeoutDialog = async (): Promise<void> => {
     const instance = oruga.dialog.open({
         backdrop: true,
         closeable: true,
-        title: "Close All test",
+        title: "Closed By Timeout",
         content:
-            "There is a 3 second timeout that will close all programmatic modals",
-        cancelButton: "No",
-        confirmButton: "Yes",
-        confirmVariant: "primary",
-        closeOnConfirm: true,
+            "There is a 3 second timeout that will close this programmatic dialog.",
     });
 
-    setTimeout(() => oruga.modal.closeAll(), 3 * 1000);
+    // close the last opened dialog in 3 seconds
+    setTimeout(() => oruga.dialog.close(), 3000);
 
-    // wait until the modal got closed
-    const result = await instance.promise;
+    // wait until the dialog got closed
+    await instance.promise;
 
     oruga.notification.open({
         duration: 5000,
-        message: "Dialog returned " + JSON.stringify(result),
+        message: "Dialog closed",
         variant: "info",
         position: "top",
         closeable: true,

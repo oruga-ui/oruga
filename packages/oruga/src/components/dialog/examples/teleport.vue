@@ -12,7 +12,7 @@ const isActive = ref(false);
             variant="primary"
             @click="isActive = true" />
 
-        <o-dialog v-model:active="isActive" teleport>
+        <o-dialog v-model:active="isActive" teleport backdrop close-on-backdrop>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
                 sodales leo nec convallis rutrum. Vivamus pharetra molestie arcu

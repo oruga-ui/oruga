@@ -2,6 +2,7 @@
 import {
     computed,
     nextTick,
+    onMounted,
     useId,
     useTemplateRef,
     watch,
@@ -148,7 +149,7 @@ watch(
     (value) => {
         if (hasBackdrop.value) toggleScroll(value);
     },
-    { immediate: true, flush: "post" },
+    { immediate: true },
 );
 
 // #endregion --- Scroll Feature ---
@@ -167,24 +168,28 @@ function focusConfirmButton(): void {
 
 // #region --- Trigger Handler ---
 
-watch(isActive, (value) => {
-    if (!rootRef.value) return;
+onMounted(() => toggleDialog(isActive.value));
 
+watch(isActive, toggleDialog);
+
+/** show of close the dialog element */
+function toggleDialog(value: boolean): void {
     if (value) {
         // trigger dialog show as modal with backdrop event
-        if (hasBackdrop.value) rootRef.value.showModal();
+        if (hasBackdrop.value) rootRef.value?.showModal();
         // trigger dialog show without backdrop event
-        else rootRef.value.show();
-    } else if (rootRef.value.open) {
+        else rootRef.value?.show();
+    } else if (rootRef.value?.open) {
         // trigger dialog close event
         rootRef.value.close();
     }
-});
+}
 
 /** request the dialog to close when active */
 function cancel(): void {
     if (!isActive.value || !rootRef.value) return;
 
+    // dialog.requestClose() is not suported in es2020
     // trigger dialog close event
     // if (typeof rootRef.value.requestClose === "function")
     //     // requestClose is a fairly new web API that is not yet supported in all environments
@@ -206,6 +211,7 @@ function onClose(event: Event): void {
     isActive.value = false;
     emits("close", event);
 }
+
 /** native dialog cancel event */
 function onCancel(event: Event): void {
     emits("cancel", event);

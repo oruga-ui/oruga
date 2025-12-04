@@ -36,83 +36,85 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <p>
-        A dialog is seperated in a <i>header</i>, <i>body</i> and possible
-        <i>footer</i> sections, which can be defined seperatly eather by
-        proeprties or through template slots.
+        A dialog is seperated into <i>header</i>, <i>body</i> and
+        <i>footer</i> sections, which can be defined separately either through
+        properties or template slots.
         <br />
-        Ensure a mechanism is provided to allow users to close the dialog. The
-        most robust way to ensure that all users can close the dialog is to
-        include an explicit button to do so, such as a confirmation,
-        cancellation, or close button. The componnet specifies types of user
-        actions that can be used to close the dialog. The main
-        <code>closeable</code> proeprty will add a close X-Mark in the dialog
-        header. The <code>closeOnBackdrop</code> property will add a A light
-        dismiss user action which closes the dialog when the user clicks or taps
-        outside it. The <code>closeOnEscape</code> allow platform-specific user
-        action, such as pressing the Esc key on desktop platforms, or a "back"
-        or "dismiss" gesture on mobile platforms to close the dialog. Further,
-        by setting the <code>cancelButton</code> or
-        <code>confirmButton</code> properties, associated buttons will be
-        rendered in the footer section. With <code>closeOnConfirm</code> the
-        confirm button can also used to close the dialog.
+        Be sure to provide a mechanism that allows users to close the dialog.
+        The most reliable way to enable all users to close the dialogue box is
+        to include an explicit button for this purpose, such as a 'Confirm',
+        'Cancel' or 'Close' button. The component specifies different types of
+        user action that can be used to close the dialogue box. The main
+        <code>closeable</code> property will add a close button to the dialog
+        header. The <code>closeOnBackdrop</code> property adds a a light dismiss
+        user action, which closes the dialog box when the user clicks or taps
+        outside of it. The <code>closeOnEscape</code> property allows
+        platform-specific user actions, such as pressing the <kbd>ESC</kbd> key
+        on desktop platforms, or performing a "back" or "dismiss" gesture on
+        mobile platforms, to close the dialog box. Furthermore, by setting the
+        <code>cancelButton</code> or <code>confirmButton</code> properties,
+        associated buttons will be rendered in the footer section. With
+        <code>closeOnConfirm</code>, the confirm button can also be used to
+        close the dialog.
     </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="modal">Modal</h3>
     <p>
-        A simple <i>modal</i> dialog is created by setting the
+        A simple <i>modal</i> dialog box is created by setting the
         <code>backdrop</code> property, which inert the background. By default,
-        attempting to interact with the backdrop closes the dialog. Setting the
-        <code>blockScroll</code> property removes the body scrollbar. However,
-        the body retains a non scrollable scrollbar to prevent the background
-        from shifting. This will set the body to <code>position="fixed"</code>,
-        which may cause some layouts to break.
+        attempting to interact with the backdrop closes the dialog box. Setting
+        the <code>blockScroll</code> property removes the body scrollbar.
+        However, the body retains a non-scrollable scrollbar to prevent the
+        background from shifting. This will set the body to
+        <code>position="fixed"</code>, which may cause some layouts to break.
     </p>
     <ExampleViewer :component="Modal" :code="ModalCode" />
 
     <h3 id="alert">Alert</h3>
     <p>
-        An <i>alert</i> dialog, defined by the <code>alert</code> property, is a
-        modal dialog that interrupts the user's workflow to communicate an
-        important message and acquire a response. Examples include action
-        confirmation prompts and error message confirmations. The dialog will
-        get the <code>alertdialog</code> <i>WAI-ARIA role</i>, which enables
-        assistive technologies and browsers to distinguish alert dialogs from
-        other dialogs so they have the option of giving alert dialogs special
-        treatment, such as playing a system alert sound.
+        An <i>alert</i> dialog box is a modal dialog that interrupts the user's
+        workflow to communicate an important message and acquire a response. It
+        is defined by setting the <code>alert</code> property. Examples include
+        action confirmation prompts and error message confirmations. The dialog
+        will have the <code>alertdialog</code> <i>WAI-ARIA role</i>, enabling
+        assistive technologies and browsers to distinguish it from other dialogs
+        and giving them the option to treat it specially, e.g. by playing a
+        system alert sound.
     </p>
     <ExampleViewer :component="Alert" :code="AlertCode" />
 
     <h3 id="form">Form</h3>
     <p>
-        A useful purpose for a dialog is to display forms in it. Each slot
-        provides the <code>close()</code> and <code>confirm()</code> function to
-        call from inside the slot content, which trigger the component events.
-        Explicitly indicating the initial focus placement by using the
+        One useful purpose of a dialog is to display forms within it. Each slot
+        provides the <code>close()</code> and <code>confirm()</code>functions,
+        which can be called from inside the slot content to trigger component
+        events. Using the
         <a
             href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/autofocus"
             target="_blank">
             <code>autofocus</code>
         </a>
-        attribute will help ensure initial focus is set on the focusable element
-        deemed the best initial focus placement for any particular dialog.
+        attribute to explicitly indicate the initial focus placement will help
+        ensure the focus is initially set on the focusable element deemed to be
+        the best initial focus placement for any particular dialog.
     </p>
     <ExampleViewer :component="Form" :code="FormCode" />
 
     <h3 id="image">Image</h3>
     <p>
-        The component provides a sperate image section in the
-        <i>body</i> where an image can be placed in, by unsing the
-        <code>imageSrc</code> proeprty. Don't forget to add an
-        <code>imageAlt</code> property for accessabiltiy reasons too.
+        The component provides a separate image section in the
+        <i>body</i> where an image can be placed using the
+        <code>imageSrc</code> property. For accessibility reasons, don't forget
+        to add an <code>imageAlt</code> property too.
     </p>
     <ExampleViewer :component="Image" :code="ImageCode" />
 
     <h3 id="position">Position</h3>
     <p>
-        You can quickly change the text alignment of any dialog in its entirety
-        with the <code>textPosition</code> property. Additionally, the footer
-        buttons can be aligned on its own by the
+        You can quickly change the alignment of all the text in the dialog box
+        using the <code>textPosition</code> property. Additionally, you can
+        align the footer buttons independently using the
         <code>buttonPosition</code> property.
     </p>
     <ExampleViewer :component="Position" :code="PositionCode" />
@@ -128,7 +130,7 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 
     <h3 id="component">Dynamic Component</h3>
     <p>
-        Instead of using the default slot, the <code>component</code> prop
+        Rather than using the default slot, the <code>component</code> prop
         allows to pass any component that will be programmatically rendered
         inside the dialog component. Furthermore, an inline component created
         with a
@@ -136,7 +138,7 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
             render function
         </a>
         can also be passed. Props and events can be passed to the component with
-        <code>props</code> and <code>events</code> props too.
+        <code>props</code> and <code>events</code> properties too.
     </p>
     <ExampleViewer :component="Component" :code="ComponentCode" />
 

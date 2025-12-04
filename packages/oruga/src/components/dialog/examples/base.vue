@@ -10,9 +10,15 @@ const isActive = ref(false);
             label="Open Dialog"
             size="medium"
             variant="primary"
+            :aria-expanded="isActive"
+            aria-controls="base-dialog"
             @click="isActive = true" />
 
-        <o-dialog v-model:active="isActive" closeable>
+        <o-dialog
+            id="base-dialog"
+            v-model:active="isActive"
+            closeable
+            :backdrop="false">
             <template #title>Dialog Title</template>
 
             <template #subtitle>Dialog Subtitle</template>

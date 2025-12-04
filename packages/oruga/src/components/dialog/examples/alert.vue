@@ -10,9 +10,12 @@ const isActive = ref(false);
             label="Open Alert Dialog"
             size="medium"
             variant="primary"
+            :aria-expanded="isActive"
+            aria-controls="alert-dialog"
             @click="isActive = true" />
 
         <o-dialog
+            id="alert-dialog"
             v-model:active="isActive"
             alert
             title="Delete Dialog"
