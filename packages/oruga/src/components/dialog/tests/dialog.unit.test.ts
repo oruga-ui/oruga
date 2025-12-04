@@ -113,7 +113,7 @@ describe("ODialog test", () => {
         await wrapper.setProps({ active: false });
 
         expect(wrapper.emitted("confirm")).toBeUndefined();
-        expect(wrapper.emitted("close")).toBeUndefined();
+        expect(wrapper.emitted("close")).toHaveLength(1);
         expect(dialog.classes("o-dialog--active")).toBeFalsy();
     });
 
