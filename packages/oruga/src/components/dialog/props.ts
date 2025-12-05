@@ -18,7 +18,7 @@ export type DialogProps<C extends Component = Component> = {
      */
     alert?: boolean;
     /** Display dialog as full screen */
-    fullScreen?: boolean;
+    fullscreen?: boolean;
     /** Max width of the dialog */
     maxWidth?: Numberish;
     /** Max height of the dialog */
@@ -116,6 +116,8 @@ export type DialogClasses = Partial<{
     mobileClass: ComponentClass;
     /** Class of the root element when active */
     activeClass: ComponentClass;
+    /** Class of the root element when fullscreen */
+    fullscreenClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
     /** Class of the root element with text-position */
@@ -124,8 +126,6 @@ export type DialogClasses = Partial<{
     backdropClass: ComponentClass;
     /** Class of the wrapper element */
     wrapperClass: ComponentClass;
-    /** Class of the wrapper element when fullscreen */
-    fullScreenClass: ComponentClass;
     /** Class of the header element */
     headerClass: ComponentClass;
     /** Class of the header title element */
@@ -134,10 +134,10 @@ export type DialogClasses = Partial<{
     subtitleClass: ComponentClass;
     /** Class of the header close element */
     closeClass: ComponentClass;
-    /** Class of the image container */
-    imageClass: ComponentClass;
     /** Class of the image figure element */
     figureClass: ComponentClass;
+    /** Class of the image element */
+    imageClass: ComponentClass;
     /** Class of the body element */
     bodyClass: ComponentClass;
     /** Class of the body content element */
