@@ -13,6 +13,13 @@ jobs:
           fetch-depth: 0
           # Always release the tag ${GITHUB_REF} version
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+
       - name: git config
         run: |
           git config user.name "${GITHUB_ACTOR}"
@@ -27,11 +34,12 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           bodyFile: "RELEASE_BODY.md"
+          # define prerelease based on the tag name
           prerelease: ${{ github.ref == 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # only update documentation for main releases
       - name: Publish documentation 📄
+        # only update documentation for main releases
         if: ${{ github.ref != 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
         run: git push origin develop:master
         env:

@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          # Always release the tag ${GITHUB_REF} version
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -23,11 +20,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
 
-      - name: git config
-        run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-
       # Ensure npm 11.5.1 or later is installed for OIDC
       - name: Update npm
         run: npm install -g npm@latest
@@ -35,18 +27,25 @@ jobs:
       - name: Install dependencies 📦
         run: npm ci
 
+      - name: Build lib 🛠️
+        run: npm run build
+
       - name: Publish Oruga pre-release 🐛
         if: "github.event.prerelease" # only for pre-release
-        run: npm run publish:lib:pre
+        working-directory: ./packages/oruga
+        run: npm publish --tag pre
 
       - name: Publish Oruga release 🐛
         if: "!github.event.prerelease" # only for main release
-        run: npm run publish:lib
+        working-directory: ./packages/oruga
+        run: npm publish
 
       - name: Publish Examples pre-release 🦋
         if: "github.event.prerelease" # only for pre-release
+        working-directory: ./packages/examples
         run: npm run publish:examples:pre
 
       - name: Publish Examples release 🦋
         if: "!github.event.prerelease" # only for main release
+        working-directory: ./packages/examples
         run: npm run publish:examples
