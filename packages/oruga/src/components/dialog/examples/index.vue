@@ -11,6 +11,9 @@ import AlertCode from "./alert.vue?raw";
 import Form from "./form.vue";
 import FormCode from "./form.vue?raw";
 
+import Fullscreen from "./fullscreen.vue";
+import FullscreenCode from "./fullscreen.vue?raw";
+
 import Image from "./image.vue";
 import ImageCode from "./image.vue?raw";
 
@@ -100,6 +103,14 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
         the best initial focus placement for any particular dialog.
     </p>
     <ExampleViewer :component="Form" :code="FormCode" />
+
+    <h3 id="fullscreen">Fullscreen</h3>
+    <p>
+        Another variant of the component is the option to display a dialog that
+        covers the full user viewport, which is available via the
+        <code>fullscreen</code> property.
+    </p>
+    <ExampleViewer :component="Fullscreen" :code="FullscreenCode" />
 
     <h3 id="image">Image</h3>
     <p>

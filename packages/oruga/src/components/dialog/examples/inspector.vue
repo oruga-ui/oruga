@@ -23,6 +23,14 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.active = true;
         },
     },
+    fullscreenClass: {
+        class: "fullscreenClass",
+        description: "Class of the root element when fullscreen",
+        properties: ["fullscreen"],
+        action: (data): void => {
+            data.fullscreen = true;
+        },
+    },
     teleportClass: {
         class: "teleportClass",
         description: "Class of the root element when teleported.",
@@ -54,14 +62,6 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         class: "wrapperClass",
         description: "Class of the wrapper element.",
     },
-    fullScreenClass: {
-        class: "fullScreenClass",
-        description: "Class of the wrapper element when fullscreen",
-        properties: ["fullScreen"],
-        action: (data): void => {
-            data.fullScreen = true;
-        },
-    },
     headerClass: {
         class: "headerClass",
         description: "Class of the header element.",
@@ -78,13 +78,13 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         class: "closeClass",
         description: "Class of the header close element.",
     },
-    imageClass: {
-        class: "imageClass",
-        description: " Class of the image container.",
-    },
     figureClass: {
         class: "figureClass",
         description: "Class of the image figure element.",
+    },
+    imageClass: {
+        class: "imageClass",
+        description: " Class of the image element.",
     },
     bodyClass: {
         class: "bodyClass",

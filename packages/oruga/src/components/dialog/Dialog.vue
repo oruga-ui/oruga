@@ -41,7 +41,7 @@ defineOptions({
 const props = withDefaults(defineProps<DialogProps<C>>(), {
     override: undefined,
     active: false,
-    fullScreen: false,
+    fullscreen: false,
     animation: () => getDefault("dialog.animation", "zoom-out"),
     backdrop: () => getDefault("dialog.backdrop", true),
     maxWidth: () => getDefault("dialog.maxWidth", "80vw"),
@@ -120,8 +120,8 @@ const _teleport = computed(() =>
 );
 
 const wrapperStyle = computed(() => ({
-    maxWidth: !props.fullScreen ? toCssDimension(props.maxWidth) : undefined,
-    maxHeight: !props.fullScreen ? toCssDimension(props.maxHeight) : undefined,
+    maxWidth: !props.fullscreen ? toCssDimension(props.maxWidth) : undefined,
+    maxHeight: !props.fullscreen ? toCssDimension(props.maxHeight) : undefined,
 }));
 
 const hasBackdrop = computed(
@@ -132,7 +132,12 @@ const hasBackdrop = computed(
 const closedBy = computed(() => {
     // The dialog can be dismissed when the user clicks or taps outside it,
     // and with a platform-specific user action or a developer-specified mechanism.
-    if (hasBackdrop.value && props.closeOnBackdrop && !props.alert)
+    if (
+        hasBackdrop.value &&
+        props.closeOnBackdrop &&
+        !props.alert &&
+        !props.fullscreen
+    )
         return "any";
     // The dialog can be dismissed with a platform-specific user action or a developer-specified mechanism.
     else if (props.closeOnEscape) return "closerequest";
@@ -226,6 +231,12 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-dialog--mobile", null, isMobile],
     ["activeClass", "o-dialog--active", null, isActive],
     [
+        "fullscreenClass",
+        "o-dialog--fullscreen",
+        null,
+        computed(() => props.fullscreen),
+    ],
+    [
         "teleportClass",
         "o-dialog--teleport",
         null,
@@ -238,13 +249,7 @@ const backdropClasses = defineClasses(["backdropClass", "o-dialog__backdrop"]);
 const wrapperClasses = defineClasses(
     ["wrapperClass", "o-dialog__wrapper"],
     [
-        "fullScreenClass",
-        "o-dialog__wrapper--fullscreen",
-        null,
-        computed(() => props.fullScreen),
-    ],
-    [
-        "positionClass",
+        "textPositionClass",
         "o-dialog__wrapper--",
         computed(() => props.textPosition),
         computed(() => !!props.textPosition),
@@ -318,7 +323,10 @@ defineExpose({ close: cancel });
                 :aria-describedby="title ? titleId : ariaDescribedby"
                 @close="onClose"
                 @cancel="onCancel">
-                <div v-if="backdrop" :class="backdropClasses" />
+                <!-- Backdrop -->
+                <div
+                    v-if="backdrop && backdropClasses.length"
+                    :class="backdropClasses" />
 
                 <div :class="wrapperClasses" :style="wrapperStyle">
                     <!-- Header -->
@@ -337,7 +345,7 @@ defineExpose({ close: cancel });
                             @binding {(event: Event): void} close - function to emit a `close` event
                         -->
                         <slot name="header" :close="cancel">
-                            <p
+                            <h1
                                 v-if="$slots['title'] || title"
                                 :id="titleId"
                                 :class="titleClasses">
@@ -345,16 +353,16 @@ defineExpose({ close: cancel });
                                     @slot Override the header title, default is title prop
                                 -->
                                 <slot name="title"> {{ title }} </slot>
-                            </p>
+                            </h1>
 
-                            <p
+                            <h2
                                 v-if="$slots['subtitle'] || subtitle"
                                 :class="subtitleClasses">
                                 <!--
                                     @slot Override the header subtitle, default is subtitle prop
                                 -->
                                 <slot name="subtitle"> {{ subtitle }} </slot>
-                            </p>
+                            </h2>
                         </slot>
 
                         <CloseButton
@@ -382,18 +390,17 @@ defineExpose({ close: cancel });
                         "
                         :class="bodyClasses">
                         <!-- Image -->
-                        <div
-                            v-if="$slots['image'] || imageSrc"
-                            :class="imageClasses">
-                            <!--
-                                @slot Override the image
-                            -->
-                            <slot name="image">
-                                <figure :class="figureClasses">
-                                    <img :src="imageSrc" :alt="imageAlt" />
-                                </figure>
-                            </slot>
-                        </div>
+                        <!--
+                            @slot Override the image
+                        -->
+                        <slot name="image">
+                            <figure v-if="imageSrc" :class="figureClasses">
+                                <img
+                                    :src="imageSrc"
+                                    :alt="imageAlt"
+                                    :class="imageClasses" />
+                            </figure>
+                        </slot>
 
                         <!--
                             @slot Override the default dialog body

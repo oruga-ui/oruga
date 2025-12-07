@@ -4,6 +4,7 @@ exports[`ODialog test > render correctly 1`] = `
 "<teleport-stub to="[object HTMLBodyElement]" disabled="true">
   <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
     <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="dialog" closedby="closerequest" aria-describedby="v-0" open="">
+      <!-- Backdrop -->
       <!--v-if-->
       <div class="o-dialog__wrapper" style="max-width: 80vw; max-height: 80vh;">
         <!-- Header -->
@@ -12,20 +13,23 @@ exports[`ODialog test > render correctly 1`] = `
                             @slot Override the header
                             @binding {(event: Event): void} close - function to emit a \`close\` event
                         -->
-          <p id="v-0" class="o-dialog__header-title">
+          <h1 id="v-0" class="o-dialog__header-title">
             <!--
                                     @slot Override the header title, default is title prop
                                 -->Adcanced Title
-          </p>
-          <p class="o-dialog__header-subtitle">
+          </h1>
+          <h2 class="o-dialog__header-subtitle">
             <!--
                                     @slot Override the header subtitle, default is subtitle prop
                                 -->Advanced subtitle
-          </p>
+          </h2>
           <!--v-if-->
         </header><!-- Body -->
         <div class="o-dialog__body">
           <!-- Image -->
+          <!--
+                            @slot Override the image
+                        -->
           <!--v-if-->
           <!--
                             @slot Override the default dialog body
@@ -73,6 +77,7 @@ exports[`ODialog test > test alert case 1`] = `
 "<teleport-stub to="[object HTMLBodyElement]" disabled="true">
   <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
     <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="alertdialog" closedby="closerequest" open="">
+      <!-- Backdrop -->
       <div class="o-dialog__backdrop"></div>
       <div class="o-dialog__wrapper" style="max-width: 80vw; max-height: 80vh;">
         <!-- Header -->
@@ -94,6 +99,7 @@ exports[`ODialog test > test modal case 1`] = `
 "<teleport-stub to="[object HTMLBodyElement]" disabled="true">
   <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
     <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="dialog" closedby="any" open="">
+      <!-- Backdrop -->
       <div class="o-dialog__backdrop"></div>
       <div class="o-dialog__wrapper" style="max-width: 80vw; max-height: 80vh;">
         <!-- Header -->

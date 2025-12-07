@@ -1023,6 +1023,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 activeClass: ClassDefinition;
                 /**
+                 * Class of the root element when fullscreen
+                 */
+                fullscreenClass: ClassDefinition;
+                /**
                  * Class of the root element when teleported
                  */
                 teleportClass: ClassDefinition;
@@ -1038,10 +1042,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the wrapper element
                  */
                 wrapperClass: ClassDefinition;
-                /**
-                 * Class of the wrapper element when fullscreen
-                 */
-                fullScreenClass: ClassDefinition;
                 /**
                  * Class of the header element
                  */
@@ -1059,13 +1059,13 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 closeClass: ClassDefinition;
                 /**
-                 * Class of the image container
-                 */
-                imageClass: ClassDefinition;
-                /**
                  * Class of the image figure element
                  */
                 figureClass: ClassDefinition;
+                /**
+                 * Class of the image element
+                 */
+                imageClass: ClassDefinition;
                 /**
                  * Class of the body element
                  */
