@@ -49,10 +49,10 @@
     "eslint": "^9.36.0",
     "eslint-plugin-vue": "^10.5.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
-    "npm-check-updates": "^19.0.0",
+    "npm-check-updates": "^19.1.2",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.6.2",
-    "replace-in-file": "^8.3.0",
+    "replace-in-file": "^8.4.0",
     "tsx": "^4.21.0"
   }
 }
