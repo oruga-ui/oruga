@@ -1,0 +1,89 @@
+name: Generate release
+on:
+  push:
+    tags:
+      - v*
+    
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
+jobs:
+  pre-release: 
+    if: ${{ github.ref == 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Always release the tag ${GITHUB_REF} version
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+      - name: git config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      # Ensure npm 11.5.1 or later is installed for OIDC
+      - name: Update npm
+        run: npm install -g npm@latest
+      - name: Install dependencies 📦
+        run: npm ci
+      - name: Publish Oruga pre-release 🐛
+        run: npm run publish:lib:pre
+      - name: Publish Examples pre-release 🦋
+        run: npm run publish:examples:pre
+      - name: Install release dependency 📦
+        run: npm i extract-changelog-release
+      - name: Generate Release Body 📋
+        run: npx extract-changelog-release > RELEASE_BODY.md
+      - uses: ncipollo/release-action@v1
+        with:
+          bodyFile: "RELEASE_BODY.md"
+          prerelease: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  release:
+    if: ${{ github.ref == 'refs/tags/v[0-9]+.[0-9]+.[0-9]+' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Always release the tip of the default branch
+          ref: develop
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+      - name: git config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      # Ensure npm 11.5.1 or later is installed for OIDC
+      - name: Update npm
+        run: npm install -g npm@latest
+      - name: Install dependencies 📦
+        run: npm ci
+      - name: Publish Oruga release 🐛
+        run: npm run publish:lib
+      - name: Publish Examples release 🦋
+        run: npm run publish:examples
+      - name: Install release dependency 📦
+        run: npm i extract-changelog-release
+      - name: Generate Release Body 📋
+        run: npx extract-changelog-release > RELEASE_BODY.md
+      - uses: ncipollo/release-action@v1
+        with:
+          bodyFile: "RELEASE_BODY.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish documentation 📄
+        run: |
+          git push origin develop:master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
