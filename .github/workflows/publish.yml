@@ -3,13 +3,13 @@ on:
   push:
     tags:
       - v*
-    
+
 permissions:
   id-token: write # Required for OIDC
   contents: read
 
 jobs:
-  pre-release: 
+  pre-release:
     if: ${{ github.ref == 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
     runs-on: ubuntu-latest
     steps:
