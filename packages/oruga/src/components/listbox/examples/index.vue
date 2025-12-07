@@ -84,7 +84,7 @@ import ScrollCode from "./scroll.vue?raw";
         list by using the <code>header</code> and <code>footer</code> slots. You
         can also display content, when no options are visible, either because
         there are no options or because they are hidden through filtering, using
-        the <code>emty</code> slot.
+        the <code>empty</code> slot.
     </p>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 

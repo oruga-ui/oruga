@@ -809,7 +809,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
 
         <transition :name="animation">
             <div
-                v-if="(!hasVisableItems && $slots.empty) || emptyLabel"
+                v-if="!hasVisableItems && ($slots.empty || emptyLabel)"
                 :class="emptyClasses">
                 <!--
                     @slot Define content for empty state
