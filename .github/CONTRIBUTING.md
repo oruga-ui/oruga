@@ -33,7 +33,7 @@ Add comments if method is too complex and/or whenever you judge necessary.
 
 # Development Setup
 
-You need at least [Node.js](http://nodejs.org/) **version 22**.
+You need at least [Node.js](http://nodejs.org/) **version 24**.
 
 Clone this repo to your local machine and install the dependencies:
 
