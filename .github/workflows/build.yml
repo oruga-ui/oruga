@@ -1,4 +1,4 @@
-name: Build Package
+name: Build Packages
 on:
   push:
     branches: [develop]
@@ -7,8 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 24
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -19,5 +17,5 @@ jobs:
           cache: "npm"
       - name: Install dependencies 📦
         run: npm ci
-      - name: Build lib 🛠️
-        run: npm run build:lib
+      - name: Build Packages 🛠️
+        run: npm run build

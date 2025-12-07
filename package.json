@@ -34,14 +34,10 @@
     "gen:volar": "tsx .scripts/gen-volar-dts.ts",
     "gen:types": "tsx .scripts/gen-comp-types.ts",
     "gen:docs": "npm run docs:gen --workspace @oruga-ui/docs-next",
-    "publish:examples": "npm run publish:examples --workspace @oruga-ui/examples",
-    "publish:examples:pre": "npm run publish:examples:pre --workspace @oruga-ui/examples",
-    "publish:lib": "npm run publish:lib --workspace @oruga-ui/oruga-next",
-    "publish:lib:pre": "npm run publish:lib:pre --workspace @oruga-ui/oruga-next",
-    "release": "npm run version && npm run changelog",
     "version": "tsx .scripts/sync-version.ts && npm i",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\"",
+    "release": "npm run version && npm run changelog",
+    "postrelease": "echo \"You can now create a tag push it with 'git push --follow-tags'\"",
     "update": "ncu -u --workspaces --root"
   },
   "devDependencies": {
