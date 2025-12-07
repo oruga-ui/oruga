@@ -2,7 +2,7 @@ name: Publish release
 on:
   release:
     types: [created]
-    
+
 permissions:
   id-token: write # Required for OIDC
   contents: read
@@ -36,17 +36,17 @@ jobs:
         run: npm ci
 
       - name: Publish Oruga pre-release 🐛
-        if: 'github.event.prerelease' # only for pre-release
+        if: "github.event.prerelease" # only for pre-release
         run: npm run publish:lib:pre
-        
+
       - name: Publish Oruga release 🐛
-        if: '!github.event.prerelease' # only for main release
+        if: "!github.event.prerelease" # only for main release
         run: npm run publish:lib
 
       - name: Publish Examples pre-release 🦋
-        if: 'github.event.prerelease' # only for pre-release
+        if: "github.event.prerelease" # only for pre-release
         run: npm run publish:examples:pre
 
       - name: Publish Examples release 🦋
-        if: '!github.event.prerelease' # only for main release
+        if: "!github.event.prerelease" # only for main release
         run: npm run publish:examples
