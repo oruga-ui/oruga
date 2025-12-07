@@ -1,4 +1,4 @@
-name: Generate release
+name: Generate Release
 on:
   push:
     tags:
