@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies 📦
         run: npm ci
 
-      - name: Build lib 🛠️
+      - name: Build packages 🛠️
         run: npm run build
 
       - name: Publish Oruga pre-release 🐛

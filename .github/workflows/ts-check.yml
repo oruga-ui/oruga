@@ -20,6 +20,6 @@ jobs:
 
       - name: Install dependencies 📦
         run: npm ci
-        
+
       - name: Run typescript check 🧐
         run: npm run test:ts

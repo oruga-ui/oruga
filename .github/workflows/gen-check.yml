@@ -2,7 +2,7 @@ name: "Check if generated files are up to date"
 on:
   pull_request:
     branches: [develop]
-    
+
 jobs:
   check:
     runs-on: ubuntu-latest

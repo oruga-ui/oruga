@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
@@ -21,5 +21,5 @@ jobs:
       - name: Install dependencies 📦
         run: npm ci
 
-      - name: Build Packages 🛠️
+      - name: Build packages 🛠️
         run: npm run build
