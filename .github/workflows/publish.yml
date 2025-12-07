@@ -1,4 +1,4 @@
-name: Publish release
+name: Publish Release
 on:
   release:
     types: [created]
@@ -11,23 +11,19 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "22.x"
+          node-version: "24.x"
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
-
-      # Ensure npm 11.5.1 or later is installed for OIDC
-      - name: Update npm
-        run: npm install -g npm@latest
 
       - name: Install dependencies 📦
         run: npm ci
 
-      - name: Build lib 🛠️
+      - name: Build packages 🛠️
         run: npm run build
 
       - name: Publish Oruga pre-release 🐛
