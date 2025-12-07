@@ -60,7 +60,7 @@
     "test": "vitest --browser.headless=true",
     "test:coverage": "vitest run --coverage",
     "test:ts": "vue-tsc --noEmit --skipLibCheck --project tsconfig.app.json",
-    "prepublish": "cp ../../README.md . && cp ../../LICENSE ."
+    "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {
     "vue": "^3.0.0"

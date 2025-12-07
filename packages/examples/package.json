@@ -45,7 +45,7 @@
   ],
   "scripts": {
     "build": "rimraf dist && vite build",
-    "prepublish": "cp ../../README.md . && cp ../../LICENSE ."
+    "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {
     "@oruga-ui/oruga-next": "0.12.3",
