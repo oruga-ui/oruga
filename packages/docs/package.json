@@ -20,9 +20,9 @@
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "@highlightjs/vue-plugin": "2.1.2",
-    "@oruga-ui/theme-bootstrap": "0.10.2",
-    "@oruga-ui/theme-bulma": "0.8.1",
-    "@oruga-ui/theme-oruga": "0.8.0",
+    "@oruga-ui/theme-bootstrap": "0.10.3",
+    "@oruga-ui/theme-bulma": "0.8.3",
+    "@oruga-ui/theme-oruga": "0.8.1",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.1.0",
     "markdown-it-highlightjs": "^4.2.0"

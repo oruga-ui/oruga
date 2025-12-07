@@ -98,19 +98,51 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                         | Default                                                                      |
+| ------------------------------------- | ---------------------------------------------------------------------------- |
+| $listbox-disabled-opacity             | h.useVar("control-disabled-opacity")                                         |
+| $listbox-box-shadow                   | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $listbox-background-color             | h.useVar("control-brackground-color")                                        |
+| $listbox-border-color                 | h.useVar("control-border-color")                                             |
+| $listbox-border-style                 | solid                                                                        |
+| $listbox-border-width                 | h.useVar("control-border-width")                                             |
+| $listbox-border-radius                | h.useVar("border-radius")                                                    |
+| $listbox-item-padding                 | h.useVar("control-spacer") calc(h.useVar("control-spacer") \* 2)             |
+| $listbox-item-color                   | h.useVar("font-color")                                                       |
+| $listbox-item-font-size               | h.useVar("font-size")                                                        |
+| $listbox-item-font-weight             | h.useVar("font-weight")                                                      |
+| $listbox-item-line-height             | h.useVar("line-height")                                                      |
+| $listbox-item-background-color        | transparent                                                                  |
+| $listbox-item-active-color            | h.useVar("primary-invert")                                                   |
+| $listbox-item-active-background-color | h.useVar("primary")                                                          |
+| $listbox-item-hover-background-color  | h.useVar("grey-lighter")                                                     |
+| $listbox-item-hover-color             | h.useVar("font-color")                                                       |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_listbox.scss)
+
 </div>
 <div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                         | Default                                           |
+| ------------------------------------- | ------------------------------------------------- |
+| $listbox-disabled-opacity             | 0.5                                               |
+| $listbox-item-hover-background-color  | css.getVar( "panel-block-hover-background-color") |
+| $listbox-item-active-background-color | css.getVar("primary")                             |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_listbox.scss)
+
 </div>
 <div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default |
+| ------------- | ------- |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_listbox.scss)
+
 </div>
 
 </section>

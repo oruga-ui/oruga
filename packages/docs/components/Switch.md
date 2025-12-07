@@ -130,9 +130,7 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 | SASS Variable  | Default |
 | -------------- | ------- |
-| $switch-spacer | 0.5em   |
-| $switch-width  | 2.75em  |
-| $switch-height | 1.5em   |
+| $switch-spacer | 0.5rem  |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_switch.scss)
 

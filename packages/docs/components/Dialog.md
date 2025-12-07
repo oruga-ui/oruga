@@ -116,7 +116,41 @@ The component implements the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                     | Default                               |
+| --------------------------------- | ------------------------------------- |
+| $dialog-spacer                    | calc(2 \* h.useVar("control-spacer")) |
+| $dialog-zindex                    | map.get(vars.$zindex, "fixed")        |
+| $dialog-box-shadow                | h.useVar("overlay-box-shadow")        |
+| $dialog-background-color          | h.useVar("control-brackground-color") |
+| $dialog-border-width              | h.useVar("control-border-width")      |
+| $dialog-border-style              | solid                                 |
+| $dialog-border-color              | h.useVar("control-border-color")      |
+| $dialog-border-radius             | h.useVar("border-radius")             |
+| $dialog-backdrop-background-color | h.useVar( "overlay-background-color") |
+| $dialog-header-padding            | $dialog-spacer                        |
+| $dialog-header-background-color   | inherit                               |
+| $dialog-body-padding              | $dialog-spacer                        |
+| $dialog-body-background-color     | inherit                               |
+| $dialog-footer-padding            | $dialog-spacer                        |
+| $dialog-footer-background-color   | inherit                               |
+| $dialog-title-color               | h.useVar("font-color")                |
+| $dialog-title-font-size           | 2em                                   |
+| $dialog-title-font-weight         | bold                                  |
+| $dialog-subtitle-color            | h.useVar("font-color")                |
+| $dialog-subtitle-font-size        | 1.5em                                 |
+| $dialog-subtitle-font-weight      | normal                                |
+| $dialog-content-color             | h.useVar("font-color")                |
+| $dialog-content-font-size         | h.useVar("font-size")                 |
+| $dialog-content-font-weight       | h.useVar("font-weight")               |
+| $dialog-close-top                 | $dialog-spacer                        |
+| $dialog-close-right               | $dialog-spacer                        |
+| $dialog-close-color               | h.useVar("black")                     |
+| $dialog-close-size                | 2rem                                  |
+| $dialog-close-border-radius       | h.useVar("border-radius-rounded")     |
+| $dialog-close-background-color    | inherit                               |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dialog.scss)
+
 </div>
 <div class="theme-bulma">
 
@@ -128,7 +162,11 @@ The component implements the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default |
+| ------------- | ------- |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dialog.scss)
+
 </div>
 
 </section>
