@@ -35,7 +35,6 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | animation          | Transition name to apply on dropdown list                                                                                                                                        | string                                                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>         |
 | autocomplete       | Native options to use in HTML5 validation                                                                                                                                        | string                                                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>       |
 | backendFiltering   | Options won't be filtered based on the input value on clientside                                                                                                                 | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;backendFiltering: false<br>}</code>   |
-| checkScroll        | Makes the component check if list reached scroll start or end and emit scroll events                                                                                             | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;checkScroll: false<br>}</code>        |
 | clearIcon          | Icon name to be added on the clear button                                                                                                                                        | string                                                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;clearIcon: "close-circle"<br>}</code> |
 | clearOnSelect      | Clear input text on select                                                                                                                                                       | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;clearOnSelect: false<br>}</code>      |
 | clearable          | Add a button/icon to clear the inputed text                                                                                                                                      | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;clearable: false<br>}</code>          |
@@ -122,12 +121,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                             | Default                    |
-| ----------------------------------------- | -------------------------- |
-| $autocomplete-item-hover-background-color | $control-brackground-color |
-
-See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
-
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 <div class="theme-bulma">
 

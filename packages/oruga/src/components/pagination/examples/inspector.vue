@@ -14,6 +14,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
     },
     orderClass: {
         class: "orderClass",
+        deprecated: "use `positionClass` instead",
         description: "Class of the root element with order.",
         properties: ["order"],
         suffixes: ["centered", "right", "left"],

@@ -2,7 +2,7 @@ import { defineCustomElement, markRaw } from "vue";
 import type { App, DefineComponent } from "vue";
 
 // THEME
-import DefaultTheme from "vitepress/theme";
+import DefaultTheme, { VPBadge } from "vitepress/theme";
 import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
 
@@ -69,6 +69,9 @@ export default {
     ...DefaultTheme,
     Layout,
     enhanceApp({ app }: { app: App }): void {
+        // add vitepress components
+        app.component("Badge", VPBadge);
+
         // add fortawesome icons
         library.add(fas);
         app.component("VueFontawesome", FontAwesomeIcon);

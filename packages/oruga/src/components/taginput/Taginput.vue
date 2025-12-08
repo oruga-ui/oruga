@@ -61,7 +61,6 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
-    checkScroll: () => getDefault("taginput.checkScroll", false),
     closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
@@ -216,9 +215,12 @@ function addItem(item?: T | string): void {
 
 function removeItem(index: number, event?: Event): void {
     if (!selectedItems.value?.length) return;
-    const item = selectedItems.value.at(index);
+    const item = selectedItems.value[index];
     if (!item) return;
-    selectedItems.value = selectedItems.value.toSpliced(index, 1);
+    // create a new array without the removed item at index for reactivity
+    const items = selectedItems.value.slice();
+    items.splice(index, 1);
+    selectedItems.value = items;
     emits("remove", item);
     if (event) event.stopPropagation();
     if (props.openOnFocus && autocompleteRef.value) setFocus();
@@ -331,6 +333,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                     :key="option.key"
                     :label="option.label"
                     :variant="variant"
+                    :size="size"
                     :class="itemClasses"
                     :closeable="closeable && !disabled"
                     :close-icon="closeIcon"
@@ -357,7 +360,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 :open-on-focus="openOnFocus"
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
-                :check-scroll="checkScroll"
                 :teleport="teleport"
                 :has-counter="false"
                 :use-html5-validation="false"
@@ -395,7 +397,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
 
                 <template v-if="$slots.empty" #empty>
                     <!--
-                        @slot Define content for empty state 
+                        @slot Define content for empty state
                     -->
                     <slot name="empty" />
                 </template>

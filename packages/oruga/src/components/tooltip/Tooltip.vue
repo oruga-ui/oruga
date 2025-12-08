@@ -1,11 +1,24 @@
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, useId, type Component } from "vue";
+import {
+    ref,
+    computed,
+    watch,
+    nextTick,
+    useId,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
 import { getDefault } from "@/utils/config";
+import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import { defineClasses, useClickOutside } from "@/composables";
+import {
+    defineClasses,
+    useClickOutside,
+    useEventListener,
+} from "@/composables";
 
 import type { TooltipProps } from "./props";
 
@@ -30,11 +43,17 @@ const props = withDefaults(defineProps<TooltipProps>(), {
     disabled: false,
     animation: () => getDefault("tooltip.animation", "fade"),
     multiline: false,
+    maxWidth: () => getDefault("tooltip.maxWidth"),
     triggerTag: () => getDefault("tooltip.triggerTag", "div"),
-    triggers: () => getDefault("tooltip.triggers", ["hover", "focus"]),
+    triggers: () => getDefault("tooltip.triggers", []),
+    openOnClick: () => getDefault("tooltip.openOnClick", false),
+    openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
+    openOnHover: () => getDefault("tooltip.openOnHover", true),
+    openOnFocus: () => getDefault("tooltip.openOnFocus", false),
     delay: undefined,
-    closeable: () =>
-        getDefault("tooltip.closeable", ["escape", "outside", "content"]),
+    closeable: () => getDefault("tooltip.closeable", true),
+    closeOnEscape: () => getDefault("tooltip.closeOnEscape", false),
+    closeOnOutside: () => getDefault("tooltip.closeOnOutside", false),
     teleport: () => getDefault("dropdown.teleport", false),
 });
 
@@ -44,22 +63,21 @@ const emits = defineEmits<{
      * @param value {boolean} - updated active prop
      */
     "update:active": [value: boolean];
-    /** on active change to false event */
-    close: [];
-    /** on active change to true event */
-    open: [];
+    /**
+     * on active state changes to false
+     * @param event {Event} - native event
+     */
+    close: [event: Event];
+    /**
+     * on active state changes to true
+     * @param event {Event} - native event
+     */
+    open: [event: Event];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-watch(isActive, (value) => {
-    if (value) emits("open");
-    else emits("close");
-});
-
 const tooltipId = useId();
-
-const timer = ref();
 
 const autoPosition = ref(props.position);
 
@@ -69,83 +87,109 @@ watch(
     (v) => (autoPosition.value = v),
 );
 
-// --- Event Handler ---
+const rootRef = useTemplateRef<HTMLElement>("rootElement");
+const triggerRef = useTemplateRef<HTMLElement | Component>("triggerRef");
+const contentRef = ref<HTMLElement>();
 
-const contentRef = ref<HTMLElement | Component>();
-const triggerRef = ref<HTMLElement>();
+const contentStyle = computed(() => ({
+    maxWidth: props.maxWidth ? toCssDimension(props.maxWidth) : undefined,
+    whiteSpace: props.maxWidth ? "wrap" : undefined,
+}));
 
-const cancelOptions = computed<string[]>(() =>
-    typeof props.closeable === "boolean"
-        ? props.closeable
-            ? ["escape", "outside", "content"]
-            : []
-        : props.closeable,
-);
+// #region --- Event Handler ---
 
 // set click outside handler
-if (isClient && cancelOptions.value.includes("outside")) {
+if (isClient) {
+    // register onKeyup event listener when is active
+    useEventListener(rootRef, "keyup", onKeyup, {
+        trigger: isActive,
+        passive: true,
+    });
+
     useClickOutside([contentRef, triggerRef], onClickedOutside, {
         trigger: isActive,
         passive: true,
     });
 }
 
+/** Keyup event listener that is bound to the root element. */
+function onKeyup(event: KeyboardEvent): void {
+    if (!props.closeOnEscape && checkNotCloseable("escape")) return;
+    if (event.key === "Escape" || event.key === "Esc") close(event);
+}
+
 /** Close tooltip if clicked outside. */
-function onClickedOutside(): void {
-    if (!isActive.value || props.always) return;
-    if (!cancelOptions.value.includes("outside")) return;
-    isActive.value = false;
+function onClickedOutside(event: Event): void {
+    if (!props.closeOnOutside && checkNotCloseable("outside")) return;
+    close(event);
 }
 
-/** Escape keydown event that is bound to the trigger */
-function onEscape(): void {
-    if (!isActive.value) return;
-    if (!cancelOptions.value.includes("escape")) return;
-    isActive.value = false;
+function onHoverLeave(event: Event): void {
+    if (props.closeOnOutside && checkNotCloseable("content")) return;
+    close(event);
 }
 
-function onClick(): void {
-    if (!props.triggers.includes("click")) return;
+function onClick(event: Event): void {
+    if (!props.openOnClick && !props.triggers.includes("click")) return;
     // if not active, toggle after clickOutside event
     // this fixes toggling programmatic
-    nextTick(() => setTimeout(() => open()));
+    nextTick(() => setTimeout(() => open(event)));
 }
 
 function onContextMenu(event: Event): void {
-    if (!props.triggers.includes("contextmenu")) return;
+    if (!props.openOnContextmenu && !props.triggers.includes("contextmenu"))
+        return;
     event.preventDefault();
-    open();
+    open(event);
 }
 
-function onFocus(): void {
-    if (!props.triggers.includes("focus")) return;
-    open();
+function onFocus(event: Event): void {
+    if (!props.openOnFocus && !props.triggers.includes("focus")) return;
+    open(event);
 }
 
-function onHover(): void {
-    if (!props.triggers.includes("hover")) return;
-    open();
+function onHover(event: Event): void {
+    if (
+        (!props.openOnHover || props.openOnClick || props.openOnContextmenu) &&
+        !props.triggers.includes("hover")
+    )
+        return;
+    open(event);
 }
 
-function open(): void {
+let timer: ReturnType<typeof setTimeout> | undefined;
+
+function open(event: Event): void {
     if (props.disabled) return;
     if (props.delay) {
-        timer.value = setTimeout(() => {
+        timer = setTimeout(() => {
             isActive.value = true;
-            timer.value = null;
+            timer = undefined;
+            emits("open", event);
         }, props.delay);
     } else {
-        isActive.value = true;
+        nextTick(() => (isActive.value = true));
+        emits("open", event);
     }
 }
 
-function onClose(): void {
-    if (!cancelOptions.value.includes("content")) return;
-    isActive.value = !props.closeable;
-    if (timer.value && props.closeable) clearTimeout(timer.value);
+/** check if method is cancelable (for deprecreated check) */
+function checkNotCloseable(
+    method: Exclude<typeof props.closeable, boolean>[number],
+): boolean {
+    return !Array.isArray(props.closeable) || !props.closeable.includes(method);
 }
 
-// --- Computed Component Classes ---
+function close(event: Event): void {
+    if (!isActive.value || !props.closeable) return;
+    if (timer) clearTimeout(timer);
+    isActive.value = false;
+    emits("close", event);
+}
+
+// #endregion --- Event Handler ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-tooltip"],
@@ -173,6 +217,7 @@ const contentClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
+    // @deprecated `multiline` will be removed later
     [
         "multilineClass",
         "o-tooltip__content--multiline",
@@ -202,23 +247,23 @@ const arrowClasses = defineClasses(
         computed(() => !!props.variant),
     ],
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <div data-oruga="tooltip" :class="rootClasses">
+    <div ref="rootElement" data-oruga="tooltip" :class="rootClasses">
         <component
             :is="triggerTag"
             ref="triggerRef"
             :class="triggerClasses"
-            aria-haspopup="true"
             :aria-describedby="tooltipId"
-            @keydown.escape="onEscape"
             @click="onClick"
             @contextmenu="onContextMenu"
             @mouseenter="onHover"
             @focus.capture="onFocus"
-            @blur.capture="onClose"
-            @mouseleave="onClose">
+            @blur.capture="onHoverLeave"
+            @mouseleave="onHoverLeave">
             <!--
                 @slot Tooltip trigger slot
                 @binding {boolean} active - tooltip active state
@@ -240,6 +285,7 @@ const arrowClasses = defineClasses(
                     :id="tooltipId"
                     :ref="(el) => (contentRef = setContent(el as HTMLElement))"
                     :class="contentClasses"
+                    :style="contentStyle"
                     role="tooltip">
                     <span :class="arrowClasses"></span>
 

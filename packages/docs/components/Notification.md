@@ -38,7 +38,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 | ariaCloseLabel | Accessibility label for the close button                                      | string                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;ariaCloseLabel: "Close"<br>}</code>  |
 | closeIcon      | Close icon name                                                               | string                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
 | closeIconSize  | Size of close icon                                                            | string                                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIconSize: undefined<br>}</code> |
-| closeable      | Add close button to the item that closes the notification                     | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                     |
+| closeable      | Add close button to close the item                                            | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                     |
 | icon           | Icon name to use                                                              | string                                                                            | -                                                                               |                                                                                                                                                                 |
 | iconPack       | Icon pack to use                                                              | string                                                                            | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
 | iconSize       | Icon size                                                                     | string                                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconSize: "large"<br>}</code>        |
@@ -54,7 +54,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 | Event name    | Properties                                | Description                 |
 | ------------- | ----------------------------------------- | --------------------------- |
 | update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         | **value** `string` - close event method   | on component close event    |
+| close         | **event** `Event` - native event          | on component close event    |
 
 ### Slots
 
@@ -93,9 +93,9 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ### Events
 
-| Event name | Properties                              | Description              |
-| ---------- | --------------------------------------- | ------------------------ |
-| close      | **value** `string` - close event method | on component close event |
+| Event name | Properties                       | Description              |
+| ---------- | -------------------------------- | ------------------------ |
+| close      | **event** `Event` - native event | on component close event |
 
 ### Slots
 
@@ -121,23 +121,23 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                        | Default                                      |
-| ------------------------------------ | -------------------------------------------- |
-| $notification-background-color       | var(--#{$prefix}primary)                     |
-| $notification-border-radius          | 4px                                          |
-| $notification-padding                | 1.75em 1.75em                                |
-| $notification-margin-bottom          | 1.5rem                                       |
-| $notification-animantion             | append-animate 0.3s linear                   |
-| $notification-color                  | var(--#{$prefix}white)                       |
-| $notification-close-border-radius    | var( --#{$prefix}base-border-radius-rounded) |
-| $notification-close-right            | 0.5rem                                       |
-| $notification-close-top              | 0.5rem                                       |
-| $notification-close-size             | 20px                                         |
-| $notification-close-color            | var(--#{$prefix}white)                       |
-| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)                         |
-| $notification-icon-margin-right      | 1rem                                         |
-| $notification-notices-padding        | 2em                                          |
-| $notification-notices-zindex         | 1000                                         |
+| SASS Variable                        | Default                                           |
+| ------------------------------------ | ------------------------------------------------- |
+| $notification-spacer                 | calc(2 \* h.useVar("control-spacer"))             |
+| $notification-padding                | 1.75em 1.75em                                     |
+| $notification-animation              | append-animate h.useVar("animation-speed") linear |
+| $notification-color                  | h.useVar("primary-invert")                        |
+| $notification-background-color       | h.useVar("primary")                               |
+| $notification-border-radius          | h.useVar("border-radius")                         |
+| $notification-close-top              | 0.5em                                             |
+| $notification-close-right            | 0.5em                                             |
+| $notification-close-color            | h.useVar("white")                                 |
+| $notification-close-size             | 1.5rem                                            |
+| $notification-close-border-radius    | h.useVar("border-radius-rounded")                 |
+| $notification-close-background-color | h.useVar("control-shadow-color")                  |
+| $notification-notices-padding        | 2em                                               |
+| $notification-notices-max-width      | 600px                                             |
+| $notification-notices-zindex         | map.get(vars.$zindex, "tooltip")                  |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
 

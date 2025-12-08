@@ -12,7 +12,6 @@ import {
     type Ref,
 } from "vue";
 import { unrefElement } from "./unrefElement";
-import { useDebounce } from "./useDebounce";
 import { useSequentialId } from "./useSequentialId";
 
 export type ProviderItem<T = unknown> = {
@@ -76,9 +75,9 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
     const total = computed<number>(() => childItems.value.length);
 
     if (options?.rootRef) {
-        /** debounced sort function */
-        const sortHandler = useDebounce((items: typeof childItems.value) => {
-            const parent = unrefElement(options.rootRef);
+        /** Sort child items according to their DOM position */
+        function sortItems(items: typeof childItems.value): void {
+            const parent = unrefElement(options?.rootRef);
             if (!parent) return;
 
             // create a list of child item ids
@@ -104,15 +103,16 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
 
             // sort items according to their index position
             items.sort((a, b) => a.index - b.index);
-        }, 500);
+        }
 
-        // when child items are added/removed (no deep change - only list update)
-        // sort them according to their DOM position
-        watch(childItems, sortHandler);
+        // sort items when child items list get updated (no deep change - only list update)
+        // use flush: "post" to ensure DOM is updated and batch updates by a Vue tick
+        watch(childItems, sortItems, { flush: "post" });
     }
 
     const { nextSequence } = useSequentialId(1);
 
+    /** register a child item on the parent */
     function registerItem(
         el: MaybeRefOrGetter<HTMLElement | null>,
         data: MaybeRefOrGetter<ItemData>,
@@ -129,6 +129,7 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
         return item as ProviderItem<ItemData>;
     }
 
+    /** unregister a child item on the parent */
     function unregisterItem(item: ProviderItem): void {
         childItems.value = childItems.value.filter(
             (i) => i.identifier !== item.identifier,

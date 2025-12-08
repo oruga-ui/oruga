@@ -115,14 +115,14 @@ function deactivate(newIndex: number): void {
     emits("deactivate");
 }
 
-/** Transition after-enter hook. */
-function afterEnter(): void {
+/** Transition start hook. */
+function onTransitionStart(): void {
     isTransitioning.value = true;
 }
 
-/** Transition before-leave hook. */
-function beforeLeave(): void {
-    isTransitioning.value = true;
+/** Transition end hook. */
+function onTransitionEnd(): void {
+    isTransitioning.value = false;
 }
 
 // #region --- Computed Component Classes ---
@@ -174,8 +174,10 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
         :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
-        @after-enter="afterEnter"
-        @before-leave="beforeLeave">
+        @before-enter="onTransitionStart"
+        @after-enter="onTransitionEnd"
+        @before-leave="onTransitionStart"
+        @after-leave="onTransitionEnd">
         <div
             v-show="isActive && visible"
             v-bind="$attrs"
@@ -188,9 +190,9 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <!-- 
+            <!--
                 @slot Override tab panel content
-                @binding {boolean} active - if item is shown 
+                @binding {boolean} active - if item is shown
             -->
             <slot :active="isActive && visible">
                 <!-- injected component -->
@@ -212,7 +214,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             <template v-if="false">
                 <!--
                     @slot Override tab header label
-                    @binding {boolean} active - if item is shown 
+                    @binding {boolean} active - if item is shown
                 -->
                 <slot name="header" :active="isActive && visible" />
             </template>

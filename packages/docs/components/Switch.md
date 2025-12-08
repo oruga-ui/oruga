@@ -32,7 +32,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | Prop name          | Description                                                                         | Type                                                                   | Values                                                                          | Default                                                                                                                                                    |
 | ------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | autocomplete       | Same as native autocomplete options to use in HTML5 validation                      | string                                                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>switch: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>       |
-| customValidity     | Custom HTML 5 validation error to set on the form control                           | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                     |
+| customValidity     | Custom HTML 5 validation error to set on the form control                           | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               |                                                                                                                                                            |
 | disabled           | Same as native disabled                                                             | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
 | falseValue         | Overrides the returned value when it's not checked                                  | unknown                                                                | -                                                                               |                                                                                                                                                            |
 | id                 | Same as native id. Also set the for label for o-field wrapper - default is an uuid. | string                                                                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                              |
@@ -84,18 +84,26 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                 | Default                                                   |
-| ----------------------------- | --------------------------------------------------------- |
-| $switch-spacer                | 0.5em                                                     |
-| $switch-width                 | 2.75em                                                    |
-| $switch-height                | 1.5em                                                     |
-| $switch-background            | var(--#{$prefix}grey-light)                               |
-| $switch-toggle-background     | $control-brackground-color                                |
-| $switch-border                | $control-border-width solid var(--#{$prefix}grey-lighter) |
-| $switch-border-radius         | var(--#{$prefix}base-border-radius)                       |
-| $switch-border-radius-rounded | var( --#{$prefix}base-border-radius-rounded)              |
-| $switch-checked-background    | var(--#{$prefix}primary)                                  |
-| $switch-disabled-opacity      | var(--#{$prefix}base-disabled-opacity)                    |
+| SASS Variable                    | Default                              |
+| -------------------------------- | ------------------------------------ |
+| $switch-spacer                   | h.useVar("control-spacer")           |
+| $switch-width                    | 2.75em                               |
+| $switch-height                   | 1.5em                                |
+| $switch-color                    | h.useVar("font-color")               |
+| $switch-font-size                | h.useVar("font-size")                |
+| $switch-font-weight              | h.useVar("font-weight")              |
+| $switch-line-height              | h.useVar("line-height")              |
+| $switch-box-shadow               | h.useVar("control-box-shadow-inset") |
+| $switch-border-color             | h.useVar("grey-lighter")             |
+| $switch-border-style             | solid                                |
+| $switch-border-width             | h.useVar("control-border-width")     |
+| $switch-border-radius            | h.useVar("border-radius")            |
+| $switch-border-radius-rounded    | h.useVar("border-radius-rounded")    |
+| $switch-background-color         | h.useVar("grey-light")               |
+| $switch-toggle-background-color  | vars.$control-brackground-color      |
+| $switch-checked-background-color | h.useVar("primary")                  |
+| $switch-checked-border-color     | h.useVar("primary")                  |
+| $switch-disabled-opacity         | h.useVar("control-disabled-opacity") |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_switch.scss)
 
@@ -122,9 +130,7 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 | SASS Variable  | Default |
 | -------------- | ------- |
-| $switch-spacer | 0.5em   |
-| $switch-width  | 2.75em  |
-| $switch-height | 1.5em   |
+| $switch-spacer | 0.5rem  |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_switch.scss)
 

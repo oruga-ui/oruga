@@ -61,7 +61,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | mobileNative              | Enable mobile native input if mobile agent                                                                                                                                       | boolean                                                                                                                   | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;mobileNative: false<br>}</code>                  |
 | v-model                   | The input value state, use v-model to make it two-way binding                                                                                                                    | [] \| [Date, Date] \| Date \| Date[]                                                                                      | -                                                                                                |                                                                                                                                                                           |
 | monthNames                | Set custom month names, else use names based on locale                                                                                                                           | string[]                                                                                                                  | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;monthNames: undefined<br>}</code>                |
-| multiple                  | Same as native, also push new item to v-model instead of replacing                                                                                                               | boolean                                                                                                                   | -                                                                                                | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                                    |
+| multiple                  | Same as native, also push new item to v-model instead of replacing                                                                                                               | boolean                                                                                                                   | -                                                                                                |                                                                                                                                                                           |
 | nearbyMonthDays           | Show nearby month days                                                                                                                                                           | boolean                                                                                                                   | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;nearbyMonthDays: true<br>}</code>                |
 | nearbySelectableMonthDays | Define if nearby month days can be selected                                                                                                                                      | boolean                                                                                                                   | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;nearbySelectableMonthDays: false<br>}</code>     |
 | openOnFocus               | Open dropdown on focus                                                                                                                                                           | boolean                                                                                                                   | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;openOnFocus: true<br>}</code>                    |
@@ -69,7 +69,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | parser                    | Custom function to parse a string into a date                                                                                                                                    | ((date: string) =&gt; [] \| Date \| Date[] \| [Date, Date] ) \| undefined                                                 | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;parser: undefined<br>}</code>                    |
 | placeholder               | Input placeholder                                                                                                                                                                | string                                                                                                                    | -                                                                                                |                                                                                                                                                                           |
 | position                  | Position of the dropdown relative to the input                                                                                                                                   | "auto" \| "bottom-left" \| "bottom-right" \| "bottom" \| "left" \| "right" \| "top-left" \| "top-right" \| "top"          | `auto`, `top`, `bottom`, `left`, `right`, `top-right`, `top-left`, `bottom-left`, `bottom-right` |                                                                                                                                                                           |
-| range                     | Enable date range selection                                                                                                                                                      | boolean                                                                                                                   | -                                                                                                | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                                    |
+| range                     | Enable date range selection                                                                                                                                                      | boolean                                                                                                                   | -                                                                                                |                                                                                                                                                                           |
 | readonly                  | Same as native input readonly                                                                                                                                                    | boolean                                                                                                                   | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                               |
 | rounded                   | Makes the input rounded                                                                                                                                                          | boolean                                                                                                                   | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                               |
 | rulesForFirstWeek         | Rules for the first week - 1 for the 1st January, 4 for the 4th January                                                                                                          | number                                                                                                                    | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>4</code>                                                                                                                   |
@@ -127,50 +127,37 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                                     | Default                                                           |
-| ------------------------------------------------- | ----------------------------------------------------------------- |
-| $datepicker-font-size                             | var(--#{$prefix}base-font-size)                                   |
-| $datepicker-box-padding                           | 0.5rem 1rem                                                       |
-| $datepicker-header-padding                        | 0.5rem 0                                                          |
-| $datepicker-header-spacer                         | 0.5rem                                                            |
-| $datepicker-header-border-bottom                  | 1px solid var(--#{$prefix}grey-lighter)                           |
-| $datepicker-footer-padding                        | 0.5rem 0.5rem 0 0.5rem                                            |
-| $datepicker-footer-border-top                     | 1px solid var(--#{$prefix}grey-lighter)                           |
-| $datepicker-table-head-padding                    | 0 0 0.875rem 0                                                    |
-| $datepicker-table-head-margin                     | 0 0 0.875rem 0                                                    |
-| $datepicker-table-head-border-bottom              | 1px solid var(--#{$prefix}grey-lighter)                           |
-| $datepicker-table-head-item-color                 | var(--#{$prefix}grey)                                             |
-| $datepicker-table-head-item-font-weight           | 600                                                               |
-| $datepicker-item-today-border                     | solid 1px rgba(var(--#{$prefix}primary), 0.5)                     |
-| $datepicker-item-selectable-color                 | var(--#{$prefix}grey-dark)                                        |
-| $datepicker-item-disabled-color                   | var(--#{$prefix}grey-light)                                       |
-| $datepicker-item-border-radius                    | var(--#{$prefix}base-border-radius)                               |
-| $datepicker-item-padding                          | 0.5rem 0.75rem                                                    |
-| $datepicker-item-selected-color                   | var(--#{$prefix}primary-invert)                                   |
-| $datepicker-item-selected-background-color        | var(--#{$prefix}primary)                                          |
-| $datepicker-item-selected-border-radius           | 0                                                                 |
-| $datepicker-item-selected-within-background-color | rgb( from $datepicker-item-selected-background-color r g b / 50%) |
-| $datepicker-item-hovered-background-color         | var(--#{$prefix}grey)                                             |
-| $datepicker-item-hovered-color                    | var(--#{$prefix}grey-lighter)                                     |
-| $datepicker-item-hovered-background-color         | $control-brackground-color                                        |
-| $datepicker-item-hovered-within-background-color  | rgb( from $datepicker-item-hovered-background-color r g b / 50%)  |
-| $datepicker-item-nearby-color                     | var(--#{$prefix}grey-light)                                       |
-| $datepicker-events-item-padding                   | 0.3rem 0.75rem 0.75rem                                            |
-| $datepicker-event-background-color                | var(--#{$prefix}grey-light)                                       |
-| $datepicker-event-dots-size                       | 0.35em                                                            |
-| $datepicker-event-dots-margin                     | 0 0.1em                                                           |
-| $datepicker-event-bars-height                     | 0.25em                                                            |
-| $datepicker-btn-background-color                  | transparent                                                       |
-| $datepicker-btn-border-color                      | var(--#{$prefix}grey-lighter)                                     |
-| $datepicker-btn-border-radius                     | var(--#{$prefix}base-border-radius)                               |
-| $datepicker-btn-border                            | 1px solid transparent                                             |
-| $datepicker-btn-color                             | #363636                                                           |
-| $datepicker-btn-height                            | 2.25em                                                            |
-| $datepicker-btn-hover-border-color                | var(--#{$prefix}grey-light)                                       |
-| $datepicker-btn-hover-color                       | #363636                                                           |
-| $datepicker-btn-hover-background-color            | transparent                                                       |
-| $datepicker-btn-min-width                         | 2.25em                                                            |
-| $datepicker-btn-padding                           | 0.5em 0.5em                                                       |
+| SASS Variable                                           | Default                                                                 |
+| ------------------------------------------------------- | ----------------------------------------------------------------------- |
+| $datepicker-font-size                                   | h.useVar("font-size")                                                   |
+| $datepicker-box-padding                                 | 0 calc(2 \* h.useVar("control-spacer"))                                 |
+| $datepicker-border-width                                | h.useVar("control-border-width")                                        |
+| $datepicker-border-style                                | solid                                                                   |
+| $datepicker-border-color                                | h.useVar("control-border-color")                                        |
+| $datepicker-header-padding                              | h.useVar("control-spacer") 0                                            |
+| $datepicker-header-spacer                               | h.useVar("control-spacer")                                              |
+| $datepicker-footer-padding                              | h.useVar("control-spacer")                                              |
+| $datepicker-footer-spacer                               | h.useVar("control-spacer")                                              |
+| $datepicker-button-height                               | 2.25em                                                                  |
+| $datepicker-button-min-width                            | 2.25em                                                                  |
+| $datepicker-table-header-font-weight                    | 600                                                                     |
+| $datepicker-table-cell-padding                          | 0.5rem 0.75rem                                                          |
+| $datepicker-table-cell-border-radius                    | h.useVar("border-radius")                                               |
+| $datepicker-table-cell-selectable-color                 | h.useVar("font-color")                                                  |
+| $datepicker-table-cell-unselectable-color               | h.useVar("grey-light")                                                  |
+| $datepicker-table-cell-nearby-color                     | h.useVar("grey-light")                                                  |
+| $datepicker-table-cell-today-border                     | solid 1px rgba(h.useVar("primary"), 0.5)                                |
+| $datepicker-table-cell-selected-color                   | h.useVar("primary-invert")                                              |
+| $datepicker-table-cell-selected-background-color        | h.useVar("primary")                                                     |
+| $datepicker-table-cell-selected-within-background-color | rgb( from $datepicker-table-cell-selected-background-color r g b / 50%) |
+| $datepicker-table-cell-hovered-color                    | h.useVar("white")                                                       |
+| $datepicker-table-cell-hovered-background-color         | h.useVar("grey")                                                        |
+| $datepicker-table-cell-hovered-within-background-color  | rgb( from $datepicker-table-cell-hovered-background-color r g b / 50%)  |
+| $datepicker-table-cell-events-padding                   | 0.3rem 0.75rem 0.75rem                                                  |
+| $datepicker-event-background-color                      | h.useVar("grey-light")                                                  |
+| $datepicker-event-dots-size                             | 0.35em                                                                  |
+| $datepicker-event-dots-margin                           | 0 0.1em                                                                 |
+| $datepicker-event-bars-height                           | 0.25em                                                                  |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datepicker.scss)
 

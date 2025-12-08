@@ -31,7 +31,9 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     fullPage: true,
     label: undefined,
     animation: () => getDefault("loading.animation", "fade"),
-    cancelable: false,
+    cancelable: undefined,
+    closeOnOutside: false,
+    closeOnEscape: false,
     icon: () => getDefault("loading.icon", "loading"),
     iconPack: () => getDefault("loading.iconPack"),
     iconSpin: () => getDefault("loading.iconSpin", true),
@@ -51,10 +53,10 @@ const emits = defineEmits<{
      */
     "update:fullPage": [value: boolean];
     /**
-     * on component close event
-     * @param value {string} - close event method
+     * on active state changes to false
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string] | unknown[]];
+    close: [event?: Event];
 }>();
 
 const rootRef = useTemplateRef("rootElement");
@@ -69,41 +71,49 @@ watch(isActive, (value) => {
     if (isFullPage.value) toggleScroll(value);
 });
 
-// --- Events Feature ---
+// #region --- Events Feature ---
 
 if (isClient) {
-    // register onKeyPress event when is active
-    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
+    // register onKeyup event when is active
+    useEventListener(rootRef, "keyup", onKeyup, {
+        trigger: isActive,
+        passive: true,
+    });
 }
 
-/** Keypress event that is bound to the document. */
-function onKeyPress(event: KeyboardEvent): void {
-    if (!isActive.value) return;
-    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
+/** Keyup event listener that is bound to the root element. */
+function onKeyup(event: KeyboardEvent): void {
+    if (!props.closeOnEscape || checkNotCloseable("escape")) return;
+    if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
-/**
- * Check if method is cancelable.
- * Call close() with action `cancel`.
- * @param method Cancel method
- */
-function cancel(method: string): void {
-    // check if method is cancelable
-    if (
-        !props.cancelable ||
-        (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
-    )
-        return;
-    close(method);
+/** Click outside event listener, when clicked on the overlay. */
+function clickedOutside(event: Event): void {
+    if (!props.closeOnOutside || checkNotCloseable("outside")) return;
+    close(event);
+}
+
+/** check if method is cancelable (for deprecreated check) */
+function checkNotCloseable(method: string): boolean {
+    return (
+        typeof props.cancelable !== "undefined" &&
+        ((typeof props.cancelable === "boolean" && !props.cancelable) ||
+            !props.cancelable ||
+            (Array.isArray(props.cancelable) &&
+                !props.cancelable.includes(method)))
+    );
 }
 
 /** set active to false and emit close event */
-function close(...args: [] | [string]): void {
+function close(event?: Event): void {
+    if (!isActive.value) return;
     isActive.value = false;
-    emits("close", ...args);
+    emits("close", event);
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Events Feature ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-loading"],
@@ -116,10 +126,14 @@ const iconClasses = defineClasses(["iconClass", "o-loading__icon"]);
 
 const labelClasses = defineClasses(["labelClass", "o-loading__label"]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -134,7 +148,7 @@ defineExpose({ close });
             <div
                 :class="overlayClasses"
                 :tabindex="-1"
-                @click="cancel('outside')" />
+                @click="clickedOutside" />
             <!--
                 @slot Override icon and label
                 @binding {close} close - function to close the component

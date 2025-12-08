@@ -20,6 +20,16 @@ import TriggersCode from "./triggers.vue?raw";
 
 <template>
     <h3 id="base">Base</h3>
+    <p>
+        While a tooltip can be placed on any content, they generally are tips
+        for tools or controls, such as providing additional content for icons
+        that have brief labels. An example of a native browser tooltip is the
+        way some browsers display an element's <code>title</code> attribute on
+        long mouse hover. However, this feature cannot be activated through
+        either keyboard focus or touch interaction, making this feature
+        inaccessible. If the information is important enough to include as a
+        tooltip or title, consider including it in visible text.
+    </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="position">Position</h3>
@@ -34,9 +44,12 @@ import TriggersCode from "./triggers.vue?raw";
 
     <h3 id="triggers">Triggers</h3>
     <p>
-        The action to trigger the tooltip can be customized using the
-        <code>triggers</code> prop. The action that closes the tooltip can be
-        customized using the <code>closaeble</code> prop.
+        The component accepts several different trigger variants, such as
+        <code>openOnClick</code> or <code>openOnContextmenu</code> to only open
+        on right click instead of left click. By default, only
+        <code>openOnHover</code> is set. The action that close the component can
+        also be customized using the <code>closeable</code>,
+        <code>closeOnOutside</code> and <code>closeOnEscape</code> props.
     </p>
     <ExampleViewer :component="Triggers" :code="TriggersCode" />
 
@@ -56,5 +69,13 @@ import TriggersCode from "./triggers.vue?raw";
         The tooltip label can be customised using the
         <code>content</code> slot.
     </p>
+    <div class="info custom-block">
+        <p class="custom-block-title">Accessibility Note:</p>
+        In terms of accessibility, tooltips provide additional information,
+        generally with no direct interaction on the tooltip itself. Therefore,
+        they should not contain any interactive elements, like links, inputs, or
+        buttons; and it will never receive active focus itself. A tooltip is not
+        considered to be a popup in this context.
+    </div>
     <ExampleViewer :component="Slot" :code="SlotCode" />
 </template>

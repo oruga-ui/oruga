@@ -31,8 +31,12 @@ import PositionCode from "./position.vue?raw";
 
     <h3 id="triggers">Triggers</h3>
     <p>
-        The component accepts several different trigger variants, such as open
-        on hover or open only on right click instead of left click.
+        The component accepts several different trigger variants, such as
+        <code>openOnHover</code> or <code>openOnContextmenu</code> to only open
+        on right click instead of left click. By default, only
+        <code>openOnClick</code> is set. The action that close the component can
+        also be customized using the <code>closeable</code>,
+        <code>closeOnOutside</code> and <code>closeOnEscape</code> props.
     </p>
     <p>
         Adding the <code>teleport</code> prop will move the dropdown menu to the

@@ -18,7 +18,7 @@ const isActive = ref(false);
             fullheight
             overlay
             teleport>
-            <o-button icon-left="times" label="Close" @click="close()" />
+            <o-button icon-left="times" label="Close" @click="close($event)" />
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
                 sodales leo nec convallis rutrum. Vivamus pharetra molestie arcu

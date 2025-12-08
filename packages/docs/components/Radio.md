@@ -31,7 +31,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | Prop name          | Description                                                                         | Type                                                                   | Values                                                                          | Default                                                                                                                                             |
 | ------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | autocomplete       | Same as native autocomplete options to use in HTML5 validation                      | string                                                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>radio: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code> |
-| customValidity     | Custom HTML 5 validation error to set on the form control                           | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                              |
+| customValidity     | Custom HTML 5 validation error to set on the form control                           | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               |                                                                                                                                                     |
 | disabled           | Same as native disabled                                                             | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                         |
 | id                 | Same as native id. Also set the for label for o-field wrapper - default is an uuid. | string                                                                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                       |
 | label              | Input label, unnecessary when default slot is used                                  | string                                                                 | -                                                                               |                                                                                                                                                     |
@@ -78,17 +78,25 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                     | Default                                |
-| --------------------------------- | -------------------------------------- |
-| $radio-active-background-color    | $primary                               |
-| $radio-checked-box-shadow-length  | 0 0 0.5em                              |
-| $radio-checked-box-shadow-opacity | 0.8                                    |
-| $radio-box-shadow                 | $control-box-shadow                    |
-| $radio-disabled-opacity           | var(--#{$prefix}base-disabled-opacity) |
-| $radio-label-padding              | 0 0 0 0.5em                            |
-| $radio-margin-sibiling            | 0.5em                                  |
-| $radio-size                       | 1rem                                   |
-| $radio-line-height                | 1.25                                   |
+| SASS Variable                     | Default                                     |
+| --------------------------------- | ------------------------------------------- |
+| $radio-spacer                     | h.useVar("control-spacer")                  |
+| $radio-disabled-opacity           | h.useVar("control-disabled-opacity")        |
+| $radio-width                      | 1em                                         |
+| $radio-height                     | 1em                                         |
+| $radio-color                      | h.useVar("font-color")                      |
+| $radio-font-size                  | h.useVar("font-size")                       |
+| $radio-font-weight                | h.useVar("font-weight")                     |
+| $radio-line-height                | h.useVar("line-height")                     |
+| $radio-box-shadow                 | h.useVar("control-box-shadow-inset")        |
+| $radio-border-color               | h.useVar("primary")                         |
+| $radio-border-style               | solid                                       |
+| $radio-border-radius              | h.useVar("border-radius-rounded")           |
+| $radio-border-width               | calc(2 \* h.useVar("control-border-width")) |
+| $radio-background-color           | h.useVar("white")                           |
+| $radio-active-background-color    | h.useVar("primary")                         |
+| $radio-checked-box-shadow-length  | 0 0 0.5em                                   |
+| $radio-checked-box-shadow-opacity | 0.8                                         |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_radio.scss)
 

@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<ListItemProps<T>>(), {
     label: undefined,
     disabled: false,
     hidden: false,
+    clickable: undefined,
     ariaLabel: undefined,
     ariaLabelledby: undefined,
     parentKey: undefined,
@@ -49,9 +50,8 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 const providedData = computed<ListItemComponent<T>>(() => ({
     value: itemValue as T,
     hidden: isHidden.value,
-    clickItem,
+    isViable: isViable.value,
     setHidden,
-    isViable,
     matches,
 }));
 
@@ -68,7 +68,18 @@ function setHidden(hidden: boolean): void {
     localHidden.value = hidden;
 }
 
+/** Shows if the item is viable or not (not disabled or hidden). */
+const isViable = computed(() => !isHidden.value && !props.disabled);
+
 const isDisabled = computed(() => parent.value.disabled || props.disabled);
+
+/** Shows if the item is clickable or not. */
+const isClickable = computed(
+    () =>
+        !parent.value.disabled &&
+        !props.disabled &&
+        (props.clickable ?? parent.value.selectable),
+);
 
 const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
@@ -85,19 +96,14 @@ const isFocused = computed(
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
-    if (isDisabled.value) return;
+    if (!isClickable.value) return;
     parent.value.selectItem(item.value, !isSelected.value);
     emits("click", itemValue as T, event);
 }
 
 /** Set the item as focused element. */
 function focusItem(): void {
-    parent.value.setFocus(item.value);
-}
-
-/** Checks if the item is viable (not disabled or hidden). */
-function isViable(): boolean {
-    return !isHidden.value && !props.disabled;
+    parent.value.focusItem(item.value);
 }
 
 /** Check if a value matches the label (startsWith). */
@@ -108,10 +114,11 @@ function matches(value: string): boolean {
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["itemClass", "o-listbox__item"],
-    ["itemDisabledClass", "o-listbox__item--disabled", null, isDisabled],
-    ["itemSelectedClass", "o-listbox__item--selected", null, isSelected],
-    ["itemFocusedClass", "o-listbox__item--focused", null, isFocused],
+    ["itemClass", `o-${key}__item`],
+    ["itemClickableClass", `o-${key}__item--clickable`, null, isClickable],
+    ["itemDisabledClass", `o-${key}__item--disabled`, null, isDisabled],
+    ["itemSelectedClass", `o-${key}__item--selected`, null, isSelected],
+    ["itemFocusedClass", `o-${key}__item--focused`, null, isFocused],
 );
 
 // #endregion --- Computed Component Classes ---

@@ -1,8 +1,9 @@
-import { type Component, type MaybeRefOrGetter } from "vue";
+import { type Component } from "vue";
 import {
     ProgrammaticFactory,
     type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
+    type ProgrammaticTarget,
 } from "../programmatic";
 
 import Sidebar from "./Sidebar.vue";
@@ -15,7 +16,6 @@ declare module "../../index" {
     }
 }
 
-/** useSidebarProgrammatic composable options */
 export type SidebarProgrammaticOptions<C extends Component> = Readonly<
     SidebarProps<C>
 > &
@@ -30,7 +30,7 @@ export class SidebarProgrammaticFactory extends ProgrammaticFactory {
      */
     open<C extends Component>(
         options: SidebarProgrammaticOptions<C>,
-        target?: MaybeRefOrGetter<string | HTMLElement | null>,
+        target?: ProgrammaticTarget,
     ): ProgrammaticExpose<typeof Sidebar<C>> {
         const componentProps: SidebarProps<C> = {
             active: true, // set the active default state to true

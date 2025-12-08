@@ -32,22 +32,41 @@ export type TooltipProps = {
     disabled?: boolean;
     /** Tooltip default animation */
     animation?: string;
-    /** Tooltip will be multilined */
+    /**
+     * Tooltip will be multilined
+     * @deprecated use `maxWidth` instead
+     */
     multiline?: boolean;
+    /** Limit the tooltip content width */
+    maxWidth?: string;
     /** Tooltip trigger tag name */
     triggerTag?: DynamicComponent;
     /**
      * Tooltip trigger events
      * @values hover, click, focus, contextmenu
+     * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
      */
     triggers?: Array<"click" | "hover" | "contextmenu" | "focus">;
+    /** Show when clicked on the trigger */
+    openOnClick?: boolean;
+    /** Show when hover over the trigger */
+    openOnHover?: boolean;
+    /** Show when right clicked on the trigger */
+    openOnContextmenu?: boolean;
+    /** Show when trigger get focused */
+    openOnFocus?: boolean;
     /** Tooltip delay before it appears (number in ms) */
     delay?: number;
     /**
      * Tooltip auto close options (pressing escape, clicking the content or outside)
      * @values true, false, content, outside, escape
+     * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
      */
     closeable?: Array<"content" | "outside" | "escape"> | boolean;
+    /** Close when clicked outside of the panel */
+    closeOnOutside?: boolean;
+    /** Close when pressing escape key */
+    closeOnEscape?: boolean;
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -70,7 +89,10 @@ export type TooltipClasses = Partial<{
     positionClass: ComponentClass;
     /** Class of the content element with variant */
     variantClass: ComponentClass;
-    /** Class of the content element when is multiline */
+    /**
+     * Class of the content element when is multiline
+     * @deprecated `multiple` prop will be removed
+     */
     multilineClass: ComponentClass;
     /** Class of the content element when is always visible */
     alwaysClass: ComponentClass;

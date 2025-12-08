@@ -122,25 +122,27 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                      | Default                             |
-| ---------------------------------- | ----------------------------------- |
-| $menu-item-color                   | var(--#{$prefix}grey-dark)          |
-| $menu-item-background-color        | transparent                         |
-| $menu-item-hover-color             | var(--#{$prefix}white)              |
-| $menu-item-hover-background-color  | var(--#{$prefix}secondary)          |
-| $menu-item-active-color            | var(--#{$prefix}primary-invert)     |
-| $menu-item-active-background-color | var(--#{$prefix}primary)            |
-| $menu-item-disabled-color          | var(--#{$prefix}grey-light)         |
-| $menu-list-border-left             | 1px solid var(--#{$prefix}primary)  |
-| $menu-list-border-radius           | var(--#{$prefix}base-border-radius) |
-| $menu-list-line-height             | 1.25em                              |
-| $menu-item-padding                 | 0.5em 0.75em                        |
-| $menu-nested-list-margin           | 0.75em 1.25em                       |
-| $menu-nested-list-padding-left     | 0.75em                              |
-| $menu-label-color                  | $grey                               |
-| $menu-label-font-size              | 0.75em                              |
-| $menu-label-spacing                | 1em                                 |
-| $menu-icon-spacer                  | 0.5rem                              |
+| SASS Variable                      | Default                              |
+| ---------------------------------- | ------------------------------------ |
+| $menu-spacer                       | 0.5rem                               |
+| $menu-border                       | 1px solid h.useVar("primary")        |
+| $menu-disabled-opacity             | h.useVar("control-disabled-opacity") |
+| $menu-label-color                  | h.useVar("font-color")               |
+| $menu-label-font-size              | calc(h.useVar("font-size") \* 0.75)  |
+| $menu-label-font-weight            | h.useVar("font-weight")              |
+| $menu-label-line-heigth            | h.useVar("line-heigth")              |
+| $menu-item-padding                 | 0.5em 0.75em                         |
+| $menu-item-color                   | h.useVar("font-color")               |
+| $menu-item-font-size               | h.useVar("font-size")                |
+| $menu-item-font-weight             | h.useVar("font-weight")              |
+| $menu-item-line-heigth             | h.useVar("line-heigth")              |
+| $menu-item-border                  | unset                                |
+| $menu-item-border-radius           | h.useVar("border-radius")            |
+| $menu-item-background-color        | transparent                          |
+| $menu-item-hover-color             | h.useVar("white")                    |
+| $menu-item-hover-background-color  | h.useVar("secondary")                |
+| $menu-item-active-color            | h.useVar("primary-invert")           |
+| $menu-item-active-background-color | h.useVar("primary")                  |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_menu.scss)
 

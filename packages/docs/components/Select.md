@@ -31,7 +31,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | Prop name          | Description                                                                           | Type                                                                   | Values                                                                          | Default                                                                                                                                               |
 | ------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | autocomplete       | Same as native autocomplete options to use in HTML5 validation                        | string                                                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>  |
-| customValidity     | Custom HTML 5 validation error to set on the form control                             | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
+| customValidity     | Custom HTML 5 validation error to set on the form control                             | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               |                                                                                                                                                       |
 | disabled           | Disable the input - same as native disabled                                           | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | expanded           | Makes input full width when inside a grouped or addon field                           | boolean                                                                | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;expanded: false<br>}</code>      |
 | icon               | Icon to be shown                                                                      | string                                                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>      |
@@ -42,7 +42,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | iconRightVariant   | Variant of right icon                                                                 | string                                                                 | -                                                                               |                                                                                                                                                       |
 | id                 | Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. | string                                                                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                         |
 | v-model            | The input value state                                                                 | unknown                                                                | -                                                                               |                                                                                                                                                       |
-| multiple           | Allow multiple selection - converts the `modelValue` into an array                    | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
+| multiple           | Allow multiple selection - converts the `modelValue` into an array                    | boolean                                                                | -                                                                               |                                                                                                                                                       |
 | nativeSize         | Same as native size                                                                   | Numberish                                                              | -                                                                               |                                                                                                                                                       |
 | options            | Select options, unnecessary when default slot is used                                 | OptionsPropWithGroups&lt;unknown&gt;                                   | -                                                                               |                                                                                                                                                       |
 | override           | Override existing theme classes completely                                            | boolean                                                                | -                                                                               |                                                                                                                                                       |
@@ -90,24 +90,25 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                 | Default                                               |
-| ----------------------------- | ----------------------------------------------------- |
-| $select-background-color      | #fff                                                  |
-| $select-border-color          | var(--#{$prefix}grey-lighter)                         |
-| $select-border-style          | solid                                                 |
-| $select-border-width          | 1px                                                   |
-| $select-border-radius         | var(--#{$prefix}base-border-radius)                   |
-| $select-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
-| $select-box-shadow            | $control-box-shadow                                   |
-| $select-color                 | #363636                                               |
-| $select-icon-zindex           | 4                                                     |
-| $select-height                | $control-height                                       |
-| $select-line-height           | var(--#{$prefix}base-line-height)                     |
-| $select-margin                | 0                                                     |
-| $select-padding               | $control-padding-vertical $control-padding-horizontal |
-| $select-arrow-color           | $select-color                                         |
-| $select-arrow-size            | 1rem                                                  |
-| $select-placeholder-opacity   | var(--#{$prefix}base-disabled-opacity)                |
+| SASS Variable                 | Default                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| $select-height                | h.useVar("control-height")                                                  |
+| $select-padding               | h.useVar("control-padding-vertical") h.useVar("control-padding-horizontal") |
+| $select-disabled-opacity      | h.useVar("control-disabled-opacity")                                        |
+| $select-color                 | h.useVar("font-color")                                                      |
+| $select-font-size             | h.useVar("font-size")                                                       |
+| $select-font-weight           | h.useVar("font-weight")                                                     |
+| $select-line-height           | h.useVar("line-height")                                                     |
+| $select-box-shadow            | h.useVar("control-box-shadow-inset")                                        |
+| $select-background-color      | h.useVar("control-brackground-color")                                       |
+| $select-border-color          | h.useVar("control-border-color")                                            |
+| $select-border-style          | solid                                                                       |
+| $select-border-width          | h.useVar("control-border-width")                                            |
+| $select-border-radius         | h.useVar("border-radius")                                                   |
+| $select-border-radius-rounded | h.useVar("border-radius-rounded")                                           |
+| $select-multiple-padding      | h.useVar("control-spacer")                                                  |
+| $select-arrow-color           | vars.$font-color                                                            |
+| $select-arrow-size            | 1em                                                                         |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
 

@@ -327,22 +327,35 @@ describe("ODropdown tests", () => {
 
         test("react accordingly when mouse over without trigger", async () => {
             const wrapper = mount(ODropdown, {
-                props: { triggers: ["click"] },
+                props: { openOnClick: true },
                 attachTo: document.body,
             });
 
             const trigger = wrapper.find(".o-dropdown__trigger");
             await trigger.trigger("mouseenter");
             expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeFalsy();
+
+            await trigger.trigger("click");
+            expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeTruthy();
         });
 
         test("react accordingly when mouse over with trigger", async () => {
             const wrapper = mount(ODropdown, {
-                props: { triggers: ["hover"] },
+                props: { openOnHover: true },
                 attachTo: document.body,
             });
             const trigger = wrapper.find(".o-dropdown__trigger");
             await trigger.trigger("mouseenter");
+            expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeTruthy();
+        });
+
+        test("react accordingly when having cotextmenu trigger", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { openOnContextmenu: true },
+                attachTo: document.body,
+            });
+            const trigger = wrapper.find(".o-dropdown__trigger");
+            await trigger.trigger("contextmenu");
             expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeTruthy();
         });
 

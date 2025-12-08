@@ -7,7 +7,7 @@ export type SidebarProps<C extends Component = Component> = {
     override?: boolean;
     /** Whether siedbar is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Show an overlay like modal */
+    /** Show an overlay background */
     overlay?: boolean;
     /** Display the Sidebear inline */
     inline?: boolean;
@@ -20,22 +20,23 @@ export type SidebarProps<C extends Component = Component> = {
     fullheight?: boolean;
     /** Show sidebar in fullwidth */
     fullwidth?: boolean;
-    /** Show a small sidebar */
-    reduce?: boolean;
     /**
-     * Custom layout on mobile
-     * @values expanded, reduced, hidden
+     * Override layout for small screens
+     * @values expanded, reduced, fullwidth, fullheight, hidden
      */
-    mobile?: "expanded" | "reduced" | "hidden";
-    /** Expand sidebar on hover when reduced or mobile is reduce */
-    expandOnHover?: boolean;
+    mobile?: "expanded" | "reduced" | "fullwidth" | "fullheight" | "hidden";
     /** Custom animation (transition name) */
     animation?: string;
     /**
-     * Is Sidebar cancleable by pressing escape or clicking outside.
+     * Is Sidebar cancelable by pressing escape or clicking outside.
      * @values escape, outside, true, false
+     * @deprecated use `closeOnOutside` and `closeOnEscape`
      */
     cancelable?: string[] | boolean;
+    /** Close when clicked outside of the panel */
+    closeOnOutside?: boolean;
+    /** Close when pressing escape key */
+    closeOnEscape?: boolean;
     /**
      * Set `true` to remove the body scrollbar.
      * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
@@ -84,6 +85,8 @@ export type SidebarClasses = Partial<{
     overlayClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
+    /** Class of the content element with small screen modifier */
+    contentMobileClass: ComponentClass;
     /** Class of the content element when hidden */
     hiddenClass: ComponentClass;
     /** Class of the content element when visible */
@@ -94,10 +97,6 @@ export type SidebarClasses = Partial<{
     fullheightClass: ComponentClass;
     /** Class of the content element when is fullwidth */
     fullwidthClass: ComponentClass;
-    /** Class of the content element when reduced */
-    reduceClass: ComponentClass;
-    /** Class of the content element when expanded on hover */
-    expandOnHoverClass: ComponentClass;
     /** Class of the body when is visible and scroll is clipped */
     scrollClipClass: ComponentClass;
     /** Class of the body when is visible and scroll is keeped */

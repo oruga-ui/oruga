@@ -1,6 +1,7 @@
 # Listbox
 
 <section class="odocs-head">
+<Badge type="warning" text="experimental" />
 
 The **Listbox** component presents a list of options and allows a user to select one or more of them.
 The component implements the W3C ARIA APG [Listbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/).
@@ -48,7 +49,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 | itemTag           | List item tag name                                                                                       | DynamicComponent                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;itemTag: "li"<br>}</code>                |
 | listTag           | List tag name                                                                                            | DynamicComponent                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;listTag: "ul"<br>}</code>                |
 | v-model           | The selected option value, use v-model to make it two-way binding                                        | string\|number\|object                           | -                                                 |                                                                                                                                                                |
-| multiple          | Allows multiple selections - converts the `modelValue` into an array                                     | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
+| multiple          | Allows multiple selections - converts the `modelValue` into an array                                     | boolean                                          | -                                                 |                                                                                                                                                                |
 | options           | Autocomplete options                                                                                     | OptionsPropWithGroups&lt;unknown&gt;             | -                                                 |                                                                                                                                                                |
 | override          | Override existing theme classes completely                                                               | boolean                                          | -                                                 |                                                                                                                                                                |
 | scrollHeight      | Height of the listbox, a scrollbar is defined if height of list exceeds this value                       | number \| string                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;scrollHeight: "225"<br>}</code>          |
@@ -97,19 +98,51 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                         | Default                                                                      |
+| ------------------------------------- | ---------------------------------------------------------------------------- |
+| $listbox-disabled-opacity             | h.useVar("control-disabled-opacity")                                         |
+| $listbox-box-shadow                   | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $listbox-background-color             | h.useVar("control-brackground-color")                                        |
+| $listbox-border-color                 | h.useVar("control-border-color")                                             |
+| $listbox-border-style                 | solid                                                                        |
+| $listbox-border-width                 | h.useVar("control-border-width")                                             |
+| $listbox-border-radius                | h.useVar("border-radius")                                                    |
+| $listbox-item-padding                 | h.useVar("control-spacer") calc(h.useVar("control-spacer") \* 2)             |
+| $listbox-item-color                   | h.useVar("font-color")                                                       |
+| $listbox-item-font-size               | h.useVar("font-size")                                                        |
+| $listbox-item-font-weight             | h.useVar("font-weight")                                                      |
+| $listbox-item-line-height             | h.useVar("line-height")                                                      |
+| $listbox-item-background-color        | transparent                                                                  |
+| $listbox-item-active-color            | h.useVar("primary-invert")                                                   |
+| $listbox-item-active-background-color | h.useVar("primary")                                                          |
+| $listbox-item-hover-background-color  | h.useVar("grey-lighter")                                                     |
+| $listbox-item-hover-color             | h.useVar("font-color")                                                       |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_listbox.scss)
+
 </div>
 <div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                         | Default                                           |
+| ------------------------------------- | ------------------------------------------------- |
+| $listbox-disabled-opacity             | 0.5                                               |
+| $listbox-item-hover-background-color  | css.getVar( "panel-block-hover-background-color") |
+| $listbox-item-active-background-color | css.getVar("primary")                             |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_listbox.scss)
+
 </div>
 <div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default |
+| ------------- | ------- |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_listbox.scss)
+
 </div>
 
 </section>

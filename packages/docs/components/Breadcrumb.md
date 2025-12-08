@@ -99,21 +99,23 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                            | Default                             |
-| ---------------------------------------- | ----------------------------------- |
-| $breadcrumb-list-line-height             | 1.25em                              |
-| $breadcrumb-item-spacer                  | 0.25em                              |
-| $breadcrumb-item-font-size               | $base-font-size                     |
-| $breadcrumb-item-padding                 | 0.3em                               |
-| $breadcrumb-list-border-radius           | var(--#{$prefix}base-border-radius) |
-| $breadcrumb-item-color                   | var(--#{$prefix}grey-dark)          |
-| $breadcrumb-item-background-color        | transparent                         |
-| $breadcrumb-item-active-color            | var(--#{$prefix}primary)            |
-| $breadcrumb-item-active-background-color | transparent                         |
-| $breadcrumb-item-disabled-color          | var(--#{$prefix}grey-light)         |
-| $breadcrumb-item-hover-color             | var(--#{$prefix}white)              |
-| $breadcrumb-item-hover-background-color  | var(--#{$prefix}secondary)          |
-| $breadcrumb-seperator-color              | inherit                             |
+| SASS Variable                            | Default                                 |
+| ---------------------------------------- | --------------------------------------- |
+| $breadcrumb-line-height                  | 1.25em                                  |
+| $breadcrumb-seperator-color              | inherit                                 |
+| $breadcrumb-disabled-opacity             | h.useVar("control-disabled-opacity")    |
+| $breadcrumb-item-spacer                  | calc(0.5 \* h.useVar("control-spacer")) |
+| $breadcrumb-item-padding                 | 0.3em                                   |
+| $breadcrumb-item-color                   | h.useVar("font-color")                  |
+| $breadcrumb-item-font-size               | h.useVar("font-size")                   |
+| $breadcrumb-item-font-weight             | h.useVar("font-weight")                 |
+| $breadcrumb-item-line-height             | h.useVar("line-height")                 |
+| $breadcrumb-item-border-radius           | h.useVar("border-radius")               |
+| $breadcrumb-item-background-color        | transparent                             |
+| $breadcrumb-item-active-color            | h.useVar("primary")                     |
+| $breadcrumb-item-active-background-color | transparent                             |
+| $breadcrumb-item-hover-color             | h.useVar("white")                       |
+| $breadcrumb-item-hover-background-color  | h.useVar("secondary")                   |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_breadcrumb.scss)
 

@@ -101,6 +101,9 @@ const iconRightClasses = defineClasses(
                 :size="iconSize"
                 :class="iconLeftClasses" />
 
+            <!--
+                @slot Override label
+            -->
             <slot>
                 <span>{{ label }}</span>
             </slot>

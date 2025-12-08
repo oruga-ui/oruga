@@ -325,7 +325,7 @@ function switchTo(index: number = 0): void {
     if (settings.value.repeat) index = mod(index, itemsCount.value);
     index = bound(index, 0, itemsCount.value - 1);
 
-    const item = childItems.value.at(index);
+    const item = childItems.value[index];
     activateItem(item?.data.getValue());
 }
 
@@ -401,7 +401,7 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
     delta.value = 0;
     // get dragging start x value
     dragX.value = (event as TouchEvent).touches
-        ? (event as TouchEvent).touches[0].clientX
+        ? (event as TouchEvent).touches[0]?.clientX
         : (event as MouseEvent).clientX;
 
     // stop timer when dragging starts
@@ -411,12 +411,12 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
 function onDragOver(event: TouchEvent | MouseEvent): void {
     if (!isDragging.value) return;
 
-    const dragEndX = (event as TouchEvent).touches
-        ? (
-              (event as TouchEvent).changedTouches[0] ||
+    const dragEndX =
+        ((event as TouchEvent).touches
+            ? (event as TouchEvent).changedTouches[0] ||
               (event as TouchEvent).touches[0]
-          ).clientX
-        : (event as MouseEvent).clientX;
+            : (event as MouseEvent)
+        ).clientX ?? 0;
     // calc transition delta value
     delta.value = (dragX.value ?? 0) - dragEndX;
 }

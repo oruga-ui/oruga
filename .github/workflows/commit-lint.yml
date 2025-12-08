@@ -1,23 +1,33 @@
-name: Lint commits
+name: Commit Lint
 on:
   push:
     branches: [develop]
   pull_request:
     branches: [develop]
+
 jobs:
-  lint-commits:
+  commitlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
+          # fetch all history for all branches and tags.
           fetch-depth: 0
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
+
       - name: Install dependencies 📦
-        run: npm install @commitlint/cli
+        run: npm install @commitlint/cli @commitlint/config-conventional
+
+      - name: Run PR title check 💬
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "${{ github.event.pull_request.title }}" | npx commitlint
+
       - name: Run commit message check 💬
-        run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
+        if: ${{ github.event_name != 'pull_request' }}
+        run: npx commitlint --from HEAD~1 --to HEAD

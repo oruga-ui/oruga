@@ -4,32 +4,40 @@ on:
     branches: [develop]
   pull_request:
     branches: [develop]
+
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
+
       - name: Install dependencies 📦
         run: npm ci
+
       - name: Determine Playwright cache key
         id: playwright-cache-key
         run: printf "key=%s" "$(jq -r '.["packages"]["node_modules/playwright"]["integrity"]' < package-lock.json)" > "$GITHUB_OUTPUT"
+
       - name: Cache Playwright installation
         uses: actions/cache@v4
         id: cache-playwright
         with:
           key: ${{ steps.playwright-cache-key.outputs.key }}
           path: ~/.cache/ms-playwright
+
       - name: Install Playwright dependencies
         run: npx playwright install-deps chromium
+
       - name: Install Playwright browser
         if: ${{ steps.cache-playwright.outputs.cache-hit != 'true' }}
         run: npx playwright install chromium
+
       - name: Run unit tests 🧪
         run: npm run test:coverage --browser chromium --browser.headless=true

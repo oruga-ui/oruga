@@ -34,9 +34,8 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | allowNew           | Allows adding new items                                                                                                                                                          | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;allowNew: false<br>}</code>          |
 | ariaCloseLabel     | Accessibility label for the close button                                                                                                                                         | string                                                                                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;ariaCloseLabel: "Remove"<br>}</code> |
 | autocomplete       | Native options to use in HTML5 validation                                                                                                                                        | string                                                                                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>      |
-| checkScroll        | Makes the component check if list reached scroll start or end and emit scroll events                                                                                             | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;checkScroll: false<br>}</code>       |
 | closeIcon          | Icon name of close icon on selected item                                                                                                                                         | string                                                                                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
-| closeable          | Add close/delete button to the item                                                                                                                                              | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;closeable: true<br>}</code>          |
+| closeable          | Add close button to close the item                                                                                                                                               | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;closeable: true<br>}</code>          |
 | counter            | Show counter when maxlength or maxtags props are passed                                                                                                                          | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;counter: true<br>}</code>            |
 | createItem         | Function to create a new item to push into v-model (items)                                                                                                                       | ((value: unknown) =&gt; unknown)                                                               | -                                                                               | <code style='white-space: nowrap; padding: 0;'>item as T</code>                                                                                             |
 | customValidity     | Custom HTML 5 validation error to set on the form control                                                                                                                        | string \| ((currentValue: unknown[] \| null , state: ValidityState) =&gt; string) \| undefined | -                                                                               |                                                                                                                                                             |
@@ -107,11 +106,11 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable               | Default            |
-| --------------------------- | ------------------ |
-| $taginput-counter-font-size | 0.75em             |
-| $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
-| $taginput-item-margin       | 0.275em            |
+| SASS Variable               | Default                    |
+| --------------------------- | -------------------------- |
+| $taginput-counter-font-size | 0.85rem                    |
+| $taginput-counter-spacer    | h.useVar("control-spacer") |
+| $taginput-item-spacer       | h.useVar("control-spacer") |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
 
@@ -123,7 +122,7 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 | SASS Variable      | Default |
 | ------------------ | ------- |
 | $taginput-height   | 100%    |
-| $taginput-tag-size | 0.9em   |
+| $taginput-tag-size | 1em     |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_taginput.scss)
 
