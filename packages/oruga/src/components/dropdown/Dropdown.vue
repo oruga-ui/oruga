@@ -29,6 +29,7 @@ import {
     useScrollEvents,
     scrollElementInView,
     type OptionsGroupItem,
+    type OptionsItem,
 } from "@/composables";
 
 import type {
@@ -133,30 +134,38 @@ defineSlots<{
      * Override the trigger element, default is label prop
      * @param active {boolean} - dropdown active state
      * @param value {unknown | unknown[]} - the selected value
-     * @param toggle {(): void} - toggle dropdown active state
+     * @param toggle {(event: Event): void} - toggle dropdown active state
      */
-    trigger?(): void;
+    trigger?(props: {
+        active: boolean;
+        value: unknown | unknown[];
+        toggle: (event: Event) => void;
+    }): void;
     /**
-     * Place dropdown items here
+     * Define the dropdown items here
      * @param active {boolean} - dropdown active state
-     * @param focusedIndex {number} - index of the focused element
+     * @param focusedIndex {number | undefined} - index of the focused element
      * @param toggle {(): void} - toggle dropdown active state
      */
-    default?(): void;
-    /** Place extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    default?(props: {
+        active: boolean;
+        focusedIndex?: number;
+        toggle: (event: Event) => void;
+    }): void;
+    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
     before?(): void;
     /**
      * Override the option group
      * @param group {object} - options group item
      * @param index {number} - option index
      */
-    group?(): void;
+    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
     /**
      * Override the label, default is label prop
      * @param option {object} - option item
      */
-    option?(): void;
-    /** Place extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    option?(props: { option: OptionsItem<T> }): void;
+    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
     after?(): void;
 }>();
 
@@ -725,7 +734,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :clickable="false">
                                 <slot
                                     name="group"
-                                    :group="group.label"
+                                    :group="group"
                                     :index="groupIndex">
                                     <span>
                                         {{ group.label }}

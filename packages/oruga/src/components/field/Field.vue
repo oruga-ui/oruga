@@ -46,6 +46,18 @@ const props = withDefaults(defineProps<FieldProps>(), {
     mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
 
+defineSlots<{
+    /** Override the label */
+    label?(): void;
+    /**
+     * Override the message
+     * @param message {string | string[] | undefined} - message property
+     */
+    message?(props: { message: string | string[] | undefined }): void;
+    /** Default content */
+    default?(): void;
+}>();
+
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 /** the unique id for the input to associate the label with */
@@ -262,11 +274,7 @@ const messageClasses = defineClasses(
                 :id="labelId"
                 :for="inputId"
                 :class="labelClasses">
-                <!--
-                    @slot Override the label
-                    @binding {string} label - label property 
-                -->
-                <slot name="label" :label="label">{{ label }}</slot>
+                <slot name="label">{{ label }}</slot>
             </label>
         </div>
 
@@ -276,11 +284,7 @@ const messageClasses = defineClasses(
                 :id="labelId"
                 :for="inputId"
                 :class="labelClasses">
-                <!--
-                    @slot Override the label
-                    @binding {string} label - label property 
-                -->
-                <slot name="label" :label="label">{{ label }}</slot>
+                <slot name="label">{{ label }}</slot>
             </label>
         </template>
 
@@ -310,17 +314,11 @@ const messageClasses = defineClasses(
 
         <div v-else-if="hasBody" :class="bodyClasses">
             <div :class="innerBodyClasses">
-                <!--
-                   @slot Default content
-                -->
                 <slot />
             </div>
         </div>
 
         <template v-else>
-            <!--
-                @slot Default content
-            -->
             <slot />
         </template>
 
@@ -329,10 +327,6 @@ const messageClasses = defineClasses(
             v-if="hasMessage && !horizontal"
             :id="messageId"
             :class="messageClasses">
-            <!--
-                @slot Override the message
-                @binding {string|string[]} message - field message 
-            -->
             <slot name="message" :message="fieldMessage">
                 <template v-if="Array.isArray(fieldMessage)">
                     <div v-for="message in fieldMessage" :key="message">

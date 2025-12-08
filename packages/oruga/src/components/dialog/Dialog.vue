@@ -102,6 +102,53 @@ const emits = defineEmits<{
     confirm: [event: Event];
 }>();
 
+defineSlots<{
+    /**
+     * Override the header
+     * @param close {(event: Event): void} - function to emit a `close` event
+     */
+    header?(props: { close: (event: Event) => void }): void;
+    /** Override the header title, default is title prop */
+    title?(): void;
+    /** Override the header subtitle, default is subtitle prop */
+    subtitle?(): void;
+    /** Define a custom close icon */
+    close?(): void;
+    /** Override the image element */
+    image?(): void;
+    /**
+     * Override the default dialog body
+     * @param close {(event: Event): void}  - function to emit a `close` event
+     * @param confirm {(event: Event): void} confirm - function to emit a `confirm` event
+     */
+    default?(props: {
+        close: (event: Event) => void;
+        confirm: (event: Event) => void;
+    }): void;
+    /**
+     * Override the body content, default is content prop
+     * @param close {(event: Event): void}  - function to emit a `close` event
+     * @param confirm {(event: Event): void} confirm - function to emit a `confirm` event
+     */
+    content?(props: {
+        close: (event: Event) => void;
+        confirm: (event: Event) => void;
+    }): void;
+    /**
+     * Override the footer
+     * @param close {(event: Event): void}  - function to emit a `close` event
+     * @param confirm {(event: Event): void} confirm - function to emit a `confirm` event
+     */
+    footer?(props: {
+        close: (event: Event) => void;
+        confirm: (event: Event) => void;
+    }): void;
+    /** Define the cancel button label */
+    cancelButton?(): void;
+    /** Define the confirm button label */
+    confirmButton?(): void;
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 const cancelButtonRef = useTemplateRef("cancelButton");
@@ -340,27 +387,17 @@ defineExpose({ close: cancel });
                             closeable
                         "
                         :class="headerClasses">
-                        <!--
-                            @slot Override the header
-                            @binding {(event: Event): void} close - function to emit a `close` event
-                        -->
                         <slot name="header" :close="cancel">
                             <h1
                                 v-if="$slots['title'] || title"
                                 :id="titleId"
                                 :class="titleClasses">
-                                <!--
-                                    @slot Override the header title, default is title prop
-                                -->
                                 <slot name="title"> {{ title }} </slot>
                             </h1>
 
                             <h2
                                 v-if="$slots['subtitle'] || subtitle"
                                 :class="subtitleClasses">
-                                <!--
-                                    @slot Override the header subtitle, default is subtitle prop
-                                -->
                                 <slot name="subtitle"> {{ subtitle }} </slot>
                             </h2>
                         </slot>
@@ -373,9 +410,6 @@ defineExpose({ close: cancel });
                             :label="ariaCloseLabel"
                             :classes="closeClasses"
                             @click="cancel">
-                            <!--
-                                @slot Define a custom close icon
-                            -->
                             <slot v-if="$slots['close']" name="close" />
                         </CloseButton>
                     </header>
@@ -390,9 +424,6 @@ defineExpose({ close: cancel });
                         "
                         :class="bodyClasses">
                         <!-- Image -->
-                        <!--
-                            @slot Override the image
-                        -->
                         <slot name="image">
                             <figure v-if="imageSrc" :class="figureClasses">
                                 <img
@@ -402,11 +433,7 @@ defineExpose({ close: cancel });
                             </figure>
                         </slot>
 
-                        <!--
-                            @slot Override the default dialog body
-                            @binding {(event: Event): void} close - function to emit a `close` event
-                            @binding {(event: Event): void} confirm - function to emit a `confirm` event
-                        -->
+                        <!-- Main Content -->
                         <slot :close="cancel" :confirm="confirm">
                             <!-- injected component for programmatic usage -->
                             <component
@@ -417,11 +444,6 @@ defineExpose({ close: cancel });
                                 @close="cancel" />
 
                             <p v-else :class="contentClasses">
-                                <!--
-                                    @slot Override the body content, default is content prop
-                                    @binding {(event: Event): void} close - function to emit a `close` event
-                                    @binding {(event: Event): void} confirm - function to emit a `confirm` event
-                                -->
                                 <slot
                                     name="content"
                                     :close="cancel"
@@ -443,11 +465,6 @@ defineExpose({ close: cancel });
                     <footer
                         v-if="$slots['footer'] || cancelButton || confirmButton"
                         :class="footerClasses">
-                        <!--
-                            @slot Override the footer
-                            @binding {(event: Event): void} close - function to emit a `close` event
-                            @binding {(event: Event): void} confirm - function to emit a `confirm` event
-                        -->
                         <slot name="footer" :close="cancel" :confirm="confirm">
                             <OButton
                                 v-if="cancelButton || $slots['cancelButton']"
@@ -459,9 +476,6 @@ defineExpose({ close: cancel });
                                 autofocus
                                 @click="cancel"
                                 @keyup.right="focusConfirmButton">
-                                <!--
-                                    @slot Define the cancel button label
-                                 -->
                                 <slot name="cancelButton">
                                     {{ cancelButton }}
                                 </slot>
@@ -478,9 +492,6 @@ defineExpose({ close: cancel });
                                 autofocus
                                 @click="confirm"
                                 @keyup.left="focusCancelButton">
-                                <!--
-                                    @slot Define the confirm button label
-                                 -->
                                 <slot name="confirmButton">
                                     {{ confirmButton }}
                                 </slot>

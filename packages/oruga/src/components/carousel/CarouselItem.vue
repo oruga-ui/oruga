@@ -40,7 +40,7 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /** Default content */
+    /** Override the item content */
     default?(): void;
 }>();
 

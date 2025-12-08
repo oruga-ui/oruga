@@ -40,13 +40,13 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /** Collapsable content */
+    /** Content to collapsable */
     default?(): void;
     /**
-     * Define the collapse trigger
+     * Define the collapse trigger element
      * @param open {boolean} - collapse open state
      */
-    trigger?(): void;
+    trigger?(props: { open: boolean }): void;
 }>();
 
 const isOpen = defineModel<boolean>("open", { default: true });

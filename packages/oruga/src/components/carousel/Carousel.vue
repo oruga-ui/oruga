@@ -115,14 +115,14 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /** Display carousel item */
+    /** Define the carousel items here */
     default?(): void;
     /**
      * Override the pause/resume button
      * @param autoplay {boolean} - if autoplay is active
      * @param toggle {(): void} - toggle autoplay
      */
-    pause?(): void;
+    pause?(props: { autoplay: boolean; toggle: () => void }): void;
     /**
      * Override the arrows
      * @param hasPrev {boolean} - has prev arrow button
@@ -130,19 +130,27 @@ defineSlots<{
      * @param prev {(): void} - switch to prev item function
      * @param next {(): void} - switch to next item function
      */
-    arrows?(): void;
+    arrows?(props: {
+        hasPrev: boolean;
+        hasNext: boolean;
+        prev: () => void;
+        next: () => void;
+    }): void;
     /**
      * Override the indicators
      * @param activeIndex {number} - active item index
      * @param switchTo {(idx: number): void} - switch to item function
      */
-    indicators?(): void;
+    indicators?(props: {
+        activeIndex: number;
+        switchTo: (idx: number) => void;
+    }): void;
     /**
      * Override the indicator elements
-     * @param index {index} - indicator index
+     * @param index {number} - indicator index
      */
-    indicator?(): void;
-    /** Overlay element */
+    indicator?(props: { index: number }): void;
+    /** Define element to show when overlay is active */
     overlay?(): void;
 }>();
 

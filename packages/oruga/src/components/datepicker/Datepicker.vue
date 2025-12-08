@@ -166,7 +166,7 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /** Override the trigger */
+    /** Override the input element */
     trigger?(): void;
     /** Override the header */
     header?(): void;

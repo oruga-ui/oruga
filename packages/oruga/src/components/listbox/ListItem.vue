@@ -40,6 +40,15 @@ const emits = defineEmits<{
     click: [value: T, event: Event];
 }>();
 
+defineSlots<{
+    /**
+     * Override the label, default is label prop
+     * @param selected {boolean} - item is selected
+     * @param disabled {boolean} - item is disabled
+     */
+    default?(props: { selected: boolean; disabled: boolean }): void;
+}>();
+
 const key = props.parentKey ?? "listbox";
 
 const itemValue = props.value ?? useId();
@@ -147,11 +156,8 @@ const rootClasses = defineClasses(
         :aria-labelledby="ariaLabelledby"
         @click.prevent="clickItem"
         @mouseenter="focusItem">
-        <!--
-            @slot Override the label, default is label prop
-            @binding {boolean} selected - item is selected
-            @binding {boolean} disabled - item is disabled
-        -->
-        <slot :selected="isSelected" :disabled="disabled">{{ label }}</slot>
+        <slot :selected="isSelected" :disabled="disabled">
+            {{ label }}
+        </slot>
     </component>
 </template>
