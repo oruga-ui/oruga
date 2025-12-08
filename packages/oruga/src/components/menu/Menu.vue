@@ -55,6 +55,35 @@ defineEmits<{
     "update:model-value": [value: ModelValue];
 }>();
 
+defineSlots<{
+    /**
+     * Override icon and label
+     * @param focused {unknown | undefined} - the focused item value
+     * @param focusedIndex {number | undefined} - index of the focused item
+     * @param selected {unknown | undefined} - the selected item value
+     * @param selectedIndex {number | undefined} - index of the selected item
+     */
+    label?(props: {
+        focused?: MenuItemComponent<T>;
+        focusedIndex?: number;
+        selected?: MenuItemComponent<T>;
+        selectedIndex?: number;
+    }): void;
+    /**
+     * Define menu items here
+     * @param focused {unknown | undefined} - the focused item value
+     * @param focusedIndex {number | undefined} - index of the focused item
+     * @param selected {unknown | undefined} - the selected item value
+     * @param selectedIndex {number | undefined} - index of the selected item
+     */
+    default?(props: {
+        focused?: MenuItemComponent<T>;
+        focusedIndex?: number;
+        selected?: MenuItemComponent<T>;
+        selectedIndex?: number;
+    });
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
@@ -238,13 +267,6 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
         :class="rootClasses"
         @focusout="onFocusLeave">
         <div v-if="label || $slots.label" :id="labelId" :class="labelClasses">
-            <!-- 
-                @slot Override icon and label
-                @binding {unknown} focused - the focused item value
-                @binding {number} focused-index - index of the focused item
-                @binding {unknown} selected - the selected item value
-                @binding {number} selected-index - index of the selected item
-            -->
             <slot
                 name="label"
                 :focused="focusedItem?.data"
@@ -274,13 +296,6 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
             @keydown.down.prevent="onDownPressed"
             @keydown.home.prevent="onHomePressed"
             @keydown.end.prevent="onEndPressed">
-            <!--
-                @slot Place menu items here 
-                @binding {unknown} focused - the focused item value
-                @binding {number} focused-index - index of the focused item
-                @binding {unknown} selected - the selected item value
-                @binding {number} selected-index - index of the selected item
-            -->
             <slot
                 :focused="focusedItem?.data"
                 :focused-index="focusedItem?.index"
