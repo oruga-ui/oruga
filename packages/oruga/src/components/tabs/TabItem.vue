@@ -52,6 +52,19 @@ const emits = defineEmits<{
     deactivate: [];
 }>();
 
+defineSlots<{
+    /**
+     * Define the tab item content here
+     * @param active {boolean} - if item is shown
+     */
+    default?(props: { active: boolean }): void;
+    /**
+     * Override tab header label
+     * @param active {boolean} - if item is shown
+     */
+    header?(): void;
+}>();
+
 const itemValue = props.value ?? useId();
 
 const rootRef = useTemplateRef("rootElement");
@@ -190,10 +203,6 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <!--
-                @slot Override tab panel content
-                @binding {boolean} active - if item is shown
-            -->
             <slot :active="isActive && visible">
                 <!-- injected component -->
                 <component
@@ -212,10 +221,6 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 Slots are defined in tabs component.
             -->
             <template v-if="false">
-                <!--
-                    @slot Override tab header label
-                    @binding {boolean} active - if item is shown
-                -->
                 <slot name="header" :active="isActive && visible" />
             </template>
         </div>

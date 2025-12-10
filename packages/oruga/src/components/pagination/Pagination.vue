@@ -73,6 +73,35 @@ const emits = defineEmits<{
     previous: [event: Event, value: number];
 }>();
 
+defineSlots<{
+    /*
+     * Previous button slot
+     * @param number {number} - page number
+     * @param isCurrent {boolean} - if page is current
+     * @param onClick {(event: Event): void} - click handler
+     * @param ariaLabel {string} - aria-label attribute
+     */
+    previous?(props: {
+        number: number;
+        isCurrent: boolean;
+        onClick: (event: Event) => void;
+        ariaLabel: string;
+    }): void;
+    /*
+     * Next button slot
+     * @param number {number} - page number
+     * @param isCurrent {boolean} - if page is current
+     * @param onClick {(event: Event): void} - click handler
+     * @param ariaLabel {string} - aria-label attribute
+     */
+    next?(props: {
+        number: number;
+        isCurrent: boolean;
+        onClick: (event: Event) => void;
+        ariaLabel: string;
+    }): void;
+}>();
+
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const currentPage = defineModel<number>("current", { default: 1 });
@@ -83,12 +112,9 @@ const pageCount = computed(() =>
 );
 
 /** If current page is trying to be greater than page count, set to last. */
-watch(
-    () => pageCount.value,
-    (value) => {
-        if (currentPage.value > value) onLast();
-    },
-);
+watch(pageCount, (value) => {
+    if (currentPage.value > value) onLast();
+});
 
 /** First item of the page (count). */
 const firstItem = computed(() => {
@@ -306,13 +332,6 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
 
 <template>
     <nav data-oruga="pagination" :class="rootClasses">
-        <!--
-            @slot Previous button slot
-            @binding {number} number - page number
-            @binding {boolean} isCurrent - if page is current
-            @binding {(event: Event): void} onClick - click handler
-            @binding {string} ariaLabel - aria-label attribute
-        -->
         <slot name="previous" v-bind="prevButton">
             <o-button
                 :tag="buttonTag"
@@ -326,13 +345,6 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 :class="[...buttonBaseClasses, ...buttonPrevClasses]" />
         </slot>
 
-        <!--
-            @slot Next button slot
-            @binding {number} number - page number
-            @binding {boolean} isCurrent - if page is current
-            @binding {(event: Event): void} onClick - click handler
-            @binding {string} ariaLabel - aria-label attribute
-        -->
         <slot name="next" v-bind="nextButton">
             <o-button
                 :tag="buttonTag"
@@ -352,7 +364,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
             </template>
             <template v-else>
                 {{ firstItem }}-{{
-                    Math.min(currentPage * Number(perPage), total)
+                    Math.min(currentPage * Number(perPage), total ?? 0)
                 }}
             </template>
             / {{ total }}

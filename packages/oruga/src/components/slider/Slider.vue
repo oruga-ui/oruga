@@ -71,6 +71,11 @@ const emits = defineEmits<{
     dragend: [];
 }>();
 
+defineSlots<{
+    /**  Define additional slider ticks here */
+    default?(): void;
+}>();
+
 const sliderRef = useTemplateRef("sliderElement");
 const thumbStartRef = useTemplateRef("thumbStartComponent");
 const thumbEndRef = useTemplateRef("thumbEndComponent");
@@ -304,9 +309,7 @@ defineExpose({ value: vmodel });
                     :tick-label-class="tickLabelClass" />
             </template>
 
-            <!--
-                @slot Define additional slider ticks here
-             -->
+            <!-- Slot for additional slider ticks -->
             <slot />
 
             <o-slider-thumb

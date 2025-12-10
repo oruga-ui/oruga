@@ -43,7 +43,7 @@ import {
     useSequentialId,
 } from "@/composables";
 
-import type { ClassBinding } from "@/types";
+import type { ClassBinding, Numberish } from "@/types";
 import type {
     TableColumn,
     TableRow,
@@ -344,6 +344,64 @@ const emits = defineEmits<{
      * @param event {DragEvent} - native columndragover event
      */
     columndragover: [column: TableColumn<T>, index: number, event: DragEvent];
+}>();
+
+defineSlots<{
+    /** Define extra `o-table-column` components here, even if you have some columns defined by prop */
+    before?(): void;
+    /** Define extra `o-table-column` components here, even if you have some columns defined by prop */
+    after?(): void;
+    /** Define `o-table-column` here */
+    default?(): void;
+    /**
+     * Override the pagination label
+     * @param current {number} - current page
+     * @param perPage {number} - rows per page
+     * @param total {number} - total rows count
+     * @param change {(page: number): void } - on page change event
+     */
+    pagination?(props: {
+        current: number;
+        perPage: Numberish;
+        total: number;
+        change: (page: number) => void;
+    }): void;
+    /** Define a table caption here */
+    caption?(): void;
+    /** Define content to palce before the header here */
+    preheader?(): void;
+    /**
+     * Override the check all checkbox
+     * @param isAllChecked {boolean} - if all rows are checked
+     * @param isAllUncheckable {boolean} - if check all is uncheckable
+     * @param checkAll {(): void}  - check all function
+     */
+    checkAll?(props: {
+        isAllChecked: boolean;
+        isAllUncheckable: boolean;
+        checkAll: () => void;
+    }): void;
+    /**
+     * Define row detail content here
+     * @param row {unknown} - row content
+     * @param index {number} - row index
+     */
+    detail?(props: { row: T; index: number }): void;
+    /** Define the content if table is empty */
+    empty?(): void;
+    /**
+     * Define a custom footer
+     * @param columnCount {number} - counts of visible columns
+     * @param rowCount {number} - counts of visible rows
+     */
+    footer?(props: { columnCount: number; rowCount: number }): void;
+    /**
+     * Override loading component
+     * @param loading {boolean} - is loading state enabled
+     */
+    loading?(): void;
+    /** Additional slot if table is paginated */
+    bottomLeft?(): void;
 }>();
 
 const slots = useSlots();
@@ -1201,14 +1259,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
 <template>
     <div data-oruga="table" :class="rootClasses">
         <div ref="slotsWrapper" style="display: none">
-            <!--
-                @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
-            -->
             <slot name="before" />
 
-            <!--
-                @slot Place `o-table-column` here
-            -->
             <slot>
                 <template v-if="columns?.length">
                     <o-table-column
@@ -1221,9 +1273,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                 </template>
             </slot>
 
-            <!--
-                @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
-            -->
             <slot name="after" />
         </div>
 
@@ -1244,13 +1293,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                 paginated &&
                 (paginationPosition === 'top' || paginationPosition === 'both')
             ">
-            <!--
-                @slot Override pagination label
-                @binding {number} current - current page
-                @binding {number} per-page - rows per page
-                @binding {number} total - total rows count
-                @binding {(page: number): void } change - on page change event
-            -->
             <slot
                 name="pagination"
                 :current="tableCurrentPage"
@@ -1298,16 +1340,10 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     selectRow(availableRows[availableRows.length - 1], $event)
                 ">
                 <caption v-if="$slots.caption">
-                    <!--
-                        @slot Define a table caption here
-                    -->
                     <slot name="caption" />
                 </caption>
 
                 <thead v-if="showHeader">
-                    <!--
-                        @slot Define preheader content here
-                    -->
                     <slot name="preheader" />
 
                     <tr :aria-rowindex="1">
@@ -1323,12 +1359,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             v-if="checkable && checkboxPosition === 'left'"
                             :class="[...thBaseClasses, ...thCheckboxClasses]"
                             :aria-colindex="showDetailRowIcon ? 2 : 1">
-                            <!--
-                                @slot Override check all checkbox
-                                @binding {boolean} is-all-checked - if all rows are checked
-                                @binding {boolean} is-all-uncheckable - if check all is uncheckable
-                                @binding {(): void} check-all - check all function
-                            -->
                             <slot
                                 v-if="checkableHeader"
                                 name="check-all"
@@ -1419,12 +1449,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :aria-colindex="
                                 ariaColIndexStart + tableColumns.length
                             ">
-                            <!--
-                                @slot Override check all checkbox
-                                @binding {boolean} is-all-checked - if all rows are checked
-                                @binding {boolean} is-all-uncheckable - if check all is uncheckable
-                                @binding {(): void} check-all - check all function
-                            -->
                             <slot
                                 v-if="checkableHeader"
                                 name="check-all"
@@ -1544,19 +1568,17 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 ]"
                                 :style="isMobileActive ? {} : column.style">
                                 <o-slot-component
-                                    v-if="column.$slots?.subheading"
                                     :component="column"
                                     name="subheading"
                                     tag="span"
                                     :props="{
                                         column: column.value,
                                         index: column.index,
-                                    }" />
-                                <slot v-else name="subheading">
+                                    }">
                                     <span :class="thLabelClasses">
                                         {{ column.subheading }}
                                     </span>
-                                </slot>
+                                </o-slot-component>
                             </th>
                         </template>
 
@@ -1702,11 +1724,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             v-if="!row.hidden && props.detailed"
                             :name="detailTransition">
                             <template v-if="isDetailRowVisible(row)">
-                                <!--
-                                    @slot Place row detail content here
-                                    @binding {unknown} row - row content
-                                    @binding {number} index - row index
-                                -->
                                 <slot
                                     v-if="customDetailRow"
                                     name="detail"
@@ -1717,11 +1734,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :key="`${row.key}_detail`"
                                     :class="trDetailedClasses">
                                     <td :colspan="columnCount">
-                                        <!--
-                                            @slot Place row detail content here
-                                            @binding {unknown} row - row content
-                                            @binding {number} index - row index
-                                        -->
                                         <slot
                                             name="detail"
                                             :row="row.value"
@@ -1734,9 +1746,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
 
                     <tr v-if="!availableRows.length" :class="trEmptyClasses">
                         <td :colspan="columnCount">
-                            <!--
-                                @slot Define content if table is empty
-                            -->
                             <slot name="empty">
                                 <o-icon
                                     v-if="emptyIcon"
@@ -1751,22 +1760,12 @@ defineExpose({ rows: tableRows, sort: sortByField });
 
                 <tfoot v-if="$slots.footer">
                     <tr :class="footerClasses">
-                        <!--
-                            @slot Define a custom footer
-                            @binding {number} column-count - counts of visible columns
-                            @binding {number} row-count - counts of visible rows
-                        -->
                         <slot
                             v-if="hasCustomFooterSlot()"
                             name="footer"
                             :column-count="columnCount"
                             :row-count="rowCount" />
                         <th v-else :colspan="columnCount">
-                            <!--
-                                @slot Define a custom footer
-                                @binding {number} column-count - counts of visible columns
-                                @binding {number} row-count - counts of visible rows
-                            -->
                             <slot
                                 name="footer"
                                 :column-count="columnCount"
@@ -1775,11 +1774,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     </tr>
                 </tfoot>
             </table>
-
-            <!--
-                @slot Override loading component
-                @binding {boolean} loading - is loading state enabled
-            -->
             <slot name="loading" :loading="loading">
                 <o-loading
                     v-bind="loadingClasses"
@@ -1797,13 +1791,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     (paginationPosition === 'bottom' ||
                         paginationPosition === 'both'))
             ">
-            <!--
-                @slot Override pagination label
-                @binding {number} current - current page
-                @binding {number} per-page - rows per page
-                @binding {number} total - total rows count
-                @binding {(page: number): void } change - on page change event
-            -->
             <slot
                 name="pagination"
                 :current="tableCurrentPage"
@@ -1828,9 +1815,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :aria-current-label="ariaCurrentLabel"
                     :root-class="paginationWrapperRootClasses"
                     @change="(page) => $emit('page-change', page)">
-                    <!--
-                        @slot Additional slot if table is paginated
-                    -->
                     <slot name="bottom-left" />
                 </o-table-pagination>
             </slot>

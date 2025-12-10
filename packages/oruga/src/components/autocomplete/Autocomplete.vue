@@ -184,7 +184,7 @@ const slots = defineSlots<{
     header?(): void;
     /** Define an additional footer */
     footer?(): void;
-    /** Define content for empty state */
+    /** Define content if the list is empty */
     empty?(): void;
 }>();
 

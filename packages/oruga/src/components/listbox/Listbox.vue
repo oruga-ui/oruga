@@ -155,7 +155,7 @@ defineSlots<{
         selected: boolean;
         disabled: boolean;
     }): void;
-    /** Define the content for the empty state */
+    /** Define the content if the list is empty */
     empty?(): void;
     /** Define an additional footer */
     footer?(): void;

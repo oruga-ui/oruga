@@ -41,6 +41,59 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
 
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
+defineSlots<{
+    /**
+     * Define the column content here
+     * @param row {unknown} - row data
+     * @param column {TableColumn} - column definition
+     * @param index {number} - row index
+     * @param colindex {number} - column index
+     * @param toggleDetails {(): void} - toggle details function
+     */
+    default?(props: {
+        row: T;
+        column: TableColumn<T>;
+        index: number;
+        colindex: number;
+        toggleDetails: () => void;
+    }): void;
+    /**
+     * Override header label
+     * @param column {TableColumn} column - column definition
+     * @param index {number} index - column index
+     */
+    header?(props: { column: TableColumn<T>; index: number }): void;
+    /**
+     * Override subheading label
+     * @param column {TableColumn} column - column definition
+     * @param index {number} index - column index
+     */
+    subheading?(props: { column: TableColumn<T>; index: number }): void;
+    /**
+     * Override searchable input
+     * @deprecated use `filter` instead
+     * @param column {TableColumn} - column definition
+     * @param index {number} - column index
+     * @param filters {object} - active filters object
+     */
+    searchable?(props: {
+        column: TableColumn<T>;
+        index: number;
+        filters: Record<string, string>;
+    }): void;
+    /**
+     * Override filter input
+     * @param column {TableColumn} - column definition
+     * @param index {number} - column index
+     * @param filters {object} - active filters object
+     */
+    filter?(props: {
+        column: TableColumn<T>;
+        index: number;
+        filters: Record<string, string>;
+    }): void;
+}>();
+
 const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
@@ -125,7 +178,7 @@ const thSubheadingClasses = defineClasses(
 // these properties are just for type addings
 // slot props will be set in Table.vue
 const row = {} as any;
-const column = {} as TableColumnProps<T, K>;
+const column = {} as TableColumn<T>;
 const index = 0;
 const toggle = () => {};
 const filters = {} as Record<string, string>;
@@ -144,14 +197,6 @@ const filters = {} as Record<string, string>;
             Slots are defined in table component.
         -->
         <template v-if="false">
-            <!--
-                @slot Default Slot
-                @binding {unknown} row - row data
-                @binding {TableColumn} column - column definition
-                @binding {number} index - row index
-                @binding {number} colindex - column index
-                @binding {(): void} toggle-details - toggle details function
-            -->
             <slot
                 :row="row"
                 :column="column"
@@ -159,39 +204,16 @@ const filters = {} as Record<string, string>;
                 :colindex="index"
                 :toggle-details="toggle" />
 
-            <!--
-                @slot Override header label
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-            -->
             <slot name="header" :column="column" :index="index" />
 
-            <!--
-                @slot Override subheading label
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-            -->
             <slot name="subheading" :column="column" :index="index" />
 
-            <!--
-                @slot Override searchable input
-                @deprecated use `filter` instead
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-                @binding {object} filters - active filters object
-            -->
             <slot
                 name="searchable"
                 :column="column"
                 :index="index"
                 :filters="filters" />
 
-            <!--
-                @slot Override searchable input
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-                @binding {object} filters - active filters object
-            -->
             <slot
                 name="filter"
                 :column="column"
