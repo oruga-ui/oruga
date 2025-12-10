@@ -54,10 +54,10 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Slots
 
-| Name    | Description             | Bindings                                                                                                                                                                                                                    |
-| ------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| label   | Override icon and label | **focused** `unknown` - the focused item value<br/>**focused-index** `number` - index of the focused item<br/>**selected** `unknown` - the selected item value<br/>**selected-index** `number` - index of the selected item |
-| default | Place menu items here   | **focused** `unknown` - the focused item value<br/>**focused-index** `number` - index of the focused item<br/>**selected** `unknown` - the selected item value<br/>**selected-index** `number` - index of the selected item |
+| Name    | Description             | Bindings                                                                                                                                                                                                                                                                      |
+| ------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| label   | Override icon and label | **focused** `unknown \| undefined` - the focused item value<br/>**focusedIndex** `number \| undefined` - index of the focused item<br/>**selected** `unknown \| undefined` - the selected item value<br/>**selectedIndex** `number \| undefined` - index of the selected item |
+| default | Define menu items here  | **focused** `unknown \| undefined` - the focused item value<br/>**focusedIndex** `number \| undefined` - index of the focused item<br/>**selected** `unknown \| undefined` - the selected item value<br/>**selectedIndex** `number \| undefined` - index of the selected item |
 
 </section>
 
@@ -99,10 +99,10 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Slots
 
-| Name    | Description           | Bindings                                                                                  |
-| ------- | --------------------- | ----------------------------------------------------------------------------------------- |
-| label   | Override label        | **expanded** `boolean` - item expanded state<br/>**active** `boolean` - item active state |
-| default | Place menu items here |                                                                                           |
+| Name    | Description                               | Bindings                                                                                  |
+| ------- | ----------------------------------------- | ----------------------------------------------------------------------------------------- |
+| label   | Override the label, default is label prop | **expanded** `boolean` - item expanded state<br/>**active** `boolean` - item active state |
+| default | Define submenu items here                 |                                                                                           |
 
 </section>
 

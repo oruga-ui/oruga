@@ -61,11 +61,11 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ### Slots
 
-| Name    | Description                 | Bindings |
-| ------- | --------------------------- | -------- |
-| before  | Additional slot before tabs |          |
-| after   | Additional slot after tabs  |          |
-| default | Place tab items here        |          |
+| Name    | Description                     | Bindings |
+| ------- | ------------------------------- | -------- |
+| before  | Additional slot before the tabs |          |
+| after   | Additional slot after the tabs  |          |
+| default | Define the tag items here       |          |
 
 </section>
 
@@ -106,10 +106,10 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ### Slots
 
-| Name    | Description                | Bindings                                |
-| ------- | -------------------------- | --------------------------------------- |
-| default | Override tab panel content | **active** `boolean` - if item is shown |
-| header  | Override tab header label  | **active** `boolean` - if item is shown |
+| Name    | Description                      | Bindings                                |
+| ------- | -------------------------------- | --------------------------------------- |
+| default | Define the tab item content here | **active** `boolean` - if item is shown |
+| header  | Override tab header label        | **active** `boolean` - if item is shown |
 
 </section>
 

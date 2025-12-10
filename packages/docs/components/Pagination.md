@@ -64,8 +64,8 @@ The component uses the [Button](/components/Button) component for the navigation
 
 | Name     | Description            | Bindings                                                                                                                                                                                    |
 | -------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| previous | Previous button slot   | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
-| next     | Next button slot       | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
+| previous |                        | **number** - <br/>**isCurrent** - <br/>**onClick** - <br/>**ariaLabel** -                                                                                                                   |
+| next     |                        | **number** - <br/>**isCurrent** - <br/>**onClick** - <br/>**ariaLabel** -                                                                                                                   |
 | default  | Pagination button slot | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
 
 </section>

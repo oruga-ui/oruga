@@ -88,7 +88,7 @@ defineSlots<{
     /** Define the step items here */
     default?(): void;
     /**
-     * Overrinextde step navigation
+     * Override the step navigation
      * @param previous {{disabled: boolean, action: (): void }} - previous button configs
      * @param next {{disabled: boolean, action: (): void }} - next button configs
      */

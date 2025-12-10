@@ -376,7 +376,7 @@ defineSlots<{
      * @param isAllUncheckable {boolean} - if check all is uncheckable
      * @param checkAll {(): void}  - check all function
      */
-    checkAll?(props: {
+    "check-all"?(props: {
         isAllChecked: boolean;
         isAllUncheckable: boolean;
         checkAll: () => void;
@@ -401,7 +401,7 @@ defineSlots<{
      */
     loading?(): void;
     /** Additional slot if table is paginated */
-    bottomLeft?(): void;
+    "bottom-left"?(): void;
 }>();
 
 const slots = useSlots();

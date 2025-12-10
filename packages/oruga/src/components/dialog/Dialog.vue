@@ -118,8 +118,8 @@ defineSlots<{
     image?(): void;
     /**
      * Override the default dialog body
-     * @param close {(event: Event): void}  - function to emit a `close` event
-     * @param confirm {(event: Event): void} confirm - function to emit a `confirm` event
+     * @param close {(event: Event): void} - function to emit a `close` event
+     * @param confirm {(event: Event): void} - function to emit a `confirm` event
      */
     default?(props: {
         close: (event: Event) => void;
@@ -127,8 +127,8 @@ defineSlots<{
     }): void;
     /**
      * Override the body content, default is content prop
-     * @param close {(event: Event): void}  - function to emit a `close` event
-     * @param confirm {(event: Event): void} confirm - function to emit a `confirm` event
+     * @param close {(event: Event): void} - function to emit a `close` event
+     * @param confirm {(event: Event): void} - function to emit a `confirm` event
      */
     content?(props: {
         close: (event: Event) => void;
@@ -136,8 +136,8 @@ defineSlots<{
     }): void;
     /**
      * Override the footer
-     * @param close {(event: Event): void}  - function to emit a `close` event
-     * @param confirm {(event: Event): void} confirm - function to emit a `confirm` event
+     * @param close {(event: Event): void} - function to emit a `close` event
+     * @param confirm {(event: Event): void} - function to emit a `confirm` event
      */
     footer?(props: {
         close: (event: Event) => void;
