@@ -139,11 +139,11 @@ defineSlots<{
     /**
      * Override the indicators
      * @param activeIndex {number} - active item index
-     * @param switchTo {(idx: number): void} - switch to item function
+     * @param switchTo {(idx?: number): void} - switch to item function
      */
     indicators?(props: {
         activeIndex: number;
-        switchTo: (idx: number) => void;
+        switchTo: (idx?: number) => void;
     }): void;
     /**
      * Override the indicator elements
