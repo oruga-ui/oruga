@@ -93,7 +93,7 @@ const checkedRows = ref([data[1], data[3]]);
             row-key="id"
             :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
             :checkbox-position="checkboxPosition">
-            <template #bottom-left>
+            <template #bottomLeft>
                 <b>Total checked</b>: {{ checkedRows.length }}
             </template>
         </o-table>
