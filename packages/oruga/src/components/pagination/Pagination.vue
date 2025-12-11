@@ -371,15 +371,8 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
         </small>
 
         <ul v-else :class="listClasses">
-            <!--First-->
+            <!-- First -->
             <li v-if="hasFirst" :class="listItemClasses">
-                <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                -->
                 <slot v-bind="firstButton">
                     <o-button
                         :tag="buttonTag"
@@ -401,18 +394,11 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
 
-            <!--Pages-->
+            <!-- Pages -->
             <li
                 v-for="page in pagesInRange"
                 :key="page.number"
                 :class="listItemClasses">
-                <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                -->
                 <slot v-bind="page">
                     <o-button
                         :tag="buttonTag"
@@ -428,19 +414,12 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 </slot>
             </li>
 
-            <!--Last-->
+            <!-- Last -->
             <li v-if="hasLastEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
 
             <li v-if="hasLast" :class="listItemClasses">
-                <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                -->
                 <slot v-bind="lastButton">
                     <o-button
                         :tag="buttonTag"
