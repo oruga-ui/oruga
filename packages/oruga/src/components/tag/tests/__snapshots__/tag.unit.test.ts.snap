@@ -1,8 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OTag tests > render correctly 1`] = `
-"<span data-oruga="tag" class="o-tag"><!--v-if--><span class="o-tag__label"><!--
-                @slot Override the tag label
-            -->My Tag</span>
+"<span data-oruga="tag" class="o-tag"><!--v-if--><span class="o-tag__label">My Tag</span>
 <!--v-if--></span>"
 `;

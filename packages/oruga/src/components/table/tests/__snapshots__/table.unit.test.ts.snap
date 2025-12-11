@@ -2,13 +2,7 @@
 
 exports[`OTable tests > render correctly 1`] = `
 "<div data-oruga="table" class="o-table__root">
-  <div style="display: none;">
-    <!--
-                @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-            -->
-    <!--
-                @slot Place \`o-table-column\` here
-            --><span data-oruga="table-column" data-id="table-1">ID <!--
+  <div style="display: none;"><span data-oruga="table-column" data-id="table-1">ID <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
@@ -28,20 +22,13 @@ exports[`OTable tests > render correctly 1`] = `
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
-        --><!--v-if--></span>
-    <!--
-                @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-            -->
-  </div>
+        --><!--v-if--></span></div>
   <!--v-if-->
   <!--v-if-->
   <div class="o-table__wrapper">
     <table class="o-table" aria-rowcount="6" aria-colcount="5">
       <!--v-if-->
       <thead>
-        <!--
-                        @slot Define preheader content here
-                    -->
         <tr aria-rowindex="1">
           <!-- detailed toggle column -->
           <!--v-if-->
@@ -134,10 +121,6 @@ exports[`OTable tests > render correctly 1`] = `
       </tbody>
       <!--v-if-->
     </table>
-    <!--
-                @slot Override loading component
-                @binding {boolean} loading - is loading state enabled
-            -->
     <transition-stub name="fade" appear="false" persisted="false" css="true">
       <!--v-if-->
     </transition-stub>
