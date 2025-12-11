@@ -12,12 +12,11 @@ import {
     createChecker,
 } from "vue-component-meta";
 import type { EventMeta, PropertyMeta, SlotMeta } from "vue-component-meta";
-import { getFilenameWithoutExtension, lowercaseFirstLetter } from "../utils";
+import { lowercaseFirstLetter } from "../utils";
 
 export type MetaSource = {
-    name: string;
     exportName: string;
-    sourceFiles: string;
+    sourceFile: string;
 } & ComponentMeta;
 
 /**
@@ -130,12 +129,8 @@ export async function vueComponentMeta(
 
                 // create MetaSource return object
                 return {
-                    sourceFiles: componentPath,
+                    sourceFile: componentPath,
                     exportName,
-                    name:
-                        exportName === "default"
-                            ? "O" + getFilenameWithoutExtension(componentPath)
-                            : exportName,
                     // add meta properties
                     ...meta,
                     // override meta props
