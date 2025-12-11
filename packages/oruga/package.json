@@ -66,7 +66,7 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "vue-component-type-helpers": "^3.1.5"
+    "vue-component-type-helpers": "^3.1.8"
   },
   "devDependencies": {
     "@babel/core": "7.28.5",
@@ -93,7 +93,7 @@
     "vitest": "^3.2.4",
     "vitest-browser-vue": "^1.1.0",
     "vue": "^3.5.25",
-    "vue-component-meta": "^3.1.5",
-    "vue-tsc": "^3.1.5"
+    "vue-component-meta": "^3.1.8",
+    "vue-tsc": "^3.1.8"
   }
 }

@@ -352,7 +352,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
             </template>
             <template v-else>
                 {{ firstItem }}-{{
-                    Math.min(currentPage * Number(perPage), total)
+                    Math.min(currentPage * Number(perPage), total ?? 0)
                 }}
             </template>
             / {{ total }}
