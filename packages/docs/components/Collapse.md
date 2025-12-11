@@ -51,7 +51,7 @@ The component implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https
 | Name    | Description                         | Bindings                                 |
 | ------- | ----------------------------------- | ---------------------------------------- |
 | trigger | Define the collapse trigger element | **open** `boolean` - collapse open state |
-| default | Content to collapsable              |                                          |
+| default | Content to collapse                 |                                          |
 
 </section>
 

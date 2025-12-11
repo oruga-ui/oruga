@@ -152,7 +152,7 @@ defineSlots<{
      * @param value {unknown} - option value
      */
     default?(props: { option: OptionsItem<T>; index: number; value: T }): void;
-    /** Define content if the list is empty */
+    /** Define the content to show if the list is empty */
     empty?(): void;
     /** Define an additional footer */
     footer?(): void;

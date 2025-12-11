@@ -1,4 +1,4 @@
-import type { SlotDescriptor } from "vue-docgen-api";
+import type { ParamTag, SlotDescriptor } from "vue-docgen-api";
 import { mdclean } from "vue-docgen-cli/lib/compileTemplates";
 
 function formatParams(params: SlotDescriptor["bindings"]): string {
@@ -23,26 +23,40 @@ export function renderer(descriptor: SlotDescriptor[]): string {
     if (!descriptor.length) return "";
     const slots = descriptor;
 
-    let ret = `
+    const tableHead = `
 ### Slots
 
 | Name          | Description  | Bindings |
 | ------------- | ------------ | -------- |
 `;
-    slots.map((slot) => {
-        const { description, tags, name, bindings } = slot;
-
+    const tableRows = slots.map((slot) => {
         // use `defineSlots` params tags when available; else use default template binding syntax
-        const params = tags && tags["params"] ? tags["params"] : bindings;
+        const params =
+            slot.tags && slot.tags["params"]
+                ? slot.tags["params"]
+                : slot.bindings;
 
-        const readableBindings = bindings ? `${formatParams(params)}` : "";
+        const readableBindings = slot.bindings ? `${formatParams(params)}` : "";
 
-        ret +=
-            `| ${mdclean(name)} | ${mdclean(description || "")} | ${mdclean(readableBindings)} |` +
-            "\n";
+        // slot name
+        let name = mdclean(slot.name);
+
+        // slot description
+        let description = mdclean(slot.description ?? "");
+
+        // add deprecation information
+        if (slot.tags?.deprecated) {
+            const deprecated = mdclean(
+                String((slot.tags.deprecated[0] as ParamTag).description),
+            );
+            name = `<s>${name}</s>`;
+            description = `<div><b>deprecated</b> - ${deprecated}</div><div><s>${description}</s></div>`;
+        }
+
+        return `| ${name} | ${description} | ${mdclean(readableBindings)} |`;
     });
 
-    return ret;
+    return tableHead + tableRows.filter((p) => !!p).join("\n");
 }
 
 export default renderer;

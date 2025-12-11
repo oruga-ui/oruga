@@ -173,7 +173,7 @@ defineSlots<{
     /** Override the body */
     body?(): void;
     /** Define an additional footer */
-    footer(): void;
+    footer?(): void;
 }>();
 
 const { dtf, dateCreator, dateFormatter, dateParser } =

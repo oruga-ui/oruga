@@ -74,7 +74,7 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /*
+    /**
      * Previous button slot
      * @param number {number} - page number
      * @param isCurrent {boolean} - if page is current
@@ -87,7 +87,7 @@ defineSlots<{
         onClick: (event: Event) => void;
         ariaLabel: string;
     }): void;
-    /*
+    /**
      * Next button slot
      * @param number {number} - page number
      * @param isCurrent {boolean} - if page is current

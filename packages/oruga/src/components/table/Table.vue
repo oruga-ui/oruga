@@ -376,7 +376,7 @@ defineSlots<{
      * @param isAllUncheckable {boolean} - if check all is uncheckable
      * @param checkAll {(): void}  - check all function
      */
-    "check-all"?(props: {
+    checkAll?(props: {
         isAllChecked: boolean;
         isAllUncheckable: boolean;
         checkAll: () => void;
@@ -387,7 +387,7 @@ defineSlots<{
      * @param index {number} - row index
      */
     detail?(props: { row: T; index: number }): void;
-    /** Define the content if table is empty */
+    /** Define the content to show if table is empty */
     empty?(): void;
     /**
      * Define a custom footer
@@ -401,7 +401,9 @@ defineSlots<{
      */
     loading?(): void;
     /** Additional slot if table is paginated */
-    "bottom-left"?(): void;
+    topLeft?(): void;
+    /** Additional slot if table is paginated */
+    bottomLeft?(): void;
 }>();
 
 const slots = useSlots();
@@ -1317,10 +1319,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :aria-current-label="ariaCurrentLabel"
                     :root-class="paginationWrapperRootClasses"
                     @change="(page) => $emit('page-change', page)">
-                    <!--
-                        @slot Additional slot if table is paginated
-                    -->
-                    <slot name="top-left" />
+                    <slot name="topLeft" />
                 </o-table-pagination>
             </slot>
         </template>
@@ -1361,7 +1360,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :aria-colindex="showDetailRowIcon ? 2 : 1">
                             <slot
                                 v-if="checkableHeader"
-                                name="check-all"
+                                name="checkAll"
                                 :is-all-checked="isAllChecked"
                                 :is-all-uncheckable="isAllUncheckable"
                                 :check-all="updateCheckedRows">
@@ -1451,7 +1450,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             ">
                             <slot
                                 v-if="checkableHeader"
-                                name="check-all"
+                                name="checkAll"
                                 :is-all-checked="isAllChecked"
                                 :is-all-uncheckable="isAllUncheckable"
                                 :check-all="updateCheckedRows">
@@ -1786,7 +1785,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
 
         <template
             v-if="
-                (checkable && $slots['bottom-left']) ||
+                (checkable && $slots['bottomLeft']) ||
                 (paginated &&
                     (paginationPosition === 'bottom' ||
                         paginationPosition === 'both'))
@@ -1815,7 +1814,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :aria-current-label="ariaCurrentLabel"
                     :root-class="paginationWrapperRootClasses"
                     @change="(page) => $emit('page-change', page)">
-                    <slot name="bottom-left" />
+                    <slot name="bottomLeft" />
                 </o-table-pagination>
             </slot>
         </template>

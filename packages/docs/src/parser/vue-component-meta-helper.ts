@@ -77,7 +77,7 @@ export async function vueComponentMeta(
             .map((meta, index) => {
                 const exportName = exportNames[index];
 
-                // we remove nested object schemas here since they are not used (we don't generate controls for object properties)
+                // we remove nested object schemas here since they are not used
                 // and they can cause "out of memory" issues for large/complex schemas (e.g. HTMLElement)
                 (["props", "events", "slots", "exposed"] as const).forEach(
                     (key) => {

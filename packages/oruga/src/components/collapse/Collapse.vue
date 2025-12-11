@@ -40,7 +40,7 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /** Content to collapsable */
+    /** Content to collapse */
     default?(): void;
     /**
      * Define the collapse trigger element

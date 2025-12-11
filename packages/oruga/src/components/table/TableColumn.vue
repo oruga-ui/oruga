@@ -59,14 +59,14 @@ defineSlots<{
     }): void;
     /**
      * Override header label
-     * @param column {TableColumn} column - column definition
-     * @param index {number} index - column index
+     * @param column {TableColumn} - column definition
+     * @param index {number} - column index
      */
     header?(props: { column: TableColumn<T>; index: number }): void;
     /**
      * Override subheading label
-     * @param column {TableColumn} column - column definition
-     * @param index {number} index - column index
+     * @param column {TableColumn} - column definition
+     * @param index {number} - column index
      */
     subheading?(props: { column: TableColumn<T>; index: number }): void;
     /**

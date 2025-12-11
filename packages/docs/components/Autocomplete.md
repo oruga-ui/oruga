@@ -95,13 +95,13 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 ### Slots
 
-| Name    | Description                         | Bindings                                                                                                         |
-| ------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| header  | Define an additional header         |                                                                                                                  |
-| group   | Override the option group           | **group** `object` - options group<br/>**index** `number` - option index                                         |
-| default | Override the select option          | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value |
-| empty   | Define content if the list is empty |                                                                                                                  |
-| footer  | Define an additional footer         |                                                                                                                  |
+| Name    | Description                                     | Bindings                                                                                                         |
+| ------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| header  | Define an additional header                     |                                                                                                                  |
+| group   | Override the option group                       | **group** `object` - options group<br/>**index** `number` - option index                                         |
+| default | Override the select option                      | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value |
+| empty   | Define the content to show if the list is empty |                                                                                                                  |
+| footer  | Define an additional footer                     |                                                                                                                  |
 
 </section>
 
