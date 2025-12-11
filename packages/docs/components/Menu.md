@@ -54,10 +54,10 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Slots
 
-| Name    | Description             | Bindings                                                                                                      |
-| ------- | ----------------------- | ------------------------------------------------------------------------------------------------------------- |
-| label   | Override icon and label | **focused** `unknown` - the focused item value<br/><br/>**selected** `unknown` - the selected item value<br/> |
-| default | Place menu items here   | **focused** `unknown` - the focused item value<br/><br/>**selected** `unknown` - the selected item value<br/> |
+| Name    | Description             | Bindings                                                                                                                                                                 |
+| ------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| label   | Override icon and label | **focused** `unknown` - the focused item value<br/>**focused-index** - undefined<br/>**selected** `unknown` - the selected item value<br/>**selected-index** - undefined |
+| default | Place menu items here   | **focused** `unknown` - the focused item value<br/>**focused-index** - undefined<br/>**selected** `unknown` - the selected item value<br/>**selected-index** - undefined |
 
 </section>
 
