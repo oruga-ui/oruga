@@ -838,9 +838,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         </transition>
 
         <div v-if="$slots.footer" :class="footerClasses">
-            <!--
-                @slot Define an additional footer
-            -->
             <slot name="footer" />
         </div>
     </div>

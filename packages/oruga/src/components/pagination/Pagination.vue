@@ -75,7 +75,20 @@ const emits = defineEmits<{
 
 defineSlots<{
     /**
-     * Previous button slot
+     * Define a custom pagination button here
+     * @param number {number} - page number
+     * @param isCurrent {boolean} - if page is current
+     * @param onClick {(event: Event): void} - click handler
+     * @param ariaLabel {string} - aria-label attribute
+     */
+    default?(props: {
+        number: number;
+        isCurrent: boolean;
+        onClick: (event: Event) => void;
+        ariaLabel: string;
+    }): void;
+    /**
+     * Define a custom previous button here
      * @param number {number} - page number
      * @param isCurrent {boolean} - if page is current
      * @param onClick {(event: Event): void} - click handler
@@ -88,7 +101,7 @@ defineSlots<{
         ariaLabel: string;
     }): void;
     /**
-     * Next button slot
+     * Define a custom next button here
      * @param number {number} - page number
      * @param isCurrent {boolean} - if page is current
      * @param onClick {(event: Event): void} - click handler
