@@ -53,6 +53,20 @@ const emits = defineEmits<{
     close: [...args: [] | [Event]];
 }>();
 
+defineSlots<{
+    /** Define a custom close icon */
+    close?(): void;
+    /**
+     * Notification inner content, outside of the message container
+     * @param close {(...args: [] | [Event]): void} - function to close the notification
+     */
+    inner?(props: { close: (...args: [] | [Event]) => void }): void;
+    /**
+     * Notification default content, default is message prop
+     * @param close {(...args: [] | [Event]): void} - function to close the notification
+     */
+    default?(props: { close: (...args: [] | [Event]) => void }): void;
+}>();
 const isActive = defineModel<boolean>("active", { default: true });
 
 /** Icon name (MDI) based on type. */
@@ -155,16 +169,9 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 :label="ariaCloseLabel"
                 :classes="closeClasses"
                 @click="close($event)">
-                <!--
-                    @slot Override the close icon
-                -->
                 <slot v-if="$slots['close']" name="close" />
             </CloseButton>
 
-            <!--
-                @slot Notification inner content, outside of the message container
-                @binding {(...args): void} close - function to close the notification
-            -->
             <slot name="inner" :close="close" />
 
             <div v-if="$slots.default || message" :class="wrapperClasses">
@@ -176,10 +183,6 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                     :size="iconSize"
                     aria-hidden="true" />
                 <div :class="contentClasses">
-                    <!--
-                        @slot Notification default content, default is message prop
-                        @binding {(...args): void} close - function to close the notification
-                    -->
                     <slot :close="close">
                         <span v-if="message">{{ message }} </span>
                     </slot>

@@ -2,19 +2,10 @@
 
 exports[`OTooltip tests > render correctly 1`] = `
 "<div data-oruga="tooltip" class="o-tooltip">
-  <div class="o-tooltip__trigger" aria-describedby="v-0">
-    <!--
-                @slot Tooltip trigger slot
-                @binding {boolean} active - tooltip active state
-            -->
-  </div>
+  <div class="o-tooltip__trigger" aria-describedby="v-0"></div>
   <!--teleport start-->
   <transition-stub name="fade" appear="false" persisted="true" css="true">
-    <div id="v-0" class="o-tooltip__content o-tooltip__content--auto" role="tooltip" style="display: none;"><span class="o-tooltip__arrow o-tooltip__arrow--auto"></span>
-      <!--
-                        @slot Tooltip content, default is label prop
-                    -->
-    </div>
+    <div id="v-0" class="o-tooltip__content o-tooltip__content--auto" role="tooltip" style="display: none;"><span class="o-tooltip__arrow o-tooltip__arrow--auto"></span></div>
   </transition-stub>
   <!--teleport end-->
 </div>"

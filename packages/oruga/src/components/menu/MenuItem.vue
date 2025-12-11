@@ -62,6 +62,17 @@ const emits = defineEmits<{
     click: [value: T, event: Event];
 }>();
 
+defineSlots<{
+    /**
+     * Override the label, default is label prop
+     * @param expanded {boolean} - item expanded state
+     * @param active {boolean} - item active state
+     */
+    label?(props: { expanded: boolean; active: boolean }): void;
+    /** Define submenu items here  */
+    default?(): void;
+}>();
+
 const itemValue = props.value ?? useId();
 
 const rootRef = useTemplateRef("rootElement");
@@ -232,11 +243,6 @@ const submenuClasses = defineClasses([
                 :icon="icon"
                 :pack="iconPack"
                 :size="iconSize" />
-            <!-- 
-                @slot Override label
-                @binding {boolean} expanded - item expanded state
-                @binding {boolean} active - item active state
-            -->
             <slot name="label" :expanded="isExpanded" :active="isActive">
                 <span>{{ label }}</span>
             </slot>
@@ -250,9 +256,6 @@ const submenuClasses = defineClasses([
                 :class="submenuClasses"
                 tabindex="-1"
                 role="group">
-                <!--
-                    @slot Place menu items here 
-                -->
                 <slot>
                     <OMenuItem
                         v-for="option in normalizedOptions"

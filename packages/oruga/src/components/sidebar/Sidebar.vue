@@ -70,6 +70,16 @@ const emits = defineEmits<{
     close: [...args: [] | [Event] | CloseEventArgs<C>];
 }>();
 
+defineSlots<{
+    /**
+     * Sidebar default content, default is component prop
+     * @param close {(...args: [] | [Event]): void} - function to close the component
+     */
+    default?(props: {
+        close: (...args: [] | [Event] | CloseEventArgs<C>) => void;
+    }): void;
+}>();
+
 const { vTrapFocus } = useTrapFocus();
 
 const rootRef = useTemplateRef("rootElement");
@@ -263,10 +273,6 @@ defineExpose({ close });
                     v-show="isActive"
                     ref="contentElement"
                     :class="contentClasses">
-                    <!--
-                        @slot Sidebar default content, default is component prop
-                        @binding {(...args): void} close - function to close the component
-                    -->
                     <slot :close="close">
                         <!-- injected component for programmatic usage -->
                         <component

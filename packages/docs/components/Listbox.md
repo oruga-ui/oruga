@@ -70,15 +70,15 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 ### Slots
 
-| Name        | Description                               | Bindings                                                                                                                                                                |
-| ----------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| header      | Define an additional header               |                                                                                                                                                                         |
-| filter      | Overridet the filter input                | **value** `string` - filter input value<br/>**on-change** - undefined<br/>**on-keydown** - undefined                                                                    |
-| default     | Place items here                          | **focused-index** - undefined                                                                                                                                           |
-| optiongroup | Override the option group                 | **group** `object` - options group item<br/>**index** `number` - group option index                                                                                     |
-| option      | Override the label, default is label prop | **option** `object` - option item<br/>**index** `number` - option index<br/>**selected** `boolean` - option is selected<br/>**disabled** `boolean` - option is disabled |
-| empty       | Define content for empty state            |                                                                                                                                                                         |
-| footer      | Define an additional footer               |                                                                                                                                                                         |
+| Name        | Description                                     | Bindings                                                                                                                                                                                               |
+| ----------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| header      | Define an additional header                     |                                                                                                                                                                                                        |
+| filter      | Overridet the filter input                      | **value** `string` - filter input value<br/>**onChange** `(input: string, event: Event): void` - on filter input change event<br/>**onKeydown** `(event: Event): void` - on filter input keydown event |
+| default     | Define the listbox items here                   | **focusedIndex** `number \| undefined` - index of the focused element                                                                                                                                  |
+| optiongroup | Override the option group                       | **group** `string` - options group item<br/>**index** `number` - group option index                                                                                                                    |
+| option      | Override the label, default is label prop       | **option** `object` - option item<br/>**index** `number` - option index<br/>**selected** `boolean` - option is selected<br/>**disabled** `boolean` - option is disabled                                |
+| empty       | Define the content to show if the list is empty |                                                                                                                                                                                                        |
+| footer      | Define an additional footer                     |                                                                                                                                                                                                        |
 
 </section>
 

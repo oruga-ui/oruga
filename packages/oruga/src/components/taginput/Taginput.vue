@@ -22,6 +22,7 @@ import {
     useSequentialId,
     toOptionsGroup,
     type OptionsGroupItem,
+    type OptionsItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
@@ -129,6 +130,38 @@ const emits = defineEmits<{
     "scroll-start": [];
     /** the list inside the dropdown reached it's end */
     "scroll-end": [];
+}>();
+defineSlots<{
+    /**
+     * Override the selected items
+     * @param items {(string, object)[]} - selected items
+     * @param options {object[]} - selected options
+     * @param removeItem {(index, event): void} - remove item function
+     */
+    selected?(props: {
+        items: T[] | undefined;
+        options: OptionsItem<T>[];
+        removeItem: (index: number, event: Event) => void;
+    }): void;
+    /** Define an additional header */
+    header?(): void;
+    /**
+     * Define the select option here
+     * @param option {object} - option object
+     * @param index {number} - option index
+     * @param value {unknown} - option value
+     */
+    default?(props: { option: OptionsItem<T>; index: number; value: T }): void;
+    /** Define the content to show if the list is empty */
+    empty?(): void;
+    /** Define an additional footer */
+    footer?(): void;
+    /**
+     * Override the counter
+     * @param items {number} - items count
+     * @param total {number} - total count
+     */
+    counter?(): void;
 }>();
 
 // define as Component to prevent docs memmory overload
@@ -248,7 +281,7 @@ function onEnter(): void {
     if (props.allowNew && !isDropdownActive.value) addItem();
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-taginput"],
@@ -308,21 +341,19 @@ const autocompleteBind = computed(() => ({
     ...props.autocompleteClasses,
 }));
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
     <div data-oruga="taginput" :class="rootClasses">
         <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
-            <!--
-                @slot Override selected items
-                @binding {(string, object)[]} items - selected items
-                @binding {object[]} options - selected options
-                @binding {(index, event): void} removeItem - remove item function
-            -->
             <slot
                 name="selected"
                 :items="selectedItems"
@@ -377,35 +408,20 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 @icon-click="$emit('icon-click', $event)"
                 @icon-right-click="$emit('icon-right-click', $event)">
                 <template v-if="$slots.header" #header>
-                    <!--
-                        @slot Define an additional header
-                    -->
                     <slot name="header" />
                 </template>
 
                 <template
                     v-if="$slots.default"
                     #default="{ option, index, value }">
-                    <!--
-                        @slot Override the select option
-                        @binding {object} option - option object
-                        @binding {number} index - option index
-                        @binding {unknown} value - option value
-                    -->
                     <slot :option="option" :index="index" :value="value" />
                 </template>
 
                 <template v-if="$slots.empty" #empty>
-                    <!--
-                        @slot Define content for empty state
-                    -->
                     <slot name="empty" />
                 </template>
 
                 <template v-if="$slots.footer" #footer>
-                    <!--
-                        @slot Define an additional footer
-                    -->
                     <slot name="footer" />
                 </template>
             </o-autocomplete>
@@ -415,22 +431,12 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
             v-if="counter && (maxitems || maxlength)"
             :class="counterClasses">
             <template v-if="maxlength && inputLength > 0">
-                <!--
-                    @slot Override the counter
-                    @binding {number} items - items count
-                    @binding {number} total - total count
-                -->
                 <slot name="counter" :items="inputLength" :total="maxlength">
                     {{ inputLength }} / {{ maxlength }}
                 </slot>
             </template>
 
             <template v-else-if="maxitems">
-                <!--
-                    @slot Override the counter
-                    @binding {number} items - items count
-                    @binding {number} total - total count
-                -->
                 <slot name="counter" :items="itemsLength" :total="maxitems">
                     {{ itemsLength }} / {{ maxitems }}
                 </slot>

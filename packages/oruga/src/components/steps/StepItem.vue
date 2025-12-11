@@ -8,6 +8,7 @@ import {
     type Component,
     type Ref,
     type ComputedRef,
+    type VNode,
 } from "vue";
 
 import { getDefault } from "@/utils/config";
@@ -50,6 +51,14 @@ const emits = defineEmits<{
     activate: [];
     /** on step item deactivate event */
     deactivate: [];
+}>();
+
+defineSlots<{
+    /**
+     * Define the step item content here
+     * @param active {boolean} - if item is shown
+     */
+    default?(props: { active: boolean }): VNode[];
 }>();
 
 const itemValue = props.value ?? useId();
@@ -210,10 +219,6 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <!--
-                @slot Step item content
-                @binding {boolean} active - if item is shown
-            -->
             <slot :active="isActive && visible">
                 <!-- injected component -->
                 <component

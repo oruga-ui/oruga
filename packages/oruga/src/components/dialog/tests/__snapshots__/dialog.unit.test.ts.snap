@@ -9,64 +9,25 @@ exports[`ODialog test > render correctly 1`] = `
       <div class="o-dialog__wrapper" style="max-width: 80vw; max-height: 80vh;">
         <!-- Header -->
         <header class="o-dialog__header">
-          <!--
-                            @slot Override the header
-                            @binding {(event: Event): void} close - function to emit a \`close\` event
-                        -->
-          <h1 id="v-0" class="o-dialog__header-title">
-            <!--
-                                    @slot Override the header title, default is title prop
-                                -->Adcanced Title
-          </h1>
-          <h2 class="o-dialog__header-subtitle">
-            <!--
-                                    @slot Override the header subtitle, default is subtitle prop
-                                -->Advanced subtitle
-          </h2>
+          <h1 id="v-0" class="o-dialog__header-title">Adcanced Title</h1>
+          <h2 class="o-dialog__header-subtitle">Advanced subtitle</h2>
           <!--v-if-->
         </header><!-- Body -->
         <div class="o-dialog__body">
           <!-- Image -->
-          <!--
-                            @slot Override the image
-                        -->
           <!--v-if-->
-          <!--
-                            @slot Override the default dialog body
-                            @binding {(event: Event): void} close - function to emit a \`close\` event
-                            @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
-                        -->
+          <!-- Main Content -->
           <!-- injected component for programmatic usage -->
-          <p class="o-dialog__body-content">
-            <!--
-                                    @slot Override the body content, default is content prop
-                                    @binding {(event: Event): void} close - function to emit a \`close\` event
-                                    @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
-                                -->Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          </p>
+          <p class="o-dialog__body-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
         </div><!-- Loading -->
         <transition-stub name="fade" appear="false" persisted="false" css="true">
           <!--v-if-->
         </transition-stub><!-- Footer -->
-        <footer class="o-dialog__footer">
-          <!--
-                            @slot Override the footer
-                            @binding {(event: Event): void} close - function to emit a \`close\` event
-                            @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
-                        --><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__cancel-button" autofocus=""><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
-                    @slot Override the label, default is label prop
-                --><!--
-                                    @slot Define the cancel button label
-                                 -->CANCEL</span>
+        <footer class="o-dialog__footer"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__cancel-button" autofocus=""><span class="o-button__wrapper"><!--v-if--><span class="o-button__label">CANCEL</span>
             <!--v-if--></span>
-          </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__confirm-button" autofocus=""><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
-                    @slot Override the label, default is label prop
-                --><!--
-                                    @slot Define the confirm button label
-                                 -->OK</span>
+          </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__confirm-button" autofocus=""><span class="o-button__wrapper"><!--v-if--><span class="o-button__label">OK</span>
             <!--v-if--></span>
-          </button>
-        </footer>
+          </button></footer>
       </div>
     </dialog>
   </transition-stub>

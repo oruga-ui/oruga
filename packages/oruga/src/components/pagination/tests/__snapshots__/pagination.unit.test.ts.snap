@@ -1,73 +1,28 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OPagination tests > render correctly 1`] = `
-"<nav data-oruga="pagination" class="o-pagination o-pagination--right">
-  <!--
-            @slot Previous button slot
-            @binding {number} number - page number
-            @binding {boolean} isCurrent - if page is current
-            @binding {(event: Event): void} onClick - click handler
-            @binding {string} ariaLabel - aria-label attribute
-        --><button data-oruga="button" role="button" tabindex="0" class="o-button o-button--disabled o-pagination__button o-pagination__button-previous o-pagination__button--disabled" disabled="" iscurrent="false" number="0" aria-label="Previous page" aria-current="false"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+"<nav data-oruga="pagination" class="o-pagination o-pagination--right"><button data-oruga="button" role="button" tabindex="0" class="o-button o-button--disabled o-pagination__button o-pagination__button-previous o-pagination__button--disabled" disabled="" iscurrent="false" number="0" aria-label="Previous page" aria-current="false"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
     <!--v-if-->
     <!--v-if--></span>
-  </button>
-  <!--
-            @slot Next button slot
-            @binding {number} number - page number
-            @binding {boolean} isCurrent - if page is current
-            @binding {(event: Event): void} onClick - click handler
-            @binding {string} ariaLabel - aria-label attribute
-        --><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button o-pagination__button-next" iscurrent="false" number="2" aria-label="Next page" aria-current="false"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+  </button><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button o-pagination__button-next" iscurrent="false" number="2" aria-label="Next page" aria-current="false"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
     <!--v-if-->
     <!--v-if--></span>
   </button>
   <ul class="o-pagination__list">
-    <!--First-->
+    <!-- First -->
     <!--v-if-->
     <!--v-if-->
-    <!--Pages-->
-    <li class="o-pagination__item">
-      <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                --><button data-oruga="button" role="button" tabindex="0" class="o-button o-button--primary o-pagination__button o-pagination__button--current" iscurrent="true" number="1" aria-label="Current page, Page 1." aria-current="true"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
-                    @slot Override the label, default is label prop
-                -->1</span>
+    <!-- Pages -->
+    <li class="o-pagination__item"><button data-oruga="button" role="button" tabindex="0" class="o-button o-button--primary o-pagination__button o-pagination__button--current" iscurrent="true" number="1" aria-label="Current page, Page 1." aria-current="true"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label">1</span>
         <!--v-if--></span>
-      </button>
-    </li>
-    <li class="o-pagination__item">
-      <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                --><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button" iscurrent="false" number="2" aria-label="Page 2." aria-current="false"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
-                    @slot Override the label, default is label prop
-                -->2</span>
+      </button></li>
+    <li class="o-pagination__item"><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button" iscurrent="false" number="2" aria-label="Page 2." aria-current="false"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label">2</span>
         <!--v-if--></span>
-      </button>
-    </li>
-    <!--Last-->
+      </button></li><!-- Last -->
     <li class="o-pagination__item"><span class="o-pagination__ellipsis">…</span></li>
-    <li class="o-pagination__item">
-      <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                --><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button" iscurrent="false" number="5" aria-label="Page 5." aria-current="false"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
-                    @slot Override the label, default is label prop
-                -->5</span>
+    <li class="o-pagination__item"><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button" iscurrent="false" number="5" aria-label="Page 5." aria-current="false"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label">5</span>
         <!--v-if--></span>
-      </button>
-    </li>
+      </button></li>
   </ul>
 </nav>"
 `;

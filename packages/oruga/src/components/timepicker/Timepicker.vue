@@ -115,6 +115,13 @@ defineEmits<{
     "icon-right-click": [event: Event];
 }>();
 
+defineSlots<{
+    /** Override the trigger input element */
+    trigger?(): void;
+    /** Define an additional content in the footer */
+    footer?(): void;
+}>();
+
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const {
@@ -627,9 +634,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         @icon-click="$emit('icon-click', $event)"
         @icon-right-click="$emit('icon-right-click', $event)">
         <template v-if="$slots.trigger" #trigger>
-            <!--
-                @slot Override the trigger
-            -->
             <slot name="trigger" />
         </template>
 
@@ -706,9 +710,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         </o-select>
 
         <footer v-if="$slots.footer" :class="footerClasses">
-            <!--
-                @slot Define an additional content on footer
-            -->
             <slot name="footer" />
         </footer>
     </OPickerWrapper>

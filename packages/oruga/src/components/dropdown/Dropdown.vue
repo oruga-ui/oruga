@@ -29,6 +29,7 @@ import {
     useScrollEvents,
     scrollElementInView,
     type OptionsGroupItem,
+    type OptionsItem,
 } from "@/composables";
 
 import type {
@@ -126,6 +127,46 @@ const emits = defineEmits<{
     "scroll-start": [];
     /** the list inside the dropdown reached it's end */
     "scroll-end": [];
+}>();
+
+defineSlots<{
+    /**
+     * Override the trigger element, default is label prop
+     * @param active {boolean} - dropdown active state
+     * @param value {unknown | unknown[]} - the selected value
+     * @param toggle {(event: Event): void} - toggle dropdown active state
+     */
+    trigger?(props: {
+        active: boolean;
+        value: unknown | unknown[];
+        toggle: (event: Event) => void;
+    }): void;
+    /**
+     * Define the dropdown items here
+     * @param active {boolean} - dropdown active state
+     * @param focusedIndex {number | undefined} - index of the focused element
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    default?(props: {
+        active: boolean;
+        focusedIndex?: number;
+        toggle: (event: Event) => void;
+    }): void;
+    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    before?(): void;
+    /**
+     * Override the option group
+     * @param group {object} - options group item
+     * @param index {number} - option index
+     */
+    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    /**
+     * Override the label, default is label prop
+     * @param option {object} - option item
+     */
+    option?(props: { option: OptionsItem<T> }): void;
+    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    after?(): void;
 }>();
 
 const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
@@ -580,8 +621,12 @@ const menuClasses = defineClasses(
 
 // #endregion --- Computed Component Classes ---
 
+// #region --- Expose Public Functionalities ---
+
 /** expose functionalities for programmatic usage */
 defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -618,12 +663,6 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
             @keydown.down.prevent="onDownPressed"
             @keydown.home="onHomePressed"
             @keydown.end="onEndPressed">
-            <!--
-                @slot Override the trigger element, default is label prop
-                @binding {boolean} active - dropdown active state
-                @binding {unknown | unknown[]} value - the selected value
-                @binding {(): void} toggle - toggle dropdown active state
-            -->
             <slot
                 name="trigger"
                 :active="isActive"
@@ -677,19 +716,10 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     @keydown.down.prevent="inline && onDownPressed($event)"
                     @keydown.home="inline && onHomePressed($event)"
                     @keydown.end="inline && onEndPressed($event)">
-                    <!--
-                        @slot Place dropdown items here
-                        @binding {boolean} active - dropdown active state
-                        @binding {number} focusedIndex - index of the focused element
-                        @binding {(): void} toggle - toggle dropdown active state
-                    -->
                     <slot
                         :active="isActive"
                         :focused-index="focusedItem?.index"
                         :toggle="toggle">
-                        <!--
-                            @slot Place extra `o-dropdown-item` components here, even if you have some options defined by prop
-                        -->
                         <slot name="before" />
 
                         <template v-for="(group, groupIndex) in groupedOptions">
@@ -702,14 +732,9 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :hidden="group.hidden"
                                 role="presentation"
                                 :clickable="false">
-                                <!--
-                                    @slot Override the option group
-                                    @binding {object} group - options group item
-                                    @binding {number} index - option index
-                                -->
                                 <slot
                                     name="group"
-                                    :group="group.label"
+                                    :group="group"
                                     :index="groupIndex">
                                     <span>
                                         {{ group.label }}
@@ -724,19 +749,12 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :key="option.key"
                                 :value="option.value"
                                 :hidden="option.hidden">
-                                <!--
-                                    @slot Override the label, default is label prop
-                                    @binding {object} option - option item
-                                -->
                                 <slot name="option" :option="option">
                                     <span> {{ option.label }} </span>
                                 </slot>
                             </o-dropdown-item>
                         </template>
 
-                        <!--
-                            @slot Place extra `o-dropdown-item` components here, even if you have some options defined by prop
-                        -->
                         <slot name="after" />
                     </slot>
                 </component>

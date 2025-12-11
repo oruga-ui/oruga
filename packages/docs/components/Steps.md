@@ -64,10 +64,10 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 ### Slots
 
-| Name       | Description              | Bindings                                                                                                                                                    |
-| ---------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| default    | Place step items here    |                                                                                                                                                             |
-| navigation | Override step navigation | **previous** `{disabled: boolean, action: (): void }` - previous button configs<br/>**next** `{disabled: boolean, action: (): void }` - next button configs |
+| Name       | Description                  | Bindings                                                                                                                                                    |
+| ---------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| default    | Define the step items here   |                                                                                                                                                             |
+| navigation | Override the step navigation | **previous** `{disabled: boolean, action: (): void }` - previous button configs<br/>**next** `{disabled: boolean, action: (): void }` - next button configs |
 
 </section>
 
@@ -109,9 +109,9 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 ### Slots
 
-| Name    | Description       | Bindings                                |
-| ------- | ----------------- | --------------------------------------- |
-| default | Step item content | **active** `boolean` - if item is shown |
+| Name    | Description                       | Bindings                                |
+| ------- | --------------------------------- | --------------------------------------- |
+| default | Define the step item content here | **active** `boolean` - if item is shown |
 
 </section>
 

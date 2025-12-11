@@ -3,9 +3,6 @@
 exports[`OField tests > render correctly 1`] = `
 "<div data-oruga="field" class="o-field">
   <!--v-if-->
-  <!--
-                @slot Default content
-            -->
   <!--v-if-->
 </div>"
 `;

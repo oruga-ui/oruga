@@ -33,6 +33,11 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
     ariaLabel: () => getDefault("modal.ariaLabel", "Breadcrumb"),
 });
 
+defineSlots<{
+    /** Place breadcrumb items here  */
+    default?(): void;
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 /** provide functionalities and data to child item components */
@@ -85,9 +90,6 @@ const listClasses = defineClasses(["listClass", "o-breadcrumb__list"]);
         :style="customStyle"
         :aria-label="ariaLabel">
         <ol :class="listClasses">
-            <!--
-                @slot Place breadcrumb items here
-            -->
             <slot>
                 <OBreadcrumbItem
                     v-for="option in normalizedOptions"

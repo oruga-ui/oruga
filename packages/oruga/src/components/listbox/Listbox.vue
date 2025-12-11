@@ -37,6 +37,7 @@ import {
     useScrollEvents,
     useSequentialId,
     type OptionsGroupItem,
+    type OptionsItem,
 } from "@/composables";
 
 import { injectField } from "@/components/field/fieldInjection";
@@ -114,6 +115,50 @@ const emits = defineEmits<{
     "scroll-start": [];
     /** scrolling the list inside reached it's end */
     "scroll-end": [];
+}>();
+
+defineSlots<{
+    /** Define an additional header */
+    header?(): void;
+    /**
+     * Overridet the filter input
+     * @param value {string} - filter input value
+     * @param onChange {(input: string, event: Event): void} - on filter input change event
+     * @param onKeydown {(event: Event): void} - on filter input keydown event
+     */
+    filter?(props: {
+        value: string;
+        onChange: (input: string, event: Event) => void;
+        onKeydown: (event: KeyboardEvent) => void;
+    }): void;
+    /**
+     * Define the listbox items here
+     * @param focusedIndex {number | undefined} - index of the focused element
+     */
+    default?(props: { focusedIndex?: number }): void;
+    /**
+     * Override the option group
+     * @param group {string} - options group item
+     * @param index {number} - group option index
+     */
+    optiongroup?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    /**
+     * Override the label, default is label prop
+     * @param option {object} - option item
+     * @param index {number} - option index
+     * @param selected {boolean} - option is selected
+     * @param disabled {boolean} - option is disabled
+     */
+    option?(props: {
+        option: OptionsItem<T>;
+        index: number;
+        selected: boolean;
+        disabled: boolean;
+    }): void;
+    /** Define the content to show if the list is empty */
+    empty?(): void;
+    /** Define an additional footer */
+    footer?(): void;
 }>();
 
 // inject parent field component if used inside one
@@ -679,19 +724,10 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         @focusout="onFocusout"
         @mouseleave="isFocused && onFocusout($event)">
         <div v-if="$slots.header" :class="headerClasses">
-            <!--
-                @slot Define an additional header
-            -->
             <slot name="header" />
         </div>
 
         <div v-if="filterable" :class="filterClasses">
-            <!--
-                @slot Overridet the filter input
-                @binding {string} value - filter input value
-                @binding {(input: string, event: Event): void} onChange - on filter input change event
-                @binding {(event: Event): void} onKeydown - on filter input keydown event
-            -->
             <slot
                 name="filter"
                 :value="filterValue"
@@ -746,10 +782,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
             @mouseleave="onHoverLeave"
             @keydown="onListKeyDown">
             <transition-group :name="animation">
-                <!--
-                    @slot Place items here
-                    @binding {number} focusedIndex - index of the focused element
-                -->
                 <slot :focused-index="focusedItem?.index">
                     <template v-for="(group, groupIndex) in groupedOptions">
                         <o-listbox-item
@@ -761,11 +793,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                             :hidden="group.hidden"
                             disabled
                             role="presentation">
-                            <!--
-                                @slot Override the option group
-                                @binding {object} group - options group item
-                                @binding {number} index - group option index
-                            -->
                             <slot
                                 name="optiongroup"
                                 :group="group"
@@ -786,13 +813,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                             :aria-posinset="
                                 findOptionIndex(groupedOptions, option) + 1
                             ">
-                            <!--
-                                @slot Override the label, default is label prop
-                                @binding {object} option - option item
-                                @binding {number} index - option index
-                                @binding {boolean} selected - option is selected
-                                @binding {boolean} disabled - option is disabled
-                            -->
                             <slot
                                 name="option"
                                 :option="option"
@@ -811,9 +831,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
             <div
                 v-if="!hasVisableItems && ($slots.empty || emptyLabel)"
                 :class="emptyClasses">
-                <!--
-                    @slot Define content for empty state
-                -->
                 <slot name="empty">
                     {{ emptyLabel }}
                 </slot>
@@ -821,9 +838,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         </transition>
 
         <div v-if="$slots.footer" :class="footerClasses">
-            <!--
-                @slot Define an additional footer
-            -->
             <slot name="footer" />
         </div>
     </div>

@@ -4,12 +4,6 @@ exports[`OTimepicker tests > render correctly 1`] = `
 "<div data-oruga="timepicker" class="o-timepicker">
   <div data-oruga="dropdown" class="o-dropdown o-timepicker__dropdown o-dropdown--position-bottom-left">
     <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
-      <!--
-                @slot Override the trigger element, default is label prop
-                @binding {boolean} active - dropdown active state
-                @binding {unknown | unknown[]} value - the selected value
-                @binding {(): void} toggle - toggle dropdown active state
-            -->
       <div data-oruga="input" class="o-input">
         <!--v-if--><input id="v-1" type="text" data-oruga-input="text" class="o-input__input" autocomplete="off">
         <!--v-if-->
@@ -20,22 +14,10 @@ exports[`OTimepicker tests > render correctly 1`] = `
     <!--v-if-->
     <transition-stub name="fade" appear="false" persisted="true" css="true">
       <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
-        <!--
-                        @slot Place dropdown items here
-                        @binding {boolean} active - dropdown active state
-                        @binding {number} focusedIndex - index of the focused element
-                        @binding {(): void} toggle - toggle dropdown active state
-                    -->
         <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-timepicker__box" role="menuitem" tabindex="-1" aria-disabled="false">
-          <!--
-            @slot Override the label, default is label prop
-        -->
           <div data-oruga="select" class="">
             <!--v-if--><select aria-label="Select Hour" id="v-3" data-oruga-input="select" class="o-timepicker__select" autocomplete="off">
               <!--v-if-->
-              <!--
-                @slot Override the options, default is options prop
-            -->
               <option selected="" value="0">00</option>
               <option value="1">01</option>
               <option value="2">02</option>
@@ -66,9 +48,6 @@ exports[`OTimepicker tests > render correctly 1`] = `
           <div data-oruga="select" class="">
             <!--v-if--><select aria-label="Select Minute" id="v-4" data-oruga-input="select" class="o-timepicker__select" autocomplete="off">
               <!--v-if-->
-              <!--
-                @slot Override the options, default is options prop
-            -->
               <option value="0">00</option>
               <option value="1">01</option>
               <option value="2">02</option>

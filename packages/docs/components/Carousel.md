@@ -73,14 +73,14 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ### Slots
 
-| Name       | Description                      | Bindings                                                                                                |
-| ---------- | -------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| pause      | Override the pause/resume button | **autoplay** - undefined<br/>**toggle** - undefined                                                     |
-| arrow      | Override the arrows              | **has-prev** - undefined<br/>**prev** - undefined<br/>**has-next** - undefined<br/>**next** - undefined |
-| default    | Display carousel item            |                                                                                                         |
-| indicators | Override the indicators          | **active-index** - undefined<br/>**switch-to** - undefined                                              |
-| indicator  | Override the indicator elements  | **index** - undefined                                                                                   |
-| overlay    | Overlay element                  |                                                                                                         |
+| Name       | Description                                   | Bindings                                                                                                                                                                                                      |
+| ---------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| pause      | Override the pause/resume button              | **autoplay** `boolean` - if autoplay is active<br/>**toggle** `(): void` - toggle autoplay                                                                                                                    |
+| arrows     | Override the arrows                           | **hasPrev** `boolean` - has prev arrow button<br/>**hasNext** `boolean` - has next arrow button<br/>**prev** `(): void` - switch to prev item function<br/>**next** `(): void` - switch to next item function |
+| default    | Define the carousel items here                |                                                                                                                                                                                                               |
+| indicators | Override the indicators                       | **activeIndex** `number` - active item index<br/>**switchTo** `(idx?: number): void` - switch to item function                                                                                                |
+| indicator  | Override the indicator elements               | **index** `number` - indicator index                                                                                                                                                                          |
+| overlay    | Define element to show when overlay is active |                                                                                                                                                                                                               |
 
 </section>
 
@@ -116,9 +116,9 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ### Slots
 
-| Name    | Description     | Bindings |
-| ------- | --------------- | -------- |
-| default | Default content |          |
+| Name    | Description               | Bindings |
+| ------- | ------------------------- | -------- |
+| default | Override the item content |          |
 
 </section>
 

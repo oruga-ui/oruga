@@ -75,6 +75,16 @@ const emits = defineEmits<{
     open: [event: Event];
 }>();
 
+defineSlots<{
+    /**
+     * Tooltip trigger slot
+     * @param active {boolean} - tooltip active state
+     */
+    default?(props: { active: boolean }): void;
+    /** Override the Tooltip content, default is label prop */
+    content?(): void;
+}>();
+
 const isActive = defineModel<boolean>("active", { default: false });
 
 const tooltipId = useId();
@@ -264,10 +274,6 @@ const arrowClasses = defineClasses(
             @focus.capture="onFocus"
             @blur.capture="onHoverLeave"
             @mouseleave="onHoverLeave">
-            <!--
-                @slot Tooltip trigger slot
-                @binding {boolean} active - tooltip active state
-            -->
             <slot :active="isActive" />
         </component>
 
@@ -288,10 +294,6 @@ const arrowClasses = defineClasses(
                     :style="contentStyle"
                     role="tooltip">
                     <span :class="arrowClasses"></span>
-
-                    <!--
-                        @slot Tooltip content, default is label prop
-                    -->
                     <slot name="content">{{ label }}</slot>
                 </div>
             </transition>

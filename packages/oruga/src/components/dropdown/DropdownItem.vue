@@ -37,6 +37,11 @@ const emits = defineEmits<{
     click: [value: T, event: Event];
 }>();
 
+defineSlots<{
+    /** Override the label, default is label prop */
+    default?(): void;
+}>();
+
 const itemValue = props.value ?? useId();
 
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
@@ -120,9 +125,6 @@ const rootClasses = defineClasses(
         @mouseenter="focusItem"
         @keydown.enter="onClick"
         @keydown.space="onClick">
-        <!--
-            @slot Override the label, default is label prop
-        -->
         <slot>{{ label }}</slot>
     </component>
 </template>

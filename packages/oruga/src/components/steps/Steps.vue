@@ -84,6 +84,20 @@ const emits = defineEmits<{
     change: [newValue: ModelValue, oldValue: ModelValue];
 }>();
 
+defineSlots<{
+    /** Define the step items here */
+    default?(): void;
+    /**
+     * Override the step navigation
+     * @param previous {{disabled: boolean, action: (): void }} - previous button configs
+     * @param next {{disabled: boolean, action: (): void }} - next button configs
+     */
+    navigation?(props: {
+        previous: { disabled: boolean; action: () => void };
+        next: { disabled: boolean; action: () => void };
+    }): void;
+}>();
+
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const rootRef = useTemplateRef("rootElement");
@@ -371,9 +385,6 @@ const navigationClasses = defineClasses([
         </ol>
 
         <section :class="contentClasses">
-            <!--
-                @slot Place step items here
-            -->
             <slot>
                 <o-step-item
                     v-for="option in normalizedOptions"
@@ -385,11 +396,6 @@ const navigationClasses = defineClasses([
             </slot>
         </section>
 
-        <!--
-            @slot Override step navigation
-            @binding {{disabled: boolean, action: (): void }} previous - previous button configs
-            @binding {{disabled: boolean, action: (): void }} next - next button configs
-        -->
         <slot
             name="navigation"
             :previous="{

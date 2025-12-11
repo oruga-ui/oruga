@@ -39,6 +39,11 @@ const emits = defineEmits<{
     deactivate: [];
 }>();
 
+defineSlots<{
+    /** Override the item content */
+    default?(): void;
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
@@ -130,9 +135,6 @@ const imageClasses = defineClasses([
         @keydown.space="onClick"
         @dragstart="parent.onDrag"
         @touchstart="parent.onDrag">
-        <!--
-            @slot Default content
-        -->
         <slot>
             <div :class="imageClasses">
                 <img :src="image" :alt="imageAlt" />

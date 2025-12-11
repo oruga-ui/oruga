@@ -73,6 +73,48 @@ const emits = defineEmits<{
     previous: [event: Event, value: number];
 }>();
 
+defineSlots<{
+    /**
+     * Define a custom pagination button here
+     * @param number {number} - page number
+     * @param isCurrent {boolean} - if page is current
+     * @param onClick {(event: Event): void} - click handler
+     * @param ariaLabel {string} - aria-label attribute
+     */
+    default?(props: {
+        number: number;
+        isCurrent: boolean;
+        onClick: (event: Event) => void;
+        ariaLabel: string;
+    }): void;
+    /**
+     * Define a custom previous button here
+     * @param number {number} - page number
+     * @param isCurrent {boolean} - if page is current
+     * @param onClick {(event: Event): void} - click handler
+     * @param ariaLabel {string} - aria-label attribute
+     */
+    previous?(props: {
+        number: number;
+        isCurrent: boolean;
+        onClick: (event: Event) => void;
+        ariaLabel: string;
+    }): void;
+    /**
+     * Define a custom next button here
+     * @param number {number} - page number
+     * @param isCurrent {boolean} - if page is current
+     * @param onClick {(event: Event): void} - click handler
+     * @param ariaLabel {string} - aria-label attribute
+     */
+    next?(props: {
+        number: number;
+        isCurrent: boolean;
+        onClick: (event: Event) => void;
+        ariaLabel: string;
+    }): void;
+}>();
+
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const currentPage = defineModel<number>("current", { default: 1 });
@@ -83,12 +125,9 @@ const pageCount = computed(() =>
 );
 
 /** If current page is trying to be greater than page count, set to last. */
-watch(
-    () => pageCount.value,
-    (value) => {
-        if (currentPage.value > value) onLast();
-    },
-);
+watch(pageCount, (value) => {
+    if (currentPage.value > value) onLast();
+});
 
 /** First item of the page (count). */
 const firstItem = computed(() => {
@@ -306,13 +345,6 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
 
 <template>
     <nav data-oruga="pagination" :class="rootClasses">
-        <!--
-            @slot Previous button slot
-            @binding {number} number - page number
-            @binding {boolean} isCurrent - if page is current
-            @binding {(event: Event): void} onClick - click handler
-            @binding {string} ariaLabel - aria-label attribute
-        -->
         <slot name="previous" v-bind="prevButton">
             <o-button
                 :tag="buttonTag"
@@ -326,13 +358,6 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 :class="[...buttonBaseClasses, ...buttonPrevClasses]" />
         </slot>
 
-        <!--
-            @slot Next button slot
-            @binding {number} number - page number
-            @binding {boolean} isCurrent - if page is current
-            @binding {(event: Event): void} onClick - click handler
-            @binding {string} ariaLabel - aria-label attribute
-        -->
         <slot name="next" v-bind="nextButton">
             <o-button
                 :tag="buttonTag"
@@ -359,15 +384,8 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
         </small>
 
         <ul v-else :class="listClasses">
-            <!--First-->
+            <!-- First -->
             <li v-if="hasFirst" :class="listItemClasses">
-                <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                -->
                 <slot v-bind="firstButton">
                     <o-button
                         :tag="buttonTag"
@@ -389,18 +407,11 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
 
-            <!--Pages-->
+            <!-- Pages -->
             <li
                 v-for="page in pagesInRange"
                 :key="page.number"
                 :class="listItemClasses">
-                <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                -->
                 <slot v-bind="page">
                     <o-button
                         :tag="buttonTag"
@@ -416,19 +427,12 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 </slot>
             </li>
 
-            <!--Last-->
+            <!-- Last -->
             <li v-if="hasLastEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
 
             <li v-if="hasLast" :class="listItemClasses">
-                <!--
-                    @slot Pagination button slot
-                    @binding {number} number - page number
-                    @binding {boolean} isCurrent - if page is current
-                    @binding {(event: Event): void} onClick - click handler
-                    @binding {string} ariaLabel - aria-label attribute
-                -->
                 <slot v-bind="lastButton">
                     <o-button
                         :tag="buttonTag"
