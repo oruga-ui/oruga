@@ -1,7 +1,9 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
+import { playwright } from "@vitest/browser-playwright";
 
 import babel from "@rollup/plugin-babel";
 
@@ -32,10 +34,7 @@ const entries = {
     }, {} as any),
 };
 
-const browserTestPattern = "src/**/*.browser.test.{ts,js}";
-
 // https://vitejs.dev/config/
-/** @type {import('vite').UserConfig} */
 export default defineConfig(({ mode }) => ({
     root: __dirname,
     plugins: [
@@ -133,29 +132,34 @@ export default defineConfig(({ mode }) => ({
         },
     },
     test: {
-        setupFiles: [resolve("./src/__tests__/vitest.setup.ts")],
-        environment: "jsdom",
         coverage: {
-            provider: "istanbul",
+            provider: "v8",
+            // Include covered and uncovered files matching this pattern:
+            include: ["src/**/*.{vue,ts}"],
+            exclude: ["src/**/examples/*.{vue,ts}", "src/**/index.ts"],
         },
         projects: [
             {
                 extends: true,
                 test: {
                     name: "unit",
+                    environment: "jsdom",
+                    setupFiles: [resolve("./src/__tests__/vitest.setup.ts")],
                     // exclude browser tests
-                    exclude: [browserTestPattern],
+                    exclude: ["src/**/*.browser.test.{ts,js}"],
                 },
             },
             {
                 extends: true,
                 test: {
                     name: "browser",
+                    setupFiles: ["vitest-browser-vue"],
                     // only run browser tests
-                    include: [browserTestPattern],
+                    include: ["src/**/*.browser.test.{ts,js}"],
                     browser: {
                         enabled: true,
-                        provider: "playwright",
+                        headless: true,
+                        provider: playwright(),
                         instances: [{ browser: "chromium" }],
                     },
                 },

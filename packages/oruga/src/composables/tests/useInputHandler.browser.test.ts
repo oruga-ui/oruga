@@ -1,11 +1,7 @@
 /* eslint-disable vue/one-component-per-file */
 
-import {
-    userEvent,
-    type Locator,
-    type LocatorSelectors,
-} from "@vitest/browser/context";
 import { describe, expect, test } from "vitest";
+import { userEvent, type Locator, type LocatorSelectors } from "vitest/browser";
 import { render } from "vitest-browser-vue";
 
 import {
