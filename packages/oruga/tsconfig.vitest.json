@@ -6,10 +6,6 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
 
     "lib": ["ESNext", "DOM"],
-    "types": [
-      "node",
-      "vite/client",
-      "./components.d.ts"
-    ]
+    "types": ["node", "vite/client", "./components.d.ts"]
   }
 }
