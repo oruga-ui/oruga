@@ -3,10 +3,10 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
 
+import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
+
 import OListbox from "@/components/listbox/Listbox.vue";
 import OListItem from "@/components/listbox/ListItem.vue";
-
-import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
 
 describe("OListbox tests", () => {
     enableAutoUnmount(afterEach);

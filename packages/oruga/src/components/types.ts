@@ -1523,7 +1523,7 @@ See icon library documentation for custom classes.
                  */
                 scrollHeight: number | string;
                 /**
-                 * A label which is displayed when no options is visible
+                 * A label which is displayed when no options are visible
                  */
                 emptyLabel: string;
                 /**
@@ -1546,14 +1546,6 @@ See icon library documentation for custom classes.
                  * Custom animation (transition name)
                  */
                 animation: string;
-                /**
-                 * List tag name
-                 */
-                listTag: DynamicComponent;
-                /**
-                 * List item tag name
-                 */
-                itemTag: DynamicComponent;
                 /**
                  * Class of the root element
                  */
@@ -1599,23 +1591,27 @@ See icon library documentation for custom classes.
                  */
                 inputClasses: Record<string, any>;
                 /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
                  * Class of the item element.
                  */
                 itemClass: ClassDefinition;
                 /**
-                 * Class of the item element when selected
+                 * Class of the item element when is selectable
+                 */
+                itemSelectableClass: ClassDefinition;
+                /**
+                 * Class of the item element when is selected
                  */
                 itemSelectedClass: ClassDefinition;
                 /**
-                 * Class of the item element when focused
+                 * Class of the item element when is focused
                  */
                 itemFocusedClass: ClassDefinition;
                 /**
-                 * Class of the item element when clickable
-                 */
-                itemClickableClass: ClassDefinition;
-                /**
-                 * Class of the item element when disabled
+                 * Class of the item element when is disabled
                  */
                 itemDisabledClass: ClassDefinition;
             }>;

@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="T">
 import { useId, computed, useTemplateRef, ref } from "vue";
 
+import OIcon from "../icon/Icon.vue";
+
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
@@ -20,15 +22,17 @@ defineOptions({
 
 const props = withDefaults(defineProps<ListItemProps<T>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not asignale of generic type T
+    value: () => useId(),
     label: undefined,
     disabled: false,
     hidden: false,
-    clickable: undefined,
+    icon: undefined,
+    iconPack: () => getDefault("listbox.iconPack"),
+    iconSize: () => getDefault("listbox.iconSize"),
     ariaLabel: undefined,
     ariaLabelledby: undefined,
     parentKey: undefined,
-    tag: () => getDefault("listbox.itemTag", "li"),
 });
 
 const emits = defineEmits<{
@@ -51,13 +55,11 @@ defineSlots<{
 
 const key = props.parentKey ?? "listbox";
 
-const itemValue = props.value ?? useId();
-
-const rootRef = useTemplateRef<HTMLElement>("rootElement");
+const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({
-    value: itemValue as T,
+    value: props.value,
     hidden: isHidden.value,
     isViable: isViable.value,
     setHidden,
@@ -82,37 +84,34 @@ const isViable = computed(() => !isHidden.value && !props.disabled);
 
 const isDisabled = computed(() => parent.value.disabled || props.disabled);
 
+const isFocused = computed(
+    () => item.value.identifier === parent.value.focsuedItem?.identifier,
+);
+
 /** Shows if the item is clickable or not. */
-const isClickable = computed(
-    () =>
-        !parent.value.disabled &&
-        !props.disabled &&
-        (props.clickable ?? parent.value.selectable),
+const isSelectable = computed(
+    () => !isDisabled.value && parent.value.selectable,
 );
 
 const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
     if (parent.value.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected) =>
-            isEqual(itemValue, selected),
+            isEqual(item.value.data.value, selected),
         );
-    return isEqual(itemValue, parent.value.selected);
+    return isEqual(item.value.data.value, parent.value.selected);
 });
 
-const isFocused = computed(
-    () => item.value.identifier === parent.value.focsuedIdentifier,
-);
+/** Hover listener, set the item as focused element. */
+function focusItem(): void {
+    parent.value.focusItem(item.value);
+}
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
-    if (!isClickable.value) return;
+    if (!isSelectable.value) return;
     parent.value.selectItem(item.value, !isSelected.value);
-    emits("click", itemValue as T, event);
-}
-
-/** Set the item as focused element. */
-function focusItem(): void {
-    parent.value.focusItem(item.value);
+    emits("click", props.value as T, event);
 }
 
 /** Check if a value matches the label (startsWith). */
@@ -122,26 +121,25 @@ function matches(value: string): boolean {
 
 // #region --- Computed Component Classes ---
 
-const rootClasses = defineClasses(
+const itmeClasses = defineClasses(
     ["itemClass", `o-${key}__item`],
-    ["itemClickableClass", `o-${key}__item--clickable`, null, isClickable],
-    ["itemDisabledClass", `o-${key}__item--disabled`, null, isDisabled],
+    ["itemSelectableClass", `o-${key}__item--selectable`, null, isSelectable],
     ["itemSelectedClass", `o-${key}__item--selected`, null, isSelected],
     ["itemFocusedClass", `o-${key}__item--focused`, null, isFocused],
+    ["itemDisabledClass", `o-${key}__item--disabled`, null, isDisabled],
 );
 
 // #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <component
-        :is="tag"
+    <li
         v-show="!isHidden"
         :id="`${parent.id}-${item.identifier}`"
         ref="rootElement"
         :data-oruga="`${key}-item`"
         :data-id="`${key}-${item.identifier}`"
-        :class="rootClasses"
+        :class="itmeClasses"
         role="option"
         tabindex="-1"
         :aria-selected="
@@ -156,8 +154,14 @@ const rootClasses = defineClasses(
         :aria-labelledby="ariaLabelledby"
         @click.prevent="clickItem"
         @mouseenter="focusItem">
-        <slot :selected="isSelected" :disabled="disabled">
-            {{ label }}
+        <!-- TODO: add checkbox for checkable -->
+        <slot :selected="isSelected" :disabled="isDisabled">
+            <o-icon
+                v-if="icon"
+                :icon="icon"
+                :pack="iconPack"
+                :size="iconSize" />
+            <span>{{ label }}</span>
         </slot>
-    </component>
+    </li>
 </template>

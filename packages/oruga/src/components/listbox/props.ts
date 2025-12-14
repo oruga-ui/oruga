@@ -1,8 +1,4 @@
-import type {
-    ComponentClass,
-    DynamicComponent,
-    OptionsPropWithGroups,
-} from "@/types";
+import type { ComponentClass, OptionsPropWithGroups } from "@/types";
 import type { InputProps } from "../input/props";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
@@ -19,17 +15,19 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     multiple?: IsMultiple;
     /** Autocomplete options */
     options?: OptionsPropWithGroups<T>;
+    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
+    id?: string;
     /** Interaction is disabled */
     disabled?: boolean;
-    /** Enables overflow when moving the focus by keyboard */
-    // focusOverflow?: boolean;
-    /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
-    scrollHeight?: string | number;
+    /** Enable a checkbox on the item element */
+    // checkable?: boolean;
     /** Enables item selection */
     selectable?: boolean;
     /** Select current focused item when focused */
     selectOnFocus?: boolean;
-    /** A label which is displayed when no options is visible */
+    /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
+    scrollHeight?: string | number;
+    /** A label which is displayed when no options are visible */
     emptyLabel?: string;
     /** Enable an additional searchbar below the header */
     filterable?: boolean;
@@ -54,10 +52,6 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
-    /** List tag name */
-    listTag?: DynamicComponent;
-    /** List item tag name */
-    itemTag?: DynamicComponent;
 } & ListboxClasses;
 
 // class props (will not be displayed in the docs)
@@ -98,19 +92,27 @@ export type ListItemProps<T> = {
      */
     value?: T;
     /** Item label, unnecessary when default slot is used */
-    label?: string;
+    label?: string; // TODO: make requried
     /** Item is disabled */
     disabled?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
-    /** Item is clickable and emit an event */
-    clickable?: boolean;
+    /** Icon to be shown */
+    icon?: string;
+    /**
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack?: string;
+    /**
+     * Icon size
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Defines a string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
-    /** Item tag name */
-    tag?: DynamicComponent;
     /**
      * Internal parent provider key override
      * @ignore
@@ -122,12 +124,12 @@ export type ListItemProps<T> = {
 export type ListItemClasses = Partial<{
     /** Class of the item element. */
     itemClass: ComponentClass;
-    /** Class of the item element when selected */
+    /** Class of the item element when is selectable */
+    itemSelectableClass: ComponentClass;
+    /** Class of the item element when is selected */
     itemSelectedClass: ComponentClass;
-    /** Class of the item element when focused */
+    /** Class of the item element when is focused */
     itemFocusedClass: ComponentClass;
-    /** Class of the item element when clickable */
-    itemClickableClass: ComponentClass;
-    /** Class of the item element when disabled */
+    /** Class of the item element when is disabled */
     itemDisabledClass: ComponentClass;
 }>;

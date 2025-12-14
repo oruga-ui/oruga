@@ -6,8 +6,9 @@ export type ListboxComponent<T> = {
     disabled: boolean;
     multiple: boolean;
     selectable: boolean;
+    // checkable: boolean;
     selected: T | T[] | undefined;
-    focsuedIdentifier: string | undefined;
+    focsuedItem: ListItem<T> | undefined;
     selectItem: (value: ListItem<T>, selection: boolean) => void;
     focusItem: (value: ListItem<T>) => void;
 };
