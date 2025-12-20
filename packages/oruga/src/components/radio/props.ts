@@ -27,7 +27,7 @@ export type RadioProps<T> = {
     name?: string;
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete?: string;
-    /** Same as native id. Also pass the id to an wrapping `o-field` component - default is an uuid. */
+    /** Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. */
     id?: string;
     /** Enable html 5 native validation */
     useHtml5Validation?: boolean;

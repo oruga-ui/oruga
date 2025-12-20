@@ -55,7 +55,7 @@ defineSlots<{
 
 const key = props.parentKey ?? "listbox";
 
-const rootRef = useTemplateRef("rootElement");
+const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({

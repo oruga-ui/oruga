@@ -34,7 +34,8 @@ defineOptions({
 const props = withDefaults(defineProps<MenuItemProps<T>>(), {
     override: undefined,
     active: false,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     options: undefined,
     label: undefined,
     expanded: false,
@@ -73,8 +74,6 @@ defineSlots<{
     default?(): void;
 }>();
 
-const itemValue = props.value ?? useId();
-
 const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
@@ -98,7 +97,7 @@ const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<MenuItemComponent<T>>(() => ({
-    value: itemValue as T,
+    value: props.value,
     disabled: props.disabled,
     hidden: props.hidden,
     parent: menuItem.parent.value,
@@ -136,7 +135,7 @@ function selectItem(event: Event): void {
     isActive.value = !isActive.value;
     if (parent.value.accordion) isExpanded.value = isActive.value;
     parent.value.selectItem(isActive.value ? item.value : undefined);
-    emits("click", itemValue as T, event);
+    emits("click", props.value as T, event);
 }
 
 function triggerReset(childs?: ProviderItem<MenuItemComponent<T>>[]): void {
