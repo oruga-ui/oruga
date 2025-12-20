@@ -20,7 +20,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<ListItemProps<T>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     label: undefined,
     disabled: false,
     hidden: false,
@@ -51,13 +52,11 @@ defineSlots<{
 
 const key = props.parentKey ?? "listbox";
 
-const itemValue = props.value ?? useId();
-
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({
-    value: itemValue as T,
+    value: props.value,
     hidden: isHidden.value,
     isViable: isViable.value,
     setHidden,
@@ -94,9 +93,9 @@ const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
     if (parent.value.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected) =>
-            isEqual(itemValue, selected),
+            isEqual(item.value.data.value, selected),
         );
-    return isEqual(itemValue, parent.value.selected);
+    return isEqual(item.value.data.value, parent.value.selected);
 });
 
 const isFocused = computed(
@@ -107,7 +106,7 @@ const isFocused = computed(
 function clickItem(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, !isSelected.value);
-    emits("click", itemValue as T, event);
+    emits("click", props.value as T, event);
 }
 
 /** Set the item as focused element. */

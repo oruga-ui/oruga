@@ -31,7 +31,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     label: undefined,
     step: undefined,
     variant: undefined,
@@ -61,15 +62,13 @@ defineSlots<{
     default?(props: { active: boolean }): VNode[];
 }>();
 
-const itemValue = props.value ?? useId();
-
 const rootRef = useTemplateRef("rootElement");
 
 const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<StepItemComponent<T>>(() => ({
-    value: itemValue as T,
+    value: props.value,
     label: props.label,
     step: props.step,
     disabled: props.disabled,
