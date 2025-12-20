@@ -35,7 +35,7 @@ export type CheckboxProps<T, IsMultiple extends boolean = false> = {
     falseValue?: T;
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete?: string;
-    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
+    /** Same as native id. Also pass the id to an wrapping `o-field` component - default is an uuid. */
     id?: string;
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;

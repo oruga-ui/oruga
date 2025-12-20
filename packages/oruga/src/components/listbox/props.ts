@@ -15,7 +15,7 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     multiple?: IsMultiple;
     /** Autocomplete options */
     options?: OptionsPropWithGroups<T>;
-    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
+    /** Same as native id. Also pass the id to an wrapping `o-field` component - default is an uuid. */
     id?: string;
     /** Interaction is disabled */
     disabled?: boolean;

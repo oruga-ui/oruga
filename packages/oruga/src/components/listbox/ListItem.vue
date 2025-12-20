@@ -22,7 +22,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<ListItemProps<T>>(), {
     override: undefined,
-    // @ts-expect-error string is not asignale of generic type T
+    // @ts-expect-error string is not assignable of generic type T
     value: () => useId(),
     label: undefined,
     disabled: false,
