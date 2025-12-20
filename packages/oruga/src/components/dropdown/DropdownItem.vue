@@ -20,7 +20,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     label: undefined,
     disabled: false,
     clickable: true,
@@ -42,13 +43,11 @@ defineSlots<{
     default?(): void;
 }>();
 
-const itemValue = props.value ?? useId();
-
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
-    value: itemValue as T,
+    value: props.value,
     disabled: props.disabled,
     hidden: props.hidden,
     clickable: props.clickable,
@@ -70,9 +69,9 @@ const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
     if (parent.value.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected: T) =>
-            isEqual(itemValue, selected),
+            isEqual(item.value.data.value, selected),
         );
-    return isEqual(itemValue, parent.value.selected);
+    return isEqual(item.value.data.value, parent.value.selected);
 });
 
 const isFocused = computed(
@@ -83,7 +82,7 @@ const isFocused = computed(
 function onClick(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, event);
-    emits("click", itemValue as T, event);
+    emits("click", props.value as T, event);
 }
 
 /** Hover listener, focus the item. */

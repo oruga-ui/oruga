@@ -117,7 +117,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 | label     | Item label, unnecessary when default slot is used                                         | string                 | -      |                                                                                                                                                   |
 | override  | Override existing theme classes completely                                                | boolean                | -      |                                                                                                                                                   |
 | tag       | Dropdown item tag name                                                                    | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;itemTag: "div"<br>}</code> |
-| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -      |                                                                                                                                                   |
+| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -      | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                     |
 
 ### Events
 

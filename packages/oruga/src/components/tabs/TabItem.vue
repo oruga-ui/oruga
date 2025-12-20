@@ -32,7 +32,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     label: undefined,
     variant: undefined,
     disabled: false,
@@ -66,15 +67,13 @@ defineSlots<{
     header?(): VNode[];
 }>();
 
-const itemValue = props.value ?? useId();
-
 const rootRef = useTemplateRef("rootElement");
 
 const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
-    value: itemValue as T,
+    value: props.value,
     label: props.label,
     disabled: props.disabled,
     visible: props.visible,
