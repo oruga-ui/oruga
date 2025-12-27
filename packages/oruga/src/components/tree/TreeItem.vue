@@ -15,7 +15,7 @@ import {
 import type {
     TreeComponent,
     TreeItemComponent,
-    SubtreeComponent,
+    // SubtreeComponent,
     SubtreeItemComponent,
 } from "./types";
 import type { TreeItemProps } from "./props";
@@ -103,7 +103,8 @@ const providedSubtreeItemData = computed<SubtreeItemComponent>(() => ({
 
 /** inject functionalities and data from the subtree parent item component */
 // const subtreeItem =
-useProviderChild<SubtreeComponent, SubtreeItemComponent>(rootRef, {
+// SubtreeComponent
+useProviderChild<unknown, SubtreeItemComponent>(rootRef, {
     key: subtreeKey,
     needParent: false,
     data: providedSubtreeItemData,

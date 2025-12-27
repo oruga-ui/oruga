@@ -31,11 +31,11 @@ export type TreeItemComponent<T> = Pick<
 
 export type TreeItem<T> = ProviderItem<TreeItemComponent<T>>;
 
-export type SubtreeComponent = {
-    // expanded: boolean;
-    // setExpand: (state: boolean) => void;
-    // bubbleReset: (childs?: ProviderItem<TreeItemComponent<T>>[]) => void;
-};
+// export type SubtreeComponent = {
+//     // expanded: boolean;
+//     // setExpand: (state: boolean) => void;
+//     // bubbleReset: (childs?: ProviderItem<TreeItemComponent<T>>[]) => void;
+// };
 
 export type SubtreeItemComponent = {
     setHidden: (state: boolean) => void;
