@@ -9,34 +9,74 @@ import type {
 
 const inspectData: InspectData<
     TreeClasses & TreeItemClasses,
-    TreeProps<unknown> & TreeItemProps<unknown>
+    TreeProps<unknown, boolean> & TreeItemProps<unknown>
 > = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
     },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Clas of the root element when disabled.",
+        properties: ["disabled"],
+        action: (data): void => {
+            data.disabled = true;
+        },
+    },
+    selectableClass: {
+        class: "selectableClass",
+        description: "Class of the root element when selectable.",
+        properties: ["selectable"],
+        action: (data): void => {
+            data.selectable = true;
+        },
+    },
+    multipleClass: {
+        class: "multipleClass",
+        description: "Class of the root element when multiple.",
+        properties: ["multiple"],
+        action: (data): void => {
+            data.multiple = true;
+        },
+    },
+    headerClass: {
+        class: "headerClass",
+        description: "Class of the header slot wrapper element.",
+    },
+    footerClass: {
+        class: "footerClass",
+        description: "Class of the footer slot wrapper element.",
+    },
+    emptyClass: {
+        class: "emptyClass",
+        description: "Class of the empty slot wrapper element.",
+        action: (data): void => {
+            data.options = [];
+        },
+    },
     listClass: {
         class: "listClass",
         description: "Class of the tree list element.",
-    },
-    labelClass: {
-        class: "labelClass",
-        description: "Class of the tree label element.",
     },
     itemClass: {
         class: "itemClass",
         subitem: "treeitem",
         description: "Class of the tree item root element.",
     },
-    itemActiveClass: {
-        class: "itemActiveClass",
+    itemSelectedClass: {
+        class: "itemSelectedClass",
         subitem: "treeitem",
-        description: "Class of the tree item root element when active.",
+        description: "Class of the tree item root element when selected.",
     },
     itemFocusedClass: {
         class: "itemFocusedClass",
         subitem: "treeitem",
         description: "Class of the tree item root element when focused.",
+    },
+    itemClickableClass: {
+        class: "itemClickableClass",
+        subitem: "treeitem",
+        description: "Class of the tree item root element when clickable.",
     },
     itemDisabledClass: {
         class: "itemDisabledClass",
@@ -47,38 +87,10 @@ const inspectData: InspectData<
             data.disabled = true;
         },
     },
-    itemButtonClass: {
-        class: "itemButtonClass",
+    itemLabelClass: {
+        class: "itemLabelClass",
         subitem: "treeitem",
-        description: "Class of the tree button element.",
-    },
-    itemButtonActiveClass: {
-        class: "itemButtonActiveClass",
-        subitem: "treeitem",
-        description: "Class of the tree button element when active.",
-    },
-    itemButtonFocusedClass: {
-        class: "itemButtonFocusedClass",
-        subitem: "treeitem",
-        description: "Class of the tree button element when focused.",
-    },
-    itemButtonDisabledClass: {
-        class: "itemButtonDisabledClass",
-        subitem: "treeitem",
-        description: "Class of the tree button element when disabled.",
-        properties: ["disabled"],
-        action: (data): void => {
-            data.disabled = true;
-        },
-    },
-    itemButtonIconClass: {
-        class: "itemButtonIconClass",
-        subitem: "treeitem",
-        description: "Class of the tree button element with icon.",
-        properties: ["icon"],
-        action: (data): void => {
-            data.icon = "times-circle";
-        },
+        description: "Class of the tree item label element element.",
     },
     itemSubtreeClass: {
         class: "itemSubtreeClass",
