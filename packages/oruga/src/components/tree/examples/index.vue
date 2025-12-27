@@ -2,27 +2,36 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
-import Links from "./links.vue";
-import LinksCode from "./links.vue?raw";
-
 import Options from "./options.vue";
 import OptionsCode from "./options.vue?raw";
 </script>
 
 <template>
     <h3 id="base">Base</h3>
-    <ExampleViewer :component="Base" :code="BaseCode" />
-
-    <h3 id="links">Links</h3>
     <p>
-        Instead of using the HTML <code>button</code> tag, the HTML tag can be
-        customised using the <code>tag</code> prop.
+        The component allows the user to select one or more items from a
+        hierarchically organized collection. For example, a file system
+        navigator that uses a tree view, each item displays a folder or file.
+        Folder items can be expanded to reveal the contents of the folder, which
+        may be files, folders, or both.
     </p>
-    <ExampleViewer :component="Links" :code="LinksCode" />
+
+    <div class="info custom-block">
+        <p class="custom-block-title">Accessibility Note:</p>
+        A tree view is primarily navigated with <i>arrow</i> keys on the
+        keyboard instead of the <i>tab</i> key. This form of navigation is more
+        similar to native applications than to web applications. For this
+        reason, consider alternative options to address the functionality you
+        need before using a tree component. A tree component is at the most
+        times not needed for typical site navigation that is styled to look like
+        a tree with expandable sections.
+    </div>
+
+    <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="options">Options</h3>
     <p>
-        Instead of using the <code>&lt;o-menu-item&gt;</code> component directly
+        Instead of using the <code>&lt;o-tree-item&gt;</code> component directly
         inside the default slot, an <code>options</code> prop can be set, which
         can be used to define the options programmatically. It accepts several
         different formats of values:
@@ -54,4 +63,14 @@ import OptionsCode from "./options.vue?raw";
         </p>
     </div>
     <ExampleViewer :component="Options" :code="OptionsCode" />
+
+    <h3 id="Selection">Selection</h3>
+
+    <h4 id="single">Single</h4>
+
+    <h4 id="multiple">Multiple</h4>
+
+    <h4 id="checkbox">Checkbox</h4>
+
+    <h3 id="scrollable">Scrollable</h3>
 </template>

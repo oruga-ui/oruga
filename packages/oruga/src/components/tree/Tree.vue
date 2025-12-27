@@ -39,7 +39,7 @@ import type { TreeComponent, TreeItem, TreeItemComponent } from "./types";
 import type { TreeProps } from "./props";
 
 /**
- * A simple tree, for any type of vertical navigation.
+ * A simple tree view, for any type of hierarchical list.
  * @displayName Tree
  * @requires ./TreeItem.vue
  * @style _tree.scss
@@ -57,16 +57,16 @@ const props = withDefaults(defineProps<TreeProps<T>>(), {
     modelValue: undefined,
     multiple: false,
     options: undefined,
-    scrollHeight: () => getDefault("listbox.scrollHeight", "225"),
+    scrollHeight: () => getDefault("tree.scrollHeight", "225"),
     disabled: false,
     collapsable: true,
     selectable: true,
     checkable: false,
-    emptyLabel: () => getDefault("listbox.emptyLabel"), // TODO: add
+    emptyLabel: () => getDefault("tree.emptyLabel"), // TODO: add
     icon: undefined,
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
-    animation: () => getDefault("listbox.animation", "fade"),
+    animation: () => getDefault("tree.animation", "slide"),
     id: () => useId(),
     ariaLabel: undefined,
     ariaLabelledby: undefined,
@@ -652,8 +652,9 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
         <div v-if="$slots.header" :class="headerClasses">
             <slot name="header" />
         </div>
-        {{ focusedItem?.index }}
-        <!-- TODO REMVOE -->
+
+        <!-- Todo: maybe add filter?! -->
+
         <ul
             :id="id + '_list'"
             ref="listElement"
