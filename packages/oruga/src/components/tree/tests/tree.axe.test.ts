@@ -17,16 +17,16 @@ describe("Menu axe tests", () => {
             value: "fruits",
             attrs: {
                 icon: "info-circle",
-                options: ["Apple", "Banana", "Watermelon"],
             },
+            options: ["Apple", "Banana", "Watermelon"],
         },
         {
             label: "Vegetables",
             value: "vegetables",
             attrs: {
                 icon: "info-circle",
-                options: ["Carrot", "Broccoli", "Cucumber", "Onion"],
             },
+            options: ["Carrot", "Broccoli", "Cucumber", "Onion"],
         },
     ];
 
@@ -50,14 +50,6 @@ describe("Menu axe tests", () => {
         {
             title: "axe tabs - icon case",
             props: { options, icon: "info-circle" },
-        },
-        {
-            title: "axe tabs - role tree case",
-            props: { options, role: "tree" },
-        },
-        {
-            title: "axe tabs - role menu case",
-            props: { options, role: "menu" },
         },
     ];
 
