@@ -5,38 +5,161 @@ import type { ComponentPublicInstance, PropType } from "vue";
 import OTree from "@/components/tree/Tree.vue";
 import OTreeItem from "@/components/tree/TreeItem.vue";
 
+import type { OptionsGroupProp } from "@/composables";
 import type { TreeItemProps } from "../props";
 
 describe("OTree tests", () => {
     enableAutoUnmount(afterEach);
 
+    const options: OptionsGroupProp = [
+        {
+            label: "Documents",
+            attrs: {
+                icon: "folder",
+            },
+            options: [
+                {
+                    label: "Work",
+                    value: "work",
+                    attrs: {
+                        icon: "cog",
+                        options: [
+                            {
+                                label: "Expenses.doc",
+                                value: "expenses",
+                                attrs: {
+                                    icon: "file",
+                                },
+                            },
+                            {
+                                label: "Resume.doc",
+                                value: "resume",
+                                attrs: {
+                                    icon: "file",
+                                },
+                            },
+                        ],
+                    },
+                },
+                {
+                    label: "Home",
+                    value: "home",
+                    attrs: {
+                        icon: "home",
+                        options: [
+                            {
+                                label: "Invoices.txt",
+                                value: "invoices",
+                                attrs: {
+                                    icon: "file",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
+        {
+            label: "Events",
+            value: "events",
+            attrs: {
+                icon: "calendar",
+            },
+            options: [
+                {
+                    label: "Meeting",
+                    value: "meeting",
+                    attrs: {
+                        icon: "calendar-plus",
+                    },
+                },
+                {
+                    label: "Product Launch",
+                    value: "product-launch",
+                    attrs: {
+                        icon: "calendar-plus",
+                    },
+                },
+                {
+                    label: "Report Review",
+                    value: "report-review",
+                    attrs: {
+                        icon: "calendar-plus",
+                    },
+                },
+            ],
+        },
+        {
+            label: "Movies",
+            value: "movies",
+            attrs: {
+                icon: "star",
+            },
+            options: [
+                {
+                    label: "Al Pacino",
+                    value: "al-pacion",
+                    attrs: {
+                        icon: "star",
+                        options: [
+                            {
+                                label: "Scarface",
+                                value: "scarface",
+                                attrs: {
+                                    icon: "video",
+                                },
+                            },
+                            {
+                                label: "Serpico",
+                                value: "serpico",
+                                attrs: {
+                                    icon: "video",
+                                },
+                            },
+                        ],
+                    },
+                },
+                {
+                    label: "Robert De Niro",
+                    value: "robert-de-niro",
+                    attrs: {
+                        icon: "star",
+                        options: [
+                            {
+                                label: "Goodfellas",
+                                value: "goodfellas",
+                                attrs: {
+                                    icon: "video",
+                                },
+                            },
+                            {
+                                label: "Untouchables",
+                                value: "untouchables",
+                                attrs: {
+                                    icon: "video",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
+    ];
+
     test("render correctly", () => {
-        const wrapper = mount(OTree, { props: { label: "My Tree" } });
+        const wrapper = mount(OTree, { props: { options } });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("tree");
         expect(wrapper.html()).toMatchSnapshot();
         expect(wrapper.classes("o-tree")).toBeTruthy();
-    });
 
-    test("render prop label correctly", () => {
-        const label = "Test";
-        const wrapper = mount(OTree, { props: { label } });
-        const labelDiv = wrapper.find(".o-tree__label");
-        expect(labelDiv.exists()).toBeTruthy();
-        expect(labelDiv.text()).toBe(label);
-    });
-
-    test("render slot label correctly", () => {
-        const label = "Test";
-        const wrapper = mount(OTree, { slots: { label } });
-        const labelDiv = wrapper.find(".o-tree__label");
-        expect(labelDiv.exists()).toBeTruthy();
-        expect(labelDiv.text()).toBe(label);
+        const items = wrapper.findAllComponents(OTreeItem);
+        expect(items.length).toBe(options.length);
     });
 
     test("render empty list correctly", () => {
-        const wrapper = mount(OTree);
+        const wrapper = mount(OTree, { props: { options: [] } });
         const listDiv = wrapper.find(".o-tree__list");
         expect(listDiv.exists()).toBeTruthy();
         const items = listDiv.findAll("*");

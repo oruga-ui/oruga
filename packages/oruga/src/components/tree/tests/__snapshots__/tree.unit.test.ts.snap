@@ -1,26 +1,38 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`OMenu tests > menu integration tests > render correctly 1`] = `
-"<nav data-oruga="menu" class="o-menu">
-  <div id="v-1" class="o-menu__label">
-    <!--v-if--><span>My Menu</span>
-  </div>
-  <ul id="v-0" class="o-menu__list" role="tree" tabindex="0" aria-labelledby="v-1">
-    <li id="v-0-1" data-oruga="menu-item" data-id="menu-1" class="o-menu__item" role="none"><button type="button" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span><span>label1</span></button><!-- sub menu items -->
-      <!--v-if-->
-    </li>
-    <li id="v-0-2" data-oruga="menu-item" data-id="menu-2" class="o-menu__item" role="none"><button type="button" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span><span>label2</span></button><!-- sub menu items -->
-      <!--v-if-->
-    </li>
+exports[`OTree tests > render correctly 1`] = `
+"<div data-oruga="tree" class="o-tree o-tree--selectable" label="My Tree">
+  <!--v-if-->
+  <!-- Todo: maybe add filter?! -->
+  <ul id="v-0_list" role="tree" class="o-tree__list o-tree__selectable" style="max-height: 225px; overflow: auto;" aria-multiselectable="false" aria-disabled="false">
+    <transition-group-stub name="slide" appear="false" persisted="false" css="true"></transition-group-stub>
   </ul>
-</nav>"
+  <transition-stub name="slide" appear="false" persisted="false" css="true">
+    <!--v-if-->
+  </transition-stub>
+  <!--v-if-->
+</div>"
 `;
 
-exports[`OMenu tests > render correctly 1`] = `
-"<nav data-oruga="menu" class="o-menu">
-  <div id="v-1" class="o-menu__label">
-    <!--v-if--><span>My Menu</span>
-  </div>
-  <ul id="v-0" class="o-menu__list" role="tree" tabindex="0" aria-labelledby="v-1"></ul>
-</nav>"
+exports[`OTree tests > tree integration tests > render correctly 1`] = `
+"<div data-oruga="tree" class="o-tree o-tree--selectable" label="My Tree">
+  <!--v-if-->
+  <!-- Todo: maybe add filter?! -->
+  <ul id="v-0_list" role="tree" class="o-tree__list o-tree__selectable" style="max-height: 225px; overflow: auto;" aria-multiselectable="false" aria-disabled="false">
+    <transition-group-stub name="slide" appear="false" persisted="false" css="true">
+      <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item o-tree__item--selectable" role="treeitem" tabindex="0" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="label1">
+        <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span><span>label1</span></div><!-- sub tree items -->
+        <!--v-if-->
+      </li>
+      <li id="v-0-2" data-oruga="tree-item" data-id="tree-2" class="o-tree__item o-tree__item--selectable" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="label2">
+        <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span><span>label2</span></div><!-- sub tree items -->
+        <!--v-if-->
+      </li>
+    </transition-group-stub>
+  </ul>
+  <transition-stub name="slide" appear="false" persisted="false" css="true">
+    <!--v-if-->
+  </transition-stub>
+  <!--v-if-->
+</div>"
 `;

@@ -60,10 +60,10 @@ const props = withDefaults(defineProps<TreeProps<T>>(), {
     scrollHeight: () => getDefault("tree.scrollHeight", "225"),
     disabled: false,
     collapsable: true,
-    selectable: true,
+    selectable: false,
     checkable: false,
     emptyLabel: () => getDefault("tree.emptyLabel"), // TODO: add
-    icon: undefined,
+    toggleIcon: () => getDefault("tree.toggleIcon"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
     animation: () => getDefault("tree.animation", "slide"),
@@ -138,6 +138,9 @@ const provideData = computed<TreeComponent<T>>(() => ({
     selectable: props.selectable,
     selected: vmodel.value,
     focsuedItem: focusedItem.value,
+    toggleIcon: props.toggleIcon,
+    iconPack: props.iconPack,
+    iconSize: props.iconSize,
     nextSequence,
     selectItem,
     focusItem,
@@ -404,7 +407,7 @@ function moveFocusDown(event: KeyboardEvent): void {
 function onCollapse(event: KeyboardEvent): void {
     if (!focusedItem.value) return;
 
-    if (focusedItem.value.data.expanded)
+    if (props.collapsable && focusedItem.value.data.expanded)
         focusedItem.value.data.setExpand(false);
     else moveFocusUp(event);
 }
@@ -416,7 +419,11 @@ function onCollapse(event: KeyboardEvent): void {
 function onExpend(event: KeyboardEvent): void {
     if (!focusedItem.value) return;
 
-    if (focusedItem.value.data.hasChildren && !focusedItem.value.data.expanded)
+    if (
+        props.collapsable &&
+        focusedItem.value.data.hasChildren &&
+        !focusedItem.value.data.expanded
+    )
         focusedItem.value.data.setExpand(true);
     else moveFocusDown(event);
 }

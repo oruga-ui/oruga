@@ -4,6 +4,12 @@ import BaseCode from "./base.vue?raw";
 
 import Options from "./options.vue";
 import OptionsCode from "./options.vue?raw";
+
+import Selection from "./selection.vue";
+import SelectionCode from "./selection.vue?raw";
+
+import Slot from "./slot.vue";
+import SlotCode from "./slot.vue?raw";
 </script>
 
 <template>
@@ -68,9 +74,15 @@ import OptionsCode from "./options.vue?raw";
 
     <h4 id="single">Single</h4>
 
+    <ExampleViewer :component="Selection" :code="SelectionCode" />
+
     <h4 id="multiple">Multiple</h4>
 
     <h4 id="checkbox">Checkbox</h4>
 
     <h3 id="scrollable">Scrollable</h3>
+
+    <h3 id="slot">Slot</h3>
+    <p>The item label can be customised using the <code>label</code> slot.</p>
+    <ExampleViewer :component="Slot" :code="SlotCode" />
 </template>

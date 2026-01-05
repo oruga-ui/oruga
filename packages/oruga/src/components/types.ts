@@ -3560,6 +3560,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 emptyLabel: string;
                 /**
+                 * The chevron icon to for the toggle element before each item
+                 */
+                toggleIcon: string;
+                /**
                  * Icon pack to use
                  */
                 iconPack: string;

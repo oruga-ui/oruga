@@ -10,6 +10,9 @@ export type TreeComponent<T> = {
     selectable: boolean;
     selected: T | T[] | undefined;
     focsuedItem: TreeItem<T> | undefined;
+    toggleIcon: string;
+    iconPack: string;
+    iconSize: string;
     nextSequence: () => string;
     selectItem: (value: TreeItem<T>, selection: boolean) => void;
     focusItem: (value: TreeItem<T>) => void;

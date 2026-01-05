@@ -158,18 +158,22 @@ const isSelected = computed(() => {
     return isEqual(item.value.data.value, parent.value.selected);
 });
 
+const itemIconPack = computed(() => props.iconPack ?? parent.value.iconPack);
+
+const itemIconSize = computed(() => props.iconSize ?? parent.value.iconSize);
+
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
-    if (!isSelectable.value) return;
+    // toggle collapsable if not dedicated icon is available
+    if (!parent.value.toggleIcon) toggleExpand();
 
-    // prevent event boubeling up
-    event.stopPropagation();
+    if (isSelectable.value) {
+        const selectionState = parent.value.toggleIcon
+            ? isExpanded.value
+            : !isSelected.value;
+        parent.value.selectItem(item.value, selectionState);
+    }
 
-    // open/close sub item if collapsable
-    if (parent.value.collapsable && hasChildren.value)
-        isExpanded.value = !isSelected.value;
-
-    parent.value.selectItem(item.value, !isSelected.value);
     emits("click", props.value as T, event);
 }
 
@@ -181,6 +185,12 @@ function focusItem(): void {
 const isExpanded = ref(props.expanded);
 // always expand if not collapsible feature
 if (!parent.value.collapsable) isExpanded.value = true;
+
+function toggleExpand(): void {
+    // open/close sub item if collapsable
+    if (parent.value.collapsable && hasChildren.value)
+        isExpanded.value = !isExpanded.value;
+}
 
 function setExpand(state: boolean): void {
     if (!parent.value.collapsable) return;
@@ -266,15 +276,27 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         :aria-label="ariaLabel ?? label"
         :aria-labelledby="ariaLabelledby"
         :aria-owns="hasChildren ? subtreeId : undefined"
-        @click.prevent="clickItem"
+        @click.stop="clickItem"
         @mouseenter="focusItem">
+        <o-icon
+            v-if="parent.toggleIcon"
+            :icon="parent.toggleIcon"
+            :pack="itemIconPack"
+            :size="itemIconSize"
+            @click.prevent="toggleExpand" />
+
         <div :class="labelClasses">
+            <o-icon
+                v-if="icon"
+                :icon="icon"
+                :pack="itemIconPack"
+                :size="itemIconSize" />
+
             <slot
                 name="label"
                 :expanded="isExpanded"
                 :selected="isSelected"
                 :disabled="disabled">
-                <o-icon :icon="icon" :pack="iconPack" :size="iconSize" />
                 <span>{{ label }}</span>
             </slot>
         </div>

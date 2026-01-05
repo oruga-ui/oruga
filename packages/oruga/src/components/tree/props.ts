@@ -26,8 +26,8 @@ export type TreeProps<T, IsMultiple extends boolean = false> = {
     scrollHeight?: string | number;
     /** A label which is displayed when no options are visible */
     emptyLabel?: string;
-    /** Icon to be shown */
-    icon?: string;
+    /** The chevron icon to for the toggle element before each item */
+    toggleIcon?: string;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
