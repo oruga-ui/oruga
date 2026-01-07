@@ -1,3 +1,7 @@
+---
+sidebarDepth: 2
+---
+
 # Listbox
 
 <section class="odocs-head">
@@ -73,6 +77,45 @@ Combine it with the [Field](/components/Field) component to access all functiona
 | default | Define the listbox items here                   |                                                                                                                                                                                                        |
 | empty   | Define the content to show if the list is empty |                                                                                                                                                                                                        |
 | footer  | Define an additional footer                     |                                                                                                                                                                                                        |
+
+</section>
+
+<section class="odocs-specs">
+
+## ListItem Component
+
+> An option item used by the listbox component.
+
+```html
+<o-list-item></o-list-item>
+```
+
+### Props
+
+| Prop name      | Description                                                                       | Type                   | Values                                            | Default                                                                                                                                               |
+| -------------- | --------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaLabel      | Defines a string value that labels an interactive element.                        | string                 | -                                                 |                                                                                                                                                       |
+| ariaLabelledby | Identifier of the underlying input element.                                       | string                 | -                                                 |                                                                                                                                                       |
+| disabled       | Item is disabled                                                                  | boolean                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| hidden         | Define whether the item is visible or not                                         | boolean                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| icon           | Icon to be shown                                                                  | string                 | -                                                 |                                                                                                                                                       |
+| iconPack       | Icon pack to use                                                                  | string                 | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconSize       | Icon size                                                                         | string                 | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code> |
+| label          | Item label, unnecessary when default slot is used                                 | string                 | -                                                 |                                                                                                                                                       |
+| override       | Override existing theme classes completely                                        | boolean                | -                                                 |                                                                                                                                                       |
+| value          | Item value (it will be used as v-model of wrapper component) - default is an uuid | string\|number\|object | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                         |
+
+### Events
+
+| Event name | Properties                                                                 | Description   |
+| ---------- | -------------------------------------------------------------------------- | ------------- |
+| click      | **value** `unknown` - value prop data<br/>**event** `event` - native event | onclick event |
+
+### Slots
+
+| Name    | Description                               | Bindings                                                                                |
+| ------- | ----------------------------------------- | --------------------------------------------------------------------------------------- |
+| default | Override the label, default is label prop | **selected** `boolean` - item is selected<br/>**disabled** `boolean` - item is disabled |
 
 </section>
 

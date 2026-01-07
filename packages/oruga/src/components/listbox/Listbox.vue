@@ -47,6 +47,7 @@ import type { ListItem, ListboxComponent, ListItemComponent } from "./types";
  * Listbox is used to select one or more values from a list of items.
  * @experimental
  * @displayName Listbox
+ * @requires ./ListItem.vue
  * @style _listbox.scss
  */
 defineOptions({
