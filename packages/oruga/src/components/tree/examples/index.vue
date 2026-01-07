@@ -72,9 +72,10 @@ import SlotCode from "./slot.vue?raw";
 
     <h3 id="Selection">Selection</h3>
     <p>
-        Trees can be "single-select", allowing users to choose just one item for
-        an action, or "multi-select", where users are able to select more than
-        one item for an action.
+        When setting the <code>selectable</code> property, users can select any
+        item. The current selected item value is available in the
+        <code>modelValue</code> property. In "multi-select" trees users are able
+        to select more than one item.
     </p>
 
     <h4 id="single">Single</h4>
@@ -89,19 +90,29 @@ import SlotCode from "./slot.vue?raw";
 
     <h4 id="multiple">Multiple</h4>
     <p>
-        When a multi-select tree receives focus, if none of the tree items are
-        selected before the tree receives focus, focus is set on the first tree
-        item. If one or more tree items are selected before the tree receives
-        focus, focus is set on the first selected node. In multi-select trees,
-        the selected state is always independent of the focus. For example, in a
-        typical file system navigator, the user can move focus to select any
-        number of files for an action, such as copy or move. The visual design
-        should make it clear which items are selected and which item has focus.
+        You can enable multi-select with the <code>multiple</code> property. In
+        multi-select trees, the selected state is always independent of the
+        focus. For example, in a typical file system navigator, the user can
+        move focus to select any number of files for an action, such as copy or
+        move. The visual design should make it clear which items are selected
+        and which item has focus. When a multi-select tree receives focus, if
+        none of the tree items are selected before the tree receives focus,
+        focus is set on the first tree item. If one or more tree items are
+        selected before the tree receives focus, focus is set on the first
+        selected node.
     </p>
 
-    <h4 id="checkbox">Checkbox</h4>
+    <!-- <h4 id="checkbox">Checkbox</h4> -->
 
     <h3 id="scrollable">Scrollable</h3>
+
+    <h3 id="scrollable">Scrollable</h3>
+    <p>
+        When having to many options, consider adding a max height using the
+        <code>scrollHeight</code> property, which allows the tree to remain at a
+        fixed height.
+    </p>
+    <!-- <ExampleViewer :component="Scrollable" :code="ScrollableCode" /> -->
 
     <h3 id="slot">Slot</h3>
     <p>The item label can be customised using the <code>label</code> slot.</p>

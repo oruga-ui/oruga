@@ -3,7 +3,7 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
 import { nextTick } from "vue";
 
-import type { OptionsProp } from "@/composables";
+import type { OptionsGroupProp } from "@/composables";
 import type { TreeProps } from "../props";
 
 import OTree from "../Tree.vue";
@@ -11,45 +11,161 @@ import OTree from "../Tree.vue";
 describe("Menu axe tests", () => {
     enableAutoUnmount(afterEach);
 
-    const options: OptionsProp<string> = [
+    const options: OptionsGroupProp<string> = [
         {
-            label: "Fruits",
-            value: "fruits",
+            label: "Documents",
             attrs: {
-                icon: "info-circle",
+                icon: "folder",
             },
-            options: ["Apple", "Banana", "Watermelon"],
+            options: [
+                {
+                    label: "Work",
+                    value: "work",
+                    attrs: {
+                        icon: "cog",
+                        options: [
+                            {
+                                label: "Expenses.doc",
+                                value: "expenses",
+                                attrs: {
+                                    icon: "file",
+                                },
+                            },
+                            {
+                                label: "Resume.doc",
+                                value: "resume",
+                                attrs: {
+                                    icon: "file",
+                                },
+                            },
+                        ],
+                    },
+                },
+                {
+                    label: "Home",
+                    value: "home",
+                    attrs: {
+                        icon: "home",
+                        options: [
+                            {
+                                label: "Invoices.txt",
+                                value: "invoices",
+                                attrs: {
+                                    icon: "file",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
         },
         {
-            label: "Vegetables",
-            value: "vegetables",
+            label: "Events",
+            value: "events",
             attrs: {
-                icon: "info-circle",
+                icon: "calendar",
             },
-            options: ["Carrot", "Broccoli", "Cucumber", "Onion"],
+            options: [
+                {
+                    label: "Meeting",
+                    value: "meeting",
+                    attrs: {
+                        icon: "calendar-plus",
+                    },
+                },
+                {
+                    label: "Product Launch",
+                    value: "product-launch",
+                    attrs: {
+                        icon: "calendar-plus",
+                    },
+                },
+                {
+                    label: "Report Review",
+                    value: "report-review",
+                    attrs: {
+                        icon: "calendar-plus",
+                    },
+                },
+            ],
+        },
+        {
+            label: "Movies",
+            value: "movies",
+            attrs: {
+                icon: "star",
+            },
+            options: [
+                {
+                    label: "Al Pacino",
+                    value: "al-pacion",
+                    attrs: {
+                        icon: "star",
+                        options: [
+                            {
+                                label: "Scarface",
+                                value: "scarface",
+                                attrs: {
+                                    icon: "video",
+                                },
+                            },
+                            {
+                                label: "Serpico",
+                                value: "serpico",
+                                attrs: {
+                                    icon: "video",
+                                },
+                            },
+                        ],
+                    },
+                },
+                {
+                    label: "Robert De Niro",
+                    value: "robert-de-niro",
+                    attrs: {
+                        icon: "star",
+                        options: [
+                            {
+                                label: "Goodfellas",
+                                value: "goodfellas",
+                                attrs: {
+                                    icon: "video",
+                                },
+                            },
+                            {
+                                label: "Untouchables",
+                                value: "untouchables",
+                                attrs: {
+                                    icon: "video",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
         },
     ];
 
     const a11yCases: { title: string; props: TreeProps<string> }[] = [
         {
             title: "axe tabs - base case",
-            props: { options },
+            props: { options, ariaLabel: "Tree Component" },
         },
         {
-            title: "axe tabs - label case",
-            props: { options, label: "My Label" },
+            title: "axe tabs - empty case",
+            props: { options: [] },
         },
         {
-            title: "axe tabs - no accordion case",
-            props: { options, accordion: false },
+            title: "axe tabs - collapsable case",
+            props: { options, collapsable: true },
         },
         {
             title: "axe tabs - disabled case",
             props: { options, disabled: true },
         },
         {
-            title: "axe tabs - icon case",
-            props: { options, icon: "info-circle" },
+            title: "axe tabs - selectable case",
+            props: { options, selectable: true, modelValue: "invoices" },
         },
     ];
 

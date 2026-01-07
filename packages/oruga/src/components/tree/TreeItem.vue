@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, ref, useId, useTemplateRef } from "vue";
+import { computed, ref, useId, useTemplateRef, watch } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -34,7 +34,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<TreeItemProps<T>>(), {
     override: undefined,
-    active: false,
     // @ts-expect-error string is not asignale of generic type T
     value: () => useId(),
     options: undefined,
@@ -53,16 +52,15 @@ const props = withDefaults(defineProps<TreeItemProps<T>>(), {
 
 const emits = defineEmits<{
     /**
-     * active prop two-way binding
-     * @param value {boolean} - updated active prop
-     */
-    "update:active": [value: boolean];
-    /**
      * onclick event
      * @param value {unknown} - value prop data
      * @param event {event} - native event
      */
     click: [value: T, event: Event];
+    /** on sub tree opened */
+    open: [];
+    /** on sub tree closed */
+    close: [];
 }>();
 
 defineSlots<{
@@ -186,14 +184,18 @@ const isExpanded = ref(props.expanded);
 // always expand if not collapsible feature
 if (!parent.value.collapsable) isExpanded.value = true;
 
+watch(isExpanded, (value) => (value ? emits("open") : emits("close")));
+
+/** open/close sub item if collapsable */
 function toggleExpand(): void {
-    // open/close sub item if collapsable
-    if (parent.value.collapsable && hasChildren.value)
-        isExpanded.value = !isExpanded.value;
+    if (!parent.value.collapsable) return;
+    if (!hasChildren.value) return;
+    isExpanded.value = !isExpanded.value;
 }
 
 function setExpand(state: boolean): void {
     if (!parent.value.collapsable) return;
+    if (!hasChildren.value) return;
     isExpanded.value = state;
     // set hidden state for all the child items
     childItems.value.forEach((item) => item.data.setHidden(!state));

@@ -35,8 +35,8 @@ import {
 
 import { injectField } from "@/components/field/fieldInjection";
 
-import type { TreeComponent, TreeItem, TreeItemComponent } from "./types";
 import type { TreeProps } from "./props";
+import type { TreeComponent, TreeItem, TreeItemComponent } from "./types";
 
 /**
  * A simple tree view, for any type of hierarchical list.
@@ -52,12 +52,12 @@ defineOptions({
 
 type ModelValue = TreeProps<T, IsMultiple>["modelValue"];
 
-const props = withDefaults(defineProps<TreeProps<T>>(), {
+const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
-    multiple: false,
+    // multiple: false,
     options: undefined,
-    scrollHeight: () => getDefault("tree.scrollHeight", "225"),
+    scrollHeight: () => getDefault("tree.scrollHeight"),
     disabled: false,
     collapsable: true,
     selectable: false,
