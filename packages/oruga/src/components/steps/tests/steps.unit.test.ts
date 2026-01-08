@@ -122,13 +122,51 @@ describe("OSteps tests", () => {
                 { label: "Jack", value: "jack", attrs: { clickable: true } },
             ];
 
+            test("render clickable state correctly", async () => {
+                const options: OptionsProp<string> = [
+                    {
+                        label: "Flint",
+                        value: "flint",
+                        attrs: { clickable: true },
+                    },
+                    {
+                        label: "Vane",
+                        value: "vane",
+                    },
+                    {
+                        label: "Billy",
+                        value: "billy",
+                        attrs: { clickable: false },
+                    },
+                    {
+                        label: "Jack",
+                        value: "jack",
+                    },
+                ];
+
+                const wrapper = mount(OSteps, {
+                    props: { options, modelValue: options[3].value },
+                });
+                await nextTick(); // await child items got rendered
+
+                const stepElements = wrapper.findAll(".o-steps__step");
+                expect(stepElements).toHaveLength(options.length);
+
+                stepElements.forEach((el, idx) => {
+                    console.log(options[idx].label);
+                    expect(el.classes("o-steps__step--clickable")).toBe(
+                        options[idx].attrs?.clickable ?? idx !== 3,
+                    );
+                });
+            });
+
             test("render accordingly when item is clicked", async () => {
                 let currentIndex = 2;
 
                 const wrapper = mount(OSteps, {
                     props: { options, modelValue: options[currentIndex].value },
                 });
-                await nextTick();
+                await nextTick(); // await child items got rendered
 
                 const stepElements = wrapper.findAll(".o-steps__step");
                 expect(stepElements).toHaveLength(options.length);
@@ -200,7 +238,7 @@ describe("OSteps tests", () => {
                 const wrapper = mount(OSteps, {
                     props: { options, modelValue: options[currentIndex].value },
                 });
-                await nextTick();
+                await nextTick(); // await child items got rendered
 
                 const navigation = wrapper.find(".o-steps__navigation");
                 expect(navigation.exists()).toBeTruthy();
@@ -240,7 +278,7 @@ describe("OSteps tests", () => {
                 const wrapper = mount(OSteps, {
                     props: { options, modelValue: options[currentIndex].value },
                 });
-                await nextTick();
+                await nextTick(); // await child items got rendered
 
                 const navigation = wrapper.find(".o-steps__navigation");
                 expect(navigation.exists()).toBeTruthy();
