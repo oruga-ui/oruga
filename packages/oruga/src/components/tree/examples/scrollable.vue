@@ -1,7 +1,7 @@
 <template>
     <section>
         <o-field label="Sidebar">
-            <o-tree>
+            <o-tree scroll-height="250" :collapsable="false">
                 <o-tree-item icon="folder" label="Documents">
                     <o-tree-item icon="cog" label="Work">
                         <o-tree-item icon="file" label="Expenses.doc" />

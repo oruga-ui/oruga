@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const selected = ref<string>();
+const selected = ref<string[]>();
 </script>
 
 <template>
     <section>
-        <o-tree v-model="selected" selectable>
+        <o-tree v-model="selected" selectable multiple>
             <o-tree-item icon="folder" label="Documents" value="documents">
                 <o-tree-item icon="cog" label="Work" value="work">
                     <o-tree-item

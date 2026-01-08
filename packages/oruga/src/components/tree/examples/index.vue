@@ -8,6 +8,12 @@ import OptionsCode from "./options.vue?raw";
 import Selection from "./selection.vue";
 import SelectionCode from "./selection.vue?raw";
 
+import Multiple from "./multiple.vue";
+import MultipleCode from "./multiple.vue?raw";
+
+import Scrollable from "./scrollable.vue";
+import ScrollableCode from "./scrollable.vue?raw";
+
 import Slot from "./slot.vue";
 import SlotCode from "./slot.vue?raw";
 </script>
@@ -21,7 +27,6 @@ import SlotCode from "./slot.vue?raw";
         Folder items can be expanded to reveal the contents of the folder, which
         may be files, folders, or both.
     </p>
-
     <div class="info custom-block">
         <p class="custom-block-title">Accessibility Note:</p>
         A tree view is primarily navigated with <i>arrow</i> keys on the
@@ -32,7 +37,6 @@ import SlotCode from "./slot.vue?raw";
         times not needed for typical site navigation that is styled to look like
         a tree with expandable sections.
     </div>
-
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="options">Options</h3>
@@ -57,7 +61,6 @@ import SlotCode from "./slot.vue?raw";
             <code>options</code> to the option object.
         </li>
     </ul>
-
     <div class="info custom-block">
         <p class="custom-block-title">Note</p>
         <p>
@@ -85,7 +88,6 @@ import SlotCode from "./slot.vue?raw";
         If a tree item is selected before the tree receives focus, focus is set
         on the selected tree item.
     </p>
-
     <ExampleViewer :component="Selection" :code="SelectionCode" />
 
     <h4 id="multiple">Multiple</h4>
@@ -101,18 +103,20 @@ import SlotCode from "./slot.vue?raw";
         selected before the tree receives focus, focus is set on the first
         selected node.
     </p>
+    <ExampleViewer :component="Multiple" :code="MultipleCode" />
 
     <!-- <h4 id="checkbox">Checkbox</h4> -->
 
     <h3 id="scrollable">Scrollable</h3>
-
-    <h3 id="scrollable">Scrollable</h3>
     <p>
         When having to many options, consider adding a max height using the
-        <code>scrollHeight</code> property, which allows the tree to remain at a
-        fixed height.
+        <code>scrollHeight</code> property, which allows to cap the tree at a
+        fixed <code>max-height</code>. This will render a long tree of options
+        with a scrollbar. The component will emit a <code>scroll-start</code> or
+        <code>scroll-end</code> event, when the top or bottom of the tree is
+        reached.
     </p>
-    <!-- <ExampleViewer :component="Scrollable" :code="ScrollableCode" /> -->
+    <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
     <h3 id="slot">Slot</h3>
     <p>The item label can be customised using the <code>label</code> slot.</p>

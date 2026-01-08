@@ -102,14 +102,9 @@ const inspectData: InspectData<
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-tree v-bind="props" label="tree">
+        <o-tree v-bind="props">
             <o-tree-item v-bind="props" icon="info-circle" label="Info" />
-            <o-tree-item
-                v-bind="props"
-                icon="cog"
-                label="Subtree"
-                active
-                expanded>
+            <o-tree-item v-bind="props" icon="cog" label="Subtree" expanded>
                 <o-tree-item v-bind="props" icon="user" label="Users" />
                 <o-tree-item
                     v-bind="props"

@@ -1,6 +1,6 @@
 <template>
     <section>
-        <o-field label="Sibedar">
+        <o-field label="Sidebar">
             <o-tree label="Links" :collapsable="false">
                 <o-tree-item icon="link">
                     <template #label>
