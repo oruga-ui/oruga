@@ -21,17 +21,30 @@ import ScrollCode from "./scroll.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <p>
-        Listboxes are a great and accessible select menus for your app, complete
-        with robust support for keyboard navigation.
+        Listboxes are great and accessible select menus for your app, complete
+        with robust support for keyboard navigation and, unlike HTML
+        <code>&lt;select&gt;</code> elements, may contain images. The
+        <code>v-model</code> can be used to bind the selected value. By default
+        the component allows a single option to be chosen.
     </p>
+
+    <div class="info custom-block">
+        <p class="custom-block-title">Accessibility Note:</p>
+        When assistive technologies present a listbox, the name of an option is
+        calculated by the browser as a flat string. Therefore, the content of an
+        option should not contain any semantic information, such as a heading.
+        In addition, assistive technologies does not provide an accessible way
+        to present a list of interactive elements for the listbox role, such as
+        links, buttons, or checkboxes.
+    </div>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="multiple">Multiple</h3>
     <p>
-        The <code>v-model</code> can be used to bind the selected value. By
-        default the component allows a single option to be chosen. When the
+        When the
         <code>multiple</code> prop is used, the component become a multi-select
-        listbox that allows multiple options to be selected.
+        listbox that allows multiple options to be selected. The
+        <code>v-model</code> now contains a list of all selected items.
     </p>
     <ExampleViewer :component="Multiple" :code="MultipleCode" />
 
@@ -39,7 +52,7 @@ import ScrollCode from "./scroll.vue?raw";
     <p>
         Instead of using the <code>&lt;o-list-item&gt;</code> component directly
         inside the default slot, an <code>options</code> prop can be defined,
-        which can be used to define the options programmatically. It accepts
+        which can be used to specify the options programmatically. It accepts
         several different formats of values:
     </p>
     <ul>
@@ -73,8 +86,8 @@ import ScrollCode from "./scroll.vue?raw";
     <p>
         The component provides a built-in filtering feature, which can be
         enabled by adding the <code>filterable</code> property. A custom filter
-        function can be defined using the <code>filter</code> prop. By default,
-        a label string comparison is performed.
+        function can be defined using the <code>filter</code> property. By
+        default, a lowercased label string comparison is performed.
     </p>
     <ExampleViewer :component="Filterable" :code="FilterableCode" />
 
@@ -90,13 +103,14 @@ import ScrollCode from "./scroll.vue?raw";
 
     <h3 id="scroll">Infinite Scroll & Async Data</h3>
     <p>
-        The list box is capped on a <code>max-height</code> with the
-        <code>scrollHeight</code> prop. A long list of options will be rendere
+        When having to many options, consider adding a max height using the
+        <code>scrollHeight</code> property, which allows to cap the list at a
+        fixed <code>max-height</code>. This will render a long list of options
         with a scrollbar. The component will emit a <code>scroll-start</code> or
         <code>scroll-end</code> event, when the top or bottom of the list is
         reached. These events can be used to load more options as needed.
-        Consider adding <code>backend-filtering</code> when manually updating
-        options on filter value changes.
+        Consider adding <code>backend-filtering</code> when updating options
+        manually in response to changes in the filter value.
     </p>
     <ExampleViewer :component="Scroll" :code="ScrollCode" />
 </template>

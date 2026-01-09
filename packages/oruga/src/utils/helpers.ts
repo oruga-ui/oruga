@@ -80,7 +80,7 @@ export const toCssDimension = (
           ? String(width)
           : String(width) + dimension;
 
-export function isEmpty(value: any): boolean {
+export function isEmpty(value: unknown): boolean {
     return (
         value === null ||
         value === undefined ||

@@ -137,7 +137,7 @@ const vmodel = defineModel<ModelValue, string, string, ModelValue>({
 });
 
 // if `id` is given set as `for` property on o-field wrapper
-if (props.id) parentField?.value?.setInputId(props.id);
+if (props.id) parentField.value?.setInputId(props.id);
 
 /** Get value length */
 const valueLength = computed(() =>
