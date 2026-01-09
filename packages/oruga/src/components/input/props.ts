@@ -69,7 +69,7 @@ export type InputProps<IsNumber extends boolean = false> = {
     clearIcon?: string;
     /** Show status icon using field and variant prop */
     statusIcon?: boolean;
-    /** Number of milliseconds to delay before to emit input event */
+    /** Number of milliseconds to delay before the value get emitted */
     debounce?: number;
     /** Native options to use in HTML5 validation */
     autocomplete?: string;
