@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const data = ref([
+const data = [
     {
         id: 1,
         user: { first_name: "Jesse", last_name: "Simmons" },
@@ -176,7 +176,7 @@ const data = ref([
         date: "2016/04/12 00:05:35",
         gender: "Male",
     },
-]);
+];
 
 const isPaginated = ref(true);
 const isPaginationSimple = ref(false);

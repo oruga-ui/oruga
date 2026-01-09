@@ -159,7 +159,7 @@ export type TableProps<T> = {
      */
     filtersEvent?: string;
     /** Filtering debounce time (in milliseconds) */
-    filterDebounce?: number;
+    filtersDebounce?: number;
     /** Label to be shown when the table is empty */
     emptyLabel?: string;
     /** Icon to be shown when the table is empty */

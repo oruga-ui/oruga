@@ -2,7 +2,13 @@
 import { computed, useSlots, useTemplateRef, type VNode } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
-import { toCssDimension } from "@/utils/helpers";
+import {
+    escapeRegExpChars,
+    getPropertyValue,
+    isDefined,
+    removeDiacriticsFromString,
+    toCssDimension,
+} from "@/utils/helpers";
 
 import type { TableColumn, TableColumnComponent } from "./types";
 import type { TableColumnProps } from "./props";
@@ -101,6 +107,8 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
     ...(props as TableColumn<T>),
     $slots: slots,
     style: style.value,
+    matches,
+    getValue,
     thClasses: thClasses.value,
     tdClasses: tdClasses.value,
     thSubClasses: thSubheadingClasses.value,
@@ -115,6 +123,33 @@ const style = computed(() => ({
     width: toCssDimension(props.width),
     "min-width": toCssDimension(props.width),
 }));
+
+/** Check if the formated row value for this column matches the given value. */
+function matches(row: T, value: string): boolean {
+    // if column has custom search funtion return result
+    if (typeof props.customSearch === "function")
+        return props.customSearch(row, value);
+
+    // if column has custom filter funtion return result
+    if (typeof props.customFilter === "function")
+        return props.customFilter(row, value);
+
+    // get the visible column value for the row
+    const rowValue = getValue(row);
+
+    // check if value is defined
+    if (!isDefined(rowValue)) return false;
+
+    // check if the value matches the filter string by regex comparison
+    const re = new RegExp(escapeRegExpChars(value), "i");
+    return re.test(removeDiacriticsFromString(rowValue)) || re.test(rowValue);
+}
+
+/** Returns the formated row value for this column. */
+function getValue(row: T): string {
+    // @ts-expect-error getPropertyValue arguments does not patch perfect to TableColumn<T> attributes
+    return getPropertyValue(row, props.field, props.formatter);
+}
 
 // #region --- Computed Component Classes ---
 
