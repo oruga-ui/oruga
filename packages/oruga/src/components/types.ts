@@ -3545,6 +3545,93 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 arrowVariantClass: ClassDefinition;
             }>;
+        tree?: ComponentConfigBase &
+            Partial<{
+                /**
+                 * Height of the tree, a scrollbar is defined if height of list exceeds this value
+                 */
+                scrollHeight: number | string;
+                /**
+                 * A label which is displayed when no options are visible
+                 */
+                emptyLabel: string;
+                /**
+                 * The chevron icon to for the toggle element before each item
+                 */
+                toggleIcon: string;
+                /**
+                 * Icon pack to use
+                 */
+                iconPack: string;
+                /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
+                 * Custom animation (transition name)
+                 */
+                animation: string;
+                /**
+                 * Class of the root element
+                 */
+                rootClass: ClassDefinition;
+                /**
+                 * Clas of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
+                /**
+                 * Clas of the root element when selectable
+                 */
+                selectableClass: ClassDefinition;
+                /**
+                 * Clas of the root element when multiple
+                 */
+                multipleClass: ClassDefinition;
+                /**
+                 * Class of the header slot wrapper element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the footer slot wrapper element
+                 */
+                footerClass: ClassDefinition;
+                /**
+                 * Class of the empty slot wrapper element
+                 */
+                emptyClass: ClassDefinition;
+                /**
+                 * Class of the tree list element
+                 */
+                listClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element
+                 */
+                itemClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when selected
+                 */
+                itemSelectedClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when focused
+                 */
+                itemFocusedClass: ClassDefinition;
+                /**
+                 * Class of the item element when clickable
+                 */
+                itemClickableClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when disabled
+                 */
+                itemDisabledClass: ClassDefinition;
+                /**
+                 * Class of the tree item label element element
+                 */
+                itemLabelClass: ClassDefinition;
+                /**
+                 * Class of the tree item subtree element
+                 */
+                itemSubtreeClass: ClassDefinition;
+            }>;
         upload?: ComponentConfigBase &
             Partial<{
                 /**

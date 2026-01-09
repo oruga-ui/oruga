@@ -488,10 +488,9 @@ function onDownPressed(event: Event): void {
 
 function onEnter(event: Event): void {
     if (!isActive.value) return;
-    if (focusedItem.value) {
-        setFocus(focusedItem.value);
-        focusedItem.value.data.selectItem(event);
-    }
+    if (!focusedItem.value) return;
+    setFocus(focusedItem.value);
+    focusedItem.value.data.selectItem(event);
 }
 
 /** Go to the first viable item */
