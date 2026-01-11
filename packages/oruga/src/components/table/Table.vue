@@ -518,11 +518,20 @@ watch(tableRows, () => {
 
 /*
  * Total data count.
- * If backend paginated, use props total else use rows data length as pagination total.
+ * If backend paginated, use props total.
+ * If filtering is active, use filtered rows count.
+ * Otherwise use rows data length as pagination total.
  */
-const tableTotal = computed(() =>
-    props.backendPagination ? props.total : tableRows.value.length,
-);
+const tableTotal = computed(() => {
+    if (props.backendPagination) return props.total;
+    
+    // If client-side filtering is active, count filtered rows
+    if (!props.backendFiltering && Object.values(filters.value).filter(Boolean).length > 0) {
+        return tableRows.value.filter((row) => !isRowFiltered(row.value)).length;
+    }
+    
+    return tableRows.value.length;
+});
 
 /** total rows count  */
 const rowCount = computed(() => {
@@ -670,6 +679,10 @@ function handleFiltersChange(value: Record<string, string>): void {
     emits("filters-change", value);
     // if not backend filtered, recompute rows visibility with updated filters
     if (!props.backendFiltering) {
+        // Reset to first page when filters change to avoid being on a non-existent page
+        if (props.paginated && !props.backendPagination) {
+            tableCurrentPage.value = 1;
+        }
         filterTableRows();
         // force tableRows reactivity to update
         triggerRef(tableRows);
@@ -689,33 +702,85 @@ watch(
 
 /** applies visability filter of reactive tableRows */
 function filterTableRows(): void {
-    // calculate pagination information
+    // if backend filtered, skip client-side filtering
+    if (props.backendFiltering) {
+        // if backend paginated, skip client-side pagination
+        if (!props.backendPagination && props.paginated) {
+            const currentPage = tableCurrentPage.value;
+            const perPage = Number(props.perPage);
+            const pageStart = (currentPage - 1) * perPage;
+            const pageEnd = pageStart + perPage;
+
+            filterOptionsItems(tableRows, (row, idx) => {
+                // paginate row based on all rows
+                if (
+                    tableRows.value.length > perPage &&
+                    (idx < pageStart || idx >= pageEnd)
+                ) {
+                    return true; // row is invisible (filtered out)
+                }
+                return false;
+            });
+        } else {
+            // no filtering or pagination needed
+            filterOptionsItems(tableRows, () => false);
+        }
+        return;
+    }
+
+    // client-side filtering: first filter all rows, then paginate filtered results
     const currentPage = tableCurrentPage.value;
     const perPage = Number(props.perPage);
-    const pageStart = (currentPage - 1) * perPage;
-    const pageEnd = pageStart + perPage;
+    const hasFilters = Object.values(filters.value).filter(Boolean).length > 0;
 
-    // update hidden state for each row
-    filterOptionsItems(tableRows, (row, idx) => {
-        // if paginated not backend paginated, paginate row
-        if (props.paginated && !props.backendPagination) {
-            // if not only one page and not on active page
+    // First pass: collect indices of rows that pass the filter
+    const filteredRowIndices: number[] = [];
+    if (hasFilters) {
+        tableRows.value.forEach((row, idx) => {
+            if (!isRowFiltered(row.value)) {
+                filteredRowIndices.push(idx);
+            }
+        });
+    } else {
+        // No filters active, all rows pass filter
+        tableRows.value.forEach((_, idx) => filteredRowIndices.push(idx));
+    }
+
+    // Second pass: apply pagination to filtered rows
+    if (props.paginated && !props.backendPagination) {
+        const pageStart = (currentPage - 1) * perPage;
+        const pageEnd = pageStart + perPage;
+
+        filterOptionsItems(tableRows, (row, idx) => {
+            // First check if row passes filter criteria
+            if (hasFilters && isRowFiltered(row.value)) {
+                return true; // row is hidden (filtered out)
+            }
+
+            // Row passed filter, now check pagination based on filtered row position
+            const filteredIndex = filteredRowIndices.indexOf(idx);
+            if (filteredIndex === -1) {
+                return true; // shouldn't happen, but hide if not found
+            }
+
+            // If there are more filtered rows than per page and this row is not on current page
             if (
-                tableRows.value.length > perPage &&
-                (idx < pageStart || idx >= pageEnd)
-            )
-                // return row is invisible (filtered out)
-                return true;
-        }
+                filteredRowIndices.length > perPage &&
+                (filteredIndex < pageStart || filteredIndex >= pageEnd)
+            ) {
+                return true; // row is invisible (filtered out by pagination)
+            }
 
-        // if not backend filtered, filter row
-        if (!props.backendFiltering)
-            // return row is hidden (filtered out) based on filters
-            return isRowFiltered(row.value);
-
-        // return row is visible (not filtered out)
-        return false;
-    });
+            // row is visible (passed filter and pagination)
+            return false;
+        });
+    } else {
+        // No pagination, only apply filtering
+        filterOptionsItems(tableRows, (row) => {
+            // Hide row if it doesn't pass filter
+            return hasFilters && isRowFiltered(row.value);
+        });
+    }
 }
 
 /**
