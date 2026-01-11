@@ -10,6 +10,7 @@ import {
     toRaw,
     type MaybeRefOrGetter,
     type VNode,
+    triggerRef,
 } from "vue";
 
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
@@ -498,7 +499,7 @@ const normalizedTableRows = computed<TableRow<T>[]>(() => {
 });
 
 /** Filtered normalized rows by any given filter value. */
-const filteredRows = computed(() =>
+const filteredRows = computed<TableRow<T>[]>(() =>
     // defines the hidden state on the original row list and returns a filtered row list
     filterRows(normalizedTableRows.value),
 );
@@ -570,7 +571,9 @@ const ariaRowIndexStart = computed(() => {
 });
 
 function paginateRows(rows: TableRow<T>[]): TableRow<T>[] {
-    if (!props.paginated || props.backendPagination) return rows;
+    if (!props.paginated || props.backendPagination)
+        // always return a new array object
+        return [...rows];
 
     // calculate pagination information
     const perPage = Number(props.perPage);
@@ -620,7 +623,9 @@ function onFiltersEvent(event: Event): void {
  * Returns a filtered list of the mutated rows.
  */
 function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
-    if (!hasFilter.value || props.backendFiltering) return rows;
+    if (!hasFilter.value || props.backendFiltering)
+        // always return a new array object
+        return [...rows];
 
     // check if a row is filtered out (hidden) by not matching any active filter expresssions
     return rows.filter((row) => {
@@ -699,7 +704,7 @@ function sortByField(field: string, direction: "asc" | "desc"): void {
 function sort(
     column: TableColumnItem<T>,
     updateDirection = false,
-    event?: Event,
+    event: Event = new Event("sort"),
 ): void {
     if (!column?.sortable) return;
 
@@ -710,24 +715,23 @@ function sort(
 
     // if not first time sort
     if (currentSortColumn.value)
-        emits(
-            "sort",
-            column,
-            isAsc.value ? "asc" : "desc",
-            event || new Event("sort"),
-        );
+        emits("sort", column, isAsc.value ? "asc" : "desc", event);
 
     currentSortColumn.value = column;
 
     // sort rows by mutating the array
-    sortRows(normalizedTableRows.value);
+    sortRows(normalizedTableRows.value, column);
+
+    // force trigger effects for this variable
+    // after making deep mutations
+    // to update reactive dependencies
+    triggerRef(normalizedTableRows);
 }
 
 /** sort rows by mutating the given array */
-function sortRows(rows: TableRow<T>[]): TableRow<T>[] {
-    if (!currentSortColumn.value || props.backendSorting) return rows;
+function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
+    if (props.backendSorting) return rows;
 
-    const column = currentSortColumn.value;
     // sort rows by mutating the tableRows array
     return sortBy<TableRow<T>>(
         rows,
