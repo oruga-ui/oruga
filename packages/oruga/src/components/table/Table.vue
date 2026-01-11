@@ -8,9 +8,9 @@ import {
     toValue,
     useTemplateRef,
     toRaw,
+    triggerRef,
     type MaybeRefOrGetter,
     type VNode,
-    triggerRef,
 } from "vue";
 
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
@@ -495,6 +495,7 @@ const normalizedTableRows = computed<TableRow<T>[]>(() => {
         key:
             // if no key is given and data is object, create unique row id for each row
             String(getValueByPath(value, props.rowKey) || nextSequence()),
+        hidden: false,
     }));
 });
 
@@ -508,6 +509,17 @@ const filteredRows = computed<TableRow<T>[]>(() =>
 const availableRows = computed<TableRow<T>[]>(() =>
     // defines the hidden state on the original row list and returns only the rows on the current page
     paginateRows(filteredRows.value),
+);
+
+// reset row hidden states on specifc prop change
+watch(
+    () => props.paginated,
+    () => {
+        normalizedTableRows.value.forEach((row) => (row.hidden = false));
+        // Force trigger effects for the base normalized rows after making same deep mutations.
+        // This forces reactive dependencies to recompute and to redefine the hidden states.
+        triggerRef(normalizedTableRows);
+    },
 );
 
 /**
@@ -722,11 +734,19 @@ function sort(
     // sort rows by mutating the array
     sortRows(normalizedTableRows.value, column);
 
-    // force trigger effects for this variable
-    // after making deep mutations
-    // to update reactive dependencies
+    // Force trigger effects for the base normalized rows after making deep mutations.
+    // This forces reactive dependencies to recompute.
     triggerRef(normalizedTableRows);
 }
+
+// recompute table rows sorting on data prop change
+watch(
+    () => props.data,
+    () => {
+        if (currentSortColumn.value)
+            sortRows(normalizedTableRows.value, currentSortColumn.value);
+    },
+);
 
 /** sort rows by mutating the given array */
 function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
@@ -1540,7 +1560,7 @@ defineExpose({ rows: filterRows, sort: sortByField });
                     <!-- table rows -->
                     <template
                         v-for="(row, rowIndex) in normalizedTableRows"
-                        :key="row.key">
+                        :key="(row.key ?? '0') + (row.hidden ?? false)">
                         <tr
                             v-if="!row.hidden"
                             :class="rowClasses(row)"

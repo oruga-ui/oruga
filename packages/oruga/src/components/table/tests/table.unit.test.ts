@@ -712,8 +712,10 @@ describe("OTable tests", () => {
 
             const body = wrapper.find("tbody");
             let trs = body.findAll("tr");
+            // check only item count of one page is displayed
             expect(trs).toHaveLength(perPage);
 
+            // update table data
             const newData = [
                 ...random_words.slice(0, 3).map((word) => ({
                     id: lastId++,
@@ -724,6 +726,7 @@ describe("OTable tests", () => {
             await wrapper.setProps({ data: newData });
 
             trs = body.findAll("tr");
+            // check only item count of one page is displayed
             expect(trs).toHaveLength(perPage);
 
             const sortedData = newData.sort((a, b) =>
