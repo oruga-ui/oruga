@@ -116,9 +116,9 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     paginationRangeBefore: undefined,
     paginationRangeAfter: undefined,
     backendFiltering: () => getDefault("table.backendFiltering", false),
-    filtersIcon: () => getDefault("table.filtersIcon"),
-    filtersPlaceholder: () => getDefault("table.filtersPlaceholder"),
-    filtersDebounce: () => getDefault("table.filtersDebounce", 300),
+    filtersIcon: () => getDefault("table.filterIcon"),
+    filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
+    filterDebounce: () => getDefault("table.filterDebounce", 300),
     filtersEvent: "",
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
@@ -1465,7 +1465,7 @@ defineExpose({ rows: filterRows, sort: sortByField });
                                         "
                                         role="searchbox"
                                         :placeholder="filtersPlaceholder"
-                                        :debounce="filtersDebounce"
+                                        :debounce="filterDebounce"
                                         :icon="filtersIcon"
                                         :pack="iconPack"
                                         size="small"
@@ -1533,7 +1533,7 @@ defineExpose({ rows: filterRows, sort: sortByField });
                 </thead>
 
                 <tbody>
-                    <!-- Table Rows Definition -->
+                    <!-- table rows -->
                     <template
                         v-for="(row, rowIndex) in normalizedTableRows"
                         :key="row.key">

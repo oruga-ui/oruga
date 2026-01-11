@@ -2808,15 +2808,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Icon of the column search input
                  */
-                filtersIcon: string;
+                filterIcon: string;
                 /**
                  * Placeholder of the column search input
                  */
-                filtersPlaceholder: string;
+                filterPlaceholder: string;
                 /**
                  * Filtering debounce time (in milliseconds)
                  */
-                filtersDebounce: number;
+                filterDebounce: number;
                 /**
                  * Label to be shown when the table is empty
                  */
