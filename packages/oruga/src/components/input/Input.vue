@@ -143,12 +143,6 @@ const vmodel = defineModel<ModelValue, string, string, ModelValue>({
     default: undefined,
 });
 
-// /** The internal value for the input element */
-// const inputValue = ref<ModelValue>(vmodel.value as ModelValue);
-
-// // update the internal input value when the vmodel value changes
-// watch(vmodel, (value) => (inputValue.value = value));
-
 /** Get value length */
 const valueLength = computed(() =>
     typeof vmodel.value === "string" || typeof vmodel.value === "number"
@@ -175,9 +169,10 @@ watch(
 const height = ref("auto");
 
 function resize(): void {
+    if (props.type !== "textarea") return;
     height.value = "auto";
     nextTick(() => {
-        if (props.type !== "textarea" || !inputRef.value) return;
+        if (!inputRef.value) return;
         const scrollHeight = inputRef.value.scrollHeight;
         height.value = scrollHeight + "px";
     });
