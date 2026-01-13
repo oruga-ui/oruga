@@ -5,7 +5,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
   <div data-oruga="dropdown" class="o-dropdown o-datepicker__dropdown o-dropdown--position-bottom-left">
     <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <div data-oruga="input" class="o-input">
-        <!--v-if--><input class="o-datetimepicker__date o-input__input" id="v-1" type="text" data-oruga-input="text" autocomplete="off">
+        <!--v-if--><input class="o-datetimepicker__date o-input__input" id="v-1" type="text" data-oruga-input="text" autocomplete="off" value="01/01/2000, 00:00">
         <!--v-if-->
         <!--v-if-->
       </div>

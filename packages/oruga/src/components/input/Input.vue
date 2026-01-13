@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     clearable: () => getDefault("input.clearable", false),
     clearIcon: () => getDefault("input.clearIcon", "close-circle"),
     statusIcon: () => getDefault("statusIcon", true),
-    debounce: () => getDefault("autocomplete.debounce", 400),
+    debounce: () => getDefault("autocomplete.debounce"),
     autocomplete: () => getDefault("input.autocomplete", "off"),
     id: () => useId(),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
@@ -123,6 +123,9 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
+// if `id` is given set as `for` property on o-field wrapper
+if (props.id) parentField.value?.setInputId(props.id);
+
 const vmodel = defineModel<ModelValue, string, string, ModelValue>({
     // cast incomming value to string
     get: (value) => (isDefined(value) ? String(value) : ""),
@@ -136,9 +139,6 @@ const vmodel = defineModel<ModelValue, string, string, ModelValue>({
     default: undefined,
 });
 
-// if `id` is given set as `for` property on o-field wrapper
-if (props.id) parentField.value?.setInputId(props.id);
-
 /** Get value length */
 const valueLength = computed(() =>
     typeof vmodel.value === "string" || typeof vmodel.value === "number"
@@ -146,30 +146,33 @@ const valueLength = computed(() =>
         : 0,
 );
 
-onMounted(() => {
-    /**
-     * When v-model is changed:
-     *  1. Set parent field filled state.
-     *  2. Resize textarea input
-     *  3. Check html5 valdiation
-     */
-    watch(
-        () => vmodel.value,
-        (value) => {
-            if (parentField?.value) parentField.value.setFilled(!!value);
-            if (props.autosize) resize();
-            if (!isValid.value) checkHtml5Validity();
-        },
-        { immediate: true, flush: "post" },
-    );
-});
+watch(
+    () => vmodel.value,
+    (value) => handleChange(value),
+    { flush: "post" },
+);
+
+onMounted(() => handleChange(vmodel.value));
+
+/**
+ * Called when v-model changes:
+ *  1. Set parent field filled state.
+ *  2. Resize textarea input
+ *  3. Check html5 valdiation
+ */
+function handleChange(value: string): void {
+    if (parentField.value) parentField.value.setFilled(!!value);
+    if (props.autosize) resize();
+    if (!isValid.value) checkHtml5Validity();
+}
 
 const height = ref("auto");
 
 function resize(): void {
+    if (props.type !== "textarea") return;
     height.value = "auto";
     nextTick(() => {
-        if (props.type !== "textarea" || !inputRef.value) return;
+        if (!inputRef.value) return;
         const scrollHeight = inputRef.value.scrollHeight;
         height.value = scrollHeight + "px";
     });
@@ -187,17 +190,22 @@ const computedStyles = computed<StyleValue>(() =>
 );
 
 /** debounced input event handler based on debounce prop */
-const debouncedInput = useDebounce(onInput, props.debounce ?? 0);
+const debouncedInput = useDebounce(onInput, props.debounce);
 
 function onInput(event: Event): void {
-    emits("input", vmodel.value, event);
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value;
+    if (value === vmodel.value) return;
+
+    vmodel.value = value as ModelValue;
+    emits("input", value, event);
 }
 
 const placeholderVisible = computed(
     () => !isDefined(vmodel.value) || vmodel.value === "",
 );
 
-// --- Icon Feature ---
+// #region --- Icon Feature ---
 
 const hasIconRight = computed(() => {
     return !!(
@@ -237,7 +245,9 @@ function rightIconClick(event: Event): void {
     }
 }
 
-// --- Password Visability Feature ---
+// #endregion --- Icon Feature ---
+
+// #region --- Password Visability Feature ---
 
 const isPasswordVisible = ref(false);
 
@@ -261,7 +271,9 @@ function togglePasswordVisibility(): void {
     nextTick(() => setFocus());
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Password Visability Feature ---
+
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -337,10 +349,14 @@ const iconRightClasses = defineClasses([
 
 const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+
+// #endregio  --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -359,7 +375,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             v-bind="inputBind"
             :id="id"
             ref="inputElement"
-            v-model="vmodel"
+            :value="vmodel"
             :type="inputType"
             :data-oruga-input="inputType"
             :class="inputClasses"
@@ -377,7 +393,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             v-bind="inputBind"
             :id="id"
             ref="inputElement"
-            v-model="vmodel"
+            :value="vmodel"
             data-oruga-input="textarea"
             :class="inputClasses"
             :maxlength="maxlength"
