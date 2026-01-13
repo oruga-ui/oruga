@@ -53,6 +53,8 @@ describe("OAutocomplete tests", () => {
     test("can emit input, focus and blur events", async () => {
         const VALUE_TYPED = "test";
 
+        vi.useFakeTimers(); // use fake timers for input debounce
+
         const wrapper = mount(OAutocomplete, {
             props: { options: OPTIONS },
         });
@@ -66,12 +68,15 @@ describe("OAutocomplete tests", () => {
 
         await input.setValue(VALUE_TYPED);
         await input.trigger("input");
+        vi.runAllTimers(); // run debounce timers
 
         expect(wrapper.emitted("update:input")).toHaveLength(1);
         expect(wrapper.emitted("update:input")![0]).toContain(VALUE_TYPED);
 
         await input.trigger("blur");
         expect(wrapper.emitted("blur")).toBeDefined();
+
+        vi.useRealTimers(); // restore real timers
     });
 
     test("can autocomplete with keydown", async () => {
@@ -248,6 +253,8 @@ describe("OAutocomplete tests", () => {
     });
 
     test("keepFirst works as input changes", async () => {
+        vi.useFakeTimers(); // use fake timers for input debounce
+
         const wrapper = mount(OAutocomplete, {
             props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
             attachTo: document.body,
@@ -269,10 +276,14 @@ describe("OAutocomplete tests", () => {
         expect(focusedItem.text()).toContain(OPTIONS[0]);
 
         await input.setValue("v");
+        vi.runAllTimers(); // run debounce timers
+        await nextTick();
 
         const updatedFocusedItem = wrapper.find(".o-dropdown__item--focused");
         expect(updatedFocusedItem.exists()).toBeTruthy();
         expect(updatedFocusedItem.text()).toContain("Vue.js");
+
+        vi.useRealTimers(); // restore real timers
     });
 
     test("do not open when openOnFocus and empty options", async () => {

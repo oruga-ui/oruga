@@ -4,7 +4,7 @@ import { nextTick } from "vue";
 
 import OInput from "@/components/input/Input.vue";
 
-describe("OInput", () => {
+describe("OInput tests", () => {
     enableAutoUnmount(afterEach);
 
     beforeEach(() => {

@@ -1448,7 +1448,7 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
-                 * Number of milliseconds to delay before to emit input event
+                 * Number of milliseconds to delay before the value get emitted
                  */
                 debounce: number;
                 /**

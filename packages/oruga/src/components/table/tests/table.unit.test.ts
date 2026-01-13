@@ -496,7 +496,7 @@ describe("OTable tests", () => {
             await input.setValue("T");
             await input.trigger("input");
             vi.runAllTimers(); // run debounce timer
-            await flushPromises();
+            await nextTick();
 
             bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(1); // Tina

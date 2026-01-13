@@ -92,7 +92,7 @@ export type ListItemProps<T> = {
      */
     value?: T;
     /** Item label, unnecessary when default slot is used */
-    label?: string; // TODO: make requried
+    label?: string; // TODO: make required
     /** Item is disabled */
     disabled?: boolean;
     /** Define whether the item is visible or not */

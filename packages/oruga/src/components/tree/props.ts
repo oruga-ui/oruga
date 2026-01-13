@@ -74,7 +74,7 @@ export type TreeItemProps<T> = {
     /** Subtree items, unnecessary when default slot is used */
     options?: OptionsProp<T>;
     /** Tree item label */
-    label?: string; // TODO: make requried
+    label?: string; // TODO: make required
     /** Tree item will be expanded */
     expanded?: boolean;
     /** Tree item will be disabled */
