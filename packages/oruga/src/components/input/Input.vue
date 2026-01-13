@@ -7,6 +7,7 @@ import {
     useAttrs,
     useId,
     useTemplateRef,
+    onMounted,
     type StyleValue,
 } from "vue";
 
@@ -63,7 +64,7 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     clearable: () => getDefault("input.clearable", false),
     clearIcon: () => getDefault("input.clearIcon", "close-circle"),
     statusIcon: () => getDefault("statusIcon", true),
-    debounce: () => getDefault("autocomplete.debounce", 300),
+    debounce: () => getDefault("autocomplete.debounce"),
     autocomplete: () => getDefault("input.autocomplete", "off"),
     id: () => useId(),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
@@ -150,21 +151,25 @@ const valueLength = computed(() =>
         : 0,
 );
 
+watch(
+    () => vmodel.value,
+    (value) => handleChange(value),
+    { flush: "post" },
+);
+
+onMounted(() => handleChange(vmodel.value));
+
 /**
- * When v-model is changed:
+ * Called when v-model changes:
  *  1. Set parent field filled state.
  *  2. Resize textarea input
  *  3. Check html5 valdiation
  */
-watch(
-    () => vmodel.value,
-    (value) => {
-        if (parentField.value) parentField.value.setFilled(!!value);
-        if (props.autosize) resize();
-        if (!isValid.value) checkHtml5Validity();
-    },
-    { immediate: true, flush: "post" },
-);
+function handleChange(value: string): void {
+    if (parentField.value) parentField.value.setFilled(!!value);
+    if (props.autosize) resize();
+    if (!isValid.value) checkHtml5Validity();
+}
 
 const height = ref("auto");
 
@@ -190,11 +195,12 @@ const computedStyles = computed<StyleValue>(() =>
 );
 
 /** debounced input event handler based on debounce prop */
-const debouncedInput = useDebounce(onInput, props.debounce ?? 0);
+const debouncedInput = useDebounce(onInput, props.debounce);
 
 function onInput(event: Event): void {
     const inputElement = unrefElement(inputRef) as HTMLInputElement;
     const value = inputElement.value;
+    if (value == vmodel.value) return;
 
     vmodel.value = value as ModelValue;
     emits("input", value, event);

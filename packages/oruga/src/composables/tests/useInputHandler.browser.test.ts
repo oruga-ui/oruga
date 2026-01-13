@@ -22,6 +22,7 @@ type CustomValidityCallback = (
     currentValue: string | number | null | undefined,
     state: ValidityState,
 ) => string;
+
 const NativeForm = defineComponent({
     name: "NativeForm",
     props: {
@@ -286,7 +287,11 @@ describe("useInputHandler", () => {
             setup: (props) => {
                 return (): VNode =>
                     h(OField, { "data-testid": "field" }, () =>
-                        h(OInput, { type: "number", max: props.max, value: 2 }),
+                        h(OInput, {
+                            type: "number",
+                            max: props.max,
+                            modelValue: 2,
+                        }),
                     );
             },
         });

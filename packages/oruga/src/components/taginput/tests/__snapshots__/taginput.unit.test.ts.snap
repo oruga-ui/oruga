@@ -6,7 +6,7 @@ exports[`OTaginput tests > render correctly 1`] = `
     <div data-oruga="autocomplete" class="o-dropdown o-dropdown--expanded o-dropdown--position-auto o-autocomplete o-taginput__autocomplete">
       <div class="o-dropdown__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false" aria-controls="v-0">
         <div data-oruga="input" class="o-input o-input--expanded">
-          <!--v-if--><input has-counter="false" aria-autocomplete="list" aria-controls="v-0" enterkeyhint="enter" id="v-1" type="text" data-oruga-input="text" class="o-input__input o-taginput__input o-input__input--placeholder" autocomplete="off">
+          <!--v-if--><input has-counter="false" aria-autocomplete="list" aria-controls="v-0" enterkeyhint="enter" id="v-1" type="text" data-oruga-input="text" class="o-input__input o-taginput__input o-input__input--placeholder" autocomplete="off" value="">
           <!--v-if-->
           <!--v-if-->
         </div>
