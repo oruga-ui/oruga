@@ -451,7 +451,7 @@ describe("OTable tests", () => {
                     filterDebounce: 1000,
                 },
             });
-            await nextTick();
+            await nextTick(); // await child component rendering
 
             const input = wrapper.find("thead input");
             expect(input.exists()).toBeTruthy();
@@ -459,7 +459,6 @@ describe("OTable tests", () => {
             for (let i = 0; i < 10; i++) {
                 await input.setValue("J".repeat(10 - i));
                 await input.trigger("input");
-                await setTimeout(() => {}, 500);
                 const bodyRows = wrapper.findAll("tbody tr");
                 expect(bodyRows).toHaveLength(5); // No filtering yet
             }
@@ -879,5 +878,7 @@ describe("OTable tests", () => {
             trs = body.findAll("tr");
             expect(trs).toHaveLength(perPage);
         });
+
+        test.todo("filter all data before paging");
     });
 });
