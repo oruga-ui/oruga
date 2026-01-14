@@ -124,8 +124,16 @@ export function alternateArray<T>(arr: T[], startIndex: number): T[] {
 }
 
 /**
- * Sort an array by key without mutating original data.
- * Call the user sort function if it was passed.
+ * Sort an array by the given `key`.
+ * The `key` can be a path to a nested property, when array items are objects.
+ * A custom sort function can be provided.
+ * By default the original array is not mutated. Set `mutate` to true to sort in place.
+ * @param array - Array to sort.
+ * @param key - Key or path to sort by.
+ * @param fn - Custom sort function.
+ * @param isAsc - Whether to sort in ascending order.
+ * @param mutate - Whether to mutate the original array.
+ * @returns Sorted array.
  */
 export function sortBy<T extends object>(
     array: T[],

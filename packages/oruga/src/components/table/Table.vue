@@ -27,8 +27,6 @@ import { getDefault } from "@/utils/config";
 import {
     getValueByPath,
     toCssDimension,
-    escapeRegExpChars,
-    removeDiacriticsFromString,
     sortBy,
     isDefined,
     getPropertyValue,
@@ -38,9 +36,6 @@ import {
     getActiveClasses,
     useProviderParent,
     useMatchMedia,
-    useDebounce,
-    isOptionViable,
-    filterOptionsItems,
     useSequentialId,
 } from "@/composables";
 
@@ -124,8 +119,8 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     backendFiltering: () => getDefault("table.backendFiltering", false),
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
-    filtersEvent: "",
     filterDebounce: () => getDefault("table.filterDebounce", 300),
+    filtersEvent: "",
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
     emptyIconSize: () => getDefault("table.emptyIconSize"),
@@ -420,7 +415,7 @@ const { childItems } = useProviderParent<TableColumnComponent<T>>({
     rootRef: slotsRef,
 });
 
-// #region --- TABLE COLUMNS ---
+// #region --- Table Columns Definition ---
 
 /** all defined columns */
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
@@ -481,17 +476,17 @@ const isScrollable = computed(() => {
     return tableColumns.value.some((column) => column.sticky);
 });
 
-// #endregion --- TABLE COLUMNS ---
+// #endregion --- Table Columns Definition ---
 
-// #region --- TABLE ROWS ---
+// #region --- Table Rows Definition ---
 
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
 
-/** all defined data elements as normalized options with a unique key*/
-const tableRows = computed<TableRow<T>[]>(() => {
+/** All defined data elements as normalized rows with a unique key. */
+const normalizedTableRows = computed<TableRow<T>[]>(() => {
     if (!props.data) return [];
     return props.data.map((value: T, idx: number) => ({
         label: "row " + idx, // row display label
@@ -500,42 +495,32 @@ const tableRows = computed<TableRow<T>[]>(() => {
         key:
             // if no key is given and data is object, create unique row id for each row
             String(getValueByPath(value, props.rowKey) || nextSequence()),
+        hidden: false,
     }));
 });
 
-/** visible rows which are filtered by viability */
+/** Filtered normalized rows by any given filter value. */
+const filteredRows = computed<TableRow<T>[]>(() =>
+    // defines the hidden state on the original row list and returns a filtered row list
+    filterRows(normalizedTableRows.value),
+);
+
+/** Visible rows for the current page. */
 const availableRows = computed<TableRow<T>[]>(() =>
-    tableRows.value.filter(isOptionViable),
+    // defines the hidden state on the original row list and returns only the rows on the current page
+    paginateRows(filteredRows.value),
 );
 
-// recompute table rows visibility on row data change
-watch(tableRows, () => {
-    // sort rows
-    sortTableRows();
-    // recalculate visible rows by page filter
-    filterTableRows();
-});
-
-/*
- * Total data count.
- * If backend paginated, use props total else use rows data length as pagination total.
- */
-const tableTotal = computed(() =>
-    props.backendPagination ? props.total : tableRows.value.length,
+// reset row hidden states on specifc prop change
+watch(
+    () => props.paginated,
+    () => {
+        normalizedTableRows.value.forEach((row) => (row.hidden = false));
+        // Force trigger effects for the base normalized rows after making same deep mutations.
+        // This forces reactive dependencies to recompute and to redefine the hidden states.
+        triggerRef(normalizedTableRows);
+    },
 );
-
-/** total rows count  */
-const rowCount = computed(() => {
-    return tableTotal.value + ariaRowIndexStart.value;
-});
-
-/** aria-rowindex start value for tds based if any column is filterable or has subheading */
-const ariaRowIndexStart = computed(() => {
-    let i = 1;
-    if (hasFilterColumns.value) i++;
-    if (hasSubheadings.value) i++;
-    return i;
-});
 
 /**
  * Check if footer slot has custom content.
@@ -552,12 +537,6 @@ function hasCustomFooterSlot(): boolean {
 
     const tag = footer[0]["type"];
     return tag === "th" || tag === "td";
-}
-
-/** get the formated row value for a column */
-function getColumnValue(row: T, column: TableColumn<T>): string {
-    // @ts-expect-error getPropertyValue arguments does not patch perfect to TableColumn<T> attributes
-    return getPropertyValue(row, column.field, column.formatter);
 }
 
 /** check if two rows are equal by a custom compare function or the rowKey attribute */
@@ -578,9 +557,216 @@ function isRowEqual(
     return el1 == el2;
 }
 
-// #endregion  --- TABLE ROWS ---
+// #endregion  --- Table Rows Definition ---
 
-// #region --- Select Feature ---
+// #region --- Pagination Feature ---
+
+/*
+ * Total data count.
+ * If backend paginated, use props total else use rows data length as pagination total.
+ */
+const tableTotal = computed(() =>
+    props.backendPagination ? props.total : filteredRows.value.length,
+);
+
+/** total rows count  */
+const rowCount = computed(() => {
+    return tableTotal.value + ariaRowIndexStart.value;
+});
+
+/** aria-rowindex start value for tds based if any column is filterable or has subheading */
+const ariaRowIndexStart = computed(() => {
+    let i = 1;
+    if (hasFilterColumns.value) i++;
+    if (hasSubheadings.value) i++;
+    return i;
+});
+
+function paginateRows(rows: TableRow<T>[]): TableRow<T>[] {
+    if (!props.paginated || props.backendPagination)
+        // always return a new array object
+        return [...rows];
+
+    // calculate pagination information
+    const perPage = Number(props.perPage);
+    const currentPage = Math.min(rows.length / perPage, tableCurrentPage.value);
+    const pageStart = (currentPage - 1) * perPage;
+    const pageEnd = pageStart + perPage;
+
+    // check if a row is filtered out (hidden) by not on the current page
+    return rows.filter((row, idx) => {
+        // check if row is on the current page
+        const currentPage =
+            rows.length < perPage || (idx >= pageStart && idx < pageEnd);
+
+        // update hidden state
+        row.hidden = !currentPage;
+        return !row.hidden;
+    });
+}
+
+// #endregion --- Pagination Feature ---
+
+// #region --- Filter Feature ---
+
+/** filter record alias { fieldKey: filterValue } */
+const filters = ref<Record<string, string>>({});
+
+/** check if any column has filterable active */
+const hasFilterColumns = computed(() =>
+    tableColumns.value.some((column) => column.searchable || column.filterable),
+);
+
+/** check if any filter is set */
+const hasFilter = computed(
+    () => !!Object.values(filters.value).filter(Boolean).length,
+);
+
+// emit filter change event
+watch(filters, (value) => emits("filters-change", value), { deep: true });
+
+/** @deprecated */
+function onFiltersEvent(event: Event): void {
+    emits("filters-event", props.filtersEvent, filters.value, event);
+}
+
+/**
+ * Set the hidden state for the given rows based on active filter values.
+ * Returns a filtered list of the mutated rows.
+ */
+function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
+    if (!hasFilter.value || props.backendFiltering)
+        // always return a new array object
+        return [...rows];
+
+    // check if a row is filtered out (hidden) by not matching any active filter expresssions
+    return rows.filter((row) => {
+        const matches = Object.entries(filters.value).some(
+            ([columnKey, filter]) => {
+                if (!filter) return false;
+                // get column for the filter
+                const column = tableColumns.value.find(
+                    (c) => c.field === columnKey,
+                );
+                if (!column) return false;
+
+                // check if the value matches the filter string
+                return column.matches(row.value, filter);
+            },
+        );
+
+        // update hidden state
+        row.hidden = !matches;
+        return !row.hidden;
+    });
+}
+
+// #endregion --- Filter Feature ---
+
+// #region --- Sort Feature ---
+
+const currentSortColumn = ref<TableColumnItem<T>>();
+const isAsc = ref(true);
+
+/** check if has any sortable column */
+const hasSortableColumns = computed(() =>
+    tableColumns.value.some((column) => column.sortable),
+);
+
+/** check if the column is the current sort column */
+function isColumnSorted(column: TableColumnItem<T>): boolean {
+    return currentSortColumn.value?.identifier === column.identifier;
+}
+
+// calculate default sort on columns change and on initial load
+watch(tableColumns, defaultSort, { immediate: true });
+
+/** sort column based on the default-sort prop if not already sorted */
+function defaultSort(): void {
+    // prevent sort when not columns or already sorted (for example async data)
+    if (!tableColumns.value.length || currentSortColumn.value) return;
+    if (!props.defaultSort) return;
+
+    let sortField = props.defaultSort;
+    let sortDirection = props.defaultSortDirection;
+    if (Array.isArray(props.defaultSort)) {
+        sortField = props.defaultSort[0];
+        if (props.defaultSort[1]) sortDirection = props.defaultSort[1];
+    } else {
+        sortField = props.defaultSort;
+    }
+    sortByField(sortField, sortDirection);
+}
+
+function sortByField(field: string, direction: "asc" | "desc"): void {
+    const sortColumn = tableColumns.value.find(
+        (column) => column.field === field,
+    );
+    if (sortColumn) {
+        isAsc.value = direction.toLowerCase() === "asc";
+        sort(sortColumn);
+    }
+}
+
+/**
+ * Sort the column.
+ * Toggle current direction on column if it's sortable
+ * and not just updating the prop.
+ */
+function sort(
+    column: TableColumnItem<T>,
+    updateDirection = false,
+    event: Event = new Event("sort"),
+): void {
+    if (!column?.sortable) return;
+
+    if (updateDirection)
+        isAsc.value = isColumnSorted(column)
+            ? !isAsc.value
+            : props.defaultSortDirection.toLowerCase() === "asc";
+
+    // if not first time sort
+    if (currentSortColumn.value)
+        emits("sort", column, isAsc.value ? "asc" : "desc", event);
+
+    currentSortColumn.value = column;
+
+    // sort rows by mutating the array
+    sortRows(normalizedTableRows.value, column);
+
+    // Force trigger effects for the base normalized rows after making deep mutations.
+    // This forces reactive dependencies to recompute.
+    triggerRef(normalizedTableRows);
+}
+
+// recompute table rows sorting on data prop change
+watch(
+    () => props.data,
+    () => {
+        if (currentSortColumn.value)
+            sortRows(normalizedTableRows.value, currentSortColumn.value);
+    },
+);
+
+/** sort rows by mutating the given array */
+function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
+    if (props.backendSorting) return rows;
+
+    // sort rows by mutating the tableRows array
+    return sortBy<TableRow<T>>(
+        rows,
+        column.field ? "value." + column.field : "",
+        column.customSort
+            ? (a, b, asc): number => column.customSort!(a.value, b.value, asc)
+            : undefined,
+        isAsc.value,
+        true, // mutate the original array
+    );
+}
+
+// #endregion --- Sort Feature ---
+
+// #region --- Row Selection Feature ---
 
 const tableSelectedRow = defineModel<T>("selected", { default: undefined });
 
@@ -645,225 +831,9 @@ function selectRow(row: TableRow<T>, event: Event): void {
     emits("select", row.value, tableSelectedRow.value);
 }
 
-// #endregion --- Select Feature ---
+// #endregion --- Row Selection Feature ---
 
-// #region --- Filter Feature ---
-
-/** filter record alias { fieldKey: filterValue } */
-const filters = ref<Record<string, string>>({});
-
-/** check if any column has filterable active */
-const hasFilterColumns = computed(() =>
-    tableColumns.value.some((column) => column.searchable || column.filterable),
-);
-
-/** debounced filters change handler based on `filterDebounce` prop */
-const debouncedFilter = useDebounce(
-    handleFiltersChange,
-    props.filterDebounce ?? 0,
-);
-
-// react on filter got changed
-watch(filters, (value) => debouncedFilter(value), { deep: true });
-
-function handleFiltersChange(value: Record<string, string>): void {
-    emits("filters-change", value);
-    // if not backend filtered, recompute rows visibility with updated filters
-    if (!props.backendFiltering) {
-        filterTableRows();
-        // force tableRows reactivity to update
-        triggerRef(tableRows);
-    }
-}
-
-function onFiltersEvent(event: Event): void {
-    emits("filters-event", props.filtersEvent, filters.value, event);
-}
-
-// compute table rows visibility on pagination values change and on initial load
-watch(
-    [tableCurrentPage, () => props.perPage, () => props.paginated],
-    () => filterTableRows(),
-    { immediate: true },
-);
-
-/** applies visability filter of reactive tableRows */
-function filterTableRows(): void {
-    // calculate pagination information
-    const currentPage = tableCurrentPage.value;
-    const perPage = Number(props.perPage);
-    const pageStart = (currentPage - 1) * perPage;
-    const pageEnd = pageStart + perPage;
-
-    // update hidden state for each row
-    filterOptionsItems(tableRows, (row, idx) => {
-        // if paginated not backend paginated, paginate row
-        if (props.paginated && !props.backendPagination) {
-            // if not only one page and not on active page
-            if (
-                tableRows.value.length > perPage &&
-                (idx < pageStart || idx >= pageEnd)
-            )
-                // return row is invisible (filtered out)
-                return true;
-        }
-
-        // if not backend filtered, filter row
-        if (!props.backendFiltering)
-            // return row is hidden (filtered out) based on filters
-            return isRowFiltered(row.value);
-
-        // return row is visible (not filtered out)
-        return false;
-    });
-}
-
-/**
- * check if a row is filtered out by not matching any active filter expresssions
- * @param {unknown} row - row element to check
- * @returns {boolean} - true if row is filtered out, false if row is visible
- */
-function isRowFiltered(row: T): boolean {
-    // check if any filter is applied
-    if (!Object.values(filters.value).filter(Boolean).length) return false;
-
-    // check each column filter if any filter applies to the row column value
-    return !Object.entries(filters.value).some(([columnKey, filter]) => {
-        if (!filter) return false;
-        // get column for the filter
-        const column = tableColumns.value.find((c) => c.field === columnKey);
-        if (!column) return false;
-
-        // if column has custom search funtion return result
-        if (typeof column.customSearch === "function")
-            return column.customSearch(row, filter);
-
-        // if column has custom filter funtion return result
-        if (typeof column.customFilter === "function")
-            return column.customFilter(row, filter);
-
-        // get the visible column value for the row
-        const value = getColumnValue(row, column);
-
-        // check if value is defined
-        if (!isDefined(value)) return false;
-
-        // check if value is onything else than string
-        if (typeof value !== "string") return value === filter;
-
-        // check if the value matches the filter string by regex comparison
-        const re = new RegExp(escapeRegExpChars(filter), "i");
-        return re.test(removeDiacriticsFromString(value)) || re.test(value);
-    });
-}
-
-// #endregion --- Filter Feature ---
-
-// #region --- Sort Feature ---
-
-const currentSortColumn = ref<TableColumnItem<T>>();
-const isAsc = ref(true);
-
-/** check if has any sortable column */
-const hasSortableColumns = computed(() =>
-    tableColumns.value.some((column) => column.sortable),
-);
-
-/** check if the column is the current sort column */
-function isColumnSorted(column: TableColumnItem<T>): boolean {
-    return currentSortColumn.value?.identifier === column.identifier;
-}
-
-// calculate default sort on columns change and on initial load
-watch(tableColumns, defaultSort, { immediate: true });
-
-/** sort column based on the default-sort prop if not already sorted */
-function defaultSort(): void {
-    // prevent sort when not columns or already sorted (for example async data)
-    if (!tableColumns.value.length || currentSortColumn.value) return;
-    if (!props.defaultSort) return;
-    let sortField = props.defaultSort;
-    let sortDirection = props.defaultSortDirection;
-    if (Array.isArray(props.defaultSort)) {
-        sortField = props.defaultSort[0];
-        if (props.defaultSort[1]) sortDirection = props.defaultSort[1];
-    } else {
-        sortField = props.defaultSort;
-    }
-    sortByField(sortField, sortDirection);
-}
-
-function sortByField(field: string, direction: "asc" | "desc"): void {
-    const sortColumn = tableColumns.value.find(
-        (column) => column.field === field,
-    );
-    if (sortColumn) {
-        isAsc.value = direction.toLowerCase() === "asc";
-        sort(sortColumn);
-    }
-}
-
-/**
- * Sort the column.
- * Toggle current direction on column if it's sortable
- * and not just updating the prop.
- */
-function sort(
-    column: TableColumnItem<T>,
-    updateDirection = false,
-    event?: Event,
-): void {
-    if (!column?.sortable) return;
-
-    if (updateDirection)
-        isAsc.value = isColumnSorted(column)
-            ? !isAsc.value
-            : props.defaultSortDirection.toLowerCase() === "asc";
-
-    // if not first time sort
-    if (currentSortColumn.value)
-        emits(
-            "sort",
-            column,
-            isAsc.value ? "asc" : "desc",
-            event || new Event("sort"),
-        );
-
-    currentSortColumn.value = column;
-
-    // if not backend sorted
-    if (!props.backendSorting) {
-        // sort rows by mutating the tableRows array
-        sortTableRows();
-        // recalculate the page filter
-        filterTableRows();
-    }
-}
-
-/** sort rows by mutating the tableRows array */
-function sortTableRows(): void {
-    if (!props.backendSorting)
-        // sort rows by mutating the tableRows array
-        sortByColumn(tableRows.value);
-}
-
-function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
-    const column = currentSortColumn.value;
-    if (!column) return rows;
-    return sortBy<TableRow<T>>(
-        rows,
-        column?.field ? "value." + column.field : "",
-        column?.customSort
-            ? (a, b, asc): number => column.customSort!(a.value, b.value, asc)
-            : undefined,
-        isAsc.value,
-        true,
-    );
-}
-
-// #endregion --- Sort Feature ---
-
-// #region --- Checkable Feature ---
+// #region --- Row Checkable Feature ---
 
 const tableCheckedRows = defineModel<T[]>("checkedRows", {
     default: [],
@@ -946,7 +916,7 @@ function removeCheckedRow(row: TableRow<T>): void {
         ];
 }
 
-// #endregion --- Checkable Feature ---
+// #endregion --- Row Checkable Feature  ---
 
 // #region --- Detail Row Feature ---
 
@@ -1253,9 +1223,9 @@ function rowClasses(row: TableRow<T>): ClassBinding[] {
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ rows: tableRows, sort: sortByField });
+defineExpose({ rows: filterRows, sort: sortByField });
 
-// #endregion
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -1268,10 +1238,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     <o-table-column
                         v-for="(column, idx) in columns"
                         :key="column.field || idx"
-                        v-slot="{ row }"
-                        v-bind="column">
-                        {{ getColumnValue(row, column) }}
-                    </o-table-column>
+                        v-bind="column" />
                 </template>
             </slot>
 
@@ -1522,6 +1489,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         "
                                         role="searchbox"
                                         :placeholder="filtersPlaceholder"
+                                        :debounce="filterDebounce"
                                         :icon="filtersIcon"
                                         :pack="iconPack"
                                         size="small"
@@ -1591,8 +1559,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                 <tbody>
                     <!-- table rows -->
                     <template
-                        v-for="(row, rowIndex) in tableRows"
-                        :key="row.key">
+                        v-for="(row, rowIndex) in normalizedTableRows"
+                        :key="(row.key ?? '0') + (row.hidden ?? false)">
                         <tr
                             v-if="!row.hidden"
                             :class="rowClasses(row)"
@@ -1698,7 +1666,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             $event,
                                         )
                                     ">
-                                    {{ getColumnValue(row.value, column) }}
+                                    {{ column.getValue(row.value) }}
                                 </o-slot-component>
                             </template>
 
