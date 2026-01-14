@@ -486,7 +486,7 @@ const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 const { nextSequence } = useSequentialId();
 
 /** All defined data elements as normalized rows with a unique key. */
-const normalizedTableRows = computed<TableRow<T>[]>(() => {
+const tableRows = computed<TableRow<T>[]>(() => {
     if (!props.data) return [];
     return props.data.map((value: T, idx: number) => ({
         label: "row " + idx, // row display label
@@ -502,7 +502,7 @@ const normalizedTableRows = computed<TableRow<T>[]>(() => {
 /** Filtered normalized rows by any given filter value. */
 const filteredRows = computed<TableRow<T>[]>(() =>
     // defines the hidden state on the original row list and returns a filtered row list
-    filterRows(normalizedTableRows.value),
+    filterRows(tableRows.value),
 );
 
 /** Visible rows for the current page. */
@@ -515,10 +515,10 @@ const availableRows = computed<TableRow<T>[]>(() =>
 watch(
     () => props.paginated,
     () => {
-        normalizedTableRows.value.forEach((row) => (row.hidden = false));
+        tableRows.value.forEach((row) => (row.hidden = false));
         // Force trigger effects for the base normalized rows after making same deep mutations.
         // This forces reactive dependencies to recompute and to redefine the hidden states.
-        triggerRef(normalizedTableRows);
+        triggerRef(tableRows);
     },
 );
 
@@ -732,11 +732,11 @@ function sort(
     currentSortColumn.value = column;
 
     // sort rows by mutating the array
-    sortRows(normalizedTableRows.value, column);
+    sortRows(tableRows.value, column);
 
     // Force trigger effects for the base normalized rows after making deep mutations.
     // This forces reactive dependencies to recompute.
-    triggerRef(normalizedTableRows);
+    triggerRef(tableRows);
 }
 
 // recompute table rows sorting on data prop change
@@ -744,7 +744,7 @@ watch(
     () => props.data,
     () => {
         if (currentSortColumn.value)
-            sortRows(normalizedTableRows.value, currentSortColumn.value);
+            sortRows(tableRows.value, currentSortColumn.value);
     },
 );
 
@@ -752,7 +752,7 @@ watch(
 function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
     if (props.backendSorting) return rows;
 
-    // sort rows by mutating the tableRows array
+    // sort rows by mutating the rows array
     return sortBy<TableRow<T>>(
         rows,
         column.field ? "value." + column.field : "",
@@ -1223,7 +1223,12 @@ function rowClasses(row: TableRow<T>): ClassBinding[] {
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ rows: filterRows, sort: sortByField });
+defineExpose({
+    columns: tableColumns,
+    rows: tableRows,
+    filters,
+    sort: sortByField,
+});
 
 // #endregion --- Expose Public Functionalities ---
 </script>
@@ -1559,7 +1564,7 @@ defineExpose({ rows: filterRows, sort: sortByField });
                 <tbody>
                     <!-- table rows -->
                     <template
-                        v-for="(row, rowIndex) in normalizedTableRows"
+                        v-for="(row, rowIndex) in tableRows"
                         :key="(row.key ?? '0') + (row.hidden ?? false)">
                         <tr
                             v-if="!row.hidden"
