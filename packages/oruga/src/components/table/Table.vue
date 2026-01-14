@@ -1253,7 +1253,12 @@ function rowClasses(row: TableRow<T>): ClassBinding[] {
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ rows: tableRows, sort: sortByField });
+defineExpose({
+    columns: tableColumns,
+    filters,
+    rows: tableRows,
+    sort: sortByField,
+});
 
 // #endregion
 </script>
