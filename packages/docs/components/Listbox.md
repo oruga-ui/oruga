@@ -1,13 +1,14 @@
+---
+sidebarDepth: 2
+---
+
 # Listbox
 
 <section class="odocs-head">
 <Badge type="warning" text="experimental" />
 
 The **Listbox** component presents a list of options and allows a user to select one or more of them.
-The component implements the W3C ARIA APG [Listbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/).
-When assistive technologies present a listbox, the name of an option is calculated by the browser as a flat string.
-Therefore, the content of an option should not contain any semantic information, such as a heading.
-In addition, assistive technologies does not provide an accessible way to present a list of interactive elements for the listbox role, such as links, buttons, or checkboxes.
+The component uses the [ARIA listbox role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/listbox_role) and implements the W3C ARIA APG [Listbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/).
 Combine it with the [Field](/components/Field) component to access all functionalities.
 
 </section>
@@ -39,15 +40,14 @@ Combine it with the [Field](/components/Field) component to access all functiona
 | ariaLabelledby    | Identifier of the underlying input element.                                                              | string                                           | -                                                 |                                                                                                                                                                |
 | backendFiltering  | Items won't be filtered on clientside, use the `filter` event to filter in your backend                  | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
 | disabled          | Interaction is disabled                                                                                  | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
-| emptyLabel        | A label which is displayed when no options is visible                                                    | string                                           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;emptyLabel: undefined<br>}</code>        |
+| emptyLabel        | A label which is displayed when no options are visible                                                   | string                                           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;emptyLabel: undefined<br>}</code>        |
 | filter            | Custom filter function to filter the items based on the input value - default is label string comparison | ((option: unknown, value: string) =&gt; boolean) | -                                                 |                                                                                                                                                                |
 | filterDebounce    | Number of milliseconds to delay the filter event                                                         | number                                           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;filterDebounce: 400<br>}</code>          |
 | filterIcon        | Icon of the column search input                                                                          | string                                           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;filterIcon: undefined<br>}</code>        |
 | filterPlaceholder | Placeholder of the column search input                                                                   | string                                           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;filterPlaceholder: undefined<br>}</code> |
 | filterable        | Enable an additional searchbar below the header                                                          | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
 | iconPack          | Icon pack to use                                                                                         | string                                           | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>          |
-| itemTag           | List item tag name                                                                                       | DynamicComponent                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;itemTag: "li"<br>}</code>                |
-| listTag           | List tag name                                                                                            | DynamicComponent                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;listTag: "ul"<br>}</code>                |
+| id                | Same as native id. Also pass the id to an wrapping `o-field` component - default is an uuid.             | string                                           | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                                  |
 | v-model           | The selected option value, use v-model to make it two-way binding                                        | string\|number\|object                           | -                                                 |                                                                                                                                                                |
 | multiple          | Allows multiple selections - converts the `modelValue` into an array                                     | boolean                                          | -                                                 |                                                                                                                                                                |
 | options           | Autocomplete options                                                                                     | OptionsPropWithGroups&lt;unknown&gt;             | -                                                 |                                                                                                                                                                |
@@ -60,25 +60,62 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 | Event name         | Properties                                                             | Description                                      |
 | ------------------ | ---------------------------------------------------------------------- | ------------------------------------------------ |
-| update:model-value | **value** `T \| T[]` - updated modelValue prop                         | modelValue prop two-way binding                  |
-| select             | **value** `T` - selected value                                         | on select event - fired before update:modelValue |
+| update:model-value | **value** `unknown \| unknown[]` - updated modelValue prop             | modelValue prop two-way binding                  |
+| select             | **value** `unknown` - selected value                                   | on select event - fired before update:modelValue |
 | filter             | **value** `string` - filter value<br/>**event** `Event` - native event | on filter change event                           |
 | focus              | **event** `Event` - native event                                       | on list focus event                              |
 | blur               | **event** `Event` - native event                                       | on list blur event                               |
-| scroll-start       |                                                                        | scrolling the list reached the start             |
-| scroll-end         |                                                                        | scrolling the list inside reached it's end       |
+| scroll-start       |                                                                        | scrolling inside the list reached the start      |
+| scroll-end         |                                                                        | scrolling inside the list reached the end        |
 
 ### Slots
 
-| Name        | Description                                     | Bindings                                                                                                                                                                                               |
-| ----------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| header      | Define an additional header                     |                                                                                                                                                                                                        |
-| filter      | Overridet the filter input                      | **value** `string` - filter input value<br/>**onChange** `(input: string, event: Event): void` - on filter input change event<br/>**onKeydown** `(event: Event): void` - on filter input keydown event |
-| default     | Define the listbox items here                   | **focusedIndex** `number \| undefined` - index of the focused element                                                                                                                                  |
-| optiongroup | Override the option group                       | **group** `string` - options group item<br/>**index** `number` - group option index                                                                                                                    |
-| option      | Override the label, default is label prop       | **option** `object` - option item<br/>**index** `number` - option index<br/>**selected** `boolean` - option is selected<br/>**disabled** `boolean` - option is disabled                                |
-| empty       | Define the content to show if the list is empty |                                                                                                                                                                                                        |
-| footer      | Define an additional footer                     |                                                                                                                                                                                                        |
+| Name    | Description                                     | Bindings                                                                                                                                                                                               |
+| ------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| header  | Define an additional header                     |                                                                                                                                                                                                        |
+| filter  | Overridet the filter input                      | **value** `string` - filter input value<br/>**onChange** `(input: string, event: Event): void` - on filter input change event<br/>**onKeydown** `(event: Event): void` - on filter input keydown event |
+| default | Define the listbox items here                   |                                                                                                                                                                                                        |
+| empty   | Define the content to show if the list is empty |                                                                                                                                                                                                        |
+| footer  | Define an additional footer                     |                                                                                                                                                                                                        |
+
+</section>
+
+<section class="odocs-specs">
+
+## ListItem Component
+
+> An option item used by the listbox component.
+
+```html
+<o-list-item></o-list-item>
+```
+
+### Props
+
+| Prop name      | Description                                                                       | Type                   | Values                                            | Default                                                                                                                                               |
+| -------------- | --------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaLabel      | Defines a string value that labels an interactive element.                        | string                 | -                                                 |                                                                                                                                                       |
+| ariaLabelledby | Identifier of the underlying input element.                                       | string                 | -                                                 |                                                                                                                                                       |
+| disabled       | Item is disabled                                                                  | boolean                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| hidden         | Define whether the item is visible or not                                         | boolean                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| icon           | Icon to be shown                                                                  | string                 | -                                                 |                                                                                                                                                       |
+| iconPack       | Icon pack to use                                                                  | string                 | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconSize       | Icon size                                                                         | string                 | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code> |
+| label          | Item label, unnecessary when default slot is used                                 | string                 | -                                                 |                                                                                                                                                       |
+| override       | Override existing theme classes completely                                        | boolean                | -                                                 |                                                                                                                                                       |
+| value          | Item value (it will be used as v-model of wrapper component) - default is an uuid | string\|number\|object | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                         |
+
+### Events
+
+| Event name | Properties                                                                 | Description   |
+| ---------- | -------------------------------------------------------------------------- | ------------- |
+| click      | **value** `unknown` - value prop data<br/>**event** `event` - native event | onclick event |
+
+### Slots
+
+| Name    | Description                               | Bindings                                                                                |
+| ------- | ----------------------------------------- | --------------------------------------------------------------------------------------- |
+| default | Override the label, default is label prop | **selected** `boolean` - item is selected<br/>**disabled** `boolean` - item is disabled |
 
 </section>
 

@@ -8,11 +8,16 @@ import { toValue, type MaybeRefOrGetter } from "vue";
  */
 export function useDebounce<A extends Array<unknown>>(
     fn: (...args: A) => void,
-    ms: MaybeRefOrGetter<number>,
+    ms: MaybeRefOrGetter<number> = 0,
 ): (...args: A) => void {
     let timeout: ReturnType<typeof setTimeout> | undefined;
 
     return (...args: A) => {
+        if (toValue(ms) <= 0) {
+            fn.apply(this, args);
+            return;
+        }
+
         const debouncedFunc = (): void => {
             timeout = undefined;
             fn.apply(this, args);

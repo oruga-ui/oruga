@@ -48,7 +48,7 @@ const onProfileActivate = (): void => {
             step="3"
             :visible="showSocial"
             label="Social"
-            :clickable="isStepsClickable">
+            :clickable="false">
             <h1 class="title has-text-centered">Social</h1>
             Lorem ipsum dolor sit amet.
         </o-step-item>

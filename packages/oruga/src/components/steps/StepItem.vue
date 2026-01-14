@@ -116,6 +116,7 @@ const itemVariant = computed(() => parent.value.variant ?? props.variant);
 const isClickable: ComputedRef<boolean> = computed(
     () =>
         !props.disabled &&
+        props.clickable !== false &&
         (props.clickable || item.value.index < parent.value.activeIndex),
 );
 

@@ -1448,7 +1448,7 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
-                 * Number of milliseconds to delay before to emit input event
+                 * Number of milliseconds to delay before the value get emitted
                  */
                 debounce: number;
                 /**
@@ -1523,7 +1523,7 @@ See icon library documentation for custom classes.
                  */
                 scrollHeight: number | string;
                 /**
-                 * A label which is displayed when no options is visible
+                 * A label which is displayed when no options are visible
                  */
                 emptyLabel: string;
                 /**
@@ -1546,14 +1546,6 @@ See icon library documentation for custom classes.
                  * Custom animation (transition name)
                  */
                 animation: string;
-                /**
-                 * List tag name
-                 */
-                listTag: DynamicComponent;
-                /**
-                 * List item tag name
-                 */
-                itemTag: DynamicComponent;
                 /**
                  * Class of the root element
                  */
@@ -1599,23 +1591,27 @@ See icon library documentation for custom classes.
                  */
                 inputClasses: Record<string, any>;
                 /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
                  * Class of the item element.
                  */
                 itemClass: ClassDefinition;
                 /**
-                 * Class of the item element when selected
+                 * Class of the item element when is selectable
+                 */
+                itemSelectableClass: ClassDefinition;
+                /**
+                 * Class of the item element when is selected
                  */
                 itemSelectedClass: ClassDefinition;
                 /**
-                 * Class of the item element when focused
+                 * Class of the item element when is focused
                  */
                 itemFocusedClass: ClassDefinition;
                 /**
-                 * Class of the item element when clickable
-                 */
-                itemClickableClass: ClassDefinition;
-                /**
-                 * Class of the item element when disabled
+                 * Class of the item element when is disabled
                  */
                 itemDisabledClass: ClassDefinition;
             }>;
@@ -3548,6 +3544,93 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the arrow element with variant
                  */
                 arrowVariantClass: ClassDefinition;
+            }>;
+        tree?: ComponentConfigBase &
+            Partial<{
+                /**
+                 * Height of the tree, a scrollbar is defined if height of list exceeds this value
+                 */
+                scrollHeight: number | string;
+                /**
+                 * A label which is displayed when no options are visible
+                 */
+                emptyLabel: string;
+                /**
+                 * The chevron icon to for the toggle element before each item
+                 */
+                toggleIcon: string;
+                /**
+                 * Icon pack to use
+                 */
+                iconPack: string;
+                /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
+                 * Custom animation (transition name)
+                 */
+                animation: string;
+                /**
+                 * Class of the root element
+                 */
+                rootClass: ClassDefinition;
+                /**
+                 * Clas of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
+                /**
+                 * Clas of the root element when selectable
+                 */
+                selectableClass: ClassDefinition;
+                /**
+                 * Clas of the root element when multiple
+                 */
+                multipleClass: ClassDefinition;
+                /**
+                 * Class of the header slot wrapper element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the footer slot wrapper element
+                 */
+                footerClass: ClassDefinition;
+                /**
+                 * Class of the empty slot wrapper element
+                 */
+                emptyClass: ClassDefinition;
+                /**
+                 * Class of the tree list element
+                 */
+                listClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element
+                 */
+                itemClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when selected
+                 */
+                itemSelectedClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when focused
+                 */
+                itemFocusedClass: ClassDefinition;
+                /**
+                 * Class of the item element when clickable
+                 */
+                itemClickableClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when disabled
+                 */
+                itemDisabledClass: ClassDefinition;
+                /**
+                 * Class of the tree item label element element
+                 */
+                itemLabelClass: ClassDefinition;
+                /**
+                 * Class of the tree item subtree element
+                 */
+                itemSubtreeClass: ClassDefinition;
             }>;
         upload?: ComponentConfigBase &
             Partial<{

@@ -48,13 +48,6 @@ defineOptions({
 
 type ModelValue = CarouselProps<T>["modelValue"];
 
-/**
- *
- * TODO: add options example
- * TODO: add options tests
- *
- */
-
 const props = withDefaults(defineProps<CarouselProps<T>>(), {
     override: undefined,
     modelValue: undefined,

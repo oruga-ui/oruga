@@ -7,7 +7,6 @@ import {
     useTemplateRef,
     watch,
     watchEffect,
-    type Component,
 } from "vue";
 
 import OListboxItem from "./ListItem.vue";
@@ -26,18 +25,17 @@ import {
 import { isClient } from "@/utils/ssr";
 import { getDefault } from "@/utils/config";
 import {
+    areOptionsGrouped,
     defineClasses,
     findOptionIndex,
     getOptionsLength,
+    isGroupOption,
     normalizeOptions,
     scrollElementInView,
-    toOptionsGroup,
     unrefElement,
     useProviderParent,
     useScrollEvents,
     useSequentialId,
-    type OptionsGroupItem,
-    type OptionsItem,
 } from "@/composables";
 
 import { injectField } from "@/components/field/fieldInjection";
@@ -49,6 +47,7 @@ import type { ListItem, ListboxComponent, ListItemComponent } from "./types";
  * Listbox is used to select one or more values from a list of items.
  * @experimental
  * @displayName Listbox
+ * @requires ./ListItem.vue
  * @style _listbox.scss
  */
 defineOptions({
@@ -64,9 +63,10 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     modelValue: undefined,
     // multiple: false,
     options: undefined,
-    disabled: false,
     scrollHeight: () => getDefault("listbox.scrollHeight", "225"),
+    disabled: false,
     selectable: true,
+    // checkable: false,
     selectOnFocus: false,
     emptyLabel: () => getDefault("listbox.emptyLabel"),
     filterable: false,
@@ -77,22 +77,21 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     filterPlaceholder: () => getDefault("listbox.filterPlaceholder"),
     iconPack: () => getDefault("listbox.iconPack"),
     animation: () => getDefault("listbox.animation", "fade"),
+    id: () => useId(),
     ariaLabel: undefined,
     ariaLabelledby: undefined,
-    listTag: () => getDefault("listbox.listTag", "ul"),
-    itemTag: () => getDefault("listbox.itemTag", "li"),
     inputClasses: () => getDefault("listbox.inputClasses"),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T | T[]} updated modelValue prop
+     * @param value {unknown | unknown[]} updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * on select event - fired before update:modelValue
-     * @param value {T} selected value
+     * @param value {unknown} selected value
      */
     select: [value: T];
     /**
@@ -111,9 +110,9 @@ const emits = defineEmits<{
      * @param event {Event} native event
      */
     blur: [event: Event];
-    /** scrolling the list reached the start */
+    /** scrolling inside the list reached the start */
     "scroll-start": [];
-    /** scrolling the list inside reached it's end */
+    /** scrolling inside the list reached the end */
     "scroll-end": [];
 }>();
 
@@ -131,73 +130,46 @@ defineSlots<{
         onChange: (input: string, event: Event) => void;
         onKeydown: (event: KeyboardEvent) => void;
     }): void;
-    /**
-     * Define the listbox items here
-     * @param focusedIndex {number | undefined} - index of the focused element
-     */
-    default?(props: { focusedIndex?: number }): void;
-    /**
-     * Override the option group
-     * @param group {string} - options group item
-     * @param index {number} - group option index
-     */
-    optiongroup?(props: { group: OptionsGroupItem<T>; index: number }): void;
-    /**
-     * Override the label, default is label prop
-     * @param option {object} - option item
-     * @param index {number} - option index
-     * @param selected {boolean} - option is selected
-     * @param disabled {boolean} - option is disabled
-     */
-    option?(props: {
-        option: OptionsItem<T>;
-        index: number;
-        selected: boolean;
-        disabled: boolean;
-    }): void;
+    /** Define the listbox items here */
+    default?(): void;
     /** Define the content to show if the list is empty */
     empty?(): void;
     /** Define an additional footer */
     footer?(): void;
 }>();
 
+const listRef = useTemplateRef<HTMLElement>("listElement");
+
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const listRef = useTemplateRef<HTMLElement | Component>("listElement");
+// if `id` is given set as `for` property on o-field wrapper
+if (props.id) parentField.value?.setInputId(props.id);
 
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
-    return groupedOptions;
-});
+const normalizedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
-// the selected item value, use v-model to make it two-way binding
-const vmodel = defineModel<ModelValue>({ default: undefined });
-
-const listStyle = computed(() => ({
-    maxHeight: toCssDimension(props.scrollHeight),
-    overflow: "auto",
-}));
+/** determines if the options are grouped or not */
+const optionsGrouped = computed(() => areOptionsGrouped(normalizedOptions));
 
 // #region --- Child Items ---
 
-const $id = useId();
-
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<ListboxComponent<T>>(() => ({
-    id: $id,
+    id: props.id,
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
+    // checkable: props.checkable,
     selectable: props.selectable,
     selected: vmodel.value,
-    focsuedIdentifier: focusedItem.value?.identifier,
+    focsuedItem: focusedItem.value,
     selectItem,
-    focusItem: focusItem,
+    focusItem,
 }));
 
 /** provide functionalities and data to child item components */
@@ -206,9 +178,8 @@ const { childItems } = useProviderParent<
     ListboxComponent<T>
 >({ rootRef: listRef, data: provideData });
 
-const hasVisableItems = computed(
-    () =>
-        !!childItems.value.map((item) => item.data && !item.data.hidden).length,
+const hasViableItems = computed(() =>
+    childItems.value.some((item) => item.data.isViable),
 );
 
 /**
@@ -261,9 +232,17 @@ if (isClient && props.scrollHeight)
         { passive: true },
     );
 
+const listStyle = computed(() => ({
+    maxHeight: toCssDimension(props.scrollHeight),
+    overflow: "auto",
+}));
+
 // #endregion --- Scroll Handler ---
 
 // #region --- Select Feature ---
+
+// the selected item value, use v-model to make it two-way binding
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** Checks if the value of the given item is part of the modelValue. */
 function isItemSelected(item: ListItem<T>): boolean {
@@ -287,7 +266,7 @@ function updateSelectedItems(items: ListItem<T>[]): void {
 function selectItem(item: ListItem<T>, selection: boolean = true): void {
     if (!props.selectable) return;
 
-    const value = item.data!.value!;
+    const value = item.data.value!;
     if (selection) emits("select", value);
 
     // set selected option
@@ -315,6 +294,7 @@ function selectItem(item: ListItem<T>, selection: boolean = true): void {
     }
 }
 
+/** Select a range of items from a staring index to an end index. */
 function selectItemRange(start: number, end: number): void {
     if (!props.selectable || !isTrueish(props.multiple)) return;
     if (start < 0 || end < 0) return;
@@ -368,8 +348,8 @@ function startFocusRange(): void {
         startRangeIndex.value = focusedItem.value?.index ?? -1;
 }
 
-/** Hover listener from DropdownItem. */
-function focusItem(value: ListItem<T>): void {
+/** Set an item as focused element. */
+function focusItem(value?: ListItem<T>): void {
     focusedItem.value = value;
 }
 
@@ -407,7 +387,7 @@ function selectFocusedItem(event: KeyboardEvent): void {
 
 /** Move the focus one element up the list. */
 function moveFocusUp(event: KeyboardEvent): void {
-    if (!hasVisableItems.value) return;
+    if (!hasViableItems.value) return;
     // get the previous item
     const delta = -1;
     const item = getFirstViableItem(focusedItem.value?.index || 0, delta);
@@ -422,7 +402,7 @@ function moveFocusUp(event: KeyboardEvent): void {
 
 /** Move the focus one element down the list. */
 function moveFocusDown(event: KeyboardEvent): void {
-    if (!hasVisableItems.value) return;
+    if (!hasViableItems.value) return;
     // get the next item
     const delta = 1;
     const item = getFirstViableItem(focusedItem.value?.index || 0, delta);
@@ -436,18 +416,31 @@ function moveFocusDown(event: KeyboardEvent): void {
 }
 
 /** Go to the first viable item. */
-function focusFirstItem(): void {
-    if (!hasVisableItems.value) return;
+function focusFirstItem(event?: KeyboardEvent): void {
+    if (!hasViableItems.value) return;
+
     // get the first item
     const item = getFirstViableItem(0, 1);
+
+    // check mulitple selection
+    if (isTrueish(props.multiple) && event?.shiftKey)
+        selectItemRange(startRangeIndex.value, item.index);
+
+    // focus new item
     setFocus(item);
 }
 
 /** Go to the last viable item. */
-function focusLastItem(): void {
-    if (!hasVisableItems.value) return;
+function focusLastItem(event?: KeyboardEvent): void {
+    if (!hasViableItems.value) return;
     // get the last item
     const item = getFirstViableItem(childItems.value.length - 1, -1);
+
+    // check mulitple selection
+    if (isTrueish(props.multiple) && event?.shiftKey)
+        selectItemRange(startRangeIndex.value, item.index);
+
+    // focus new item
     setFocus(item);
 }
 
@@ -475,9 +468,17 @@ function onFocusin(event: FocusEvent): void {
     emits("focus", event);
 }
 
-/** List hover leave event handler. */
-function onHoverLeave(): void {
+function onFocusout(event: FocusEvent): void {
+    // check if focus is still inside the component
+    const listElement = event.currentTarget as HTMLElement;
+    const newFocus = event.relatedTarget as HTMLElement;
+    if (listElement?.contains(newFocus)) return;
+    if (listElement?.contains(event.target as Node)) return;
+
+    // clear focus
+    isFocused.value = false;
     focusedItem.value = undefined;
+    startRangeIndex.value = -1;
 }
 
 function onBlur(event: Event): void {
@@ -487,15 +488,6 @@ function onBlur(event: Event): void {
     startRangeIndex.value = -1;
 
     emits("blur", event);
-}
-
-function onFocusout(event: FocusEvent): void {
-    const listElement = unrefElement(listRef);
-    if (listElement?.contains(event.target as Node)) return;
-    // clear focus
-    isFocused.value = false;
-    focusedItem.value = undefined;
-    startRangeIndex.value = -1;
 }
 
 // #endregion --- Focus Feature ---
@@ -592,12 +584,12 @@ function onListKeyDown(event: KeyboardEvent): void {
             break;
 
         case "Home":
-            focusFirstItem();
+            focusFirstItem(event);
             event.preventDefault();
             break;
 
         case "End":
-            focusLastItem();
+            focusLastItem(event);
             event.preventDefault();
             break;
 
@@ -648,12 +640,12 @@ function onFilterKeyDown(event: KeyboardEvent): void {
             break;
 
         case "Home":
-            focusFirstItem();
+            focusFirstItem(event);
             event.preventDefault();
             break;
 
         case "End":
-            focusLastItem();
+            focusLastItem(event);
             event.preventDefault();
             break;
 
@@ -748,10 +740,10 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                     expanded
                     size="small"
                     aria-label="listbox filter input"
-                    :aria-owns="$id + '_list'"
+                    :aria-owns="id + '_list'"
                     :aria-activedescendant="
                         focusedItem
-                            ? `${$id}-${focusedItem.identifier}`
+                            ? `${id}-${focusedItem.identifier}`
                             : undefined
                     "
                     autocomplete="off"
@@ -763,8 +755,8 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         </div>
 
         <component
-            :is="listTag"
-            :id="$id + '_list'"
+            :is="optionsGrouped ? 'div' : 'ul'"
+            :id="id + '_list'"
             ref="listElement"
             role="listbox"
             :tabindex="disabled || isFocused ? -1 : 0"
@@ -772,56 +764,51 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
             :style="listStyle"
             :aria-multiselectable="multiple"
             :aria-activedescendant="
-                focusedItem ? `${$id}-${focusedItem.identifier}` : undefined
+                focusedItem ? `${id}-${focusedItem.identifier}` : undefined
             "
             :aria-label="ariaLabel"
             :aria-labelledby="props.ariaLabelledby ?? parentField?.labelId"
             :aria-disabled="disabled"
             @focusin="onFocusin"
             @blur="onBlur"
-            @mouseleave="onHoverLeave"
+            @mouseleave="focusItem(undefined)"
             @keydown="onListKeyDown">
             <transition-group :name="animation">
-                <slot :focused-index="focusedItem?.index">
-                    <template v-for="(group, groupIndex) in groupedOptions">
-                        <o-listbox-item
-                            v-if="group.label"
-                            v-bind="group.attrs"
-                            :key="group.key"
-                            :value="group.value"
-                            :label="group.label"
-                            :hidden="group.hidden"
-                            disabled
-                            role="presentation">
-                            <slot
-                                name="optiongroup"
-                                :group="group"
-                                :index="groupIndex">
-                                <span> {{ group.label }} </span>
-                            </slot>
-                        </o-listbox-item>
+                <slot>
+                    <template
+                        v-for="option in normalizedOptions"
+                        :key="option.key">
+                        <ul v-if="isGroupOption(option)" role="group">
+                            <o-listbox-item
+                                v-bind="option.attrs"
+                                :label="option.label"
+                                :hidden="option.hidden"
+                                disabled
+                                role="presentation" />
+
+                            <o-listbox-item
+                                v-for="_option in option.options"
+                                v-bind="_option.attrs"
+                                :key="_option.key"
+                                :value="_option.value"
+                                :label="_option.label"
+                                :hidden="_option.hidden"
+                                :aria-setsize="getOptionsLength(option.options)"
+                                :aria-posinset="
+                                    findOptionIndex(option.options, _option) + 1
+                                " />
+                        </ul>
 
                         <o-listbox-item
-                            v-for="(option, optionIndex) in group.options"
-                            v-slot="{ selected, disabled }"
+                            v-else
                             v-bind="option.attrs"
-                            :key="option.key"
                             :value="option.value"
                             :label="option.label"
                             :hidden="option.hidden"
-                            :aria-setsize="getOptionsLength(groupedOptions)"
+                            :aria-setsize="getOptionsLength(normalizedOptions)"
                             :aria-posinset="
-                                findOptionIndex(groupedOptions, option) + 1
-                            ">
-                            <slot
-                                name="option"
-                                :option="option"
-                                :index="optionIndex"
-                                :selected="selected"
-                                :disabled="disabled">
-                                <span> {{ option.label }} </span>
-                            </slot>
-                        </o-listbox-item>
+                                findOptionIndex(normalizedOptions, option) + 1
+                            " />
                     </template>
                 </slot>
             </transition-group>
@@ -829,7 +816,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
 
         <transition :name="animation">
             <div
-                v-if="!hasVisableItems && ($slots.empty || emptyLabel)"
+                v-if="!hasViableItems && ($slots.empty || emptyLabel)"
                 :class="emptyClasses">
                 <slot name="empty">
                     {{ emptyLabel }}

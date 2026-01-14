@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="T">
 import { useId, computed, useTemplateRef, ref } from "vue";
 
+import OIcon from "../icon/Icon.vue";
+
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
@@ -25,11 +27,12 @@ const props = withDefaults(defineProps<ListItemProps<T>>(), {
     label: undefined,
     disabled: false,
     hidden: false,
-    clickable: undefined,
+    icon: undefined,
+    iconPack: () => getDefault("listbox.iconPack"),
+    iconSize: () => getDefault("listbox.iconSize"),
     ariaLabel: undefined,
     ariaLabelledby: undefined,
     parentKey: undefined,
-    tag: () => getDefault("listbox.itemTag", "li"),
 });
 
 const emits = defineEmits<{
@@ -81,12 +84,13 @@ const isViable = computed(() => !isHidden.value && !props.disabled);
 
 const isDisabled = computed(() => parent.value.disabled || props.disabled);
 
+const isFocused = computed(
+    () => item.value.identifier === parent.value.focsuedItem?.identifier,
+);
+
 /** Shows if the item is clickable or not. */
-const isClickable = computed(
-    () =>
-        !parent.value.disabled &&
-        !props.disabled &&
-        (props.clickable ?? parent.value.selectable),
+const isSelectable = computed(
+    () => !isDisabled.value && parent.value.selectable,
 );
 
 const isSelected = computed(() => {
@@ -98,20 +102,16 @@ const isSelected = computed(() => {
     return isEqual(item.value.data.value, parent.value.selected);
 });
 
-const isFocused = computed(
-    () => item.value.identifier === parent.value.focsuedIdentifier,
-);
+/** Hover listener, set the item as focused element. */
+function focusItem(): void {
+    parent.value.focusItem(item.value);
+}
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
-    if (!isClickable.value) return;
+    if (!isSelectable.value) return;
     parent.value.selectItem(item.value, !isSelected.value);
     emits("click", props.value as T, event);
-}
-
-/** Set the item as focused element. */
-function focusItem(): void {
-    parent.value.focusItem(item.value);
 }
 
 /** Check if a value matches the label (startsWith). */
@@ -121,26 +121,25 @@ function matches(value: string): boolean {
 
 // #region --- Computed Component Classes ---
 
-const rootClasses = defineClasses(
+const itmeClasses = defineClasses(
     ["itemClass", `o-${key}__item`],
-    ["itemClickableClass", `o-${key}__item--clickable`, null, isClickable],
-    ["itemDisabledClass", `o-${key}__item--disabled`, null, isDisabled],
+    ["itemSelectableClass", `o-${key}__item--selectable`, null, isSelectable],
     ["itemSelectedClass", `o-${key}__item--selected`, null, isSelected],
     ["itemFocusedClass", `o-${key}__item--focused`, null, isFocused],
+    ["itemDisabledClass", `o-${key}__item--disabled`, null, isDisabled],
 );
 
 // #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <component
-        :is="tag"
+    <li
         v-show="!isHidden"
         :id="`${parent.id}-${item.identifier}`"
         ref="rootElement"
         :data-oruga="`${key}-item`"
         :data-id="`${key}-${item.identifier}`"
-        :class="rootClasses"
+        :class="itmeClasses"
         role="option"
         tabindex="-1"
         :aria-selected="
@@ -155,8 +154,14 @@ const rootClasses = defineClasses(
         :aria-labelledby="ariaLabelledby"
         @click.prevent="clickItem"
         @mouseenter="focusItem">
-        <slot :selected="isSelected" :disabled="disabled">
-            {{ label }}
+        <!-- TODO: add checkbox for checkable -->
+        <slot :selected="isSelected" :disabled="isDisabled">
+            <o-icon
+                v-if="icon"
+                :icon="icon"
+                :pack="iconPack"
+                :size="iconSize" />
+            <span>{{ label }}</span>
         </slot>
-    </component>
+    </li>
 </template>

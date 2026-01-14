@@ -83,10 +83,15 @@ const inspectData: InspectData<
         subitem: "listitem",
         description: "Class of the item element.",
     },
+    itemSelectableClass: {
+        class: "itemSelectableClass",
+        subitem: "listitem",
+        description: "Class of the item element when is selectable.",
+    },
     itemSelectedClass: {
         class: "itemSelectedClass",
         subitem: "listitem",
-        description: "Class of the item element when selected.",
+        description: "Class of the item element when is selected.",
         action: (data): void => {
             data.modelValue = "Vue.js";
         },
@@ -94,17 +99,12 @@ const inspectData: InspectData<
     itemFocusedClass: {
         class: "itemFocusedClass",
         subitem: "listitem",
-        description: "Class of the item element when focused.",
-    },
-    itemClickableClass: {
-        class: "itemClickableClass",
-        subitem: "listitem",
-        description: "Class of the item element when clickable.",
+        description: "Class of the item element when is focused.",
     },
     itemDisabledClass: {
         class: "itemDisabledClass",
         subitem: "listitem",
-        description: "Class of the item element when disabled.",
+        description: "Class of the item element when is disabled.",
         action: (data): void => {
             data.options = [
                 {

@@ -1,5 +1,5 @@
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
-import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
+import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
 import type { TableColumn } from "../types";
@@ -330,7 +330,7 @@ describe("OTable tests", () => {
             expect(filterCells[1].find("input").exists()).toBeTruthy(); // Name column is filterable
         });
 
-        test("displays filtered data when searching", async () => {
+        test("displays filtered data when filtering", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
@@ -352,7 +352,7 @@ describe("OTable tests", () => {
             await input.setValue("J");
             await input.trigger("input");
             vi.runAllTimers(); // run debounce timer
-            await flushPromises();
+            await nextTick();
 
             const bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(2); // Jesse and João
@@ -360,7 +360,7 @@ describe("OTable tests", () => {
             expect(wrapper.emitted("filters-change")).toHaveLength(1);
         });
 
-        test("displays filtered data when searching and updating data", async () => {
+        test("displays filtered data when filtering and updating data", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
@@ -378,7 +378,7 @@ describe("OTable tests", () => {
             await input.setValue("J");
             await input.trigger("input");
             vi.runAllTimers(); // run debounce timer
-            await flushPromises();
+            await nextTick();
 
             let bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(2); // Jesse and João
@@ -392,7 +392,7 @@ describe("OTable tests", () => {
             expect(bodyRows).toHaveLength(3); // Jesse, João and Justin
         });
 
-        test("displays filtered data when searching by name without accent", async () => {
+        test("displays filtered data when filtering by name without accent", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
@@ -410,13 +410,13 @@ describe("OTable tests", () => {
             await input.setValue("Joao");
             await input.trigger("input");
             vi.runAllTimers(); // run debounce timer
-            await flushPromises();
+            await nextTick();
 
             const bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(1); // João
         });
 
-        test("displays filtered data when searching by name with accent", async () => {
+        test("displays filtered data when filtering by name with accent", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
@@ -434,7 +434,7 @@ describe("OTable tests", () => {
             await input.setValue("João");
             await input.trigger("input");
             vi.runAllTimers(); // run debounce timer
-            await flushPromises();
+            await nextTick();
 
             const bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(1); // João
@@ -451,7 +451,7 @@ describe("OTable tests", () => {
                     filterDebounce: 1000,
                 },
             });
-            await nextTick();
+            await nextTick(); // await child component rendering
 
             const input = wrapper.find("thead input");
             expect(input.exists()).toBeTruthy();
@@ -459,7 +459,6 @@ describe("OTable tests", () => {
             for (let i = 0; i < 10; i++) {
                 await input.setValue("J".repeat(10 - i));
                 await input.trigger("input");
-                await setTimeout(() => {}, 500);
                 const bodyRows = wrapper.findAll("tbody tr");
                 expect(bodyRows).toHaveLength(5); // No filtering yet
             }
@@ -496,7 +495,7 @@ describe("OTable tests", () => {
             await input.setValue("T");
             await input.trigger("input");
             vi.runAllTimers(); // run debounce timer
-            await flushPromises();
+            await nextTick();
 
             bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(1); // Tina
@@ -712,8 +711,10 @@ describe("OTable tests", () => {
 
             const body = wrapper.find("tbody");
             let trs = body.findAll("tr");
+            // check only item count of one page is displayed
             expect(trs).toHaveLength(perPage);
 
+            // update table data
             const newData = [
                 ...random_words.slice(0, 3).map((word) => ({
                     id: lastId++,
@@ -724,6 +725,7 @@ describe("OTable tests", () => {
             await wrapper.setProps({ data: newData });
 
             trs = body.findAll("tr");
+            // check only item count of one page is displayed
             expect(trs).toHaveLength(perPage);
 
             const sortedData = newData.sort((a, b) =>
@@ -851,7 +853,7 @@ describe("OTable tests", () => {
                     perPage: perPage,
                 },
             });
-            await nextTick();
+            await nextTick(); // await child component rendering
 
             let body = wrapper.find("tbody");
             let trs = body.findAll("tr");
@@ -865,16 +867,66 @@ describe("OTable tests", () => {
                         { label: "ID", field: "id", numeric: true },
                         { label: "Name", field: "name", filterable: true },
                     ],
-                    paginated: true,
                     data: data,
+                    paginated: true,
                     perPage: perPage,
                 },
             });
-            await nextTick();
+            await nextTick(); // await child component rendering
 
             body = wrapper.find("tbody");
             trs = body.findAll("tr");
             expect(trs).toHaveLength(perPage);
+        });
+
+        test("show correct amount of rows when pageable and has filter", async () => {
+            const data = [
+                { id: 1, name: "Jesse" },
+                { id: 2, name: "João" },
+                { id: 3, name: "Tina" },
+                { id: 4, name: "Marco" },
+                { id: 5, name: "Hannes" },
+                { id: 6, name: "Anne" },
+                { id: 7, name: "Clarence" },
+            ];
+            const perPage = 5;
+
+            vi.useFakeTimers(); // use fake timers for debounce
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", filterable: true },
+                    ],
+                    data: data,
+                    paginated: true,
+                    perPage: perPage,
+                },
+            });
+            await nextTick(); // await child component rendering
+
+            const body = wrapper.find("tbody");
+            const trs = body.findAll("tr");
+            expect(trs).toHaveLength(perPage);
+
+            const input = wrapper.find("thead input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue("j");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await nextTick(); // await child component rendering
+
+            expect(wrapper.findAll("tbody tr")).toHaveLength(2); // Jesse/João
+
+            await input.setValue("e");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await nextTick(); // await child component rendering
+
+            expect(wrapper.findAll("tbody tr")).toHaveLength(4); // Jesse/Anne/Hannes/Clarence
+
+            vi.useRealTimers();
         });
     });
 });

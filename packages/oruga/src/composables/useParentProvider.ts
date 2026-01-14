@@ -44,7 +44,7 @@ type ProviderParentOptions<T = unknown> = {
      * Override the provide/inject key.
      * Default is the component configField attribute
      */
-    key?: string;
+    key?: string | symbol;
     /**
      * Additional data provided for the child to the item
      */
@@ -68,8 +68,11 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
             "useProviderChild must be called within a component setup function.",
         );
 
-    const configField = vm.proxy?.$options.configField;
-    const key = options?.key || configField;
+    const configField = String(vm.proxy?.$options.configField);
+    const key =
+        (typeof options?.key === "symbol"
+            ? options.key?.toString()
+            : options?.key) || configField;
 
     const childItems = ref<ProviderItem<ItemData>[]>([]);
     const total = computed<number>(() => childItems.value.length);
@@ -155,7 +158,7 @@ type ProviderChildOptions<T = unknown> = {
      * Override the provide/inject key.
      * Default is the component configField attribute
      */
-    key?: string;
+    key?: string | symbol;
     /**
      * Does the child need the be below the parent?
      * @default true
@@ -247,8 +250,11 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
             "useProviderChild must be called within a component setup function.",
         );
 
-    const configField = vm.proxy?.$options.configField;
-    const key = options?.key || configField;
+    const configField = String(vm.proxy?.$options.configField);
+    const key =
+        (typeof options?.key === "symbol"
+            ? options.key.toString()
+            : options?.key) || configField;
 
     /** Inject parent component functionality if used inside one **/
     const parent = inject<PovidedData<ParentData, ItemData> | undefined>(
