@@ -1,7 +1,9 @@
 name: Publish Release
 on:
-  release:
-    types: [created]
+  # run after the 'Generate Release' workflow completes
+  workflow_run:
+    workflows: ["Generate Release"]
+    types: [completed]
 
 permissions:
   id-token: write # Required for OIDC
@@ -9,6 +11,8 @@ permissions:
 
 jobs:
   publish:
+    # only publish when the 'Generate Release' workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
