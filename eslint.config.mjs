@@ -7,7 +7,7 @@ import {
   vueTsConfigs,
 } from "@vue/eslint-config-typescript";
 // import vueA11yPlugin from "eslint-plugin-vuejs-accessibility";
-import prettierConfig from "@vue/eslint-config-prettier";
+import stylistic from "@stylistic/eslint-plugin";
 
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -41,11 +41,26 @@ export default [
   // add vue a11y configs
   // ...vueA11yPlugin.configs["flat/recommended"],
 
-  // add prettier configs
-  prettierConfig,
+  // disable eslint and @typescript-eslint/eslint-plugin legacy rules
+  stylistic.configs["disable-legacy"],
 
-  // your modifications
+  // add formatter configs
+  stylistic.configs.customize({
+    quotes: "double",
+    semi: true,
+    jsx: false,
+    quoteProps: "as-needed",
+    arrowParens: true,
+    braceStyle: "1tbs",
+  }),
+
+  // project specific modifications
   {
+    plugins: {
+      // add eslint stylistic
+      "@stylistic": stylistic,
+    },
+    // custon rule modifications
     rules: {
       // TypeScript
       "@typescript-eslint/no-explicit-any": ["warn"],
@@ -64,6 +79,29 @@ export default [
           selfClosingTag: {
             singleline: "never",
             multiline: "never",
+          },
+        },
+      ],
+      // Stylistic
+      "@stylistic/multiline-ternary": ["error", "always-multiline"],
+      "@stylistic/object-curly-newline": [
+        "error",
+        {
+          ObjectExpression: {
+            multiline: true,
+            consistent: true,
+          },
+          ObjectPattern: { multiline: true },
+        },
+      ],
+      "@stylistic/operator-linebreak": [
+        "error",
+        "after",
+        {
+          overrides: {
+            "?": "before",
+            ":": "before",
+            "|": "before",
           },
         },
       ],

@@ -1,9 +1,9 @@
 import {
-    computed,
-    onBeforeUnmount,
-    ref,
-    toValue,
-    type MaybeRefOrGetter,
+  computed,
+  onBeforeUnmount,
+  ref,
+  toValue,
+  type MaybeRefOrGetter,
 } from "vue";
 import { isClient } from "@/utils/ssr";
 import { defineClasses, getActiveClasses } from "./defineClasses";
@@ -16,51 +16,51 @@ import { defineClasses, getActiveClasses } from "./defineClasses";
  * @param clipScroll clip scrollbar or not
  */
 export function usePreventScrolling(
-    clipScroll: MaybeRefOrGetter<boolean>,
+  clipScroll: MaybeRefOrGetter<boolean>,
 ): (active: boolean) => void {
-    const scrollClipClasses = defineClasses([
-        "scrollClipClass",
-        "o-scroll-clip",
-    ]);
-    const scrollKeepClasses = defineClasses([
-        "scrollKeepClass",
-        "o-scroll-keep",
-    ]);
+  const scrollClipClasses = defineClasses([
+    "scrollClipClass",
+    "o-scroll-clip",
+  ]);
+  const scrollKeepClasses = defineClasses([
+    "scrollKeepClass",
+    "o-scroll-keep",
+  ]);
 
-    const scrollClass = computed(() =>
-        getActiveClasses(
-            toValue(clipScroll)
-                ? scrollClipClasses.value
-                : scrollKeepClasses.value,
-        ),
-    );
+  const scrollClass = computed(() =>
+    getActiveClasses(
+      toValue(clipScroll)
+        ? scrollClipClasses.value
+        : scrollKeepClasses.value,
+    ),
+  );
 
-    const savedScrollTop = ref<number>();
+  const savedScrollTop = ref<number>();
 
-    // reset scroll
-    onBeforeUnmount(() => toggleScroll(false));
+  // reset scroll
+  onBeforeUnmount(() => toggleScroll(false));
 
-    function toggleScroll(active: boolean): void {
-        if (!isClient) return;
-        if (!scrollClass.value) return;
+  function toggleScroll(active: boolean): void {
+    if (!isClient) return;
+    if (!scrollClass.value) return;
 
-        savedScrollTop.value = savedScrollTop.value
-            ? savedScrollTop.value
-            : document.documentElement.scrollTop;
+    savedScrollTop.value = savedScrollTop.value
+      ? savedScrollTop.value
+      : document.documentElement.scrollTop;
 
-        if (active) document.body.classList.add(...scrollClass.value);
-        else document.body.classList.remove(...scrollClass.value);
+    if (active) document.body.classList.add(...scrollClass.value);
+    else document.body.classList.remove(...scrollClass.value);
 
-        if (!toValue(clipScroll)) {
-            if (active) {
-                document.body.style.top = `-${savedScrollTop.value}px`;
-            } else {
-                document.documentElement.scrollTop = savedScrollTop.value;
-                document.body.style.top = "";
-                savedScrollTop.value = undefined;
-            }
-        }
+    if (!toValue(clipScroll)) {
+      if (active) {
+        document.body.style.top = `-${savedScrollTop.value}px`;
+      } else {
+        document.documentElement.scrollTop = savedScrollTop.value;
+        document.body.style.top = "";
+        savedScrollTop.value = undefined;
+      }
     }
+  }
 
-    return toggleScroll;
+  return toggleScroll;
 }

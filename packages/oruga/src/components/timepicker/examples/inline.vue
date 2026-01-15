@@ -1,5 +1,5 @@
 <template>
-    <section>
-        <o-timepicker inline />
-    </section>
+  <section>
+    <o-timepicker inline />
+  </section>
 </template>

@@ -7,26 +7,26 @@ import { toValue, type MaybeRefOrGetter } from "vue";
  * @returns A new, debounce, function to call.
  */
 export function useDebounce<A extends Array<unknown>>(
-    fn: (...args: A) => void,
-    ms: MaybeRefOrGetter<number> = 0,
+  fn: (...args: A) => void,
+  ms: MaybeRefOrGetter<number> = 0,
 ): (...args: A) => void {
-    let timeout: ReturnType<typeof setTimeout> | undefined;
+  let timeout: ReturnType<typeof setTimeout> | undefined;
 
-    return (...args: A) => {
-        if (toValue(ms) <= 0) {
-            fn.apply(this, args);
-            return;
-        }
+  return (...args: A) => {
+    if (toValue(ms) <= 0) {
+      fn.apply(this, args);
+      return;
+    }
 
-        const debouncedFunc = (): void => {
-            timeout = undefined;
-            fn.apply(this, args);
-        };
-
-        // clear old timeout
-        if (timeout) clearTimeout(timeout);
-
-        // create new timeout to call debounced function
-        timeout = setTimeout(debouncedFunc, toValue(ms));
+    const debouncedFunc = (): void => {
+      timeout = undefined;
+      fn.apply(this, args);
     };
+
+    // clear old timeout
+    if (timeout) clearTimeout(timeout);
+
+    // create new timeout to call debounced function
+    timeout = setTimeout(debouncedFunc, toValue(ms));
+  };
 }

@@ -10,10 +10,10 @@ export type { TableColumn, TableRow } from "./types";
 
 /** export table plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Table);
-        registerComponent(app, TableColumn);
-    },
+  install(app: App) {
+    registerComponent(app, Table);
+    registerComponent(app, TableColumn);
+  },
 } as Plugin;
 
 /** export table components */

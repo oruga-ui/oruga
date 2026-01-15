@@ -1,17 +1,17 @@
 /** create a unique id sequence */
 export function useSequentialId(start: number = 0): {
-    nextSequence: () => string;
-    sequence: Readonly<number>;
+  nextSequence: () => string;
+  sequence: Readonly<number>;
 } {
-    let sequence = start;
+  let sequence = start;
 
-    /** increase the unique id sequence */
-    function nextSequence(): string {
-        return String(sequence++);
-    }
+  /** increase the unique id sequence */
+  function nextSequence(): string {
+    return String(sequence++);
+  }
 
-    return {
-        nextSequence,
-        sequence,
-    };
+  return {
+    nextSequence,
+    sequence,
+  };
 }

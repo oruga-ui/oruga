@@ -7,10 +7,10 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export breadcrumb plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Breadcrumb);
-        registerComponent(app, BreadcrumbItem);
-    },
+  install(app: App) {
+    registerComponent(app, Breadcrumb);
+    registerComponent(app, BreadcrumbItem);
+  },
 } as Plugin;
 
 /** export Breadcrumb components */

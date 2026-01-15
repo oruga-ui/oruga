@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export tooltip plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Tooltip);
-    },
+  install(app: App) {
+    registerComponent(app, Tooltip);
+  },
 } as Plugin;
 
 /** export tooltip components */

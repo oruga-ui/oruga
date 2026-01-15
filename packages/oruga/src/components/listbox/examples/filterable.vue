@@ -5,23 +5,23 @@ import type { OptionsProp } from "@/composables";
 const selectedValue = ref();
 
 const options: OptionsProp = [
-    { label: "New York", value: "NY" },
-    { label: "Rome", value: "RM" },
-    { label: "London", value: "LDN" },
-    { label: "Istanbul", value: "IST" },
-    { label: "Paris", value: "PRS" },
+  { label: "New York", value: "NY" },
+  { label: "Rome", value: "RM" },
+  { label: "London", value: "LDN" },
+  { label: "Istanbul", value: "IST" },
+  { label: "Paris", value: "PRS" },
 ];
 </script>
 
 <template>
-    <section class="odocs-spaced">
-        <o-listbox
-            v-model="selectedValue"
-            :options="options"
-            filterable
-            filter-placeholder="Search..."
-            empty-label="No Results." />
+  <section class="odocs-spaced">
+    <o-listbox
+      v-model="selectedValue"
+      :options="options"
+      filterable
+      filter-placeholder="Search..."
+      empty-label="No Results." />
 
-        <p><b>Selected:</b> {{ selectedValue }}</p>
-    </section>
+    <p><b>Selected:</b> {{ selectedValue }}</p>
+  </section>
 </template>

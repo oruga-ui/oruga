@@ -10,8 +10,8 @@ export type Numberish = number | string;
  * @returns a class binding or undefined if no class should be applied
  */
 export type ClassFunction = (
-    suffix: string,
-    props: Record<string, any>,
+  suffix: string,
+  props: Record<string, any>,
 ) => ClassBinding | ClassBinding[] | undefined;
 
 /** Vue native type for a class attribute */
@@ -25,13 +25,13 @@ export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
 /** Remove generic <[x: string]: any> index signature structure from type */
 export type RemoveIndex<T> = {
-    [K in keyof T as string extends K
+  [K in keyof T as string extends K
+    ? never
+    : number extends K
+      ? never
+      : symbol extends K
         ? never
-        : number extends K
-          ? never
-          : symbol extends K
-            ? never
-            : K]: T[K];
+        : K]: T[K];
 };
 
 /** Custom type helper which extracts the `$emits` type of an component and converts it to an props object. */
@@ -45,12 +45,12 @@ type TypeOfKey<T, K extends string> = K extends keyof T ? T[K] : unknown;
  * Property `K` can be defined as a property path with `.` seperator.
  */
 export type DeepType<T, K> = T extends object
-    ? K extends string
-        ? K extends `${infer F}.${infer R}`
-            ? DeepType<TypeOfKey<T, F>, R>
-            : TypeOfKey<T, K>
-        : T
-    : T;
+  ? K extends string
+    ? K extends `${infer F}.${infer R}`
+      ? DeepType<TypeOfKey<T, F>, R>
+      : TypeOfKey<T, K>
+    : T
+  : T;
 
 /**
  * Defines a list of property paths for each property and deep property of an object `T`.
@@ -58,12 +58,12 @@ export type DeepType<T, K> = T extends object
  */
 export type DeepKeys<T> =
     | (T extends object
-          ? {
-                [K in keyof T]-?: K extends string | number
-                    ? Required<T>[K] extends object
-                        ? `${K}` | `${K}.${DeepKeys<T[K]>}`
-                        : `${K}`
-                    : never;
-            }[keyof T & string]
-          : never)
+      ? {
+          [K in keyof T]-?: K extends string | number
+            ? Required<T>[K] extends object
+              ? `${K}` | `${K}.${DeepKeys<T[K]>}`
+              : `${K}`
+            : never;
+        }[keyof T & string]
+      : never)
     | (keyof T & string);

@@ -1,60 +1,64 @@
 <script setup lang="ts">
 defineOptions({
-    inheritAttrs: false,
+  inheritAttrs: false,
 });
 
 defineProps({
-    email: { type: String, default: "" },
-    password: { type: String, default: "" },
+  email: { type: String, default: "" },
+  password: { type: String, default: "" },
 });
 
 defineEmits<{
-    close: [value: Event];
+  close: [value: Event];
 }>();
 </script>
 
 <template>
-    <form action="">
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Login</p>
-                <o-icon
-                    clickable
-                    native-type="button"
-                    icon="times"
-                    @click="$emit('close', $event)" />
-            </header>
-            <section class="modal-card-body">
-                <o-field label="Email">
-                    <o-input
-                        type="email"
-                        :value="email"
-                        placeholder="Your email"
-                        required />
-                </o-field>
+  <form action="">
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">
+          Login
+        </p>
+        <o-icon
+          clickable
+          native-type="button"
+          icon="times"
+          @click="$emit('close', $event)" />
+      </header>
+      <section class="modal-card-body">
+        <o-field label="Email">
+          <o-input
+            type="email"
+            :value="email"
+            placeholder="Your email"
+            required />
+        </o-field>
 
-                <o-field label="Password">
-                    <o-input
-                        type="password"
-                        :value="password"
-                        password-reveal
-                        placeholder="Your password"
-                        required />
-                </o-field>
+        <o-field label="Password">
+          <o-input
+            type="password"
+            :value="password"
+            password-reveal
+            placeholder="Your password"
+            required />
+        </o-field>
 
-                <o-field>
-                    <o-checkbox>Remember me</o-checkbox>
-                </o-field>
-            </section>
-            <footer class="modal-card-foot">
-                <o-button
-                    label="Close"
-                    type="button"
-                    @click="$emit('close', $event)" />
-                <o-button label="Login" variant="primary" />
-            </footer>
-        </div>
-    </form>
+        <o-field>
+          <o-checkbox>Remember me</o-checkbox>
+        </o-field>
+      </section>
+      <footer class="modal-card-foot">
+        <o-button
+          label="Close"
+          type="button"
+          @click="$emit('close', $event)" />
+        <o-button
+          label="Login"
+          variant="primary" />
+      </footer>
+    </div>
+  </form>
 </template>
 
 <style scoped>

@@ -10,10 +10,10 @@ export type * from "./types";
 
 /** export slider plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Slider);
-        registerComponent(app, SliderTick);
-    },
+  install(app: App) {
+    registerComponent(app, Slider);
+    registerComponent(app, SliderTick);
+  },
 } as Plugin;
 
 /** export slider components */

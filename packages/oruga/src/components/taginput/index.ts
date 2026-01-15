@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export taginput plugin */
 export default {
-    install(Vue: App) {
-        registerComponent(Vue, Taginput);
-    },
+  install(Vue: App) {
+    registerComponent(Vue, Taginput);
+  },
 } as Plugin;
 
 /** export taginput components */

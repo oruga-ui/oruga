@@ -1,43 +1,47 @@
 <script setup lang="ts">
 defineOptions({
-    inheritAttrs: false,
+  inheritAttrs: false,
 });
 
 defineProps({
-    title: { type: String, default: "" },
-    message: { type: String, default: "" },
+  title: { type: String, default: "" },
+  message: { type: String, default: "" },
 });
 
 defineEmits<{
-    close: [event: Event];
+  close: [event: Event];
 }>();
 </script>
 
 <template>
-    <form action="">
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">{{ title }}</p>
-                <o-icon
-                    clickable
-                    type="button"
-                    icon="times"
-                    @click.prevent="$emit('close', $event)" />
-            </header>
+  <form action="">
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">
+          {{ title }}
+        </p>
+        <o-icon
+          clickable
+          type="button"
+          icon="times"
+          @click.prevent="$emit('close', $event)" />
+      </header>
 
-            <section class="modal-card-body">
-                <p>{{ message }}</p>
-            </section>
+      <section class="modal-card-body">
+        <p>{{ message }}</p>
+      </section>
 
-            <footer class="modal-card-foot">
-                <o-button label="No" @click.prevent="$emit('close', $event)" />
-                <o-button
-                    label="Yes"
-                    variant="primary"
-                    @click.prevent="$emit('close', $event)" />
-            </footer>
-        </div>
-    </form>
+      <footer class="modal-card-foot">
+        <o-button
+          label="No"
+          @click.prevent="$emit('close', $event)" />
+        <o-button
+          label="Yes"
+          variant="primary"
+          @click.prevent="$emit('close', $event)" />
+      </footer>
+    </div>
+  </form>
 </template>
 
 <style scoped>
