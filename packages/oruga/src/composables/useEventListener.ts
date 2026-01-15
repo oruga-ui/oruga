@@ -1,22 +1,22 @@
 import {
-    onMounted,
-    watch,
-    getCurrentScope,
-    onScopeDispose,
-    type MaybeRefOrGetter,
-    type Component,
-    type WatchSource,
-    toValue,
+  onMounted,
+  watch,
+  getCurrentScope,
+  onScopeDispose,
+  type MaybeRefOrGetter,
+  type Component,
+  type WatchSource,
+  toValue,
 } from "vue";
 import { isObject } from "@/utils/helpers";
 import { unrefElement } from "./unrefElement";
 
 export type EventTarget = Element | Document | Window | Component;
 export type EventListenerOptions = AddEventListenerOptions & {
-    /** Register event listener immediate or on mounted hook. */
-    immediate?: boolean;
-    /** Trigger when the listener get registered and removed */
-    trigger?: WatchSource<boolean>;
+  /** Register event listener immediate or on mounted hook. */
+  immediate?: boolean;
+  /** Trigger when the listener get registered and removed */
+  trigger?: WatchSource<boolean>;
 };
 
 /**
@@ -30,61 +30,61 @@ export type EventListenerOptions = AddEventListenerOptions & {
  * @return stop function
  */
 export function useEventListener(
-    element: MaybeRefOrGetter<EventTarget>,
-    event: string,
-    handler: (evt?: any) => void,
-    options?: EventListenerOptions,
+  element: MaybeRefOrGetter<EventTarget>,
+  event: string,
+  handler: (evt?: any) => void,
+  options?: EventListenerOptions,
 ): () => void {
-    let cleanup: () => void;
+  let cleanup: () => void;
 
-    const register = (): void => {
-        if (!element) return;
+  const register = (): void => {
+    if (!element) return;
 
-        const target = unrefElement(element);
-        // create a clone of options, to avoid it being changed reactively on removal
-        const optionsClone = isObject(options) ? { ...options } : options;
-        // register listener with timeout to prevent animation collision
-        setTimeout(() => {
-            target.addEventListener(event, handler, optionsClone);
-            cleanup = (): void => {
-                target.removeEventListener(event, handler, optionsClone);
-            };
-        });
-    };
+    const target = unrefElement(element);
+    // create a clone of options, to avoid it being changed reactively on removal
+    const optionsClone = isObject(options) ? { ...options } : options;
+    // register listener with timeout to prevent animation collision
+    setTimeout(() => {
+      target.addEventListener(event, handler, optionsClone);
+      cleanup = (): void => {
+        target.removeEventListener(event, handler, optionsClone);
+      };
+    });
+  };
 
-    let stopWatch: () => void;
+  let stopWatch: () => void;
 
-    if (typeof options?.trigger !== "undefined") {
-        stopWatch = watch(
-            options.trigger,
-            (value) => {
-                // toggle listener
-                if (value) register();
-                else if (typeof cleanup === "function") cleanup();
-            },
-            { flush: "post" },
-        );
-    }
+  if (typeof options?.trigger !== "undefined") {
+    stopWatch = watch(
+      options.trigger,
+      (value) => {
+        // toggle listener
+        if (value) register();
+        else if (typeof cleanup === "function") cleanup();
+      },
+      { flush: "post" },
+    );
+  }
 
-    if (options?.immediate) register();
-    else if (getCurrentScope()) {
-        // register listener on mount
-        onMounted(() => {
-            if (
-                typeof options?.trigger === "undefined" ||
-                toValue(options.trigger)
-            )
-                register();
-        });
-    }
+  if (options?.immediate) register();
+  else if (getCurrentScope()) {
+    // register listener on mount
+    onMounted(() => {
+      if (
+        typeof options?.trigger === "undefined" ||
+        toValue(options.trigger)
+      )
+        register();
+    });
+  }
 
-    const stop = (): void => {
-        // remove listener before unmounting
-        if (typeof stopWatch === "function") stopWatch();
-        if (typeof cleanup === "function") cleanup();
-    };
+  const stop = (): void => {
+    // remove listener before unmounting
+    if (typeof stopWatch === "function") stopWatch();
+    if (typeof cleanup === "function") cleanup();
+  };
 
-    if (getCurrentScope()) onScopeDispose(stop);
+  if (getCurrentScope()) onScopeDispose(stop);
 
-    return stop;
+  return stop;
 }

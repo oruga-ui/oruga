@@ -13,18 +13,18 @@ const host = useHost();
 const shadowRoot = useShadowRoot();
 
 if (!shadowRoot)
-    throw new Error("ExampleShowcase must be used as web component.");
+  throw new Error("ExampleShowcase must be used as web component.");
 
 onMounted(() => {
-    if (host?.children)
-        // add bulma light theme attribute to the slot content
-        Array.from(host.children).forEach((child) =>
-            child.setAttribute("data-theme", "light"),
-        );
+  if (host?.children)
+  // add bulma light theme attribute to the slot content
+    Array.from(host.children).forEach((child) =>
+      child.setAttribute("data-theme", "light"),
+    );
 
-    // The slot content must be moved to the shadow root
-    // for the scoped style above to be applied.
-    if (host?.childNodes) shadowRoot.append(...(host.childNodes ?? []));
+  // The slot content must be moved to the shadow root
+  // for the scoped style above to be applied.
+  if (host?.childNodes) shadowRoot.append(...(host.childNodes ?? []));
 });
 
 // create an HTML link element for the current theme cdn
@@ -40,7 +40,7 @@ shadowRoot.appendChild(style);
 const link = document.createElement("link");
 link.rel = "stylesheet";
 link.href =
-    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/svg-with-js.min.css";
+  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/svg-with-js.min.css";
 
 // inject the fortawesome link within the shadow root
 shadowRoot.appendChild(link);

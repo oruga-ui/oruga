@@ -5,261 +5,261 @@ import { nextTick } from "vue";
 import OInput from "@/components/input/Input.vue";
 
 describe("OInput tests", () => {
-    enableAutoUnmount(afterEach);
+  enableAutoUnmount(afterEach);
 
-    beforeEach(() => {
-        vi.useFakeTimers();
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  test("render correctly", () => {
+    const wrapper = mount(OInput);
+    expect(!!wrapper.vm).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.attributes("data-oruga")).toBe("input");
+    expect(wrapper.html()).toMatchSnapshot();
+    expect(wrapper.classes("o-input")).toBeTruthy();
+  });
+
+  test("test basic", async () => {
+    const wrapper = mount(OInput, {
+      props: { icon: "placeholder", iconClickable: true },
     });
 
-    afterEach(() => {
-        vi.useRealTimers();
+    const input = wrapper.find("input");
+    expect(input.exists()).toBeTruthy();
+    expect(input.classes()).toContain("o-input__input");
+    expect(input.element.tagName).toBe("INPUT");
+
+    const value = "some value";
+    await input.setValue(value);
+    await vi.runAllTimers(); // await debounce timer
+
+    expect(wrapper.emitted("input")).toHaveLength(1);
+    expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+    expect(wrapper.vm.value).toEqual(value);
+  });
+
+  test("render textarea element when type is textarea", () => {
+    const wrapper = mount(OInput, { props: { type: "textarea" } });
+
+    expect(wrapper.classes()).toContain("o-input--textarea");
+
+    const input = wrapper.find("textarea");
+    expect(input.exists()).toBeTruthy();
+    expect(input.classes()).toContain("o-input__input");
+    expect(input.attributes("style")).toBeFalsy();
+    expect(input.element.tagName).toBe("TEXTAREA");
+  });
+
+  test("add inline style and call resize for textarea when autosize is true", async () => {
+    const wrapper = mount(OInput, {
+      props: { type: "textarea", autosize: true },
     });
 
-    test("render correctly", () => {
-        const wrapper = mount(OInput);
-        expect(!!wrapper.vm).toBeTruthy();
-        expect(wrapper.exists()).toBeTruthy();
-        expect(wrapper.attributes("data-oruga")).toBe("input");
-        expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-input")).toBeTruthy();
+    const target = wrapper.find("textarea");
+    const style = target.attributes("style");
+    expect(!!style).toBeTruthy();
+
+    await target.setValue("test2");
+    expect(target.attributes("style") == style).toBeFalsy();
+
+    expect(target.element.style.height).toContain("px");
+  });
+
+  test("render field password when the type property is password", () => {
+    const wrapper = shallowMount(OInput, {
+      props: { type: "password", passwordReveal: true },
     });
 
-    test("test basic", async () => {
-        const wrapper = mount(OInput, {
-            props: { icon: "placeholder", iconClickable: true },
-        });
+    const target = wrapper.find("input");
+    expect(target.exists()).toBeTruthy();
+    expect(target.attributes("type")).toBe("password");
 
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-        expect(input.classes()).toContain("o-input__input");
-        expect(input.element.tagName).toBe("INPUT");
+    const icon = wrapper.find("o-icon-stub");
+    expect(icon.exists()).toBeTruthy();
+    expect(icon.classes("o-input__icon-right")).toBeTruthy();
+  });
 
-        const value = "some value";
-        await input.setValue(value);
-        await vi.runAllTimers(); // await debounce timer
-
-        expect(wrapper.emitted("input")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-        expect(wrapper.vm.value).toEqual(value);
+  test("toggles the visibility of the password to true when the togglePasswordVisibility method is called", async () => {
+    const wrapper = mount(OInput, {
+      props: {
+        modelValue: "foo",
+        type: "password",
+        passwordReveal: true,
+        iconRightClickable: true,
+      },
     });
 
-    test("render textarea element when type is textarea", () => {
-        const wrapper = mount(OInput, { props: { type: "textarea" } });
+    const target = wrapper.find("input");
+    expect(target).toBeTruthy();
+    await target.setValue("bar");
 
-        expect(wrapper.classes()).toContain("o-input--textarea");
+    expect(target.element.type).toBe("password");
 
-        const input = wrapper.find("textarea");
-        expect(input.exists()).toBeTruthy();
-        expect(input.classes()).toContain("o-input__input");
-        expect(input.attributes("style")).toBeFalsy();
-        expect(input.element.tagName).toBe("TEXTAREA");
+    const icon = wrapper.find("[data-oruga='icon']");
+    expect(icon.exists()).toBeTruthy();
+    expect(icon.classes("o-icon--clickable")).toBeTruthy();
+    expect(icon.find(".mdi-eye").exists()).toBeTruthy();
+
+    await icon.trigger("click");
+    expect(wrapper.emitted("icon-right-click")).toHaveLength(1);
+
+    expect(target.element.type).toBe("text");
+    expect(target.attributes().type).toBe("text");
+    expect(icon.find(".mdi-eye-off").exists()).toBeTruthy();
+  });
+
+  test("icon clickable", async () => {
+    const wrapper = mount(OInput, {
+      props: { icon: "foo", iconClickable: true },
     });
 
-    test("add inline style and call resize for textarea when autosize is true", async () => {
-        const wrapper = mount(OInput, {
-            props: { type: "textarea", autosize: true },
-        });
+    const icon = wrapper.find("[data-oruga='icon']");
+    expect(icon.exists()).toBeTruthy();
+    expect(icon.classes("o-icon--clickable")).toBeTruthy();
+    expect(icon.find(".mdi-foo").exists()).toBeTruthy();
 
-        const target = wrapper.find("textarea");
-        const style = target.attributes("style");
-        expect(!!style).toBeTruthy();
+    await icon.trigger("click");
+    expect(wrapper.emitted("icon-click")).toHaveLength(1);
+  });
 
-        await target.setValue("test2");
-        expect(target.attributes("style") == style).toBeFalsy();
-
-        expect(target.element.style.height).toContain("px");
+  test("render the placeholder and readonly attribute when passed", () => {
+    const wrapper = shallowMount(OInput, {
+      props: { placeholder: "Awesome!", readonly: true },
     });
 
-    test("render field password when the type property is password", () => {
-        const wrapper = shallowMount(OInput, {
-            props: { type: "password", passwordReveal: true },
-        });
+    const input = wrapper.find("input");
+    expect(input.element.getAttribute("placeholder")).toBe("Awesome!");
+    expect(input.attributes("readonly")).toBe("");
+  });
 
-        const target = wrapper.find("input");
-        expect(target.exists()).toBeTruthy();
-        expect(target.attributes("type")).toBe("password");
+  test("expands input when expanded property is passed", async () => {
+    const wrapper = mount(OInput, { props: { expanded: true } });
 
-        const icon = wrapper.find("o-icon-stub");
-        expect(icon.exists()).toBeTruthy();
-        expect(icon.classes("o-input__icon-right")).toBeTruthy();
+    expect(wrapper.classes()).toContain("o-input--expanded");
+  });
+
+  test("render accordingly when has size prop", () => {
+    const wrapper = mount(OInput, {
+      props: { size: "large" },
     });
 
-    test("toggles the visibility of the password to true when the togglePasswordVisibility method is called", async () => {
-        const wrapper = mount(OInput, {
-            props: {
-                modelValue: "foo",
-                type: "password",
-                passwordReveal: true,
-                iconRightClickable: true,
-            },
-        });
+    expect(wrapper.classes("o-input--large")).toBeTruthy();
+  });
 
-        const target = wrapper.find("input");
-        expect(target).toBeTruthy();
-        await target.setValue("bar");
-
-        expect(target.element.type).toBe("password");
-
-        const icon = wrapper.find("[data-oruga='icon']");
-        expect(icon.exists()).toBeTruthy();
-        expect(icon.classes("o-icon--clickable")).toBeTruthy();
-        expect(icon.find(".mdi-eye").exists()).toBeTruthy();
-
-        await icon.trigger("click");
-        expect(wrapper.emitted("icon-right-click")).toHaveLength(1);
-
-        expect(target.element.type).toBe("text");
-        expect(target.attributes().type).toBe("text");
-        expect(icon.find(".mdi-eye-off").exists()).toBeTruthy();
+  test("render accordingly when has variant prop", () => {
+    const wrapper = mount(OInput, {
+      props: { variant: "danger" },
     });
 
-    test("icon clickable", async () => {
-        const wrapper = mount(OInput, {
-            props: { icon: "foo", iconClickable: true },
-        });
+    expect(wrapper.classes("o-input--danger")).toBeTruthy();
+  });
 
-        const icon = wrapper.find("[data-oruga='icon']");
-        expect(icon.exists()).toBeTruthy();
-        expect(icon.classes("o-icon--clickable")).toBeTruthy();
-        expect(icon.find(".mdi-foo").exists()).toBeTruthy();
-
-        await icon.trigger("click");
-        expect(wrapper.emitted("icon-click")).toHaveLength(1);
+  test("render accordingly when is disabled", () => {
+    const wrapper = mount(OInput, {
+      props: { disabled: true },
     });
 
-    test("render the placeholder and readonly attribute when passed", () => {
-        const wrapper = shallowMount(OInput, {
-            props: { placeholder: "Awesome!", readonly: true },
-        });
+    expect(wrapper.classes("o-input--disabled")).toBeTruthy();
+    const input = wrapper.find("input");
+    expect(input.exists()).toBeTruthy();
+    expect(input.attributes("disabled")).not.toBeUndefined();
+  });
 
-        const input = wrapper.find("input");
-        expect(input.element.getAttribute("placeholder")).toBe("Awesome!");
-        expect(input.attributes("readonly")).toBe("");
+  test("keep its value on blur", async () => {
+    const wrapper = mount(OInput, {
+      props: {
+        modelValue: "foo",
+        "onUpdate:modelValue": (modelValue) =>
+          wrapper.setProps({ modelValue }),
+      },
     });
 
-    test("expands input when expanded property is passed", async () => {
-        const wrapper = mount(OInput, { props: { expanded: true } });
+    const input = wrapper.find("input");
+    expect(input.element.value).toBe("foo");
 
-        expect(wrapper.classes()).toContain("o-input--expanded");
+    await input.setValue("bar");
+    await input.trigger("blur");
+    await vi.runAllTimers(); // await debounce timer
+
+    const emits = wrapper.emitted("input");
+    expect(emits).toHaveLength(1);
+    expect(emits![0][0]).toBe("bar");
+    expect(wrapper.emitted("blur")).toHaveLength(1);
+    expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+    expect(wrapper.emitted("update:modelValue")![0][0]).toBe("bar");
+    expect(wrapper.props("modelValue")).toBe("bar");
+  });
+
+  test("manage the click on icon", async () => {
+    const wrapper = mount(OInput, {
+      props: { icon: "magnify", iconClickable: true },
     });
 
-    test("render accordingly when has size prop", () => {
-        const wrapper = mount(OInput, {
-            props: { size: "large" },
-        });
+    expect(wrapper.find("input").exists()).toBeTruthy();
 
-        expect(wrapper.classes("o-input--large")).toBeTruthy();
+    const visibilityIcon = wrapper.find(".o-icon--clickable");
+    expect(visibilityIcon.exists()).toBeTruthy();
+
+    await visibilityIcon.trigger("click");
+    expect(wrapper.emitted("icon-click")).toHaveLength(1);
+  });
+
+  test("check type number ", async () => {
+    const wrapper = shallowMount(OInput, {
+      props: {
+        type: "number",
+        min: 0,
+        max: 1000,
+        modelValue: 10,
+        number: true,
+      },
     });
 
-    test("render accordingly when has variant prop", () => {
-        const wrapper = mount(OInput, {
-            props: { variant: "danger" },
-        });
+    const input = wrapper.find("input");
+    expect(input.exists()).toBeTruthy();
+    expect(input.element.value).toBe("10");
 
-        expect(wrapper.classes("o-input--danger")).toBeTruthy();
+    await input.setValue(11);
+    expect(input.element.value).toBe("11");
+    await input.setValue(12);
+    expect(input.element.value).toBe("12");
+    await input.setValue(13);
+    expect(input.element.value).toBe("13");
+    await input.setValue(12);
+    expect(input.element.value).toBe("12");
+    await input.setValue(11);
+    expect(input.element.value).toBe("11");
+
+    const emitted = wrapper.emitted("update:modelValue");
+
+    expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
+  });
+
+  test("check is empty when null", async () => {
+    const wrapper = mount(OInput, {
+      // @ts-expect-error special check for null instead of undefined
+      props: { modelValue: null },
     });
 
-    test("render accordingly when is disabled", () => {
-        const wrapper = mount(OInput, {
-            props: { disabled: true },
-        });
+    const input = wrapper.find("input");
+    expect(input.exists()).toBeTruthy();
+    expect(input.element.value).toEqual("");
+  });
 
-        expect(wrapper.classes("o-input--disabled")).toBeTruthy();
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-        expect(input.attributes("disabled")).not.toBeUndefined();
+  test("react accordingly when method focus() is called", async () => {
+    const wrapper = mount(OInput);
+
+    const input = wrapper.find("input");
+    input.element.focus = vi.fn();
+
+    wrapper.vm.focus();
+    await nextTick(() => {
+      expect(input.element.focus).toHaveBeenCalled();
     });
-
-    test("keep its value on blur", async () => {
-        const wrapper = mount(OInput, {
-            props: {
-                modelValue: "foo",
-                "onUpdate:modelValue": (modelValue) =>
-                    wrapper.setProps({ modelValue }),
-            },
-        });
-
-        const input = wrapper.find("input");
-        expect(input.element.value).toBe("foo");
-
-        await input.setValue("bar");
-        await input.trigger("blur");
-        await vi.runAllTimers(); // await debounce timer
-
-        const emits = wrapper.emitted("input");
-        expect(emits).toHaveLength(1);
-        expect(emits![0][0]).toBe("bar");
-        expect(wrapper.emitted("blur")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")![0][0]).toBe("bar");
-        expect(wrapper.props("modelValue")).toBe("bar");
-    });
-
-    test("manage the click on icon", async () => {
-        const wrapper = mount(OInput, {
-            props: { icon: "magnify", iconClickable: true },
-        });
-
-        expect(wrapper.find("input").exists()).toBeTruthy();
-
-        const visibilityIcon = wrapper.find(".o-icon--clickable");
-        expect(visibilityIcon.exists()).toBeTruthy();
-
-        await visibilityIcon.trigger("click");
-        expect(wrapper.emitted("icon-click")).toHaveLength(1);
-    });
-
-    test("check type number ", async () => {
-        const wrapper = shallowMount(OInput, {
-            props: {
-                type: "number",
-                min: 0,
-                max: 1000,
-                modelValue: 10,
-                number: true,
-            },
-        });
-
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-        expect(input.element.value).toBe("10");
-
-        await input.setValue(11);
-        expect(input.element.value).toBe("11");
-        await input.setValue(12);
-        expect(input.element.value).toBe("12");
-        await input.setValue(13);
-        expect(input.element.value).toBe("13");
-        await input.setValue(12);
-        expect(input.element.value).toBe("12");
-        await input.setValue(11);
-        expect(input.element.value).toBe("11");
-
-        const emitted = wrapper.emitted("update:modelValue");
-
-        expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
-    });
-
-    test("check is empty when null", async () => {
-        const wrapper = mount(OInput, {
-            // @ts-expect-error special check for null instead of undefined
-            props: { modelValue: null },
-        });
-
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-        expect(input.element.value).toEqual("");
-    });
-
-    test("react accordingly when method focus() is called", async () => {
-        const wrapper = mount(OInput);
-
-        const input = wrapper.find("input");
-        input.element.focus = vi.fn();
-
-        wrapper.vm.focus();
-        await nextTick(() => {
-            expect(input.element.focus).toHaveBeenCalled();
-        });
-    });
+  });
 });

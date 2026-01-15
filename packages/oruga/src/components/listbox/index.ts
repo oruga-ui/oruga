@@ -7,10 +7,10 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export listbox plugin */
 export default {
-    install(Vue: App) {
-        registerComponent(Vue, Listbox);
-        registerComponent(Vue, ListItem);
-    },
+  install(Vue: App) {
+    registerComponent(Vue, Listbox);
+    registerComponent(Vue, ListItem);
+  },
 } as Plugin;
 
 /** export listbox components */

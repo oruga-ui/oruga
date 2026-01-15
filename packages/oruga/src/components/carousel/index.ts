@@ -7,10 +7,10 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export carousel plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Carousel);
-        registerComponent(app, CarouselItem);
-    },
+  install(app: App) {
+    registerComponent(app, Carousel);
+    registerComponent(app, CarouselItem);
+  },
 } as Plugin;
 
 /** export carousel components */

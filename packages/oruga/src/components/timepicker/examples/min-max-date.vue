@@ -13,13 +13,13 @@ const maxTime = ref(max);
 </script>
 
 <template>
-    <section>
-        <o-field label="Select time">
-            <o-timepicker
-                placeholder="Click to select..."
-                rounded
-                :min-time="minTime"
-                :max-time="maxTime" />
-        </o-field>
-    </section>
+  <section>
+    <o-field label="Select time">
+      <o-timepicker
+        placeholder="Click to select..."
+        rounded
+        :min-time="minTime"
+        :max-time="maxTime" />
+    </o-field>
+  </section>
 </template>

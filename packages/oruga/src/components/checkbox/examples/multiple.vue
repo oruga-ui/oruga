@@ -5,34 +5,34 @@ const checkboxGroup = ref(["Flint"]);
 </script>
 
 <template>
-    <section>
-        <o-field>
-            <o-checkbox
-                v-model="checkboxGroup"
-                multiple
-                native-value="Silver"
-                label="Silver" />
+  <section>
+    <o-field>
+      <o-checkbox
+        v-model="checkboxGroup"
+        multiple
+        native-value="Silver"
+        label="Silver" />
 
-            <o-checkbox
-                v-model="checkboxGroup"
-                multiple
-                native-value="Flint"
-                label="Flint" />
+      <o-checkbox
+        v-model="checkboxGroup"
+        multiple
+        native-value="Flint"
+        label="Flint" />
 
-            <o-checkbox
-                v-model="checkboxGroup"
-                multiple
-                native-value="Vane"
-                label="Vane" />
+      <o-checkbox
+        v-model="checkboxGroup"
+        multiple
+        native-value="Vane"
+        label="Vane" />
 
-            <o-checkbox
-                v-model="checkboxGroup"
-                multiple
-                native-value="Billy"
-                label="Billy"
-                disabled />
-        </o-field>
+      <o-checkbox
+        v-model="checkboxGroup"
+        multiple
+        native-value="Billy"
+        label="Billy"
+        disabled />
+    </o-field>
 
-        <p><b>Selection:</b> {{ checkboxGroup }}</p>
-    </section>
+    <p><b>Selection:</b> {{ checkboxGroup }}</p>
+  </section>
 </template>

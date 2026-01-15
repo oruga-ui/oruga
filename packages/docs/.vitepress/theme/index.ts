@@ -39,106 +39,106 @@ const STORAGEKEY = "oruga-ui.com:theme";
 
 /** load the last used theme or get a default one */
 export function loadTheme(): ThemeConfig {
-    if (typeof window !== "undefined") {
-        const cache = window.localStorage.getItem(STORAGEKEY);
-        if (cache && cache !== "undefined") {
-            try {
-                const themeConfig = JSON.parse(cache);
-                if (themeConfig && typeof themeConfig === "object")
-                    return themeConfig;
-            } catch (e) {
-                console.warn(e);
-                return Themes[0];
-            }
-        }
+  if (typeof window !== "undefined") {
+    const cache = window.localStorage.getItem(STORAGEKEY);
+    if (cache && cache !== "undefined") {
+      try {
+        const themeConfig = JSON.parse(cache);
+        if (themeConfig && typeof themeConfig === "object")
+          return themeConfig;
+      } catch (e) {
+        console.warn(e);
+        return Themes[0];
+      }
     }
-    return Themes[0];
+  }
+  return Themes[0];
 }
 
 /** save the theme config to load later */
 export function saveTheme(theme: ThemeConfig): void {
-    if (typeof window === "undefined") {
-        console.log("The window object is not available in this environment.");
-    } else {
-        window.localStorage.setItem(STORAGEKEY, JSON.stringify(theme));
-        location.reload();
-    }
+  if (typeof window === "undefined") {
+    console.log("The window object is not available in this environment.");
+  } else {
+    window.localStorage.setItem(STORAGEKEY, JSON.stringify(theme));
+    location.reload();
+  }
 }
 
 export default {
-    ...DefaultTheme,
-    Layout,
-    enhanceApp({ app }: { app: App }): void {
-        // add vitepress components
-        app.component("Badge", VPBadge);
+  ...DefaultTheme,
+  Layout,
+  enhanceApp({ app }: { app: App }): void {
+    // add vitepress components
+    app.component("Badge", VPBadge);
 
-        // add fortawesome icons
-        library.add(fas);
-        app.component("VueFontawesome", FontAwesomeIcon);
+    // add fortawesome icons
+    library.add(fas);
+    app.component("VueFontawesome", FontAwesomeIcon);
 
-        // add documentation components
-        app.component("InspectorWrapper", InspectorWrapper);
-        app.component("ExampleViewer", ExampleViewer);
-        app.component("Expo", Expo);
+    // add documentation components
+    app.component("InspectorWrapper", InspectorWrapper);
+    app.component("ExampleViewer", ExampleViewer);
+    app.component("Expo", Expo);
 
-        // register example-showcase web component
-        if (!import.meta.env.SSR) {
-            customElements.define(
-                "example-showcase",
-                defineCustomElement(ExampleShowcase, {
-                    configureApp: () => app,
-                }),
-            );
+    // register example-showcase web component
+    if (!import.meta.env.SSR) {
+      customElements.define(
+        "example-showcase",
+        defineCustomElement(ExampleShowcase, {
+          configureApp: () => app,
+        }),
+      );
+    }
+
+    // import example components
+    const examples = import.meta.glob<DefineComponent>(
+      "../../../oruga/src/components/**/examples/index.vue",
+      { eager: true },
+    );
+    for (const path in examples) {
+      const v = path.split("/");
+      app.component("example-" + v[6], markRaw(examples[path].default));
+    }
+
+    // import inspector components
+    const inspectors = import.meta.glob<DefineComponent>(
+      "../../../oruga/src/components/**/examples/inspector.vue",
+      { eager: true },
+    );
+    for (const path in inspectors) {
+      const v = path.split("/");
+      app.component(
+        "inspector-" + v[6] + "-viewer",
+        markRaw(inspectors[path].default),
+      );
+    }
+
+    // basic docs config
+    let orugaConfig: OrugaOptions = {
+      iconPack: "fas",
+      iconComponent: "vue-fontawesome",
+    };
+
+    if (typeof window !== "undefined") {
+      const theme = loadTheme();
+
+      // update oruga config by theme config
+      switch (theme.key) {
+        case "theme-bulma": {
+          // update base orugaConfig with bulmaConfig
+          orugaConfig = Object.assign(orugaConfig, bulmaConfig);
+          break;
         }
-
-        // import example components
-        const examples = import.meta.glob<DefineComponent>(
-            "../../../oruga/src/components/**/examples/index.vue",
-            { eager: true },
-        );
-        for (const path in examples) {
-            const v = path.split("/");
-            app.component("example-" + v[6], markRaw(examples[path].default));
+        case "theme-bootstrap": {
+          // update base orugaConfig with bootstrapConfig
+          orugaConfig = Object.assign(orugaConfig, bootstrapConfig);
+          break;
         }
+      }
+    }
 
-        // import inspector components
-        const inspectors = import.meta.glob<DefineComponent>(
-            "../../../oruga/src/components/**/examples/inspector.vue",
-            { eager: true },
-        );
-        for (const path in inspectors) {
-            const v = path.split("/");
-            app.component(
-                "inspector-" + v[6] + "-viewer",
-                markRaw(inspectors[path].default),
-            );
-        }
-
-        // basic docs config
-        let orugaConfig: OrugaOptions = {
-            iconPack: "fas",
-            iconComponent: "vue-fontawesome",
-        };
-
-        if (typeof window !== "undefined") {
-            const theme = loadTheme();
-
-            // update oruga config by theme config
-            switch (theme.key) {
-                case "theme-bulma": {
-                    // update base orugaConfig with bulmaConfig
-                    orugaConfig = Object.assign(orugaConfig, bulmaConfig);
-                    break;
-                }
-                case "theme-bootstrap": {
-                    // update base orugaConfig with bootstrapConfig
-                    orugaConfig = Object.assign(orugaConfig, bootstrapConfig);
-                    break;
-                }
-            }
-        }
-
-        // import oruga component with theme config
-        app.use(Oruga, orugaConfig);
-    },
+    // import oruga component with theme config
+    app.use(Oruga, orugaConfig);
+  },
 };

@@ -9,9 +9,9 @@ export type { DatepickerEvent, FocusedDate } from "./types";
 
 /** export datepicker plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Datepicker);
-    },
+  install(app: App) {
+    registerComponent(app, Datepicker);
+  },
 } as Plugin;
 
 /** export datepicker components */

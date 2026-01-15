@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export timepicker plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Timepicker);
-    },
+  install(app: App) {
+    registerComponent(app, Timepicker);
+  },
 } as Plugin;
 
 /** export timepicker components */

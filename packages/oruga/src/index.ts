@@ -15,14 +15,14 @@ export * from "./utils/helpers";
 
 // export some useful composables
 export {
-    findFocusable,
-    useTrapFocus,
-    useEventListener,
-    useClickOutside,
-    useDebounce,
-    useScrollEvents,
-    unrefElement,
-    getScrollingParent,
+  findFocusable,
+  useTrapFocus,
+  useEventListener,
+  useClickOutside,
+  useDebounce,
+  useScrollEvents,
+  unrefElement,
+  getScrollingParent,
 } from "./composables";
 
 // export all vue components
@@ -38,15 +38,15 @@ export { useOruga, type OrugaProgrammatic } from "./utils/programmatic";
 
 // main oruga vue plugin
 const plugin: Plugin = {
-    install(app: App, options: OrugaOptions = {}) {
-        // initialise config with options
-        registerPlugin(app, OrugaConfig, options);
+  install(app: App, options: OrugaOptions = {}) {
+    // initialise config with options
+    registerPlugin(app, OrugaConfig, options);
 
-        // add all oruga vue components
-        for (const componentKey in plugins) {
-            registerPlugin(app, plugins[componentKey]);
-        }
-    },
+    // add all oruga vue components
+    for (const componentKey in plugins) {
+      registerPlugin(app, plugins[componentKey]);
+    }
+  },
 };
 
 // export default oruga vue plugin

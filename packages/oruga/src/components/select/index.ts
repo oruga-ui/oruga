@@ -9,9 +9,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export select plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Select);
-    },
+  install(app: App) {
+    registerComponent(app, Select);
+  },
 } as Plugin;
 
 /** export select components */

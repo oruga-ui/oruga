@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export switch plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Switch);
-    },
+  install(app: App) {
+    registerComponent(app, Switch);
+  },
 } as Plugin;
 
 /** export switch components */

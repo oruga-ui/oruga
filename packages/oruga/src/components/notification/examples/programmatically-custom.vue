@@ -5,34 +5,34 @@ import NotificationForm from "./_notification-form.vue";
 const oruga = useOruga();
 
 async function component(): Promise<void> {
-    const instance = oruga.notification.open({
-        component: NotificationForm,
-        position: "bottom-right",
-        variant: "warning",
-        infinite: true,
-    });
+  const instance = oruga.notification.open({
+    component: NotificationForm,
+    position: "bottom-right",
+    variant: "warning",
+    infinite: true,
+  });
 
-    // wait until the notification got closed
-    const result = await instance.promise;
+  // wait until the notification got closed
+  const result = await instance.promise;
 
-    oruga.notification.open({
-        duration: 5000,
-        message: "Modal dialog returned " + JSON.stringify(result),
-        variant: "info",
-        position: "top",
-        closeable: true,
-    });
+  oruga.notification.open({
+    duration: 5000,
+    message: "Modal dialog returned " + JSON.stringify(result),
+    variant: "info",
+    position: "top",
+    closeable: true,
+  });
 }
 </script>
 
 <template>
-    <section class="odocs-spaced">
-        <o-button
-            label="Launch component notification (form)"
-            variant="primary"
-            size="medium"
-            @click="component" />
-    </section>
+  <section class="odocs-spaced">
+    <o-button
+      label="Launch component notification (form)"
+      variant="primary"
+      size="medium"
+      @click="component" />
+  </section>
 </template>
 
 <style>
