@@ -1,3 +1,24 @@
+## [0.12.4](https://github.com/oruga-ui/oruga/compare/v0.12.3...v0.12.4) (2026-01-14)
+
+
+### Bug Fixes
+
+* **input:** debounce reactive `modelValue` changes ([#1509](https://github.com/oruga-ui/oruga/issues/1509)) ([9d738cd](https://github.com/oruga-ui/oruga/commit/9d738cd101787590bd30b2a0f07c18016edc2cee))
+* **listbox:** prevent empty state always shown ([#1495](https://github.com/oruga-ui/oruga/issues/1495)) ([1f163dd](https://github.com/oruga-ui/oruga/commit/1f163ddc89fe36890f9fc2f1d0a57ef771f95ae7))
+* **steps:** prevent step-item is clickable when prop `clickable` is `false` ([#1507](https://github.com/oruga-ui/oruga/issues/1507)) ([d8654e5](https://github.com/oruga-ui/oruga/commit/d8654e523f3653ce14514d577943fb014dcd1c49))
+* **table:** correctly filter all rows before paging when filter is active ([#1508](https://github.com/oruga-ui/oruga/issues/1508)) ([3f84fa0](https://github.com/oruga-ui/oruga/commit/3f84fa01bda91588c734385135fab846b0e917b3))
+
+
+### Features
+
+* **dialog:** enhance dialog implementation ([#1492](https://github.com/oruga-ui/oruga/issues/1492)) ([63d0e17](https://github.com/oruga-ui/oruga/commit/63d0e17fa5b07cbdae7ff6997636e652187c6991))
+* **listbox:** update listbox component ([#1502](https://github.com/oruga-ui/oruga/issues/1502)) ([8232dab](https://github.com/oruga-ui/oruga/commit/8232dab60bb3db111605c39e39619c293e6a6fad))
+* **table:** expose `filter` and `tableColumns` for programmatic use ([#1513](https://github.com/oruga-ui/oruga/issues/1513)) ([02e6284](https://github.com/oruga-ui/oruga/commit/02e6284c13fe6b350a7f9935fca247411ea272cf))
+* **tree:** add OTree component ([#1503](https://github.com/oruga-ui/oruga/issues/1503)) ([3adb12c](https://github.com/oruga-ui/oruga/commit/3adb12cbf7935e7e9d0c274780b849f144415924))
+* **types:** update slots by implementing `defineSlots` macro ([#1434](https://github.com/oruga-ui/oruga/issues/1434)) ([e87bd88](https://github.com/oruga-ui/oruga/commit/e87bd88a2b1b99cc61d740a128f8060b1d693e14))
+
+
+
 ## [0.12.3](https://github.com/oruga-ui/oruga/compare/v0.12.2...v0.12.3) (2025-12-04)
 
 
