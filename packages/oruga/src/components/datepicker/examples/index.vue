@@ -14,8 +14,8 @@ import MultipleCode from "./multiple.vue?raw";
 import Programmatically from "./programmatically.vue";
 import ProgrammaticallyCode from "./programmatically.vue?raw";
 
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Events from "./events.vue";
 import EventsCode from "./events.vue?raw";
@@ -61,14 +61,15 @@ import MonthPickerCode from "./month-picker.vue?raw";
     </p>
     <ExampleViewer :component="Events" :code="EventsCode" />
 
-    <h3 id="slots">Slots</h3>
+    <h3 id="templates">Templates</h3>
     <p>
-        The component can be customized through several slots, e.g. the HTML
-        input can be replaced by a custom trigger to open the dropdown/modal
-        through the <code>trigger</code> slot. The header and footer can be
-        overridden using the <code>header</code> and <code>footer</code> slots.
+        The component can be customized through several template slots, e.g. the
+        HTML input can be replaced by a custom trigger to open the
+        dropdown/modal through the <code>trigger</code> template slot. The
+        header and footer can be overridden using the <code>header</code> and
+        <code>footer</code> template slots.
     </p>
-    <ExampleViewer :component="Slots" :code="SlotsCode" />
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
     <h3 id="programmatically">Programmatically</h3>
     <p>

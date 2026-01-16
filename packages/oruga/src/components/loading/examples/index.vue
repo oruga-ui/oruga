@@ -2,8 +2,8 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
-import Slot from "./slot.vue";
-import SlotCode from "./slot.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Programmatically from "./programmatically.vue";
 import ProgrammaticallyCode from "./programmatically.vue?raw";
@@ -19,9 +19,12 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3 id="slot">Slot</h3>
-    <p>Override the loading icon by passing a <code>default</code> slot.</p>
-    <ExampleViewer :component="Slot" :code="SlotCode" />
+    <h3 id="templates">Templates</h3>
+    <p>
+        You can override the loading icon by defining custom HTML in the
+        <code>default</code> template slot.
+    </p>
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
     <h3 id="programmatically">Programmatically</h3>
     <p>

@@ -11,8 +11,8 @@ import GroupedCode from "./grouped.vue?raw";
 import Horizontal from "./horizontal.vue";
 import HorizontalCode from "./horizontal.vue?raw";
 
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 </script>
 
 <template>
@@ -39,10 +39,10 @@ import SlotsCode from "./slots.vue?raw";
     </p>
     <ExampleViewer :component="Horizontal" :code="HorizontalCode" />
 
-    <h3 id="slots">Slots</h3>
+    <h3 id="templates">Templates</h3>
     <p>
         The <code>label</code> and the <code>message</code> can be customised
-        using slots if needed.
+        using template slots if needed.
     </p>
-    <ExampleViewer :component="Slots" :code="SlotsCode" />
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 </template>
