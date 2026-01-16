@@ -11,8 +11,8 @@ import OptionsCode from "./options.vue?raw";
 import Filterable from "./filterable.vue";
 import FilterableCode from "./filterable.vue?raw";
 
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Scroll from "./scroll.vue";
 import ScrollCode from "./scroll.vue?raw";
@@ -91,15 +91,15 @@ import ScrollCode from "./scroll.vue?raw";
     </p>
     <ExampleViewer :component="Filterable" :code="FilterableCode" />
 
-    <h3 id="scroll">Slots</h3>
+    <h3 id="templates">Templates</h3>
     <p>
         A custom header and footer can be added before and after the options
-        list by using the <code>header</code> and <code>footer</code> slots. You
-        can also display content, when no options are visible, either because
-        there are no options or because they are hidden through filtering, using
-        the <code>empty</code> slot.
+        list by using the <code>header</code> and <code>footer</code> template
+        slots. You can also display content, when no options are visible, either
+        because there are no options or because they are hidden through
+        filtering, using the <code>empty</code> template slot.
     </p>
-    <ExampleViewer :component="Slots" :code="SlotsCode" />
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
     <h3 id="scroll">Infinite Scroll & Async Data</h3>
     <p>

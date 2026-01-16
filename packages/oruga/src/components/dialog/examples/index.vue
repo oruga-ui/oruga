@@ -20,8 +20,8 @@ import ImageCode from "./image.vue?raw";
 import Position from "./position.vue";
 import PositionCode from "./position.vue?raw";
 
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Component from "./component.vue";
 import ComponentCode from "./component.vue?raw";
@@ -130,14 +130,14 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
     </p>
     <ExampleViewer :component="Position" :code="PositionCode" />
 
-    <h3 id="slots">Slots</h3>
+    <h3 id="templates">Templates</h3>
     <p>
-        The component provides <code>header</code>, <code>title</code>,
+        The component provides a <code>header</code>, <code>title</code>,
         <code>subtitle</code>, <code>content</code>, <code>footer</code> as well
-        as <code>confirmButton</code> and <code>cancelButton</code> named slots
-        templates to customise HTML content.
+        as <code>confirmButton</code> and <code>cancelButton</code> named
+        template slots. These can be used to customise HTML content.
     </p>
-    <ExampleViewer :component="Slots" :code="SlotsCode" />
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
     <h3 id="component">Dynamic Component</h3>
     <p>

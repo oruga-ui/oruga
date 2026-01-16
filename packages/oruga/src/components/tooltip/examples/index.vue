@@ -11,8 +11,8 @@ import PositionCode from "./position.vue?raw";
 import Multiline from "./multiline.vue";
 import MultilineCode from "./multiline.vue?raw";
 
-import Slot from "./slot.vue";
-import SlotCode from "./slot.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Triggers from "./triggers.vue";
 import TriggersCode from "./triggers.vue?raw";
@@ -64,10 +64,10 @@ import TriggersCode from "./triggers.vue?raw";
     </p>
     <ExampleViewer :component="Multiline" :code="MultilineCode" />
 
-    <h3 id="slot">Slot</h3>
+    <h3 id="templates">Templates</h3>
     <p>
         The tooltip label can be customised using the
-        <code>content</code> slot.
+        <code>content</code> template slot.
     </p>
     <div class="info custom-block">
         <p class="custom-block-title">Accessibility Note:</p>
@@ -77,5 +77,5 @@ import TriggersCode from "./triggers.vue?raw";
         buttons; and it will never receive active focus itself. A tooltip is not
         considered to be a popup in this context.
     </div>
-    <ExampleViewer :component="Slot" :code="SlotCode" />
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 </template>

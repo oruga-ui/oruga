@@ -30,7 +30,9 @@ function getType(item: string): string {
                 placeholder="Add an item"
                 allow-new>
                 <template #header> Custom Header </template>
+
                 <template #footer> Custom Footer </template>
+
                 <template #selected="{ options, removeItem }">
                     <o-button
                         v-for="(item, index) in options"
