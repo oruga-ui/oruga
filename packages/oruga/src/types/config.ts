@@ -6,14 +6,10 @@ import type { MaybeRefOrGetter } from "vue";
 
 /** export option types */
 export type {
-    OptionsItem,
-    OptionsPropItem,
-    OptionsGroupItem,
-    OptionsGroupPropItem,
+    SimpleOptions,
     OptionsProp,
-    SimpleOptionsProp,
-    OptionsGroupProp,
-    OptionsPropWithGroups,
+    OptionsGroupsProp,
+    OptionsOrGroupsProp,
 } from "@/composables";
 
 /** The class definition for a component class property. */

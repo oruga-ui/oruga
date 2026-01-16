@@ -111,6 +111,7 @@ const rootClasses = defineClasses(
 <template>
     <component
         :is="tag"
+        v-show="!hidden"
         :id="`${parent.menuId}-${item.identifier}`"
         ref="rootElement"
         data-oruga="dropdown-item"

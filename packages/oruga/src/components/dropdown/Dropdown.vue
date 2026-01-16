@@ -18,18 +18,16 @@ import { toCssDimension, isMobileAgent, isTrueish, mod } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    toOptionsGroup,
     normalizeOptions,
     useProviderParent,
     useMatchMedia,
     useClickOutside,
     usePreventScrolling,
-    useSequentialId,
     useEventListener,
     useScrollEvents,
     scrollElementInView,
-    type OptionsGroupItem,
-    type OptionsItem,
+    useIndexer,
+    type OptionItem,
 } from "@/composables";
 
 import type {
@@ -37,7 +35,7 @@ import type {
     DropdownComponent,
     DropdownItemComponent,
 } from "./types";
-import type { DropdownProps } from "./props";
+import type { DropdownItemProps, DropdownProps } from "./props";
 import { injectField } from "../field/fieldInjection";
 
 /**
@@ -159,12 +157,12 @@ defineSlots<{
      * @param group {object} - options group item
      * @param index {number} - option index
      */
-    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    group?(props: { index: number }): void;
     /**
      * Override the label, default is label prop
      * @param option {object} - option item
      */
-    option?(props: { option: OptionsItem<T> }): void;
+    option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
     /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
     after?(): void;
 }>();
@@ -193,15 +191,13 @@ const { childItems } = useProviderParent<
     data: provideData,
 });
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
-const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
-    return groupedOptions;
-});
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer),
+);
 
 /** is any option visible */
 const isNotEmpty = computed(() => childItems.value.some(isItemViable));
@@ -721,35 +717,38 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                         :toggle="toggle">
                         <slot name="before" />
 
-                        <template v-for="(group, groupIndex) in groupedOptions">
-                            <o-dropdown-item
-                                v-if="group.label"
-                                v-show="!group.hidden"
-                                v-bind="group.attrs"
-                                :key="group.key"
-                                :value="group.value"
-                                :hidden="group.hidden"
-                                role="presentation"
-                                :clickable="false">
-                                <slot
-                                    name="group"
-                                    :group="group"
-                                    :index="groupIndex">
-                                    <span>
-                                        {{ group.label }}
-                                    </span>
-                                </slot>
-                            </o-dropdown-item>
+                        <template
+                            v-for="(option, idx) in normalizedOptions"
+                            :key="option.key">
+                            <template v-if="option.isGroup">
+                                <o-dropdown-item
+                                    v-bind="option.attrs"
+                                    :label="option.label"
+                                    :hidden="option.hidden"
+                                    role="presentation"
+                                    :clickable="false">
+                                    <slot name="group" :index="idx">
+                                        <span> {{ option.label }} </span>
+                                    </slot>
+                                </o-dropdown-item>
+
+                                <o-dropdown-item
+                                    v-for="_option in option.options"
+                                    v-bind="_option.item"
+                                    :key="_option.key"
+                                    :hidden="_option.hidden">
+                                    <slot name="option" :option="_option.item">
+                                        <span> {{ _option.item.label }} </span>
+                                    </slot>
+                                </o-dropdown-item>
+                            </template>
 
                             <o-dropdown-item
-                                v-for="option in group.options"
-                                v-show="!option.hidden"
-                                v-bind="option.attrs"
-                                :key="option.key"
-                                :value="option.value"
+                                v-else
+                                v-bind="option.item"
                                 :hidden="option.hidden">
-                                <slot name="option" :option="option">
-                                    <span> {{ option.label }} </span>
+                                <slot name="option" :option="option.item">
+                                    <span> {{ option.item.label }} </span>
                                 </slot>
                             </o-dropdown-item>
                         </template>

@@ -114,11 +114,9 @@ const { parent, item } = useProviderChild<
     MenuItemComponent<T>
 >(rootRef, { data: providedData });
 
-const nextSequence = parent.value.nextSequence;
-
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
+    normalizeOptions(props.options, parent.value.indexer),
 );
 
 const isActive = defineModel<boolean>("active", { default: false });
@@ -256,13 +254,26 @@ const submenuClasses = defineClasses([
                 tabindex="-1"
                 role="group">
                 <slot>
-                    <OMenuItem
+                    <template
                         v-for="option in normalizedOptions"
-                        :key="option.key"
-                        v-bind="option.attrs"
-                        :value="option.value"
-                        :label="option.label"
-                        :hidden="option.hidden" />
+                        :key="option.key">
+                        <o-menu-item
+                            v-if="option.isGroup"
+                            v-bind="option.attrs"
+                            :label="option.label"
+                            :hidden="option.hidden">
+                            <o-menu-item
+                                v-for="_option in option.options"
+                                v-bind="_option.item"
+                                :key="_option.key"
+                                :hidden="_option.hidden" />
+                        </o-menu-item>
+
+                        <o-menu-item
+                            v-else-if="!option.isGroup"
+                            v-bind="option.item"
+                            :hidden="option.hidden" />
+                    </template>
                 </slot>
             </ul>
         </transition>

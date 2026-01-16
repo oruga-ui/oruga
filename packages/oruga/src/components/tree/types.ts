@@ -1,4 +1,4 @@
-import type { ProviderItem } from "@/composables";
+import type { Indexer, ProviderItem } from "@/composables";
 import type { TreeItemProps } from "./props";
 
 export type TreeComponent<T> = {
@@ -13,12 +13,9 @@ export type TreeComponent<T> = {
     toggleIcon: string;
     iconPack: string;
     iconSize: string;
-    nextSequence: () => string;
+    indexer: Indexer;
     selectItem: (value: TreeItem<T>, selection: boolean) => void;
     focusItem: (value: TreeItem<T>) => void;
-    // resetSelection: (
-    //     excludedItems?: ProviderItem<TreeItemComponent<T>>[],
-    // ) => void;
 };
 
 export type TreeItemComponent<T> = Pick<
@@ -28,17 +25,10 @@ export type TreeItemComponent<T> = Pick<
     hasChildren: boolean;
     isViable: boolean;
     setExpand: (state: boolean) => void;
-    // reset: () => void;
     matches: (value: string) => boolean;
 };
 
 export type TreeItem<T> = ProviderItem<TreeItemComponent<T>>;
-
-// export type SubtreeComponent = {
-//     // expanded: boolean;
-//     // setExpand: (state: boolean) => void;
-//     // bubbleReset: (childs?: ProviderItem<TreeItemComponent<T>>[]) => void;
-// };
 
 export type SubtreeItemComponent = {
     setHidden: (state: boolean) => void;

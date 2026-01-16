@@ -22,7 +22,7 @@ import {
     useSequentialId,
     toOptionsGroup,
     type OptionsGroupItem,
-    type OptionsItem,
+    type OptionItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
@@ -140,7 +140,7 @@ defineSlots<{
      */
     selected?(props: {
         items: T[] | undefined;
-        options: OptionsItem<T>[];
+        options: OptionItem<T>[];
         removeItem: (index: number, event: Event) => void;
     }): void;
     /** Define an additional header */
@@ -151,7 +151,7 @@ defineSlots<{
      * @param index {number} - option index
      * @param value {unknown} - option value
      */
-    default?(props: { option: OptionsItem<T>; index: number; value: T }): void;
+    default?(props: { option: OptionItem<T>; index: number; value: T }): void;
     /** Define the content to show if the list is empty */
     empty?(): void;
     /** Define an additional footer */

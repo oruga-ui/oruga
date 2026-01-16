@@ -6,7 +6,7 @@ import {
     defineClasses,
     normalizeOptions,
     useProviderParent,
-    useSequentialId,
+    useIndexer,
 } from "@/composables";
 
 import type { BreadcrumbProps } from "./props";
@@ -43,12 +43,12 @@ const rootRef = useTemplateRef("rootElement");
 /** provide functionalities and data to child item components */
 useProviderParent({ rootRef });
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions(props.options, nextSequence),
+    normalizeOptions(props.options, indexer),
 );
 
 const customStyle = computed(() => ({ "--seperator": `'${props.separator}'` }));
@@ -91,12 +91,10 @@ const listClasses = defineClasses(["listClass", "o-breadcrumb__list"]);
         :aria-label="ariaLabel">
         <ol :class="listClasses">
             <slot>
-                <OBreadcrumbItem
+                <O-breadcrumb-item
                     v-for="option in normalizedOptions"
                     :key="option.key"
-                    v-bind="option.attrs"
-                    :value="option.value"
-                    :label="option.label"
+                    v-bind="option.item"
                     :hidden="option.hidden" />
             </slot>
         </ol>

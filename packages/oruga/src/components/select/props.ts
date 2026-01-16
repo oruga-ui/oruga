@@ -1,7 +1,9 @@
 import type { ComponentClass, Numberish } from "@/types";
-import type { OptionsPropWithGroups } from "@/composables";
+import type { OptionsOrGroupsProp } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+type Option = { label: string; value: number | string, attrs?: Record<string, any>};
 
 export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
@@ -11,7 +13,7 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Allow multiple selection - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Select options, unnecessary when default slot is used */
-    options?: OptionsPropWithGroups<T>;
+    options?: OptionsOrGroupsProp<Option>;
     /**
      * Vertical size of input
      * @values small, medium, large

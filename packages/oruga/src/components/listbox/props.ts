@@ -1,7 +1,9 @@
-import type { ComponentClass, OptionsPropWithGroups } from "@/types";
+import type { ComponentClass, OptionsOrGroupsProp } from "@/types";
 import type { InputProps } from "../input/props";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+// export type ListboxOption<T> = ListItemProps<T>;
 
 export type ListboxProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
@@ -14,7 +16,7 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Autocomplete options */
-    options?: OptionsPropWithGroups<T>;
+    options?: OptionsOrGroupsProp<ListItemProps<T>>;
     /** Same as native id. Also pass the id to an wrapping `o-field` component - default is an uuid. */
     id?: string;
     /** Interaction is disabled */

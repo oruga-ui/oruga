@@ -12,7 +12,7 @@ import {
     type Ref,
 } from "vue";
 import { unrefElement } from "./unrefElement";
-import { useSequentialId } from "./useSequentialId";
+import { useSequentialId } from "./useIndexer";
 
 export type ProviderItem<T = unknown> = {
     /** The root element of the item component */

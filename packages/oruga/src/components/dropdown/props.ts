@@ -1,5 +1,5 @@
 import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
-import type { OptionsPropWithGroups } from "@/composables";
+import type { OptionsOrGroupsProp } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -11,7 +11,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Dropdown options, unnecessary when default slot is used */
-    options?: OptionsPropWithGroups<T>;
+    options?: OptionsOrGroupsProp<DropdownItemProps<T>>;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Trigger label, unnecessary when trigger slot is used */

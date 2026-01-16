@@ -14,10 +14,8 @@ import { getDefault } from "@/utils/config";
 import { isDefined, isTrueish } from "@/utils/helpers";
 import {
     defineClasses,
-    isGroupOption,
     normalizeOptions,
     useInputHandler,
-    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -142,13 +140,8 @@ watch(
     { immediate: true, flush: "post" },
 );
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
-
 /** normalized programamtic options */
-const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
-);
+const normalizedOptions = computed(() => normalizeOptions(props.options));
 
 const placeholderVisible = computed(
     () =>
@@ -315,29 +308,28 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             <slot>
                 <template v-for="option in normalizedOptions" :key="option.key">
                     <optgroup
-                        v-if="isGroupOption(option)"
+                        v-if="option.isGroup"
                         v-show="!option.hidden"
                         v-bind="option.attrs"
-                        :label="option.label"
-                        :value="option.value">
+                        :label="option.label">
                         <option
                             v-for="_option in option.options"
                             v-show="!_option.hidden"
-                            v-bind="_option.attrs"
+                            v-bind="_option.item.attrs"
                             :key="_option.key"
-                            :value="_option.value"
-                            :selected="option.value === vmodel">
-                            {{ _option.label }}
+                            :value="_option.item.value"
+                            :selected="_option.item.value === vmodel">
+                            {{ _option.item.label }}
                         </option>
                     </optgroup>
 
                     <option
                         v-else
                         v-show="!option.hidden"
-                        v-bind="option.attrs"
-                        :value="option.value"
-                        :selected="option.value === vmodel">
-                        {{ option.label }}
+                        v-bind="option.item.attrs"
+                        :value="option.item.value"
+                        :selected="option.item.value === vmodel">
+                        {{ option.item.label }}
                     </option>
                 </template>
             </slot>

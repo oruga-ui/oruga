@@ -19,7 +19,6 @@ import {
     defineClasses,
     normalizeOptions,
     useProviderParent,
-    useSequentialId,
 } from "@/composables";
 
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
@@ -106,13 +105,8 @@ const { childItems, itemsCount } = useProviderParent<TabItemComponent<T>>({
     data: provideData,
 });
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
-
 /** normalized programamtic options */
-const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
-);
+const normalizedOptions = computed(() => normalizeOptions(props.options));
 
 // #region --- Active Item Feature ---
 
@@ -363,11 +357,9 @@ const contentClasses = defineClasses(
             <slot>
                 <o-tab-item
                     v-for="option in normalizedOptions"
-                    v-show="!option.hidden"
-                    v-bind="option.attrs"
+                    v-bind="option.item"
                     :key="option.key"
-                    :value="option.value"
-                    :label="option.label" />
+                    :hidden="option.hidden" />
             </slot>
         </section>
     </div>
