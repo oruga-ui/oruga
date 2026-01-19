@@ -17,8 +17,8 @@ import DisabledCode from "./disabled.vue?raw";
 import Customise from "./customise.vue";
 import CustomiseCode from "./customise.vue?raw";
 
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 </script>
 
 <template>
@@ -65,10 +65,10 @@ import SlotsCode from "./slots.vue?raw";
     <h3 id="customise">Customise</h3>
     <ExampleViewer :component="Customise" :code="CustomiseCode" />
 
-    <h3 id="slots">Slots</h3>
+    <h3 id="templates">Templates</h3>
     <p>
         The component can be further customised by using template slots to
         override specific buttons.
     </p>
-    <ExampleViewer :component="Slots" :code="SlotsCode" />
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 </template>
