@@ -1,3 +1,13 @@
+## [0.12.5](https://github.com/oruga-ui/oruga/compare/v0.12.3...v0.12.5) (2026-01-20)
+
+
+### Bug Fixes
+
+* **input:** solve value does not change in a web component setup ([#1522](https://github.com/oruga-ui/oruga/issues/1522)) ([38a48fb](https://github.com/oruga-ui/oruga/commit/38a48fb9ff1f8f5d0e1e86fcb845024a19d0afcf))
+* **pagination:** pass `iconPack` property correctly to the internal button components ([#1518](https://github.com/oruga-ui/oruga/issues/1518)) ([b4632f3](https://github.com/oruga-ui/oruga/commit/b4632f399d0f5858b478972060eb664bf3030507))
+
+
+
 ## [0.12.4](https://github.com/oruga-ui/oruga/compare/v0.12.3...v0.12.4) (2026-01-14)
 
 
