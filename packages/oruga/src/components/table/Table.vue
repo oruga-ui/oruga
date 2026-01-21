@@ -630,13 +630,13 @@ function onFiltersEvent(event: Event): void {
  * Returns a filtered list of the mutated rows.
  */
 function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
-    if(props.backendFiltering)
+    if (props.backendFiltering)
         // always return a new array object
         return [...rows];
 
-    if ( !Object.values(filters.value).filter(Boolean).length) {
+    if (!Object.values(filters.value).filter(Boolean).length) {
         // when has no filter reset hidden states
-        rows.forEach(row => row.hidden = false);
+        rows.forEach((row) => (row.hidden = false));
         // always return a new array object
         return [...rows];
     }
