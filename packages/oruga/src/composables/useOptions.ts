@@ -1,8 +1,8 @@
 import {
-    computed,
-    toValue,
-    type ComputedRef,
-    type MaybeRefOrGetter,
+  computed,
+  toValue,
+  type ComputedRef,
+  type MaybeRefOrGetter,
 } from "vue";
 import { isEqual } from "@/utils/helpers";
 
@@ -12,10 +12,10 @@ import { isEqual } from "@/utils/helpers";
  * @internal
  */
 export type OptionsItem<V = unknown> = OptionsPropItem<V> & {
-    /** internal definiton if the element should be hidden */
-    hidden?: boolean;
-    /** internal genereated uniqe option key */
-    key?: string;
+  /** internal definiton if the element should be hidden */
+  hidden?: boolean;
+  /** internal genereated uniqe option key */
+  key?: string;
 };
 
 /**
@@ -24,20 +24,20 @@ export type OptionsItem<V = unknown> = OptionsPropItem<V> & {
  * @public
  */
 export type OptionsPropItem<V = unknown> = {
-    /** displayed option label */
-    label: string;
-    /** the real option value */
-    value: V;
-    /** additional attributes bound to the option element */
-    attrs?: {
-        disabled?: boolean;
-    } & Record<string, any>;
-    [index: string]: any;
+  /** displayed option label */
+  label: string;
+  /** the real option value */
+  value: V;
+  /** additional attributes bound to the option element */
+  attrs?: {
+    disabled?: boolean;
+  } & Record<string, any>;
+  [index: string]: any;
 };
 
 export type SimpleOptionsProp =
-    | (string | number)[]
-    | Omit<OptionsPropItem<never>, "value">[];
+  | (string | number)[]
+  | Omit<OptionsPropItem<never>, "value">[];
 
 /**
  * The types of options that can be passed to the options prop.
@@ -45,9 +45,9 @@ export type SimpleOptionsProp =
  * @public
  */
 export type OptionsProp<V = string | number | object> =
-    | (string | number)[]
-    | Record<string | number, string>
-    | OptionsPropItem<V>[];
+  | (string | number)[]
+  | Record<string | number, string>
+  | OptionsPropItem<V>[];
 
 /**
  * Option groups should always be formatted as an array of objects with group and nested options.
@@ -55,18 +55,18 @@ export type OptionsProp<V = string | number | object> =
  * @internal
  */
 export type OptionsGroupItem<V = unknown> = {
-    /** displayed option group label */
-    label?: string;
-    /** the real option group value */
-    value?: V;
-    /** list of options */
-    options: OptionsItem<V>[];
-    /** additional attributes bound to the options grouü element */
-    attrs?: Record<string, any>;
-    /** internal definiton if the element should be hidden */
-    hidden?: boolean;
-    /** internal genereated uniqe option key */
-    key?: string;
+  /** displayed option group label */
+  label?: string;
+  /** the real option group value */
+  value?: V;
+  /** list of options */
+  options: OptionsItem<V>[];
+  /** additional attributes bound to the options grouü element */
+  attrs?: Record<string, any>;
+  /** internal definiton if the element should be hidden */
+  hidden?: boolean;
+  /** internal genereated uniqe option key */
+  key?: string;
 };
 
 /**
@@ -75,14 +75,14 @@ export type OptionsGroupItem<V = unknown> = {
  * @public
  */
 export type OptionsGroupPropItem<V = unknown> = {
-    /** displayed option group label */
-    label?: string;
-    /** the real option group value */
-    value?: V;
-    /** list of options */
-    options: OptionsProp<V>;
-    /** additional attributes bound to the options grouü element */
-    attrs?: Record<string, any>;
+  /** displayed option group label */
+  label?: string;
+  /** the real option group value */
+  value?: V;
+  /** list of options */
+  options: OptionsProp<V>;
+  /** additional attributes bound to the options grouü element */
+  attrs?: Record<string, any>;
 };
 
 /**
@@ -92,7 +92,7 @@ export type OptionsGroupPropItem<V = unknown> = {
  * @public
  */
 export type OptionsGroupProp<V = string | number | object> =
-    OptionsGroupPropItem<V>[];
+  OptionsGroupPropItem<V>[];
 
 /**
  * The types of options that can be passed to the options prop.
@@ -102,21 +102,21 @@ export type OptionsGroupProp<V = string | number | object> =
  * @public
  */
 export type OptionsPropWithGroups<V = unknown> =
-    | OptionsProp<V>
-    | OptionsGroupProp<V>;
+  | OptionsProp<V>
+  | OptionsGroupProp<V>;
 
 /** Normalized external options prop for internal usage */
 type NormalizedOptions<
-    V,
-    O extends OptionsPropWithGroups<V> | SimpleOptionsProp | undefined,
+  V,
+  O extends OptionsPropWithGroups<V> | SimpleOptionsProp | undefined,
 > =
-    O extends OptionsGroupProp<V>
-        ? OptionsGroupItem<V>[]
-        : O extends OptionsProp<V>
-          ? OptionsItem<V>[]
-          : O extends SimpleOptionsProp
-            ? OptionsItem<never>[]
-            : never[];
+  O extends OptionsGroupProp<V>
+    ? OptionsGroupItem<V>[]
+    : O extends OptionsProp<V>
+      ? OptionsItem<V>[]
+      : O extends SimpleOptionsProp
+        ? OptionsItem<never>[]
+        : never[];
 
 /**
  * A function to normalize an array of objects, array of strings, or object of
@@ -127,54 +127,54 @@ type NormalizedOptions<
  * @returns A list of {@link OptionsItem} | {@link OptionsGroupItem}.
  */
 export function normalizeOptions<
-    V,
-    O extends
-        | SimpleOptionsProp
-        | OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
+  V,
+  O extends
+  | SimpleOptionsProp
+  | OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
 >(options: O | undefined, uuid: () => string): NormalizedOptions<V, O> {
-    if (!options) return [] as NormalizedOptions<V, O>;
+  if (!options) return [] as NormalizedOptions<V, O>;
 
-    if (Array.isArray(options))
-        return options.map(
-            (option: O[number]): OptionsItem | OptionsGroupItem => {
-                if (typeof option === "string" || typeof option === "number")
-                    // create options item from primitive
-                    return {
-                        label: String(option),
-                        value: String(option),
-                        key: uuid(),
-                    } as OptionsItem<V>;
-
-                if (typeof option == "object") {
-                    if ("options" in option) {
-                        // process group options
-                        const options = normalizeOptions(option.options, uuid);
-                        // create options group item
-                        return {
-                            ...option,
-                            options,
-                            key: uuid(),
-                        } as OptionsGroupItem<V>;
-                    } else if ("value" in option) {
-                        // create options item
-                        return {
-                            ...option,
-                            key: uuid(),
-                        } as OptionsItem<V>;
-                    }
-                }
-                return option as OptionsItem<V>;
-            },
-        ) as NormalizedOptions<V, O>;
-
-    return Object.keys(options).map(
-        (value: string): OptionsItem<string> => ({
-            // create option from object key/value
-            label: options[value],
-            value,
+  if (Array.isArray(options))
+    return options.map(
+      (option: O[number]): OptionsItem | OptionsGroupItem => {
+        if (typeof option === "string" || typeof option === "number")
+        // create options item from primitive
+          return {
+            label: String(option),
+            value: String(option),
             key: uuid(),
-        }),
+          } as OptionsItem<V>;
+
+        if (typeof option == "object") {
+          if ("options" in option) {
+            // process group options
+            const options = normalizeOptions(option.options, uuid);
+            // create options group item
+            return {
+              ...option,
+              options,
+              key: uuid(),
+            } as OptionsGroupItem<V>;
+          } else if ("value" in option) {
+            // create options item
+            return {
+              ...option,
+              key: uuid(),
+            } as OptionsItem<V>;
+          }
+        }
+        return option as OptionsItem<V>;
+      },
     ) as NormalizedOptions<V, O>;
+
+  return Object.keys(options).map(
+    (value: string): OptionsItem<string> => ({
+      // create option from object key/value
+      label: options[value],
+      value,
+      key: uuid(),
+    }),
+  ) as NormalizedOptions<V, O>;
 }
 
 /**
@@ -188,11 +188,11 @@ export function normalizeOptions<
  *   Returns true if the option is a group option; otherwise, false.
  */
 export function isGroupOption(
-    option: Partial<OptionsItem | OptionsGroupItem>,
+  option: Partial<OptionsItem | OptionsGroupItem>,
 ): option is OptionsGroupItem {
-    return (
-        option && typeof option === "object" && Array.isArray(option.options)
-    );
+  return (
+    option && typeof option === "object" && Array.isArray(option.options)
+  );
 }
 
 /**
@@ -210,18 +210,18 @@ export function isGroupOption(
  *   A grouped options array.
  */
 export function toOptionsGroup<V>(
-    options: OptionsItem<V>[] | OptionsGroupItem<V>[],
-    key: string,
+  options: OptionsItem<V>[] | OptionsGroupItem<V>[],
+  key: string,
 ): OptionsGroupItem<V>[] {
-    if (!Array.isArray(options)) return [];
+  if (!Array.isArray(options)) return [];
 
-    const isGroup = options.some((option) => isGroupOption(option));
+  const isGroup = options.some((option) => isGroupOption(option));
 
-    // if options are already a list options do nothing
-    if (isGroup) return [...options] as OptionsGroupItem<V>[];
+  // if options are already a list options do nothing
+  if (isGroup) return [...options] as OptionsGroupItem<V>[];
 
-    // create a list with a single group
-    return [{ options, key }] as OptionsGroupItem<V>[];
+  // create a list with a single group
+  return [{ options, key }] as OptionsGroupItem<V>[];
 }
 
 /**
@@ -236,14 +236,14 @@ export function toOptionsGroup<V>(
  *   A flat array containing all options from all groups.
  */
 export function toOptionsList<V>(
-    options: MaybeRefOrGetter<OptionsGroupItem<V>[]>,
+  options: MaybeRefOrGetter<OptionsGroupItem<V>[]>,
 ): OptionsItem<V>[] {
-    if (!Array.isArray(toValue(options))) return [];
+  if (!Array.isArray(toValue(options))) return [];
 
-    return toValue(options).reduce((list, group) => {
-        list.push(...group.options);
-        return list;
-    }, [] as OptionsItem<V>[]);
+  return toValue(options).reduce((list, group) => {
+    list.push(...group.options);
+    return list;
+  }, [] as OptionsItem<V>[]);
 }
 
 /**
@@ -259,21 +259,21 @@ export function toOptionsList<V>(
  * @returns {void}
  */
 export function filterOptionsItems<V>(
-    options: MaybeRefOrGetter<OptionsItem<V>[] | OptionsGroupItem<V>[]>,
-    filter: (option: OptionsItem<V>, index: number) => boolean,
+  options: MaybeRefOrGetter<OptionsItem<V>[] | OptionsGroupItem<V>[]>,
+  filter: (option: OptionsItem<V>, index: number) => boolean,
 ): void {
-    toValue(options).forEach(
-        (option: OptionsItem<V> | OptionsGroupItem<V>, idx: number) => {
-            if (isGroupOption(option)) {
-                filterOptionsItems(option.options, filter);
-                // hide the whole group if every group options is hidden
-                option.hidden = option.options.every((option) => option.hidden);
-            } else {
-                // hide the option if filtered
-                option.hidden = filter(option, idx);
-            }
-        },
-    );
+  toValue(options).forEach(
+    (option: OptionsItem<V> | OptionsGroupItem<V>, idx: number) => {
+      if (isGroupOption(option)) {
+        filterOptionsItems(option.options, filter);
+        // hide the whole group if every group options is hidden
+        option.hidden = option.options.every((option) => option.hidden);
+      } else {
+        // hide the option if filtered
+        option.hidden = filter(option, idx);
+      }
+    },
+  );
 }
 
 /**
@@ -288,18 +288,18 @@ export function filterOptionsItems<V>(
  *   Returns true if all options are non-viable (hidden or disabled); otherwise, false.
  */
 export function checkOptionsEmpty(
-    options: MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>,
+  options: MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>,
 ): boolean {
-    // check if options are empty
-    if (!Array.isArray(toValue(options))) return true;
+  // check if options are empty
+  if (!Array.isArray(toValue(options))) return true;
 
-    return toValue(options).every((option: OptionsItem | OptionsGroupItem) => {
-        if (isGroupOption(option))
-            // check if every options are hidden
-            return checkOptionsEmpty(option.options);
-        // check if option is hidden
-        else return !isOptionViable(option);
-    });
+  return toValue(options).every((option: OptionsItem | OptionsGroupItem) => {
+    if (isGroupOption(option))
+      // check if every options are hidden
+      return checkOptionsEmpty(option.options);
+    // check if option is hidden
+    else return !isOptionViable(option);
+  });
 }
 
 /**
@@ -315,25 +315,26 @@ export function checkOptionsEmpty(
  *   The matching option if found; otherwise, undefined.
  */
 export function findOption<V>(
-    options:
-        | MaybeRefOrGetter<OptionsItem<V>[]>
-        | MaybeRefOrGetter<OptionsGroupItem<V>[]>,
-    value: MaybeRefOrGetter<V>,
+  options:
+    | MaybeRefOrGetter<OptionsItem<V>[]>
+    | MaybeRefOrGetter<OptionsGroupItem<V>[]>,
+  value: MaybeRefOrGetter<V>,
 ): OptionsItem<V> | undefined {
-    if (!Array.isArray(toValue(options))) return undefined;
+  if (!Array.isArray(toValue(options))) return undefined;
 
-    for (const option of toValue(options)) {
-        if (typeof option !== "object" && option) continue;
-        if (isGroupOption(option)) {
-            // option in group
-            const found = findOption(option.options, value);
-            if (found !== undefined) return found;
-        }
-        // check if option has value
-        else if (isEqual(toValue(value), option.value)) return option;
+  for (const option of toValue(options)) {
+    if (typeof option !== "object" && option) continue;
+    if (isGroupOption(option)) {
+      // option in group
+      const found = findOption(option.options, value);
+      if (found !== undefined) return found;
+    } else if (isEqual(toValue(value), option.value)) {
+      // return option because it has value
+      return option;
     }
+  }
 
-    return undefined;
+  return undefined;
 }
 
 /**
@@ -347,24 +348,24 @@ export function findOption<V>(
  *   The first viable option found, or undefined if none are viable.
  */
 export function firstViableOption<V>(
-    options:
-        | MaybeRefOrGetter<OptionsItem<V>[]>
-        | MaybeRefOrGetter<OptionsGroupItem<V>[]>,
+  options:
+    | MaybeRefOrGetter<OptionsItem<V>[]>
+    | MaybeRefOrGetter<OptionsGroupItem<V>[]>,
 ): OptionsItem<V> | undefined {
-    if (!Array.isArray(toValue(options))) return undefined;
+  if (!Array.isArray(toValue(options))) return undefined;
 
-    for (const option of toValue(options)) {
-        if (typeof option !== "object" && option) continue;
-        if (isGroupOption(option)) {
-            // option in group
-            const found = firstViableOption(option.options);
-            if (found !== undefined) return found;
-        }
-        // check if option is viable
-        else if (isOptionViable(option)) return option;
-    }
+  for (const option of toValue(options)) {
+    if (typeof option !== "object" && option) continue;
+    if (isGroupOption(option)) {
+      // option in group
+      const found = firstViableOption(option.options);
+      if (found !== undefined) return found;
+    } else if (isOptionViable(option))
+      // option is viable
+      return option;
+  }
 
-    return undefined;
+  return undefined;
 }
 
 /**
@@ -378,7 +379,7 @@ export function firstViableOption<V>(
  *   Returns true if the option is not hidden and not disabled; otherwise, false.
  */
 export function isOptionViable(option: MaybeRefOrGetter<OptionsItem>): boolean {
-    return !toValue(option).hidden && !toValue(option).attrs?.disabled;
+  return !toValue(option).hidden && !toValue(option).attrs?.disabled;
 }
 
 /**
@@ -395,15 +396,15 @@ export function isOptionViable(option: MaybeRefOrGetter<OptionsItem>): boolean {
  *   Returns true if the option is viable and its label starts with the search value; otherwise, false.
  */
 export function isOptionMatched(
-    option: MaybeRefOrGetter<OptionsItem>,
-    value: MaybeRefOrGetter<string>,
+  option: MaybeRefOrGetter<OptionsItem>,
+  value: MaybeRefOrGetter<string>,
 ): boolean {
-    return (
-        isOptionViable(option) &&
-        toValue(option)
-            .label?.toLowerCase()
-            .startsWith(toValue(value).toLowerCase())
-    );
+  return (
+    isOptionViable(option) &&
+    toValue(option)
+      .label?.toLowerCase()
+      .startsWith(toValue(value).toLowerCase())
+  );
 }
 
 /**
@@ -420,35 +421,35 @@ export function isOptionMatched(
  *   The index of the option if found; otherwise, -1.
  */
 export function findOptionIndex(
-    options:
-        | MaybeRefOrGetter<OptionsItem[]>
-        | MaybeRefOrGetter<OptionsGroupItem[]>,
-    option: MaybeRefOrGetter<OptionsItem>,
+  options:
+    | MaybeRefOrGetter<OptionsItem[]>
+    | MaybeRefOrGetter<OptionsGroupItem[]>,
+  option: MaybeRefOrGetter<OptionsItem>,
 ): number {
-    if (!Array.isArray(toValue(options))) return -1;
+  if (!Array.isArray(toValue(options))) return -1;
 
-    let idx = 0;
-    for (const item of toValue(options)) {
-        if (typeof item !== "object" && item) continue;
-        if (isGroupOption(item)) {
-            // check options in group options
-            const groupIdx = findOptionIndex(item.options, option);
-            // increase full group options length when not found
-            if (groupIdx === -1) idx += item.options.length;
-            else {
-                // increase found index of group options
-                idx += groupIdx;
-                return idx;
-            }
-        }
-        // check if option is searched option
-        else if (isEqual(item.value, toValue(option).value)) return idx;
-        // else increase search indx
-        else idx += 1;
-    }
+  let idx = 0;
+  for (const item of toValue(options)) {
+    if (typeof item !== "object" && item) continue;
+    if (isGroupOption(item)) {
+      // check options in group options
+      const groupIdx = findOptionIndex(item.options, option);
+      // increase full group options length when not found
+      if (groupIdx === -1) idx += item.options.length;
+      else {
+        // increase found index of group options
+        idx += groupIdx;
+        return idx;
+      }
+    } else if (isEqual(item.value, toValue(option).value))
+      // option is searched option
+      return idx;
+    // else increase search indx
+    else idx += 1;
+  }
 
-    // not matching option found
-    return -1;
+  // not matching option found
+  return -1;
 }
 
 /**
@@ -460,37 +461,37 @@ export function findOptionIndex(
  *   The total count of individual options, including those nested within groups.
  */
 export function getOptionsLength(
-    options:
-        | MaybeRefOrGetter<OptionsItem[]>
-        | MaybeRefOrGetter<OptionsGroupItem[]>,
+  options:
+    | MaybeRefOrGetter<OptionsItem[]>
+    | MaybeRefOrGetter<OptionsGroupItem[]>,
 ): number {
-    if (!Array.isArray(toValue(options))) return 0;
+  if (!Array.isArray(toValue(options))) return 0;
 
-    return toValue(options).reduce((length, item) => {
-        if (typeof item !== "object" && item) return length;
-        if (isGroupOption(item)) {
-            return length + getOptionsLength(item.options);
-        }
-        return length + 1;
-    }, 0);
+  return toValue(options).reduce((length, item) => {
+    if (typeof item !== "object" && item) return length;
+    if (isGroupOption(item)) {
+      return length + getOptionsLength(item.options);
+    }
+    return length + 1;
+  }, 0);
 }
 
 export function useKeyedOptions<T>(
-    options?: MaybeRefOrGetter<T[]>,
+  options?: MaybeRefOrGetter<T[]>,
 ): ComputedRef<{ key: string; value: T }[]> {
-    let key = 0;
-    return computed(
-        () =>
-            toValue(options)?.map((o) => ({ key: String(key++), value: o })) ??
-            [],
-    );
+  let key = 0;
+  return computed(
+    () =>
+      toValue(options)?.map((o) => ({ key: String(key++), value: o })) ??
+      [],
+  );
 }
 
 /** determines if the options are grouped or not */
 export function areOptionsGrouped(
-    options: MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>,
+  options: MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>,
 ): boolean {
-    const _options = toValue(options);
-    if (!_options?.length) return false;
-    return isGroupOption(_options[0]);
+  const _options = toValue(options);
+  if (!_options?.length) return false;
+  return isGroupOption(_options[0]);
 }

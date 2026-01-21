@@ -7,7 +7,7 @@ exports[`OModal tests > render correctly 1`] = `
     <div class="o-modal__overlay" tabindex="-1"></div>
     <div class="o-modal__content" style="max-width: 960px;">
       <!-- injected component for programmatic usage -->
-      <!--v-if--><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-close mdi-36px"></i></span></button>
+      <!--v-if--><button type="button" data-oruga="close" class="o-modal__close" aria-label="Close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-close mdi-36px"></i></span></button>
     </div>
   </div>
 </transition-stub>

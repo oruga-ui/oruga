@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {
-    computed,
-    ref,
-    useSlots,
-    watch,
-    useId,
-    useTemplateRef,
-    type VNodeArrayChildren,
+  computed,
+  ref,
+  useSlots,
+  watch,
+  useId,
+  useTemplateRef,
+  type VNodeArrayChildren,
 } from "vue";
 
 import { getDefault } from "@/utils/config";
@@ -23,39 +23,39 @@ import type { FieldProps } from "./props";
  * @style _field.scss
  */
 defineOptions({
-    isOruga: true,
-    name: "OField",
-    configField: "field",
+  isOruga: true,
+  name: "OField",
+  configField: "field",
 });
 
 const props = withDefaults(defineProps<FieldProps>(), {
-    override: undefined,
-    variant: undefined,
-    label: undefined,
-    labelSize: () => getDefault("field.labelSize"),
-    labelFor: undefined,
-    labelId: () => useId(),
-    message: undefined,
-    messageSize: () => getDefault("field.messageSize"),
-    messageTag: () => getDefault("field.messageTag", "p"),
-    messageId: () => useId(),
-    grouped: false,
-    addons: false,
-    multiline: false,
-    horizontal: false,
-    mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
+  override: undefined,
+  variant: undefined,
+  label: undefined,
+  labelSize: () => getDefault("field.labelSize"),
+  labelFor: undefined,
+  labelId: () => useId(),
+  message: undefined,
+  messageSize: () => getDefault("field.messageSize"),
+  messageTag: () => getDefault("field.messageTag", "p"),
+  messageId: () => useId(),
+  grouped: false,
+  addons: false,
+  multiline: false,
+  horizontal: false,
+  mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
 
 defineSlots<{
-    /** Override the label */
-    label?(): void;
-    /**
-     * Override the message
-     * @param message {string | string[] | undefined} - message property
-     */
-    message?(props: { message: string | string[] | undefined }): void;
-    /** Default content */
-    default?(): void;
+  /** Override the label */
+  label?(): void;
+  /**
+   * Override the message
+   * @param message {string | string[] | undefined} - message property
+   */
+  message?(props: { message: string | string[] | undefined }): void;
+  /** Default content */
+  default?(): void;
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -63,31 +63,31 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 /** the unique id for the input to associate the label with */
 const inputId = ref(props.labelFor);
 watch(
-    () => props.labelFor,
-    (v) => (inputId.value = v),
+  () => props.labelFor,
+  (v) => (inputId.value = v),
 );
 
 /** set internal variant when prop change */
 const fieldVariant = ref(props.variant);
 watch(
-    () => props.variant,
-    (v) => (fieldVariant.value = v),
+  () => props.variant,
+  (v) => (fieldVariant.value = v),
 );
 
 /** set internal message when prop change */
 const fieldMessage = ref(props.message);
 watch(
-    () => props.message,
-    (v) => (fieldMessage.value = v),
+  () => props.message,
+  (v) => (fieldMessage.value = v),
 );
 
 /** set parent message if we use Field in Field */
 watch(fieldMessage, (value) => {
-    if (parentField.value && parentField.value.hasInnerField) {
-        if (!parentField.value.variant)
-            parentField.value.setVariant(fieldVariant.value);
-        if (!parentField.value.message) parentField.value.setMessage(value);
-    }
+  if (parentField.value && parentField.value.hasInnerField) {
+    if (!parentField.value.variant)
+      parentField.value.setVariant(fieldVariant.value);
+    if (!parentField.value.message) parentField.value.setMessage(value);
+  }
 });
 
 /** this can be set from inputs to update the focus state */
@@ -107,29 +107,29 @@ const slots = useSlots();
 const hasLabel = computed(() => props.label || !!slots.label);
 
 const hasMessage = computed(
-    () =>
-        (Array.isArray(fieldMessage.value) && fieldMessage.value.length) ||
-        (!Array.isArray(fieldMessage.value) && !!fieldMessage.value) ||
-        !!slots.message,
+  () =>
+    (Array.isArray(fieldMessage.value) && fieldMessage.value.length) ||
+    (!Array.isArray(fieldMessage.value) && !!fieldMessage.value) ||
+    !!slots.message,
 );
 
 const hasBody = computed(
-    () =>
-        props.grouped ||
-        props.multiline ||
-        hasInnerField.value ||
-        hasAddons.value,
+  () =>
+    props.grouped ||
+    props.multiline ||
+    hasInnerField.value ||
+    hasAddons.value,
 );
 
 const hasAddons = computed(
-    () => props.addons && !props.horizontal && !!slots.default,
+  () => props.addons && !props.horizontal && !!slots.default,
 );
 
 function getInnerContent(vnode): VNodeArrayChildren {
-    const slot = vnode();
-    return slot.length === 1 && Array.isArray(slot[0].children)
-        ? slot[0].children
-        : slot;
+  const slot = vnode();
+  return slot.length === 1 && Array.isArray(slot[0].children)
+    ? slot[0].children
+    : slot;
 }
 
 // --- Field Dependency Injection Feature ---
@@ -137,47 +137,47 @@ function getInnerContent(vnode): VNodeArrayChildren {
 const rootRef = useTemplateRef("rootElement");
 
 function addInnerField(): void {
-    hasInnerField.value = true;
+  hasInnerField.value = true;
 }
 function setFocus(value: boolean): void {
-    isFocused.value = value;
+  isFocused.value = value;
 }
 function setFilled(value: boolean): void {
-    isFilled.value = value;
+  isFilled.value = value;
 }
 function setVariant(value?: string): void {
-    fieldVariant.value = value;
+  fieldVariant.value = value;
 }
 function setMessage(value?: string | string[]): void {
-    fieldMessage.value = value;
+  fieldMessage.value = value;
 }
 function setInputId(value: string): void {
-    inputId.value = value;
+  inputId.value = value;
 }
 
 const inputAttrs = computed(() => ({
-    "aria-labelledby": props.labelId,
-    ...(fieldVariant.value === "error"
-        ? { "aria-errormessage": props.messageId }
-        : {}),
-    ...(fieldMessage.value ? { "aria-describedby": props.messageId } : {}),
+  "aria-labelledby": props.labelId,
+  ...(fieldVariant.value === "error"
+    ? { "aria-errormessage": props.messageId }
+    : {}),
+  ...(fieldMessage.value ? { "aria-describedby": props.messageId } : {}),
 }));
 
 // Provided data is a computed ref to ensure reactivity.
 const provideData = computed<FieldData>(() => ({
-    $el: rootRef.value,
-    props,
-    hasInnerField: hasInnerField.value,
-    variant: fieldVariant.value,
-    message: fieldMessage.value,
-    labelId: props.labelId,
-    inputAttrs: inputAttrs.value,
-    addInnerField,
-    setInputId,
-    setFocus,
-    setFilled,
-    setVariant,
-    setMessage,
+  $el: rootRef.value,
+  props,
+  hasInnerField: hasInnerField.value,
+  variant: fieldVariant.value,
+  message: fieldMessage.value,
+  labelId: props.labelId,
+  inputAttrs: inputAttrs.value,
+  addInnerField,
+  setInputId,
+  setFocus,
+  setFilled,
+  setVariant,
+  setMessage,
 }));
 
 // Provide field component data via dependency injection.
@@ -186,158 +186,161 @@ provideField(provideData);
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-field"],
-    [
-        "horizontalClass",
-        "o-field--horizontal",
-        null,
-        computed(() => !!props.horizontal),
-    ],
-    ["mobileClass", "o-field--mobile", null, isMobile],
-    ["focusedClass", "o-field--focused", null, isFocused],
-    ["filledClass", "o-field--filled", null, isFilled],
-    [
-        "variantClass",
-        "o-field--",
-        fieldVariant,
-        computed(() => !!fieldVariant.value),
-    ],
+  ["rootClass", "o-field"],
+  [
+    "horizontalClass",
+    "o-field--horizontal",
+    null,
+    computed(() => !!props.horizontal),
+  ],
+  ["mobileClass", "o-field--mobile", null, isMobile],
+  ["focusedClass", "o-field--focused", null, isFocused],
+  ["filledClass", "o-field--filled", null, isFilled],
+  [
+    "variantClass",
+    "o-field--",
+    fieldVariant,
+    computed(() => !!fieldVariant.value),
+  ],
 );
 
 const labelClasses = defineClasses(
-    ["labelClass", "o-field__label"],
-    [
-        "labelSizeClass",
-        "o-field__label--",
-        computed(() => props.labelSize),
-        computed(() => !!props.labelSize),
-    ],
-    [
-        "labelVariantClass",
-        "o-field__label--",
-        fieldVariant,
-        computed(() => !!fieldVariant.value),
-    ],
+  ["labelClass", "o-field__label"],
+  [
+    "labelSizeClass",
+    "o-field__label--",
+    computed(() => props.labelSize),
+    computed(() => !!props.labelSize),
+  ],
+  [
+    "labelVariantClass",
+    "o-field__label--",
+    fieldVariant,
+    computed(() => !!fieldVariant.value),
+  ],
 );
 
 const horizontalLabelClasses = defineClasses([
-    "horizontalLabelClass",
-    "o-field__horizontal-label",
+  "horizontalLabelClass",
+  "o-field__horizontal-label",
 ]);
 
 const horizontalBodyClasses = defineClasses([
-    "horizontalBodyClass",
-    "o-field__horizontal-body",
+  "horizontalBodyClass",
+  "o-field__horizontal-body",
 ]);
 
 const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
 
 const innerBodyClasses = defineClasses(
-    ["rootClass", "o-field"],
-    ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
-    [
-        "addonsClass",
-        "o-field--addons",
-        null,
-        computed(() => !props.grouped && hasAddons.value),
-    ],
-    [
-        "multilineClass",
-        "o-field--multiline",
-        null,
-        computed(() => props.multiline),
-    ],
+  ["rootClass", "o-field"],
+  ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
+  [
+    "addonsClass",
+    "o-field--addons",
+    null,
+    computed(() => !props.grouped && hasAddons.value),
+  ],
+  [
+    "multilineClass",
+    "o-field--multiline",
+    null,
+    computed(() => props.multiline),
+  ],
 );
 
 const messageClasses = defineClasses(
-    ["messageClass", "o-field__message"],
-    [
-        "messageSizeClass",
-        "o-field__message--",
-        computed(() => props.messageSize),
-        computed(() => !!props.messageSize),
-    ],
-    [
-        "messageVariantClass",
-        "o-field__message--",
-        fieldVariant,
-        computed(() => !!fieldVariant.value),
-    ],
+  ["messageClass", "o-field__message"],
+  [
+    "messageSizeClass",
+    "o-field__message--",
+    computed(() => props.messageSize),
+    computed(() => !!props.messageSize),
+  ],
+  [
+    "messageVariantClass",
+    "o-field__message--",
+    fieldVariant,
+    computed(() => !!fieldVariant.value),
+  ],
 );
 </script>
 
 <template>
-    <div ref="rootElement" data-oruga="field" :class="rootClasses">
-        <div v-if="horizontal" :class="horizontalLabelClasses">
-            <label
-                v-if="hasLabel"
-                :id="labelId"
-                :for="inputId"
-                :class="labelClasses">
-                <slot name="label">{{ label }}</slot>
-            </label>
-        </div>
-
-        <template v-else>
-            <label
-                v-if="hasLabel"
-                :id="labelId"
-                :for="inputId"
-                :class="labelClasses">
-                <slot name="label">{{ label }}</slot>
-            </label>
-        </template>
-
-        <div v-if="horizontal" :class="horizontalBodyClasses">
-            <template
-                v-for="(element, index) in getInnerContent($slots.default)"
-                :key="index">
-                <component :is="element" v-if="isVNodeEmpty(element)" />
-
-                <OField
-                    v-else
-                    :variant="fieldVariant"
-                    :addons="false"
-                    :label-id="labelId"
-                    :message-id="messageId"
-                    :message-tag="messageTag"
-                    :message-class="messageClass"
-                    :message="index === 0 ? fieldMessage : undefined">
-                    <!-- render inner default slot element -->
-                    <component :is="element" />
-                    <template v-if="index === 0 && $slots.message" #message>
-                        <slot name="message" :message="fieldMessage" />
-                    </template>
-                </OField>
-            </template>
-        </div>
-
-        <div v-else-if="hasBody" :class="bodyClasses">
-            <div :class="innerBodyClasses">
-                <slot />
-            </div>
-        </div>
-
-        <template v-else>
-            <slot />
-        </template>
-
-        <component
-            :is="messageTag"
-            v-if="hasMessage && !horizontal"
-            :id="messageId"
-            :class="messageClasses">
-            <slot name="message" :message="fieldMessage">
-                <template v-if="Array.isArray(fieldMessage)">
-                    <div v-for="message in fieldMessage" :key="message">
-                        {{ message }}
-                    </div>
-                </template>
-
-                <template v-else>
-                    {{ fieldMessage }}
-                </template>
-            </slot>
-        </component>
+  <div
+    ref="rootElement"
+    data-oruga="field"
+    :class="rootClasses">
+    <div v-if="horizontal" :class="horizontalLabelClasses">
+      <label
+        v-if="hasLabel"
+        :id="labelId"
+        :for="inputId"
+        :class="labelClasses">
+        <slot name="label">{{ label }}</slot>
+      </label>
     </div>
+
+    <template v-else>
+      <label
+        v-if="hasLabel"
+        :id="labelId"
+        :for="inputId"
+        :class="labelClasses">
+        <slot name="label">{{ label }}</slot>
+      </label>
+    </template>
+
+    <div v-if="horizontal" :class="horizontalBodyClasses">
+      <template
+        v-for="(element, index) in getInnerContent($slots.default)"
+        :key="index">
+        <component :is="element" v-if="isVNodeEmpty(element)" />
+
+        <OField
+          v-else
+          :variant="fieldVariant"
+          :addons="false"
+          :label-id="labelId"
+          :message-id="messageId"
+          :message-tag="messageTag"
+          :message-class="messageClass"
+          :message="index === 0 ? fieldMessage : undefined">
+          <!-- render inner default slot element -->
+          <component :is="element" />
+          <template v-if="index === 0 && $slots.message" #message>
+            <slot name="message" :message="fieldMessage" />
+          </template>
+        </OField>
+      </template>
+    </div>
+
+    <div v-else-if="hasBody" :class="bodyClasses">
+      <div :class="innerBodyClasses">
+        <slot />
+      </div>
+    </div>
+
+    <template v-else>
+      <slot />
+    </template>
+
+    <component
+      :is="messageTag"
+      v-if="hasMessage && !horizontal"
+      :id="messageId"
+      :class="messageClasses">
+      <slot name="message" :message="fieldMessage">
+        <template v-if="Array.isArray(fieldMessage)">
+          <div v-for="message in fieldMessage" :key="message">
+            {{ message }}
+          </div>
+        </template>
+
+        <template v-else>
+          {{ fieldMessage }}
+        </template>
+      </slot>
+    </component>
+  </div>
 </template>

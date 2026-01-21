@@ -5,101 +5,103 @@ const isActive = ref(false);
 </script>
 
 <template>
-    <section class="odocs-spaced">
-        <p>
-            <o-dropdown>
-                <template #trigger="{ active }">
-                    <o-button
-                        variant="primary"
-                        label="Default"
-                        :icon-right="active ? 'caret-up' : 'caret-down'" />
-                </template>
+  <section class="odocs-spaced">
+    <p>
+      <o-dropdown>
+        <template #trigger="{ active }">
+          <o-button
+            variant="primary"
+            label="Default"
+            :icon-right="active ? 'caret-up' : 'caret-down'" />
+        </template>
 
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
+        <o-dropdown-item label="Action" />
+        <o-dropdown-item label="Another action" />
+        <o-dropdown-item label="Something else" />
+      </o-dropdown>
 
-            <o-dropdown open-on-hover>
-                <template #trigger="{ active }">
-                    <o-button
-                        variant="info"
-                        label="Hover"
-                        :icon-right="active ? 'caret-up' : 'caret-down'" />
-                </template>
+      <o-dropdown open-on-hover>
+        <template #trigger="{ active }">
+          <o-button
+            variant="info"
+            label="Hover"
+            :icon-right="active ? 'caret-up' : 'caret-down'" />
+        </template>
 
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
+        <o-dropdown-item label="Action" />
+        <o-dropdown-item label="Another action" />
+        <o-dropdown-item label="Something else" />
+      </o-dropdown>
 
-            <o-dropdown open-on-contextmenu>
-                <template #trigger>
-                    <o-button label="Right click" />
-                </template>
+      <o-dropdown open-on-contextmenu>
+        <template #trigger>
+          <o-button label="Right click" />
+        </template>
 
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
+        <o-dropdown-item label="Action" />
+        <o-dropdown-item label="Another action" />
+        <o-dropdown-item label="Something else" />
+      </o-dropdown>
 
-            <o-dropdown disabled>
-                <template #trigger="{ active }">
-                    <o-button
-                        label="Disabled"
-                        disabled
-                        :icon-right="active ? 'caret-up' : 'caret-down'" />
-                </template>
+      <o-dropdown disabled>
+        <template #trigger="{ active }">
+          <o-button
+            label="Disabled"
+            disabled
+            :icon-right="active ? 'caret-up' : 'caret-down'" />
+        </template>
 
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
+        <o-dropdown-item label="Action" />
+        <o-dropdown-item label="Another action" />
+        <o-dropdown-item label="Something else" />
+      </o-dropdown>
 
-            <o-dropdown>
-                <template #trigger>
-                    <div role="button" tabindex="0">
-                        Custom
-                        <o-icon variant="success" icon="caret-down" />
-                    </div>
-                </template>
+      <o-dropdown>
+        <template #trigger>
+          <div role="button" tabindex="0">
+            Custom
+            <o-icon variant="success" icon="caret-down" />
+          </div>
+        </template>
 
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
+        <o-dropdown-item label="Action" />
+        <o-dropdown-item label="Another action" />
+        <o-dropdown-item label="Something else" />
+      </o-dropdown>
 
-            <o-dropdown teleport>
-                <template #trigger>
-                    <o-button label="Append to body" />
-                </template>
+      <o-dropdown teleport>
+        <template #trigger>
+          <o-button label="Append to body" />
+        </template>
 
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
-        </p>
-        <br />
-        <p>
-            <o-field grouped>
-                <o-dropdown v-model:active="isActive" :open-on-click="false">
-                    <template #trigger="{ active }">
-                        <o-icon
-                            variant="success"
-                            :icon="active ? 'caret-up' : 'caret-down'" />
-                        Click the button beside!
-                    </template>
+        <o-dropdown-item label="Action" />
+        <o-dropdown-item label="Another action" />
+        <o-dropdown-item label="Something else" />
+      </o-dropdown>
+    </p>
+    <br>
+    <p>
+      <o-field grouped>
+        <o-dropdown
+          v-model:active="isActive"
+          :open-on-click="false">
+          <template #trigger="{ active }">
+            <o-icon
+              variant="success"
+              :icon="active ? 'caret-up' : 'caret-down'" />
+            Click the button beside!
+          </template>
 
-                    <o-dropdown-item label="Action" />
-                    <o-dropdown-item label="Another action" />
-                    <o-dropdown-item label="Something else" />
-                </o-dropdown>
+          <o-dropdown-item label="Action" />
+          <o-dropdown-item label="Another action" />
+          <o-dropdown-item label="Something else" />
+        </o-dropdown>
 
-                <o-button
-                    label="Open / Close"
-                    variant="secondary"
-                    @click="isActive = !isActive" />
-            </o-field>
-        </p>
-    </section>
+        <o-button
+          label="Open / Close"
+          variant="secondary"
+          @click="isActive = !isActive" />
+      </o-field>
+    </p>
+  </section>
 </template>

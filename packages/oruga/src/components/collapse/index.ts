@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export collapse plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Collapse);
-    },
+  install(app: App) {
+    registerComponent(app, Collapse);
+  },
 } as Plugin;
 
 /** export collapse components */

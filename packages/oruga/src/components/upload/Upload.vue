@@ -22,64 +22,64 @@ import type { UploadProps } from "./props";
  * @style _upload.scss
  */
 defineOptions({
-    isOruga: true,
-    name: "OUpload",
-    configField: "upload",
-    inheritAttrs: false,
+  isOruga: true,
+  name: "OUpload",
+  configField: "upload",
+  inheritAttrs: false,
 });
 
 type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
-    override: undefined,
-    modelValue: undefined,
-    // multiple: false,
-    variant: () => getDefault("upload.variant"),
-    disabled: false,
-    expanded: () => getDefault("upload.expanded", false),
-    accept: undefined,
-    dragDrop: false,
-    native: true,
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
-    customValidity: "",
+  override: undefined,
+  modelValue: undefined,
+  // multiple: false,
+  variant: () => getDefault("upload.variant"),
+  disabled: false,
+  expanded: () => getDefault("upload.expanded", false),
+  accept: undefined,
+  dragDrop: false,
+  native: true,
+  useHtml5Validation: () => getDefault("useHtml5Validation", true),
+  customValidity: "",
 });
 
 const emits = defineEmits<{
-    /**
-     * modelValue prop two-way binding
-     * @param value {object | object[] | File | File[]} - updated modelValue prop
-     */
-    "update:model-value": [value: ModelValue];
-    /**
-     * on input focus event
-     * @param event {Event} - native event
-     */
-    focus: [event: Event];
-    /**
-     * on input blur event
-     * @param event {Event} - native event
-     */
-    blur: [event: Event];
-    /**
-     * on input invalid event
-     * @param event {Event} - native event
-     */
-    invalid: [event: Event];
+  /**
+   * modelValue prop two-way binding
+   * @param value {object | object[] | File | File[]} - updated modelValue prop
+   */
+  "update:model-value": [value: ModelValue];
+  /**
+   * on input focus event
+   * @param event {Event} - native event
+   */
+  focus: [event: Event];
+  /**
+   * on input blur event
+   * @param event {Event} - native event
+   */
+  blur: [event: Event];
+  /**
+   * on input invalid event
+   * @param event {Event} - native event
+   */
+  invalid: [event: Event];
 }>();
 
 defineSlots<{
-    /**
-     * Default content
-     * @param onclick {(event: Event): void} - click handler, only needed if a button is used
-     */
-    default?(props: { onclick: (event: Event) => void }): void;
+  /**
+   * Default content
+   * @param onclick {(event: Event): void} - click handler, only needed if a button is used
+   */
+  default?(props: { onclick: (event: Event) => void }): void;
 }>();
 
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionality
 const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
-    useInputHandler(inputRef, emits, props);
+  useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
@@ -94,9 +94,9 @@ const dragDropFocus = ref(false);
  * 2. If it's invalid, validate again.
  */
 watch(vmodel, (value) => {
-    if (!value || (Array.isArray(value) && value.length === 0))
-        if (inputRef.value) inputRef.value.value = "";
-    if (!isValid.value && !props.dragDrop) checkHtml5Validity();
+  if (!value || (Array.isArray(value) && value.length === 0))
+    if (inputRef.value) inputRef.value.value = "";
+  if (!isValid.value && !props.dragDrop) checkHtml5Validity();
 });
 
 /**
@@ -104,95 +104,94 @@ watch(vmodel, (value) => {
  * emit 'input' event and validate
  */
 function onFileChange(event: Event | DragEvent): void {
-    if (props.disabled) return;
-    if (props.dragDrop) updateDragDropFocus(false);
-    const value =
-        (event.target as HTMLInputElement).files ||
-        (event as DragEvent).dataTransfer?.files ||
-        [];
-    // no file selected
-    if (value.length === 0) {
-        if (!vmodel.value) return;
-        if (props.native) vmodel.value = undefined;
-    }
+  if (props.disabled) return;
+  if (props.dragDrop) updateDragDropFocus(false);
+  const value =
+    (event.target as HTMLInputElement).files ||
+    (event as DragEvent).dataTransfer?.files ||
+    [];
+  // no file selected
+  if (value.length === 0) {
+    if (!vmodel.value) return;
+    if (props.native) vmodel.value = undefined;
+  }
 
-    // multiple upload
-    if (isTrueish(props.multiple)) {
-        // always new values if native or undefined local
-        const values =
-            props.native || !vmodel.value || !Array.isArray(vmodel.value)
-                ? []
-                : [...vmodel.value];
+  // multiple upload
+  if (isTrueish(props.multiple)) {
+    // always new values if native or undefined local
+    const values =
+      props.native || !vmodel.value || !Array.isArray(vmodel.value)
+        ? []
+        : [...vmodel.value];
 
-        for (let i = 0; i < value.length; i++) {
-            const file = value[i];
-            // add file when type is valid
-            if (checkType(file)) values.push(file);
-        }
-        vmodel.value = values as ModelValue;
+    for (let i = 0; i < value.length; i++) {
+      const file = value[i];
+      // add file when type is valid
+      if (checkType(file)) values.push(file);
     }
-    // single uplaod
+    vmodel.value = values as ModelValue;
+  // single uplaod
+  } else {
+    // only one element in case drag drop mode and isn't multiple
+    if (props.dragDrop && value.length !== 1) return;
     else {
-        // only one element in case drag drop mode and isn't multiple
-        if (props.dragDrop && value.length !== 1) return;
-        else {
-            const file = value[0];
-            // add file when type is valid
-            if (checkType(file)) vmodel.value = file as ModelValue;
-            // else clear input
-            else if (vmodel.value) {
-                vmodel.value = undefined;
-                clearInput();
-            } else {
-                // Force input back to empty state and recheck validity
-                clearInput();
-                checkHtml5Validity();
-                return;
-            }
-        }
+      const file = value[0];
+      // add file when type is valid
+      if (checkType(file)) vmodel.value = file as ModelValue;
+      // else clear input
+      else if (vmodel.value) {
+        vmodel.value = undefined;
+        clearInput();
+      } else {
+        // Force input back to empty state and recheck validity
+        clearInput();
+        checkHtml5Validity();
+        return;
+      }
     }
+  }
 
-    if (!props.dragDrop) checkHtml5Validity();
+  if (!props.dragDrop) checkHtml5Validity();
 }
 
 /** Reset file input value */
 function clearInput(): void {
-    if (inputRef.value) inputRef.value.value = "";
+  if (inputRef.value) inputRef.value.value = "";
 }
 
 /** Listen drag-drop to update internal variable */
 function updateDragDropFocus(focus: boolean): void {
-    if (!props.disabled) dragDropFocus.value = focus;
+  if (!props.disabled) dragDropFocus.value = focus;
 }
 
-/** Check mime type of file s*/
+/** Check mime type of file s */
 function checkType(file: File): boolean {
-    if (!props.accept) return true;
-    const types = props.accept.split(",");
-    if (types.length === 0) return true;
-    for (let i = 0; i < types.length; i++) {
-        const type = types[i].trim();
-        if (type) {
-            if (type.substring(0, 1) === ".") {
-                const extension = file.name.toLowerCase().slice(-type.length);
-                if (extension === type.toLowerCase()) return true;
-            } else {
-                // check mime type
-                if (file.type.match(type)) return true;
-            }
-        }
+  if (!props.accept) return true;
+  const types = props.accept.split(",");
+  if (types.length === 0) return true;
+  for (let i = 0; i < types.length; i++) {
+    const type = types[i].trim();
+    if (type) {
+      if (type.substring(0, 1) === ".") {
+        const extension = file.name.toLowerCase().slice(-type.length);
+        if (extension === type.toLowerCase()) return true;
+      } else {
+        // check mime type
+        if (file.type.match(type)) return true;
+      }
     }
-    return false;
+  }
+  return false;
 }
 
 function onClick(event: Event): void {
-    if (props.disabled) return;
+  if (props.disabled) return;
 
-    // click input if not drag and drop is used
-    if (!props.dragDrop) {
-        event.preventDefault();
-        if (inputRef.value) inputRef.value.click();
-    }
+  // click input if not drag and drop is used
+  if (!props.dragDrop) {
+    event.preventDefault();
+    if (inputRef.value) inputRef.value.click();
+  }
 }
 
 // --- Computed Component Classes ---
@@ -200,40 +199,40 @@ function onClick(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+  ...parentField?.value?.inputAttrs,
+  ...attrs,
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-upload"],
-    [
-        "expandedClass",
-        "o-upload--expanded",
-        null,
-        computed(() => props.expanded),
-    ],
-    [
-        "disabledClass",
-        "o-upload--disabled",
-        null,
-        computed(() => props.disabled),
-    ],
-    [
-        "variantClass",
-        "o-upload--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
+  ["rootClass", "o-upload"],
+  [
+    "expandedClass",
+    "o-upload--expanded",
+    null,
+    computed(() => props.expanded),
+  ],
+  [
+    "disabledClass",
+    "o-upload--disabled",
+    null,
+    computed(() => props.disabled),
+  ],
+  [
+    "variantClass",
+    "o-upload--",
+    computed(() => props.variant),
+    computed(() => !!props.variant),
+  ],
 );
 
 const draggableClasses = defineClasses(
-    ["draggableClass", "o-upload__draggable"],
-    [
-        "draggableHoveredClass",
-        "o-upload__draggable--hovered",
-        null,
-        computed(() => dragDropFocus.value),
-    ],
+  ["draggableClass", "o-upload__draggable"],
+  [
+    "draggableHoveredClass",
+    "o-upload__draggable--hovered",
+    null,
+    computed(() => dragDropFocus.value),
+  ],
 );
 
 // --- Expose Public Functionalities ---
@@ -243,36 +242,36 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <label data-oruga="upload" :class="rootClasses">
-        <template v-if="!dragDrop">
-            <slot :onclick="onClick" />
-        </template>
+  <label data-oruga="upload" :class="rootClasses">
+    <template v-if="!dragDrop">
+      <slot :onclick="onClick" />
+    </template>
 
-        <div
-            v-else
-            :class="draggableClasses"
-            role="button"
-            tabindex="0"
-            @mouseenter="updateDragDropFocus(true)"
-            @mouseleave="updateDragDropFocus(false)"
-            @dragover.prevent="updateDragDropFocus(true)"
-            @dragleave.prevent="updateDragDropFocus(false)"
-            @dragenter.prevent="updateDragDropFocus(true)"
-            @drop.prevent="onFileChange">
-            <slot :onclick="onClick" />
-        </div>
+    <div
+      v-else
+      :class="draggableClasses"
+      role="button"
+      tabindex="0"
+      @mouseenter="updateDragDropFocus(true)"
+      @mouseleave="updateDragDropFocus(false)"
+      @dragover.prevent="updateDragDropFocus(true)"
+      @dragleave.prevent="updateDragDropFocus(false)"
+      @dragenter.prevent="updateDragDropFocus(true)"
+      @drop.prevent="onFileChange">
+      <slot :onclick="onClick" />
+    </div>
 
-        <input
-            v-bind="inputBind"
-            ref="inputElement"
-            type="file"
-            data-oruga-input="file"
-            :multiple="props.multiple"
-            :accept="accept"
-            :disabled="disabled"
-            @change="onFileChange"
-            @focus="onFocus"
-            @blur="onBlur"
-            @invalid="onInvalid" />
-    </label>
+    <input
+      v-bind="inputBind"
+      ref="inputElement"
+      type="file"
+      data-oruga-input="file"
+      :multiple="props.multiple"
+      :accept="accept"
+      :disabled="disabled"
+      @change="onFileChange"
+      @focus="onFocus"
+      @blur="onBlur"
+      @invalid="onInvalid">
+  </label>
 </template>

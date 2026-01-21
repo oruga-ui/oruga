@@ -15,26 +15,26 @@ const showcaseWrapper = useTemplateRef<HTMLElement>("showcaseRef");
 const shadowRoot = computed(() => showcaseWrapper.value?.shadowRoot);
 
 watch(
-    shadowRoot,
-    (target) => {
-        if (!target) return;
-        const oruga = useOruga();
-        oruga.config.setOption("teleportTarget", target);
-    },
-    { immediate: true },
+  shadowRoot,
+  (target) => {
+    if (!target) return;
+    const oruga = useOruga();
+    oruga.config.setOption("teleportTarget", target);
+  },
+  { immediate: true },
 );
 </script>
 
 <template>
-    <Layout :class="theme?.key">
-        <template #nav-bar-content-before>
-            <ThemeSelector v-if="hasSidebar" v-model:theme="theme" />
-        </template>
-    </Layout>
+  <Layout :class="theme?.key">
+    <template #nav-bar-content-before>
+      <ThemeSelector v-if="hasSidebar" v-model:theme="theme" />
+    </template>
+  </Layout>
 
-    <!-- web components cannot be rendered in server side -->
-    <ClientOnly>
-        <!-- shadow root web component container for programmatic examples -->
-        <example-showcase ref="showcaseRef" />
-    </ClientOnly>
+  <!-- web components cannot be rendered in server side -->
+  <ClientOnly>
+    <!-- shadow root web component container for programmatic examples -->
+    <example-showcase ref="showcaseRef" />
+  </ClientOnly>
 </template>

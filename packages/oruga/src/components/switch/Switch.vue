@@ -14,80 +14,80 @@ import type { SwitchProps } from "./props";
  * @style _switch.scss
  */
 defineOptions({
-    isOruga: true,
-    name: "OSwitch",
-    configField: "switch",
-    inheritAttrs: false,
+  isOruga: true,
+  name: "OSwitch",
+  configField: "switch",
+  inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<SwitchProps<T>>(), {
-    override: undefined,
-    modelValue: undefined,
-    id: () => useId(),
-    label: undefined,
-    variant: () => getDefault("switch.variant"),
-    passiveVariant: () => getDefault("switch.passiveVariant"),
-    size: () => getDefault("switch.size"),
-    position: () => getDefault("switch.right", "position"),
-    rounded: () => getDefault("switch.rounded", true),
-    required: false,
-    disabled: false,
-    name: undefined,
-    nativeValue: undefined,
-    trueValue: undefined,
-    falseValue: undefined,
-    autocomplete: () => getDefault("switch.autocomplete", "off"),
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
+  override: undefined,
+  modelValue: undefined,
+  id: () => useId(),
+  label: undefined,
+  variant: () => getDefault("switch.variant"),
+  passiveVariant: () => getDefault("switch.passiveVariant"),
+  size: () => getDefault("switch.size"),
+  position: () => getDefault("switch.right", "position"),
+  rounded: () => getDefault("switch.rounded", true),
+  required: false,
+  disabled: false,
+  name: undefined,
+  nativeValue: undefined,
+  trueValue: undefined,
+  falseValue: undefined,
+  autocomplete: () => getDefault("switch.autocomplete", "off"),
+  useHtml5Validation: () => getDefault("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{
-    /**
-     * modelValue prop two-way binding
-     * @param value {unknown} - updated modelValue prop
-     */
-    "update:model-value": [value: T];
-    /**
-     * on input change event
-     * @param value {unknown} - input value
-     * @param event {Event} - native event
-     */
-    input: [value: T, event: Event];
-    /**
-     * on input focus event
-     * @param event {Event} - native event
-     */
-    focus: [event: Event];
-    /**
-     * on input blur event
-     * @param event {Event} - native event
-     */
-    blur: [event: Event];
-    /**
-     * on input invalid event
-     * @param event {Event} - native event
-     */
-    invalid: [event: Event];
+  /**
+   * modelValue prop two-way binding
+   * @param value {unknown} - updated modelValue prop
+   */
+  "update:model-value": [value: T];
+  /**
+   * on input change event
+   * @param value {unknown} - input value
+   * @param event {Event} - native event
+   */
+  input: [value: T, event: Event];
+  /**
+   * on input focus event
+   * @param event {Event} - native event
+   */
+  focus: [event: Event];
+  /**
+   * on input blur event
+   * @param event {Event} - native event
+   */
+  blur: [event: Event];
+  /**
+   * on input invalid event
+   * @param event {Event} - native event
+   */
+  invalid: [event: Event];
 }>();
 
 defineSlots<{
-    /** Override the label, default is label prop */
-    default?(): void;
+  /** Override the label, default is label prop */
+  default?(): void;
 }>();
 
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
 const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
-    useInputHandler(inputRef, emits, props);
+  useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId =
-    !!parentField.value || !!props.label || !!useSlots().default
-        ? parentField.value?.labelId || useId()
-        : undefined;
+  !!parentField.value || !!props.label || !!useSlots().default
+    ? parentField.value?.labelId || useId()
+    : undefined;
 
 // if no `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField.value?.setInputId(props.id);
@@ -95,14 +95,14 @@ if (!props.label && props.id) parentField.value?.setInputId(props.id);
 const vmodel = defineModel<T>({ default: undefined });
 
 const isChecked = computed(
-    () =>
-        vmodel.value === (props.trueValue ?? true) ||
-        (Array.isArray(vmodel.value) &&
-            vmodel.value.includes(props.nativeValue)),
+  () =>
+    vmodel.value === (props.trueValue ?? true) ||
+    (Array.isArray(vmodel.value) &&
+      vmodel.value.includes(props.nativeValue)),
 );
 
 function onInput(event: Event): void {
-    emits("input", vmodel.value, event);
+  emits("input", vmodel.value, event);
 }
 
 // --- Computed Component Classes ---
@@ -110,44 +110,44 @@ function onInput(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField.value?.inputAttrs,
-    ...attrs,
+  ...parentField.value?.inputAttrs,
+  ...attrs,
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-switch"],
-    [
-        "sizeClass",
-        "o-switch--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-    [
-        "variantClass",
-        "o-switch--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
-    [
-        "passiveVariantClass",
-        "o-switch--",
-        computed(() => props.passiveVariant + "-passive"),
-        computed(() => !!props.passiveVariant),
-    ],
-    [
-        "positionClass",
-        "o-switch--",
-        computed(() => props.position),
-        computed(() => !!props.position),
-    ],
-    [
-        "disabledClass",
-        "o-switch--disabled",
-        null,
-        computed(() => props.disabled),
-    ],
-    ["roundedClass", "o-switch--rounded", null, computed(() => props.rounded)],
-    ["checkedClass", "o-switch--checked", null, isChecked],
+  ["rootClass", "o-switch"],
+  [
+    "sizeClass",
+    "o-switch--",
+    computed(() => props.size),
+    computed(() => !!props.size),
+  ],
+  [
+    "variantClass",
+    "o-switch--",
+    computed(() => props.variant),
+    computed(() => !!props.variant),
+  ],
+  [
+    "passiveVariantClass",
+    "o-switch--",
+    computed(() => props.passiveVariant + "-passive"),
+    computed(() => !!props.passiveVariant),
+  ],
+  [
+    "positionClass",
+    "o-switch--",
+    computed(() => props.position),
+    computed(() => !!props.position),
+  ],
+  [
+    "disabledClass",
+    "o-switch--disabled",
+    null,
+    computed(() => props.disabled),
+  ],
+  ["roundedClass", "o-switch--rounded", null, computed(() => props.rounded)],
+  ["checkedClass", "o-switch--checked", null, isChecked],
 );
 
 const inputClasses = defineClasses(["inputClass", "o-switch__input"]);
@@ -161,36 +161,36 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div data-oruga="switch" :class="rootClasses">
-        <input
-            v-bind="inputBind"
-            :id="id"
-            ref="inputElement"
-            v-model="vmodel"
-            type="checkbox"
-            role="switch"
-            data-oruga-input="switch"
-            :class="inputClasses"
-            :name="name"
-            :value="nativeValue"
-            :true-value="trueValue ?? true"
-            :false-value="falseValue ?? false"
-            :required="required"
-            :disabled="disabled"
-            :autocomplete="autocomplete"
-            :aria-checked="isChecked"
-            :aria-labelledby="labelId"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid"
-            @change="onInput" />
+  <div data-oruga="switch" :class="rootClasses">
+    <input
+      v-bind="inputBind"
+      :id="id"
+      ref="inputElement"
+      v-model="vmodel"
+      type="checkbox"
+      role="switch"
+      data-oruga-input="switch"
+      :class="inputClasses"
+      :name="name"
+      :value="nativeValue"
+      :true-value="trueValue ?? true"
+      :false-value="falseValue ?? false"
+      :required="required"
+      :disabled="disabled"
+      :autocomplete="autocomplete"
+      :aria-checked="isChecked"
+      :aria-labelledby="labelId"
+      @blur="onBlur"
+      @focus="onFocus"
+      @invalid="onInvalid"
+      @change="onInput">
 
-        <label
-            v-if="label || $slots.default"
-            :id="labelId"
-            :for="id"
-            :class="labelClasses">
-            <slot>{{ label }}</slot>
-        </label>
-    </div>
+    <label
+      v-if="label || $slots.default"
+      :id="labelId"
+      :for="id"
+      :class="labelClasses">
+      <slot>{{ label }}</slot>
+    </label>
+  </div>
 </template>

@@ -6,234 +6,234 @@ import InstanceRegistry from "../InstanceRegistry";
 import useProgrammaticComponent from "../useProgrammatic";
 
 describe("useProgrammatic tests", () => {
-    // create a new factory
-    const factory = useProgrammaticComponent();
+  // create a new factory
+  const factory = useProgrammaticComponent();
 
-    beforeEach(() => {
-        vi.useFakeTimers();
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    // clear body after each test
+    document.body.innerHTML = "";
+    vi.useRealTimers();
+
+    // clear factory items
+    factory.closeAll();
+    flushPromises(); // await promise finished
+  });
+
+  enableAutoUnmount(afterEach);
+
+  test("test mounting component correctly", async () => {
+    const component = createVNode({
+      template: '<button id="mycomp"></button>',
     });
 
-    afterEach(() => {
-        // clear body after each test
-        document.body.innerHTML = "";
-        vi.useRealTimers();
+    // open element
+    const { close, promise } = factory.open(component);
 
-        // clear factory items
-        factory.closeAll();
-        flushPromises(); // await promise finished
+    // check promise get called
+    const handler = vi.fn();
+    promise.then(() => handler());
+    expect(handler).not.toHaveBeenCalled();
+
+    // check element exist
+    let el = document.body.querySelector("#mycomp");
+    expect(el).not.toBeNull();
+
+    // close element through handler
+    close();
+    vi.runAllTimers();
+
+    // check element does not exist
+    el = document.body.querySelector("#mycomp");
+    expect(el).toBeNull();
+
+    await flushPromises(); // await promise finished
+    expect(handler).toHaveBeenCalledOnce();
+  });
+
+  test("test mounting with target correctly", async () => {
+    const container = document.createElement("div");
+    container.id = "my-cool-container";
+    document.body.appendChild(container);
+
+    const component = createVNode({
+      template: '<button id="mycomp"></button>',
     });
 
-    enableAutoUnmount(afterEach);
+    // open element
+    const { close } = factory.open(component, {}, "#my-cool-container");
 
-    test("test mounting component correctly", async () => {
-        const component = createVNode({
-            template: `<button id="mycomp"></button>`,
-        });
+    // check element exist
+    let el = document.body.querySelector("#mycomp");
+    expect(el).not.toBeNull();
 
-        // open element
-        const { close, promise } = factory.open(component);
+    let bodyElements = document.body.querySelectorAll("body > *");
+    expect(bodyElements).toHaveLength(1);
 
-        // check promise get called
-        const handler = vi.fn();
-        promise.then(() => handler());
-        expect(handler).not.toHaveBeenCalled();
+    // close element through handler
+    close();
+    vi.runAllTimers();
 
-        // check element exist
-        let el = document.body.querySelector("#mycomp");
-        expect(el).not.toBeNull();
+    // check element does not exist
+    el = document.body.querySelector("#mycomp");
+    expect(el).toBeNull();
 
-        // close element through handler
-        close();
-        vi.runAllTimers();
+    // check container still exists
+    bodyElements = document.body.querySelectorAll("body > *");
+    expect(bodyElements).toHaveLength(1);
+  });
 
-        // check element does not exist
-        el = document.body.querySelector("#mycomp");
-        expect(el).toBeNull();
-
-        await flushPromises(); // await promise finished
-        expect(handler).toHaveBeenCalledOnce();
+  test("test close event working correctly", async () => {
+    const component = createVNode({
+      template: "<button id=\"mycomp\" @click=\"$emit('close', 'abc')\"></button>",
     });
 
-    test("test mounting with target correctly", async () => {
-        const container = document.createElement("div");
-        container.id = "my-cool-container";
-        document.body.appendChild(container);
+    const onClose = vi.fn();
 
-        const component = createVNode({
-            template: `<button id="mycomp"></button>`,
-        });
+    // open element
+    factory.open(component, { onClose });
 
-        // open element
-        const { close } = factory.open(component, {}, "#my-cool-container");
+    // check element exist
+    let el = document.body.querySelector("button");
+    expect(el).not.toBeNull();
 
-        // check element exist
-        let el = document.body.querySelector("#mycomp");
-        expect(el).not.toBeNull();
+    // close element through click
+    el?.click();
+    vi.runAllTimers();
 
-        let bodyElements = document.body.querySelectorAll("body > *");
-        expect(bodyElements).toHaveLength(1);
+    // check element does not exist
+    el = document.body.querySelector("button");
+    expect(el).toBeNull();
 
-        // close element through handler
-        close();
-        vi.runAllTimers();
+    expect(onClose).toHaveBeenCalledOnce();
+  });
 
-        // check element does not exist
-        el = document.body.querySelector("#mycomp");
-        expect(el).toBeNull();
-
-        // check container still exists
-        bodyElements = document.body.querySelectorAll("body > *");
-        expect(bodyElements).toHaveLength(1);
+  test("test props working correctly", async () => {
+    const component = createVNode({
+      template: '<button id="mycomp"></button>',
     });
 
-    test("test close event working correctly", async () => {
-        const component = createVNode({
-            template: `<button id="mycomp" @click="$emit('close', 'abc')"></button>`,
-        });
-
-        const onClose = vi.fn();
-
-        // open element
-        factory.open(component, { onClose });
-
-        // check element exist
-        let el = document.body.querySelector("button");
-        expect(el).not.toBeNull();
-
-        // close element through click
-        el?.click();
-        vi.runAllTimers();
-
-        // check element does not exist
-        el = document.body.querySelector("button");
-        expect(el).toBeNull();
-
-        expect(onClose).toHaveBeenCalledOnce();
+    // open element
+    const { close } = factory.open(component, {
+      props: { "data-oruga": "programmatic" },
     });
 
-    test("test props working correctly", async () => {
-        const component = createVNode({
-            template: `<button id="mycomp"></button>`,
-        });
+    // check element exist
 
-        // open element
-        const { close } = factory.open(component, {
-            props: { "data-oruga": "programmatic" },
-        });
+    let el = document.body.querySelector<HTMLButtonElement>(
+      '[data-oruga="programmatic"]',
+    );
+    expect(el).not.toBeNull();
 
-        // check element exist
+    // close element through click
+    close();
+    vi.runAllTimers();
 
-        let el = document.body.querySelector<HTMLButtonElement>(
-            '[data-oruga="programmatic"]',
-        );
-        expect(el).not.toBeNull();
+    // check element does not exist
+    el = document.body.querySelector<HTMLButtonElement>(
+      '[data-oruga="programmatic"]',
+    );
+    expect(el).toBeNull();
+  });
 
-        // close element through click
-        close();
-        vi.runAllTimers();
+  test("test using custom instance registry", async () => {
+    const instanceRegistry = new InstanceRegistry();
 
-        // check element does not exist
-        el = document.body.querySelector<HTMLButtonElement>(
-            '[data-oruga="programmatic"]',
-        );
-        expect(el).toBeNull();
+    expect(instanceRegistry.entries).toHaveLength(0);
+
+    const { close } = factory.open("div", {
+      registry: instanceRegistry,
     });
 
-    test("test using custom instance registry", async () => {
-        const instanceRegistry = new InstanceRegistry();
+    expect(instanceRegistry.entries).toHaveLength(1);
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+    close();
+    vi.runAllTimers();
 
-        const { close } = factory.open("div", {
-            registry: instanceRegistry,
-        });
+    expect(instanceRegistry.entries).toHaveLength(0);
+  });
 
-        expect(instanceRegistry.entries).toHaveLength(1);
+  test("test closeAll is working correctly", async () => {
+    const root = document.createElement("div");
 
-        close();
-        vi.runAllTimers();
+    // open elements
+    factory.open("div", {}, root);
+    factory.open("div", {}, root);
 
-        expect(instanceRegistry.entries).toHaveLength(0);
-    });
+    expect(factory.count()).toBe(2);
 
-    test("test closeAll is working correctly", async () => {
-        const root = document.createElement("div");
+    let apps = root.querySelectorAll("#programmatic-app");
+    expect(apps).toHaveLength(2);
 
-        // open elements
-        factory.open("div", {}, root);
-        factory.open("div", {}, root);
+    // close all elements
+    factory.closeAll();
+    vi.runAllTimers();
 
-        expect(factory.count()).toBe(2);
+    expect(factory.count()).toBe(0);
 
-        let apps = root.querySelectorAll("#programmatic-app");
-        expect(apps).toHaveLength(2);
+    // check elements are removed
+    apps = root.querySelectorAll("#programmatic-app");
+    expect(apps).toHaveLength(0);
+  });
 
-        // close all elements
-        factory.closeAll();
-        vi.runAllTimers();
+  test("test close last is working correctly", async () => {
+    // open elements
+    factory.open("div");
+    factory.open("div");
 
-        expect(factory.count()).toBe(0);
+    expect(factory.count()).toBe(2);
 
-        // check elements are removed
-        apps = root.querySelectorAll("#programmatic-app");
-        expect(apps).toHaveLength(0);
-    });
+    let bodyElements = document.body.querySelectorAll("#programmatic-app");
+    expect(bodyElements).toHaveLength(2);
 
-    test("test close last is working correctly", async () => {
-        // open elements
-        factory.open("div");
-        factory.open("div");
+    // close last element
+    factory.close();
+    vi.runAllTimers();
 
-        expect(factory.count()).toBe(2);
+    expect(factory.count()).toBe(1);
 
-        let bodyElements = document.body.querySelectorAll("#programmatic-app");
-        expect(bodyElements).toHaveLength(2);
+    bodyElements = document.body.querySelectorAll("#programmatic-app");
+    expect(bodyElements).toHaveLength(1);
 
-        // close last element
-        factory.close();
-        vi.runAllTimers();
+    // close last element
+    factory.close();
+    vi.runAllTimers();
 
-        expect(factory.count()).toBe(1);
+    expect(factory.count()).toBe(0);
 
-        bodyElements = document.body.querySelectorAll("#programmatic-app");
-        expect(bodyElements).toHaveLength(1);
+    bodyElements = document.body.querySelectorAll("#programmatic-app");
+    expect(bodyElements).toHaveLength(0);
+  });
 
-        // close last element
-        factory.close();
-        vi.runAllTimers();
+  test("test render slot correctly", async () => {
+    // create inner slot element
+    const slot = h("p", { "data-oruga": "inner-slot" }, "HELP");
 
-        expect(factory.count()).toBe(0);
+    const component = createVNode(
+      { template: '<button id="mycomp"><slot /></button>' },
+      null,
+      () => slot,
+    );
 
-        bodyElements = document.body.querySelectorAll("#programmatic-app");
-        expect(bodyElements).toHaveLength(0);
-    });
+    // open elements
+    const { close } = factory.open(component);
 
-    test("test render slot correctly", async () => {
-        // create inner slot element
-        const slot = h("p", { "data-oruga": "inner-slot" }, "HELP");
+    // check element exist
+    const button = document.body.querySelector("button");
+    expect(button).not.toBeNull();
 
-        const component = createVNode(
-            { template: `<button id="mycomp"><slot /></button>` },
-            null,
-            () => slot,
-        );
+    // check if slot element exist
+    expect(button?.innerHTML).toBe('<p data-oruga="inner-slot">HELP</p>');
+    const innerSlot = document.body.querySelector(
+      '[data-oruga="inner-slot"]',
+    );
+    expect(innerSlot).not.toBeNull();
 
-        // open elements
-        const { close } = factory.open(component);
-
-        // check element exist
-        const button = document.body.querySelector("button");
-        expect(button).not.toBeNull();
-
-        // check if slot element exist
-        expect(button?.innerHTML).toBe(`<p data-oruga="inner-slot">HELP</p>`);
-        const innerSlot = document.body.querySelector(
-            '[data-oruga="inner-slot"]',
-        );
-        expect(innerSlot).not.toBeNull();
-
-        // close element
-        close();
-        vi.runAllTimers();
-    });
+    // close element
+    close();
+    vi.runAllTimers();
+  });
 });

@@ -1,8 +1,8 @@
 import { type MaybeRefOrGetter } from "vue";
 import {
-    useEventListener,
-    type EventTarget,
-    type EventListenerOptions,
+  useEventListener,
+  type EventTarget,
+  type EventListenerOptions,
 } from "./useEventListener";
 import { unrefElement } from "./unrefElement";
 
@@ -16,51 +16,51 @@ import { unrefElement } from "./unrefElement";
  * @return stop function
  */
 export function useClickOutside(
-    elements:
-        | MaybeRefOrGetter<EventTarget>
-        | string
-        | (MaybeRefOrGetter<EventTarget> | string)[],
-    handler: (evt: PointerEvent) => void,
-    options?: EventListenerOptions,
+  elements:
+    | MaybeRefOrGetter<EventTarget>
+    | string
+    | (MaybeRefOrGetter<EventTarget> | string)[],
+  handler: (evt: PointerEvent) => void,
+  options?: EventListenerOptions,
 ): () => void {
-    if (!window) return () => {};
+  if (!window) return () => {};
 
-    // set default options
-    const listenerOptions = Object.assign({ ignore: [] }, options);
+  // set default options
+  const listenerOptions = Object.assign({ ignore: [] }, options);
 
-    // convert elements to ignore list
-    const ignores = Array.isArray(elements) ? elements : [elements];
+  // convert elements to ignore list
+  const ignores = Array.isArray(elements) ? elements : [elements];
 
-    /**
-     * White-listed items that not emit event when clicked.
-     * All children from ignore prop.
-     */
-    const shouldIgnore = (event: PointerEvent): boolean => {
-        return ignores.some((target) => {
-            if (typeof target === "string") {
-                return Array.from(
-                    window.document.querySelectorAll(target),
-                ).some(
-                    (el) =>
-                        el === event.target ||
-                        event.composedPath().includes(el),
-                );
-            } else {
-                const el = unrefElement(target);
-                return (
-                    el &&
-                    (event.target === el || event.composedPath().includes(el))
-                );
-            }
-        });
-    };
+  /**
+   * White-listed items that not emit event when clicked.
+   * All children from ignore prop.
+   */
+  const shouldIgnore = (event: PointerEvent): boolean => {
+    return ignores.some((target) => {
+      if (typeof target === "string") {
+        return Array.from(
+          window.document.querySelectorAll(target),
+        ).some(
+          (el) =>
+            el === event.target ||
+            event.composedPath().includes(el),
+        );
+      } else {
+        const el = unrefElement(target);
+        return (
+          el &&
+          (event.target === el || event.composedPath().includes(el))
+        );
+      }
+    });
+  };
 
-    function listener(event: PointerEvent): void {
-        if (shouldIgnore(event)) return;
-        handler(event);
-    }
+  function listener(event: PointerEvent): void {
+    if (shouldIgnore(event)) return;
+    handler(event);
+  }
 
-    const stop = useEventListener(window, "click", listener, listenerOptions);
+  const stop = useEventListener(window, "click", listener, listenerOptions);
 
-    return stop;
+  return stop;
 }

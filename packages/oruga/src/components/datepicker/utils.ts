@@ -1,10 +1,10 @@
 type MonthType =
-    | "numeric"
-    | "2-digit"
-    | "long"
-    | "short"
-    | "narrow"
-    | undefined;
+  | "numeric"
+  | "2-digit"
+  | "long"
+  | "short"
+  | "narrow"
+  | undefined;
 
 /**
  * Return month names according to a specified locale
@@ -13,17 +13,17 @@ type MonthType =
  * @return {Array<String>} An array of month names
  */
 export function getMonthNames(
-    locale?: string,
-    format: MonthType = "long",
+  locale?: string,
+  format: MonthType = "long",
 ): string[] {
-    const dates: Date[] = [];
-    for (let i = 0; i < 12; i++) {
-        dates.push(new Date(2000, i, 15));
-    }
-    const dtf = new Intl.DateTimeFormat(locale, {
-        month: format,
-    });
-    return dates.map((d) => dtf.format(d));
+  const dates: Date[] = [];
+  for (let i = 0; i < 12; i++) {
+    dates.push(new Date(2000, i, 15));
+  }
+  const dtf = new Intl.DateTimeFormat(locale, {
+    month: format,
+  });
+  return dates.map((d) => dtf.format(d));
 }
 
 type WeekdayType = "long" | "short" | "narrow" | undefined;
@@ -36,23 +36,23 @@ type WeekdayType = "long" | "short" | "narrow" | undefined;
  * @return {Array<String>} An array of weekday names
  */
 export function getWeekdayNames(
-    locale?: string,
-    firstDayOfWeek: number = 0,
-    format: WeekdayType = "narrow",
+  locale?: string,
+  firstDayOfWeek: number = 0,
+  format: WeekdayType = "narrow",
 ): string[] {
-    const dates: Date[] = [];
-    for (let i = 1, j = 0; j < 7; i++) {
-        const d = new Date(2000, 0, i);
-        const day = d.getDay();
-        if (day === firstDayOfWeek || j > 0) {
-            dates.push(d);
-            j++;
-        }
+  const dates: Date[] = [];
+  for (let i = 1, j = 0; j < 7; i++) {
+    const d = new Date(2000, 0, i);
+    const day = d.getDay();
+    if (day === firstDayOfWeek || j > 0) {
+      dates.push(d);
+      j++;
     }
-    const dtf = new Intl.DateTimeFormat(locale, {
-        weekday: format,
-    });
-    return dates.map((d) => dtf.format(d));
+  }
+  const dtf = new Intl.DateTimeFormat(locale, {
+    weekday: format,
+  });
+  return dates.map((d) => dtf.format(d));
 }
 
 /**
@@ -64,93 +64,93 @@ export function getWeekdayNames(
  * @return {Object} an object with a property for each group having the group's match as the value
  */
 export function matchWithGroups(pattern: string, str: string): any {
-    const matches = str.match(pattern);
-    return (
-        // get the pattern as a string
-        pattern
-            .toString()
-            // suss out the groups
-            .match(/<(.+?)>/g)
-            // remove the braces
-            ?.map((group) => {
-                const groupMatches = group.match(/<(.+)>/);
-                if (!groupMatches || groupMatches.length <= 0) {
-                    return null;
-                }
-                const match = group.match(/<(.+)>/);
-                return match && match?.length > 1 ? match[1] : null;
-            })
-            // create an object with a property for each group having the group's match as the value
-            .reduce((acc, curr, index) => {
-                if (curr === null) return acc;
-                if (matches && matches.length > index) {
-                    acc[curr] = matches[index + 1];
-                } else {
-                    acc[curr] = null;
-                }
-                return acc;
-            }, {} as any)
-    );
+  const matches = str.match(pattern);
+  return (
+    // get the pattern as a string
+    pattern
+      .toString()
+      // suss out the groups
+      .match(/<(.+?)>/g)
+      // remove the braces
+      ?.map((group) => {
+        const groupMatches = group.match(/<(.+)>/);
+        if (!groupMatches || groupMatches.length <= 0) {
+          return null;
+        }
+        const match = group.match(/<(.+)>/);
+        return match && match?.length > 1 ? match[1] : null;
+      })
+      // create an object with a property for each group having the group's match as the value
+      .reduce((acc, curr, index) => {
+        if (curr === null) return acc;
+        if (matches && matches.length > index) {
+          acc[curr] = matches[index + 1];
+        } else {
+          acc[curr] = null;
+        }
+        return acc;
+      }, {} as any)
+  );
 }
 
 /** Return array of all days in the week that the startingDate is within */
 export function weekBuilder(
-    startingDate: number,
-    month: number,
-    year: number,
-    firstDayOfWeek: number,
+  startingDate: number,
+  month: number,
+  year: number,
+  firstDayOfWeek: number,
 ): Date[] {
-    const thisMonth = new Date(year, month);
+  const thisMonth = new Date(year, month);
 
-    const thisWeek: Date[] = [];
+  const thisWeek: Date[] = [];
 
-    const dayOfWeek = new Date(year, month, startingDate).getDay();
+  const dayOfWeek = new Date(year, month, startingDate).getDay();
 
-    const end =
-        dayOfWeek >= firstDayOfWeek
-            ? dayOfWeek - firstDayOfWeek
-            : 7 - firstDayOfWeek + dayOfWeek;
+  const end =
+    dayOfWeek >= firstDayOfWeek
+      ? dayOfWeek - firstDayOfWeek
+      : 7 - firstDayOfWeek + dayOfWeek;
 
-    let daysAgo = 1;
-    for (let i = 0; i < end; i++) {
-        thisWeek.unshift(
-            new Date(
-                thisMonth.getFullYear(),
-                thisMonth.getMonth(),
-                startingDate - daysAgo,
-            ),
-        );
-        daysAgo++;
-    }
+  let daysAgo = 1;
+  for (let i = 0; i < end; i++) {
+    thisWeek.unshift(
+      new Date(
+        thisMonth.getFullYear(),
+        thisMonth.getMonth(),
+        startingDate - daysAgo,
+      ),
+    );
+    daysAgo++;
+  }
 
-    thisWeek.push(new Date(year, month, startingDate));
+  thisWeek.push(new Date(year, month, startingDate));
 
-    let daysForward = 1;
-    while (thisWeek.length < 7) {
-        thisWeek.push(new Date(year, month, startingDate + daysForward));
-        daysForward++;
-    }
+  let daysForward = 1;
+  while (thisWeek.length < 7) {
+    thisWeek.push(new Date(year, month, startingDate + daysForward));
+    daysForward++;
+  }
 
-    return thisWeek;
+  return thisWeek;
 }
 
 export function firstWeekOffset(year, dow, doy): number {
-    // first-week day -- which january is always in the first week (4 for iso, 1 for other)
-    const fwd = 7 + dow - doy;
-    // first-week day local weekday -- which local weekday is fwd
-    const firstJanuary = new Date(year, 0, fwd);
-    const fwdlw = (7 + firstJanuary.getDay() - dow) % 7;
-    return -fwdlw + fwd - 1;
+  // first-week day -- which january is always in the first week (4 for iso, 1 for other)
+  const fwd = 7 + dow - doy;
+  // first-week day local weekday -- which local weekday is fwd
+  const firstJanuary = new Date(year, 0, fwd);
+  const fwdlw = (7 + firstJanuary.getDay() - dow) % 7;
+  return -fwdlw + fwd - 1;
 }
 
 /** Return the number of days in a specific year */
 export function daysInYear(year): number {
-    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 366 : 365;
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 366 : 365;
 }
 
 /** Return the number of weeks in a specific year */
 export function weeksInYear(year, dow, doy): number {
-    const weekOffset = firstWeekOffset(year, dow, doy);
-    const weekOffsetNext = firstWeekOffset(year + 1, dow, doy);
-    return (daysInYear(year) - weekOffset + weekOffsetNext) / 7;
+  const weekOffset = firstWeekOffset(year, dow, doy);
+  const weekOffsetNext = firstWeekOffset(year + 1, dow, doy);
+  return (daysInYear(year) - weekOffset + weekOffsetNext) / 7;
 }

@@ -10,10 +10,10 @@ export type * from "./types";
 
 /** export tabs plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Tabs);
-        registerComponent(app, TabItem);
-    },
+  install(app: App) {
+    registerComponent(app, Tabs);
+    registerComponent(app, TabItem);
+  },
 } as Plugin;
 
 /** export tabs components */

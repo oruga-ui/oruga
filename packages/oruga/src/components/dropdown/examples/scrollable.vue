@@ -3,13 +3,13 @@ import { ref } from "vue";
 
 const maxHeight = 200;
 const menus = [
-    { icon: "users", text: "People" },
-    { icon: "box", text: "Orders" },
-    { icon: "credit-card", text: "Payments" },
-    { icon: "dolly", text: "Logistics" },
-    { icon: "business-time", text: "Jobs" },
-    { icon: "shopping-cart", text: "Cart" },
-    { icon: "cog", text: "Configuration" },
+  { icon: "users", text: "People" },
+  { icon: "box", text: "Orders" },
+  { icon: "credit-card", text: "Payments" },
+  { icon: "dolly", text: "Logistics" },
+  { icon: "business-time", text: "Jobs" },
+  { icon: "shopping-cart", text: "Cart" },
+  { icon: "cog", text: "Configuration" },
 ];
 
 const isScrollable = ref(true);
@@ -17,37 +17,37 @@ const currentMenu = ref({ icon: "users", text: "People" });
 </script>
 
 <template>
-    <section>
-        <o-field>
-            <o-switch v-model="isScrollable" label="Scrollable" />
-        </o-field>
+  <section>
+    <o-field>
+      <o-switch v-model="isScrollable" label="Scrollable" />
+    </o-field>
 
-        <o-dropdown
-            v-model="currentMenu"
-            :scrollable="isScrollable"
-            :max-height="maxHeight"
-            selectable
-            check-scroll>
-            <template #trigger>
-                <o-button
-                    variant="primary"
-                    type="button"
-                    :label="currentMenu.text"
-                    :icon-left="currentMenu.icon"
-                    icon-right="caret-down" />
-            </template>
+    <o-dropdown
+      v-model="currentMenu"
+      :scrollable="isScrollable"
+      :max-height="maxHeight"
+      selectable
+      check-scroll>
+      <template #trigger>
+        <o-button
+          variant="primary"
+          type="button"
+          :label="currentMenu.text"
+          :icon-left="currentMenu.icon"
+          icon-right="caret-down" />
+      </template>
 
-            <o-dropdown-item
-                v-for="(menu, index) in menus"
-                :key="index"
-                :value="menu">
-                <div class="media">
-                    <o-icon class="media-left" :icon="menu.icon" />
-                    <div class="media-content">{{ menu.text }}</div>
-                </div>
-            </o-dropdown-item>
-        </o-dropdown>
-    </section>
+      <o-dropdown-item
+        v-for="(menu, index) in menus"
+        :key="index"
+        :value="menu">
+        <div class="media">
+          <o-icon class="media-left" :icon="menu.icon" />
+          <div class="media-content">{{ menu.text }}</div>
+        </div>
+      </o-dropdown-item>
+    </o-dropdown>
+  </section>
 </template>
 
 <style scoped>

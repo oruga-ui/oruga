@@ -1,4 +1,4 @@
 export type SliderComponent = {
-    min: number;
-    max: number;
+  min: number;
+  max: number;
 };

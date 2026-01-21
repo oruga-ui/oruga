@@ -14,94 +14,94 @@ import type { ButtonProps } from "./props";
  * @style _button.scss
  */
 defineOptions({
-    isOruga: true,
-    name: "OButton",
-    configField: "button",
+  isOruga: true,
+  name: "OButton",
+  configField: "button",
 });
 
 const props = withDefaults(defineProps<ButtonProps>(), {
-    override: undefined,
-    tag: () => getDefault("button.tag", "button"),
-    variant: () => getDefault("button.variant"),
-    size: () => getDefault("button.size"),
-    label: undefined,
-    rounded: () => getDefault("button.rounded", false),
-    expanded: false,
-    disabled: false,
-    outlined: false,
-    loading: false,
-    inverted: false,
-    type: "button",
-    iconPack: () => getDefault("button.iconPack"),
-    iconLeft: undefined,
-    iconRight: undefined,
+  override: undefined,
+  tag: () => getDefault("button.tag", "button"),
+  variant: () => getDefault("button.variant"),
+  size: () => getDefault("button.size"),
+  label: undefined,
+  rounded: () => getDefault("button.rounded", false),
+  expanded: false,
+  disabled: false,
+  outlined: false,
+  loading: false,
+  inverted: false,
+  type: "button",
+  iconPack: () => getDefault("button.iconPack"),
+  iconLeft: undefined,
+  iconRight: undefined,
 });
 
 defineEmits<{
-    /**
-     * button click event
-     * @param event {Event} - native event
-     */
-    click: [event: Event];
+  /**
+   * button click event
+   * @param event {Event} - native event
+   */
+  click: [event: Event];
 }>();
 
 defineSlots<{
-    /** Override the label, default is label prop */
-    default?(): void;
+  /** Override the label, default is label prop */
+  default?(): void;
 }>();
 
 const computedTag = computed(() =>
-    typeof props.disabled !== "undefined" && props.disabled !== false
-        ? "button"
-        : props.tag,
+  typeof props.disabled !== "undefined" && props.disabled !== false
+    ? "button"
+    : props.tag,
 );
 
 const computedNativeType = computed(() =>
-    props.tag === "button" || props.tag === "input" ? props.type : null,
+  props.tag === "button" || props.tag === "input" ? props.type : null,
 );
 
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-button"],
-    [
-        "sizeClass",
-        "o-button--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-    [
-        "variantClass",
-        "o-button--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
-    [
-        "outlinedClass",
-        "o-button--outlined",
-        null,
-        computed(() => props.outlined),
-    ],
-    [
-        "invertedClass",
-        "o-button--inverted",
-        null,
-        computed(() => props.inverted),
-    ],
-    [
-        "expandedClass",
-        "o-button--expanded",
-        null,
-        computed(() => props.expanded),
-    ],
-    ["loadingClass", "o-button--loading", null, computed(() => props.loading)],
-    ["roundedClass", "o-button--rounded", null, computed(() => props.rounded)],
-    [
-        "disabledClass",
-        "o-button--disabled",
-        null,
-        computed(() => props.disabled),
-    ],
+  ["rootClass", "o-button"],
+  [
+    "sizeClass",
+    "o-button--",
+    computed(() => props.size),
+    computed(() => !!props.size),
+  ],
+  [
+    "variantClass",
+    "o-button--",
+    computed(() => props.variant),
+    computed(() => !!props.variant),
+  ],
+  [
+    "outlinedClass",
+    "o-button--outlined",
+    null,
+    computed(() => props.outlined),
+  ],
+  [
+    "invertedClass",
+    "o-button--inverted",
+    null,
+    computed(() => props.inverted),
+  ],
+  [
+    "expandedClass",
+    "o-button--expanded",
+    null,
+    computed(() => props.expanded),
+  ],
+  ["loadingClass", "o-button--loading", null, computed(() => props.loading)],
+  ["roundedClass", "o-button--rounded", null, computed(() => props.rounded)],
+  [
+    "disabledClass",
+    "o-button--disabled",
+    null,
+    computed(() => props.disabled),
+  ],
 );
 
 const wrapperClasses = defineClasses(["wrapperClass", "o-button__wrapper"]);
@@ -113,43 +113,45 @@ const iconClasses = defineClasses(["iconClass", "o-button__icon"]);
 const iconLeftClasses = defineClasses(["iconLeftClass", "o-button__icon-left"]);
 
 const iconRightClasses = defineClasses([
-    "iconRightClass",
-    "o-button__icon-right",
+  "iconRightClass",
+  "o-button__icon-right",
 ]);
 
 // #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <component
-        :is="computedTag"
-        data-oruga="button"
-        :type="computedNativeType"
-        role="button"
-        tabindex="0"
-        :class="rootClasses"
-        :disabled="disabled ? true : null"
-        @click="$emit('click', $event)"
-        @keydown.enter="$emit('click', $event)"
-        @keydown.space="$emit('click', $event)">
-        <span :class="wrapperClasses">
-            <o-icon
-                v-if="iconLeft"
-                :pack="iconPack"
-                :icon="iconLeft"
-                :size="size"
-                :class="[...iconClasses, ...iconLeftClasses]" />
+  <component
+    :is="computedTag"
+    data-oruga="button"
+    :type="computedNativeType"
+    role="button"
+    tabindex="0"
+    :class="rootClasses"
+    :disabled="disabled ? true : null"
+    @click="$emit('click', $event)"
+    @keydown.enter="$emit('click', $event)"
+    @keydown.space="$emit('click', $event)">
+    <span :class="wrapperClasses">
+      <o-icon
+        v-if="iconLeft"
+        :pack="iconPack"
+        :icon="iconLeft"
+        :size="size"
+        :class="[...iconClasses, ...iconLeftClasses]" />
 
-            <span v-if="label || $slots.default" :class="labelClasses">
-                <slot>{{ label }}</slot>
-            </span>
+      <span
+        v-if="label || $slots.default"
+        :class="labelClasses">
+        <slot>{{ label }}</slot>
+      </span>
 
-            <o-icon
-                v-if="iconRight"
-                :pack="iconPack"
-                :icon="iconRight"
-                :size="size"
-                :class="[...iconClasses, ...iconRightClasses]" />
-        </span>
-    </component>
+      <o-icon
+        v-if="iconRight"
+        :pack="iconPack"
+        :icon="iconRight"
+        :size="size"
+        :class="[...iconClasses, ...iconRightClasses]" />
+    </span>
+  </component>
 </template>

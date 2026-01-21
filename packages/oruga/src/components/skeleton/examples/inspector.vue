@@ -3,52 +3,55 @@ import type { InspectData } from "@docs";
 import type { SkeletonClasses, SkeletonProps } from "../props";
 
 const inspectData: InspectData<SkeletonClasses, SkeletonProps> = {
-    rootClass: {
-        class: "rootClass",
-        description: "Class of the root element.",
+  rootClass: {
+    class: "rootClass",
+    description: "Class of the root element.",
+  },
+  positionClass: {
+    class: "positionClass",
+    description: "Class of the root element with position.",
+    properties: ["position"],
+    suffixes: ["left", "centered", "right"],
+    action: (data): void => {
+      data.position = "centered";
     },
-    positionClass: {
-        class: "positionClass",
-        description: "Class of the root element with position.",
-        properties: ["position"],
-        suffixes: ["left", "centered", "right"],
-        action: (data): void => {
-            data.position = "centered";
-        },
+  },
+  itemClass: {
+    class: "itemClass",
+    description: "Class of the item element.",
+  },
+  sizeClass: {
+    class: "sizeClass",
+    description: "Class of the item element with size.",
+    properties: ["size"],
+    suffixes: ["small", "medium", "large"],
+    action: (data): void => {
+      data.size = "large";
     },
-    itemClass: {
-        class: "itemClass",
-        description: "Class of the item element.",
+  },
+  animatedClass: {
+    class: "animatedClass",
+    description: "Class of the item element when animated.",
+    action: (data): void => {
+      data.animated = true;
     },
-    sizeClass: {
-        class: "sizeClass",
-        description: "Class of the item element with size.",
-        properties: ["size"],
-        suffixes: ["small", "medium", "large"],
-        action: (data): void => {
-            data.size = "large";
-        },
+  },
+  roundedClass: {
+    class: "roundedClass",
+    description: "Class of the item element when rounded.",
+    properties: ["rounded"],
+    action: (data): void => {
+      data.rounded = true;
     },
-    animatedClass: {
-        class: "animatedClass",
-        description: "Class of the item element when animated.",
-        action: (data): void => {
-            data.animated = true;
-        },
-    },
-    roundedClass: {
-        class: "roundedClass",
-        description: "Class of the item element when rounded.",
-        properties: ["rounded"],
-        action: (data): void => {
-            data.rounded = true;
-        },
-    },
+  },
 };
 </script>
 
 <template>
-    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-skeleton width="264px" :count="2" v-bind="props" />
-    </inspector-wrapper>
+  <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+    <o-skeleton
+      width="264px"
+      :count="2"
+      v-bind="props" />
+  </inspector-wrapper>
 </template>

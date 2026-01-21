@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export checkbox plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Checkbox);
-    },
+  install(app: App) {
+    registerComponent(app, Checkbox);
+  },
 } as Plugin;
 
 /** export table components */

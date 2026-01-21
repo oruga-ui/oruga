@@ -9,9 +9,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export input plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Input);
-    },
+  install(app: App) {
+    registerComponent(app, Input);
+  },
 } as Plugin;
 
 /** export input components */

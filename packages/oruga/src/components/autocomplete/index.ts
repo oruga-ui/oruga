@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export autocomplete plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Autocomplete);
-    },
+  install(app: App) {
+    registerComponent(app, Autocomplete);
+  },
 } as Plugin;
 
 /** export autocomplete components */

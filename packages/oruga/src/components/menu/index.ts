@@ -7,10 +7,10 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export menu plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Menu);
-        registerComponent(app, MenuItem);
-    },
+  install(app: App) {
+    registerComponent(app, Menu);
+    registerComponent(app, MenuItem);
+  },
 } as Plugin;
 
 /** export menu components */

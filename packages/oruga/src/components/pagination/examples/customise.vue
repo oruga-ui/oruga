@@ -16,74 +16,88 @@ const size = ref("");
 </script>
 
 <template>
-    <section>
-        <o-field grouped multiline>
-            <o-field label="Total">
-                <o-input v-model="total" type="number" number />
-            </o-field>
-            <o-field label="Items per page">
-                <o-input v-model="perPage" type="number" number />
-            </o-field>
-        </o-field>
-        <o-field grouped multiline>
-            <o-field label="Show buttons before current">
-                <o-input v-model="rangeBefore" type="number" number min="0" />
-            </o-field>
-            <o-field label="Show buttons after current">
-                <o-input v-model="rangeAfter" type="number" number min="0" />
-            </o-field>
-        </o-field>
-        <o-field grouped multiline>
-            <o-field label="Position">
-                <o-select v-model="position">
-                    <option value="left">left</option>
-                    <option value="centered">centered</option>
-                    <option value="right">right</option>
-                </o-select>
-            </o-field>
-            <o-field label="Size">
-                <o-select v-model="size">
-                    <option value="">default</option>
-                    <option value="small">small</option>
-                    <option value="medium">medium</option>
-                    <option value="large">large</option>
-                </o-select>
-            </o-field>
-            <o-field label="Previous icon">
-                <o-select v-model="prevIcon">
-                    <option value="chevron-left">Chevron</option>
-                    <option value="arrow-left">Arrow</option>
-                </o-select>
-            </o-field>
-            <o-field label="Next icon">
-                <o-select v-model="nextIcon">
-                    <option value="chevron-right">Chevron</option>
-                    <option value="arrow-right">Arrow</option>
-                </o-select>
-            </o-field>
-        </o-field>
-        <o-field grouped>
-            <o-switch v-model="isSimple" label="Simple" />
-            <o-switch v-model="isRounded" label="Rounded" />
-            <o-switch v-model="isDisabled" label="Disabled" />
-        </o-field>
+  <section>
+    <o-field grouped multiline>
+      <o-field label="Total">
+        <o-input
+          v-model="total"
+          type="number"
+          number />
+      </o-field>
+      <o-field label="Items per page">
+        <o-input
+          v-model="perPage"
+          type="number"
+          number />
+      </o-field>
+    </o-field>
+    <o-field grouped multiline>
+      <o-field label="Show buttons before current">
+        <o-input
+          v-model="rangeBefore"
+          type="number"
+          number
+          min="0" />
+      </o-field>
+      <o-field label="Show buttons after current">
+        <o-input
+          v-model="rangeAfter"
+          type="number"
+          number
+          min="0" />
+      </o-field>
+    </o-field>
+    <o-field grouped multiline>
+      <o-field label="Position">
+        <o-select v-model="position">
+          <option value="left">left</option>
+          <option value="centered">centered</option>
+          <option value="right">right</option>
+        </o-select>
+      </o-field>
+      <o-field label="Size">
+        <o-select v-model="size">
+          <option value="">default</option>
+          <option value="small">small</option>
+          <option value="medium">medium</option>
+          <option value="large">large</option>
+        </o-select>
+      </o-field>
+      <o-field label="Previous icon">
+        <o-select v-model="prevIcon">
+          <option value="chevron-left">Chevron</option>
+          <option value="arrow-left">Arrow</option>
+        </o-select>
+      </o-field>
+      <o-field label="Next icon">
+        <o-select v-model="nextIcon">
+          <option value="chevron-right">Chevron</option>
+          <option value="arrow-right">Arrow</option>
+        </o-select>
+      </o-field>
+    </o-field>
+    <o-field grouped>
+      <o-switch v-model="isSimple" label="Simple" />
+      <o-switch v-model="isRounded" label="Rounded" />
+      <o-switch v-model="isDisabled" label="Disabled" />
+    </o-field>
 
-        <hr />
+    <hr>
 
-        <o-pagination
-            v-model:current="current"
-            :total="total"
-            :per-page="perPage"
-            :range-before="rangeBefore || 0"
-            :range-after="rangeAfter || 0"
-            :position="position"
-            :size="size"
-            :disabled="isDisabled"
-            :simple="isSimple"
-            :rounded="isRounded"
-            :icon-prev="prevIcon"
-            :icon-next="nextIcon" />
+    <o-pagination
+      v-model:current="current"
+      :total="total"
+      :per-page="perPage"
+      :range-before="rangeBefore || 0"
+      :range-after="rangeAfter || 0"
+      :position="position"
+      :size="size"
+      :disabled="isDisabled"
+      :simple="isSimple"
+      :rounded="isRounded"
+      :icon-prev="prevIcon"
+      :icon-next="nextIcon" />
 
-        <p><b>Current:</b> {{ current }}</p>
-    </section>
+    <p><b>Current:</b> {{ current }}</p>
+  </section>
 </template>
