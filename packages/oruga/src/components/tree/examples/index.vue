@@ -118,6 +118,17 @@ import TemplatesCode from "./templates.vue?raw";
   </p>
   <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
+  <h3 id="scrollable">Scrollable</h3>
+  <p>
+    When having to many options, consider adding a max height using the
+    <code>scrollHeight</code> property, which allows to cap the tree at a
+    fixed <code>max-height</code>. This will render a long tree of options
+    with a scrollbar. The component will emit a <code>scroll-start</code> or
+    <code>scroll-end</code> event, when the top or bottom of the tree is
+    reached.
+  </p>
+  <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
+
   <h3 id="templates">Templates</h3>
   <p>
     The item label can be customised using the <code>label</code> template

@@ -72,13 +72,13 @@ import SizesCode from "./sizes.vue?raw";
   </p>
   <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
-  <h3 id="limits">Limits</h3>
+  <h3 id="templates">Templates</h3>
   <p>
-    The number of entered items can be limited either by the character
-    length of the item using the <code>maxlength</code> prop and by the
-    number of times using the <code>maxitems</code> prop.
+    Different parts of the component can be customised using template slots,
+    e.g. the a custom header and footer can be added and the selected items
+    can be customised.
   </p>
-  <ExampleViewer :component="Limits" :code="LimitsCode" />
+  <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
   <h3 id="disabled">Disabled</h3>
   <p>Prevent inputs with the <code>disabled</code> prop.</p>

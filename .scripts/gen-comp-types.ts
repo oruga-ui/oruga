@@ -28,7 +28,7 @@ const checker = createChecker(
 // get all component folders
 const component_folders = getFolders(componentDirectory);
 
-console.log(`Processing components...`);
+console.log("Processing components...");
 
 const components = component_folders
   .map((folder) => {

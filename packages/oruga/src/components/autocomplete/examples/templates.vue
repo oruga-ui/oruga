@@ -28,7 +28,9 @@
         selectable-header
         selectable-footer>
         <template #empty> No results found </template>
+
         <template #header> Header </template>
+
         <template #footer> Footer </template>
       </o-autocomplete>
     </o-field>

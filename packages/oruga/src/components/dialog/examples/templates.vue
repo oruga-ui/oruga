@@ -12,16 +12,10 @@ const isActive = ref(false);
       variant="primary"
       @click="isActive = true" />
 
-    <o-dialog
-      v-model:active="isActive"
-      closeable>
-      <template #title>
-        Advanced Dialog
-      </template>
+    <o-dialog v-model:active="isActive" closeable>
+      <template #title>Advanced Dialog</template>
 
-      <template #subtitle>
-        Dialog subtitle
-      </template>
+      <template #subtitle>Dialog subtitle</template>
 
       <template #image>
         <img
@@ -40,15 +34,11 @@ const isActive = ref(false);
       </template>
 
       <template #cancelButton>
-        <a
-          href="#"
-          class="dialog-link">A link</a>
+        <a href="#" class="dialog-link">A link</a>
       </template>
 
       <template #confirmButton>
-        <a
-          href="#"
-          class="dialog-link">Another link</a>
+        <a href="#" class="dialog-link">Another link</a>
       </template>
     </o-dialog>
   </section>

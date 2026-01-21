@@ -41,7 +41,7 @@ const getStartedItems = [
 ];
 
 export default defineConfig({
-  title: `Oruga`,
+  title: "Oruga",
   description: "UI components for Vue.js and CSS framework agnostic",
   // prettier-ignore
   head: [

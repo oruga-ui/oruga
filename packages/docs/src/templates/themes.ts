@@ -51,7 +51,7 @@ export function createThemeDocs(cwd: string): void {
 
     // check if no files are found
     if (!files.length) {
-      const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
+      const noStyle = "<p>The theme does not have any custom variables for this component.</p>";
 
       // write markdown doc file for the theme
       fs.writeFileSync(`./themes/${theme.key}.md`, noStyle);
