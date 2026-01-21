@@ -617,11 +617,6 @@ const hasFilterColumns = computed(() =>
     tableColumns.value.some((column) => column.searchable || column.filterable),
 );
 
-/** check if any filter is set */
-const hasFilter = computed(
-    () => !!Object.values(filters.value).filter(Boolean).length,
-);
-
 // emit filter change event
 watch(filters, (value) => emits("filters-change", value), { deep: true });
 
@@ -635,9 +630,16 @@ function onFiltersEvent(event: Event): void {
  * Returns a filtered list of the mutated rows.
  */
 function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
-    if (!hasFilter.value || props.backendFiltering)
+    if(props.backendFiltering)
         // always return a new array object
         return [...rows];
+
+    if ( !Object.values(filters.value).filter(Boolean).length) {
+        // when has no filter reset hidden states
+        rows.forEach(row => row.hidden = false);
+        // always return a new array object
+        return [...rows];
+    }
 
     // check if a row is filtered out (hidden) by not matching any active filter expresssions
     return rows.filter((row) => {
