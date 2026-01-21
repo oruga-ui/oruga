@@ -21,13 +21,8 @@ import { getDefault } from "@/utils/config";
 import {
     defineClasses,
     normalizeOptions,
-    toOptionsGroup,
-    toOptionsList,
-    findOption,
-    checkOptionsEmpty,
-    filterOptionsItems,
     useInputHandler,
-    useSequentialId,
+    useIndexer,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -210,15 +205,13 @@ const inputValue = defineModel<string>("input", { default: "" });
 /** create a unique id for the menu */
 const menuId = useId();
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
-const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
-    return groupedOptions;
-});
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer),
+);
 
 // if not backend filtered
 if (!props.backendFiltering)
@@ -499,7 +492,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
             <slot name="header" />
         </o-dropdown-item>
 
-        <template v-for="(group, groupIndex) in groupedOptions">
+        <template v-for="(group, groupIndex) in normalizeOptions">
             <o-dropdown-item
                 v-if="group.label"
                 v-show="!group.hidden"

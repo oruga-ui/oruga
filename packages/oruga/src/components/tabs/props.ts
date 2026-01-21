@@ -16,7 +16,7 @@ export type TabsProps<T> = {
      */
     modelValue?: T;
     /** Tabs options, unnecessary when default slot is used */
-    options?: OptionsProp<T>;
+    options?: OptionsProp<TabItemProps<T>>;
     /**
      * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color

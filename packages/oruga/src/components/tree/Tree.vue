@@ -25,12 +25,11 @@ import { isClient } from "@/utils/ssr";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
-    isGroupOption,
     normalizeOptions,
     scrollElementInView,
+    useIndexer,
     useProviderParent,
     useScrollEvents,
-    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "@/components/field/fieldInjection";
@@ -119,12 +118,12 @@ const { parentField } = injectField();
 // if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField.value?.setInputId(props.id);
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
+    normalizeOptions(props.options, indexer),
 );
 
 // #region --- Child Items ---
@@ -142,7 +141,7 @@ const provideData = computed<TreeComponent<T>>(() => ({
     toggleIcon: props.toggleIcon,
     iconPack: props.iconPack,
     iconSize: props.iconSize,
-    nextSequence,
+    indexer: indexer,
     selectItem,
     focusItem,
     // resetSelection,
@@ -684,25 +683,21 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
                     <template
                         v-for="option in normalizedOptions"
                         :key="option.key">
-                        <OTreeItem
-                            v-if="isGroupOption(option)"
+                        <o-tree-item
+                            v-if="option.isGroup"
                             v-bind="option.attrs"
                             :label="option.label"
                             :hidden="option.hidden">
-                            <OTreeItem
+                            <o-tree-item
                                 v-for="_option in option.options"
-                                v-bind="_option.attrs"
+                                v-bind="_option.item"
                                 :key="_option.key"
-                                :value="_option.value"
-                                :label="_option.label"
                                 :hidden="_option.hidden" />
-                        </OTreeItem>
+                        </o-tree-item>
 
-                        <OTreeItem
+                        <o-tree-item
                             v-else
-                            v-bind="option.attrs"
-                            :value="option.value"
-                            :label="option.label"
+                            v-bind="option.item"
                             :hidden="option.hidden" />
                     </template>
                 </slot>

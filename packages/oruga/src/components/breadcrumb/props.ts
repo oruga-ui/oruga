@@ -1,14 +1,14 @@
 import type {
     ComponentClass,
     DynamicComponent,
-    SimpleOptionsProp,
+    OptionsProp,
 } from "@/types";
 
 export type BreadcrumbProps = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** breadcrumb items, unnecessary when default slot is used */
-    options?: SimpleOptionsProp;
+    options?: OptionsProp<BreadcrumbItemProps>;
     /**
      * Size of the breadcrumb
      * @values small, medium, large

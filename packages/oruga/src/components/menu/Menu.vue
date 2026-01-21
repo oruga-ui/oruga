@@ -8,10 +8,9 @@ import { getDefault } from "@/utils/config";
 import { mod } from "@/utils/helpers";
 import {
     defineClasses,
-    isGroupOption,
     normalizeOptions,
     useProviderParent,
-    useSequentialId,
+    useIndexer,
     type ProviderItem,
 } from "@/composables";
 
@@ -93,7 +92,7 @@ const provideData = computed<MenuComponent<T>>(() => ({
     accordion: props.accordion,
     disabled: props.disabled,
     role: props.role,
-    nextSequence,
+    indexer,
     resetMenu,
     selectItem,
 }));
@@ -104,12 +103,12 @@ const { childItems } = useProviderParent<
     MenuComponent<T>
 >({ rootRef, data: provideData });
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
+    normalizeOptions(props.options, indexer),
 );
 
 /** call reset for every menu item excluding the given one */
@@ -302,25 +301,21 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
                 :selected="selectedItem?.data"
                 :selected-index="selectedItem?.index">
                 <template v-for="option in normalizedOptions" :key="option.key">
-                    <OMenuItem
-                        v-if="isGroupOption(option)"
+                    <o-menu-item
+                        v-if="option.isGroup"
                         v-bind="option.attrs"
                         :label="option.label"
                         :hidden="option.hidden">
-                        <OMenuItem
+                        <o-menu-item
                             v-for="_option in option.options"
-                            v-bind="_option.attrs"
+                            v-bind="_option.item"
                             :key="_option.key"
-                            :value="_option.value"
-                            :label="_option.label"
                             :hidden="_option.hidden" />
-                    </OMenuItem>
+                    </o-menu-item>
 
-                    <OMenuItem
-                        v-else
-                        v-bind="option.attrs"
-                        :value="option.value"
-                        :label="option.label"
+                    <o-menu-item
+                        v-else-if="!option.isGroup"
+                        v-bind="option.item"
                         :hidden="option.hidden" />
                 </template>
             </slot>

@@ -9,6 +9,6 @@ export * from "./useClickOutside";
 export * from "./useOptions";
 export * from "./usePreventScrolling";
 export * from "./useScrollHelper";
-export * from "./useSequentialId";
+export * from "./useIndexer";
 export * from "./useConfig";
 export * from "./useTrapFocus";

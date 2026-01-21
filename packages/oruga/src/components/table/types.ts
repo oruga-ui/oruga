@@ -1,10 +1,10 @@
 import type { Slots, StyleValue } from "vue";
-import type { OptionsItem, ProviderItem } from "@/composables";
+import type { OptionItem, ProviderItem } from "@/composables";
 import type { ClassBinding } from "@/types";
 
 import type { FieldKey, TableColumnProps } from "./props";
 
-export type TableRow<V = unknown> = OptionsItem<V> & {
+export type TableRow<V = unknown> = OptionItem<V> & {
     /** table index position of the current row */
     index: number;
 };
