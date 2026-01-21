@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-    ref,
-    watch,
-    nextTick,
-    useTemplateRef,
-    type PropType,
-} from "vue";
+import { ref, watch, nextTick, useTemplateRef, type PropType } from "vue";
 import { setValueByPath } from "@oruga-ui/oruga-next";
 import type { InspectClass, InspectData } from "@docs";
 import InspectorTable from "./InspectorTable.vue";
