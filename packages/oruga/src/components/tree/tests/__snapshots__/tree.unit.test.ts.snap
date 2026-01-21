@@ -21,36 +21,42 @@ exports[`OTree tests > render correctly with deep options 1`] = `
   <ul id="v-0_list" role="tree" class="o-tree__list" aria-disabled="false">
     <transition-group-stub name="slide" appear="false" persisted="false" css="true">
       <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item" role="treeitem" tabindex="0" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Documents">
-        <!--v-if-->
-        <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-folder mdi-24px"></i></span><span>Documents</span></div><!-- sub tree items -->
+        <div class="o-tree__item-label">
+          <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-folder mdi-24px"></i></span><span>Documents</span>
+        </div><!-- sub tree items -->
         <transition-stub name="slide" appear="false" persisted="true" css="true">
           <ul id="v-2" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
             <li id="v-0-2" data-oruga="tree-item" data-id="tree-2" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Work">
-              <!--v-if-->
-              <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-cog mdi-24px"></i></span><span>Work</span></div><!-- sub tree items -->
+              <div class="o-tree__item-label">
+                <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-cog mdi-24px"></i></span><span>Work</span>
+              </div><!-- sub tree items -->
               <transition-stub name="slide" appear="false" persisted="true" css="true">
                 <ul id="v-3" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
                   <li id="v-0-3" data-oruga="tree-item" data-id="tree-3" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Expenses.doc">
-                    <!--v-if-->
-                    <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-file mdi-24px"></i></span><span>Expenses.doc</span></div><!-- sub tree items -->
+                    <div class="o-tree__item-label">
+                      <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-file mdi-24px"></i></span><span>Expenses.doc</span>
+                    </div><!-- sub tree items -->
                     <!--v-if-->
                   </li>
                   <li id="v-0-4" data-oruga="tree-item" data-id="tree-4" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Resume.doc">
-                    <!--v-if-->
-                    <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-file mdi-24px"></i></span><span>Resume.doc</span></div><!-- sub tree items -->
+                    <div class="o-tree__item-label">
+                      <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-file mdi-24px"></i></span><span>Resume.doc</span>
+                    </div><!-- sub tree items -->
                     <!--v-if-->
                   </li>
                 </ul>
               </transition-stub>
             </li>
             <li id="v-0-5" data-oruga="tree-item" data-id="tree-5" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Home">
-              <!--v-if-->
-              <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-home mdi-24px"></i></span><span>Home</span></div><!-- sub tree items -->
+              <div class="o-tree__item-label">
+                <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-home mdi-24px"></i></span><span>Home</span>
+              </div><!-- sub tree items -->
               <transition-stub name="slide" appear="false" persisted="true" css="true">
                 <ul id="v-6" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
                   <li id="v-0-6" data-oruga="tree-item" data-id="tree-6" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Invoices.txt">
-                    <!--v-if-->
-                    <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-file mdi-24px"></i></span><span>Invoices.txt</span></div><!-- sub tree items -->
+                    <div class="o-tree__item-label">
+                      <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-file mdi-24px"></i></span><span>Invoices.txt</span>
+                    </div><!-- sub tree items -->
                     <!--v-if-->
                   </li>
                 </ul>
@@ -60,64 +66,75 @@ exports[`OTree tests > render correctly with deep options 1`] = `
         </transition-stub>
       </li>
       <li id="v-0-7" data-oruga="tree-item" data-id="tree-7" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Events">
-        <!--v-if-->
-        <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar mdi-24px"></i></span><span>Events</span></div><!-- sub tree items -->
+        <div class="o-tree__item-label">
+          <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar mdi-24px"></i></span><span>Events</span>
+        </div><!-- sub tree items -->
         <transition-stub name="slide" appear="false" persisted="true" css="true">
           <ul id="v-9" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
             <li id="v-0-8" data-oruga="tree-item" data-id="tree-8" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Meeting">
-              <!--v-if-->
-              <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar-plus mdi-24px"></i></span><span>Meeting</span></div><!-- sub tree items -->
+              <div class="o-tree__item-label">
+                <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar-plus mdi-24px"></i></span><span>Meeting</span>
+              </div><!-- sub tree items -->
               <!--v-if-->
             </li>
             <li id="v-0-9" data-oruga="tree-item" data-id="tree-9" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Product Launch">
-              <!--v-if-->
-              <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar-plus mdi-24px"></i></span><span>Product Launch</span></div><!-- sub tree items -->
+              <div class="o-tree__item-label">
+                <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar-plus mdi-24px"></i></span><span>Product Launch</span>
+              </div><!-- sub tree items -->
               <!--v-if-->
             </li>
             <li id="v-0-10" data-oruga="tree-item" data-id="tree-10" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Report Review">
-              <!--v-if-->
-              <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar-plus mdi-24px"></i></span><span>Report Review</span></div><!-- sub tree items -->
+              <div class="o-tree__item-label">
+                <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar-plus mdi-24px"></i></span><span>Report Review</span>
+              </div><!-- sub tree items -->
               <!--v-if-->
             </li>
           </ul>
         </transition-stub>
       </li>
       <li id="v-0-11" data-oruga="tree-item" data-id="tree-11" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Movies">
-        <!--v-if-->
-        <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Movies</span></div><!-- sub tree items -->
+        <div class="o-tree__item-label">
+          <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Movies</span>
+        </div><!-- sub tree items -->
         <transition-stub name="slide" appear="false" persisted="true" css="true">
           <ul id="v-14" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
             <li id="v-0-12" data-oruga="tree-item" data-id="tree-12" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Al Pacino">
-              <!--v-if-->
-              <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Al Pacino</span></div><!-- sub tree items -->
+              <div class="o-tree__item-label">
+                <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Al Pacino</span>
+              </div><!-- sub tree items -->
               <transition-stub name="slide" appear="false" persisted="true" css="true">
                 <ul id="v-15" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
                   <li id="v-0-13" data-oruga="tree-item" data-id="tree-13" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Scarface">
-                    <!--v-if-->
-                    <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Scarface</span></div><!-- sub tree items -->
+                    <div class="o-tree__item-label">
+                      <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Scarface</span>
+                    </div><!-- sub tree items -->
                     <!--v-if-->
                   </li>
                   <li id="v-0-14" data-oruga="tree-item" data-id="tree-14" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Serpico">
-                    <!--v-if-->
-                    <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Serpico</span></div><!-- sub tree items -->
+                    <div class="o-tree__item-label">
+                      <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Serpico</span>
+                    </div><!-- sub tree items -->
                     <!--v-if-->
                   </li>
                 </ul>
               </transition-stub>
             </li>
             <li id="v-0-15" data-oruga="tree-item" data-id="tree-15" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Robert De Niro">
-              <!--v-if-->
-              <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Robert De Niro</span></div><!-- sub tree items -->
+              <div class="o-tree__item-label">
+                <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Robert De Niro</span>
+              </div><!-- sub tree items -->
               <transition-stub name="slide" appear="false" persisted="true" css="true">
                 <ul id="v-18" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
                   <li id="v-0-16" data-oruga="tree-item" data-id="tree-16" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Goodfellas">
-                    <!--v-if-->
-                    <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Goodfellas</span></div><!-- sub tree items -->
+                    <div class="o-tree__item-label">
+                      <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Goodfellas</span>
+                    </div><!-- sub tree items -->
                     <!--v-if-->
                   </li>
                   <li id="v-0-17" data-oruga="tree-item" data-id="tree-17" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Untouchables">
-                    <!--v-if-->
-                    <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Untouchables</span></div><!-- sub tree items -->
+                    <div class="o-tree__item-label">
+                      <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Untouchables</span>
+                    </div><!-- sub tree items -->
                     <!--v-if-->
                   </li>
                 </ul>
@@ -142,13 +159,15 @@ exports[`OTree tests > render correctly with options 1`] = `
   <ul id="v-0_list" role="tree" class="o-tree__list" aria-disabled="false">
     <transition-group-stub name="slide" appear="false" persisted="false" css="true">
       <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item" role="treeitem" tabindex="0" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="label1">
-        <!--v-if-->
-        <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span><span>label1</span></div><!-- sub tree items -->
+        <div class="o-tree__item-label">
+          <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span><span>label1</span>
+        </div><!-- sub tree items -->
         <!--v-if-->
       </li>
       <li id="v-0-2" data-oruga="tree-item" data-id="tree-2" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="label2">
-        <!--v-if-->
-        <div class="o-tree__item-label"><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span><span>label2</span></div><!-- sub tree items -->
+        <div class="o-tree__item-label">
+          <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span><span>label2</span>
+        </div><!-- sub tree items -->
         <!--v-if-->
       </li>
     </transition-group-stub>

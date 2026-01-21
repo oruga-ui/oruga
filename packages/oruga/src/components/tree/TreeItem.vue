@@ -251,7 +251,7 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         <div
             :class="labelClasses"
             @mouseenter="focusItem"
-            @click.stop="clickItem">
+            @click="clickItem">
             <o-icon
                 v-if="parent.toggleIcon"
                 :icon="parent.toggleIcon"
