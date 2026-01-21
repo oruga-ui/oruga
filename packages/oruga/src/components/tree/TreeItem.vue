@@ -81,17 +81,11 @@ defineSlots<{
 
 const rootRef = useTemplateRef("rootElement");
 
-// provided data is a computed ref to ensure reactivity
-// const providedSubtreeData = computed<SubtreeComponent<T>>(() => ({
-//     expanded: isExpanded.value,
-// }));
-
 const subtreeKey = Symbol("subtree");
 
 /** provide functionalities and data to subtree child item components */
 const { childItems } = useProviderParent<SubtreeItemComponent>({
     key: subtreeKey,
-    // data: providedSubtreeData,
 });
 
 // provided data is a computed ref to ensure reactivity
@@ -100,8 +94,6 @@ const providedSubtreeItemData = computed<SubtreeItemComponent>(() => ({
 }));
 
 /** inject functionalities and data from the subtree parent item component */
-// const subtreeItem =
-// SubtreeComponent
 useProviderChild<unknown, SubtreeItemComponent>(rootRef, {
     key: subtreeKey,
     needParent: false,
@@ -116,7 +108,6 @@ const providedData = computed<TreeItemComponent<T>>(() => ({
     isViable: isViable.value,
     hasChildren: hasChildren.value,
     setExpand,
-    // reset,
     matches,
 }));
 
@@ -199,10 +190,6 @@ function setExpand(state: boolean): void {
     isExpanded.value = state;
     // set hidden state for all the child items
     childItems.value.forEach((item) => item.data.setHidden(!state));
-
-    // // expand parent subtree if available
-    // if (typeof subtreeItem.parent.value?.setExpand === "function")
-    //     subtreeItem.parent.value.setExpand(state);
 }
 
 const localHidden = ref(false);
@@ -211,33 +198,6 @@ const isHidden = computed(() => props.hidden || localHidden.value);
 function setHidden(state: boolean): void {
     localHidden.value = state;
 }
-
-// /** Called by the parent to reset this item selection. */
-// function reset(): void {
-//     // close collapsable if available
-//     if (parent.value.collapsable) isExpanded.value = false;
-//     // deselect item
-//     parent.value.selectItem(item.value, false);
-// }
-
-/**
- *  // TODO: check if used?
- *  The point of this method is to collect references to the clicked item and any parent,
- *  this way we can skip resetting those elements.
- */
-// function bubbleReset(childs?: ProviderItem<TreeItemComponent<T>>[]): void {
-//     if (typeof subtreeItem.parent.value?.bubbleReset === "function") {
-//         subtreeItem.parent.value.bubbleReset(
-//             childs ? [item.value, ...childs] : [item.value],
-//         );
-//     }
-//     // else if not a sub item reset parent tree
-//     else if (typeof parent.value.resetSelection === "function") {
-//         parent.value.resetSelection(
-//             childs ? [item.value, ...childs] : [item.value],
-//         );
-//     }
-// }
 
 /** Check if a value matches the label (startsWith). */
 function matches(value: string): boolean {
@@ -249,9 +209,9 @@ function matches(value: string): boolean {
 const itemClasses = defineClasses(
     ["itemClass", "o-tree__item"],
     ["itemSelectabelClass", `o-tree__item--selectable`, null, isSelectable],
-    ["itemDisabledClass", "o-tree__item--disabled", null, isDisabled],
     ["itemSelectedClass", "o-tree__item--selected", null, isSelected],
     ["itemFocusedClass", "o-tree__item--focused", null, isFocused],
+    ["itemDisabledClass", "o-tree__item--disabled", null, isDisabled],
 );
 
 const labelClasses = defineClasses(["itemLabelClass", "o-tree__item-label"]);

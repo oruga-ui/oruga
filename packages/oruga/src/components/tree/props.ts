@@ -107,16 +107,16 @@ export type TreeItemProps<T> = {
 export type TreeItemClasses = Partial<{
     /** Class of the tree item root element */
     itemClass: ComponentClass;
+    /** Class of the item element when selectable */
+    itemSelectabelClass: ComponentClass;
     /** Class of the tree item root element when selected */
     itemSelectedClass: ComponentClass;
     /** Class of the tree item root element when focused */
     itemFocusedClass: ComponentClass;
-    /** Class of the item element when clickable */
-    itemClickableClass: ComponentClass;
     /** Class of the tree item root element when disabled */
     itemDisabledClass: ComponentClass;
     /** Class of the tree item label element element */
     itemLabelClass: ComponentClass;
-    /** Class of the tree item subtree element */
-    itemSubtreeClass: ComponentClass;
+    /** Class of a subtree element of a tree item */
+    subtreeClass: ComponentClass;
 }>;

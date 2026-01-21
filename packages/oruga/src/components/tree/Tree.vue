@@ -631,16 +631,7 @@ const rootClasses = defineClasses(
     ],
 );
 
-const listClasses = defineClasses(
-    ["listClass", "o-tree__list"],
-    // TODO add class
-    [
-        "selectableClass",
-        "o-tree__selectable",
-        null,
-        computed(() => props.selectable),
-    ],
-);
+const listClasses = defineClasses(["listClass", "o-tree__list"]);
 
 const headerClasses = defineClasses(["headerClass", "o-tree__header"]);
 
