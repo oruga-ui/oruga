@@ -3,14 +3,14 @@ import { computed, onMounted, ref } from "vue";
 import VueTelescopeClient from "./VueTelescopeClient.js";
 
 const props = defineProps({
-    slugs: { type: Object, required: true },
-    imageWidth: { type: Number, default: 800 },
-    sortBy: { type: String, default: "rank" },
-    sortDirection: { type: String, default: "asc" },
-    labelRetry: { type: String, default: "Retry" },
-    labelError: { type: String, default: "Something went wrong!" },
-    labelLoadMore: { type: String, default: "Load More" },
-    labelLoading: { type: String, default: "Loading..." },
+  slugs: { type: Object, required: true },
+  imageWidth: { type: Number, default: 800 },
+  sortBy: { type: String, default: "rank" },
+  sortDirection: { type: String, default: "asc" },
+  labelRetry: { type: String, default: "Retry" },
+  labelError: { type: String, default: "Something went wrong!" },
+  labelLoadMore: { type: String, default: "Load More" },
+  labelLoading: { type: String, default: "Loading..." },
 });
 
 const items = ref<any[]>([]);
@@ -22,116 +22,132 @@ const client = ref(new VueTelescopeClient());
 const retry = ref(false);
 
 const hasMoreItems = computed(() => {
-    return items.value.length < count.value;
+  return items.value.length < count.value;
 });
 
 onMounted(() => {
-    firstLoadItems();
+  firstLoadItems();
 });
 
 function firstLoadItems(): void {
-    retry.value = false;
-    client.value
-        .getItemsCount(props.slugs, props.sortBy, props.sortDirection)
-        .then((data) => {
-            count.value = parseInt(data, 10);
-            loadItems();
-        })
-        .catch(() => {
-            retry.value = true;
-        });
+  retry.value = false;
+  client.value
+    .getItemsCount(props.slugs, props.sortBy, props.sortDirection)
+    .then((data) => {
+      count.value = parseInt(data, 10);
+      loadItems();
+    })
+    .catch(() => {
+      retry.value = true;
+    });
 }
 
 function loadItems(): void {
-    loading.value = true;
-    client.value
-        .getItems(
-            props.slugs,
-            props.sortBy,
-            props.sortDirection,
-            limit.value,
-            start.value,
-        )
-        .then((data) => {
-            items.value = [
-                ...items.value,
-                ...data.filter((d: any) => d.isPublic),
-            ];
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+  loading.value = true;
+  client.value
+    .getItems(
+      props.slugs,
+      props.sortBy,
+      props.sortDirection,
+      limit.value,
+      start.value,
+    )
+    .then((data) => {
+      items.value = [
+        ...items.value,
+        ...data.filter((d: any) => d.isPublic),
+      ];
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 }
 function loadMoreItems(): void {
-    start.value += limit.value;
-    loadItems();
+  start.value += limit.value;
+  loadItems();
 }
 </script>
 
 <template>
-    <section class="section">
-        <div class="grid">
-            <div v-for="item in items" :key="item.id" class="grid-item">
-                <slot :item="item" name="item">
-                    <a target="_blank" class="grid-item-link" :href="item.url">
-                        <img
-                            :src="`https://res.cloudinary.com/nuxt/image/upload/w_${imageWidth},h_${
-                                (imageWidth * 6) / 8
-                            },f_auto,q_auto/${item.screenshotUrl}`"
-                            class="grid-item-image" />
-                        <div class="grid-item-details">
-                            <p class="grid-item-url">
-                                <strong>{{ item.hostname }}</strong>
-                            </p>
-                            <div class="grid-item-plugins">
-                                <a
-                                    target="_blank"
-                                    class="grid-item-link"
-                                    :href="`https://vuetelescope.com/explore/${item.slug}`">
-                                    <img
-                                        v-if="item.ui"
-                                        class="grid-item-plugin-image"
-                                        :src="`https://icons.vuetelescope.com${item.ui.imgPath}`" />
-                                    <img
-                                        v-if="item.framework"
-                                        class="grid-item-plugin-image"
-                                        :src="`https://icons.vuetelescope.com${item.framework.imgPath}`" />
-                                </a>
-                            </div>
-                        </div>
-                    </a>
-                </slot>
+  <section class="section">
+    <div class="grid">
+      <div
+        v-for="item in items"
+        :key="item.id"
+        class="grid-item">
+        <slot
+          :item="item"
+          name="item">
+          <a
+            target="_blank"
+            class="grid-item-link"
+            :href="item.url">
+            <img
+              :src="`https://res.cloudinary.com/nuxt/image/upload/w_${imageWidth},h_${
+                (imageWidth * 6) / 8
+              },f_auto,q_auto/${item.screenshotUrl}`"
+              class="grid-item-image">
+            <div class="grid-item-details">
+              <p class="grid-item-url">
+                <strong>{{ item.hostname }}</strong>
+              </p>
+              <div class="grid-item-plugins">
+                <a
+                  target="_blank"
+                  class="grid-item-link"
+                  :href="`https://vuetelescope.com/explore/${item.slug}`">
+                  <img
+                    v-if="item.ui"
+                    class="grid-item-plugin-image"
+                    :src="`https://icons.vuetelescope.com${item.ui.imgPath}`">
+                  <img
+                    v-if="item.framework"
+                    class="grid-item-plugin-image"
+                    :src="`https://icons.vuetelescope.com${item.framework.imgPath}`">
+                </a>
+              </div>
             </div>
-        </div>
-        <div class="controls">
-            <div v-if="!retry">
-                <slot
-                    name="buttons"
-                    v-bind="{
-                        loading,
-                        loadMoreItems,
-                        hasMoreItems,
-                        labelLoadMore,
-                        labelLoading,
-                    }">
-                    <button
-                        v-if="hasMoreItems"
-                        class="button"
-                        @click="loadMoreItems">
-                        {{ !loading ? labelLoadMore : labelLoading }}
-                    </button>
-                </slot>
-            </div>
-            <div v-if="retry">
-                <slot name="retry" :first-load-items="firstLoadItems">
-                    <div class="retry-label">{{ labelError }}</div>
-                    <button class="button" @click="firstLoadItems">
-                        {{ labelRetry }}
-                    </button>
-                </slot>
-            </div>
-        </div>
-    </section>
+          </a>
+        </slot>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div v-if="!retry">
+        <slot
+          name="buttons"
+          v-bind="{
+            loading,
+            loadMoreItems,
+            hasMoreItems,
+            labelLoadMore,
+            labelLoading,
+          }">
+          <button
+            v-if="hasMoreItems"
+            class="button"
+            @click="loadMoreItems">
+            {{ !loading ? labelLoadMore : labelLoading }}
+          </button>
+        </slot>
+      </div>
+
+      <div v-if="retry">
+        <slot
+          name="retry"
+          :first-load-items="firstLoadItems">
+          <div class="retry-label">
+            {{ labelError }}
+          </div>
+          <button
+            class="button"
+            @click="firstLoadItems">
+            {{ labelRetry }}
+          </button>
+        </slot>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>

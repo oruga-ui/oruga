@@ -6,136 +6,136 @@ import { OModal } from "@/components/modal";
 
 import InstanceRegistry from "../InstanceRegistry";
 import {
-    ProgrammaticComponent,
-    type ProgrammaticComponentExpose,
+  ProgrammaticComponent,
+  type ProgrammaticComponentExpose,
 } from "../ProgrammaticComponent";
 
 describe("ProgrammaticComponent tests", () => {
-    enableAutoUnmount(afterEach);
+  enableAutoUnmount(afterEach);
 
-    test("test render simple div correctly", () => {
-        const wrapper = mount(ProgrammaticComponent, {
-            props: {
-                component: "div",
-                props: { "data-oruga": "programmatic" },
-            },
-        });
-
-        expect(!!wrapper.vm).toBeTruthy();
-        expect(wrapper.exists()).toBeTruthy();
-        expect(wrapper.html()).toMatchSnapshot();
-        const element = wrapper.find('[data-oruga="programmatic"]');
-        expect(element.exists()).toBeTruthy();
+  test("test render simple div correctly", () => {
+    const wrapper = mount(ProgrammaticComponent, {
+      props: {
+        component: "div",
+        props: { "data-oruga": "programmatic" },
+      },
     });
 
-    test("test render slot correctly", () => {
-        const wrapper = mount(ProgrammaticComponent, {
-            props: {
-                component: createVNode({
-                    template: `<div><slot /></div>`,
-                }),
-                props: { "data-oruga": "programmatic" },
-            },
-            slots: {
-                default: `<p data-oruga="inner-slot">HELP</p>`,
-            },
-        });
+    expect(!!wrapper.vm).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.html()).toMatchSnapshot();
+    const element = wrapper.find('[data-oruga="programmatic"]');
+    expect(element.exists()).toBeTruthy();
+  });
 
-        const element = wrapper.find('[data-oruga="programmatic"]');
-        expect(element.exists()).toBeTruthy();
-        const inner = wrapper.find('[data-oruga="inner-slot"]');
-        expect(inner.exists()).toBeTruthy();
+  test("test render slot correctly", () => {
+    const wrapper = mount(ProgrammaticComponent, {
+      props: {
+        component: createVNode({
+          template: "<div><slot /></div>",
+        }),
+        props: { "data-oruga": "programmatic" },
+      },
+      slots: {
+        default: '<p data-oruga="inner-slot">HELP</p>',
+      },
     });
 
-    test("test render complex component with props correctly", () => {
-        const content = "This is my content";
-        const wrapper = mount(ProgrammaticComponent, {
-            props: {
-                component: markRaw(OModal),
-                props: { content },
-            },
-        });
+    const element = wrapper.find('[data-oruga="programmatic"]');
+    expect(element.exists()).toBeTruthy();
+    const inner = wrapper.find('[data-oruga="inner-slot"]');
+    expect(inner.exists()).toBeTruthy();
+  });
 
-        const model = wrapper.find('[data-oruga="modal"]');
-        expect(model.exists()).toBeTruthy();
-        expect(model.text()).toBe(content);
+  test("test render complex component with props correctly", () => {
+    const content = "This is my content";
+    const wrapper = mount(ProgrammaticComponent, {
+      props: {
+        component: markRaw(OModal),
+        props: { content },
+      },
     });
 
-    test("test close is called correctly", async () => {
-        vi.useFakeTimers();
+    const model = wrapper.find('[data-oruga="modal"]');
+    expect(model.exists()).toBeTruthy();
+    expect(model.text()).toBe(content);
+  });
 
-        const onClose = vi.fn();
-        const onDestroy = vi.fn();
-        const wrapper = mount(ProgrammaticComponent, {
-            props: {
-                component: createVNode({
-                    template: `<button @click="$emit('close', 'abc')"></button>`,
-                }),
-                props: { "data-oruga": "programmatic" },
-                onClose,
-                onDestroy,
-            },
-        });
+  test("test close is called correctly", async () => {
+    vi.useFakeTimers();
 
-        const button = wrapper.find("button");
-        await button.trigger("click");
-
-        vi.runAllTimers();
-
-        const closeEmits = wrapper.emitted("close");
-        expect(closeEmits).toHaveLength(1);
-        expect(closeEmits![0][0]).toBe("abc");
-        const destroyEmits = wrapper.emitted("destroy");
-        expect(destroyEmits).toHaveLength(1);
-
-        expect(onClose).toHaveBeenCalledOnce();
-        expect(onDestroy).toHaveBeenCalledOnce();
-
-        vi.useRealTimers();
+    const onClose = vi.fn();
+    const onDestroy = vi.fn();
+    const wrapper = mount(ProgrammaticComponent, {
+      props: {
+        component: createVNode({
+          template: "<button @click=\"$emit('close', 'abc')\"></button>",
+        }),
+        props: { "data-oruga": "programmatic" },
+        onClose,
+        onDestroy,
+      },
     });
 
-    test("test promise is called correctly", async () => {
-        const wrapper = mount(ProgrammaticComponent, {
-            props: {
-                component: "div",
-                props: { "data-oruga": "programmatic" },
-            },
-        });
+    const button = wrapper.find("button");
+    await button.trigger("click");
 
-        const component =
-            wrapper.vm as unknown as ProgrammaticComponentExpose<VNode>;
-        expect(component.promise).not.toBeUndefined();
+    vi.runAllTimers();
 
-        // check promise get called
-        const handler = vi.fn();
-        component.promise.then(() => handler());
-        expect(handler).not.toHaveBeenCalled();
+    const closeEmits = wrapper.emitted("close");
+    expect(closeEmits).toHaveLength(1);
+    expect(closeEmits![0][0]).toBe("abc");
+    const destroyEmits = wrapper.emitted("destroy");
+    expect(destroyEmits).toHaveLength(1);
 
-        component.close(); // call close programmaticaly
+    expect(onClose).toHaveBeenCalledOnce();
+    expect(onDestroy).toHaveBeenCalledOnce();
 
-        const closeEmits = wrapper.emitted("close");
-        expect(closeEmits).toHaveLength(1);
+    vi.useRealTimers();
+  });
 
-        await flushPromises(); // await promise finished
-        expect(handler).toHaveBeenCalledOnce();
+  test("test promise is called correctly", async () => {
+    const wrapper = mount(ProgrammaticComponent, {
+      props: {
+        component: "div",
+        props: { "data-oruga": "programmatic" },
+      },
     });
 
-    test("test instance registry is called correctly", async () => {
-        const instanceRegistry = new InstanceRegistry();
+    const component =
+      wrapper.vm as unknown as ProgrammaticComponentExpose<VNode>;
+    expect(component.promise).not.toBeUndefined();
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+    // check promise get called
+    const handler = vi.fn();
+    component.promise.then(() => handler());
+    expect(handler).not.toHaveBeenCalled();
 
-        const wrapper = mount(ProgrammaticComponent, {
-            props: {
-                component: "div",
-                registry: instanceRegistry,
-            },
-        });
+    component.close(); // call close programmaticaly
 
-        expect(instanceRegistry.entries).toHaveLength(1);
+    const closeEmits = wrapper.emitted("close");
+    expect(closeEmits).toHaveLength(1);
 
-        wrapper.unmount();
+    await flushPromises(); // await promise finished
+    expect(handler).toHaveBeenCalledOnce();
+  });
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+  test("test instance registry is called correctly", async () => {
+    const instanceRegistry = new InstanceRegistry();
+
+    expect(instanceRegistry.entries).toHaveLength(0);
+
+    const wrapper = mount(ProgrammaticComponent, {
+      props: {
+        component: "div",
+        registry: instanceRegistry,
+      },
     });
+
+    expect(instanceRegistry.entries).toHaveLength(1);
+
+    wrapper.unmount();
+
+    expect(instanceRegistry.entries).toHaveLength(0);
+  });
 });

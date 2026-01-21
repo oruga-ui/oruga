@@ -14,75 +14,75 @@ import type { RadioProps } from "./props";
  * @style _radio.scss
  */
 defineOptions({
-    isOruga: true,
-    name: "ORadio",
-    configField: "radio",
-    inheritAttrs: false,
+  isOruga: true,
+  name: "ORadio",
+  configField: "radio",
+  inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<RadioProps<T>>(), {
-    override: undefined,
-    modelValue: undefined,
-    id: () => useId(),
-    label: undefined,
-    name: undefined,
-    variant: () => getDefault("radio.variant"),
-    size: () => getDefault("radio.size"),
-    disabled: false,
-    required: false,
-    nativeValue: undefined,
-    autocomplete: () => getDefault("radio.autocomplete", "off"),
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
+  override: undefined,
+  modelValue: undefined,
+  id: () => useId(),
+  label: undefined,
+  name: undefined,
+  variant: () => getDefault("radio.variant"),
+  size: () => getDefault("radio.size"),
+  disabled: false,
+  required: false,
+  nativeValue: undefined,
+  autocomplete: () => getDefault("radio.autocomplete", "off"),
+  useHtml5Validation: () => getDefault("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{
-    /**
-     * modelValue prop two-way binding
-     * @param value {unknown} - updated modelValue prop
-     */
-    "update:model-value": [value: T];
-    /**
-     * on input change event
-     * @param value {unknown} - input value
-     * @param event {Event} - native event
-     */
-    input: [value: T, event: Event];
-    /**
-     * on input focus event
-     * @param event {Event} - native event
-     */
-    focus: [event: Event];
-    /**
-     * on input blur event
-     * @param event {Event} - native event
-     */
-    blur: [event: Event];
-    /**
-     * on input invalid event
-     * @param event {Event} - native event
-     */
-    invalid: [event: Event];
+  /**
+   * modelValue prop two-way binding
+   * @param value {unknown} - updated modelValue prop
+   */
+  "update:model-value": [value: T];
+  /**
+   * on input change event
+   * @param value {unknown} - input value
+   * @param event {Event} - native event
+   */
+  input: [value: T, event: Event];
+  /**
+   * on input focus event
+   * @param event {Event} - native event
+   */
+  focus: [event: Event];
+  /**
+   * on input blur event
+   * @param event {Event} - native event
+   */
+  blur: [event: Event];
+  /**
+   * on input invalid event
+   * @param event {Event} - native event
+   */
+  invalid: [event: Event];
 }>();
 
 defineSlots<{
-    /** Override the label, default is label prop */
-    default?(): void;
+  /** Override the label, default is label prop */
+  default?(): void;
 }>();
 
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
 const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
-    useInputHandler(inputRef, emits, props);
+  useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId =
-    !!parentField.value || !!props.label || !!useSlots().default
-        ? parentField.value?.labelId || useId()
-        : undefined;
+  !!parentField.value || !!props.label || !!useSlots().default
+    ? parentField.value?.labelId || useId()
+    : undefined;
 
 // if no `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField.value?.setInputId(props.id);
@@ -92,7 +92,7 @@ const vmodel = defineModel<T>({ default: undefined });
 const isChecked = computed(() => vmodel.value === props.nativeValue);
 
 function onInput(event: Event): void {
-    emits("input", vmodel.value, event);
+  emits("input", vmodel.value, event);
 }
 
 // --- Computed Component Classes ---
@@ -100,31 +100,31 @@ function onInput(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+  ...parentField?.value?.inputAttrs,
+  ...attrs,
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-radio"],
-    [
-        "sizeClass",
-        "o-radio--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-    [
-        "variantClass",
-        "o-radio--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
-    [
-        "disabledClass",
-        "o-radio--disabled",
-        null,
-        computed(() => props.disabled),
-    ],
-    ["checkedClass", "o-radio--checked", null, isChecked],
+  ["rootClass", "o-radio"],
+  [
+    "sizeClass",
+    "o-radio--",
+    computed(() => props.size),
+    computed(() => !!props.size),
+  ],
+  [
+    "variantClass",
+    "o-radio--",
+    computed(() => props.variant),
+    computed(() => !!props.variant),
+  ],
+  [
+    "disabledClass",
+    "o-radio--disabled",
+    null,
+    computed(() => props.disabled),
+  ],
+  ["checkedClass", "o-radio--checked", null, isChecked],
 );
 
 const inputClasses = defineClasses(["inputClass", "o-radio__input"]);
@@ -138,33 +138,33 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div data-oruga="radio" :class="rootClasses">
-        <input
-            v-bind="inputBind"
-            :id="id"
-            ref="inputElement"
-            v-model="vmodel"
-            type="radio"
-            data-oruga-input="radio"
-            :class="inputClasses"
-            :name="name"
-            :value="nativeValue"
-            :required="required"
-            :disabled="disabled"
-            :autocomplete="autocomplete"
-            :aria-checked="isChecked"
-            :aria-labelledby="labelId"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid"
-            @change="onInput" />
+  <div data-oruga="radio" :class="rootClasses">
+    <input
+      v-bind="inputBind"
+      :id="id"
+      ref="inputElement"
+      v-model="vmodel"
+      type="radio"
+      data-oruga-input="radio"
+      :class="inputClasses"
+      :name="name"
+      :value="nativeValue"
+      :required="required"
+      :disabled="disabled"
+      :autocomplete="autocomplete"
+      :aria-checked="isChecked"
+      :aria-labelledby="labelId"
+      @blur="onBlur"
+      @focus="onFocus"
+      @invalid="onInvalid"
+      @change="onInput">
 
-        <label
-            v-if="label || $slots.default"
-            :id="labelId"
-            :for="id"
-            :class="labelClasses">
-            <slot>{{ label }}</slot>
-        </label>
-    </div>
+    <label
+      v-if="label || $slots.default"
+      :id="labelId"
+      :for="id"
+      :class="labelClasses">
+      <slot>{{ label }}</slot>
+    </label>
+  </div>
 </template>

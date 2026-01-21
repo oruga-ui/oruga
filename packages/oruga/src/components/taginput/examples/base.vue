@@ -5,16 +5,16 @@ const tags = ref(["Pistoia", "Valdinievole"]);
 </script>
 
 <template>
-    <section>
-        <o-field label="Add some items">
-            <o-taginput
-                v-model="tags"
-                allow-new
-                icon="tag"
-                placeholder="Add an item"
-                aria-close-label="Delete this item" />
-        </o-field>
+  <section>
+    <o-field label="Add some items">
+      <o-taginput
+        v-model="tags"
+        allow-new
+        icon="tag"
+        placeholder="Add an item"
+        aria-close-label="Delete this item" />
+    </o-field>
 
-        <p><b>Items:</b> {{ tags }}</p>
-    </section>
+    <p><b>Items:</b> {{ tags }}</p>
+  </section>
 </template>

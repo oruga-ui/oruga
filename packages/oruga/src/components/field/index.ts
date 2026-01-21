@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export field plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Field);
-    },
+  install(app: App) {
+    registerComponent(app, Field);
+  },
 } as Plugin;
 
 /** export field components */

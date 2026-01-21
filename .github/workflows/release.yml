@@ -31,7 +31,7 @@ jobs:
       - name: Generate release body 📝
         run: npx extract-changelog-release > RELEASE_BODY.md
 
-      - name: Create github release 🎉
+      - name: Create GitHub release 🎉
         uses: ncipollo/release-action@v1
         with:
           bodyFile: "RELEASE_BODY.md"
@@ -42,6 +42,8 @@ jobs:
       - name: Publish documentation 📰
         # only update documentation for main releases
         if: ${{ github.ref != 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
-        run: git push origin develop:master
+        run: |
+          git fetch origin develop:develop 
+          git push origin develop:master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

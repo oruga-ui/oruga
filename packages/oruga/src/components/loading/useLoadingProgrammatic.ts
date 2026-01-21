@@ -1,8 +1,8 @@
 import {
-    ProgrammaticFactory,
-    type ProgrammaticComponentOptions,
-    type ProgrammaticExpose,
-    type ProgrammaticTarget,
+  ProgrammaticFactory,
+  type ProgrammaticComponentOptions,
+  type ProgrammaticExpose,
+  type ProgrammaticTarget,
 } from "../programmatic";
 
 import Loading from "./Loading.vue";
@@ -10,46 +10,46 @@ import Loading from "./Loading.vue";
 import type { LoadingProps } from "./props";
 
 declare module "../../index" {
-    interface OrugaProgrammatic {
-        loading: Required<InstanceType<typeof LoadingProgrammaticFactory>>;
-    }
+  interface OrugaProgrammatic {
+    loading: Required<InstanceType<typeof LoadingProgrammaticFactory>>;
+  }
 }
 
 export type LoadingProgrammaticOptions = Readonly<LoadingProps> &
-    ProgrammaticComponentOptions<typeof Loading>;
+  ProgrammaticComponentOptions<typeof Loading>;
 
 export class LoadingProgrammaticFactory extends ProgrammaticFactory {
-    /**
-     * Create a new programmatic loading component instance.
-     * @param options - Loading label string or loading component props object.
-     * @param target - A target container the component get rendered into - default is `document.body`.
-     * @returns ProgrammaticExpose - programmatic component expose interface
-     */
-    public open(
-        options: string | LoadingProgrammaticOptions,
-        target?: ProgrammaticTarget,
-    ): ProgrammaticExpose<typeof Loading> {
-        const _options: LoadingProgrammaticOptions =
-            typeof options === "string" ? { label: options } : options;
+  /**
+   * Create a new programmatic loading component instance.
+   * @param options - Loading label string or loading component props object.
+   * @param target - A target container the component get rendered into - default is `document.body`.
+   * @returns ProgrammaticExpose - programmatic component expose interface
+   */
+  public open(
+    options: string | LoadingProgrammaticOptions,
+    target?: ProgrammaticTarget,
+  ): ProgrammaticExpose<typeof Loading> {
+    const _options: LoadingProgrammaticOptions =
+      typeof options === "string" ? { label: options } : options;
 
-        const componentProps: LoadingProps = {
-            active: true, // set the active default state to true
-            fullPage: false, // set the full page default state to false
-            ..._options,
-        };
+    const componentProps: LoadingProps = {
+      active: true, // set the active default state to true
+      fullPage: false, // set the full page default state to false
+      ..._options,
+    };
 
-        // create programmatic component
-        return this._create(
-            Loading,
-            {
-                props: componentProps, // component specific props
-                onClose: _options.onClose, // on close event handler
-            },
-            target, // target the component get rendered into
-        );
-    }
+    // create programmatic component
+    return this._create(
+      Loading,
+      {
+        props: componentProps, // component specific props
+        onClose: _options.onClose, // on close event handler
+      },
+      target, // target the component get rendered into
+    );
+  }
 }
 
 export default function useLoadingProgrammatic(): LoadingProgrammaticFactory {
-    return new LoadingProgrammaticFactory();
+  return new LoadingProgrammaticFactory();
 }

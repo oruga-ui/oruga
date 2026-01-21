@@ -10,10 +10,10 @@ export type * from "./types";
 
 /** export steps plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Steps);
-        registerComponent(app, StepItem);
-    },
+  install(app: App) {
+    registerComponent(app, Steps);
+    registerComponent(app, StepItem);
+  },
 } as Plugin;
 
 /** export steps components */

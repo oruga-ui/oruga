@@ -7,10 +7,10 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export dropdown plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Dropdown);
-        registerComponent(app, DropdownItem);
-    },
+  install(app: App) {
+    registerComponent(app, Dropdown);
+    registerComponent(app, DropdownItem);
+  },
 } as Plugin;
 
 /** export dropdown components */

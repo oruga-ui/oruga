@@ -1,5 +1,5 @@
 <template>
-    <section>
-        <o-datetimepicker inline />
-    </section>
+  <section>
+    <o-datetimepicker inline />
+  </section>
 </template>

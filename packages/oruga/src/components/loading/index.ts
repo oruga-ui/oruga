@@ -2,7 +2,7 @@ import type { App, Plugin } from "vue";
 
 import Loading from "./Loading.vue";
 import useLoadingProgrammatic, {
-    LoadingProgrammaticFactory,
+  LoadingProgrammaticFactory,
 } from "./useLoadingProgrammatic";
 
 import { registerComponent, registerComponentInterface } from "@/utils/plugins";
@@ -12,10 +12,10 @@ export type { LoadingProgrammaticOptions } from "./useLoadingProgrammatic";
 
 /** export loading plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Loading);
-        registerComponentInterface(app, "loading", LoadingProgrammaticFactory);
-    },
+  install(app: App) {
+    registerComponent(app, Loading);
+    registerComponentInterface(app, "loading", LoadingProgrammaticFactory);
+  },
 } as Plugin;
 
 /** export loading components & composables */

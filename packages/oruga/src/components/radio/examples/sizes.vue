@@ -5,42 +5,42 @@ const radio = ref("small");
 </script>
 
 <template>
-    <section>
-        <o-field>
-            <o-radio
-                v-model="radio"
-                name="sizes"
-                native-value="small"
-                size="small"
-                label="Small" />
-        </o-field>
+  <section>
+    <o-field>
+      <o-radio
+        v-model="radio"
+        name="sizes"
+        native-value="small"
+        size="small"
+        label="Small" />
+    </o-field>
 
-        <o-field>
-            <o-radio
-                v-model="radio"
-                name="sizes"
-                native-value="default"
-                label="Default" />
-        </o-field>
+    <o-field>
+      <o-radio
+        v-model="radio"
+        name="sizes"
+        native-value="default"
+        label="Default" />
+    </o-field>
 
-        <o-field>
-            <o-radio
-                v-model="radio"
-                name="sizes"
-                native-value="medium"
-                size="medium"
-                label="Medium" />
-        </o-field>
+    <o-field>
+      <o-radio
+        v-model="radio"
+        name="sizes"
+        native-value="medium"
+        size="medium"
+        label="Medium" />
+    </o-field>
 
-        <o-field>
-            <o-radio
-                v-model="radio"
-                name="sizes"
-                native-value="large"
-                size="large"
-                label="Large" />
-        </o-field>
+    <o-field>
+      <o-radio
+        v-model="radio"
+        name="sizes"
+        native-value="large"
+        size="large"
+        label="Large" />
+    </o-field>
 
-        <p><b>Selection:</b> {{ radio }}</p>
-    </section>
+    <p><b>Selection:</b> {{ radio }}</p>
+  </section>
 </template>

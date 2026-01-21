@@ -4,12 +4,13 @@ import { isClient } from "@/utils/ssr";
 import { unrefElement } from "./unrefElement";
 import { useDebounce } from "./useDebounce";
 import {
-    useEventListener,
-    type EventListenerOptions,
-    type EventTarget,
+  useEventListener,
+  type EventListenerOptions,
+  type EventTarget,
 } from "./useEventListener";
 
-/** Call a function when the scoll reaches the end or the start of an element.
+/**
+ * Call a function when the scoll reaches the end or the start of an element.
  * This is useful for infinite scroll lists.
  * @param element - The element to listen for scroll events.
  * @param options - Options for the infinite scroll.
@@ -20,84 +21,84 @@ import {
  * @returns A function to call to to manually check the scroll position.
  */
 export function useScrollEvents(
-    element: MaybeRefOrGetter<EventTarget>,
-    options: {
-        onScroll?: () => void;
-        onScrollEnd?: () => void;
-        onScrollStart?: () => void;
-        debounce?: number;
-    },
-    listenerOptions?: EventListenerOptions,
+  element: MaybeRefOrGetter<EventTarget>,
+  options: {
+    onScroll?: () => void;
+    onScrollEnd?: () => void;
+    onScrollStart?: () => void;
+    debounce?: number;
+  },
+  listenerOptions?: EventListenerOptions,
 ): () => void {
-    if (!getCurrentScope())
-        throw new Error(
-            "The 'useScrollEvents' composable should be used inside a current EffectScope.",
-        );
-
-    /** debounced checkScroll funciton */
-    const debouncedCheckScroll = useDebounce(
-        checkScroll,
-        options.debounce ?? 100,
+  if (!getCurrentScope())
+    throw new Error(
+      "The 'useScrollEvents' composable should be used inside a current EffectScope.",
     );
 
-    if (isClient)
-        useEventListener(
-            element,
-            "scroll",
-            debouncedCheckScroll,
-            listenerOptions,
-        );
+  /** debounced checkScroll funciton */
+  const debouncedCheckScroll = useDebounce(
+    checkScroll,
+    options.debounce ?? 100,
+  );
 
-    /** Check if the scroll list inside the dropdown reached the top or it's end. */
-    function checkScroll(): void {
-        const el = unrefElement(element);
-        if (!el) return;
-        if (options.onScroll) options.onScroll();
-        const { offsetTop, scrollTop, clientHeight, scrollHeight } = el;
+  if (isClient)
+    useEventListener(
+      element,
+      "scroll",
+      debouncedCheckScroll,
+      listenerOptions,
+    );
 
-        const trashhold = offsetTop;
-        if (clientHeight !== scrollHeight) {
-            if (
-                Math.ceil(scrollTop + clientHeight + trashhold) >= scrollHeight
-            ) {
-                if (options.onScrollEnd) options.onScrollEnd();
-            } else if (scrollTop <= trashhold) {
-                if (options.onScrollStart) options.onScrollStart();
-            }
-        }
+  /** Check if the scroll list inside the dropdown reached the top or it's end. */
+  function checkScroll(): void {
+    const el = unrefElement(element);
+    if (!el) return;
+    if (options.onScroll) options.onScroll();
+    const { offsetTop, scrollTop, clientHeight, scrollHeight } = el;
+
+    const trashhold = offsetTop;
+    if (clientHeight !== scrollHeight) {
+      if (
+        Math.ceil(scrollTop + clientHeight + trashhold) >= scrollHeight
+      ) {
+        if (options.onScrollEnd) options.onScrollEnd();
+      } else if (scrollTop <= trashhold) {
+        if (options.onScrollStart) options.onScrollStart();
+      }
     }
+  }
 
-    return debouncedCheckScroll;
+  return debouncedCheckScroll;
 }
 
 /**
  * Given an element, returns the element who scrolls it.
  */
 export function getScrollingParent(target: HTMLElement): HTMLElement | null {
-    if (target.style.position === "fixed" || !target)
-        return document.documentElement;
+  if (target.style.position === "fixed" || !target)
+    return document.documentElement;
 
-    let isScrollingParent = false;
-    let nextParent = target.parentElement;
+  let isScrollingParent = false;
+  let nextParent = target.parentElement;
 
-    while (!isScrollingParent && isDefined(nextParent)) {
-        if (nextParent === document.documentElement) break;
+  while (!isScrollingParent && isDefined(nextParent)) {
+    if (nextParent === document.documentElement) break;
 
-        const { overflow, overflowY } = getComputedStyle(nextParent);
-        const { scrollHeight, clientHeight } = nextParent; // Both rounded by nature
+    const { overflow, overflowY } = getComputedStyle(nextParent);
+    const { scrollHeight, clientHeight } = nextParent; // Both rounded by nature
 
-        isScrollingParent =
-            /(auto|scroll)/.test(`${overflow}${overflowY}`) &&
-            scrollHeight > clientHeight;
+    isScrollingParent =
+      /(auto|scroll)/.test(`${overflow}${overflowY}`) &&
+      scrollHeight > clientHeight;
 
-        /* ...found it, this one is returned */
-        if (isScrollingParent) break;
+    /* ...found it, this one is returned */
+    if (isScrollingParent) break;
 
-        /* ...if not check the next one */
-        nextParent = nextParent.parentElement;
-    }
+    /* ...if not check the next one */
+    nextParent = nextParent.parentElement;
+  }
 
-    return nextParent;
+  return nextParent;
 }
 
 /**
@@ -105,19 +106,19 @@ export function getScrollingParent(target: HTMLElement): HTMLElement | null {
  * @deprecated currently unused - can be deleted
  */
 export function isElementInView(
-    elementRef: MaybeRefOrGetter<HTMLElement>,
+  elementRef: MaybeRefOrGetter<HTMLElement>,
 ): boolean {
-    const element = unrefElement(elementRef);
-    const bounding = element.getBoundingClientRect();
+  const element = unrefElement(elementRef);
+  const bounding = element.getBoundingClientRect();
 
-    return (
-        bounding.top >= 0 &&
-        bounding.left >= 0 &&
-        bounding.bottom <=
-            (window.innerHeight || document.documentElement.clientHeight) &&
-        bounding.right <=
-            (window.innerWidth || document.documentElement.clientWidth)
-    );
+  return (
+    bounding.top >= 0 &&
+    bounding.left >= 0 &&
+    bounding.bottom <=
+    (window.innerHeight || document.documentElement.clientHeight) &&
+    bounding.right <=
+    (window.innerWidth || document.documentElement.clientWidth)
+  );
 }
 
 /**
@@ -125,10 +126,10 @@ export function isElementInView(
  * @deprecated currently unused - can be deleted
  */
 export function isScrollable(
-    elementRef: MaybeRefOrGetter<HTMLElement>,
+  elementRef: MaybeRefOrGetter<HTMLElement>,
 ): boolean {
-    const element = unrefElement(elementRef);
-    return element && element.clientHeight < element.scrollHeight;
+  const element = unrefElement(elementRef);
+  return element && element.clientHeight < element.scrollHeight;
 }
 
 /**
@@ -136,27 +137,27 @@ export function isScrollable(
  * If the child is not visible, scroll the parent to the child's position.
  */
 export function scrollElementInView(
-    scrollableParent: MaybeRefOrGetter<HTMLElement | Component | null>,
-    childElement: MaybeRefOrGetter<HTMLElement | Component | null>,
+  scrollableParent: MaybeRefOrGetter<HTMLElement | Component | null>,
+  childElement: MaybeRefOrGetter<HTMLElement | Component | null>,
 ): void {
-    const parent = unrefElement(scrollableParent);
-    const element = unrefElement(childElement);
+  const parent = unrefElement(scrollableParent);
+  const element = unrefElement(childElement);
 
-    if (!parent || !element) return;
+  if (!parent || !element) return;
 
-    // The 'offsetTop' is the distance from the outer border of the element (including margin)
-    // to the top padding edge of the offsetParent, the closest positioned ancestor element.
-    // The 'offsetHeight' is the height of an element, including vertical padding and borders, as an integer.
-    // The 'scrollTop' is the number of pixels by which an element's content is scrolled from its top edge.
-    const { offsetHeight, offsetTop } = element;
-    const { offsetHeight: parentOffsetHeight, scrollTop } = parent;
+  // The 'offsetTop' is the distance from the outer border of the element (including margin)
+  // to the top padding edge of the offsetParent, the closest positioned ancestor element.
+  // The 'offsetHeight' is the height of an element, including vertical padding and borders, as an integer.
+  // The 'scrollTop' is the number of pixels by which an element's content is scrolled from its top edge.
+  const { offsetHeight, offsetTop } = element;
+  const { offsetHeight: parentOffsetHeight, scrollTop } = parent;
 
-    const isAbove = offsetTop < scrollTop;
-    const isBelow = offsetTop + offsetHeight > scrollTop + parentOffsetHeight;
+  const isAbove = offsetTop < scrollTop;
+  const isBelow = offsetTop + offsetHeight > scrollTop + parentOffsetHeight;
 
-    if (isAbove) {
-        parent.scrollTo(0, offsetTop);
-    } else if (isBelow) {
-        parent.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight);
-    }
+  if (isAbove) {
+    parent.scrollTo(0, offsetTop);
+  } else if (isBelow) {
+    parent.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight);
+  }
 }

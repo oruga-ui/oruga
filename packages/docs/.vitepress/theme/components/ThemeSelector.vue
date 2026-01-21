@@ -7,36 +7,36 @@ const selectedTheme = defineModel<ThemeConfig>("theme");
 selectedTheme.value = loadTheme();
 
 function onThemeChange(theme: ThemeConfig): void {
-    selectedTheme.value = theme;
-    saveTheme(theme);
+  selectedTheme.value = theme;
+  saveTheme(theme);
 }
 </script>
 
 <template>
-    <o-dropdown
-        :model-value="selectedTheme"
-        override
-        root-class="theme-selector"
-        menu-class="theme-drop__menu"
-        selectable
-        aria-label="theme selection"
-        @change="onThemeChange">
-        <template #trigger="{ active }">
-            <span role="button">
-                Theme ➜ {{ selectedTheme?.label }}
-                <o-icon :icon="active ? 'caret-up' : 'caret-down'" />
-            </span>
-        </template>
+  <o-dropdown
+    :model-value="selectedTheme"
+    override
+    root-class="theme-selector"
+    menu-class="theme-drop__menu"
+    selectable
+    aria-label="theme selection"
+    @change="onThemeChange">
+    <template #trigger="{ active }">
+      <span role="button">
+        Theme ➜ {{ selectedTheme?.label }}
+        <o-icon :icon="active ? 'caret-up' : 'caret-down'" />
+      </span>
+    </template>
 
-        <o-dropdown-item
-            v-for="item in Themes"
-            :key="item.key"
-            :value="item"
-            item-class="theme-drop__item"
-            item-selected-class="theme-drop__item--active">
-            {{ item.label }}
-        </o-dropdown-item>
-    </o-dropdown>
+    <o-dropdown-item
+      v-for="item in Themes"
+      :key="item.key"
+      :value="item"
+      item-class="theme-drop__item"
+      item-selected-class="theme-drop__item--active">
+      {{ item.label }}
+    </o-dropdown-item>
+  </o-dropdown>
 </template>
 
 <style lang="scss" scoped>

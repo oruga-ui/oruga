@@ -4,81 +4,81 @@ import type { InspectData } from "@docs";
 import type { AutocompleteClasses, AutocompleteProps } from "../props";
 
 const options: OptionsGroupProp<string> = [
-    {
-        label: "Frameworks",
-        options: ["Vue.js"],
-    },
+  {
+    label: "Frameworks",
+    options: ["Vue.js"],
+  },
 ];
 
 const inspectData: InspectData<
-    AutocompleteClasses,
-    AutocompleteProps<unknown>
+  AutocompleteClasses,
+  AutocompleteProps<unknown>
 > = {
-    rootClass: {
-        class: "rootClass",
-        description: "Class of the root element.",
+  rootClass: {
+    class: "rootClass",
+    description: "Class of the root element.",
+  },
+  itemClass: {
+    class: "itemClass",
+    description: "Class of the menu items.",
+    action: (data): void => {
+      data.input = "Q";
+      data.active = true;
     },
-    itemClass: {
-        class: "itemClass",
-        description: "Class of the menu items.",
-        action: (data): void => {
-            data.input = "Q";
-            data.active = true;
-        },
+  },
+  itemGroupClass: {
+    class: "itemGroupClass",
+    description: "Class of the menu group item.",
+    action: (data): void => {
+      data.input = "Q";
+      data.active = true;
     },
-    itemGroupClass: {
-        class: "itemGroupClass",
-        description: "Class of the menu group item.",
-        action: (data): void => {
-            data.input = "Q";
-            data.active = true;
-        },
+  },
+  itemEmptyClass: {
+    class: "itemEmptyClass",
+    description: "Class of the empty menu placeholder item.",
+    action: (data): void => {
+      data.input = "|";
+      data.active = true;
     },
-    itemEmptyClass: {
-        class: "itemEmptyClass",
-        description: "Class of the empty menu placeholder item.",
-        action: (data): void => {
-            data.input = "|";
-            data.active = true;
-        },
+  },
+  itemHeaderClass: {
+    class: "itemHeaderClass",
+    description: "Class of the menu header item.",
+    action: (data): void => {
+      data.input = "Q";
+      data.active = true;
     },
-    itemHeaderClass: {
-        class: "itemHeaderClass",
-        description: "Class of the menu header item.",
-        action: (data): void => {
-            data.input = "Q";
-            data.active = true;
-        },
+  },
+  itemFooterClass: {
+    class: "itemFooterClass",
+    description: "Class of the menu footer item.",
+    action: (data): void => {
+      data.input = "Q";
+      data.active = true;
     },
-    itemFooterClass: {
-        class: "itemFooterClass",
-        description: "Class of the menu footer item.",
-        action: (data): void => {
-            data.input = "Q";
-            data.active = true;
-        },
-    },
-    inputClasses: {
-        class: "inputClasses",
-        description: "Classes to apply on the internal input component.",
-        relatedComponent: "Input",
-    },
+  },
+  inputClasses: {
+    class: "inputClasses",
+    description: "Classes to apply on the internal input component.",
+    relatedComponent: "Input",
+  },
 };
 </script>
 
 <template>
-    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-autocomplete
-            v-bind="props"
-            :options="options"
-            placeholder="e.g. Vue.js"
-            icon="search"
-            clearable
-            selectable-header
-            selectable-footer>
-            <template #empty>No results found</template>
-            <template #header>Header slot (optional)</template>
-            <template #footer>Footer slot (optional)</template>
-        </o-autocomplete>
-    </inspector-wrapper>
+  <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+    <o-autocomplete
+      v-bind="props"
+      :options="options"
+      placeholder="e.g. Vue.js"
+      icon="search"
+      clearable
+      selectable-header
+      selectable-footer>
+      <template #empty> No results found </template>
+      <template #header> Header slot (optional) </template>
+      <template #footer> Footer slot (optional) </template>
+    </o-autocomplete>
+  </inspector-wrapper>
 </template>

@@ -56,10 +56,6 @@ export default [
 
   // project specific modifications
   {
-    plugins: {
-      // add eslint stylistic
-      "@stylistic": stylistic,
-    },
     // custon rule modifications
     rules: {
       // TypeScript
@@ -69,8 +65,16 @@ export default [
       // Vue
       "vue/padding-line-between-blocks": ["error", "always"],
       "vue/multi-word-component-names": ["off"],
+      "vue/singleline-html-element-content-newline": ["off"],
       "vue/block-order": ["error", { order: ["script", "template", "style"] }],
       "vue/block-lang": ["error", { script: { lang: "ts" } }],
+      "vue/max-attributes-per-line": [
+        "error",
+        {
+          singleline: { max: 2 },
+          multiline: { max: 1 },
+        },
+      ],
       "vue/html-closing-bracket-newline": [
         "error",
         {
@@ -83,6 +87,8 @@ export default [
         },
       ],
       // Stylistic
+      "@stylistic/quotes": ["error", "double", { avoidEscape: true }],
+      "@stylistic/spaced-comment": ["error", "always"],
       "@stylistic/multiline-ternary": ["error", "always-multiline"],
       "@stylistic/object-curly-newline": [
         "error",

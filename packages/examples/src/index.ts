@@ -41,28 +41,28 @@ import { ClientOnly } from "../../../node_modules/vitepress/dist/client/app/comp
 
 // main oruga vue plugin
 const plugin: Plugin = {
-    install(app: App) {
-        // add fortawesome icons
-        library.add(fas);
-        app.component("VueFontawesome", FontAwesomeIcon);
+  install(app: App) {
+    // add fortawesome icons
+    library.add(fas);
+    app.component("VueFontawesome", FontAwesomeIcon);
 
-        // add examples components
-        const examples = import.meta.glob<DefineComponent>(
-            "../../oruga/src/components/**/examples/index.vue",
-            { eager: true },
-        );
-        for (const path in examples) {
-            const str = path.split("/")[5];
-            const component =
-                str.charAt(0).toUpperCase() + str.slice(1) + "Examples";
-            app.component(component, markRaw(examples[path].default));
-        }
+    // add examples components
+    const examples = import.meta.glob<DefineComponent>(
+      "../../oruga/src/components/**/examples/index.vue",
+      { eager: true },
+    );
+    for (const path in examples) {
+      const str = path.split("/")[5];
+      const component =
+        str.charAt(0).toUpperCase() + str.slice(1) + "Examples";
+      app.component(component, markRaw(examples[path].default));
+    }
 
-        // add documentation components
-        app.component("ExampleShowcase", ExampleShowcase);
-        app.component("ExampleViewer", ExampleViewer);
-        app.component("ClientOnly", ClientOnly);
-    },
+    // add documentation components
+    app.component("ExampleShowcase", ExampleShowcase);
+    app.component("ExampleViewer", ExampleViewer);
+    app.component("ClientOnly", ClientOnly);
+  },
 };
 
 // export example plugins

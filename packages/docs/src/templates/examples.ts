@@ -1,5 +1,5 @@
 export function renderer(name: string): string {
-    return `
+  return `
 ## Examples
 
 ${"<example-" + name.toLowerCase() + " />"}

@@ -9,55 +9,55 @@ const selectOnClose = ref(false);
 const clearOnSelect = ref(false);
 
 const options: OptionsProp<string> = [
-    "Angular",
-    "Angular 2",
-    "Aurelia",
-    "Backbone",
-    "Ember",
-    "jQuery",
-    "Meteor",
-    "Node.js",
-    "Polymer",
-    "React",
-    "RxJS",
-    "Vue.js",
+  "Angular",
+  "Angular 2",
+  "Aurelia",
+  "Backbone",
+  "Ember",
+  "jQuery",
+  "Meteor",
+  "Node.js",
+  "Polymer",
+  "React",
+  "RxJS",
+  "Vue.js",
 ];
 
 const selected = ref();
 
 function changeselection(): void {
-    selected.value = options[0];
+  selected.value = options[0];
 }
 </script>
 
 <template>
-    <section class="odocs-spaced">
-        <o-field grouped multiline>
-            <o-switch v-model="keepFirst">Keep first</o-switch>
-            <o-switch v-model="keepOpen">Keep open</o-switch>
-            <o-switch v-model="openOnFocus">Open on focus</o-switch>
-            <o-switch v-model="selectOnClose">Select on close</o-switch>
-            <o-switch v-model="clearOnSelect">Clear on Select</o-switch>
-            <o-button @click="changeselection">
-                Set '{{ options[0] }}' selected
-            </o-button>
-        </o-field>
+  <section class="odocs-spaced">
+    <o-field grouped multiline>
+      <o-switch v-model="keepFirst"> Keep first </o-switch>
+      <o-switch v-model="keepOpen"> Keep open </o-switch>
+      <o-switch v-model="openOnFocus"> Open on focus </o-switch>
+      <o-switch v-model="selectOnClose"> Select on close </o-switch>
+      <o-switch v-model="clearOnSelect"> Clear on Select </o-switch>
+      <o-button @click="changeselection">
+        Set '{{ options[0] }}' selected
+      </o-button>
+    </o-field>
 
-        <o-field label="Find a name">
-            <o-autocomplete
-                v-model="selected"
-                :options="options"
-                placeholder="e.g. Vue"
-                icon="search"
-                :keep-first="keepFirst"
-                :open-on-focus="openOnFocus"
-                :keep-open="keepOpen"
-                :clear-on-select="clearOnSelect"
-                :select-on-close="selectOnClose">
-                <template #empty> No results found </template>
-            </o-autocomplete>
+    <o-field label="Find a name">
+      <o-autocomplete
+        v-model="selected"
+        :options="options"
+        placeholder="e.g. Vue"
+        icon="search"
+        :keep-first="keepFirst"
+        :open-on-focus="openOnFocus"
+        :keep-open="keepOpen"
+        :clear-on-select="clearOnSelect"
+        :select-on-close="selectOnClose">
+        <template #empty> No results found </template>
+      </o-autocomplete>
 
-            <p><b>Selected:</b> {{ selected }}</p>
-        </o-field>
-    </section>
+      <p><b>Selected:</b> {{ selected }}</p>
+    </o-field>
+  </section>
 </template>

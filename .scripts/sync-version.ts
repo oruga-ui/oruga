@@ -1,39 +1,39 @@
 import { ReplaceInFileConfig, replaceInFileSync } from "replace-in-file";
 
 const jsonPaths = [
-    "package-lock.json",
-    "packages/docs/package.json",
-    "packages/oruga/package.json",
-    "packages/examples/package.json",
+  "package-lock.json",
+  "packages/docs/package.json",
+  "packages/oruga/package.json",
+  "packages/examples/package.json",
 ];
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const version = require("../package.json").version;
 
 const configJsonOptions = [
-    {
-        files: jsonPaths,
-        from: /"name": "@oruga-ui\/(.*)",([^"]*)"version": .+/gi,
-        to: (match: string): string =>
-            match.replace(/"version": .+/i, `"version": "${version}",`),
-    },
-    {
-        files: jsonPaths,
-        from: /"@oruga-ui\/oruga-next": "(.*)",/gi,
-        to: (match: string): string =>
-            match.replace(
-                /oruga-next": "(.*)",/i,
-                `oruga-next": "${version}",`,
-            ),
-    },
+  {
+    files: jsonPaths,
+    from: /"name": "@oruga-ui\/(.*)",([^"]*)"version": .+/gi,
+    to: (match: string): string =>
+      match.replace(/"version": .+/i, `"version": "${version}",`),
+  },
+  {
+    files: jsonPaths,
+    from: /"@oruga-ui\/oruga-next": "(.*)",/gi,
+    to: (match: string): string =>
+      match.replace(
+        /oruga-next": "(.*)",/i,
+        `oruga-next": "${version}",`,
+      ),
+  },
 ];
 
 const replaceInFile = (config: ReplaceInFileConfig): string[] =>
-    replaceInFileSync(config).map((el) => el.file);
+  replaceInFileSync(config).map((el) => el.file);
 
 try {
-    configJsonOptions.forEach((options) => replaceInFile(options));
-    console.info("Modified files:", jsonPaths.join(", "));
+  configJsonOptions.forEach((options) => replaceInFile(options));
+  console.info("Modified files:", jsonPaths.join(", "));
 } catch (error) {
-    console.error(error);
-    process.exit(1);
+  console.error(error);
+  process.exit(1);
 }

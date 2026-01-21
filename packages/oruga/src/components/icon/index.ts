@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export icon plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Icon);
-    },
+  install(app: App) {
+    registerComponent(app, Icon);
+  },
 } as Plugin;
 
 /** export icon components */

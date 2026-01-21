@@ -6,9 +6,9 @@ import { registerComponent } from "@/utils/plugins";
 
 /** export radio plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Radio);
-    },
+  install(app: App) {
+    registerComponent(app, Radio);
+  },
 } as Plugin;
 
 /** export radio components */

@@ -2,7 +2,7 @@ import type { App, Plugin } from "vue";
 
 import Dialog from "./Dialog.vue";
 import useDialogProgrammatic, {
-    DialogProgrammaticFactory,
+  DialogProgrammaticFactory,
 } from "./useDialogProgrammatic";
 
 import { registerComponent, registerComponentInterface } from "@/utils/plugins";
@@ -12,10 +12,10 @@ export type { DialogProgrammaticOptions } from "./useDialogProgrammatic";
 
 /** export dialog plugin */
 export default {
-    install(app: App) {
-        registerComponent(app, Dialog);
-        registerComponentInterface(app, "dialog", DialogProgrammaticFactory);
-    },
+  install(app: App) {
+    registerComponent(app, Dialog);
+    registerComponentInterface(app, "dialog", DialogProgrammaticFactory);
+  },
 } as Plugin;
 
 /** export dialog components */

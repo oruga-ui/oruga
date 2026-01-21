@@ -5,36 +5,44 @@ const active = ref(true);
 </script>
 
 <template>
-    <section class="odocs-spaced">
-        <p>
-            <o-field>
-                <o-switch v-model="active" label="Toggle" />
-            </o-field>
+  <section class="odocs-spaced">
+    <p>
+      <o-field>
+        <o-switch
+          v-model="active"
+          label="Toggle" />
+      </o-field>
 
-            <o-tooltip label="I'm never closing" open-on-click close-on-outside>
-                <o-button label="Click me" />
-            </o-tooltip>
+      <o-tooltip
+        label="I'm never closing"
+        open-on-click
+        close-on-outside>
+        <o-button label="Click me" />
+      </o-tooltip>
 
-            <o-tooltip
-                label="I'm never closing"
-                open-on-contextmenu
-                close-on-outside>
-                <o-button label="Right click me" />
-            </o-tooltip>
+      <o-tooltip
+        label="I'm never closing"
+        open-on-contextmenu
+        close-on-outside>
+        <o-button label="Right click me" />
+      </o-tooltip>
 
-            <o-tooltip label="I'm never closing" always position="top">
-                <o-button label="Always" />
-            </o-tooltip>
+      <o-tooltip
+        label="I'm never closing"
+        always
+        position="top">
+        <o-button label="Always" />
+      </o-tooltip>
 
-            <o-tooltip
-                variant="danger"
-                label="Tooltip right"
-                position="right"
-                :open-on-hover="false"
-                :closeable="false"
-                :active="active">
-                <o-button label="Toggled" />
-            </o-tooltip>
-        </p>
-    </section>
+      <o-tooltip
+        variant="danger"
+        label="Tooltip right"
+        position="right"
+        :open-on-hover="false"
+        :closeable="false"
+        :active="active">
+        <o-button label="Toggled" />
+      </o-tooltip>
+    </p>
+  </section>
 </template>
