@@ -75,6 +75,8 @@ export type TreeItemProps<T> = {
     options?: OptionsProp<T>;
     /** Tree item label */
     label?: string; // TODO: make required
+    /** Override item selectable state */
+    selectable?: boolean;
     /** Tree item will be expanded */
     expanded?: boolean;
     /** Tree item will be disabled */
@@ -115,10 +117,12 @@ export type TreeItemClasses = Partial<{
     itemFocusedClass: ComponentClass;
     /** Class of the tree item root element when disabled */
     itemDisabledClass: ComponentClass;
-    /** Class of the tree item label element element */
-    itemLabelClass: ComponentClass;
+    /** Class of the tree item toggle icon element */
+    itemToggleIconClass: ComponentClass;
     /** Class of the tree item icon element */
     itemIconClass: ComponentClass;
+    /** Class of the tree item label element element */
+    itemLabelClass: ComponentClass;
     /** Class of a subtree element of a tree item */
     subtreeClass: ComponentClass;
 }>;

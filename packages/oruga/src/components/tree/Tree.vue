@@ -28,6 +28,7 @@ import {
     isGroupOption,
     normalizeOptions,
     scrollElementInView,
+    unrefElement,
     useProviderParent,
     useScrollEvents,
     useSequentialId,
@@ -323,9 +324,18 @@ const focusedItem = ref<TreeItem<T>>();
 const startRangeIndex = ref(-1);
 
 // focus the item when the focused item changes
-watch(focusedItem, () => toValue(focusedItem.value?.el)?.focus(), {
-    flush: "post",
-});
+watch(
+    focusedItem,
+    (newFocus, oldFocus) => {
+        if (newFocus)
+            // focus new element
+            toValue(newFocus.el)?.focus();
+        else if (oldFocus)
+            // blur old if no new focus available to
+            unrefElement(oldFocus.el)?.blur();
+    },
+    { flush: "post" },
+);
 
 // initialise focus on mounted
 onMounted(resetFocus);
@@ -477,6 +487,11 @@ function onFocusin(event: FocusEvent): void {
 
     isFocused.value = true;
 
+    emits("focus", event);
+
+    // prevent further when an item is already focused
+    if (focusedItem.value) return;
+
     const firstSelectedItem = findFirstSelectedItem();
 
     // when an item is already selected
@@ -486,8 +501,6 @@ function onFocusin(event: FocusEvent): void {
     else
         // else focus first item
         focusFirstItem();
-
-    emits("focus", event);
 }
 
 function onFocusout(event: FocusEvent): void {

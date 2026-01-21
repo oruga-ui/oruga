@@ -81,11 +81,17 @@ const inspectData: InspectData<
     itemDisabledClass: {
         class: "itemDisabledClass",
         subitem: "treeitem",
-        description: "Class of the tree item element when disabled.",
         properties: ["disabled"],
+        description: "Class of the tree item element when disabled.",
         action: (data): void => {
             data.disabled = true;
         },
+    },
+    itemToggleIconClass: {
+        class: "itemToggleIconClass",
+        subitem: "treeitem",
+        properties: ["toggleIcon"],
+        description: "Class of the tree item toggle icon element.",
     },
     itemLabelClass: {
         class: "itemLabelClass",

@@ -3624,13 +3624,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 itemDisabledClass: ClassDefinition;
                 /**
-                 * Class of the tree item label element element
+                 * Class of the tree item toggle icon element
                  */
-                itemLabelClass: ClassDefinition;
+                itemToggleIconClass: ClassDefinition;
                 /**
                  * Class of the tree item icon element
                  */
                 itemIconClass: ClassDefinition;
+                /**
+                 * Class of the tree item label element element
+                 */
+                itemLabelClass: ClassDefinition;
                 /**
                  * Class of a subtree element of a tree item
                  */

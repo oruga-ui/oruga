@@ -38,6 +38,7 @@ const props = withDefaults(defineProps<TreeItemProps<T>>(), {
     value: () => useId(),
     options: undefined,
     label: undefined,
+    selectable: undefined,
     expanded: false,
     disabled: false,
     hidden: false,
@@ -117,9 +118,11 @@ const { parent, item } = useProviderChild<
     TreeItemComponent<T>
 >(rootRef, { data: providedData });
 
+const nextSequence = parent.value.nextSequence;
+
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, parent.value.nextSequence),
+    normalizeOptions<T>(props.options, nextSequence),
 );
 
 const hasChildren = computed(() => !!childItems.value.length);
@@ -135,7 +138,7 @@ const isFocused = computed(
 
 /** Shows if the item is selectable or not. */
 const isSelectable = computed(
-    () => !isDisabled.value && parent.value.selectable,
+    () => !isDisabled.value && (props.selectable ?? parent.value.selectable),
 );
 
 const isSelected = computed(() => {
@@ -218,6 +221,11 @@ const labelClasses = defineClasses(["itemLabelClass", "o-tree__item-label"]);
 
 const iconClasses = defineClasses(["itemIconClass", "o-tree__item-icon"]);
 
+const toggleClasses = defineClasses([
+    "itemToggleIconClass",
+    "o-tree__item-toggle-icon",
+]);
+
 const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
 
 // #endregion --- Computed Component Classes ---
@@ -239,17 +247,19 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         :aria-disabled="disabled || parent.disabled"
         :aria-label="ariaLabel ?? label"
         :aria-labelledby="ariaLabelledby"
-        :aria-owns="hasChildren ? subtreeId : undefined"
-        @click.stop="clickItem"
-        @mouseenter="focusItem">
-        <o-icon
-            v-if="parent.toggleIcon"
-            :icon="parent.toggleIcon"
-            :pack="itemIconPack"
-            :size="itemIconSize"
-            @click.prevent="toggleExpand" />
+        :aria-owns="hasChildren ? subtreeId : undefined">
+        <div
+            :class="labelClasses"
+            @mouseenter="focusItem"
+            @click.stop="clickItem">
+            <o-icon
+                v-if="parent.toggleIcon"
+                :icon="parent.toggleIcon"
+                :pack="itemIconPack"
+                :size="itemIconSize"
+                :class="toggleClasses"
+                @click.prevent="toggleExpand" />
 
-        <div :class="labelClasses">
             <o-icon
                 v-if="icon"
                 :icon="icon"

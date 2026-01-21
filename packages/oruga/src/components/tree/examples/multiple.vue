@@ -42,8 +42,16 @@ const selected = ref<string[]>();
                     value="review" />
             </o-tree-item>
 
-            <o-tree-item icon="star" label="Movies" value="movies">
-                <o-tree-item icon="star" label="Al Pacino" value="al-paciono">
+            <o-tree-item
+                icon="star"
+                label="Movies"
+                value="movies"
+                :selectable="false">
+                <o-tree-item
+                    icon="star"
+                    label="Al Pacino"
+                    value="al-paciono"
+                    :selectable="false">
                     <o-tree-item
                         icon="video"
                         label="Scarface"
@@ -54,7 +62,8 @@ const selected = ref<string[]>();
                 <o-tree-item
                     icon="star"
                     label="Robert De Niro"
-                    value="robert-deniro">
+                    value="robert-deniro"
+                    :selectable="false">
                     <o-tree-item
                         icon="video"
                         label="Goodfellas"
