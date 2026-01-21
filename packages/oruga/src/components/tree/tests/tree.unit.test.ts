@@ -244,7 +244,9 @@ describe("OTree tests", () => {
                 expect(item.text()).toEqual(options[index].label),
             );
 
-            await items[1].trigger("click");
+            const itemLabel = items[1].find(".o-tree__item-label");
+            expect(itemLabel.exists()).toBeTruthy();
+            await itemLabel.trigger("click");
             expect(items[0].classes("o-tree__item--selected")).toBeFalsy();
             expect(items[1].classes("o-tree__item--selected")).toBeTruthy();
             expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
@@ -439,33 +441,38 @@ describe("OTree tests", () => {
             expect(items.length).toBe(17);
 
             const itemOne = items[0]; // Documents item
-            expect(itemOne.find(".o-tree__item-label").text()).toBe(
-                "Documents",
-            );
+            const itemOneLabel = itemOne.find(".o-tree__item-label");
+            expect(itemOneLabel.exists()).toBeTruthy();
+            expect(itemOneLabel.text()).toBe("Documents");
             const itemTwo = items[6]; // Events item
-            expect(itemTwo.find(".o-tree__item-label").text()).toBe("Events");
+            const itemTwoLabel = itemTwo.find(".o-tree__item-label");
+            expect(itemTwoLabel.exists()).toBeTruthy();
+            expect(itemTwoLabel.text()).toBe("Events");
+
             const itemThree = items[10]; // Movies item
-            expect(itemThree.find(".o-tree__item-label").text()).toBe("Movies");
+            const itemThreeLabel = itemThree.find(".o-tree__item-label");
+            expect(itemThreeLabel.exists()).toBeTruthy();
+            expect(itemThreeLabel.text()).toBe("Movies");
 
             // open tree sections
-            await itemOne.trigger("click");
+            await itemOneLabel.trigger("click");
             expect(itemOne.emitted("open")).toBeDefined();
             expect(itemOne.emitted("close")).toBeUndefined();
-            await itemTwo.trigger("click");
+            await itemTwoLabel.trigger("click");
             expect(itemTwo.emitted("open")).toBeDefined();
             expect(itemTwo.emitted("close")).toBeUndefined();
-            await itemThree.trigger("click");
+            await itemThreeLabel.trigger("click");
             expect(itemThree.emitted("open")).toBeDefined();
             expect(itemThree.emitted("close")).toBeUndefined();
 
             // close all tree sections
-            await itemOne.trigger("click");
+            await itemOneLabel.trigger("click");
             expect(itemOne.emitted("open")).toBeDefined();
             expect(itemOne.emitted("close")).toBeDefined();
-            await itemTwo.trigger("click");
+            await itemTwoLabel.trigger("click");
             expect(itemTwo.emitted("open")).toBeDefined();
             expect(itemTwo.emitted("close")).toBeDefined();
-            await itemThree.trigger("click");
+            await itemThreeLabel.trigger("click");
             expect(itemThree.emitted("open")).toBeDefined();
             expect(itemThree.emitted("close")).toBeDefined();
         });
@@ -498,7 +505,9 @@ describe("OTree tests", () => {
             expect(items[1].classes("o-tree__item--selected")).toBeFalsy();
             expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
 
-            await items[2].trigger("click");
+            const itemLabel = items[2].find(".o-tree__item-label");
+            expect(itemLabel.exists()).toBeTruthy();
+            await itemLabel.trigger("click");
 
             expect(items[0].classes("o-tree__item--selected")).toBeFalsy();
             expect(items[1].classes("o-tree__item--selected")).toBeFalsy();
@@ -550,7 +559,9 @@ describe("OTree tests", () => {
             expect(items[1].classes("o-tree__item--selected")).toBeFalsy();
             expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
 
-            await items[0].trigger("click");
+            const itemLabel = items[0].find(".o-tree__item-label");
+            expect(itemLabel.exists()).toBeTruthy();
+            await itemLabel.trigger("click");
 
             expect(items[0].classes("o-tree__item--selected")).toBeFalsy();
             expect(items[1].classes("o-tree__item--selected")).toBeFalsy();
@@ -579,7 +590,10 @@ describe("OTree tests", () => {
             expect(items[1].classes("o-tree__item--selected")).toBeFalsy();
             expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
 
-            await items[0].trigger("click");
+            let itemLabel = items[0].find(".o-tree__item-label");
+            expect(itemLabel.exists()).toBeTruthy();
+
+            await itemLabel.trigger("click");
 
             expect(items[0].classes("o-tree__item--selected")).toBeTruthy();
             expect(items[1].classes("o-tree__item--selected")).toBeFalsy();
@@ -593,7 +607,10 @@ describe("OTree tests", () => {
                 options[0].value,
             );
 
-            await items[2].trigger("click");
+            itemLabel = items[2].find(".o-tree__item-label");
+            expect(itemLabel.exists()).toBeTruthy();
+
+            await itemLabel.trigger("click");
 
             expect(items[0].classes("o-tree__item--selected")).toBeTruthy();
             expect(items[1].classes("o-tree__item--selected")).toBeFalsy();
@@ -610,7 +627,10 @@ describe("OTree tests", () => {
                 options[2].value,
             );
 
-            await items[0].trigger("click");
+            itemLabel = items[0].find(".o-tree__item-label");
+            expect(itemLabel.exists()).toBeTruthy();
+
+            await itemLabel.trigger("click");
 
             expect(items[0].classes("o-tree__item--selected")).toBeFalsy();
             expect(items[1].classes("o-tree__item--selected")).toBeFalsy();

@@ -61,41 +61,54 @@ const inspectData: InspectData<
     itemClass: {
         class: "itemClass",
         subitem: "treeitem",
-        description: "Class of the tree item root element.",
+        description: "Class of the tree item element.",
+    },
+    itemSelectableClass: {
+        class: "itemSelectableClass",
+        subitem: "treeitem",
+        description: "Class of the tree item element when selectable.",
     },
     itemSelectedClass: {
         class: "itemSelectedClass",
         subitem: "treeitem",
-        description: "Class of the tree item root element when selected.",
+        description: "Class of the tree item element when selected.",
     },
     itemFocusedClass: {
         class: "itemFocusedClass",
         subitem: "treeitem",
-        description: "Class of the tree item root element when focused.",
-    },
-    itemClickableClass: {
-        class: "itemClickableClass",
-        subitem: "treeitem",
-        description: "Class of the tree item root element when clickable.",
+        description: "Class of the tree item element when focused.",
     },
     itemDisabledClass: {
         class: "itemDisabledClass",
         subitem: "treeitem",
-        description: "Class of the tree item root element when disabled.",
         properties: ["disabled"],
+        description: "Class of the tree item element when disabled.",
         action: (data): void => {
             data.disabled = true;
         },
     },
+    itemToggleIconClass: {
+        class: "itemToggleIconClass",
+        subitem: "treeitem",
+        properties: ["toggleIcon"],
+        description: "Class of the tree item toggle icon element.",
+    },
     itemLabelClass: {
         class: "itemLabelClass",
         subitem: "treeitem",
+        properties: ["label"],
         description: "Class of the tree item label element element.",
     },
-    itemSubtreeClass: {
-        class: "itemSubtreeClass",
+    itemIconClass: {
+        class: "itemIconClass",
         subitem: "treeitem",
-        description: "Class of the tree item subtree element.",
+        properties: ["icon"],
+        description: "Class of the tree item icon element.",
+    },
+    subtreeClass: {
+        class: "subtreeClass",
+        subitem: "treeitem",
+        description: "Class of a subtree element of a tree item.",
     },
 };
 </script>

@@ -7,7 +7,7 @@ sidebarDepth: 2
 <section class="odocs-head">
 <Badge type="warning" text="experimental" />
 
-The **Tree** component presents a hierarchical list. Any item in the hierarchy may have child items, and items that have children may be expanded or collapsed to show or hide the children. Items with children can be cexpanded or collapsed and child items can be selected.
+The **Tree** component presents a hierarchical list of items. Any item in the hierarchy can have children. Items with children may be expanded or collapsed to show or hide the children.
 The component uses the [ARIA tree role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/tree_role) and implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/).
 Combine it with the [Field](/components/Field) component to access all functionalities.
 
@@ -101,6 +101,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 | label          | Tree item label                                                                           | string                     | -                                                 |                                                                                                                                                    |
 | options        | Subtree items, unnecessary when default slot is used                                      | OptionsProp&lt;unknown&gt; | -                                                 |                                                                                                                                                    |
 | override       | Override existing theme classes completely                                                | boolean                    | -                                                 |                                                                                                                                                    |
+| selectable     | Override item selectable state                                                            | boolean                    | -                                                 |                                                                                                                                                    |
 | subtreeId      | HTML element Id of the sub tree ol list element                                           | string                     | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                      |
 | value          | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | unknown                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                      |
 
