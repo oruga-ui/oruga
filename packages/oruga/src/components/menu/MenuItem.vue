@@ -145,11 +145,11 @@ function triggerReset(childs?: ProviderItem<MenuItemComponent<T>>[]): void {
     menuItem.parent.value.triggerReset(
       childs ? [item.value, ...childs] : [item.value],
     );
-  }
+  } else
   // else if not a sub item reset parent menu
-  else if (typeof parent.value.resetMenu === "function") {
-    parent.value.resetMenu(childs ? [item.value, ...childs] : [item.value]);
-  }
+    if (typeof parent.value.resetMenu === "function") {
+      parent.value.resetMenu(childs ? [item.value, ...childs] : [item.value]);
+    }
 }
 
 const isExpanded = ref(props.expanded);

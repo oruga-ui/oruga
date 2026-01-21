@@ -64,6 +64,14 @@ import SizesCode from "./sizes.vue?raw";
   </div>
   <ExampleViewer :component="Autocomplete" :code="AutocompleteCode" />
 
+  <h3 id="limits">Limits</h3>
+  <p>
+    The number of entered items can be limited either by the character
+    length of the item using the <code>maxlength</code> prop and by the
+    number of times using the <code>maxitems</code> prop.
+  </p>
+  <ExampleViewer :component="Limits" :code="LimitsCode" />
+
   <h3 id="templates">Templates</h3>
   <p>
     Different parts of the component can be customised using template slots,
