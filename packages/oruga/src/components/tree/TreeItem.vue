@@ -276,7 +276,7 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
                 :aria-hidden="!isExpanded"
                 role="group">
                 <slot>
-                    <OTreeItem
+                    <o-tree-item
                         v-for="option in normalizedOptions"
                         :key="option.key"
                         v-bind="option.attrs"

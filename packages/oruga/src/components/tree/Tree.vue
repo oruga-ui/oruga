@@ -675,21 +675,21 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
                     <template
                         v-for="option in normalizedOptions"
                         :key="option.key">
-                        <OTreeItem
+                        <o-tree-item
                             v-if="isGroupOption(option)"
                             v-bind="option.attrs"
                             :label="option.label"
                             :hidden="option.hidden">
-                            <OTreeItem
+                            <o-tree-item
                                 v-for="_option in option.options"
                                 v-bind="_option.attrs"
                                 :key="_option.key"
                                 :value="_option.value"
                                 :label="_option.label"
                                 :hidden="_option.hidden" />
-                        </OTreeItem>
+                        </o-tree-item>
 
-                        <OTreeItem
+                        <o-tree-item
                             v-else
                             v-bind="option.attrs"
                             :value="option.value"
