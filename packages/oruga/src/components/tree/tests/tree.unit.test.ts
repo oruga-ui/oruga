@@ -443,8 +443,7 @@ describe("OTree tests", () => {
             const itemOne = items[0]; // Documents item
             const itemOneLabel = itemOne.find(".o-tree__item-label");
             expect(itemOneLabel.exists()).toBeTruthy();
-            expect(itemOneLabel.text()).toBe("Documents",
-            );
+            expect(itemOneLabel.text()).toBe("Documents");
             const itemTwo = items[6]; // Events item
             const itemTwoLabel = itemTwo.find(".o-tree__item-label");
             expect(itemTwoLabel.exists()).toBeTruthy();
