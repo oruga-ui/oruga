@@ -63,8 +63,8 @@ const inspectData: InspectData<
         subitem: "treeitem",
         description: "Class of the tree item element.",
     },
-    itemSelectabelClass: {
-        class: "itemSelectabelClass",
+    itemSelectableClass: {
+        class: "itemSelectableClass",
         subitem: "treeitem",
         description: "Class of the tree item element when selectable.",
     },

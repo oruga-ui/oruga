@@ -208,7 +208,7 @@ function matches(value: string): boolean {
 
 const itemClasses = defineClasses(
     ["itemClass", "o-tree__item"],
-    ["itemSelectabelClass", `o-tree__item--selectable`, null, isSelectable],
+    ["itemSelectableClass", `o-tree__item--selectable`, null, isSelectable],
     ["itemSelectedClass", "o-tree__item--selected", null, isSelected],
     ["itemFocusedClass", "o-tree__item--focused", null, isFocused],
     ["itemDisabledClass", "o-tree__item--disabled", null, isDisabled],

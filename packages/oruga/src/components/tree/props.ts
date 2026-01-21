@@ -108,7 +108,7 @@ export type TreeItemClasses = Partial<{
     /** Class of the tree item root element */
     itemClass: ComponentClass;
     /** Class of the item element when selectable */
-    itemSelectabelClass: ComponentClass;
+    itemSelectableClass: ComponentClass;
     /** Class of the tree item root element when selected */
     itemSelectedClass: ComponentClass;
     /** Class of the tree item root element when focused */

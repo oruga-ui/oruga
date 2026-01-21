@@ -145,7 +145,6 @@ const provideData = computed<TreeComponent<T>>(() => ({
     nextSequence,
     selectItem,
     focusItem,
-    // resetSelection,
 }));
 
 /** provide functionalities and data to child item components */
@@ -208,8 +207,10 @@ if (isClient && props.scrollHeight)
     );
 
 const listStyle = computed(() => ({
-    maxHeight: toCssDimension(props.scrollHeight),
-    overflow: "auto",
+    maxHeight: props.scrollHeight
+        ? toCssDimension(props.scrollHeight)
+        : undefined,
+    overflow: props.scrollHeight ? "auto" : undefined,
 }));
 
 // #endregion --- Scroll Handler ---
@@ -268,14 +269,6 @@ function selectItem(item: TreeItem<T>, selection: boolean = true): void {
         }
     }
 }
-
-/** Unselect every tree item excluding the given one. */
-// function resetSelection(excludedItems: TreeItem<T>[] = []): void {
-//     childItems.value.forEach((item) => {
-//         if (!excludedItems.map((i) => i?.identifier).includes(item.identifier))
-//             item.data.reset(); // TODO: rename unselect
-//     });
-// }
 
 /** Select a range of items from a staring index to an end index. */
 function selectItemRange(start: number, end: number): void {
