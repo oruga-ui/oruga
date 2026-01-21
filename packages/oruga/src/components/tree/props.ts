@@ -117,6 +117,8 @@ export type TreeItemClasses = Partial<{
     itemDisabledClass: ComponentClass;
     /** Class of the tree item label element element */
     itemLabelClass: ComponentClass;
+    /** Class of the tree item icon element */
+    itemIconClass: ComponentClass;
     /** Class of a subtree element of a tree item */
     subtreeClass: ComponentClass;
 }>;

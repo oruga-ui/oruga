@@ -90,7 +90,14 @@ const inspectData: InspectData<
     itemLabelClass: {
         class: "itemLabelClass",
         subitem: "treeitem",
+        properties: ["label"],
         description: "Class of the tree item label element element.",
+    },
+    itemIconClass: {
+        class: "itemIconClass",
+        subitem: "treeitem",
+        properties: ["icon"],
+        description: "Class of the tree item icon element.",
     },
     subtreeClass: {
         class: "subtreeClass",

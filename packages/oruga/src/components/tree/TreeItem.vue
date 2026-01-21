@@ -216,6 +216,8 @@ const itemClasses = defineClasses(
 
 const labelClasses = defineClasses(["itemLabelClass", "o-tree__item-label"]);
 
+const iconClasses = defineClasses(["itemIconClass", "o-tree__item-icon"]);
+
 const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
 
 // #endregion --- Computed Component Classes ---
@@ -252,7 +254,8 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
                 v-if="icon"
                 :icon="icon"
                 :pack="itemIconPack"
-                :size="itemIconSize" />
+                :size="itemIconSize"
+                :class="iconClasses" />
 
             <slot
                 name="label"
