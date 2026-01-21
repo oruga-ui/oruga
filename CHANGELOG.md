@@ -1,3 +1,15 @@
+## [0.12.6](https://github.com/oruga-ui/oruga/compare/v0.12.5...v0.12.6) (2026-01-21)
+
+
+### Bug Fixes
+
+* **carousel:** prevent a memory-leak from an unstopped interval ([#1527](https://github.com/oruga-ui/oruga/issues/1527)) ([6ad1216](https://github.com/oruga-ui/oruga/commit/6ad1216461ee17ad53e0e4629ecb3881721fd822))
+* **table:** correct wrong row filtering when a filter is cleared ([#1525](https://github.com/oruga-ui/oruga/issues/1525)) ([a1757be](https://github.com/oruga-ui/oruga/commit/a1757be562db5874884b619907a5556a543bcb05))
+* **tree:** correct class props ([#1526](https://github.com/oruga-ui/oruga/issues/1526)) ([5a2913a](https://github.com/oruga-ui/oruga/commit/5a2913ad8461d5d21ef55696e36238d621e707b2))
+
+
+
+
 ## [0.12.5](https://github.com/oruga-ui/oruga/compare/v0.12.3...v0.12.5) (2026-01-20)
 
 
