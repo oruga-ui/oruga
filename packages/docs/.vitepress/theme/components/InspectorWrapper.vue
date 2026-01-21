@@ -27,19 +27,15 @@ const data = ref({});
 const classes = ref({});
 /** applied classed of the HTML element */
 const appliedClasses = ref<string | undefined>();
-let interval: ReturnType<typeof setTimeout> | undefined;
 
-onUnmounted(() => {
-    clearTimeout(interval);
-    interval = undefined;
-});
+let timeout: ReturnType<typeof setTimeout> | undefined;
 
 watch(
     inspectClass,
     ({ className, action }) => {
         // clear values
-        clearTimeout(interval);
-        interval = undefined;
+        clearTimeout(timeout);
+        timeout = undefined;
         classes.value = {};
         data.value = {};
 
@@ -50,7 +46,7 @@ watch(
         nextTick(() => {
             // add INSPECT_CLASS to class by `className`
             setValueByPath(classes.value, className, () => INSPECT_CLASS);
-            interval = setTimeout(() => {
+            timeout = setTimeout(() => {
                 // get example showcase root
                 const wrapper =
                     showcaseElement.value?.shadowRoot?.getElementById(
@@ -61,7 +57,7 @@ watch(
                 const el = wrapper?.getElementsByClassName(INSPECT_CLASS)[0];
 
                 if (el) {
-                    clearTimeout(interval);
+                    clearTimeout(timeout);
                     // remove INSPECT_CLASS from the DOM element
                     // extract other classes from the DOM element
                     appliedClasses.value = el.className.replace(
