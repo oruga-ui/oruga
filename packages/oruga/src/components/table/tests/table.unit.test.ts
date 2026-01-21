@@ -342,22 +342,58 @@ describe("OTable tests", () => {
             });
             await nextTick();
 
-            const header = wrapper.find("thead");
+            let bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(data.length); // check all is shown
 
+            const header = wrapper.find("thead");
             const inputs = header.findAll("input");
             expect(inputs).toHaveLength(1);
 
             const input = inputs[0];
 
+            // displays a subset of data when filtering by "J"
             await input.setValue("J");
             await input.trigger("input");
             vi.runAllTimers(); // run debounce timer
             await nextTick();
 
-            const bodyRows = wrapper.findAll("tbody tr");
+            bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(2); // Jesse and João
 
             expect(wrapper.emitted("filters-change")).toHaveLength(1);
+
+            // displays a subset of data when filtering by name without accent
+            await input.setValue("Joao");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await nextTick();
+
+            bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(1); // João
+
+            expect(wrapper.emitted("filters-change")).toHaveLength(2);
+
+            // displays a subset of  data when filtering by name with accent
+            await input.setValue("João");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await nextTick();
+
+            bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(1); // João
+
+            expect(wrapper.emitted("filters-change")).toHaveLength(3);
+
+            // reset filter
+            await input.setValue("");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await nextTick();
+
+            bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(data.length); // check all is shown again
+
+            expect(wrapper.emitted("filters-change")).toHaveLength(4);
         });
 
         test("displays filtered data when filtering and updating data", async () => {
@@ -390,54 +426,6 @@ describe("OTable tests", () => {
 
             bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(3); // Jesse, João and Justin
-        });
-
-        test("displays filtered data when filtering by name without accent", async () => {
-            const wrapper = mount(OTable, {
-                props: {
-                    columns: [
-                        { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", filterable: true },
-                    ],
-                    data,
-                },
-            });
-            await nextTick();
-
-            const input = wrapper.find("thead input");
-            expect(input.exists()).toBeTruthy();
-
-            await input.setValue("Joao");
-            await input.trigger("input");
-            vi.runAllTimers(); // run debounce timer
-            await nextTick();
-
-            const bodyRows = wrapper.findAll("tbody tr");
-            expect(bodyRows).toHaveLength(1); // João
-        });
-
-        test("displays filtered data when filtering by name with accent", async () => {
-            const wrapper = mount(OTable, {
-                props: {
-                    columns: [
-                        { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", filterable: true },
-                    ],
-                    data,
-                },
-            });
-            await nextTick();
-
-            const input = wrapper.find("thead input");
-            expect(input.exists()).toBeTruthy();
-
-            await input.setValue("João");
-            await input.trigger("input");
-            vi.runAllTimers(); // run debounce timer
-            await nextTick();
-
-            const bodyRows = wrapper.findAll("tbody tr");
-            expect(bodyRows).toHaveLength(1); // João
         });
 
         test("debounce search filtering when filter-debounce is defined", async () => {
