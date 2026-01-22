@@ -250,11 +250,13 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         :aria-owns="hasChildren ? subtreeId : undefined">
         <div :class="labelClasses" @mouseenter="focusItem" @click="clickItem">
             <o-icon
-                v-if="parent.toggleIcon"
+                v-if="parent.toggleIcon && hasChildren"
                 :icon="parent.toggleIcon"
                 :pack="itemIconPack"
                 :size="itemIconSize"
                 :class="toggleClasses"
+                clickable
+                :rotation="isExpanded ? 90 : 0"
                 @click.prevent="toggleExpand" />
 
             <o-icon

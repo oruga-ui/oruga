@@ -7,8 +7,16 @@ const selected = ref<string[]>();
 <template>
     <section>
         <o-tree v-model="selected" selectable multiple>
-            <o-tree-item icon="folder" label="Documents" value="documents">
-                <o-tree-item icon="cog" label="Work" value="work">
+            <o-tree-item
+                icon="folder"
+                label="Documents"
+                value="documents"
+                :selectable="false">
+                <o-tree-item
+                    icon="cog"
+                    label="Work"
+                    value="work"
+                    :selectable="false">
                     <o-tree-item
                         icon="file"
                         label="Expenses.doc"
@@ -19,7 +27,11 @@ const selected = ref<string[]>();
                         value="resume" />
                 </o-tree-item>
 
-                <o-tree-item icon="home" label="Home" value="home">
+                <o-tree-item
+                    icon="home"
+                    label="Home"
+                    value="home"
+                    :selectable="false">
                     <o-tree-item
                         icon="file"
                         label="Invoices.txt"
@@ -27,7 +39,11 @@ const selected = ref<string[]>();
                 </o-tree-item>
             </o-tree-item>
 
-            <o-tree-item icon="cog" label="Events" value="events">
+            <o-tree-item
+                icon="cog"
+                label="Events"
+                value="events"
+                :selectable="false">
                 <o-tree-item
                     icon="calendar-plus"
                     label="Meeting"

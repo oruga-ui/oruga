@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     selectable: false,
     checkable: false,
     emptyLabel: () => getDefault("tree.emptyLabel"), // TODO: add
-    toggleIcon: () => getDefault("tree.toggleIcon"),
+    toggleIcon: () => getDefault("tree.toggleIcon", "chevron-right"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
     animation: () => getDefault("tree.animation", "slide"),
