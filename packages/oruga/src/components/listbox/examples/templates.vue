@@ -1,7 +1,7 @@
 <template>
     <section class="odocs-spaced">
         <o-field label="Find a name">
-            <o-autocomplete
+            <o-listbox
                 :options="[
                     {
                         label: 'Jesse Simmons',
@@ -21,16 +21,13 @@
                             gender: 'Male',
                         },
                     },
-                ]"
-                open-on-focus
-                keep-open
-                keep-first
-                selectable-header
-                selectable-footer>
+                ]">
                 <template #empty> No results found </template>
+
                 <template #header> Header </template>
+
                 <template #footer> Footer </template>
-            </o-autocomplete>
+            </o-listbox>
         </o-field>
     </section>
 </template>

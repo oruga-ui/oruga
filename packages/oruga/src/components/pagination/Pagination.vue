@@ -352,7 +352,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 :label="undefined"
                 :disabled="isFirst || disabled"
                 :icon-left="iconPrev"
-                :pack="iconPack"
+                :icon-pack="iconPack"
                 :rounded="rounded"
                 :size="size"
                 :class="[...buttonBaseClasses, ...buttonPrevClasses]" />
@@ -365,7 +365,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 :label="undefined"
                 :disabled="isLast || disabled"
                 :icon-left="iconNext"
-                :pack="iconPack"
+                :icon-pack="iconPack"
                 :rounded="rounded"
                 :size="size"
                 :class="[...buttonBaseClasses, ...buttonNextClasses]" />

@@ -14,6 +14,7 @@ const time = ref<Date | undefined>(new Date());
                         variant="primary"
                         icon-left="clock"
                         @click="time = new Date()" />
+
                     <o-button
                         label="Clear"
                         variant="danger"

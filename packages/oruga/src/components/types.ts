@@ -3608,6 +3608,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 itemClass: ClassDefinition;
                 /**
+                 * Class of the item element when selectable
+                 */
+                itemSelectableClass: ClassDefinition;
+                /**
                  * Class of the tree item root element when selected
                  */
                 itemSelectedClass: ClassDefinition;
@@ -3616,21 +3620,25 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 itemFocusedClass: ClassDefinition;
                 /**
-                 * Class of the item element when clickable
-                 */
-                itemClickableClass: ClassDefinition;
-                /**
                  * Class of the tree item root element when disabled
                  */
                 itemDisabledClass: ClassDefinition;
+                /**
+                 * Class of the tree item toggle icon element
+                 */
+                itemToggleIconClass: ClassDefinition;
+                /**
+                 * Class of the tree item icon element
+                 */
+                itemIconClass: ClassDefinition;
                 /**
                  * Class of the tree item label element element
                  */
                 itemLabelClass: ClassDefinition;
                 /**
-                 * Class of the tree item subtree element
+                 * Class of a subtree element of a tree item
                  */
-                itemSubtreeClass: ClassDefinition;
+                subtreeClass: ClassDefinition;
             }>;
         upload?: ComponentConfigBase &
             Partial<{
