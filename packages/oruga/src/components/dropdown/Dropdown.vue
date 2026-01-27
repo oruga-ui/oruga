@@ -152,8 +152,6 @@ defineSlots<{
         focusedIndex?: number;
         toggle: (event: Event) => void;
     }): void;
-    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
-    before?(): void;
     /**
      * Override the option group
      * @param group {object} - options group item
@@ -166,7 +164,11 @@ defineSlots<{
      */
     option?(props: { option: OptionsItem<T> }): void;
     /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    before?(): void;
+    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
     after?(): void;
+    /** Define the content to show if the list is empty */
+    empty?(): void;
 }>();
 
 const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
@@ -277,7 +279,7 @@ watch(
             moveFocus(1);
         }
     },
-    { deep: true, flush: "post" },
+    { flush: "post" },
 );
 
 /**
@@ -717,12 +719,12 @@ defineExpose({ value: vmodel, items: childItems });
                     @keydown.down.prevent="inline && onDownPressed($event)"
                     @keydown.home="inline && onHomePressed($event)"
                     @keydown.end="inline && onEndPressed($event)">
+                    <slot name="before" />
+
                     <slot
                         :active="isActive"
                         :focused-index="focusedItem?.index"
                         :toggle="toggle">
-                        <slot name="before" />
-
                         <template v-for="(group, groupIndex) in groupedOptions">
                             <o-dropdown-item
                                 v-if="group.label"
@@ -755,9 +757,10 @@ defineExpose({ value: vmodel, items: childItems });
                                 </slot>
                             </o-dropdown-item>
                         </template>
-
-                        <slot name="after" />
                     </slot>
+
+                    <slot v-if="!hasViableItems" name="empty" />
+                    <slot name="after" />
                 </component>
             </transition>
         </PositionWrapper>

@@ -18,7 +18,6 @@ import {
     defineClasses,
     normalizeOptions,
     toOptionsGroup,
-    checkOptionsEmpty,
     useInputHandler,
     useSequentialId,
 } from "@/composables";
@@ -227,6 +226,8 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     return groupedOptions;
 });
 
+// #region --- Child Items ---
+
 const childItems = computed(() => dropdownRef.value?.items ?? []);
 
 // filter child items based on the input value
@@ -245,11 +246,13 @@ watch(inputValue, (filter) => {
     });
 });
 
-/** is no option visible */
-const isEmpty = computed(() => checkOptionsEmpty(groupedOptions));
+/** is any option visible */
+const hasViableItems = computed(() =>
+    childItems.value.some((item) => item.data.isViable),
+);
 
-watch(isEmpty, (empty) => {
-    if (isFocused.value) isActive.value = !empty || !!slots.empty;
+watch(hasViableItems, (viable) => {
+    if (isFocused.value) isActive.value = viable || !!slots.empty;
 });
 
 function findOption(
@@ -258,7 +261,9 @@ function findOption(
     return childItems.value.find((item) => isEqual(value, item.data.value));
 }
 
-// --- Select Feature ---
+// #endregion --- Child Items ---
+
+// #region --- Select Feature ---
 
 const dropdownValue = ref<T>();
 
@@ -283,7 +288,7 @@ watch(
         }
 
         // Close dropdown if data is empty
-        if (isEmpty.value && !slots.empty) {
+        if (!hasViableItems.value && !slots.empty) {
             isActive.value = false;
         }
     },
@@ -339,12 +344,14 @@ function setSelected(item: T | SpecialOption | undefined): void {
     else isActive.value = false;
 }
 
+// #endregion --- Select Feature ---
+
 // #region --- Event Handler ---
 
 /** emit input change event */
 function onInput(value: string, event: Event): void {
     if (isFocused.value) {
-        if (!isActive.value && value && (!isEmpty.value || slots.empty)) {
+        if (!isActive.value && value && (hasViableItems.value || slots.empty)) {
             // open dropdown if input has value and options are available
             isActive.value = true;
         } else if (isActive.value && !value && !props.keepOpen) {
@@ -512,7 +519,7 @@ defineExpose({
                 @icon-right-click="rightIconClick" />
         </template>
 
-        <template #default="{ active, toggle, focusedIndex }">
+        <template #before>
             <o-dropdown-item
                 v-if="$slots.header"
                 :tag="itemTag"
@@ -521,7 +528,9 @@ defineExpose({
                 :class="[...itemClasses, ...itemHeaderClasses]">
                 <slot name="header" />
             </o-dropdown-item>
+        </template>
 
+        <template #default="{ active, toggle, focusedIndex }">
             <slot :active :toggle :focused-index>
                 <template v-for="(group, groupIndex) in groupedOptions">
                     <o-dropdown-item
@@ -531,11 +540,15 @@ defineExpose({
                         v-bind="group.attrs"
                         :hidden="group.hidden"
                         :value="group.value"
+                        :label="String(group.value)"
                         :tag="itemTag"
                         role="presentation"
                         :clickable="false"
                         :class="[...itemClasses, ...itemGroupClasses]">
-                        <slot name="group" :group="group" :index="groupIndex">
+                        <slot
+                            name="group"
+                            :group="group"
+                            :index="Number(groupIndex)">
                             <span> {{ group.label }} </span>
                         </slot>
                     </o-dropdown-item>
@@ -546,6 +559,7 @@ defineExpose({
                         :key="option.key"
                         v-bind="option.attrs"
                         :value="option.value"
+                        :label="option.label"
                         :hidden="option.hidden"
                         :tag="itemTag"
                         :class="itemClasses">
@@ -553,7 +567,7 @@ defineExpose({
                             name="option"
                             :option="option"
                             :value="option.value"
-                            :index="optionIndex">
+                            :index="Number(optionIndex)">
                             <span> {{ option.label }} </span>
                         </slot>
                     </o-dropdown-item>
@@ -561,12 +575,14 @@ defineExpose({
             </slot>
 
             <o-dropdown-item
-                v-if="isEmpty && $slots.empty"
+                v-if="!hasViableItems && $slots.empty"
                 :tag="itemTag"
                 :class="[...itemClasses, ...itemEmptyClasses]">
                 <slot name="empty" />
             </o-dropdown-item>
+        </template>
 
+        <template #after>
             <o-dropdown-item
                 v-if="$slots.footer"
                 :tag="itemTag"
