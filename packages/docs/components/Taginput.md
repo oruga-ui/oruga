@@ -83,10 +83,11 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | -------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | selected | Override the selected items                     | **items** `(string, object)[]` - selected items<br/>**options** `object[]` - selected options<br/>**removeItem** `(index, event): void` - remove item function |
 | header   | Define an additional header                     |                                                                                                                                                                |
-| default  | Define the select option here                   | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value                                               |
+| default  |                                                 | **option** - undefined<br/>**index** - undefined<br/>**value** - undefined                                                                                     |
 | empty    | Define the content to show if the list is empty |                                                                                                                                                                |
 | footer   | Define an additional footer                     |                                                                                                                                                                |
 | counter  | Override the counter                            | **items** `number` - items count<br/>**total** `number` - total count                                                                                          |
+| option   | Define the select option here                   | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value                                               |
 
 </section>
 

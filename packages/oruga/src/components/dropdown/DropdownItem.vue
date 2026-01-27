@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { useId, computed, useTemplateRef } from "vue";
+import { useId, computed, useTemplateRef, ref } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
@@ -48,9 +48,11 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
     value: props.value,
-    disabled: props.disabled,
-    hidden: props.hidden,
-    clickable: props.clickable,
+    label: props.label,
+    isHidden: isHidden.value,
+    isViable: isViable.value,
+    setHidden,
+    matches,
     selectItem: (): void => rootRef.value?.click(),
 }));
 
@@ -60,10 +62,20 @@ const { parent, item } = useProviderChild<
     DropdownItemComponent<T>
 >(rootRef, { data: providedData });
 
+const localHidden = ref(false);
+const isHidden = computed(() => props.hidden || localHidden.value);
+
+function setHidden(hidden: boolean): void {
+    localHidden.value = hidden;
+}
+
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
 );
+
+/** Shows if the item is viable or not (not disabled or hidden). */
+const isViable = computed(() => !isHidden.value && isClickable.value);
 
 const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
@@ -90,6 +102,11 @@ function focusItem(): void {
     parent.value.focusItem(item.value);
 }
 
+/** Check if a  given value matches the item label (startsWith). */
+function matches(value: string): boolean {
+    return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
+}
+
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -111,6 +128,7 @@ const rootClasses = defineClasses(
 <template>
     <component
         :is="tag"
+        v-show="!hidden"
         :id="`${parent.menuId}-${item.identifier}`"
         ref="rootElement"
         data-oruga="dropdown-item"

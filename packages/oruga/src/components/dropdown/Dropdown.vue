@@ -172,26 +172,11 @@ defineSlots<{
 const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
 const menuRef = ref<HTMLElement | Component>();
 
-// provided data is a computed ref to ensure reactivity
-const provideData = computed<DropdownComponent<T>>(() => ({
-    disabled: props.disabled,
-    multiple: isTrueish(props.multiple),
-    selectable: props.selectable,
-    menuId: props.menuId,
-    selected: vmodel.value,
-    focsuedIdentifier: focusedItem.value?.identifier,
-    selectItem,
-    focusItem,
-}));
+// inject parent field component if used inside one
+const { parentField } = injectField();
 
-/** provide functionalities and data to child item components */
-const { childItems } = useProviderParent<
-    DropdownItemComponent<T>,
-    DropdownComponent<T>
->({
-    rootRef: menuRef,
-    data: provideData,
-});
+// set field labelId or create a unique label id if a label is given
+const labelId = props.labelledby ?? parentField.value?.labelId;
 
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
@@ -203,20 +188,11 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     return groupedOptions;
 });
 
-/** is any option visible */
-const isNotEmpty = computed(() => childItems.value.some(isItemViable));
-
-// inject parent field component if used inside one
-const { parentField } = injectField();
-
 // the selected item value, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
-
-// set field labelId or create a unique label id if a label is given
-const labelId = props.labelledby ?? parentField.value?.labelId;
 
 const autoPosition = ref(props.position);
 
@@ -264,6 +240,34 @@ watch(
     { flush: "post" },
 );
 
+// #region --- Child Items ---
+
+// provided data is a computed ref to ensure reactivity
+const provideData = computed<DropdownComponent<T>>(() => ({
+    disabled: props.disabled,
+    multiple: isTrueish(props.multiple),
+    selectable: props.selectable,
+    menuId: props.menuId,
+    selected: vmodel.value,
+    focsuedIdentifier: focusedItem.value?.identifier,
+    selectItem,
+    focusItem,
+}));
+
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent<
+    DropdownItemComponent<T>,
+    DropdownComponent<T>
+>({
+    rootRef: menuRef,
+    data: provideData,
+});
+
+/** is any option visible */
+const hasViableItems = computed(() =>
+    childItems.value.some((item) => item.data.isViable),
+);
+
 watch(
     childItems,
     () => {
@@ -275,6 +279,36 @@ watch(
     },
     { deep: true, flush: "post" },
 );
+
+/**
+ * Get the first 'viable' child, starting at startingIndex and in the direction specified
+ * by the boolean parameter forward. In other words, first try to select the child at index
+ * startingIndex, and if it is not visible or it is disabled, then go to the index in the
+ * specified direction until either returning to startIndex or finding a viable child item.
+ */
+function getFirstViableItem(
+    startingIndex: number,
+    delta: 1 | -1,
+): DropdownChildItem<T> {
+    let newIndex = mod(
+        focusedItem.value?.index == startingIndex
+            ? startingIndex + delta
+            : startingIndex,
+        childItems.value.length,
+    );
+    for (
+        ;
+        newIndex !== focusedItem.value?.index;
+        newIndex = mod(newIndex + delta, childItems.value.length)
+    ) {
+        // Break if the item at this index is viable (not disabled or hidden)
+        if (childItems.value[newIndex].data.isViable) break;
+    }
+
+    return childItems.value[newIndex];
+}
+
+// #endregion --- Child Items ---
 
 // #region --- Trigger Handler ---
 
@@ -456,7 +490,7 @@ function onMenuHoverLeave(): void {
 
 /** Set focus on a tab item. */
 function moveFocus(delta: 1 | -1): void {
-    if (!isNotEmpty.value) return;
+    if (!hasViableItems.value) return;
     const item = getFirstViableItem(focusedItem.value?.index || 0, delta);
     setFocus(item);
 }
@@ -501,7 +535,7 @@ function onHomePressed(event: Event): void {
         event.preventDefault();
 
     open(event);
-    if (!isNotEmpty.value) return;
+    if (!hasViableItems.value) return;
     const item = getFirstViableItem(0, 1);
     setFocus(item);
 }
@@ -514,45 +548,13 @@ function onEndPressed(event: Event): void {
         event.preventDefault();
 
     open(event);
-    if (!isNotEmpty.value) return;
+    if (!hasViableItems.value) return;
     const item = getFirstViableItem(childItems.value.length - 1, -1);
     setFocus(item);
 }
 
 function onEscape(event: Event): void {
     close(event);
-}
-
-/**
- * Get the first 'viable' child, starting at startingIndex and in the direction specified
- * by the boolean parameter forward. In other words, first try to select the child at index
- * startingIndex, and if it is not visible or it is disabled, then go to the index in the
- * specified direction until either returning to startIndex or finding a viable child item.
- */
-function getFirstViableItem(
-    startingIndex: number,
-    delta: 1 | -1,
-): DropdownChildItem<T> {
-    let newIndex = mod(
-        focusedItem.value?.index == startingIndex
-            ? startingIndex + delta
-            : startingIndex,
-        childItems.value.length,
-    );
-    for (
-        ;
-        newIndex !== focusedItem.value?.index;
-        newIndex = mod(newIndex + delta, childItems.value.length)
-    ) {
-        // Break if the item at this index is viable (not disabled)
-        if (isItemViable(childItems.value[newIndex])) break;
-    }
-
-    return childItems.value[newIndex];
-}
-
-function isItemViable(item: DropdownChildItem<T>): boolean {
-    return !item.data.disabled && !item.data.hidden && !!item.data.clickable;
 }
 
 // #endregion --- Focus Feature ---
@@ -623,7 +625,7 @@ const menuClasses = defineClasses(
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
+defineExpose({ value: vmodel, items: childItems });
 
 // #endregion --- Expose Public Functionalities ---
 </script>

@@ -64,6 +64,7 @@ const providedData = computed<ListItemComponent<T>>(() => ({
     isViable: isViable.value,
     setHidden,
     matches,
+    selectItem: (): void => rootRef.value?.click(),
 }));
 
 /** inject functionalities and data from the parent component */
@@ -114,7 +115,7 @@ function clickItem(event: Event): void {
     emits("click", props.value as T, event);
 }
 
-/** Check if a value matches the label (startsWith). */
+/** Check if a  given value matches the item label (startsWith). */
 function matches(value: string): boolean {
     return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
 }

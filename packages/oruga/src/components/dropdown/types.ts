@@ -1,21 +1,23 @@
 import type { ProviderItem } from "@/composables";
-import type { DropdownItemProps } from "./props";
 
 export type DropdownComponent<T> = {
+    menuId: string;
     disabled: boolean;
     multiple: boolean;
     selectable: boolean;
-    menuId: string;
     selected: T | T[] | undefined;
     focsuedIdentifier: string | undefined;
     selectItem: (value: DropdownChildItem<T>, event: Event) => void;
     focusItem: (value: DropdownChildItem<T>) => void;
 };
 
-export type DropdownItemComponent<T> = Pick<
-    DropdownItemProps<T>,
-    "value" | "disabled" | "hidden" | "clickable"
-> & {
+export type DropdownItemComponent<T> = {
+    value: T;
+    label: string;
+    isHidden: boolean;
+    isViable: boolean;
+    setHidden: (hidden: boolean) => void;
+    matches: (value: string) => boolean;
     selectItem: (event: Event) => void;
 };
 

@@ -5,12 +5,8 @@ import {
     watch,
     useAttrs,
     useId,
-    triggerRef,
-    watchEffect,
     useTemplateRef,
-    toValue,
     type Component,
-    type MaybeRefOrGetter,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -22,10 +18,7 @@ import {
     defineClasses,
     normalizeOptions,
     toOptionsGroup,
-    toOptionsList,
-    findOption,
     checkOptionsEmpty,
-    filterOptionsItems,
     useInputHandler,
     useSequentialId,
 } from "@/composables";
@@ -34,6 +27,7 @@ import { injectField } from "../field/fieldInjection";
 
 import type { OptionsItem, OptionsGroupItem } from "@/types";
 import type { AutocompleteProps } from "./props";
+import { isEqual } from "@/utils/helpers";
 
 enum SpecialOption {
     Header,
@@ -168,12 +162,23 @@ const emits = defineEmits<{
 
 const slots = defineSlots<{
     /**
+     * Define the dropdown items here
+     * @param active {boolean} - dropdown active state
+     * @param focusedIndex {number | undefined} - index of the focused element
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    default?(props: {
+        active: boolean;
+        focusedIndex?: number;
+        toggle: (event: Event) => void;
+    }): void;
+    /**
      * Override the select option
      * @param option {object} - option object
      * @param index {number} - option index
      * @param value {unknown} - option value
      */
-    default?(props: { option: OptionsItem<T>; index: number; value: T }): void;
+    option?(props: { option: OptionsItem<T>; index: number; value: T }): void;
     /**
      * Override the option group
      * @param group {object} - options group
@@ -187,6 +192,8 @@ const slots = defineSlots<{
     /** Define the content to show if the list is empty */
     empty?(): void;
 }>();
+
+const dropdownRef = useTemplateRef("dropdownElement");
 
 // define as Component to prevent docs memmory overload
 const inputRef = useTemplateRef<Component>("inputComponent");
@@ -220,32 +227,23 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     return groupedOptions;
 });
 
-// if not backend filtered
-if (!props.backendFiltering)
-    /**
-     * Applies an reactive filter for the options based on the input value.
-     * Options are filtered by setting the hidden attribute.
-     */
-    watchEffect(() => {
-        // filter options by input value
-        filterOptionsItems<T>(groupedOptions, (o) =>
-            filterItems(o, inputValue),
-        );
-        // trigger reactive update of groupedOptions
-        triggerRef(groupedOptions);
-    });
+const childItems = computed(() => dropdownRef.value?.items ?? []);
 
-function filterItems(
-    option: OptionsItem<T>,
-    value: MaybeRefOrGetter<string>,
-): boolean {
-    if (typeof props.filter === "function")
-        return props.filter(option.value, toValue(value));
-    else
-        return !String(option.label)
-            .toLowerCase()
-            .includes(toValue(value)?.toLowerCase());
-}
+// filter child items based on the input value
+watch(inputValue, (filter) => {
+    if (props.backendFiltering) return;
+    childItems.value.forEach((item) => {
+        // check if the value matches the filter string
+        const matches =
+            typeof props.filter === "function"
+                ? props.filter(item.data.value, filter)
+                : item.data.matches(filter);
+
+        console.log("hidden", !matches, filter, item.data.label);
+        // update hidden state
+        item.data.setHidden(!matches);
+    });
+});
 
 /** is no option visible */
 const isEmpty = computed(() => checkOptionsEmpty(groupedOptions));
@@ -254,9 +252,15 @@ watch(isEmpty, (empty) => {
     if (isFocused.value) isActive.value = !empty || !!slots.empty;
 });
 
+function findOption(
+    value: T,
+): (typeof childItems)["value"][number] | undefined {
+    return childItems.value.find((item) => isEqual(value, item.data.value));
+}
+
 // --- Select Feature ---
 
-const dropdownValue = ref();
+const dropdownValue = ref<T>();
 
 /**
  * When updating input's value:
@@ -265,11 +269,14 @@ const dropdownValue = ref();
  */
 watch(
     inputValue,
-    (value) => {
+    (filter) => {
         // find the option for the current selected value
-        const currentOption = findOption(groupedOptions, selectedValue);
+        const currentOption = selectedValue.value
+            ? findOption(selectedValue.value)
+            : undefined;
+
         // clear selected if option label does not match the selected value
-        if (currentOption && currentOption.label !== value) {
+        if (currentOption && currentOption.data.label !== filter) {
             // clear selected value
             selectedValue.value = undefined;
             dropdownValue.value = undefined;
@@ -292,22 +299,28 @@ watch(
     selectedValue,
     (value) => {
         if (!value) return;
-        const option = findOption(groupedOptions, value);
+        const option = findOption(value);
         if (!option) return;
 
         // set selected option label as input value
-        inputValue.value = props.clearOnSelect ? "" : option.label;
+        inputValue.value = props.clearOnSelect ? "" : (option.data.label ?? "");
         checkHtml5Validity();
 
         // set the selected option value as dropdown value
-        dropdownValue.value = option.value;
+        dropdownValue.value = option.data.value;
     },
     // set initial values if selected is given
     { immediate: true },
 );
 
+/**
+ * Set the selected value when the dropdown value changes.
+ * 1. update v-model value
+ * 2. emit select event
+ * 3. close dropdown if not keepOpen
+ */
 function setSelected(item: T | SpecialOption | undefined): void {
-    let option: OptionsItem<T> | undefined = undefined;
+    let value: T | undefined = undefined;
 
     /** Check if header or footer was selected. */
     if (item === SpecialOption.Header) {
@@ -315,22 +328,18 @@ function setSelected(item: T | SpecialOption | undefined): void {
     } else if (item === SpecialOption.Footer) {
         emits("select-footer");
     } else if (item) {
-        // convert grouped options to simple list
-        const options: OptionsItem<T>[] = toOptionsList(groupedOptions);
-
-        // get option or undefined for header, footer or group
-        option = options.find((o) => o.value === item);
+        value = item;
     }
 
     // set which option is currently selected, update v-model,
-    selectedValue.value = option?.value;
-    emits("select", option?.value);
+    selectedValue.value = value;
+    emits("select", value);
 
     if (props.keepOpen) setFocus();
     else isActive.value = false;
 }
 
-// --- Event Handler ---
+// #region --- Event Handler ---
 
 /** emit input change event */
 function onInput(value: string, event: Event): void {
@@ -355,7 +364,10 @@ function handleFocus(event: Event): void {
     // open dropdown if `openOnFocus` and has options
     if (
         props.openOnFocus &&
-        (!!props.options?.length || !!slots.header || !!slots.footer)
+        (!!props.options?.length ||
+            !!slots.default ||
+            !!slots.header ||
+            !!slots.footer)
     )
         isActive.value = true;
     onFocus(event);
@@ -427,12 +439,22 @@ const itemFooterClasses = defineClasses([
 
 // #endregion --- Computed Component Classes ---
 
+// #region --- Expose Public Functionalities ---
+
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
+defineExpose({
+    value: inputValue,
+    items: childItems,
+    checkHtml5Validity,
+    focus: setFocus,
+});
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
     <o-dropdown
+        ref="dropdownElement"
         v-model="dropdownValue"
         v-model:active="isActive"
         data-oruga="autocomplete"
@@ -490,64 +512,69 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
                 @icon-right-click="rightIconClick" />
         </template>
 
-        <o-dropdown-item
-            v-if="$slots.header"
-            :tag="itemTag"
-            :value="SpecialOption.Header"
-            :clickable="selectableHeader"
-            :class="[...itemClasses, ...itemHeaderClasses]">
-            <slot name="header" />
-        </o-dropdown-item>
-
-        <template v-for="(group, groupIndex) in groupedOptions">
+        <template #default="{ active, toggle, focusedIndex }">
             <o-dropdown-item
-                v-if="group.label"
-                v-show="!group.hidden"
-                :key="group.key"
-                v-bind="group.attrs"
-                :hidden="group.hidden"
-                :value="group.value"
+                v-if="$slots.header"
                 :tag="itemTag"
-                role="presentation"
-                :clickable="false"
-                :class="[...itemClasses, ...itemGroupClasses]">
-                <slot name="group" :group="group" :index="groupIndex">
-                    <span> {{ group.label }} </span>
-                </slot>
+                :value="SpecialOption.Header"
+                :clickable="selectableHeader"
+                :class="[...itemClasses, ...itemHeaderClasses]">
+                <slot name="header" />
+            </o-dropdown-item>
+
+            <slot :active :toggle :focused-index>
+                <template v-for="(group, groupIndex) in groupedOptions">
+                    <o-dropdown-item
+                        v-if="group.label"
+                        v-show="!group.hidden"
+                        :key="group.key"
+                        v-bind="group.attrs"
+                        :hidden="group.hidden"
+                        :value="group.value"
+                        :tag="itemTag"
+                        role="presentation"
+                        :clickable="false"
+                        :class="[...itemClasses, ...itemGroupClasses]">
+                        <slot name="group" :group="group" :index="groupIndex">
+                            <span> {{ group.label }} </span>
+                        </slot>
+                    </o-dropdown-item>
+
+                    <o-dropdown-item
+                        v-for="(option, optionIndex) in group.options"
+                        v-show="!option.hidden"
+                        :key="option.key"
+                        v-bind="option.attrs"
+                        :value="option.value"
+                        :hidden="option.hidden"
+                        :tag="itemTag"
+                        :class="itemClasses">
+                        <slot
+                            name="option"
+                            :option="option"
+                            :value="option.value"
+                            :index="optionIndex">
+                            <span> {{ option.label }} </span>
+                        </slot>
+                    </o-dropdown-item>
+                </template>
+            </slot>
+
+            <o-dropdown-item
+                v-if="isEmpty && $slots.empty"
+                :tag="itemTag"
+                :class="[...itemClasses, ...itemEmptyClasses]">
+                <slot name="empty" />
             </o-dropdown-item>
 
             <o-dropdown-item
-                v-for="(option, optionIndex) in group.options"
-                v-show="!option.hidden"
-                :key="option.key"
-                v-bind="option.attrs"
-                :value="option.value"
-                :hidden="option.hidden"
+                v-if="$slots.footer"
                 :tag="itemTag"
-                :class="itemClasses">
-                <slot
-                    :option="option"
-                    :value="option.value"
-                    :index="optionIndex">
-                    <span> {{ option.label }} </span>
-                </slot>
+                :value="SpecialOption.Footer"
+                :clickable="selectableFooter"
+                :class="[...itemClasses, ...itemFooterClasses]">
+                <slot name="footer" />
             </o-dropdown-item>
         </template>
-
-        <o-dropdown-item
-            v-if="isEmpty && $slots.empty"
-            :tag="itemTag"
-            :class="[...itemClasses, ...itemEmptyClasses]">
-            <slot name="empty" />
-        </o-dropdown-item>
-
-        <o-dropdown-item
-            v-if="$slots.footer"
-            :tag="itemTag"
-            :value="SpecialOption.Footer"
-            :clickable="selectableFooter"
-            :class="[...itemClasses, ...itemFooterClasses]">
-            <slot name="footer" />
-        </o-dropdown-item>
     </o-dropdown>
 </template>
