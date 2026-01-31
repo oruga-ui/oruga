@@ -138,7 +138,7 @@ export abstract class ProgrammaticFactory {
         if (VueInstance)
             app._context = Object.assign(app._context, VueInstance._context);
 
-        // set a prefix for all IDs generated via useId() to prevent duplicate ids for programmatic instances
+        // set a prefix for all IDs generated via useId() to prevent duplication in multiple programmatic instances
         app.config.idPrefix =
             options.idPrefix ??
             "programmatic-" + options.registry!.getCounter();
