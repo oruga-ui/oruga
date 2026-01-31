@@ -140,7 +140,8 @@ export abstract class ProgrammaticFactory {
 
         // set a prefix for all IDs generated via useId() to prevent duplicate ids for programmatic instances
         app.config.idPrefix =
-            options.idPrefix ?? "programmatic-" + options.registry!.counter;
+            options.idPrefix ??
+            "programmatic-" + options.registry!.getCounter();
 
         // render the new vue instance into the container element
         const instance = app.mount(container);

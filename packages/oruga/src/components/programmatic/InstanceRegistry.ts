@@ -1,8 +1,8 @@
 import type { ComponentInternalInstance } from "vue";
 
 export default class InstanceRegistry<T = ComponentInternalInstance> {
-    entries: Array<T>;
-    counter: number;
+    private entries: Array<T>;
+    private counter: number;
 
     constructor() {
         this.entries = [];
