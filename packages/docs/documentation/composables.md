@@ -234,10 +234,16 @@ type open = <C extends VNodeTypes>(
 
 type ProgrammaticOptions<C extends VNodeTypes> = {
     /**
-     * Specify the template `id` for the programmatic container element.
+     * Specify the template `id` attribute for the programmatic container element.
      * @default `programmatic-app`
      */
     appId?: string;
+    /**
+     * Configure a prefix for all IDs generated via `useId()` inside this programmatic instance.
+     * By default a unique id prefix is generated.
+     * See {@link https://vuejs.org/api/application.html#app-config-idprefix}.
+     */
+    idPrefix?: string;
     /**
      * Props to be binded to the injected component.
      * Both attributes and properties can be used in props.
