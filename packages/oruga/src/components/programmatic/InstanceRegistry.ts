@@ -48,7 +48,7 @@ export default class InstanceRegistry<T = ComponentInternalInstance> {
         // Walk a copy of the array so that the callback is allowed to remove the instance
         this.entries = [...this.entries].filter((e) => {
             const ret = callback(e);
-            return !(ret === true);
+            return ret !== true;
         });
     }
 }
