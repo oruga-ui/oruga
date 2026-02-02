@@ -27,10 +27,12 @@ import { injectField } from "../field/fieldInjection";
 import type { OptionsItem, OptionsGroupItem } from "@/types";
 import type { AutocompleteProps } from "./props";
 import { isEqual } from "@/utils/helpers";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 enum SpecialOption {
     Header,
     Footer,
+    EMPTY,
 }
 
 /**
@@ -192,7 +194,8 @@ const slots = defineSlots<{
     empty?(): void;
 }>();
 
-const dropdownRef = useTemplateRef("dropdownElement");
+const dropdownRef =
+    useTemplateRef<ComponentExposed<typeof ODropdown<T>>>("dropdownElement");
 
 // define as Component to prevent docs memmory overload
 const inputRef = useTemplateRef<Component>("inputComponent");
@@ -234,6 +237,11 @@ const childItems = computed(() => dropdownRef.value?.items ?? []);
 watch(inputValue, (filter) => {
     if (props.backendFiltering) return;
     childItems.value.forEach((item) => {
+        // prevent the empty state from hidding
+        if (item.data.value === SpecialOption.Header) return;
+        if (item.data.value === SpecialOption.Footer) return;
+        if (item.data.value === SpecialOption.EMPTY) return;
+
         // check if the value matches the filter string
         const matches =
             typeof props.filter === "function"
@@ -327,7 +335,9 @@ watch(
 function setSelected(item: T | SpecialOption | undefined): void {
     let value: T | undefined = undefined;
 
-    /** Check if header or footer was selected. */
+    // check if emoty was selected
+    if (item === SpecialOption.EMPTY) return;
+    // Check if header or footer was selected
     if (item === SpecialOption.Header) {
         emits("select-header");
     } else if (item === SpecialOption.Footer) {
@@ -573,10 +583,13 @@ defineExpose({
                     </o-dropdown-item>
                 </template>
             </slot>
+        </template>
 
+        <template v-if="$slots.empty" #empty>
             <o-dropdown-item
-                v-if="!hasViableItems && $slots.empty"
                 :tag="itemTag"
+                :value="SpecialOption.EMPTY"
+                :clickable="false"
                 :class="[...itemClasses, ...itemEmptyClasses]">
                 <slot name="empty" />
             </o-dropdown-item>
