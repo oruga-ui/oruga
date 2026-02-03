@@ -6,7 +6,6 @@ import {
     useId,
     watchEffect,
     ref,
-    type Component,
 } from "vue";
 
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
@@ -16,16 +15,13 @@ import { getDefault } from "@/utils/config";
 import {
     defineClasses,
     getActiveClasses,
-    normalizeOptions,
-    findOption,
     useInputHandler,
-    useSequentialId,
-    toOptionsGroup,
-    type OptionsGroupItem,
     type OptionsItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
+import type { ComponentExposed } from "vue-component-type-helpers";
+import { isEqual } from "@/utils/helpers";
 
 /**
  * A simple tag input field that can have autocomplete functionality.
@@ -131,6 +127,7 @@ const emits = defineEmits<{
     /** the list inside the dropdown reached it's end */
     "scroll-end": [];
 }>();
+
 defineSlots<{
     /**
      * Override the selected items
@@ -165,7 +162,9 @@ defineSlots<{
 }>();
 
 // define as Component to prevent docs memmory overload
-const autocompleteRef = useTemplateRef<Component>("autocompleteComponent");
+const autocompleteRef = useTemplateRef<
+    ComponentExposed<typeof OAutocomplete<T>>
+>("autocompleteComponent");
 
 // use form input functionalities
 const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } =
@@ -182,23 +181,22 @@ const inputValue = defineModel<string>("input", { default: "" });
 const inputLength = computed(() => inputValue.value.trim().length);
 const itemsLength = computed(() => selectedItems.value?.length || 0);
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
-
-/** normalized programamtic options */
-const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
-    return groupedOptions;
-});
+const childItems = computed(() => autocompleteRef.value?.items ?? []);
 
 /** map the selected items into option items */
 const selectedOptions = computed(() => {
     if (!selectedItems.value) return [];
     return selectedItems.value.map((value) => {
-        const option = findOption<T>(groupedOptions, value);
+        const option = childItems.value.find((item) =>
+            isEqual(value, item.data.value),
+        );
         // return the found option or create a new option object
-        if (option) return option;
+        if (option)
+            return {
+                label: option.data.label,
+                value: option.data.value,
+                key: option.identifier,
+            };
         else return { label: String(value), value, key: useId() };
     });
 });
@@ -259,7 +257,7 @@ function removeItem(index: number, event?: Event): void {
     if (props.openOnFocus && autocompleteRef.value) setFocus();
 }
 
-// --- Event Handler ---
+// #region --- Event Handler ---
 
 function onSelect(option: T | undefined): void {
     if (!option) return;
@@ -280,6 +278,7 @@ function onEnter(): void {
     // Add item if not select only and dropdown selection is closed
     if (props.allowNew && !isDropdownActive.value) addItem();
 }
+// #endregion --- Event Handler ---
 
 // #region --- Computed Component Classes ---
 
