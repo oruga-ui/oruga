@@ -279,7 +279,7 @@ watch(
             moveFocus(1);
         }
     },
-    { flush: "post" },
+    { deep: true, flush: "post" },
 );
 
 /**

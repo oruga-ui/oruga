@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsProp } from "@oruga-ui/oruga-next";
 
 const keepFirst = ref(false);
 const keepOpen = ref(true);
@@ -8,7 +7,7 @@ const openOnFocus = ref(true);
 const selectOnClose = ref(false);
 const clearOnSelect = ref(false);
 
-const options: OptionsProp<string> = [
+const options = [
     "Angular",
     "Angular 2",
     "Aurelia",
@@ -23,7 +22,7 @@ const options: OptionsProp<string> = [
     "Vue.js",
 ];
 
-const selected = ref();
+const selected = ref<string>(options[4]);
 
 function changeselection(): void {
     selected.value = options[0];
@@ -49,6 +48,7 @@ function changeselection(): void {
                 :options="options"
                 placeholder="e.g. Vue"
                 icon="search"
+                clearable
                 :keep-first="keepFirst"
                 :open-on-focus="openOnFocus"
                 :keep-open="keepOpen"

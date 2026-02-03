@@ -210,9 +210,6 @@ const { parentField } = injectField();
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
-// the selected value, use v-model to make it two-way binding
-const selectedValue = defineModel<ModelValue>({ default: undefined });
-
 // the value of the inner input, use v-model:input to make it two-way binding
 const inputValue = defineModel<string>("input", { default: "" });
 
@@ -234,7 +231,7 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
 const childItems = computed(() => dropdownRef.value?.items ?? []);
 
 // filter child items based on the input value
-watch(inputValue, (filter) => {
+watch(inputValue, (filter: string): void => {
     if (props.backendFiltering) return;
     childItems.value.forEach((item) => {
         // prevent the empty state from hidding
@@ -248,7 +245,6 @@ watch(inputValue, (filter) => {
                 ? props.filter(item.data.value, filter)
                 : item.data.matches(filter);
 
-        console.log("hidden", !matches, filter, item.data.label);
         // update hidden state
         item.data.setHidden(!matches);
     });
@@ -264,8 +260,10 @@ watch(hasViableItems, (viable) => {
 });
 
 function findOption(
-    value: T,
+    value: T | undefined,
 ): (typeof childItems)["value"][number] | undefined {
+    if (typeof value === "undefined") return undefined;
+
     return childItems.value.find((item) => isEqual(value, item.data.value));
 }
 
@@ -273,26 +271,22 @@ function findOption(
 
 // #region --- Select Feature ---
 
+/** the selected value, use v-model to make it two-way binding */
+const selectedValue = defineModel<ModelValue>({ default: undefined });
+
+/** the selected value to the dropdown list */
 const dropdownValue = ref<T>();
 
-/**
- * When updating input's value:
- * 1. If value isn't the same as selected, set undefined
- * 2. Close dropdown if value is clear or else open it
- */
+// update the selected value when the input value changes
 watch(
     inputValue,
-    (filter) => {
+    (value) => {
         // find the option for the current selected value
-        const currentOption = selectedValue.value
-            ? findOption(selectedValue.value)
-            : undefined;
+        const currentOption = findOption(selectedValue.value);
 
-        // clear selected if option label does not match the selected value
-        if (currentOption && currentOption.data.label !== filter) {
-            // clear selected value
+        // clear selected value if option label does not match the selected value
+        if (currentOption && currentOption.data.label !== value) {
             selectedValue.value = undefined;
-            dropdownValue.value = undefined;
         }
 
         // Close dropdown if data is empty
@@ -303,28 +297,41 @@ watch(
     { flush: "post" },
 );
 
-/**
- * When updating selected value:
- * 1. Set selected option label as input value
- * 2. Set the selected option value as dropdown value
- */
+// update the input value when the selected value changes
 watch(
     selectedValue,
-    (value) => {
-        if (!value) return;
-        const option = findOption(value);
-        if (!option) return;
-
-        // set selected option label as input value
-        inputValue.value = props.clearOnSelect ? "" : (option.data.label ?? "");
-        checkHtml5Validity();
-
-        // set the selected option value as dropdown value
-        dropdownValue.value = option.data.value;
-    },
+    updateInput,
     // set initial values if selected is given
     { immediate: true },
 );
+
+// initialise the input value when the childitems got defined
+watch(
+    childItems,
+    () => {
+        if (selectedValue.value) updateInput(selectedValue.value);
+    },
+    { once: true },
+);
+
+/** Update the input and dropdown Value based on the given value. */
+function updateInput(value: T | undefined): void {
+    // find option based on the value
+    const option = findOption(value);
+
+    if (!option) {
+        inputValue.value = "";
+        dropdownValue.value = undefined;
+        return;
+    }
+
+    // set selected option label as input value
+    inputValue.value = props.clearOnSelect ? "" : (option.data.label ?? "");
+    checkHtml5Validity();
+
+    // set the selected option value as dropdown value
+    dropdownValue.value = option.data.value;
+}
 
 /**
  * Set the selected value when the dropdown value changes.
@@ -356,7 +363,7 @@ function setSelected(item: T | SpecialOption | undefined): void {
 
 // #endregion --- Select Feature ---
 
-// #region --- Event Handler ---
+// #region --- Input Event Handler ---
 
 /** emit input change event */
 function onInput(value: string, event: Event): void {
@@ -398,7 +405,7 @@ function handleBlur(event: Event): void {
     onBlur(event);
 }
 
-// #endregion --- Event Handler ---
+// #endregion --- Input Event Handler ---
 
 // #region --- Icon Feature ---
 

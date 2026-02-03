@@ -121,7 +121,7 @@ describe("OAutocomplete tests", () => {
                 },
             },
         });
-        await nextTick();
+        await nextTick(); // await child component rendering
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -256,7 +256,11 @@ describe("OAutocomplete tests", () => {
         vi.useFakeTimers(); // use fake timers for input debounce
 
         const wrapper = mount(OAutocomplete, {
-            props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
+            props: {
+                options: OPTIONS,
+                openOnFocus: true,
+                keepFirst: true,
+            },
             attachTo: document.body,
         });
 
@@ -335,7 +339,7 @@ describe("OAutocomplete tests", () => {
             const wrapper = mount(OAutocomplete, {
                 props: { options: OPTIONS, backendFiltering: true },
             });
-            await nextTick();
+            await nextTick(); // await child component rendering
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
@@ -381,6 +385,7 @@ describe("OAutocomplete tests", () => {
                     clearable: true,
                 },
             });
+            await nextTick(); // await child component rendering
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
@@ -395,11 +400,15 @@ describe("OAutocomplete tests", () => {
 
         test("clear button does not appear when clearable property is not set to true", () => {
             const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, modelValue: OPTIONS[5] },
+                props: {
+                    options: OPTIONS,
+                    modelValue: OPTIONS[5],
+                    clearable: false,
+                },
             });
-            const subject = wrapper.find(".o-icon").exists();
 
-            expect(subject).toBeFalsy();
+            const subject = wrapper.find(".o-icon");
+            expect(subject.exists()).toBeFalsy();
         });
     });
 
