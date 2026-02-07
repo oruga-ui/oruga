@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="T, IsMultiple extends boolean = false">
 import {
     computed,
+    nextTick,
     onMounted,
     ref,
     toValue,
@@ -330,9 +331,13 @@ watch(
         if (newFocus)
             // focus new element
             toValue(newFocus.el)?.focus();
-        else if (oldFocus)
-            // blur old if no new focus available to
-            unrefElement(oldFocus.el)?.blur();
+        else {
+            if (oldFocus)
+                // blur old if no new focus available to
+                unrefElement(oldFocus.el)?.blur();
+            // reset focus if not ites is focused
+            resetFocus();
+        }
     },
     { flush: "post" },
 );
@@ -352,7 +357,7 @@ function resetFocus(): void {
     const firstSelectedItem = findFirstSelectedItem();
     const firstViableItem = firstSelectedItem ?? getFirstViableItem(0, 1);
     const el = toValue(firstViableItem.el);
-    if (el) el.tabIndex = 0;
+    if (el) nextTick(() => (el.tabIndex = 0));
 }
 
 /** Sets the beginn index for an multiselection. */
