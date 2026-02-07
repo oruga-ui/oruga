@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="T, IsMultiple extends boolean = false">
 import {
     computed,
-    nextTick,
     onMounted,
     ref,
     toValue,
@@ -357,7 +356,7 @@ function resetFocus(): void {
     const firstSelectedItem = findFirstSelectedItem();
     const firstViableItem = firstSelectedItem ?? getFirstViableItem(0, 1);
     const el = toValue(firstViableItem.el);
-    if (el) nextTick(() => (el.tabIndex = 0));
+    if (el) el.tabIndex = 0;
 }
 
 /** Sets the beginn index for an multiselection. */

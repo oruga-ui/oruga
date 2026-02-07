@@ -20,7 +20,7 @@ exports[`OTree tests > render correctly with deep options 1`] = `
   <!-- Todo: maybe add filter?! -->
   <ul id="v-0_list" role="tree" class="o-tree__list" aria-disabled="false">
     <transition-group-stub name="slide" appear="false" persisted="false" css="true">
-      <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Documents">
+      <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item" role="treeitem" tabindex="0" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Documents">
         <div class="o-tree__item-label">
           <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-folder mdi-24px"></i></span><span>Documents</span>
         </div><!-- sub tree items -->
@@ -158,7 +158,7 @@ exports[`OTree tests > render correctly with options 1`] = `
   <!-- Todo: maybe add filter?! -->
   <ul id="v-0_list" role="tree" class="o-tree__list" aria-disabled="false">
     <transition-group-stub name="slide" appear="false" persisted="false" css="true">
-      <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="label1">
+      <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item" role="treeitem" tabindex="0" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="label1">
         <div class="o-tree__item-label">
           <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span><span>label1</span>
         </div><!-- sub tree items -->

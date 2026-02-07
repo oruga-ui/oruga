@@ -94,7 +94,7 @@ const { childItems } = useProviderParent({
 });
 
 /** inject functionalities and data from the subtree parent item component */
-const { parent: parentSubtre } = useProviderChild<SubtreeComponent>(rootRef, {
+const { parent: parentSubtree } = useProviderChild<SubtreeComponent>(rootRef, {
     key: subtreeKey,
     needParent: false,
 });
@@ -129,7 +129,8 @@ const hasToggleIcon = computed(
 );
 
 const isHidden = computed(
-    () => props.hidden ?? (parentSubtre.value && !parentSubtre.value.expanded),
+    () =>
+        props.hidden ?? (parentSubtree.value && !parentSubtree.value.expanded),
 );
 
 /** Shows if the item is viable or not (not disabled or hidden). */
