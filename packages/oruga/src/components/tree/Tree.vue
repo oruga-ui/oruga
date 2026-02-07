@@ -334,7 +334,7 @@ watch(
             if (oldFocus)
                 // blur old if no new focus available to
                 unrefElement(oldFocus.el)?.blur();
-            // reset focus if not ites is focused
+            // reset focus if no new item is focused
             resetFocus();
         }
     },
