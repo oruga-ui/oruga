@@ -127,6 +127,10 @@ const normalizedOptions = computed(() =>
 
 const hasChildren = computed(() => !!childItems.value.length);
 
+const hasToggleIcon = computed(
+    () => parent.value.toggleIcon && hasChildren.value,
+);
+
 /** Shows if the item is viable or not (not disabled or hidden). */
 const isViable = computed(() => !isHidden.value && !props.disabled);
 
@@ -156,13 +160,25 @@ const itemIconSize = computed(() => props.iconSize ?? parent.value.iconSize);
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
-    // toggle collapsable if not dedicated icon is available
-    if (!parent.value.toggleIcon) toggleExpand();
+    if (hasToggleIcon.value) {
+        const toggleIcon = (event.target as HTMLElement).closest(
+            "[data-toggle]",
+        );
+        if (toggleIcon && rootRef.value?.contains(toggleIcon)) {
+            event.stopPropagation();
+            toggleExpand();
+            return;
+        }
+    }
+    // toggle collapsable if not a dedicated icon is available
+    else toggleExpand();
 
     if (isSelectable.value) {
-        const selectionState = parent.value.toggleIcon
-            ? isExpanded.value
-            : !isSelected.value;
+        const selectionState = hasToggleIcon.value
+            ? // when has toggle icon use expanded state as selection state
+              isExpanded.value
+            : // else use opposite of current selected state
+              !isSelected.value;
         parent.value.selectItem(item.value, selectionState);
     }
 
@@ -250,14 +266,13 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         :aria-owns="hasChildren ? subtreeId : undefined">
         <div :class="labelClasses" @mouseenter="focusItem" @click="clickItem">
             <o-icon
-                v-if="parent.toggleIcon && hasChildren"
+                v-if="hasToggleIcon"
+                data-toggle
                 :icon="parent.toggleIcon"
                 :pack="itemIconPack"
                 :size="itemIconSize"
                 :class="toggleClasses"
-                clickable
-                :rotation="isExpanded ? 90 : 0"
-                @click.prevent="toggleExpand" />
+                :rotation="isExpanded ? 90 : 0" />
 
             <o-icon
                 v-if="icon"
