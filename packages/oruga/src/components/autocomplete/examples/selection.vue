@@ -22,7 +22,7 @@ const options = [
     "Vue.js",
 ];
 
-const selected = ref<string>(options[4]);
+const selected = ref(options[4]);
 
 function changeselection(): void {
     selected.value = options[0];
