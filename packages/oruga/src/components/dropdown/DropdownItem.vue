@@ -67,13 +67,13 @@ function setHidden(hidden: boolean): void {
     localHidden.value = hidden;
 }
 
+/** Shows if the item is viable or not (not disabled or hidden). */
+const isViable = computed(() => !isHidden.value && isClickable.value);
+
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
 );
-
-/** Shows if the item is viable or not (not disabled or hidden). */
-const isViable = computed(() => !isHidden.value && isClickable.value);
 
 const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;

@@ -143,12 +143,10 @@ defineSlots<{
     }): void;
     /**
      * Define the dropdown items here
-     * @param active {boolean} - dropdown active state
      * @param focusedIndex {number | undefined} - index of the focused element
      * @param toggle {(): void} - toggle dropdown active state
      */
     default?(props: {
-        active: boolean;
         focusedIndex?: number;
         toggle: (event: Event) => void;
     }): void;
@@ -246,10 +244,10 @@ watch(
 
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
+    menuId: props.menuId,
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
     selectable: props.selectable,
-    menuId: props.menuId,
     selected: vmodel.value,
     focsuedIdentifier: focusedItem.value?.identifier,
     selectItem,
@@ -265,11 +263,6 @@ const { childItems } = useProviderParent<
     data: provideData,
 });
 
-/** is any option visible */
-const hasViableItems = computed(() =>
-    childItems.value.some((item) => item.data.isViable),
-);
-
 watch(
     childItems,
     () => {
@@ -280,6 +273,11 @@ watch(
         }
     },
     { deep: true, flush: "post" },
+);
+
+/** is any option visible */
+const hasViableItems = computed(() =>
+    childItems.value.some((item) => item.data.isViable),
 );
 
 /**
@@ -721,10 +719,7 @@ defineExpose({ value: vmodel, items: childItems });
                     @keydown.end="inline && onEndPressed($event)">
                     <slot name="before" />
 
-                    <slot
-                        :active="isActive"
-                        :focused-index="focusedItem?.index"
-                        :toggle="toggle">
+                    <slot :focused-index="focusedItem?.index" :toggle="toggle">
                         <template v-for="(group, groupIndex) in groupedOptions">
                             <o-dropdown-item
                                 v-if="group.label"

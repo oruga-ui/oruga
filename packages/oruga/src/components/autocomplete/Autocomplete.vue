@@ -163,13 +163,11 @@ const emits = defineEmits<{
 
 const slots = defineSlots<{
     /**
-     * Define the dropdown items here
-     * @param active {boolean} - dropdown active state
+     * Define the autocomplete items here
      * @param focusedIndex {number | undefined} - index of the focused element
      * @param toggle {(): void} - toggle dropdown active state
      */
     default?(props: {
-        active: boolean;
         focusedIndex?: number;
         toggle: (event: Event) => void;
     }): void;
@@ -256,6 +254,7 @@ const hasViableItems = computed(() =>
 );
 
 watch(hasViableItems, (viable) => {
+    // open or close dropdown when has no items to show or an empty state entry
     if (isFocused.value) isActive.value = viable || !!slots.empty;
 });
 
@@ -263,7 +262,6 @@ function findOption(
     value: T | undefined,
 ): (typeof childItems)["value"][number] | undefined {
     if (typeof value === "undefined") return undefined;
-
     return childItems.value.find((item) => isEqual(value, item.data.value));
 }
 
@@ -547,8 +545,8 @@ defineExpose({
             </o-dropdown-item>
         </template>
 
-        <template #default="{ active, toggle, focusedIndex }">
-            <slot :active :toggle :focused-index>
+        <template #default="{ toggle, focusedIndex }">
+            <slot :toggle :focused-index>
                 <template v-for="(group, groupIndex) in groupedOptions">
                     <o-dropdown-item
                         v-if="group.label"
