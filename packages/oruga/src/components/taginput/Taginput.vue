@@ -146,12 +146,12 @@ defineSlots<{
     /** Define an additional header */
     header?(): void;
     /**
-     * Define the select option here
+     * Define a selected option here
      * @param option {object} - option object
      * @param index {number} - option index
      * @param value {unknown} - option value
      */
-    default?(props: { option: OptionsItem<T>; index: number; value: T }): void;
+    option?(props: { option: OptionsItem<T>; index: number; value: T }): void;
     /** Define the content to show if the list is empty */
     empty?(): void;
     /** Define an additional footer */
@@ -412,7 +412,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 </template>
 
                 <template
-                    v-if="$slots.default"
+                    v-if="$slots.option"
                     #default="{ option, index, value }">
                     <slot :option="option" :index="index" :value="value" />
                 </template>
