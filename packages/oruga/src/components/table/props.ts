@@ -330,8 +330,16 @@ export type TableColumnProps<T, K extends string = FieldKey<T>> = {
     customSearch?: (row: T, filter: string) => boolean;
     /** Define a custom filter funtion when filterable */
     customFilter?: (row: T, filter: string) => boolean;
-    /** Adds native attributes to th */
+    /**
+     * Adds native attributes to th.
+     *
+     * *Due to a Vue reactivity system limitiation do not define an object value directly in the component template block - use a variable in the script block.*
+     */
     thAttrs?: object;
-    /** Adds native attributes to td */
+    /**
+     * Adds native attributes to td.
+     *
+     * *Due to a Vue reactivity system limitiation do not define an object value directly in the component template block - use a variable in the script block.*
+     */
     tdAttrs?: object;
 };

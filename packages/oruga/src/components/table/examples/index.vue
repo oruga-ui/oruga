@@ -43,6 +43,20 @@ import DraggableCode from "./draggable.vue?raw";
 
     <h3 id="customise">Customise</h3>
     <p>Define the table in the way that you need it to be.</p>
+    <div class="info custom-block">
+        <p class="custom-block-title">Limitations</p>
+        <p>
+            Due to the way the Vue reactivity system works, it is not possible
+            to define a JavaScript object for the <code>thAttrs</code> and
+            <code>tdAttrs</code> properties of the
+            <code>o-table-column</code> component directly in the template
+            block. This will result in a recursive rendering error. In order to
+            use an object as value, the object must be defined as variable in
+            the script block. (See
+            <a href="https://github.com/oruga-ui/oruga/issues/1531">
+                Issue #1531</a>)
+        </p>
+    </div>
     <ExampleViewer :component="Customise" :code="CustomiseCode" />
 
     <h3 id="columns">Columns</h3>
