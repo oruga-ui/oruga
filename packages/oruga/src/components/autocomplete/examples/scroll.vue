@@ -6,7 +6,7 @@ const isFetching = ref(false);
 const page = ref(1);
 const totalPages = ref(1);
 
-const options = ref<OptionsPropItem<any>[]>([]);
+const options = ref<OptionsPropItem[]>([]);
 const selected = ref<any>();
 const value = ref("");
 

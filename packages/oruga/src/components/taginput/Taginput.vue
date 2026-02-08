@@ -12,6 +12,7 @@ import OAutocomplete from "../autocomplete/Autocomplete.vue";
 import OTag from "../tag/Tag.vue";
 
 import { getDefault } from "@/utils/config";
+import { isEqual } from "@/utils/helpers";
 import {
     defineClasses,
     getActiveClasses,
@@ -21,7 +22,6 @@ import {
 
 import type { TaginputProps } from "./props";
 import type { ComponentExposed } from "vue-component-type-helpers";
-import { isEqual } from "@/utils/helpers";
 
 /**
  * A simple tag input field that can have autocomplete functionality.

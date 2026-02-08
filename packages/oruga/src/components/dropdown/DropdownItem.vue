@@ -49,7 +49,6 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 const providedData = computed<DropdownItemComponent<T>>(() => ({
     value: props.value,
     label: props.label,
-    isHidden: isHidden.value,
     isViable: isViable.value,
     setHidden,
     matches,

@@ -14,7 +14,6 @@ export type DropdownComponent<T> = {
 export type DropdownItemComponent<T> = {
     value: T;
     label: string;
-    isHidden: boolean;
     isViable: boolean;
     setHidden: (hidden: boolean) => void;
     matches: (value: string) => boolean;

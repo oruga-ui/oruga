@@ -14,6 +14,7 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { getDefault } from "@/utils/config";
+import { isEqual } from "@/utils/helpers";
 import {
     defineClasses,
     normalizeOptions,
@@ -26,7 +27,6 @@ import { injectField } from "../field/fieldInjection";
 
 import type { OptionsItem, OptionsGroupItem } from "@/types";
 import type { AutocompleteProps } from "./props";
-import { isEqual } from "@/utils/helpers";
 import type { ComponentExposed } from "vue-component-type-helpers";
 
 enum SpecialOption {
