@@ -240,13 +240,13 @@ watch(inputValue, (filter: string): void => {
         if (item.data.value === SpecialOption.EMPTY) return;
 
         // check if the value matches the filter string
-        const matches =
+        const containsFilter =
             typeof props.filter === "function"
                 ? props.filter(item.data.value, filter)
-                : item.data.matches(filter);
+                : item.data.label?.toLowerCase().includes(filter.toLowerCase());
 
         // update hidden state
-        item.data.setHidden(!matches);
+        item.data.setHidden(!containsFilter);
     });
 });
 

@@ -51,7 +51,6 @@ const providedData = computed<DropdownItemComponent<T>>(() => ({
     label: props.label,
     isViable: isViable.value,
     setHidden,
-    matches,
     selectItem: (): void => rootRef.value?.click(),
 }));
 
@@ -101,11 +100,6 @@ function focusItem(): void {
     parent.value.focusItem(item.value);
 }
 
-/** Check if a  given value matches the item label (startsWith). */
-function matches(value: string): boolean {
-    return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
-}
-
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -136,6 +130,7 @@ const rootClasses = defineClasses(
         :role="parent.selectable ? 'option' : 'menuitem'"
         tabindex="-1"
         :aria-selected="parent.selectable ? isSelected : undefined"
+        :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"
         @mouseenter="focusItem"

@@ -336,8 +336,15 @@ describe("OAutocomplete tests", () => {
 
     describe("filtering", () => {
         test("do not sort when `backend-filtering` is given", async () => {
+            vi.useFakeTimers();
+
             const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, backendFiltering: true },
+                props: {
+                    options: OPTIONS,
+                    backendFiltering: true,
+                    active: true,
+                },
+                attachTo: document.body,
             });
             await nextTick(); // await child component rendering
 
@@ -353,13 +360,51 @@ describe("OAutocomplete tests", () => {
             );
 
             await input.setValue(OPTIONS[2]);
+            await vi.runAllTimers(); // await debounce input handler
 
             // check that there are no out filtered elements
             optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
             expect(optionElements).toHaveLength(OPTIONS.length);
+            optionElements.forEach((option) => {
+                expect(option.isVisible()).toBeTruthy();
+                expect(option.attributes("disabled")).toBeUndefined();
+            });
+            vi.useRealTimers();
+        });
+
+        test("show available options correctly when filter is given", async () => {
+            vi.useFakeTimers();
+
+            const wrapper = mount(OAutocomplete, {
+                props: { options: OPTIONS, active: true },
+                attachTo: document.body,
+            });
+            await nextTick(); // await child component rendering
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            let optionElements = wrapper.findAll(
+                '[data-oruga="dropdown-item"]',
+            );
+            expect(optionElements).toHaveLength(OPTIONS.length);
             optionElements.forEach((option) =>
                 expect(option.attributes("disabled")).toBeUndefined(),
             );
+
+            await input.setValue("j");
+            await vi.runAllTimers(); // await debounce input handler
+
+            // check that there are no out filtered elements
+            optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
+            expect(optionElements).toHaveLength(OPTIONS.length);
+            optionElements.forEach((option) => {
+                expect(option.isVisible()).toBe(
+                    option.text().toLowerCase().includes("j"),
+                );
+                expect(option.attributes("disabled")).toBeUndefined();
+            });
+            vi.useRealTimers();
         });
     });
 

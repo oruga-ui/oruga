@@ -115,7 +115,8 @@ function clickItem(event: Event): void {
     emits("click", props.value as T, event);
 }
 
-/** Check if a  given value matches the item label (startsWith). */
+/** Check if a given value matches the item label (startsWith). */
+// TODO: refactor to mave into Parent because not name does noch match implementation
 function matches(value: string): boolean {
     return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
 }

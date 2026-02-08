@@ -14,7 +14,7 @@ exports[`ODatepicker > render correctly 1`] = `
     <!--v-if-->
     <transition-stub name="fade" appear="false" persisted="true" css="true">
       <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
-        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-datepicker__box" role="menuitem" tabindex="-1" aria-disabled="false">
+        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-datepicker__box" role="menuitem" tabindex="-1" aria-hidden="false" aria-disabled="false">
           <header class="o-datepicker__header"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__previous" aria-label="Previous Page"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
               <!--v-if-->
               <!--v-if--></span>
