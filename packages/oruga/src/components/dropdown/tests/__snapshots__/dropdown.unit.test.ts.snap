@@ -10,6 +10,7 @@ exports[`ODropdown tests > render correctly with items 1`] = `
       <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">A</div>
       <div id="v-0-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">B</div>
       <div id="v-0-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">C</div>
+      <!--v-if-->
     </div>
   </transition-stub>
   <!--teleport end-->
@@ -27,6 +28,7 @@ exports[`ODropdown tests > render correctly with options 1`] = `
       <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false"><span>Item 1</span></div>
       <div id="v-0-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false"><span>Item 2</span></div>
       <div id="v-0-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false"><span>Item 3</span></div>
+      <!--v-if-->
     </div>
   </transition-stub>
   <!--teleport end-->
