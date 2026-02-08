@@ -183,18 +183,18 @@ const slots = defineSlots<{
      */
     empty?(props: { toggle: (event: Event) => void }): void;
     /**
+     * Override the option group
+     * @param group {object} - options group
+     * @param index {number} - option index
+     */
+    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    /**
      * Override the select option
      * @param option {object} - option object
      * @param index {number} - option index
      * @param value {unknown} - option value
      */
     option?(props: { option: OptionsItem<T>; index: number; value: T }): void;
-    /**
-     * Override the option group
-     * @param group {object} - options group
-     * @param index {number} - option index
-     */
-    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
 }>();
 
 const dropdownRef =

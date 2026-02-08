@@ -9,8 +9,10 @@
                 selectable-footer>
                 <template #header> Header </template>
 
-                <o-dropdown-item label="Jesse Simmons" :value="1" />
-                <o-dropdown-item label="John Jacobs" :value="2" />
+                <template #default>
+                    <o-dropdown-item label="Jesse Simmons" :value="1" />
+                    <o-dropdown-item label="John Jacobs" :value="2" />
+                </template>
 
                 <template #footer> Footer </template>
 
