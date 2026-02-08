@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     selectable: false,
     checkable: false,
     emptyLabel: () => getDefault("tree.emptyLabel"), // TODO: add
-    toggleIcon: () => getDefault("tree.toggleIcon"),
+    toggleIcon: () => getDefault("tree.toggleIcon", "chevron-right"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
     animation: () => getDefault("tree.animation", "slide"),
@@ -330,9 +330,13 @@ watch(
         if (newFocus)
             // focus new element
             toValue(newFocus.el)?.focus();
-        else if (oldFocus)
-            // blur old if no new focus available to
-            unrefElement(oldFocus.el)?.blur();
+        else {
+            if (oldFocus)
+                // blur old if no new focus available to
+                unrefElement(oldFocus.el)?.blur();
+            // reset focus if no new item is focused
+            resetFocus();
+        }
     },
     { flush: "post" },
 );

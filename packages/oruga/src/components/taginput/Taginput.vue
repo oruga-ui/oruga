@@ -143,7 +143,7 @@ defineSlots<{
     /** Define an additional header */
     header?(): void;
     /**
-     * Define the select option here
+     * Define a selected option here
      * @param option {object} - option object
      * @param index {number} - option index
      * @param value {unknown} - option value

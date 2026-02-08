@@ -87,7 +87,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | empty    | Define the content to show if the list is empty |                                                                                                                                                                |
 | footer   | Define an additional footer                     |                                                                                                                                                                |
 | counter  | Override the counter                            | **items** `number` - items count<br/>**total** `number` - total count                                                                                          |
-| option   | Define the select option here                   | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value                                               |
+| option   | Define a selected option here                   | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value                                               |
 
 </section>
 

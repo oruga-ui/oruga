@@ -143,13 +143,15 @@ defineSlots<{
     }): void;
     /**
      * Define the dropdown items here
-     * @param focusedIndex {number | undefined} - index of the focused element
      * @param toggle {(): void} - toggle dropdown active state
      */
-    default?(props: {
-        focusedIndex?: number;
-        toggle: (event: Event) => void;
-    }): void;
+    default?(props: { toggle: (event: Event) => void }): void;
+    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    before?(props: { toggle: (event: Event) => void }): void;
+    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    after?(props: { toggle: (event: Event) => void }): void;
+    /** Define the content to show if the list is empty */
+    empty?(props: { toggle: (event: Event) => void }): void;
     /**
      * Override the option group
      * @param group {object} - options group item
@@ -161,12 +163,6 @@ defineSlots<{
      * @param option {object} - option item
      */
     option?(props: { option: OptionsItem<T> }): void;
-    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
-    before?(): void;
-    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
-    after?(): void;
-    /** Define the content to show if the list is empty */
-    empty?(): void;
 }>();
 
 const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
@@ -717,9 +713,9 @@ defineExpose({ value: vmodel, items: childItems });
                     @keydown.down.prevent="inline && onDownPressed($event)"
                     @keydown.home="inline && onHomePressed($event)"
                     @keydown.end="inline && onEndPressed($event)">
-                    <slot name="before" />
+                    <slot name="before" :toggle="toggle" />
 
-                    <slot :focused-index="focusedItem?.index" :toggle="toggle">
+                    <slot :toggle="toggle">
                         <template v-for="(group, groupIndex) in groupedOptions">
                             <o-dropdown-item
                                 v-if="group.label"
@@ -754,8 +750,9 @@ defineExpose({ value: vmodel, items: childItems });
                         </template>
                     </slot>
 
-                    <slot v-if="!hasViableItems" name="empty" />
-                    <slot name="after" />
+                    <slot v-if="!hasViableItems" name="empty" :toggle="toggle" />
+
+                    <slot name="after" :toggle="toggle" />
                 </component>
             </transition>
         </PositionWrapper>

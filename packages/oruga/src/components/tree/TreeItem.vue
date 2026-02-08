@@ -9,14 +9,12 @@ import {
     normalizeOptions,
     useProviderChild,
     useProviderParent,
-    // type ProviderItem,
 } from "@/composables";
 
 import type {
     TreeComponent,
     TreeItemComponent,
-    // SubtreeComponent,
-    SubtreeItemComponent,
+    SubtreeComponent,
 } from "./types";
 import type { TreeItemProps } from "./props";
 import { isDefined, isEqual } from "@/utils/helpers";
@@ -84,27 +82,26 @@ const rootRef = useTemplateRef("rootElement");
 
 const subtreeKey = Symbol("subtree");
 
-/** provide functionalities and data to subtree child item components */
-const { childItems } = useProviderParent<SubtreeItemComponent>({
-    key: subtreeKey,
-});
-
 // provided data is a computed ref to ensure reactivity
-const providedSubtreeItemData = computed<SubtreeItemComponent>(() => ({
-    setHidden,
+const subtreeProvidedData = computed<SubtreeComponent>(() => ({
+    expanded: isExpanded.value,
 }));
 
+/** provide functionalities and data to subtree child item components */
+const { childItems } = useProviderParent({
+    key: subtreeKey,
+    data: subtreeProvidedData,
+});
+
 /** inject functionalities and data from the subtree parent item component */
-useProviderChild<unknown, SubtreeItemComponent>(rootRef, {
+const { parent: parentSubtree } = useProviderChild<SubtreeComponent>(rootRef, {
     key: subtreeKey,
     needParent: false,
-    data: providedSubtreeItemData,
 });
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TreeItemComponent<T>>(() => ({
     value: props.value as T,
-    hidden: isHidden.value,
     expanded: isExpanded.value,
     isViable: isViable.value,
     hasChildren: hasChildren.value,
@@ -126,6 +123,15 @@ const normalizedOptions = computed(() =>
 );
 
 const hasChildren = computed(() => !!childItems.value.length);
+
+const hasToggleIcon = computed(
+    () => parent.value.toggleIcon && hasChildren.value,
+);
+
+const isHidden = computed(
+    () =>
+        props.hidden ?? (parentSubtree.value && !parentSubtree.value.expanded),
+);
 
 /** Shows if the item is viable or not (not disabled or hidden). */
 const isViable = computed(() => !isHidden.value && !props.disabled);
@@ -156,14 +162,22 @@ const itemIconSize = computed(() => props.iconSize ?? parent.value.iconSize);
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
-    // toggle collapsable if not dedicated icon is available
-    if (!parent.value.toggleIcon) toggleExpand();
+    if (hasToggleIcon.value) {
+        const toggleIcon = (event.target as HTMLElement).closest(
+            "[data-toggle]",
+        );
+        if (toggleIcon && rootRef.value?.contains(toggleIcon)) {
+            event.stopPropagation();
+            toggleExpand();
+            return;
+        }
+    }
+    // toggle collapsable if not a dedicated icon is available
+    else toggleExpand();
 
     if (isSelectable.value) {
-        const selectionState = parent.value.toggleIcon
-            ? isExpanded.value
-            : !isSelected.value;
-        parent.value.selectItem(item.value, selectionState);
+        // toggle selection state
+        parent.value.selectItem(item.value, !isSelected.value);
     }
 
     emits("click", props.value as T, event);
@@ -191,15 +205,6 @@ function setExpand(state: boolean): void {
     if (!parent.value.collapsable) return;
     if (!hasChildren.value) return;
     isExpanded.value = state;
-    // set hidden state for all the child items
-    childItems.value.forEach((item) => item.data.setHidden(!state));
-}
-
-const localHidden = ref(false);
-const isHidden = computed(() => props.hidden || localHidden.value);
-
-function setHidden(state: boolean): void {
-    localHidden.value = state;
 }
 
 /** Check if a value matches the label (startsWith). */
@@ -251,12 +256,13 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         :aria-owns="hasChildren ? subtreeId : undefined">
         <div :class="labelClasses" @mouseenter="focusItem" @click="clickItem">
             <o-icon
-                v-if="parent.toggleIcon"
+                v-if="hasToggleIcon"
+                data-toggle
                 :icon="parent.toggleIcon"
                 :pack="itemIconPack"
                 :size="itemIconSize"
                 :class="toggleClasses"
-                @click.prevent="toggleExpand" />
+                :rotation="isExpanded ? 90 : 0" />
 
             <o-icon
                 v-if="icon"
