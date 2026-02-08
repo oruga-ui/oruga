@@ -167,11 +167,20 @@ const slots = defineSlots<{
      * @param toggle {(): void} - toggle dropdown active state
      */
     default?(props: { toggle: (event: Event) => void }): void;
-    /** Define an additional header */
+    /**
+     * Define an additional header
+     * @param toggle {(): void} - toggle dropdown active state
+     */
     header?(props: { toggle: (event: Event) => void }): void;
-    /** Define an additional footer */
+    /**
+     * Define an additional footer
+     * @param toggle {(): void} - toggle dropdown active state
+     */
     footer?(props: { toggle: (event: Event) => void }): void;
-    /** Define the content to show if the list is empty */
+    /**
+     * Define the content to show if the list is empty
+     * @param toggle {(): void} - toggle dropdown active state
+     */
     empty?(props: { toggle: (event: Event) => void }): void;
     /**
      * Override the select option

@@ -147,11 +147,20 @@ defineSlots<{
      * @param toggle {(): void} - toggle dropdown active state
      */
     default?(props: { toggle: (event: Event) => void }): void;
-    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    /**
+     * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
+     * @param toggle {(): void} - toggle dropdown active state
+     * */
     before?(props: { toggle: (event: Event) => void }): void;
-    /** Define extra `o-dropdown-item` components here, even if you have some options defined by prop */
+    /**
+     * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
+     * @param toggle {(): void} - toggle dropdown active state
+     */
     after?(props: { toggle: (event: Event) => void }): void;
-    /** Define the content to show if the list is empty */
+    /**
+     * Define the content to show if the list is empty
+     * @param toggle {(): void} - toggle dropdown active state
+     */
     empty?(props: { toggle: (event: Event) => void }): void;
     /**
      * Override the option group

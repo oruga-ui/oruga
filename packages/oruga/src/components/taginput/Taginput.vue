@@ -1,12 +1,5 @@
 <script setup lang="ts" generic="T = string">
-import {
-    computed,
-    useAttrs,
-    useTemplateRef,
-    useId,
-    watchEffect,
-    ref,
-} from "vue";
+import { computed, useAttrs, useTemplateRef, watchEffect, ref } from "vue";
 
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 import OTag from "../tag/Tag.vue";
@@ -17,6 +10,7 @@ import {
     defineClasses,
     getActiveClasses,
     useInputHandler,
+    useSequentialId,
     type OptionsItem,
 } from "@/composables";
 
@@ -130,6 +124,26 @@ const emits = defineEmits<{
 
 defineSlots<{
     /**
+     * Define the taginput items here
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    default?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define an additional header
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    header?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define an additional footer
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    footer?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define the content to show if the list is empty
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    empty?(props: { toggle: (event: Event) => void }): void;
+    /**
      * Override the selected items
      * @param items {(string, object)[]} - selected items
      * @param options {object[]} - selected options
@@ -140,8 +154,6 @@ defineSlots<{
         options: OptionsItem<T>[];
         removeItem: (index: number, event: Event) => void;
     }): void;
-    /** Define an additional header */
-    header?(): void;
     /**
      * Define a selected option here
      * @param option {object} - option object
@@ -149,10 +161,6 @@ defineSlots<{
      * @param value {unknown} - option value
      */
     option?(props: { option: OptionsItem<T>; index: number; value: T }): void;
-    /** Define the content to show if the list is empty */
-    empty?(): void;
-    /** Define an additional footer */
-    footer?(): void;
     /**
      * Override the counter
      * @param items {number} - items count
@@ -183,6 +191,9 @@ const itemsLength = computed(() => selectedItems.value?.length || 0);
 
 const childItems = computed(() => autocompleteRef.value?.items ?? []);
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** map the selected items into option items */
 const selectedOptions = computed(() => {
     if (!selectedItems.value) return [];
@@ -197,7 +208,7 @@ const selectedOptions = computed(() => {
                 value: option.data.value,
                 key: option.identifier,
             };
-        else return { label: String(value), value, key: useId() };
+        else return { label: String(value), value, key: nextSequence() };
     });
 });
 
@@ -274,9 +285,12 @@ function onBackspace(): void {
         removeItem(itemsLength.value - 1);
 }
 
-function onEnter(): void {
+function onEnter(event: Event): void {
     // Add item if not select only and dropdown selection is closed
-    if (props.allowNew && !isDropdownActive.value) addItem();
+    if (props.allowNew && !isDropdownActive.value) {
+        event.stopPropagation();
+        addItem();
+    }
 }
 // #endregion --- Event Handler ---
 
@@ -406,22 +420,30 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 @scroll-end="$emit('scroll-end')"
                 @icon-click="$emit('icon-click', $event)"
                 @icon-right-click="$emit('icon-right-click', $event)">
-                <template v-if="$slots.header" #header>
-                    <slot name="header" />
+                <template v-if="$slots.header" #header="{ toggle }">
+                    <slot name="header" :toggle />
+                </template>
+
+                <template v-if="$slots.default" #default="{ toggle }">
+                    <slot :toggle />
                 </template>
 
                 <template
                     v-if="$slots.option"
                     #option="{ option, index, value }">
-                    <slot :option="option" :index="index" :value="value" />
+                    <slot
+                        name="option"
+                        :option="option"
+                        :index="index"
+                        :value="value" />
                 </template>
 
-                <template v-if="$slots.empty" #empty>
-                    <slot name="empty" />
+                <template v-if="$slots.empty" #empty="{ toggle }">
+                    <slot name="empty" :toggle />
                 </template>
 
-                <template v-if="$slots.footer" #footer>
-                    <slot name="footer" />
+                <template v-if="$slots.footer" #footer="{ toggle }">
+                    <slot name="footer" :toggle />
                 </template>
             </o-autocomplete>
         </div>

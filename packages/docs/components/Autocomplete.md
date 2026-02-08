@@ -97,12 +97,12 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 | Name    | Description                                     | Bindings                                                                                                         |
 | ------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| header  | Define an additional header                     | **toggle** -                                                                                                     |
+| header  | Define an additional header                     | **toggle** `(): void` - toggle dropdown active state                                                             |
 | default | Define the autocomplete items here              | **toggle** `(): void` - toggle dropdown active state                                                             |
 | group   | Override the option group                       | **group** `object` - options group<br/>**index** `number` - option index                                         |
 | option  | Override the select option                      | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value |
-| empty   | Define the content to show if the list is empty | **toggle** -                                                                                                     |
-| footer  | Define an additional footer                     | **toggle** -                                                                                                     |
+| empty   | Define the content to show if the list is empty | **toggle** `(): void` - toggle dropdown active state                                                             |
+| footer  | Define an additional footer                     | **toggle** `(): void` - toggle dropdown active state                                                             |
 
 </section>
 
