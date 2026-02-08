@@ -54,7 +54,9 @@ import DraggableCode from "./draggable.vue?raw";
             use an object as value, the object must be defined as variable in
             the script block. (See
             <a href="https://github.com/oruga-ui/oruga/issues/1531">
-                Issue #1531</a>)
+                <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
+                Issue #1531</a
+            >)
         </p>
     </div>
     <ExampleViewer :component="Customise" :code="CustomiseCode" />
