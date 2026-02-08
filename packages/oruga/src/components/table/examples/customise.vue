@@ -105,8 +105,7 @@ const hasMobileCards = ref(true);
                 field="last_name"
                 label="Last Name"
                 sortable
-                :th-attrs="{ style: { 'min-width': '120px' } }"
-                :td-attrs="{ class: '...' }">
+                :th-attrs="{ style: { 'min-width': '120px' } }">
                 {{ row.last_name }}
             </o-table-column>
 
