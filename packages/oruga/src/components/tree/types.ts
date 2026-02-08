@@ -20,7 +20,7 @@ export type TreeComponent<T> = {
 
 export type TreeItemComponent<T> = Pick<
     TreeItemProps<T>,
-    "value" | "hidden" | "expanded"
+    "value" | "expanded"
 > & {
     hasChildren: boolean;
     isViable: boolean;
@@ -30,6 +30,6 @@ export type TreeItemComponent<T> = Pick<
 
 export type TreeItem<T> = ProviderItem<TreeItemComponent<T>>;
 
-export type SubtreeItemComponent = {
-    setHidden: (state: boolean) => void;
+export type SubtreeComponent = {
+    expanded: boolean;
 };

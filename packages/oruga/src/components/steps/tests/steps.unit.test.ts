@@ -153,7 +153,6 @@ describe("OSteps tests", () => {
                 expect(stepElements).toHaveLength(options.length);
 
                 stepElements.forEach((el, idx) => {
-                    console.log(options[idx].label);
                     expect(el.classes("o-steps__step--clickable")).toBe(
                         options[idx].attrs?.clickable ?? idx !== 3,
                     );
