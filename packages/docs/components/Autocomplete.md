@@ -95,14 +95,14 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 ### Slots
 
-| Name    | Description                                     | Bindings                                                                                                                                                                        |
-| ------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| header  | Define an additional header                     |                                                                                                                                                                                 |
-| default | Define the dropdown items here                  | **active** `boolean` - dropdown active state<br/>**focusedIndex** `number \| undefined` - index of the focused element<br/>**toggle** `(): void` - toggle dropdown active state |
-| group   | Override the option group                       | **group** `object` - options group<br/>**index** `number` - option index                                                                                                        |
-| option  | Override the select option                      | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value                                                                |
-| empty   | Define the content to show if the list is empty |                                                                                                                                                                                 |
-| footer  | Define an additional footer                     |                                                                                                                                                                                 |
+| Name    | Description                                     | Bindings                                                                                                         |
+| ------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| header  | Define an additional header                     | **toggle** -                                                                                                     |
+| default | Define the autocomplete items here              | **toggle** `(): void` - toggle dropdown active state                                                             |
+| group   | Override the option group                       | **group** `object` - options group<br/>**index** `number` - option index                                         |
+| option  | Override the select option                      | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value |
+| empty   | Define the content to show if the list is empty | **toggle** -                                                                                                     |
+| footer  | Define an additional footer                     | **toggle** -                                                                                                     |
 
 </section>
 

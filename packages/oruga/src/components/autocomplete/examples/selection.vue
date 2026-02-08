@@ -45,7 +45,6 @@ function changeselection(): void {
         <o-field label="Find a name">
             <o-autocomplete
                 v-model="selected"
-                :options="options"
                 placeholder="e.g. Vue"
                 icon="search"
                 clearable
@@ -54,6 +53,10 @@ function changeselection(): void {
                 :keep-open="keepOpen"
                 :clear-on-select="clearOnSelect"
                 :select-on-close="selectOnClose">
+                <o-dropdown-item
+                    v-for="option in options"
+                    :key="option"
+                    :label="option" />
                 <template #empty> No results found </template>
             </o-autocomplete>
 

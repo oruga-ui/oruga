@@ -30,6 +30,7 @@ import {
     scrollElementInView,
     type OptionsGroupItem,
     type OptionsItem,
+    unrefElement,
 } from "@/composables";
 
 import type {
@@ -410,13 +411,20 @@ function open(event: Event): void {
 function close(event: Event): void {
     if (!isActive.value) return;
 
+    // clear remaining timer
+    if (timer) clearTimeout(timer);
+
     // select item when dropdown closed
     if (props.selectOnClose && focusedItem.value?.data.value)
         selectItem(focusedItem.value);
 
-    if (timer) clearTimeout(timer);
+    // reset focused item
+    if (focusedItem.value) {
+        unrefElement(focusedItem.value.el)?.blur();
+        focusedItem.value = undefined;
+    }
+
     isActive.value = false;
-    focusedItem.value = undefined;
     emits("close", event);
 }
 
@@ -750,7 +758,10 @@ defineExpose({ value: vmodel, items: childItems });
                         </template>
                     </slot>
 
-                    <slot v-if="!hasViableItems" name="empty" :toggle="toggle" />
+                    <slot
+                        v-if="!hasViableItems"
+                        name="empty"
+                        :toggle="toggle" />
 
                     <slot name="after" :toggle="toggle" />
                 </component>

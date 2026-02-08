@@ -16,7 +16,17 @@ const selectedOption = ref();
             </template>
 
             <o-dropdown-item :value="1" label="Action " />
-            <o-dropdown-item :value="2" label="Another action " />
+            <o-dropdown-item
+                :value="{
+                    label: 'Jesse Simmons',
+                    value: {
+                        id: 1,
+                        user: { first_name: 'Jesse', last_name: 'Simmons' },
+                        date: '2016/10/15 13:43:27',
+                        gender: 'Male',
+                    },
+                }"
+                label="Another action " />
             <o-dropdown-item :value="3" label="Something else " />
         </o-dropdown>
 

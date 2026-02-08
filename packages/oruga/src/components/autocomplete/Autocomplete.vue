@@ -164,13 +164,15 @@ const emits = defineEmits<{
 const slots = defineSlots<{
     /**
      * Define the autocomplete items here
-     * @param focusedIndex {number | undefined} - index of the focused element
      * @param toggle {(): void} - toggle dropdown active state
      */
-    default?(props: {
-        focusedIndex?: number;
-        toggle: (event: Event) => void;
-    }): void;
+    default?(props: { toggle: (event: Event) => void }): void;
+    /** Define an additional header */
+    header?(props: { toggle: (event: Event) => void }): void;
+    /** Define an additional footer */
+    footer?(props: { toggle: (event: Event) => void }): void;
+    /** Define the content to show if the list is empty */
+    empty?(props: { toggle: (event: Event) => void }): void;
     /**
      * Override the select option
      * @param option {object} - option object
@@ -184,12 +186,6 @@ const slots = defineSlots<{
      * @param index {number} - option index
      */
     group?(props: { group: OptionsGroupItem<T>; index: number }): void;
-    /** Define an additional header */
-    header?(): void;
-    /** Define an additional footer */
-    footer?(): void;
-    /** Define the content to show if the list is empty */
-    empty?(): void;
 }>();
 
 const dropdownRef =
@@ -534,19 +530,19 @@ defineExpose({
                 @icon-right-click="rightIconClick" />
         </template>
 
-        <template #before>
+        <template #before="{ toggle }">
             <o-dropdown-item
                 v-if="$slots.header"
                 :tag="itemTag"
                 :value="SpecialOption.Header"
                 :clickable="selectableHeader"
                 :class="[...itemClasses, ...itemHeaderClasses]">
-                <slot name="header" />
+                <slot name="header" :toggle />
             </o-dropdown-item>
         </template>
 
-        <template #default="{ toggle, focusedIndex }">
-            <slot :toggle :focused-index>
+        <template #default="{ toggle }">
+            <slot :toggle>
                 <template v-for="(group, groupIndex) in groupedOptions">
                     <o-dropdown-item
                         v-if="group.label"
@@ -560,10 +556,7 @@ defineExpose({
                         role="presentation"
                         :clickable="false"
                         :class="[...itemClasses, ...itemGroupClasses]">
-                        <slot
-                            name="group"
-                            :group="group"
-                            :index="Number(groupIndex)">
+                        <slot name="group" :group="group" :index="groupIndex">
                             <span> {{ group.label }} </span>
                         </slot>
                     </o-dropdown-item>
@@ -582,7 +575,7 @@ defineExpose({
                             name="option"
                             :option="option"
                             :value="option.value"
-                            :index="Number(optionIndex)">
+                            :index="optionIndex">
                             <span> {{ option.label }} </span>
                         </slot>
                     </o-dropdown-item>
@@ -590,24 +583,24 @@ defineExpose({
             </slot>
         </template>
 
-        <template v-if="$slots.empty" #empty>
+        <template v-if="$slots.empty" #empty="{ toggle }">
             <o-dropdown-item
                 :tag="itemTag"
                 :value="SpecialOption.EMPTY"
                 :clickable="false"
                 :class="[...itemClasses, ...itemEmptyClasses]">
-                <slot name="empty" />
+                <slot name="empty" :toggle />
             </o-dropdown-item>
         </template>
 
-        <template #after>
+        <template #after="{ toggle }">
             <o-dropdown-item
                 v-if="$slots.footer"
                 :tag="itemTag"
                 :value="SpecialOption.Footer"
                 :clickable="selectableFooter"
                 :class="[...itemClasses, ...itemFooterClasses]">
-                <slot name="footer" />
+                <slot name="footer" :toggle />
             </o-dropdown-item>
         </template>
     </o-dropdown>
