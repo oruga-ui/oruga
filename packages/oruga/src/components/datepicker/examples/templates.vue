@@ -51,6 +51,7 @@ function selectMonth(month: number | undefined): void {
                             root-class="grow"
                             expanded
                             @update:model-value="selectMonth" />
+
                         <o-button
                             :label="selected?.getFullYear().toString()"
                             disabled />
@@ -64,6 +65,7 @@ function selectMonth(month: number | undefined): void {
                             icon-left="calendar"
                             label="Today"
                             @click="selected = new Date()" />
+
                         <o-button
                             variant="danger"
                             icon-left="times"

@@ -8,10 +8,8 @@ import {
 import type { ComponentProps } from "vue-component-type-helpers";
 
 import Dialog from "./Dialog.vue";
-import Modal from "@/components/modal/Modal.vue";
 
 import type { DialogProps } from "./props";
-import type { ModalProps } from "../modal/props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -22,10 +20,8 @@ declare module "../../index" {
 export type DialogProgrammaticOptions<C extends Component> = Readonly<
     DialogProps<C>
 > &
-    Pick<ComponentProps<typeof Dialog<C>>, "onConfirm" | "onClose">;
-
-type DialogModalProgrammaticOptions = Readonly<ModalProps<never>> &
-    ProgrammaticComponentOptions<typeof Dialog<never>>;
+    ProgrammaticComponentOptions<typeof Dialog<C>> &
+    Partial<Pick<ComponentProps<typeof Dialog<C>>, "onConfirm" | "onClose">>;
 
 export class DialogProgrammaticFactory extends ProgrammaticFactory {
     /**
@@ -37,26 +33,22 @@ export class DialogProgrammaticFactory extends ProgrammaticFactory {
      */
     open<C extends Component>(
         options: string | DialogProgrammaticOptions<C>,
-        modalOptions?: DialogModalProgrammaticOptions,
         target?: ProgrammaticTarget,
-    ): ProgrammaticExpose<typeof Modal<typeof Dialog<C>>> {
-        const dialogOptions: DialogProgrammaticOptions<C> =
+    ): ProgrammaticExpose<typeof Dialog<C>> {
+        const _options: DialogProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
 
-        const componentProps: ModalProps<typeof Dialog<C>> = {
+        const componentProps: DialogProps<C> = {
             active: true, // set the active default state to true
-            ...(modalOptions ?? {}),
-            component: Dialog,
-            props: dialogOptions,
+            ..._options,
         };
 
         // create programmatic component
-        return this._create<typeof Modal<typeof Dialog<C>>>(
-            Modal,
+        return this._create<typeof Dialog<C>>(
+            Dialog,
             {
                 props: componentProps, // component specific props
-                // @ts-ignore will be reworked later
-                onClose: dialogOptions.onClose, // on close event handler
+                onClose: _options.onClose, // on close event handler
             },
             target, // target the component get rendered into
         );

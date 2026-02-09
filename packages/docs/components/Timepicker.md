@@ -87,10 +87,10 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Slots
 
-| Name    | Description                            | Bindings |
-| ------- | -------------------------------------- | -------- |
-| trigger | Override the trigger                   |          |
-| footer  | Define an additional content on footer |          |
+| Name    | Description                                | Bindings |
+| ------- | ------------------------------------------ | -------- |
+| trigger | Override the trigger input element         |          |
+| footer  | Define an additional content in the footer |          |
 
 </section>
 

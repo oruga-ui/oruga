@@ -8,6 +8,9 @@ import TriggersCode from "./triggers.vue?raw";
 import Options from "./options.vue";
 import OptionsCode from "./options.vue?raw";
 
+import OptionsGrouped from "./options-grouped.vue";
+import OptionsGroupedCode from "./options-grouped.vue?raw";
+
 import Inline from "./inline.vue";
 import InlineCode from "./inline.vue?raw";
 
@@ -78,6 +81,7 @@ import PositionCode from "./position.vue?raw";
         </p>
     </div>
     <ExampleViewer :component="Options" :code="OptionsCode" />
+    <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 
     <h3 id="selectable">Selectable</h3>
     <p>

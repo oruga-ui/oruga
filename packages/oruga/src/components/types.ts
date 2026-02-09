@@ -949,9 +949,41 @@ In addition, any CSS selector string or an actual DOM node can be used.
         dialog?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Adds close button to the header
+                 * Custom animation (transition name)
+                 */
+                animation: string;
+                /**
+                 * Show an backdrop overlay background; make it a modal dialog
+                 */
+                backdrop: boolean;
+                /**
+                 * Max width of the dialog
+                 */
+                maxWidth: Numberish;
+                /**
+                 * Max height of the dialog
+                 */
+                maxHeight: Numberish;
+                /**
+                 * Adds close button to the header to hide the dialog
                  */
                 closeable: boolean;
+                /**
+                 * Close the dialog when clicked outside of the panel
+                 */
+                closeOnBackdrop: boolean;
+                /**
+                 * Close the dialog when pressing escape key
+                 */
+                closeOnEscape: boolean;
+                /**
+                 * Close the dialog when the confirm button is preset
+                 */
+                closeOnConfirm: boolean;
+                /**
+                 * Whether background scrollbar should be blocked/removed when dialog is visible
+                 */
+                blockScroll: boolean;
                 /**
                  * Icon pack to use for the close icon
                  */
@@ -969,9 +1001,47 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 ariaCloseLabel: string;
                 /**
+                 * Mobile breakpoint as `max-width` value
+                 */
+                mobileBreakpoint: string;
+                /**
+                 * Append the component to another part of the DOM.
+Set `true` to append the component to the body.
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
+                teleport: boolean | object | string;
+                /**
                  * Class of the root element
                  */
                 rootClass: ClassDefinition;
+                /**
+                 * Class of the root element when on mobile
+                 */
+                mobileClass: ClassDefinition;
+                /**
+                 * Class of the root element when active
+                 */
+                activeClass: ClassDefinition;
+                /**
+                 * Class of the root element when fullscreen
+                 */
+                fullscreenClass: ClassDefinition;
+                /**
+                 * Class of the root element when teleported
+                 */
+                teleportClass: ClassDefinition;
+                /**
+                 * Class of the root element with text-position
+                 */
+                textPositionClass: ClassDefinition;
+                /**
+                 * Class of the backdrop overlay element
+                 */
+                backdropClass: ClassDefinition;
+                /**
+                 * Class of the wrapper element
+                 */
+                wrapperClass: ClassDefinition;
                 /**
                  * Class of the header element
                  */
@@ -981,17 +1051,21 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 titleClass: ClassDefinition;
                 /**
+                 * Class of the header subtitle element
+                 */
+                subtitleClass: ClassDefinition;
+                /**
                  * Class of the header close element
                  */
                 closeClass: ClassDefinition;
                 /**
-                 * Class of the image container
-                 */
-                imageClass: ClassDefinition;
-                /**
                  * Class of the image figure element
                  */
                 figureClass: ClassDefinition;
+                /**
+                 * Class of the image element
+                 */
+                imageClass: ClassDefinition;
                 /**
                  * Class of the body element
                  */
@@ -1016,6 +1090,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the cancel button element
                  */
                 cancelButtonClass: ClassDefinition;
+                /**
+                 * Class of the body when modal is open and scroll is clipped
+                 */
+                scrollClipClass: ClassDefinition;
+                /**
+                 * Class of the body when modal is open and scroll is keeped
+                 */
+                scrollKeepClass: ClassDefinition;
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
@@ -1042,7 +1124,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Dropdown will be triggered by any events
                  */
-                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
+                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
                 /**
                  * Show when clicked on the trigger
                  */
@@ -1366,7 +1448,7 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
-                 * Number of milliseconds to delay before to emit input event
+                 * Number of milliseconds to delay before the value get emitted
                  */
                 debounce: number;
                 /**
@@ -1441,7 +1523,7 @@ See icon library documentation for custom classes.
                  */
                 scrollHeight: number | string;
                 /**
-                 * A label which is displayed when no options is visible
+                 * A label which is displayed when no options are visible
                  */
                 emptyLabel: string;
                 /**
@@ -1464,14 +1546,6 @@ See icon library documentation for custom classes.
                  * Custom animation (transition name)
                  */
                 animation: string;
-                /**
-                 * List tag name
-                 */
-                listTag: DynamicComponent;
-                /**
-                 * List item tag name
-                 */
-                itemTag: DynamicComponent;
                 /**
                  * Class of the root element
                  */
@@ -1517,23 +1591,27 @@ See icon library documentation for custom classes.
                  */
                 inputClasses: Record<string, any>;
                 /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
                  * Class of the item element.
                  */
                 itemClass: ClassDefinition;
                 /**
-                 * Class of the item element when selected
+                 * Class of the item element when is selectable
+                 */
+                itemSelectableClass: ClassDefinition;
+                /**
+                 * Class of the item element when is selected
                  */
                 itemSelectedClass: ClassDefinition;
                 /**
-                 * Class of the item element when focused
+                 * Class of the item element when is focused
                  */
                 itemFocusedClass: ClassDefinition;
                 /**
-                 * Class of the item element when clickable
-                 */
-                itemClickableClass: ClassDefinition;
-                /**
-                 * Class of the item element when disabled
+                 * Class of the item element when is disabled
                  */
                 itemDisabledClass: ClassDefinition;
             }>;
@@ -3385,7 +3463,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Tooltip trigger events
                  * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
                  */
-                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
+                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
                 /**
                  * Show when clicked on the trigger
                  */
@@ -3466,6 +3544,101 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the arrow element with variant
                  */
                 arrowVariantClass: ClassDefinition;
+            }>;
+        tree?: ComponentConfigBase &
+            Partial<{
+                /**
+                 * Height of the tree, a scrollbar is defined if height of list exceeds this value
+                 */
+                scrollHeight: number | string;
+                /**
+                 * A label which is displayed when no options are visible
+                 */
+                emptyLabel: string;
+                /**
+                 * The chevron icon to for the toggle element before each item
+                 */
+                toggleIcon: string;
+                /**
+                 * Icon pack to use
+                 */
+                iconPack: string;
+                /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
+                 * Custom animation (transition name)
+                 */
+                animation: string;
+                /**
+                 * Class of the root element
+                 */
+                rootClass: ClassDefinition;
+                /**
+                 * Clas of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
+                /**
+                 * Clas of the root element when selectable
+                 */
+                selectableClass: ClassDefinition;
+                /**
+                 * Clas of the root element when multiple
+                 */
+                multipleClass: ClassDefinition;
+                /**
+                 * Class of the header slot wrapper element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the footer slot wrapper element
+                 */
+                footerClass: ClassDefinition;
+                /**
+                 * Class of the empty slot wrapper element
+                 */
+                emptyClass: ClassDefinition;
+                /**
+                 * Class of the tree list element
+                 */
+                listClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element
+                 */
+                itemClass: ClassDefinition;
+                /**
+                 * Class of the item element when selectable
+                 */
+                itemSelectableClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when selected
+                 */
+                itemSelectedClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when focused
+                 */
+                itemFocusedClass: ClassDefinition;
+                /**
+                 * Class of the tree item root element when disabled
+                 */
+                itemDisabledClass: ClassDefinition;
+                /**
+                 * Class of the tree item toggle icon element
+                 */
+                itemToggleIconClass: ClassDefinition;
+                /**
+                 * Class of the tree item icon element
+                 */
+                itemIconClass: ClassDefinition;
+                /**
+                 * Class of the tree item label element element
+                 */
+                itemLabelClass: ClassDefinition;
+                /**
+                 * Class of a subtree element of a tree item
+                 */
+                subtreeClass: ClassDefinition;
             }>;
         upload?: ComponentConfigBase &
             Partial<{

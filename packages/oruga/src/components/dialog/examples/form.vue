@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
+const isActive = ref(false);
+
 function onClose(): void {
     alert("close");
 }
@@ -8,44 +12,45 @@ function onLogin(): void {
 </script>
 
 <template>
-    <o-dialog title="Login" closeable @close="onClose">
-        <template #content>
-            <form action="">
-                <o-field label="Email">
-                    <o-input type="email" placeholder="Your email" required />
-                </o-field>
+    <o-button
+        label="Open Form Dialog"
+        size="medium"
+        variant="primary"
+        @click="isActive = true" />
 
-                <o-field label="Password">
-                    <o-input
-                        type="password"
-                        password-reveal
-                        placeholder="Your password"
-                        required />
-                </o-field>
+    <o-dialog
+        v-slot="{ close, confirm }"
+        v-model:active="isActive"
+        :backdrop="false"
+        title="Login"
+        closeable
+        @close="onClose"
+        @confirm="onLogin">
+        <form method="dialog">
+            <o-field label="Email">
+                <o-input
+                    type="email"
+                    autofocus
+                    placeholder="Your email"
+                    required />
+            </o-field>
 
-                <o-field>
-                    <o-checkbox label="Remember me" />
-                </o-field>
+            <o-field label="Password">
+                <o-input
+                    type="password"
+                    password-reveal
+                    placeholder="Your password"
+                    required />
+            </o-field>
 
-                <div class="dialog-footer">
-                    <o-button
-                        label="Close"
-                        type="button"
-                        @click.prevent="onClose" />
-                    <o-button
-                        label="Login"
-                        variant="primary"
-                        @click.prevent="onLogin" />
-                </div>
-            </form>
-        </template>
+            <o-field>
+                <o-checkbox label="Remember me" />
+            </o-field>
+
+            <div style="display: flex; align-items: center; gap: 5px">
+                <o-button type="button" label="Close" @click="close" />
+                <o-button label="Login" variant="primary" @click="confirm" />
+            </div>
+        </form>
     </o-dialog>
 </template>
-
-<style scoped>
-.dialog-footer {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-</style>

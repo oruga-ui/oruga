@@ -61,11 +61,11 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ### Slots
 
-| Name    | Description                 | Bindings |
-| ------- | --------------------------- | -------- |
-| before  | Additional slot before tabs |          |
-| after   | Additional slot after tabs  |          |
-| default | Place tab items here        |          |
+| Name    | Description                     | Bindings |
+| ------- | ------------------------------- | -------- |
+| before  | Additional slot before the tabs |          |
+| after   | Additional slot after the tabs  |          |
+| default | Define the tag items here       |          |
 
 </section>
 
@@ -93,7 +93,7 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 | override  | Override existing theme classes completely                                                | boolean                | -                                                                               |                                                                                                                                                     |
 | props     | Props to be binded to the injected component                                              | any                    | -                                                                               |                                                                                                                                                     |
 | tag       | Tabs item tag name                                                                        | DynamicComponent       | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: PlainButton<br>}</code> |
-| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -                                                                               |                                                                                                                                                     |
+| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                       |
 | variant   | Color variant of the control<br/>This will override parent variant.                       | string                 | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                                     |
 | visible   | Show/hide item                                                                            | boolean                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                          |
 
@@ -106,10 +106,10 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ### Slots
 
-| Name    | Description                | Bindings                                |
-| ------- | -------------------------- | --------------------------------------- |
-| default | Override tab panel content | **active** `boolean` - if item is shown |
-| header  | Override tab header label  | **active** `boolean` - if item is shown |
+| Name    | Description                      | Bindings                                |
+| ------- | -------------------------------- | --------------------------------------- |
+| default | Define the tab item content here | **active** `boolean` - if item is shown |
+| header  | Override tab header label        | **active** `boolean` - if item is shown |
 
 </section>
 

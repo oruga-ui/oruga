@@ -102,12 +102,12 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 
 ### Slots
 
-| Name    | Description                 | Bindings |
-| ------- | --------------------------- | -------- |
-| trigger | Override the trigger        |          |
-| header  | Override the header         |          |
-| body    | Override the body           |          |
-| footer  | Define an additional footer |          |
+| Name    | Description                        | Bindings |
+| ------- | ---------------------------------- | -------- |
+| trigger | Override the trigger input element |          |
+| header  | Override the header                |          |
+| body    | Override the body                  |          |
+| footer  | Define an additional footer        |          |
 
 </section>
 

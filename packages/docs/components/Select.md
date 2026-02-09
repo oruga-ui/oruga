@@ -67,10 +67,10 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Slots
 
-| Name        | Description                                   | Bindings |
-| ----------- | --------------------------------------------- | -------- |
-| placeholder | Override the placeholder                      |          |
-| default     | Override the options, default is options prop |          |
+| Name        | Description                                             | Bindings |
+| ----------- | ------------------------------------------------------- | -------- |
+| placeholder | Override the placeholder                                |          |
+| default     | Define the select options here, default is options prop |          |
 
 </section>
 

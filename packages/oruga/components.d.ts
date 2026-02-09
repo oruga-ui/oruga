@@ -43,6 +43,8 @@ declare module "vue" {
         OTaginput: (typeof import("../oruga/src/components"))["OTaginput"];
         OTimepicker: (typeof import("../oruga/src/components"))["OTimepicker"];
         OTooltip: (typeof import("../oruga/src/components"))["OTooltip"];
+        OTree: (typeof import("../oruga/src/components"))["OTree"];
+        OTreeItem: (typeof import("../oruga/src/components"))["OTreeItem"];
         OUpload: (typeof import("../oruga/src/components"))["OUpload"];
     }
 }

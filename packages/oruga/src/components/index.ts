@@ -31,4 +31,5 @@ export * from "./tag";
 export * from "./taginput";
 export * from "./timepicker";
 export * from "./tooltip";
+export * from "./tree";
 export * from "./upload";

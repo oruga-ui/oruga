@@ -72,6 +72,11 @@ const emits = defineEmits<{
     invalid: [event: Event];
 }>();
 
+defineSlots<{
+    /** Override the label, default is label prop */
+    default?(): void;
+}>();
+
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
@@ -104,7 +109,7 @@ function onInput(event: Event): void {
     emits("input", vmodel.value, event);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -146,10 +151,14 @@ const inputClasses = defineClasses(["inputClass", "o-checkbox__input"]);
 
 const labelClasses = defineClasses(["labelClass", "o-checkbox__label"]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -182,9 +191,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             :id="labelId"
             :for="id"
             :class="labelClasses">
-            <!--
-                @slot Content slot, default is label prop
-            -->
             <slot>{{ label }}</slot>
         </label>
     </div>

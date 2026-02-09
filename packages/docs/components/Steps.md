@@ -64,10 +64,10 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 ### Slots
 
-| Name       | Description              | Bindings                                                                                                                                                    |
-| ---------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| default    | Place step items here    |                                                                                                                                                             |
-| navigation | Override step navigation | **previous** `{disabled: boolean, action: (): void }` - previous button configs<br/>**next** `{disabled: boolean, action: (): void }` - next button configs |
+| Name       | Description                  | Bindings                                                                                                                                                    |
+| ---------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| default    | Define the step items here   |                                                                                                                                                             |
+| navigation | Override the step navigation | **previous** `{disabled: boolean, action: (): void }` - previous button configs<br/>**next** `{disabled: boolean, action: (): void }` - next button configs |
 
 </section>
 
@@ -96,7 +96,7 @@ Breaking things down into multiple steps can improve the user experience by keep
 | override  | Override existing theme classes completely                                                                                               | boolean                | -                                                                               |                                                                                                                                                     |
 | props     | Props to be binded to the injected component                                                                                             | any                    | -                                                                               |                                                                                                                                                     |
 | step      | Step marker content (when there is no icon)                                                                                              | Numberish              | -                                                                               |                                                                                                                                                     |
-| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid                                                | string\|number\|object | -                                                                               |                                                                                                                                                     |
+| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid                                                | string\|number\|object | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                       |
 | variant   | Color variant of the control.<br/>This will override parent variant.<br/>Could be used to set a completed step to "success" for example. | string                 | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                                     |
 | visible   | Show/hide item                                                                                                                           | boolean                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                          |
 
@@ -109,9 +109,9 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 ### Slots
 
-| Name    | Description       | Bindings                                |
-| ------- | ----------------- | --------------------------------------- |
-| default | Step item content | **active** `boolean` - if item is shown |
+| Name    | Description                       | Bindings                                |
+| ------- | --------------------------------- | --------------------------------------- |
+| default | Define the step item content here | **active** `boolean` - if item is shown |
 
 </section>
 

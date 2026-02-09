@@ -1,8 +1,14 @@
 <script setup lang="ts" generic="T, K extends string">
-import { computed, useSlots, useTemplateRef } from "vue";
+import { computed, useSlots, useTemplateRef, type VNode } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
-import { toCssDimension } from "@/utils/helpers";
+import {
+    escapeRegExpChars,
+    getPropertyValue,
+    isDefined,
+    removeDiacriticsFromString,
+    toCssDimension,
+} from "@/utils/helpers";
 
 import type { TableColumn, TableColumnComponent } from "./types";
 import type { TableColumnProps } from "./props";
@@ -41,6 +47,59 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
 
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
+defineSlots<{
+    /**
+     * Define the column content here
+     * @param row {unknown} - row data
+     * @param column {TableColumn} - column definition
+     * @param index {number} - row index
+     * @param colindex {number} - column index
+     * @param toggleDetails {(): void} - toggle details function
+     */
+    default?(props: {
+        row: T extends unknown ? any : T;
+        column: TableColumn<T>;
+        index: number;
+        colindex: number;
+        toggleDetails: () => void;
+    }): VNode[];
+    /**
+     * Override header label
+     * @param column {TableColumn} - column definition
+     * @param index {number} - column index
+     */
+    header?(props: { column: TableColumn<T>; index: number }): VNode[];
+    /**
+     * Override subheading label
+     * @param column {TableColumn} - column definition
+     * @param index {number} - column index
+     */
+    subheading?(props: { column: TableColumn<T>; index: number }): VNode[];
+    /**
+     * Override searchable input
+     * @deprecated use `filter` instead
+     * @param column {TableColumn} - column definition
+     * @param index {number} - column index
+     * @param filters {object} - active filters object
+     */
+    searchable?(props: {
+        column: TableColumn<T>;
+        index: number;
+        filters: Record<string, string>;
+    }): VNode[];
+    /**
+     * Override filter input
+     * @param column {TableColumn} - column definition
+     * @param index {number} - column index
+     * @param filters {object} - active filters object
+     */
+    filter?(props: {
+        column: TableColumn<T>;
+        index: number;
+        filters: Record<string, string>;
+    }): VNode[];
+}>();
+
 const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
@@ -48,6 +107,8 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
     ...(props as TableColumn<T>),
     $slots: slots,
     style: style.value,
+    matches,
+    getValue,
     thClasses: thClasses.value,
     tdClasses: tdClasses.value,
     thSubClasses: thSubheadingClasses.value,
@@ -62,6 +123,33 @@ const style = computed(() => ({
     width: toCssDimension(props.width),
     "min-width": toCssDimension(props.width),
 }));
+
+/** Check if the formated row value for this column matches the given value. */
+function matches(row: T, value: string): boolean {
+    // if column has custom search funtion return result
+    if (typeof props.customSearch === "function")
+        return props.customSearch(row, value);
+
+    // if column has custom filter funtion return result
+    if (typeof props.customFilter === "function")
+        return props.customFilter(row, value);
+
+    // get the visible column value for the row
+    const rowValue = getValue(row);
+
+    // check if value is defined
+    if (!isDefined(rowValue)) return false;
+
+    // check if the value matches the filter string by regex comparison
+    const re = new RegExp(escapeRegExpChars(value), "i");
+    return re.test(removeDiacriticsFromString(rowValue)) || re.test(rowValue);
+}
+
+/** Returns the formated row value for this column. */
+function getValue(row: T): string {
+    // @ts-expect-error getPropertyValue arguments does not patch perfect to TableColumn<T> attributes
+    return getPropertyValue(row, props.field, props.formatter);
+}
 
 // #region --- Computed Component Classes ---
 
@@ -125,7 +213,7 @@ const thSubheadingClasses = defineClasses(
 // these properties are just for type addings
 // slot props will be set in Table.vue
 const row = {} as any;
-const column = {} as TableColumnProps<T, K>;
+const column = {} as TableColumn<T>;
 const index = 0;
 const toggle = () => {};
 const filters = {} as Record<string, string>;
@@ -144,14 +232,6 @@ const filters = {} as Record<string, string>;
             Slots are defined in table component.
         -->
         <template v-if="false">
-            <!--
-                @slot Default Slot
-                @binding {unknown} row - row data
-                @binding {TableColumn} column - column definition
-                @binding {number} index - row index
-                @binding {number} colindex - column index
-                @binding {(): void} toggle-details - toggle details function
-            -->
             <slot
                 :row="row"
                 :column="column"
@@ -159,39 +239,16 @@ const filters = {} as Record<string, string>;
                 :colindex="index"
                 :toggle-details="toggle" />
 
-            <!--
-                @slot Override header label
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-            -->
             <slot name="header" :column="column" :index="index" />
 
-            <!--
-                @slot Override subheading label
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-            -->
             <slot name="subheading" :column="column" :index="index" />
 
-            <!--
-                @slot Override searchable input
-                @deprecated use `filter` instead
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-                @binding {object} filters - active filters object
-            -->
             <slot
                 name="searchable"
                 :column="column"
                 :index="index"
                 :filters="filters" />
 
-            <!--
-                @slot Override searchable input
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-                @binding {object} filters - active filters object
-            -->
             <slot
                 name="filter"
                 :column="column"

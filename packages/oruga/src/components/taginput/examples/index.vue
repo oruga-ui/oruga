@@ -5,8 +5,8 @@ import BaseCode from "./base.vue?raw";
 import Autocomplete from "./autocomplete.vue";
 import AutocompleteCode from "./autocomplete.vue?raw";
 
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Limits from "./limits.vue";
 import LimitsCode from "./limits.vue?raw";
@@ -64,9 +64,13 @@ import SizesCode from "./sizes.vue?raw";
     </div>
     <ExampleViewer :component="Autocomplete" :code="AutocompleteCode" />
 
-    <h3 id="slots">Slots</h3>
-    <p>Different parts of the component can be customised using slots.</p>
-    <ExampleViewer :component="Slots" :code="SlotsCode" />
+    <h3 id="templates">Templates</h3>
+    <p>
+        Different parts of the component can be customised using template slots,
+        e.g. the a custom header and footer can be added and the selected items
+        can be customised.
+    </p>
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
     <h3 id="limits">Limits</h3>
     <p>

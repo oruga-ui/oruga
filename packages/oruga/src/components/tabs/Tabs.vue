@@ -78,6 +78,15 @@ const emits = defineEmits<{
     change: [newValue: ModelValue, oldValue: ModelValue];
 }>();
 
+defineSlots<{
+    /** Additional slot before the tabs */
+    before?(): void;
+    /** Define the tag items here */
+    default?(): void;
+    /** Additional slot after the tabs */
+    after?(): void;
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
@@ -307,9 +316,6 @@ const contentClasses = defineClasses(
             role="tablist"
             :aria-label="ariaLabel"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
-            <!--
-                @slot Additional slot before tabs
-            -->
             <slot name="before" />
 
             <o-slot-component
@@ -350,16 +356,10 @@ const contentClasses = defineClasses(
                 </span>
             </o-slot-component>
 
-            <!--
-                @slot Additional slot after tabs
-            -->
             <slot name="after" />
         </component>
 
         <section :class="contentClasses">
-            <!--
-                @slot Place tab items here
-            -->
             <slot>
                 <o-tab-item
                     v-for="option in normalizedOptions"

@@ -28,7 +28,9 @@ import {
     useEventListener,
     useScrollEvents,
     scrollElementInView,
+    unrefElement,
     type OptionsGroupItem,
+    type OptionsItem,
 } from "@/composables";
 
 import type {
@@ -128,29 +130,59 @@ const emits = defineEmits<{
     "scroll-end": [];
 }>();
 
+defineSlots<{
+    /**
+     * Override the trigger element, default is label prop
+     * @param active {boolean} - dropdown active state
+     * @param value {unknown | unknown[]} - the selected value
+     * @param toggle {(event: Event): void} - toggle dropdown active state
+     */
+    trigger?(props: {
+        active: boolean;
+        value: unknown | unknown[];
+        toggle: (event: Event) => void;
+    }): void;
+    /**
+     * Define the dropdown items here
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    default?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
+     * @param toggle {(): void} - toggle dropdown active state
+     * */
+    before?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    after?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define the content to show if the list is empty
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    empty?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Override the option group
+     * @param group {object} - options group item
+     * @param index {number} - option index
+     */
+    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    /**
+     * Override the label, default is label prop
+     * @param option {object} - option item
+     */
+    option?(props: { option: OptionsItem<T> }): void;
+}>();
+
 const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
 const menuRef = ref<HTMLElement | Component>();
 
-// provided data is a computed ref to ensure reactivity
-const provideData = computed<DropdownComponent<T>>(() => ({
-    disabled: props.disabled,
-    multiple: isTrueish(props.multiple),
-    selectable: props.selectable,
-    menuId: props.menuId,
-    selected: vmodel.value,
-    focsuedIdentifier: focusedItem.value?.identifier,
-    selectItem,
-    focusItem,
-}));
+// inject parent field component if used inside one
+const { parentField } = injectField();
 
-/** provide functionalities and data to child item components */
-const { childItems } = useProviderParent<
-    DropdownItemComponent<T>,
-    DropdownComponent<T>
->({
-    rootRef: menuRef,
-    data: provideData,
-});
+// set field labelId or create a unique label id if a label is given
+const labelId = props.labelledby ?? parentField.value?.labelId;
 
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
@@ -162,20 +194,11 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     return groupedOptions;
 });
 
-/** is any option visible */
-const isNotEmpty = computed(() => childItems.value.some(isItemViable));
-
-// inject parent field component if used inside one
-const { parentField } = injectField();
-
 // the selected item value, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
-
-// set field labelId or create a unique label id if a label is given
-const labelId = props.labelledby ?? parentField.value?.labelId;
 
 const autoPosition = ref(props.position);
 
@@ -223,6 +246,29 @@ watch(
     { flush: "post" },
 );
 
+// #region --- Child Items ---
+
+// provided data is a computed ref to ensure reactivity
+const provideData = computed<DropdownComponent<T>>(() => ({
+    menuId: props.menuId,
+    disabled: props.disabled,
+    multiple: isTrueish(props.multiple),
+    selectable: props.selectable,
+    selected: vmodel.value,
+    focsuedIdentifier: focusedItem.value?.identifier,
+    selectItem,
+    focusItem,
+}));
+
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent<
+    DropdownItemComponent<T>,
+    DropdownComponent<T>
+>({
+    rootRef: menuRef,
+    data: provideData,
+});
+
 watch(
     childItems,
     () => {
@@ -234,6 +280,41 @@ watch(
     },
     { deep: true, flush: "post" },
 );
+
+/** is any option visible */
+const hasViableItems = computed(() =>
+    childItems.value.some((item) => item.data.isViable),
+);
+
+/**
+ * Get the first 'viable' child, starting at startingIndex and in the direction specified
+ * by the boolean parameter forward. In other words, first try to select the child at index
+ * startingIndex, and if it is not visible or it is disabled, then go to the index in the
+ * specified direction until either returning to startIndex or finding a viable child item.
+ */
+function getFirstViableItem(
+    startingIndex: number,
+    delta: 1 | -1,
+): DropdownChildItem<T> {
+    let newIndex = mod(
+        focusedItem.value?.index == startingIndex
+            ? startingIndex + delta
+            : startingIndex,
+        childItems.value.length,
+    );
+    for (
+        ;
+        newIndex !== focusedItem.value?.index;
+        newIndex = mod(newIndex + delta, childItems.value.length)
+    ) {
+        // Break if the item at this index is viable (not disabled or hidden)
+        if (childItems.value[newIndex].data.isViable) break;
+    }
+
+    return childItems.value[newIndex];
+}
+
+// #endregion --- Child Items ---
 
 // #region --- Trigger Handler ---
 
@@ -339,13 +420,20 @@ function open(event: Event): void {
 function close(event: Event): void {
     if (!isActive.value) return;
 
+    // clear remaining timer
+    if (timer) clearTimeout(timer);
+
     // select item when dropdown closed
     if (props.selectOnClose && focusedItem.value?.data.value)
         selectItem(focusedItem.value);
 
-    if (timer) clearTimeout(timer);
+    // reset focused item
+    if (focusedItem.value) {
+        unrefElement(focusedItem.value.el)?.blur();
+        focusedItem.value = undefined;
+    }
+
     isActive.value = false;
-    focusedItem.value = undefined;
     emits("close", event);
 }
 
@@ -415,7 +503,7 @@ function onMenuHoverLeave(): void {
 
 /** Set focus on a tab item. */
 function moveFocus(delta: 1 | -1): void {
-    if (!isNotEmpty.value) return;
+    if (!hasViableItems.value) return;
     const item = getFirstViableItem(focusedItem.value?.index || 0, delta);
     setFocus(item);
 }
@@ -447,10 +535,9 @@ function onDownPressed(event: Event): void {
 
 function onEnter(event: Event): void {
     if (!isActive.value) return;
-    if (focusedItem.value) {
-        setFocus(focusedItem.value);
-        focusedItem.value.data.selectItem(event);
-    }
+    if (!focusedItem.value) return;
+    setFocus(focusedItem.value);
+    focusedItem.value.data.selectItem(event);
 }
 
 /** Go to the first viable item */
@@ -461,7 +548,7 @@ function onHomePressed(event: Event): void {
         event.preventDefault();
 
     open(event);
-    if (!isNotEmpty.value) return;
+    if (!hasViableItems.value) return;
     const item = getFirstViableItem(0, 1);
     setFocus(item);
 }
@@ -474,45 +561,13 @@ function onEndPressed(event: Event): void {
         event.preventDefault();
 
     open(event);
-    if (!isNotEmpty.value) return;
+    if (!hasViableItems.value) return;
     const item = getFirstViableItem(childItems.value.length - 1, -1);
     setFocus(item);
 }
 
 function onEscape(event: Event): void {
     close(event);
-}
-
-/**
- * Get the first 'viable' child, starting at startingIndex and in the direction specified
- * by the boolean parameter forward. In other words, first try to select the child at index
- * startingIndex, and if it is not visible or it is disabled, then go to the index in the
- * specified direction until either returning to startIndex or finding a viable child item.
- */
-function getFirstViableItem(
-    startingIndex: number,
-    delta: 1 | -1,
-): DropdownChildItem<T> {
-    let newIndex = mod(
-        focusedItem.value?.index == startingIndex
-            ? startingIndex + delta
-            : startingIndex,
-        childItems.value.length,
-    );
-    for (
-        ;
-        newIndex !== focusedItem.value?.index;
-        newIndex = mod(newIndex + delta, childItems.value.length)
-    ) {
-        // Break if the item at this index is viable (not disabled)
-        if (isItemViable(childItems.value[newIndex])) break;
-    }
-
-    return childItems.value[newIndex];
-}
-
-function isItemViable(item: DropdownChildItem<T>): boolean {
-    return !item.data.disabled && !item.data.hidden && !!item.data.clickable;
 }
 
 // #endregion --- Focus Feature ---
@@ -580,8 +635,12 @@ const menuClasses = defineClasses(
 
 // #endregion --- Computed Component Classes ---
 
+// #region --- Expose Public Functionalities ---
+
 /** expose functionalities for programmatic usage */
-defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
+defineExpose({ value: vmodel, items: childItems });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -618,12 +677,6 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
             @keydown.down.prevent="onDownPressed"
             @keydown.home="onHomePressed"
             @keydown.end="onEndPressed">
-            <!--
-                @slot Override the trigger element, default is label prop
-                @binding {boolean} active - dropdown active state
-                @binding {unknown | unknown[]} value - the selected value
-                @binding {(): void} toggle - toggle dropdown active state
-            -->
             <slot
                 name="trigger"
                 :active="isActive"
@@ -677,21 +730,9 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     @keydown.down.prevent="inline && onDownPressed($event)"
                     @keydown.home="inline && onHomePressed($event)"
                     @keydown.end="inline && onEndPressed($event)">
-                    <!--
-                        @slot Place dropdown items here
-                        @binding {boolean} active - dropdown active state
-                        @binding {number} focusedIndex - index of the focused element
-                        @binding {(): void} toggle - toggle dropdown active state
-                    -->
-                    <slot
-                        :active="isActive"
-                        :focused-index="focusedItem?.index"
-                        :toggle="toggle">
-                        <!--
-                            @slot Place extra `o-dropdown-item` components here, even if you have some options defined by prop
-                        -->
-                        <slot name="before" />
+                    <slot name="before" :toggle="toggle" />
 
+                    <slot :toggle="toggle">
                         <template v-for="(group, groupIndex) in groupedOptions">
                             <o-dropdown-item
                                 v-if="group.label"
@@ -702,14 +743,9 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :hidden="group.hidden"
                                 role="presentation"
                                 :clickable="false">
-                                <!--
-                                    @slot Override the option group
-                                    @binding {object} group - options group item
-                                    @binding {number} index - option index
-                                -->
                                 <slot
                                     name="group"
-                                    :group="group.label"
+                                    :group="group"
                                     :index="groupIndex">
                                     <span>
                                         {{ group.label }}
@@ -724,21 +760,19 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :key="option.key"
                                 :value="option.value"
                                 :hidden="option.hidden">
-                                <!--
-                                    @slot Override the label, default is label prop
-                                    @binding {object} option - option item
-                                -->
                                 <slot name="option" :option="option">
                                     <span> {{ option.label }} </span>
                                 </slot>
                             </o-dropdown-item>
                         </template>
-
-                        <!--
-                            @slot Place extra `o-dropdown-item` components here, even if you have some options defined by prop
-                        -->
-                        <slot name="after" />
                     </slot>
+
+                    <slot
+                        v-if="!hasViableItems"
+                        name="empty"
+                        :toggle="toggle" />
+
+                    <slot name="after" :toggle="toggle" />
                 </component>
             </transition>
         </PositionWrapper>

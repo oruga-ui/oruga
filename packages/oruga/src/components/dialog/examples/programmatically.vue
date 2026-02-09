@@ -11,6 +11,7 @@ function openConfirmDialog(): void {
         confirmButton: "Save",
         confirmVariant: "success",
         cancelButton: "Cancel",
+        buttonPosition: "right",
     });
 }
 
@@ -22,6 +23,8 @@ function openImageDialog(): void {
 
     oruga.dialog.open({
         component: vnode,
+        closeOnBackdrop: true,
+        closeOnEscape: true,
         imageAlt: "Oruga logo",
         imageSrc: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
     });
@@ -35,13 +38,13 @@ function openImageDialog(): void {
                 label="Open Confirm Dialog"
                 size="medium"
                 variant="primary"
-                @click.prevent="openConfirmDialog()" />
+                @click="openConfirmDialog()" />
 
             <o-button
                 label="Open Oruga Image"
                 size="medium"
                 variant="primary"
-                @click.prevent="openImageDialog()" />
+                @click="openImageDialog()" />
         </p>
     </section>
 </template>

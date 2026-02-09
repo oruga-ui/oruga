@@ -31,6 +31,7 @@ import Tag from "./tag";
 import Taginput from "./taginput";
 import Timepicker from "./timepicker";
 import Tooltip from "./tooltip";
+import Tree from "./tree";
 import Upload from "./upload";
 
 export {
@@ -67,5 +68,6 @@ export {
     Taginput,
     Timepicker,
     Tooltip,
+    Tree,
     Upload,
 };

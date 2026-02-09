@@ -76,10 +76,10 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 ### Slots
 
-| Name      | Description    | Bindings |
-| --------- | -------------- | -------- |
-| seperator | Item seperator |          |
-| default   | Override label |          |
+| Name      | Description                               | Bindings |
+| --------- | ----------------------------------------- | -------- |
+| seperator | Item seperator                            |          |
+| default   | Override the label, default is label prop |          |
 
 </section>
 

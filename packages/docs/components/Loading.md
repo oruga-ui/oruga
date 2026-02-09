@@ -52,9 +52,9 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 ### Slots
 
-| Name    | Description             | Bindings                                            |
-| ------- | ----------------------- | --------------------------------------------------- |
-| default | Override icon and label | **close** `close` - function to close the component |
+| Name    | Description                                                               | Bindings                                                           |
+| ------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| default | Define the content while loading, default is icon and optional label prop | **close** `(event: Event): void` - function to close the component |
 
 </section>
 

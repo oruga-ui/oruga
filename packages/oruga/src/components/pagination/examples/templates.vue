@@ -61,7 +61,7 @@ function convertToRoman(num: number): string {
                     :label="convertToRoman(props.number)"
                     :disabled="props.isCurrent"
                     :aria-label="props.ariaLabel"
-                    :aria-current="props.ariaCurrent"
+                    :aria-current="props.isCurrent"
                     @click="props.onClick" />
             </template>
 

@@ -1,3 +1,60 @@
+## [0.12.6](https://github.com/oruga-ui/oruga/compare/v0.12.5...v0.12.6) (2026-01-21)
+
+
+### Bug Fixes
+
+* **carousel:** prevent a memory-leak from an unstopped interval ([#1527](https://github.com/oruga-ui/oruga/issues/1527)) ([6ad1216](https://github.com/oruga-ui/oruga/commit/6ad1216461ee17ad53e0e4629ecb3881721fd822))
+* **table:** correct wrong row filtering when a filter is cleared ([#1525](https://github.com/oruga-ui/oruga/issues/1525)) ([a1757be](https://github.com/oruga-ui/oruga/commit/a1757be562db5874884b619907a5556a543bcb05))
+* **tree:** correct class props ([#1526](https://github.com/oruga-ui/oruga/issues/1526)) ([5a2913a](https://github.com/oruga-ui/oruga/commit/5a2913ad8461d5d21ef55696e36238d621e707b2))
+
+
+
+
+## [0.12.5](https://github.com/oruga-ui/oruga/compare/v0.12.3...v0.12.5) (2026-01-20)
+
+
+### Bug Fixes
+
+* **input:** solve value does not change in a web component setup ([#1522](https://github.com/oruga-ui/oruga/issues/1522)) ([38a48fb](https://github.com/oruga-ui/oruga/commit/38a48fb9ff1f8f5d0e1e86fcb845024a19d0afcf))
+* **pagination:** pass `iconPack` property correctly to the internal button components ([#1518](https://github.com/oruga-ui/oruga/issues/1518)) ([b4632f3](https://github.com/oruga-ui/oruga/commit/b4632f399d0f5858b478972060eb664bf3030507))
+
+
+
+## [0.12.4](https://github.com/oruga-ui/oruga/compare/v0.12.3...v0.12.4) (2026-01-14)
+
+
+### Bug Fixes
+
+* **input:** debounce reactive `modelValue` changes ([#1509](https://github.com/oruga-ui/oruga/issues/1509)) ([9d738cd](https://github.com/oruga-ui/oruga/commit/9d738cd101787590bd30b2a0f07c18016edc2cee))
+* **listbox:** prevent empty state always shown ([#1495](https://github.com/oruga-ui/oruga/issues/1495)) ([1f163dd](https://github.com/oruga-ui/oruga/commit/1f163ddc89fe36890f9fc2f1d0a57ef771f95ae7))
+* **steps:** prevent step-item is clickable when prop `clickable` is `false` ([#1507](https://github.com/oruga-ui/oruga/issues/1507)) ([d8654e5](https://github.com/oruga-ui/oruga/commit/d8654e523f3653ce14514d577943fb014dcd1c49))
+* **table:** correctly filter all rows before paging when filter is active ([#1508](https://github.com/oruga-ui/oruga/issues/1508)) ([3f84fa0](https://github.com/oruga-ui/oruga/commit/3f84fa01bda91588c734385135fab846b0e917b3))
+
+
+### Features
+
+* **dialog:** enhance dialog implementation ([#1492](https://github.com/oruga-ui/oruga/issues/1492)) ([63d0e17](https://github.com/oruga-ui/oruga/commit/63d0e17fa5b07cbdae7ff6997636e652187c6991))
+* **listbox:** update listbox component ([#1502](https://github.com/oruga-ui/oruga/issues/1502)) ([8232dab](https://github.com/oruga-ui/oruga/commit/8232dab60bb3db111605c39e39619c293e6a6fad))
+* **table:** expose `filter` and `tableColumns` for programmatic use ([#1513](https://github.com/oruga-ui/oruga/issues/1513)) ([02e6284](https://github.com/oruga-ui/oruga/commit/02e6284c13fe6b350a7f9935fca247411ea272cf))
+* **tree:** add OTree component ([#1503](https://github.com/oruga-ui/oruga/issues/1503)) ([3adb12c](https://github.com/oruga-ui/oruga/commit/3adb12cbf7935e7e9d0c274780b849f144415924))
+* **types:** update slots by implementing `defineSlots` macro ([#1434](https://github.com/oruga-ui/oruga/issues/1434)) ([e87bd88](https://github.com/oruga-ui/oruga/commit/e87bd88a2b1b99cc61d740a128f8060b1d693e14))
+
+
+
+## [0.12.3](https://github.com/oruga-ui/oruga/compare/v0.12.2...v0.12.3) (2025-12-04)
+
+
+### Bug Fixes
+
+* replace child items debounced sorting with `flush: "post"` watcher ([#1484](https://github.com/oruga-ui/oruga/issues/1484)) ([aece462](https://github.com/oruga-ui/oruga/commit/aece46286f8151f2eaae4761108ff6e24c9e6f04))
+
+
+### Features
+
+* **dialog:** rewrite dialog component ([#1485](https://github.com/oruga-ui/oruga/issues/1485)) ([969e0aa](https://github.com/oruga-ui/oruga/commit/969e0aabb310dd9d283ff7bf281d482092c64826))
+
+
+
 ## [0.12.2](https://github.com/oruga-ui/oruga/compare/v0.12.1...v0.12.2) (2025-11-22)
 
 

@@ -4,9 +4,6 @@ exports[`OSelect tests > render correctly 1`] = `
 "<div data-oruga="select" class="o-select">
   <!--v-if--><select id="v-0" data-oruga-input="select" class="o-select__input o-select__input--placeholder o-select__input--arrowed" autocomplete="off">
     <!--v-if-->
-    <!--
-                @slot Override the options, default is options prop
-            -->
     <option value="flint">Flint</option>
     <option value="silver">Silver</option>
     <option value="vane">Vane</option>

@@ -80,6 +80,18 @@ const emits = defineEmits<{
     close: [...args: [] | [Event] | CloseEventArgs<C>];
 }>();
 
+defineSlots<{
+    /**
+     * Modal default content, default is content prop
+     * @param clsoe {(...args): void} - function to close the component
+     */
+    default?(props: {
+        close: (...args: [] | [Event] | CloseEventArgs<C>) => void;
+    }): void;
+    /** Define a custom close icon */
+    close?(): void;
+}>();
+
 const { vTrapFocus } = useTrapFocus();
 
 const rootRef = useTemplateRef("rootElement");
@@ -252,10 +264,6 @@ defineExpose({ close });
                         v-on="$props.events || {}"
                         @close="close" />
 
-                    <!--
-                        @slot Modal default content, default is content prop
-                        @binding {(...args): void} close - function to close the component
-                    -->
                     <slot v-else :close="close">
                         <div v-if="content">{{ content }}</div>
                     </slot>
@@ -269,9 +277,6 @@ defineExpose({ close });
                         :label="ariaCloseLabel"
                         :classes="closeClasses"
                         @click="close($event)">
-                        <!--
-                            @slot Override the close icon
-                        -->
                         <slot v-if="$slots['close']" name="close" />
                     </CloseButton>
                 </div>

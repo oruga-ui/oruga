@@ -75,6 +75,16 @@ const emits = defineEmits<{
     open: [event: Event];
 }>();
 
+defineSlots<{
+    /**
+     * Tooltip trigger slot
+     * @param active {boolean} - tooltip active state
+     */
+    default?(props: { active: boolean }): void;
+    /** Override the Tooltip content, default is label prop */
+    content?(): void;
+}>();
+
 const isActive = defineModel<boolean>("active", { default: false });
 
 const tooltipId = useId();
@@ -157,14 +167,14 @@ function onHover(event: Event): void {
     open(event);
 }
 
-let timer: ReturnType<typeof setTimeout> | undefined;
+let timeout: ReturnType<typeof setTimeout> | undefined;
 
 function open(event: Event): void {
     if (props.disabled) return;
     if (props.delay) {
-        timer = setTimeout(() => {
+        timeout = setTimeout(() => {
             isActive.value = true;
-            timer = undefined;
+            timeout = undefined;
             emits("open", event);
         }, props.delay);
     } else {
@@ -182,7 +192,7 @@ function checkNotCloseable(
 
 function close(event: Event): void {
     if (!isActive.value || !props.closeable) return;
-    if (timer) clearTimeout(timer);
+    if (timeout) clearTimeout(timeout);
     isActive.value = false;
     emits("close", event);
 }
@@ -264,10 +274,6 @@ const arrowClasses = defineClasses(
             @focus.capture="onFocus"
             @blur.capture="onHoverLeave"
             @mouseleave="onHoverLeave">
-            <!--
-                @slot Tooltip trigger slot
-                @binding {boolean} active - tooltip active state
-            -->
             <slot :active="isActive" />
         </component>
 
@@ -288,10 +294,6 @@ const arrowClasses = defineClasses(
                     :style="contentStyle"
                     role="tooltip">
                     <span :class="arrowClasses"></span>
-
-                    <!--
-                        @slot Tooltip content, default is label prop
-                    -->
                     <slot name="content">{{ label }}</slot>
                 </div>
             </transition>

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
+import { userEvent } from "vitest/browser";
 import { render } from "vitest-browser-vue";
-import { userEvent } from "@vitest/browser/context";
 
 import { defineComponent, h, ref } from "vue";
 

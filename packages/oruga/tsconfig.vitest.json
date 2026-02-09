@@ -5,12 +5,7 @@
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
 
-    "lib": ["esnext"],
-    "types": [
-      "node",
-      "vite/client",
-      "@vitest/browser/providers/playwright",
-      "./components.d.ts"
-    ]
+    "lib": ["ESNext", "DOM"],
+    "types": ["node", "vite/client", "./components.d.ts"]
   }
 }

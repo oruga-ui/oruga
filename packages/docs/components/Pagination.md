@@ -62,11 +62,11 @@ The component uses the [Button](/components/Button) component for the navigation
 
 ### Slots
 
-| Name     | Description            | Bindings                                                                                                                                                                                    |
-| -------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| previous | Previous button slot   | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
-| next     | Next button slot       | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
-| default  | Pagination button slot | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
+| Name     | Description                            | Bindings                                                                                                                                                                                    |
+| -------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| previous | Define a custom previous button here   | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
+| next     | Define a custom next button here       | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
+| default  | Define a custom pagination button here | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event: Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
 
 </section>
 

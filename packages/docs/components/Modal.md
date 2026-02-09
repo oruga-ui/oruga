@@ -68,8 +68,8 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 
 | Name    | Description                                    | Bindings                                                      |
 | ------- | ---------------------------------------------- | ------------------------------------------------------------- |
-| default | Modal default content, default is content prop | **close** `(...args): void` - function to close the component |
-| close   | Override the close icon                        |                                                               |
+| default | Modal default content, default is content prop | **clsoe** `(...args): void` - function to close the component |
+| close   | Define a custom close icon                     |                                                               |
 
 </section>
 

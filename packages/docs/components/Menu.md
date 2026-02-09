@@ -54,10 +54,10 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Slots
 
-| Name    | Description             | Bindings                                                                                                      |
-| ------- | ----------------------- | ------------------------------------------------------------------------------------------------------------- |
-| label   | Override icon and label | **focused** `unknown` - the focused item value<br/><br/>**selected** `unknown` - the selected item value<br/> |
-| default | Place menu items here   | **focused** `unknown` - the focused item value<br/><br/>**selected** `unknown` - the selected item value<br/> |
+| Name    | Description             | Bindings                                                                                                                                                                                                                                                                      |
+| ------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| label   | Override icon and label | **focused** `unknown \| undefined` - the focused item value<br/>**focusedIndex** `number \| undefined` - index of the focused item<br/>**selected** `unknown \| undefined` - the selected item value<br/>**selectedIndex** `number \| undefined` - index of the selected item |
+| default | Define menu items here  | **focused** `unknown \| undefined` - the focused item value<br/>**focusedIndex** `number \| undefined` - index of the focused item<br/>**selected** `unknown \| undefined` - the selected item value<br/>**selectedIndex** `number \| undefined` - index of the selected item |
 
 </section>
 
@@ -88,7 +88,7 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 | override  | Override existing theme classes completely                                                | boolean                    | -                                                 |                                                                                                                                                     |
 | submenuId | HTML element Id of the sub menu ol list element                                           | string                     | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                       |
 | tag       | Menu item tag name                                                                        | DynamicComponent           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;itemTag: PlainButton<br>}</code> |
-| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | unknown                    | -                                                 |                                                                                                                                                     |
+| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | unknown                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                       |
 
 ### Events
 
@@ -99,10 +99,10 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Slots
 
-| Name    | Description           | Bindings                                                                                  |
-| ------- | --------------------- | ----------------------------------------------------------------------------------------- |
-| label   | Override label        | **expanded** `boolean` - item expanded state<br/>**active** `boolean` - item active state |
-| default | Place menu items here |                                                                                           |
+| Name    | Description                               | Bindings                                                                                  |
+| ------- | ----------------------------------------- | ----------------------------------------------------------------------------------------- |
+| label   | Override the label, default is label prop | **expanded** `boolean` - item expanded state<br/>**active** `boolean` - item active state |
+| default | Define submenu items here                 |                                                                                           |
 
 </section>
 

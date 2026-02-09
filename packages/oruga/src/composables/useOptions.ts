@@ -485,3 +485,12 @@ export function useKeyedOptions<T>(
             [],
     );
 }
+
+/** determines if the options are grouped or not */
+export function areOptionsGrouped(
+    options: MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>,
+): boolean {
+    const _options = toValue(options);
+    if (!_options?.length) return false;
+    return isGroupOption(_options[0]);
+}

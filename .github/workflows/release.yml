@@ -1,48 +1,49 @@
-name: Generate new release
+name: Generate Release
 on:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
-      - "!v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+"
+      - v*
+
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          # Always release the tip of the default branch
-          ref: develop
+          # Always release the tag ${GITHUB_REF} version
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "22.x"
+          node-version: "24.x"
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
+
       - name: git config
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - name: Install dependencies 📦
-        run: npm ci
-      - name: Publish Oruga release 🐛
-        run: npm run publish:lib
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish Examples release 🦋
-        run: npm run publish:examples
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Install release dependency 📦
         run: npm i extract-changelog-release
-      - name: Generate Release Body 📋
+
+      - name: Generate release body 📝
         run: npx extract-changelog-release > RELEASE_BODY.md
-      - uses: ncipollo/release-action@v1
+
+      - name: Create GitHub release 🎉
+        uses: ncipollo/release-action@v1
         with:
           bodyFile: "RELEASE_BODY.md"
+          # define prerelease based on the tag name
+          prerelease: ${{ github.ref == 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish documentation 📄
+
+      - name: Publish documentation 📰
+        # only update documentation for main releases
+        if: ${{ github.ref != 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
         run: |
+          git fetch origin develop:develop 
           git push origin develop:master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

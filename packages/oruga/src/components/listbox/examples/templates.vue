@@ -23,7 +23,9 @@
                     },
                 ]">
                 <template #empty> No results found </template>
+
                 <template #header> Header </template>
+
                 <template #footer> Footer </template>
             </o-listbox>
         </o-field>

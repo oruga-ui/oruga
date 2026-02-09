@@ -59,6 +59,14 @@ const emits = defineEmits<{
     close: [event?: Event];
 }>();
 
+defineSlots<{
+    /**
+     * Define the content while loading, default is icon and optional label prop
+     * @param close {(event: Event): void} - function to close the component
+     */
+    default?(props: { close: (event: Event) => void }): void;
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 const isFullPage = defineModel<boolean>("fullPage", { default: true });
@@ -105,7 +113,7 @@ function checkNotCloseable(method: string): boolean {
 }
 
 /** set active to false and emit close event */
-function close(event?: Event): void {
+function close(event: Event): void {
     if (!isActive.value) return;
     isActive.value = false;
     emits("close", event);
@@ -149,10 +157,7 @@ defineExpose({ close });
                 :class="overlayClasses"
                 :tabindex="-1"
                 @click="clickedOutside" />
-            <!--
-                @slot Override icon and label
-                @binding {close} close - function to close the component
-            -->
+
             <slot :close="close">
                 <o-icon
                     :icon="icon"

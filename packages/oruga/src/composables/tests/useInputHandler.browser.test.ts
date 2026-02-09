@@ -1,11 +1,7 @@
 /* eslint-disable vue/one-component-per-file */
 
-import {
-    userEvent,
-    type Locator,
-    type LocatorSelectors,
-} from "@vitest/browser/context";
 import { describe, expect, test } from "vitest";
+import { userEvent, type Locator, type LocatorSelectors } from "vitest/browser";
 import { render } from "vitest-browser-vue";
 
 import {
@@ -26,6 +22,7 @@ type CustomValidityCallback = (
     currentValue: string | number | null | undefined,
     state: ValidityState,
 ) => string;
+
 const NativeForm = defineComponent({
     name: "NativeForm",
     props: {
@@ -290,7 +287,11 @@ describe("useInputHandler", () => {
             setup: (props) => {
                 return (): VNode =>
                     h(OField, { "data-testid": "field" }, () =>
-                        h(OInput, { type: "number", max: props.max, value: 2 }),
+                        h(OInput, {
+                            type: "number",
+                            max: props.max,
+                            modelValue: 2,
+                        }),
                     );
             },
         });

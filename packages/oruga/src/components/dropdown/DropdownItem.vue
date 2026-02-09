@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { useId, computed, useTemplateRef } from "vue";
+import { useId, computed, useTemplateRef, ref } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
@@ -20,7 +20,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     label: undefined,
     disabled: false,
     clickable: true,
@@ -37,16 +38,19 @@ const emits = defineEmits<{
     click: [value: T, event: Event];
 }>();
 
-const itemValue = props.value ?? useId();
+defineSlots<{
+    /** Override the label, default is label prop */
+    default?(): void;
+}>();
 
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
-    value: itemValue as T,
-    disabled: props.disabled,
-    hidden: props.hidden,
-    clickable: props.clickable,
+    value: props.value,
+    label: props.label,
+    isViable: isViable.value,
+    setHidden,
     selectItem: (): void => rootRef.value?.click(),
 }));
 
@@ -55,6 +59,16 @@ const { parent, item } = useProviderChild<
     DropdownComponent<T>,
     DropdownItemComponent<T>
 >(rootRef, { data: providedData });
+
+const localHidden = ref(false);
+const isHidden = computed(() => props.hidden || localHidden.value);
+
+function setHidden(hidden: boolean): void {
+    localHidden.value = hidden;
+}
+
+/** Shows if the item is viable or not (not disabled or hidden). */
+const isViable = computed(() => !isHidden.value && isClickable.value);
 
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
@@ -65,9 +79,9 @@ const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
     if (parent.value.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected: T) =>
-            isEqual(itemValue, selected),
+            isEqual(item.value.data.value, selected),
         );
-    return isEqual(itemValue, parent.value.selected);
+    return isEqual(item.value.data.value, parent.value.selected);
 });
 
 const isFocused = computed(
@@ -78,7 +92,7 @@ const isFocused = computed(
 function onClick(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, event);
-    emits("click", itemValue as T, event);
+    emits("click", props.value as T, event);
 }
 
 /** Hover listener, focus the item. */
@@ -107,6 +121,7 @@ const rootClasses = defineClasses(
 <template>
     <component
         :is="tag"
+        v-show="!isHidden"
         :id="`${parent.menuId}-${item.identifier}`"
         ref="rootElement"
         data-oruga="dropdown-item"
@@ -115,14 +130,12 @@ const rootClasses = defineClasses(
         :role="parent.selectable ? 'option' : 'menuitem'"
         tabindex="-1"
         :aria-selected="parent.selectable ? isSelected : undefined"
+        :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"
         @mouseenter="focusItem"
         @keydown.enter="onClick"
         @keydown.space="onClick">
-        <!--
-            @slot Override the label, default is label prop
-        -->
         <slot>{{ label }}</slot>
     </component>
 </template>

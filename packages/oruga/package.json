@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.12.2",
+  "version": "0.12.6",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -49,46 +49,43 @@
     "build": "rimraf dist && vite build && vite build --mode minify",
     "build:watch": "vite build --mode minify --watch",
     "build:lib": "rimraf dist && npm run test:ts && npm run build",
-    "build:lib:watch": "npm link && npm run build:watch",
-    "test": "vitest --browser.headless=true",
+    "build:lib:watch": "(npm link || true) && npm run build:watch",
+    "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ts": "vue-tsc --noEmit --skipLibCheck --project tsconfig.app.json",
-    "prepublish": "cp ../../README.md . && cp ../../LICENSE .",
-    "publish:lib": "npm run prepublish && npm run build:lib && npm publish",
-    "publish:lib:pre": "npm run prepublish && npm run build:lib && npm publish --tag pre"
+    "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "vue-component-type-helpers": "^3.1.0"
+    "vue-component-type-helpers": "^3.1.8"
   },
   "devDependencies": {
-    "@babel/core": "7.28.0",
-    "@babel/preset-env": "7.28.0",
-    "@rollup/plugin-babel": "6.0.4",
-    "@tsconfig/node22": "^22.0.2",
+    "@babel/core": "7.28.5",
+    "@babel/preset-env": "7.28.5",
+    "@rollup/plugin-babel": "6.1.0",
+    "@tsconfig/node24": "^24.0.3",
     "@types/jest-axe": "^3.5.9",
-    "@types/jsdom": "^21.1.7",
-    "@types/node": "^24.2.1",
-    "@vitejs/plugin-vue": "^6.0.1",
-    "@vitest/browser": "^3.2.4",
-    "@vitest/coverage-istanbul": "^3.2.4",
+    "@types/jsdom": "^27.0.0",
+    "@types/node": "^24.10.1",
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitest/coverage-v8": "^4.0.15",
+    "@vitest/browser-playwright": "^4.0.15",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
     "core-js": "3.45.1",
     "jest-axe": "^10.0.0",
-    "jsdom": "^26.1.0",
-    "playwright": "^1.55.1",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.11",
+    "jsdom": "^27.3.0",
+    "rimraf": "^6.1.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.6",
     "vite-plugin-dts": "^4.5.4",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4",
-    "vitest-browser-vue": "^1.1.0",
-    "vue": "^3.5.22",
-    "vue-component-meta": "^3.1.0",
-    "vue-tsc": "^3.1.0"
+    "vitest": "^4.0.15",
+    "vitest-browser-vue": "^2.0.1",
+    "vue": "^3.5.25",
+    "vue-component-meta": "^3.1.8",
+    "vue-tsc": "^3.1.8"
   }
 }

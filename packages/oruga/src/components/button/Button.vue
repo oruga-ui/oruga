@@ -45,6 +45,11 @@ defineEmits<{
     click: [event: Event];
 }>();
 
+defineSlots<{
+    /** Override the label, default is label prop */
+    default?(): void;
+}>();
+
 const computedTag = computed(() =>
     typeof props.disabled !== "undefined" && props.disabled !== false
         ? "button"
@@ -55,7 +60,7 @@ const computedNativeType = computed(() =>
     props.tag === "button" || props.tag === "input" ? props.type : null,
 );
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-button"],
@@ -111,6 +116,8 @@ const iconRightClasses = defineClasses([
     "iconRightClass",
     "o-button__icon-right",
 ]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -134,9 +141,6 @@ const iconRightClasses = defineClasses([
                 :class="[...iconClasses, ...iconLeftClasses]" />
 
             <span v-if="label || $slots.default" :class="labelClasses">
-                <!--
-                    @slot Override the label, default is label prop
-                -->
                 <slot>{{ label }}</slot>
             </span>
 

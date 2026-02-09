@@ -26,8 +26,8 @@ import StickyCode from "./sticky.vue?raw";
 import Detailed from "./detailed.vue";
 import DetailedCode from "./detailed.vue?raw";
 
-import Searchable from "./searchable.vue";
-import SearchableCode from "./searchable.vue?raw";
+import Filterable from "./filterable.vue";
+import FilterableCode from "./filterable.vue?raw";
 
 import Draggable from "./draggable.vue";
 import DraggableCode from "./draggable.vue?raw";
@@ -43,6 +43,22 @@ import DraggableCode from "./draggable.vue?raw";
 
     <h3 id="customise">Customise</h3>
     <p>Define the table in the way that you need it to be.</p>
+    <div class="info custom-block">
+        <p class="custom-block-title">Limitations</p>
+        <p>
+            Due to the way the Vue reactivity system works, it is not possible
+            to define a JavaScript object for the <code>thAttrs</code> and
+            <code>tdAttrs</code> properties of the
+            <code>o-table-column</code> component directly in the template
+            block. This will result in a recursive rendering error. In order to
+            use an object as value, the object must be defined as variable in
+            the script block. (See
+            <a href="https://github.com/oruga-ui/oruga/issues/1531">
+                <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
+                Issue #1531</a
+            >)
+        </p>
+    </div>
     <ExampleViewer :component="Customise" :code="CustomiseCode" />
 
     <h3 id="columns">Columns</h3>
@@ -101,14 +117,14 @@ import DraggableCode from "./draggable.vue?raw";
         <ExampleViewer :component="Pagination" :code="PaginationCode" />
     </p>
 
-    <h3 id="searchable">Searchable</h3>
+    <h3 id="filterable">Filterable</h3>
     <p>
         Columns can have a search filter input by adding
-        <code>searchable</code> to the TableColumn component item. The search
+        <code>filterable</code> to the TableColumn component item. The search
         filter can be debounced to avoid multiple filtering when typing wich
         adding the <code>filter-debounce</code> prop to the Table component.
     </p>
-    <ExampleViewer :component="Searchable" :code="SearchableCode" />
+    <ExampleViewer :component="Filterable" :code="FilterableCode" />
 
     <h3 id="async">Async Data</h3>
     <p>

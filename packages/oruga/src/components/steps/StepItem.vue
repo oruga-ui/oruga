@@ -8,6 +8,7 @@ import {
     type Component,
     type Ref,
     type ComputedRef,
+    type VNode,
 } from "vue";
 
 import { getDefault } from "@/utils/config";
@@ -30,7 +31,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     label: undefined,
     step: undefined,
     variant: undefined,
@@ -52,7 +54,13 @@ const emits = defineEmits<{
     deactivate: [];
 }>();
 
-const itemValue = props.value ?? useId();
+defineSlots<{
+    /**
+     * Define the step item content here
+     * @param active {boolean} - if item is shown
+     */
+    default?(props: { active: boolean }): VNode[];
+}>();
 
 const rootRef = useTemplateRef("rootElement");
 
@@ -60,7 +68,7 @@ const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<StepItemComponent<T>>(() => ({
-    value: itemValue as T,
+    value: props.value,
     label: props.label,
     step: props.step,
     disabled: props.disabled,
@@ -108,6 +116,7 @@ const itemVariant = computed(() => parent.value.variant ?? props.variant);
 const isClickable: ComputedRef<boolean> = computed(
     () =>
         !props.disabled &&
+        props.clickable !== false &&
         (props.clickable || item.value.index < parent.value.activeIndex),
 );
 
@@ -210,10 +219,6 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <!--
-                @slot Step item content
-                @binding {boolean} active - if item is shown
-            -->
             <slot :active="isActive && visible">
                 <!-- injected component -->
                 <component

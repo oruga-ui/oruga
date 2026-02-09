@@ -7,6 +7,7 @@ import {
     useTemplateRef,
     type Component,
     type Ref,
+    type VNode,
 } from "vue";
 
 import PlainButton from "../utils/PlainButton";
@@ -31,7 +32,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     label: undefined,
     variant: undefined,
     disabled: false,
@@ -52,7 +54,18 @@ const emits = defineEmits<{
     deactivate: [];
 }>();
 
-const itemValue = props.value ?? useId();
+defineSlots<{
+    /**
+     * Define the tab item content here
+     * @param active {boolean} - if item is shown
+     */
+    default?(props: { active: boolean }): VNode[];
+    /**
+     * Override tab header label
+     * @param active {boolean} - if item is shown
+     */
+    header?(): VNode[];
+}>();
 
 const rootRef = useTemplateRef("rootElement");
 
@@ -60,7 +73,7 @@ const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
-    value: itemValue as T,
+    value: props.value,
     label: props.label,
     disabled: props.disabled,
     visible: props.visible,
@@ -190,10 +203,6 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <!--
-                @slot Override tab panel content
-                @binding {boolean} active - if item is shown
-            -->
             <slot :active="isActive && visible">
                 <!-- injected component -->
                 <component
@@ -212,10 +221,6 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 Slots are defined in tabs component.
             -->
             <template v-if="false">
-                <!--
-                    @slot Override tab header label
-                    @binding {boolean} active - if item is shown
-                -->
                 <slot name="header" :active="isActive && visible" />
             </template>
         </div>
