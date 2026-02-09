@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsProp } from "@oruga-ui/oruga-next";
 
 const keepFirst = ref(false);
 const keepOpen = ref(true);
@@ -8,7 +7,7 @@ const openOnFocus = ref(true);
 const selectOnClose = ref(false);
 const clearOnSelect = ref(false);
 
-const options: OptionsProp<string> = [
+const options = [
     "Angular",
     "Angular 2",
     "Aurelia",
@@ -23,7 +22,7 @@ const options: OptionsProp<string> = [
     "Vue.js",
 ];
 
-const selected = ref();
+const selected = ref(options[4]);
 
 function changeselection(): void {
     selected.value = options[0];
@@ -46,14 +45,18 @@ function changeselection(): void {
         <o-field label="Find a name">
             <o-autocomplete
                 v-model="selected"
-                :options="options"
                 placeholder="e.g. Vue"
                 icon="search"
+                clearable
                 :keep-first="keepFirst"
                 :open-on-focus="openOnFocus"
                 :keep-open="keepOpen"
                 :clear-on-select="clearOnSelect"
                 :select-on-close="selectOnClose">
+                <o-dropdown-item
+                    v-for="option in options"
+                    :key="option"
+                    :label="option" />
                 <template #empty> No results found </template>
             </o-autocomplete>
 

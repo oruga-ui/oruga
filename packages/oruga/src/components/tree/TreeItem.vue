@@ -208,6 +208,7 @@ function setExpand(state: boolean): void {
 }
 
 /** Check if a value matches the label (startsWith). */
+// TODO: refactor to mave into Parent because not name does noch match implementation
 function matches(value: string): boolean {
     return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
 }

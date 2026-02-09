@@ -33,6 +33,12 @@ function getType(item: string): string {
 
                 <template #footer> Custom Footer </template>
 
+                <template #default>
+                    <o-dropdown-item label="Item A" />
+                    <o-dropdown-item label="Item B" />
+                    <o-dropdown-item label="Item C" />
+                </template>
+
                 <template #selected="{ options, removeItem }">
                     <o-button
                         v-for="(item, index) in options"
@@ -40,6 +46,7 @@ function getType(item: string): string {
                         :label="item.label"
                         :variant="getType(item.value)"
                         rounded
+                        :style="{ margin: '5px' }"
                         @click="removeItem(index, $event)" />
                 </template>
             </o-taginput>

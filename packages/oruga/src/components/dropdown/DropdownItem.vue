@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { useId, computed, useTemplateRef } from "vue";
+import { useId, computed, useTemplateRef, ref } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
@@ -48,9 +48,9 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
     value: props.value,
-    disabled: props.disabled,
-    hidden: props.hidden,
-    clickable: props.clickable,
+    label: props.label,
+    isViable: isViable.value,
+    setHidden,
     selectItem: (): void => rootRef.value?.click(),
 }));
 
@@ -59,6 +59,16 @@ const { parent, item } = useProviderChild<
     DropdownComponent<T>,
     DropdownItemComponent<T>
 >(rootRef, { data: providedData });
+
+const localHidden = ref(false);
+const isHidden = computed(() => props.hidden || localHidden.value);
+
+function setHidden(hidden: boolean): void {
+    localHidden.value = hidden;
+}
+
+/** Shows if the item is viable or not (not disabled or hidden). */
+const isViable = computed(() => !isHidden.value && isClickable.value);
 
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
@@ -111,6 +121,7 @@ const rootClasses = defineClasses(
 <template>
     <component
         :is="tag"
+        v-show="!isHidden"
         :id="`${parent.menuId}-${item.identifier}`"
         ref="rootElement"
         data-oruga="dropdown-item"
@@ -119,6 +130,7 @@ const rootClasses = defineClasses(
         :role="parent.selectable ? 'option' : 'menuitem'"
         tabindex="-1"
         :aria-selected="parent.selectable ? isSelected : undefined"
+        :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"
         @mouseenter="focusItem"

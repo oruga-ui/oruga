@@ -17,7 +17,7 @@ const options: OptionsProp<string> = [
     "Vue.js",
 ];
 
-const selected = ref();
+const selected = ref<string>();
 </script>
 
 <template>

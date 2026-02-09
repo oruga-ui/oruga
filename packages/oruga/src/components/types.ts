@@ -1124,7 +1124,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Dropdown will be triggered by any events
                  */
-                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
+                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
                 /**
                  * Show when clicked on the trigger
                  */
@@ -3463,7 +3463,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Tooltip trigger events
                  * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
                  */
-                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
+                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
                 /**
                  * Show when clicked on the trigger
                  */

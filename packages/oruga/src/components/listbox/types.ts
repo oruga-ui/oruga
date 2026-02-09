@@ -20,6 +20,7 @@ export type ListItemComponent<T> = Pick<
     isViable: boolean;
     setHidden: (hidden: boolean) => void;
     matches: (value: string) => boolean;
+    selectItem: (event: Event) => void;
 };
 
 export type ListItem<T> = ProviderItem<ListItemComponent<T>>;

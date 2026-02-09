@@ -82,12 +82,12 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | Name     | Description                                     | Bindings                                                                                                                                                       |
 | -------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | selected | Override the selected items                     | **items** `(string, object)[]` - selected items<br/>**options** `object[]` - selected options<br/>**removeItem** `(index, event): void` - remove item function |
-| header   | Define an additional header                     |                                                                                                                                                                |
-| default  |                                                 | **option** - undefined<br/>**index** - undefined<br/>**value** - undefined                                                                                     |
-| empty    | Define the content to show if the list is empty |                                                                                                                                                                |
-| footer   | Define an additional footer                     |                                                                                                                                                                |
-| counter  | Override the counter                            | **items** `number` - items count<br/>**total** `number` - total count                                                                                          |
+| header   | Define an additional header                     | **toggle** `(): void` - toggle dropdown active state                                                                                                           |
+| default  | Define the taginput items here                  | **toggle** `(): void` - toggle dropdown active state                                                                                                           |
 | option   | Define a selected option here                   | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value                                               |
+| empty    | Define the content to show if the list is empty | **toggle** `(): void` - toggle dropdown active state                                                                                                           |
+| footer   | Define an additional footer                     | **toggle** `(): void` - toggle dropdown active state                                                                                                           |
+| counter  | Override the counter                            | **items** `number` - items count<br/>**total** `number` - total count                                                                                          |
 
 </section>
 
