@@ -70,7 +70,7 @@ function getMoreAsyncData(): void {
                 :debounce="500"
                 @input="getAsyncData"
                 @scroll-end="getMoreAsyncData">
-                <template #default="{ value }">
+                <template #option="{ value }">
                     <div class="media">
                         <div class="media-left">
                             <img

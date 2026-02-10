@@ -167,14 +167,14 @@ function onHover(event: Event): void {
     open(event);
 }
 
-let timer: ReturnType<typeof setTimeout> | undefined;
+let timeout: ReturnType<typeof setTimeout> | undefined;
 
 function open(event: Event): void {
     if (props.disabled) return;
     if (props.delay) {
-        timer = setTimeout(() => {
+        timeout = setTimeout(() => {
             isActive.value = true;
-            timer = undefined;
+            timeout = undefined;
             emits("open", event);
         }, props.delay);
     } else {
@@ -192,7 +192,7 @@ function checkNotCloseable(
 
 function close(event: Event): void {
     if (!isActive.value || !props.closeable) return;
-    if (timer) clearTimeout(timer);
+    if (timeout) clearTimeout(timeout);
     isActive.value = false;
     emits("close", event);
 }

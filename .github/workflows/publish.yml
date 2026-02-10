@@ -1,7 +1,9 @@
 name: Publish Release
 on:
-  release:
-    types: [created]
+  # run after the 'Generate Release' workflow completes
+  workflow_run:
+    workflows: ["Generate Release"]
+    types: [completed]
 
 permissions:
   id-token: write # Required for OIDC
@@ -9,6 +11,8 @@ permissions:
 
 jobs:
   publish:
+    # only publish when the 'Generate Release' workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -39,9 +43,9 @@ jobs:
       - name: Publish Examples pre-release 🦋
         if: "github.event.prerelease" # only for pre-release
         working-directory: ./packages/examples
-        run: npm run publish:examples:pre
+        run: npm publish --tag pre
 
       - name: Publish Examples release 🦋
         if: "!github.event.prerelease" # only for main release
         working-directory: ./packages/examples
-        run: npm run publish:examples
+        run: npm publish

@@ -121,7 +121,7 @@ describe("OAutocomplete tests", () => {
                 },
             },
         });
-        await nextTick();
+        await nextTick(); // await child component rendering
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -256,7 +256,11 @@ describe("OAutocomplete tests", () => {
         vi.useFakeTimers(); // use fake timers for input debounce
 
         const wrapper = mount(OAutocomplete, {
-            props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
+            props: {
+                options: OPTIONS,
+                openOnFocus: true,
+                keepFirst: true,
+            },
             attachTo: document.body,
         });
 
@@ -332,10 +336,17 @@ describe("OAutocomplete tests", () => {
 
     describe("filtering", () => {
         test("do not sort when `backend-filtering` is given", async () => {
+            vi.useFakeTimers();
+
             const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, backendFiltering: true },
+                props: {
+                    options: OPTIONS,
+                    backendFiltering: true,
+                    active: true,
+                },
+                attachTo: document.body,
             });
-            await nextTick();
+            await nextTick(); // await child component rendering
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
@@ -349,13 +360,51 @@ describe("OAutocomplete tests", () => {
             );
 
             await input.setValue(OPTIONS[2]);
+            await vi.runAllTimers(); // await debounce input handler
 
             // check that there are no out filtered elements
             optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
             expect(optionElements).toHaveLength(OPTIONS.length);
+            optionElements.forEach((option) => {
+                expect(option.isVisible()).toBeTruthy();
+                expect(option.attributes("disabled")).toBeUndefined();
+            });
+            vi.useRealTimers();
+        });
+
+        test("show available options correctly when filter is given", async () => {
+            vi.useFakeTimers();
+
+            const wrapper = mount(OAutocomplete, {
+                props: { options: OPTIONS, active: true },
+                attachTo: document.body,
+            });
+            await nextTick(); // await child component rendering
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            let optionElements = wrapper.findAll(
+                '[data-oruga="dropdown-item"]',
+            );
+            expect(optionElements).toHaveLength(OPTIONS.length);
             optionElements.forEach((option) =>
                 expect(option.attributes("disabled")).toBeUndefined(),
             );
+
+            await input.setValue("j");
+            await vi.runAllTimers(); // await debounce input handler
+
+            // check that there are no out filtered elements
+            optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
+            expect(optionElements).toHaveLength(OPTIONS.length);
+            optionElements.forEach((option) => {
+                expect(option.isVisible()).toBe(
+                    option.text().toLowerCase().includes("j"),
+                );
+                expect(option.attributes("disabled")).toBeUndefined();
+            });
+            vi.useRealTimers();
         });
     });
 
@@ -381,6 +430,7 @@ describe("OAutocomplete tests", () => {
                     clearable: true,
                 },
             });
+            await nextTick(); // await child component rendering
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
@@ -395,11 +445,15 @@ describe("OAutocomplete tests", () => {
 
         test("clear button does not appear when clearable property is not set to true", () => {
             const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, modelValue: OPTIONS[5] },
+                props: {
+                    options: OPTIONS,
+                    modelValue: OPTIONS[5],
+                    clearable: false,
+                },
             });
-            const subject = wrapper.find(".o-icon").exists();
 
-            expect(subject).toBeFalsy();
+            const subject = wrapper.find(".o-icon");
+            expect(subject.exists()).toBeFalsy();
         });
     });
 

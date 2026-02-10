@@ -1,22 +1,22 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.12.3",
+  "version": "0.12.6",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
-  "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "type": "module",
-  "main": "dist/cjs/index.cjs",
-  "module": "dist/esm/index.mjs",
-  "unpkg": "dist/oruga.js",
-  "typings": "dist/types/index.d.ts",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "unpkg": "./dist/index.umd.cjs",
+  "jsdelivr": "./dist/index.umd.cjs",
+  "typings": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.mjs",
-      "require": "./dist/cjs/index.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
     },
-    "./*": "./*",
+    "./*": "./dist/*",
     "./volar": {
       "types": "./volar.d.ts"
     }
@@ -24,15 +24,11 @@
   "files": [
     "dist",
     "src",
-    "nuxt",
-    "types/*.d.ts",
     "volar.d.ts",
+    "LICENSE",
     "README.md"
   ],
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oruga-ui/oruga.git"
@@ -53,10 +49,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vite build && vite build --mode minify",
-    "build:watch": "vite build --mode minify --watch",
-    "build:lib": "rimraf dist && npm run test:ts && npm run build",
-    "build:lib:watch": "(npm link || true) && npm run build:watch",
+    "build": "rimraf dist && vite build",
+    "build:watch": "(npm link || true) && vite build --watch",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ts": "vue-tsc --noEmit --skipLibCheck --project tsconfig.app.json",

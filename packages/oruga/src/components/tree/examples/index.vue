@@ -14,8 +14,8 @@ import MultipleCode from "./multiple.vue?raw";
 import Scrollable from "./scrollable.vue";
 import ScrollableCode from "./scrollable.vue?raw";
 
-import Slot from "./slot.vue";
-import SlotCode from "./slot.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 </script>
 
 <template>
@@ -118,7 +118,10 @@ import SlotCode from "./slot.vue?raw";
     </p>
     <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
-    <h3 id="slot">Slot</h3>
-    <p>The item label can be customised using the <code>label</code> slot.</p>
-    <ExampleViewer :component="Slot" :code="SlotCode" />
+    <h3 id="templates">Templates</h3>
+    <p>
+        The item label can be customised using the <code>label</code> template
+        slot.
+    </p>
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 </template>

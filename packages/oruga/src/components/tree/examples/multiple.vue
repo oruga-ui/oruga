@@ -7,8 +7,16 @@ const selected = ref<string[]>();
 <template>
     <section>
         <o-tree v-model="selected" selectable multiple>
-            <o-tree-item icon="folder" label="Documents" value="documents">
-                <o-tree-item icon="cog" label="Work" value="work">
+            <o-tree-item
+                icon="folder"
+                label="Documents"
+                value="documents"
+                :selectable="false">
+                <o-tree-item
+                    icon="cog"
+                    label="Work"
+                    value="work"
+                    :selectable="false">
                     <o-tree-item
                         icon="file"
                         label="Expenses.doc"
@@ -19,7 +27,11 @@ const selected = ref<string[]>();
                         value="resume" />
                 </o-tree-item>
 
-                <o-tree-item icon="home" label="Home" value="home">
+                <o-tree-item
+                    icon="home"
+                    label="Home"
+                    value="home"
+                    :selectable="false">
                     <o-tree-item
                         icon="file"
                         label="Invoices.txt"
@@ -27,7 +39,11 @@ const selected = ref<string[]>();
                 </o-tree-item>
             </o-tree-item>
 
-            <o-tree-item icon="cog" label="Events" value="events">
+            <o-tree-item
+                icon="cog"
+                label="Events"
+                value="events"
+                :selectable="false">
                 <o-tree-item
                     icon="calendar-plus"
                     label="Meeting"
@@ -42,8 +58,16 @@ const selected = ref<string[]>();
                     value="review" />
             </o-tree-item>
 
-            <o-tree-item icon="star" label="Movies" value="movies">
-                <o-tree-item icon="star" label="Al Pacino" value="al-paciono">
+            <o-tree-item
+                icon="star"
+                label="Movies"
+                value="movies"
+                :selectable="false">
+                <o-tree-item
+                    icon="star"
+                    label="Al Pacino"
+                    value="al-paciono"
+                    :selectable="false">
                     <o-tree-item
                         icon="video"
                         label="Scarface"
@@ -54,7 +78,8 @@ const selected = ref<string[]>();
                 <o-tree-item
                     icon="star"
                     label="Robert De Niro"
-                    value="robert-deniro">
+                    value="robert-deniro"
+                    :selectable="false">
                     <o-tree-item
                         icon="video"
                         label="Goodfellas"

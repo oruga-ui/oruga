@@ -1,25 +1,27 @@
 {
   "name": "@oruga-ui/examples",
-  "version": "0.12.3",
+  "version": "0.12.6",
   "homepage": "https://oruga-ui.com",
   "description": "Oruga component examples",
   "license": "MIT",
   "type": "module",
-  "main": "dist/examples.js",
-  "module": "dist/examples.mjs",
-  "unpkg": "dist/examples.js",
-  "typings": "dist/types/examples/src/index.d.ts",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "unpkg": "./dist/index.umd.cjs",
+  "jsdelivr": "./dist/index.umd.cjs",
+  "typings": "./dist/types/examples/src/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/examples/src/index.d.ts",
-      "import": "./dist/examples.mjs",
-      "require": "./dist/examples.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
     },
-    "./*": "./*"
+    "./*": "./dist/*"
   },
   "files": [
     "dist",
     "src",
+    "LICENSE",
     "README.md"
   ],
   "sideEffects": [
@@ -44,11 +46,11 @@
     "framework"
   ],
   "scripts": {
-    "build": "rimraf dist && vite build",
+    "build": "vite build",
     "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {
-    "@oruga-ui/oruga-next": "0.12.3",
+    "@oruga-ui/oruga-next": "0.12.6",
     "vue": "^3.0.0"
   },
   "dependencies": {

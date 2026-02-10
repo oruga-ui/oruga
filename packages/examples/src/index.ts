@@ -40,8 +40,8 @@ import ExampleViewer from "../../docs/.vitepress/theme/components/ExampleViewer.
 import { ClientOnly } from "../../../node_modules/vitepress/dist/client/app/components/ClientOnly.js";
 
 // main oruga vue plugin
-const plugin: Plugin = {
-    install(app: App) {
+const plugin = {
+    install(app: App): void {
         // add fortawesome icons
         library.add(fas);
         app.component("VueFontawesome", FontAwesomeIcon);
@@ -63,7 +63,7 @@ const plugin: Plugin = {
         app.component("ExampleViewer", ExampleViewer);
         app.component("ClientOnly", ClientOnly);
     },
-};
+} satisfies Plugin;
 
 // export example plugins
 export default plugin;

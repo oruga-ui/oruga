@@ -9,14 +9,12 @@ import {
     normalizeOptions,
     useProviderChild,
     useProviderParent,
-    // type ProviderItem,
 } from "@/composables";
 
 import type {
     TreeComponent,
     TreeItemComponent,
-    // SubtreeComponent,
-    SubtreeItemComponent,
+    SubtreeComponent,
 } from "./types";
 import type { TreeItemProps } from "./props";
 import { isDefined, isEqual } from "@/utils/helpers";
@@ -38,6 +36,7 @@ const props = withDefaults(defineProps<TreeItemProps<T>>(), {
     value: () => useId(),
     options: undefined,
     label: undefined,
+    selectable: undefined,
     expanded: false,
     disabled: false,
     hidden: false,
@@ -83,27 +82,26 @@ const rootRef = useTemplateRef("rootElement");
 
 const subtreeKey = Symbol("subtree");
 
-/** provide functionalities and data to subtree child item components */
-const { childItems } = useProviderParent<SubtreeItemComponent>({
-    key: subtreeKey,
-});
-
 // provided data is a computed ref to ensure reactivity
-const providedSubtreeItemData = computed<SubtreeItemComponent>(() => ({
-    setHidden,
+const subtreeProvidedData = computed<SubtreeComponent>(() => ({
+    expanded: isExpanded.value,
 }));
 
+/** provide functionalities and data to subtree child item components */
+const { childItems } = useProviderParent({
+    key: subtreeKey,
+    data: subtreeProvidedData,
+});
+
 /** inject functionalities and data from the subtree parent item component */
-useProviderChild<unknown, SubtreeItemComponent>(rootRef, {
+const { parent: parentSubtree } = useProviderChild<SubtreeComponent>(rootRef, {
     key: subtreeKey,
     needParent: false,
-    data: providedSubtreeItemData,
 });
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TreeItemComponent<T>>(() => ({
     value: props.value as T,
-    hidden: isHidden.value,
     expanded: isExpanded.value,
     isViable: isViable.value,
     hasChildren: hasChildren.value,
@@ -117,12 +115,23 @@ const { parent, item } = useProviderChild<
     TreeItemComponent<T>
 >(rootRef, { data: providedData });
 
+const indexer = parent.value.indexer;
+
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions(props.options, parent.value.indexer),
+    normalizeOptions(props.options, indexer),
 );
 
 const hasChildren = computed(() => !!childItems.value.length);
+
+const hasToggleIcon = computed(
+    () => parent.value.toggleIcon && hasChildren.value,
+);
+
+const isHidden = computed(
+    () =>
+        props.hidden ?? (parentSubtree.value && !parentSubtree.value.expanded),
+);
 
 /** Shows if the item is viable or not (not disabled or hidden). */
 const isViable = computed(() => !isHidden.value && !props.disabled);
@@ -135,7 +144,7 @@ const isFocused = computed(
 
 /** Shows if the item is selectable or not. */
 const isSelectable = computed(
-    () => !isDisabled.value && parent.value.selectable,
+    () => !isDisabled.value && (props.selectable ?? parent.value.selectable),
 );
 
 const isSelected = computed(() => {
@@ -153,14 +162,22 @@ const itemIconSize = computed(() => props.iconSize ?? parent.value.iconSize);
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
-    // toggle collapsable if not dedicated icon is available
-    if (!parent.value.toggleIcon) toggleExpand();
+    if (hasToggleIcon.value) {
+        const toggleIcon = (event.target as HTMLElement).closest(
+            "[data-toggle]",
+        );
+        if (toggleIcon && rootRef.value?.contains(toggleIcon)) {
+            event.stopPropagation();
+            toggleExpand();
+            return;
+        }
+    }
+    // toggle collapsable if not a dedicated icon is available
+    else toggleExpand();
 
     if (isSelectable.value) {
-        const selectionState = parent.value.toggleIcon
-            ? isExpanded.value
-            : !isSelected.value;
-        parent.value.selectItem(item.value, selectionState);
+        // toggle selection state
+        parent.value.selectItem(item.value, !isSelected.value);
     }
 
     emits("click", props.value as T, event);
@@ -188,18 +205,10 @@ function setExpand(state: boolean): void {
     if (!parent.value.collapsable) return;
     if (!hasChildren.value) return;
     isExpanded.value = state;
-    // set hidden state for all the child items
-    childItems.value.forEach((item) => item.data.setHidden(!state));
-}
-
-const localHidden = ref(false);
-const isHidden = computed(() => props.hidden || localHidden.value);
-
-function setHidden(state: boolean): void {
-    localHidden.value = state;
 }
 
 /** Check if a value matches the label (startsWith). */
+// TODO: refactor to mave into Parent because not name does noch match implementation
 function matches(value: string): boolean {
     return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
 }
@@ -208,13 +217,20 @@ function matches(value: string): boolean {
 
 const itemClasses = defineClasses(
     ["itemClass", "o-tree__item"],
-    ["itemSelectabelClass", `o-tree__item--selectable`, null, isSelectable],
-    ["itemDisabledClass", "o-tree__item--disabled", null, isDisabled],
+    ["itemSelectableClass", `o-tree__item--selectable`, null, isSelectable],
     ["itemSelectedClass", "o-tree__item--selected", null, isSelected],
     ["itemFocusedClass", "o-tree__item--focused", null, isFocused],
+    ["itemDisabledClass", "o-tree__item--disabled", null, isDisabled],
 );
 
 const labelClasses = defineClasses(["itemLabelClass", "o-tree__item-label"]);
+
+const iconClasses = defineClasses(["itemIconClass", "o-tree__item-icon"]);
+
+const toggleClasses = defineClasses([
+    "itemToggleIconClass",
+    "o-tree__item-toggle-icon",
+]);
 
 const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
 
@@ -237,22 +253,23 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         :aria-disabled="disabled || parent.disabled"
         :aria-label="ariaLabel ?? label"
         :aria-labelledby="ariaLabelledby"
-        :aria-owns="hasChildren ? subtreeId : undefined"
-        @click.stop="clickItem"
-        @mouseenter="focusItem">
-        <o-icon
-            v-if="parent.toggleIcon"
-            :icon="parent.toggleIcon"
-            :pack="itemIconPack"
-            :size="itemIconSize"
-            @click.prevent="toggleExpand" />
+        :aria-owns="hasChildren ? subtreeId : undefined">
+        <div :class="labelClasses" @mouseenter="focusItem" @click="clickItem">
+            <o-icon
+                v-if="hasToggleIcon"
+                data-toggle
+                :icon="parent.toggleIcon"
+                :pack="itemIconPack"
+                :size="itemIconSize"
+                :class="toggleClasses"
+                :rotation="isExpanded ? 90 : 0" />
 
-        <div :class="labelClasses">
             <o-icon
                 v-if="icon"
                 :icon="icon"
                 :pack="itemIconPack"
-                :size="itemIconSize" />
+                :size="itemIconSize"
+                :class="iconClasses" />
 
             <slot
                 name="label"

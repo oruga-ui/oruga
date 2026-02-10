@@ -27,6 +27,7 @@ import {
     defineClasses,
     normalizeOptions,
     scrollElementInView,
+    unrefElement,
     useIndexer,
     useProviderParent,
     useScrollEvents,
@@ -63,7 +64,7 @@ const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     selectable: false,
     checkable: false,
     emptyLabel: () => getDefault("tree.emptyLabel"), // TODO: add
-    toggleIcon: () => getDefault("tree.toggleIcon"),
+    toggleIcon: () => getDefault("tree.toggleIcon", "chevron-right"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
     animation: () => getDefault("tree.animation", "slide"),
@@ -144,7 +145,6 @@ const provideData = computed<TreeComponent<T>>(() => ({
     indexer: indexer,
     selectItem,
     focusItem,
-    // resetSelection,
 }));
 
 /** provide functionalities and data to child item components */
@@ -207,8 +207,10 @@ if (isClient && props.scrollHeight)
     );
 
 const listStyle = computed(() => ({
-    maxHeight: toCssDimension(props.scrollHeight),
-    overflow: "auto",
+    maxHeight: props.scrollHeight
+        ? toCssDimension(props.scrollHeight)
+        : undefined,
+    overflow: props.scrollHeight ? "auto" : undefined,
 }));
 
 // #endregion --- Scroll Handler ---
@@ -268,14 +270,6 @@ function selectItem(item: TreeItem<T>, selection: boolean = true): void {
     }
 }
 
-/** Unselect every tree item excluding the given one. */
-// function resetSelection(excludedItems: TreeItem<T>[] = []): void {
-//     childItems.value.forEach((item) => {
-//         if (!excludedItems.map((i) => i?.identifier).includes(item.identifier))
-//             item.data.reset(); // TODO: rename unselect
-//     });
-// }
-
 /** Select a range of items from a staring index to an end index. */
 function selectItemRange(start: number, end: number): void {
     if (!props.selectable || !isTrueish(props.multiple)) return;
@@ -329,9 +323,22 @@ const focusedItem = ref<TreeItem<T>>();
 const startRangeIndex = ref(-1);
 
 // focus the item when the focused item changes
-watch(focusedItem, () => toValue(focusedItem.value?.el)?.focus(), {
-    flush: "post",
-});
+watch(
+    focusedItem,
+    (newFocus, oldFocus) => {
+        if (newFocus)
+            // focus new element
+            toValue(newFocus.el)?.focus();
+        else {
+            if (oldFocus)
+                // blur old if no new focus available to
+                unrefElement(oldFocus.el)?.blur();
+            // reset focus if no new item is focused
+            resetFocus();
+        }
+    },
+    { flush: "post" },
+);
 
 // initialise focus on mounted
 onMounted(resetFocus);
@@ -483,6 +490,11 @@ function onFocusin(event: FocusEvent): void {
 
     isFocused.value = true;
 
+    emits("focus", event);
+
+    // prevent further when an item is already focused
+    if (focusedItem.value) return;
+
     const firstSelectedItem = findFirstSelectedItem();
 
     // when an item is already selected
@@ -492,8 +504,6 @@ function onFocusin(event: FocusEvent): void {
     else
         // else focus first item
         focusFirstItem();
-
-    emits("focus", event);
 }
 
 function onFocusout(event: FocusEvent): void {
@@ -630,16 +640,7 @@ const rootClasses = defineClasses(
     ],
 );
 
-const listClasses = defineClasses(
-    ["listClass", "o-tree__list"],
-    // TODO add class
-    [
-        "selectableClass",
-        "o-tree__selectable",
-        null,
-        computed(() => props.selectable),
-    ],
-);
+const listClasses = defineClasses(["listClass", "o-tree__list"]);
 
 const headerClasses = defineClasses(["headerClass", "o-tree__header"]);
 

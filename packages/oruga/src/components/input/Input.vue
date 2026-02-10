@@ -15,7 +15,12 @@ import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
 import { isDefined, isTrueish } from "@/utils/helpers";
-import { defineClasses, useDebounce, useInputHandler } from "@/composables";
+import {
+    defineClasses,
+    unrefElement,
+    useDebounce,
+    useInputHandler,
+} from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -193,8 +198,9 @@ const computedStyles = computed<StyleValue>(() =>
 const debouncedInput = useDebounce(onInput, props.debounce);
 
 function onInput(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const value = inputElement.value;
+    const inputElement = unrefElement(inputRef);
+    if (!inputElement) return;
+    const value = (inputElement as HTMLInputElement).value;
     if (value === vmodel.value) return;
 
     vmodel.value = value as ModelValue;

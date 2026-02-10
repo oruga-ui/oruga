@@ -11,6 +11,7 @@ import {
     useTemplateRef,
     triggerRef,
     watchEffect,
+    onUnmounted,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -441,7 +442,13 @@ function onDragEnd(): void {
 
 // #region --- Autoplay Feature ---
 
-let timer: ReturnType<typeof setTimeout> | undefined;
+let autoplayInterval: ReturnType<typeof setInterval> | undefined;
+
+onUnmounted(() => {
+    clearInterval(autoplayInterval);
+    autoplayInterval = undefined;
+});
+
 /** deactive autoplay feature */
 const isAutoplayPaused = ref(false);
 
@@ -490,19 +497,18 @@ function onToggleAutoplay(): void {
 }
 
 function startTimer(): void {
-    if (!props.autoplay || timer) return;
+    if (!props.autoplay || autoplayInterval) return;
     if (isAutoplayPaused.value) return;
-    timer = setInterval(() => {
+    autoplayInterval = setInterval(() => {
         if (!props.repeat && !hasNext.value) pauseTimer();
         else onNext();
     }, props.interval);
 }
 
 function pauseTimer(): void {
-    if (timer) {
-        clearInterval(timer);
-        timer = undefined;
-    }
+    if (!autoplayInterval) return;
+    clearInterval(autoplayInterval);
+    autoplayInterval = undefined;
 }
 
 // #endregion --- Autoplay Feature ---

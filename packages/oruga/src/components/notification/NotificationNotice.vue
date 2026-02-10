@@ -158,15 +158,15 @@ function showNotice(): void {
 
 // --- Auto Close Feature  ---
 
-let timer: ReturnType<typeof setTimeout> | undefined;
+let timeout: ReturnType<typeof setTimeout> | undefined;
 
 /** Set timer to auto close message */
 function setAutoClose(): void {
     if (!props.infinite) {
         // clear old timer
-        if (timer) clearTimeout(timer);
+        if (timeout) clearTimeout(timeout);
         // set new timer
-        timer = setTimeout(() => {
+        timeout = setTimeout(() => {
             if (isActive.value) close();
         }, props.duration);
     }
@@ -178,7 +178,7 @@ function onMouseEnter(): void {
     if (!props.pauseOnHover || props.infinite) return;
     isPaused = true;
     // stop auto close timeout
-    clearInterval(timer);
+    clearTimeout(timeout);
 }
 
 function onMouseLeave(event: Event): void {
@@ -190,7 +190,7 @@ function onMouseLeave(event: Event): void {
 /** set active to false and emit close event */
 function close(...args: [] | [Event] | CloseEventArgs<C>): void {
     isActive.value = false;
-    if (timer) clearTimeout(timer);
+    if (timeout) clearTimeout(timeout);
     emits("close", ...args);
 }
 

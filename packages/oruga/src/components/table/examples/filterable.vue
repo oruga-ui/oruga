@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import type { TableColumn } from "@oruga-ui/oruga-next";
 
 const data = [
@@ -209,20 +210,26 @@ const columns: TableColumn<(typeof data)[number]>[] = [
         sortable: true,
     },
 ];
+
+const isPaginated = ref(true);
 </script>
 
 <template>
     <section>
+        <o-field>
+            <o-switch v-model="isPaginated" label="Paginated" />
+        </o-field>
+
         <o-table
             :data="data"
             :columns="columns"
-            paginated
+            :paginated="isPaginated"
             per-page="5"
             filters-placeholder="Search..." />
 
         <p>You can also customize the search input using a scoped slot.</p>
 
-        <o-table :data="data" paginated per-page="5">
+        <o-table :data="data" :paginated="isPaginated" per-page="5">
             <o-table-column
                 v-for="(column, idx) in columns"
                 :key="idx"

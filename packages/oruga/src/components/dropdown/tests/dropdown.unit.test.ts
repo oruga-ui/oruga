@@ -602,6 +602,25 @@ describe("ODropdown tests", () => {
             expect(dropdown.emitted("close")).toBeUndefined();
         });
 
+        test("react accordingly when component has keepFirst", async () => {
+            const wrapper = mount(ODropdown, {
+                props: {
+                    active: true,
+                    options,
+                    keepFirst: true,
+                    selectable: true,
+                },
+            });
+            await nextTick(); // await dropdown item rendered
+
+            const dropdown = wrapper.find(".o-dropdown__menu");
+            expect(dropdown.exists()).toBeTruthy();
+
+            const focusedItem = wrapper.find(".o-dropdown__item--focused");
+            expect(focusedItem.exists()).toBeTruthy();
+            expect(focusedItem.text()).toContain(options[0].label);
+        });
+
         test("react accordingly when is disabled", async () => {
             const wrapper = mount(ODropdown, {
                 props: { options: simpleOptions, disabled: true, active: true },
