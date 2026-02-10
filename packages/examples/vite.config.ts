@@ -3,16 +3,12 @@ import vue from "@vitejs/plugin-vue";
 import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 
-import path, { resolve } from "path";
+import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
 
 import { peerDependencies } from "./package.json";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // https://vitejs.dev/config/
-/** @type {import('vite').UserConfig} */
 export default defineConfig({
     root: __dirname,
     plugins: [vue(), tsconfigPaths(), dts({ outDir: "./dist/types" })],
@@ -27,15 +23,13 @@ export default defineConfig({
         },
     },
     build: {
-        emptyOutDir: false,
+        emptyOutDir: true,
         sourcemap: true,
         lib: {
             // build minified version with index.ts entry
             name: "Oruga Examples",
             entry: resolve(__dirname, "src/index.ts"),
-            formats: ["umd", "es"],
-            fileName: (format) =>
-                format === "umd" ? "examples.js" : "examples.mjs",
+            fileName: "index",
         },
         rollupOptions: {
             // make sure to externalize deps that shouldn't be bundled
