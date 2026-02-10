@@ -1,5 +1,5 @@
 import type { ComponentClass } from "@/types";
-import type { OptionsProp, OptionsOrGroupsProp } from "@/composables";
+import type { OptionsOrGroupsProp } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 

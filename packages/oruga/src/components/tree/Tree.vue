@@ -25,6 +25,7 @@ import { isClient } from "@/utils/ssr";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
+    isGroupOption,
     normalizeOptions,
     scrollElementInView,
     unrefElement,
@@ -685,7 +686,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
                         v-for="option in normalizedOptions"
                         :key="option.key">
                         <o-tree-item
-                            v-if="option.isGroup"
+                            v-if="isGroupOption(option)"
                             v-bind="option.attrs"
                             :label="option.label"
                             :hidden="option.hidden">

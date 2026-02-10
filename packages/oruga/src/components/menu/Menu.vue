@@ -12,6 +12,7 @@ import {
     useProviderParent,
     useIndexer,
     type ProviderItem,
+    isGroupOption,
 } from "@/composables";
 
 import type { MenuChildItem, MenuComponent, MenuItemComponent } from "./types";
@@ -302,7 +303,7 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
                 :selected-index="selectedItem?.index">
                 <template v-for="option in normalizedOptions" :key="option.key">
                     <o-menu-item
-                        v-if="option.isGroup"
+                        v-if="isGroupOption(option)"
                         v-bind="option.attrs"
                         :label="option.label"
                         :hidden="option.hidden">
@@ -314,7 +315,7 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
                     </o-menu-item>
 
                     <o-menu-item
-                        v-else-if="!option.isGroup"
+                        v-else
                         v-bind="option.item"
                         :hidden="option.hidden" />
                 </template>

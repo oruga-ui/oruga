@@ -6,6 +6,7 @@ import OIcon from "../icon/Icon.vue";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
+    isGroupOption,
     normalizeOptions,
     useProviderChild,
     useProviderParent,
@@ -294,7 +295,7 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
                         v-for="option in normalizedOptions"
                         :key="option.key">
                         <o-tree-item
-                            v-if="option.isGroup"
+                            v-if="isGroupOption(option)"
                             v-bind="option.attrs"
                             :label="option.label"
                             :hidden="option.hidden">

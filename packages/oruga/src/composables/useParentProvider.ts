@@ -12,7 +12,7 @@ import {
     type Ref,
 } from "vue";
 import { unrefElement } from "./unrefElement";
-import { useSequentialId } from "./useIndexer";
+import { useIndexer } from "./useIndexer";
 
 export type ProviderItem<T = unknown> = {
     /** The root element of the item component */
@@ -113,7 +113,7 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
         watch(childItems, sortItems, { flush: "post" });
     }
 
-    const { nextSequence } = useSequentialId(1);
+    const { nextIndex } = useIndexer(1);
 
     /** register a child item on the parent */
     function registerItem(
@@ -121,7 +121,7 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
         data: MaybeRefOrGetter<ItemData>,
     ): ProviderItem<ItemData> {
         const index = childItems.value.length;
-        const identifier = nextSequence();
+        const identifier = nextIndex();
         const item = { el, index, identifier, data };
         // add new item to the child list
         // this unwraps all inner refs

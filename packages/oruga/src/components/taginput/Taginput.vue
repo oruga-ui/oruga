@@ -10,12 +10,13 @@ import {
     defineClasses,
     getActiveClasses,
     useInputHandler,
-    useSequentialId,
-    type OptionsItem,
+    useIndexer,
+    type Option,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
 import type { ComponentExposed } from "vue-component-type-helpers";
+import type { DropdownItemProps } from "../dropdown/props";
 
 /**
  * A simple tag input field that can have autocomplete functionality.
@@ -151,7 +152,7 @@ defineSlots<{
      */
     selected?(props: {
         items: T[] | undefined;
-        options: OptionItem<T>[];
+        options: SelectedTag[];
         removeItem: (index: number, event: Event) => void;
     }): void;
     /**
@@ -160,7 +161,7 @@ defineSlots<{
      * @param index {number} - option index
      * @param value {unknown} - option value
      */
-    option?(props: { option: OptionItem<T>; index: number; value: T }): void;
+    option?(props: { option: Option<DropdownItemProps<T>> }): void;
     /**
      * Override the counter
      * @param items {number} - items count
@@ -192,10 +193,16 @@ const itemsLength = computed(() => selectedItems.value?.length || 0);
 const childItems = computed(() => autocompleteRef.value?.items ?? []);
 
 // create a unique id sequence
-const { nextSequence } = useSequentialId();
+const indexer = useIndexer();
+
+type SelectedTag = {
+    label: string;
+    value: T;
+    key: string;
+};
 
 /** map the selected items into option items */
-const selectedOptions = computed(() => {
+const selectedOptions = computed<SelectedTag[]>(() => {
     if (!selectedItems.value) return [];
     return selectedItems.value.map((value) => {
         const option = childItems.value.find((item) =>
@@ -208,7 +215,7 @@ const selectedOptions = computed(() => {
                 value: option.data.value,
                 key: option.identifier,
             };
-        else return { label: String(value), value, key: nextSequence() };
+        else return { label: String(value), value, key: indexer.nextIndex() };
     });
 });
 
@@ -428,14 +435,8 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                     <slot :toggle />
                 </template>
 
-                <template
-                    v-if="$slots.option"
-                    #option="{ option, index, value }">
-                    <slot
-                        name="option"
-                        :option="option"
-                        :index="index"
-                        :value="value" />
+                <template v-if="$slots.option" #option="{ option }">
+                    <slot name="option" :option="option" />
                 </template>
 
                 <template v-if="$slots.empty" #empty="{ toggle }">

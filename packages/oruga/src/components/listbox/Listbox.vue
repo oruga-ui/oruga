@@ -29,6 +29,7 @@ import {
     defineClasses,
     findOptionIndex,
     getOptionsLength,
+    isGroupOption,
     normalizeOptions,
     scrollElementInView,
     unrefElement,
@@ -771,7 +772,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                     <template
                         v-for="option in normalizedOptions"
                         :key="option.key">
-                        <ul v-if="option.isGroup" role="group">
+                        <ul v-if="isGroupOption(option)" role="group">
                             <o-listbox-item
                                 v-bind="option.attrs"
                                 :label="option.label"

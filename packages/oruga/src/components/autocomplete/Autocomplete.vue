@@ -20,13 +20,16 @@ import {
     normalizeOptions,
     useInputHandler,
     useIndexer,
+    isGroupOption,
+    type OptionGroupItem,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { OptionsItem, OptionsGroupItem } from "@/types";
+import type { Option } from "@/types";
 import type { AutocompleteProps } from "./props";
 import type { ComponentExposed } from "vue-component-type-helpers";
+import type { DropdownItemProps } from "../dropdown/props";
 
 enum SpecialOption {
     Header,
@@ -186,14 +189,14 @@ const slots = defineSlots<{
      * @param group {object} - options group
      * @param index {number} - option index
      */
-    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    group?(props: { group: OptionGroupItem<DropdownItemProps<T>> }): void;
     /**
      * Override the select option
      * @param option {object} - option object
      * @param index {number} - option index
      * @param value {unknown} - option value
      */
-    option?(props: { option: OptionsItem<T>; index: number; value: T }): void;
+    option?(props: { option: Option<DropdownItemProps<T>> }): void;
 }>();
 
 const dropdownRef =
@@ -549,40 +552,42 @@ defineExpose({
 
         <template #default="{ toggle }">
             <slot :toggle>
-                <template v-for="(group, groupIndex) in groupedOptions">
-                    <o-dropdown-item
-                        v-if="group.label"
-                        v-show="!group.hidden"
-                        :key="group.key"
-                        v-bind="group.attrs"
-                        :hidden="group.hidden"
-                        :value="group.value"
-                        :label="group.value"
-                        :tag="itemTag"
-                        role="presentation"
-                        :clickable="false"
-                        :class="[...itemClasses, ...itemGroupClasses]">
-                        <slot name="group" :group="group" :index="groupIndex">
-                            <span> {{ group.label }} </span>
-                        </slot>
-                    </o-dropdown-item>
+                <template v-for="option in normalizedOptions" :key="option.key">
+                    <template v-if="isGroupOption(option)">
+                        <o-dropdown-item
+                            v-bind="option.attrs"
+                            :hidden="option.hidden"
+                            :label="option.label"
+                            :tag="itemTag"
+                            role="presentation"
+                            :clickable="false"
+                            :class="[...itemClasses, ...itemGroupClasses]">
+                            <slot name="group" :group="option">
+                                <span> {{ option.label }} </span>
+                            </slot>
+                        </o-dropdown-item>
+
+                        <o-dropdown-item
+                            v-for="_option in option.options"
+                            :key="_option.key"
+                            v-bind="_option.item"
+                            :hidden="_option.hidden"
+                            :tag="itemTag"
+                            :class="itemClasses">
+                            <slot name="option" :option="_option.item">
+                                <span> {{ _option.item.label }} </span>
+                            </slot>
+                        </o-dropdown-item>
+                    </template>
 
                     <o-dropdown-item
-                        v-for="(option, optionIndex) in group.options"
-                        v-show="!option.hidden"
-                        :key="option.key"
-                        v-bind="option.attrs"
-                        :value="option.value"
-                        :label="option.label"
+                        v-else
+                        v-bind="option.item"
                         :hidden="option.hidden"
                         :tag="itemTag"
                         :class="itemClasses">
-                        <slot
-                            name="option"
-                            :option="option"
-                            :value="option.value"
-                            :index="optionIndex">
-                            <span> {{ option.label }} </span>
+                        <slot name="option" :option="option.item">
+                            <span> {{ option.item.label }} </span>
                         </slot>
                     </o-dropdown-item>
                 </template>

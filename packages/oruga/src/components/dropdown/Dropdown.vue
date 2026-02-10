@@ -28,7 +28,8 @@ import {
     scrollElementInView,
     unrefElement,
     useIndexer,
-    type OptionItem,
+    isGroupOption,
+    type Option,
 } from "@/composables";
 
 import type {
@@ -170,7 +171,7 @@ defineSlots<{
      * Override the label, default is label prop
      * @param option {object} - option item
      */
-    option?(props: { option: OptionsItem<T> }): void;
+    option?(props: { option: Option<DropdownItemProps<T>> }): void;
 }>();
 
 const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
@@ -732,7 +733,7 @@ defineExpose({ value: vmodel, items: childItems });
                         <template
                             v-for="(option, idx) in normalizedOptions"
                             :key="option.key">
-                            <template v-if="option.isGroup">
+                            <template v-if="isGroupOption(option)">
                                 <o-dropdown-item
                                     v-bind="option.attrs"
                                     :label="option.label"

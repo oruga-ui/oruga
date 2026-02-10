@@ -7,6 +7,7 @@ import PlainButton from "../utils/PlainButton";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
+    isGroupOption,
     normalizeOptions,
     useProviderChild,
     useProviderParent,
@@ -258,7 +259,7 @@ const submenuClasses = defineClasses([
                         v-for="option in normalizedOptions"
                         :key="option.key">
                         <o-menu-item
-                            v-if="option.isGroup"
+                            v-if="isGroupOption(option)"
                             v-bind="option.attrs"
                             :label="option.label"
                             :hidden="option.hidden">
@@ -270,7 +271,7 @@ const submenuClasses = defineClasses([
                         </o-menu-item>
 
                         <o-menu-item
-                            v-else-if="!option.isGroup"
+                            v-else
                             v-bind="option.item"
                             :hidden="option.hidden" />
                     </template>
