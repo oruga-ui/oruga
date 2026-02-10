@@ -11,8 +11,8 @@ import {
     normalizeOptions,
     useProviderParent,
     useIndexer,
-    type ProviderItem,
     isGroupOption,
+    type ProviderItem,
 } from "@/composables";
 
 import type { MenuChildItem, MenuComponent, MenuItemComponent } from "./types";

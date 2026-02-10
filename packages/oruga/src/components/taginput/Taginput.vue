@@ -17,6 +17,7 @@ import {
 import type { TaginputProps } from "./props";
 import type { ComponentExposed } from "vue-component-type-helpers";
 import type { DropdownItemProps } from "../dropdown/props";
+import type { Numberish } from "@/types";
 
 /**
  * A simple tag input field that can have autocomplete functionality.
@@ -158,8 +159,6 @@ defineSlots<{
     /**
      * Define a selected option here
      * @param option {object} - option object
-     * @param index {number} - option index
-     * @param value {unknown} - option value
      */
     option?(props: { option: Option<DropdownItemProps<T>> }): void;
     /**
@@ -167,7 +166,7 @@ defineSlots<{
      * @param items {number} - items count
      * @param total {number} - total count
      */
-    counter?(): void;
+    counter?(props: { items: number; total: Numberish }): void;
 }>();
 
 // define as Component to prevent docs memmory overload

@@ -30,6 +30,7 @@ import {
     useIndexer,
     isGroupOption,
     type Option,
+    type OptionGroupItem,
 } from "@/composables";
 
 import type {
@@ -164,9 +165,8 @@ defineSlots<{
     /**
      * Override the option group
      * @param group {object} - options group item
-     * @param index {number} - option index
      */
-    group?(props: { index: number }): void;
+    group?(props: { group: OptionGroupItem<DropdownItemProps<T>> }): void;
     /**
      * Override the label, default is label prop
      * @param option {object} - option item
@@ -731,7 +731,7 @@ defineExpose({ value: vmodel, items: childItems });
 
                     <slot :toggle="toggle">
                         <template
-                            v-for="(option, idx) in normalizedOptions"
+                            v-for="option in normalizedOptions"
                             :key="option.key">
                             <template v-if="isGroupOption(option)">
                                 <o-dropdown-item
@@ -739,7 +739,7 @@ defineExpose({ value: vmodel, items: childItems });
                                     :label="option.label"
                                     role="presentation"
                                     :clickable="false">
-                                    <slot name="group" :index="idx">
+                                    <slot name="group" :group="option">
                                         <span> {{ option.label }} </span>
                                     </slot>
                                 </o-dropdown-item>

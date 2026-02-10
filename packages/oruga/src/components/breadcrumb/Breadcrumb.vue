@@ -91,7 +91,7 @@ const listClasses = defineClasses(["listClass", "o-breadcrumb__list"]);
         :aria-label="ariaLabel">
         <ol :class="listClasses">
             <slot>
-                <O-breadcrumb-item
+                <o-breadcrumb-item
                     v-for="option in normalizedOptions"
                     :key="option.key"
                     v-bind="option.item" />

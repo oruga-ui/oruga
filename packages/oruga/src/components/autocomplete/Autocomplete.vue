@@ -28,8 +28,8 @@ import { injectField } from "../field/fieldInjection";
 
 import type { Option } from "@/types";
 import type { AutocompleteProps } from "./props";
-import type { ComponentExposed } from "vue-component-type-helpers";
 import type { DropdownItemProps } from "../dropdown/props";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 enum SpecialOption {
     Header,
@@ -187,14 +187,11 @@ const slots = defineSlots<{
     /**
      * Override the option group
      * @param group {object} - options group
-     * @param index {number} - option index
      */
     group?(props: { group: OptionGroupItem<DropdownItemProps<T>> }): void;
     /**
      * Override the select option
      * @param option {object} - option object
-     * @param index {number} - option index
-     * @param value {unknown} - option value
      */
     option?(props: { option: Option<DropdownItemProps<T>> }): void;
 }>();
