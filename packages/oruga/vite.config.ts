@@ -8,21 +8,19 @@ import { playwright } from "@vitest/browser-playwright";
 
 import babel from "@rollup/plugin-babel";
 
-import { peerDependencies, version } from "./package.json";
-
 import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
 
-const bannerTxt = `/*! Oruga v${version} | MIT License | github.com/oruga-ui/oruga */`;
+import { peerDependencies, version } from "./package.json";
 
-const browserTestPattern = "src/**/*.browser.test.{ts,js}";
+const bannerTxt = `/*! Oruga v${version} | MIT License | github.com/oruga-ui/oruga */`;
 
 // https://vitejs.dev/config/
 export default defineConfig({
     root: __dirname,
     plugins: [
-        tsconfigPaths(),
         vue(),
+        tsconfigPaths(),
         dts({
             tsconfigPath: "./tsconfig.app.json",
             entryRoot: "./src",
@@ -49,7 +47,7 @@ export default defineConfig({
         port: 3000,
     },
     build: {
-        emptyOutDir: false,
+        emptyOutDir: true,
         sourcemap: true,
         lib: {
             name: "Oruga",
@@ -90,7 +88,9 @@ export default defineConfig({
                 test: {
                     name: "unit",
                     environment: "jsdom",
-                    setupFiles: [resolve("./src/__tests__/vitest.setup.ts")],
+                    setupFiles: [
+                        resolve(__dirname, "./src/__tests__/vitest.setup.ts"),
+                    ],
                     // exclude browser tests
                     exclude: ["src/**/*.browser.test.{ts,js}"],
                 },
