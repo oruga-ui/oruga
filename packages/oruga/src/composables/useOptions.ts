@@ -59,8 +59,6 @@ export type OptionsOrGroupsProp<T extends object = object> =
  * @internal
  */
 export type OptionItem<T extends object> = {
-    /** internal definiton if the element should be hidden */
-    hidden: boolean;
     /** internal genereated uniqe option key */
     key: string;
     /** the option item object */
@@ -72,8 +70,6 @@ export type OptionItem<T extends object> = {
  * @internal
  */
 export type OptionGroupItem<T extends object> = {
-    /** internal definiton if the element should be hidden */
-    hidden: boolean;
     /** internal genereated uniqe option key */
     key: string;
     /** displayed option group label */
@@ -142,7 +138,6 @@ export function normalizeOptions<T extends object>(
                             value: String(option),
                         },
                         key: indexer.nextIndex(),
-                        hidden: false,
                     } satisfies NormalizedOption<SimpleOption>;
 
                 if (typeof option == "object") {
@@ -159,7 +154,6 @@ export function normalizeOptions<T extends object>(
                             attrs: option.attrs,
                             options,
                             key: indexer.nextIndex(),
-                            hidden: false,
                         } satisfies NormalizedGroup<T>;
                     } else {
                         // create options item
@@ -167,7 +161,6 @@ export function normalizeOptions<T extends object>(
                             // isGroup: false,
                             item: option,
                             key: indexer.nextIndex(),
-                            hidden: false,
                         } satisfies NormalizedOption<T>;
                     }
                 }
@@ -186,7 +179,6 @@ export function normalizeOptions<T extends object>(
                     value,
                 },
                 key: indexer.nextIndex(),
-                hidden: false,
             }) satisfies NormalizedOption<SimpleOption>,
     ) as unknown as NormalizedItem<T>[];
 }

@@ -776,7 +776,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                             <o-listbox-item
                                 v-bind="option.attrs"
                                 :label="option.label"
-                                :hidden="option.hidden"
                                 disabled
                                 role="presentation" />
 
@@ -784,7 +783,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                                 v-for="_option in option.options"
                                 v-bind="_option.item"
                                 :key="_option.key"
-                                :hidden="_option.hidden"
                                 :aria-setsize="getOptionsLength(option.options)"
                                 :aria-posinset="
                                     findOptionIndex(option.options, _option) + 1
@@ -794,7 +792,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                         <o-listbox-item
                             v-else
                             v-bind="option.item"
-                            :hidden="option.hidden"
                             :aria-setsize="getOptionsLength(normalizedOptions)"
                             :aria-posinset="
                                 findOptionIndex(normalizedOptions, option) + 1

@@ -358,8 +358,7 @@ const contentClasses = defineClasses(
                 <o-tab-item
                     v-for="option in normalizedOptions"
                     v-bind="option.item"
-                    :key="option.key"
-                    :hidden="option.hidden" />
+                    :key="option.key" />
             </slot>
         </section>
     </div>

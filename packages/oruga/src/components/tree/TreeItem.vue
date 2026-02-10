@@ -297,19 +297,14 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
                         <o-tree-item
                             v-if="isGroupOption(option)"
                             v-bind="option.attrs"
-                            :label="option.label"
-                            :hidden="option.hidden">
+                            :label="option.label">
                             <o-tree-item
                                 v-for="_option in option.options"
                                 v-bind="_option.item"
-                                :key="_option.key"
-                                :hidden="_option.hidden" />
+                                :key="_option.key" />
                         </o-tree-item>
 
-                        <o-tree-item
-                            v-else
-                            v-bind="option.item"
-                            :hidden="option.hidden" />
+                        <o-tree-item v-else v-bind="option.item" />
                     </template>
                 </slot>
             </ul>

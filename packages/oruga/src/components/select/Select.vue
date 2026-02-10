@@ -14,6 +14,7 @@ import { getDefault } from "@/utils/config";
 import { isDefined, isTrueish } from "@/utils/helpers";
 import {
     defineClasses,
+    isGroupOption,
     normalizeOptions,
     useInputHandler,
 } from "@/composables";
@@ -308,13 +309,11 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             <slot>
                 <template v-for="option in normalizedOptions" :key="option.key">
                     <optgroup
-                        v-if="option.isGroup"
-                        v-show="!option.hidden"
+                        v-if="isGroupOption(option)"
                         v-bind="option.attrs"
                         :label="option.label">
                         <option
                             v-for="_option in option.options"
-                            v-show="!_option.hidden"
                             v-bind="_option.item.attrs"
                             :key="_option.key"
                             :value="_option.item.value"
@@ -325,7 +324,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 
                     <option
                         v-else
-                        v-show="!option.hidden"
                         v-bind="option.item.attrs"
                         :value="option.item.value"
                         :selected="option.item.value === vmodel">

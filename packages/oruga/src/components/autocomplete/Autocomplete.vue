@@ -556,7 +556,6 @@ defineExpose({
                     <template v-if="isGroupOption(option)">
                         <o-dropdown-item
                             v-bind="option.attrs"
-                            :hidden="option.hidden"
                             :label="option.label"
                             :tag="itemTag"
                             role="presentation"
@@ -571,7 +570,6 @@ defineExpose({
                             v-for="_option in option.options"
                             :key="_option.key"
                             v-bind="_option.item"
-                            :hidden="_option.hidden"
                             :tag="itemTag"
                             :class="itemClasses">
                             <slot name="option" :option="_option.item">
@@ -583,7 +581,6 @@ defineExpose({
                     <o-dropdown-item
                         v-else
                         v-bind="option.item"
-                        :hidden="option.hidden"
                         :tag="itemTag"
                         :class="itemClasses">
                         <slot name="option" :option="option.item">

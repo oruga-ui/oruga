@@ -737,7 +737,6 @@ defineExpose({ value: vmodel, items: childItems });
                                 <o-dropdown-item
                                     v-bind="option.attrs"
                                     :label="option.label"
-                                    :hidden="option.hidden"
                                     role="presentation"
                                     :clickable="false">
                                     <slot name="group" :index="idx">
@@ -748,18 +747,14 @@ defineExpose({ value: vmodel, items: childItems });
                                 <o-dropdown-item
                                     v-for="_option in option.options"
                                     v-bind="_option.item"
-                                    :key="_option.key"
-                                    :hidden="_option.hidden">
+                                    :key="_option.key">
                                     <slot name="option" :option="_option.item">
                                         <span> {{ _option.item.label }} </span>
                                     </slot>
                                 </o-dropdown-item>
                             </template>
 
-                            <o-dropdown-item
-                                v-else
-                                v-bind="option.item"
-                                :hidden="option.hidden">
+                            <o-dropdown-item v-else v-bind="option.item">
                                 <slot name="option" :option="option.item">
                                     <span> {{ option.item.label }} </span>
                                 </slot>

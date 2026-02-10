@@ -94,8 +94,7 @@ const listClasses = defineClasses(["listClass", "o-breadcrumb__list"]);
                 <O-breadcrumb-item
                     v-for="option in normalizedOptions"
                     :key="option.key"
-                    v-bind="option.item"
-                    :hidden="option.hidden" />
+                    v-bind="option.item" />
             </slot>
         </ol>
     </nav>

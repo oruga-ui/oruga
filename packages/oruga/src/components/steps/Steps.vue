@@ -383,8 +383,7 @@ const navigationClasses = defineClasses([
                 <o-step-item
                     v-for="option in normalizedOptions"
                     v-bind="option.item"
-                    :key="option.key"
-                    :hidden="option.hidden" />
+                    :key="option.key" />
             </slot>
         </section>
 
