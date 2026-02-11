@@ -23,6 +23,7 @@ export {
 export * from "./components";
 // export all components as vue plugins
 export * from "./components/plugins";
+import * as plugins from "./components/plugins";
 
 // export main oruga composables
 export { createOruga, useOruga } from "./utils/config";
@@ -34,5 +35,5 @@ export { useProgrammaticConfig, type OrugaProgrammatic } from "./utils/config";
 const plugin = createOruga();
 
 // export default oruga vue plugin
-export { plugin as Oruga };
+export { plugin as Oruga, plugins };
 export default plugin;
