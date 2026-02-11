@@ -131,7 +131,7 @@ export function getActiveOruga(): Oruga | undefined {
 
 /**
  * Get the oruga instence by injecting from the current context.
- * Throws an error when not inject context or no oruga instance is available.
+ * Throws an error when no inject context or no oruga instance is available.
  * @internal
  */
 function getOruga(): Oruga {
@@ -167,7 +167,13 @@ export function getConfig(): OrugaConfig {
     return getActiveOruga()?._config ?? {};
 }
 
-/** Override the current config the Oruga instance. */
+/**
+ * Override the config of the current active Oruga instance.
+ * The given config will be mergen in the existing one.
+ * Throws an error when no inject context or no oruga instance is available.
+ *
+ * @param config - The new config to be mergen into the existing one.
+ */
 function setConfig(config: OrugaConfig): void {
     const oruga = getOruga();
     const _config = merge(oruga._config, config, true);
