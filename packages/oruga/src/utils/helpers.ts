@@ -135,9 +135,9 @@ export function alternateArray<T>(arr: T[], startIndex: number): T[] {
  * @param mutate - Whether to mutate the original array.
  * @returns Sorted array.
  */
-export function sortBy<T extends object>(
+export function sortBy<T extends object, K extends string = DeepKeys<T>>(
     array: T[],
-    key: DeepKeys<T>,
+    key: K,
     fn?: (a: T, b: T, asc: boolean) => number,
     isAsc: boolean = false,
     mutate: boolean = false,

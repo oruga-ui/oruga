@@ -5,7 +5,7 @@ import Select from "./Select.vue";
 import { registerComponent } from "@/utils/plugins";
 
 /** export select specific types */
-// no types to export here
+export type { SelectOption } from "./props";
 
 /** export select plugin */
 export default {

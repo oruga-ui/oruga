@@ -1,12 +1,20 @@
 import type { Slots, StyleValue } from "vue";
-import type { Option, ProviderItem } from "@/composables";
+import type { ProviderItem } from "@/composables";
 import type { ClassBinding } from "@/types";
 
 import type { FieldKey, TableColumnProps } from "./props";
 
-export type TableRow<V extends object = object> = Option<V> & {
+export type TableRow<T = unknown> = {
+    /** displayed option label */
+    label: string;
+    /** the real option value */
+    value: T;
     /** table index position of the current row */
     index: number;
+    /** internal genereated uniqe option key */
+    key: string;
+    /** internal definiton if the element should be hidden */
+    hidden: boolean;
 };
 
 export type TableColumn<T = unknown> = TableColumnProps<T>;

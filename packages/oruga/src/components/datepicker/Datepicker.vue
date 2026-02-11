@@ -20,9 +20,9 @@ import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
 
-import type { OptionsPropItem } from "@/types";
 import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
+import type { SelectOption } from "../select";
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile.
@@ -273,7 +273,7 @@ const computedMonthNames = computed(() =>
         : getMonthNames(props.locale),
 );
 
-const listOfMonths = computed<OptionsPropItem<number>[]>(() => {
+const listOfMonths = computed<SelectOption<number>[]>(() => {
     let minMonth = 0;
     let maxMonth = 12;
     if (
@@ -305,7 +305,7 @@ const computedDayNames = computed(() =>
  * Returns an array of years for the year dropdown. If earliest/latest
  * dates are set by props, range of years will fall within those dates.
  */
-const listOfYears = computed<OptionsPropItem<number>[]>(() => {
+const listOfYears = computed<SelectOption<number>[]>(() => {
     let latestYear = _initialDate.getFullYear() + (props.yearsRange[1] ?? 0);
     if (props.maxDate && props.maxDate.getFullYear() < latestYear) {
         latestYear = Math.max(

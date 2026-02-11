@@ -9,7 +9,7 @@ import { useIndexer, type Indexer } from "./useIndexer";
  *
  * @public
  */
-export type Option<T extends object> = Omit<T, "hidden" | "key">;
+export type Option<T extends object> = T;
 
 /**
  * Simplified types of options that can be passed to the options prop.

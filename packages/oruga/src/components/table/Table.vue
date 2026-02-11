@@ -755,7 +755,7 @@ function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
     if (props.backendSorting) return rows;
 
     // sort rows by mutating the rows array
-    return sortBy<TableRow<T>>(
+    return sortBy<TableRow<T>, string>(
         rows,
         column.field ? "value." + column.field : "",
         column.customSort
