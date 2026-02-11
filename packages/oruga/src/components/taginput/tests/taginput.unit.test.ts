@@ -1,11 +1,11 @@
 import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 
-import OTaginput from "@/components/taginput/Taginput.vue";
-
 import type { OptionsProp } from "@/composables";
-import type { TaginputOptions } from "../props";
 import type { DropdownItemProps } from "@/components/dropdown/props";
+import type { TaginputOptions } from "../props";
+
+import OTaginput from "@/components/taginput/Taginput.vue";
 
 describe("OTaginput tests", () => {
     enableAutoUnmount(afterEach);

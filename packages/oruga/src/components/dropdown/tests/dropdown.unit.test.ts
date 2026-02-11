@@ -4,10 +4,10 @@ import { nextTick, type ComponentPublicInstance } from "vue";
 import { setTimeout } from "timers/promises";
 
 import type { OptionsProp } from "@/composables";
+import type { DropdownItemProps, DropdownOptions } from "../props";
 
 import ODropdown from "@/components/dropdown/Dropdown.vue";
 import ODropdownItem from "@/components/dropdown/DropdownItem.vue";
-import type { DropdownItemProps, DropdownOptions } from "../props";
 
 describe("ODropdown tests", () => {
     const options: DropdownOptions<number> = [

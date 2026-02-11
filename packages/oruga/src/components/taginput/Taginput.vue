@@ -15,9 +15,9 @@ import {
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
-import type { ComponentExposed } from "vue-component-type-helpers";
-import type { DropdownItemProps } from "../dropdown/props";
 import type { Numberish } from "@/types";
+import type { DropdownItemProps } from "../dropdown/props";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 /**
  * A simple tag input field that can have autocomplete functionality.

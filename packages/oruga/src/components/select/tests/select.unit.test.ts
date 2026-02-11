@@ -3,9 +3,9 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
 import type { OptionsProp } from "@/composables";
+import type { SelectOption, SelectOptions } from "../props";
 
 import OSelect from "@/components/select/Select.vue";
-import type { SelectOption, SelectOptions } from "../props";
 
 describe("OSelect tests", () => {
     enableAutoUnmount(afterEach);

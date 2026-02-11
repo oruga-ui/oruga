@@ -2,8 +2,8 @@ import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick, defineComponent, type PropType, h } from "vue";
 
-import type { StepItemProps, StepsProps, StepsOptions } from "../props";
 import type { OptionsProp } from "@/composables";
+import type { StepItemProps, StepsProps, StepsOptions } from "../props";
 
 import OSteps from "@/components/steps/Steps.vue";
 import OStepItem from "@/components/steps/StepItem.vue";
