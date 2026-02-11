@@ -14,12 +14,14 @@ export default class InstanceRegistry<T = ComponentInternalInstance> {
 
     /** Returns the first registered active instance. */
     fist(): T | undefined {
-        return this.entries.at(0);
+        return this.entries.length ? this.entries[0] : undefined;
     }
 
     /** Returns the last registered active instance. */
     last(): T | undefined {
-        return this.entries.at(-1);
+        return this.entries.length
+            ? this.entries[this.entries.length - 1]
+            : undefined;
     }
 
     /** Adds a new instance to the instance stack. */

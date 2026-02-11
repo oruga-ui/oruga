@@ -30,25 +30,25 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Props
 
-| Prop name          | Description                                                                         | Type                                                                   | Values                                                                          | Default                                                                                                                                                |
-| ------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| autocomplete       | Same as native autocomplete options to use in HTML5 validation                      | string                                                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>checkbox: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code> |
-| customValidity     | Custom HTML 5 validation error to set on the form control                           | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               | <code style='white-space: nowrap; padding: 0;'>""</code>                                                                                               |
-| disabled           | Same as native disabled                                                             | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
-| falseValue         | Overrides the returned value when it's not checked                                  | unknown                                                                | -                                                                               |                                                                                                                                                        |
-| id                 | Same as native id. Also set the for label for o-field wrapper - default is an uuid. | string                                                                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                          |
-| indeterminate      | Same as native indeterminate                                                        | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
-| label              | Input label, unnecessary when default slot is used                                  | string                                                                 | -                                                                               |                                                                                                                                                        |
-| v-model            | The input value state, use v-model to make it two-way binding                       | unknown                                                                | -                                                                               |                                                                                                                                                        |
-| multiple           | Defines the v-model as array of values                                              | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                 |
-| name               | Same as native name                                                                 | string                                                                 | -                                                                               |                                                                                                                                                        |
-| nativeValue        | Same as native value                                                                | unknown                                                                | -                                                                               |                                                                                                                                                        |
-| override           | Override existing theme classes completely                                          | boolean                                                                | -                                                                               |                                                                                                                                                        |
-| required           | Same as native required                                                             | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
-| size               | Size of the control                                                                 | string                                                                 | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>checkbox: {<br>&nbsp;&nbsp;size: undefined<br>}</code>     |
-| trueValue          | Overrides the returned value when it's checked                                      | unknown                                                                | -                                                                               |                                                                                                                                                        |
-| useHtml5Validation | Enable HTML 5 native validation                                                     | boolean                                                                | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;useHtml5Validation: true<br>}</code>      |
-| variant            | Color variant of the control                                                        | string                                                                 | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>checkbox: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
+| Prop name          | Description                                                                               | Type                                                                   | Values                                                                          | Default                                                                                                                                                |
+| ------------------ | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| autocomplete       | Same as native autocomplete options to use in HTML5 validation                            | string                                                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>checkbox: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code> |
+| customValidity     | Custom HTML 5 validation error to set on the form control                                 | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               | <code style='white-space: nowrap; padding: 0;'>""</code>                                                                                               |
+| disabled           | Same as native disabled                                                                   | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
+| falseValue         | Overrides the returned value when it's not checked                                        | unknown                                                                | -                                                                               |                                                                                                                                                        |
+| id                 | Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. | string                                                                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                          |
+| indeterminate      | Same as native indeterminate                                                              | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
+| label              | Input label, unnecessary when default slot is used                                        | string                                                                 | -                                                                               |                                                                                                                                                        |
+| v-model            | The input value state, use v-model to make it two-way binding                             | unknown                                                                | -                                                                               |                                                                                                                                                        |
+| multiple           | Defines the v-model as array of values                                                    | boolean                                                                | -                                                                               |                                                                                                                                                        |
+| name               | Same as native name                                                                       | string                                                                 | -                                                                               |                                                                                                                                                        |
+| nativeValue        | Same as native value                                                                      | unknown                                                                | -                                                                               |                                                                                                                                                        |
+| override           | Override existing theme classes completely                                                | boolean                                                                | -                                                                               |                                                                                                                                                        |
+| required           | Same as native required                                                                   | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
+| size               | Size of the control                                                                       | string                                                                 | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>checkbox: {<br>&nbsp;&nbsp;size: undefined<br>}</code>     |
+| trueValue          | Overrides the returned value when it's checked                                            | unknown                                                                | -                                                                               |                                                                                                                                                        |
+| useHtml5Validation | Enable HTML 5 native validation                                                           | boolean                                                                | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;useHtml5Validation: true<br>}</code>      |
+| variant            | Color variant of the control                                                              | string                                                                 | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>checkbox: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
 
 ### Events
 
@@ -62,9 +62,9 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Slots
 
-| Name    | Description                         | Bindings |
-| ------- | ----------------------------------- | -------- |
-| default | Content slot, default is label prop |          |
+| Name    | Description                               | Bindings |
+| ------- | ----------------------------------------- | -------- |
+| default | Override the label, default is label prop |          |
 
 </section>
 
@@ -84,23 +84,24 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                        | Default                                |
-| ------------------------------------ | -------------------------------------- |
-| $checkbox-active-background-color    | var(--#{$prefix}primary)               |
-| $checkbox-background-color           | var(--#{$prefix}primary)               |
-| $checkbox-box-shadow                 | $control-box-shadow                    |
-| $checkbox-border-color               | var(--#{$prefix}primary)               |
-| $checkbox-border-style               | solid                                  |
-| $checkbox-border-radius              | var(--#{$prefix}base-border-radius)    |
-| $checkbox-border-width               | 2px                                    |
-| $checkbox-checked-box-shadow-length  | 0 0 0.5em                              |
-| $checkbox-checked-box-shadow-opacity | 0.8                                    |
-| $checkbox-checkmark-color            | $primary-invert                        |
-| $checkbox-disabled-opacity           | var(--#{$prefix}base-disabled-opacity) |
-| $checkbox-label-padding              | 0 0 0 0.5em                            |
-| $checkbox-margin-sibiling            | 0.5em                                  |
-| $checkbox-size                       | 1rem                                   |
-| $checkbox-line-height                | 1.5                                    |
+| SASS Variable                     | Default                                     |
+| --------------------------------- | ------------------------------------------- |
+| $checkbox-spacer                  | h.useVar("control-spacer")                  |
+| $checkbox-height                  | 1.2em                                       |
+| $checkbox-width                   | 1.2em                                       |
+| $checkbox-color                   | h.useVar("font-color")                      |
+| $checkbox-font-size               | h.useVar("font-size")                       |
+| $checkbox-font-weight             | h.useVar("font-weight")                     |
+| $checkbox-line-height             | h.useVar("line-height")                     |
+| $checkbox-box-shadow              | h.useVar("control-box-shadow-inset")        |
+| $checkbox-border-color            | h.useVar("primary")                         |
+| $checkbox-border-width            | calc(2 \* h.useVar("control-border-width")) |
+| $checkbox-border-style            | solid                                       |
+| $checkbox-border-radius           | h.useVar("border-radius")                   |
+| $checkbox-background-color        | h.useVar("primary")                         |
+| $checkbox-active-background-color | h.useVar("primary")                         |
+| $checkbox-checkmark-color         | vars.$primary-invert                        |
+| $checkbox-disabled-opacity        | h.useVar("control-disabled-opacity")        |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
 

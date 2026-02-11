@@ -12,12 +12,11 @@ import {
     createChecker,
 } from "vue-component-meta";
 import type { EventMeta, PropertyMeta, SlotMeta } from "vue-component-meta";
-import { getFilenameWithoutExtension, lowercaseFirstLetter } from "../utils";
+import { lowercaseFirstLetter } from "../utils";
 
 export type MetaSource = {
-    name: string;
     exportName: string;
-    sourceFiles: string;
+    sourceFile: string;
 } & ComponentMeta;
 
 /**
@@ -77,7 +76,7 @@ export async function vueComponentMeta(
             .map((meta, index) => {
                 const exportName = exportNames[index];
 
-                // we remove nested object schemas here since they are not used (we don't generate controls for object properties)
+                // we remove nested object schemas here since they are not used
                 // and they can cause "out of memory" issues for large/complex schemas (e.g. HTMLElement)
                 (["props", "events", "slots", "exposed"] as const).forEach(
                     (key) => {
@@ -130,12 +129,8 @@ export async function vueComponentMeta(
 
                 // create MetaSource return object
                 return {
-                    sourceFiles: componentPath,
+                    sourceFile: componentPath,
                     exportName,
-                    name:
-                        exportName === "default"
-                            ? "O" + getFilenameWithoutExtension(componentPath)
-                            : exportName,
                     // add meta properties
                     ...meta,
                     // override meta props

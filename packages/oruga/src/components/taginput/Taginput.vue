@@ -1,30 +1,21 @@
 <script setup lang="ts" generic="T = string">
-import {
-    computed,
-    useAttrs,
-    useTemplateRef,
-    useId,
-    watchEffect,
-    ref,
-    type Component,
-} from "vue";
+import { computed, useAttrs, useTemplateRef, watchEffect, ref } from "vue";
 
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 import OTag from "../tag/Tag.vue";
 
 import { getDefault } from "@/utils/config";
+import { isEqual } from "@/utils/helpers";
 import {
     defineClasses,
     getActiveClasses,
-    normalizeOptions,
-    findOption,
     useInputHandler,
     useSequentialId,
-    toOptionsGroup,
-    type OptionsGroupItem,
+    type OptionsItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 /**
  * A simple tag input field that can have autocomplete functionality.
@@ -61,7 +52,6 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
-    checkScroll: () => getDefault("taginput.checkScroll", false),
     closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
@@ -132,8 +122,57 @@ const emits = defineEmits<{
     "scroll-end": [];
 }>();
 
+defineSlots<{
+    /**
+     * Define the taginput items here
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    default?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define an additional header
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    header?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define an additional footer
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    footer?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Define the content to show if the list is empty
+     * @param toggle {(): void} - toggle dropdown active state
+     */
+    empty?(props: { toggle: (event: Event) => void }): void;
+    /**
+     * Override the selected items
+     * @param items {(string, object)[]} - selected items
+     * @param options {object[]} - selected options
+     * @param removeItem {(index, event): void} - remove item function
+     */
+    selected?(props: {
+        items: T[] | undefined;
+        options: OptionsItem<T>[];
+        removeItem: (index: number, event: Event) => void;
+    }): void;
+    /**
+     * Define a selected option here
+     * @param option {object} - option object
+     * @param index {number} - option index
+     * @param value {unknown} - option value
+     */
+    option?(props: { option: OptionsItem<T>; index: number; value: T }): void;
+    /**
+     * Override the counter
+     * @param items {number} - items count
+     * @param total {number} - total count
+     */
+    counter?(): void;
+}>();
+
 // define as Component to prevent docs memmory overload
-const autocompleteRef = useTemplateRef<Component>("autocompleteComponent");
+const autocompleteRef = useTemplateRef<
+    ComponentExposed<typeof OAutocomplete<T>>
+>("autocompleteComponent");
 
 // use form input functionalities
 const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } =
@@ -150,24 +189,26 @@ const inputValue = defineModel<string>("input", { default: "" });
 const inputLength = computed(() => inputValue.value.trim().length);
 const itemsLength = computed(() => selectedItems.value?.length || 0);
 
+const childItems = computed(() => autocompleteRef.value?.items ?? []);
+
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
-
-/** normalized programamtic options */
-const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
-    return groupedOptions;
-});
 
 /** map the selected items into option items */
 const selectedOptions = computed(() => {
     if (!selectedItems.value) return [];
     return selectedItems.value.map((value) => {
-        const option = findOption<T>(groupedOptions, value);
+        const option = childItems.value.find((item) =>
+            isEqual(value, item.data.value),
+        );
         // return the found option or create a new option object
-        if (option) return option;
-        else return { label: String(value), value, key: useId() };
+        if (option)
+            return {
+                label: option.data.label,
+                value: option.data.value,
+                key: option.identifier,
+            };
+        else return { label: String(value), value, key: nextSequence() };
     });
 });
 
@@ -216,15 +257,18 @@ function addItem(item?: T | string): void {
 
 function removeItem(index: number, event?: Event): void {
     if (!selectedItems.value?.length) return;
-    const item = selectedItems.value.at(index);
+    const item = selectedItems.value[index];
     if (!item) return;
-    selectedItems.value = selectedItems.value.toSpliced(index, 1);
+    // create a new array without the removed item at index for reactivity
+    const items = selectedItems.value.slice();
+    items.splice(index, 1);
+    selectedItems.value = items;
     emits("remove", item);
     if (event) event.stopPropagation();
     if (props.openOnFocus && autocompleteRef.value) setFocus();
 }
 
-// --- Event Handler ---
+// #region --- Event Handler ---
 
 function onSelect(option: T | undefined): void {
     if (!option) return;
@@ -241,12 +285,16 @@ function onBackspace(): void {
         removeItem(itemsLength.value - 1);
 }
 
-function onEnter(): void {
+function onEnter(event: Event): void {
     // Add item if not select only and dropdown selection is closed
-    if (props.allowNew && !isDropdownActive.value) addItem();
+    if (props.allowNew && !isDropdownActive.value) {
+        event.stopPropagation();
+        addItem();
+    }
 }
+// #endregion --- Event Handler ---
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-taginput"],
@@ -306,21 +354,19 @@ const autocompleteBind = computed(() => ({
     ...props.autocompleteClasses,
 }));
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
     <div data-oruga="taginput" :class="rootClasses">
         <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
-            <!--
-                @slot Override selected items
-                @binding {(string, object)[]} items - selected items
-                @binding {object[]} options - selected options
-                @binding {(index, event): void} removeItem - remove item function
-            -->
             <slot
                 name="selected"
                 :items="selectedItems"
@@ -331,6 +377,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                     :key="option.key"
                     :label="option.label"
                     :variant="variant"
+                    :size="size"
                     :class="itemClasses"
                     :closeable="closeable && !disabled"
                     :close-icon="closeIcon"
@@ -357,7 +404,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 :open-on-focus="openOnFocus"
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
-                :check-scroll="checkScroll"
                 :teleport="teleport"
                 :has-counter="false"
                 :use-html5-validation="false"
@@ -374,37 +420,30 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 @scroll-end="$emit('scroll-end')"
                 @icon-click="$emit('icon-click', $event)"
                 @icon-right-click="$emit('icon-right-click', $event)">
-                <template v-if="$slots.header" #header>
-                    <!--
-                        @slot Define an additional header
-                    -->
-                    <slot name="header" />
+                <template v-if="$slots.header" #header="{ toggle }">
+                    <slot name="header" :toggle />
+                </template>
+
+                <template v-if="$slots.default" #default="{ toggle }">
+                    <slot :toggle />
                 </template>
 
                 <template
-                    v-if="$slots.default"
-                    #default="{ option, index, value }">
-                    <!--
-                        @slot Override the select option
-                        @binding {object} option - option object
-                        @binding {number} index - option index
-                        @binding {unknown} value - option value
-                    -->
-                    <slot :option="option" :index="index" :value="value" />
+                    v-if="$slots.option"
+                    #option="{ option, index, value }">
+                    <slot
+                        name="option"
+                        :option="option"
+                        :index="index"
+                        :value="value" />
                 </template>
 
-                <template v-if="$slots.empty" #empty>
-                    <!--
-                        @slot Define content for empty state 
-                    -->
-                    <slot name="empty" />
+                <template v-if="$slots.empty" #empty="{ toggle }">
+                    <slot name="empty" :toggle />
                 </template>
 
-                <template v-if="$slots.footer" #footer>
-                    <!--
-                        @slot Define an additional footer
-                    -->
-                    <slot name="footer" />
+                <template v-if="$slots.footer" #footer="{ toggle }">
+                    <slot name="footer" :toggle />
                 </template>
             </o-autocomplete>
         </div>
@@ -413,22 +452,12 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
             v-if="counter && (maxitems || maxlength)"
             :class="counterClasses">
             <template v-if="maxlength && inputLength > 0">
-                <!--
-                    @slot Override the counter
-                    @binding {number} items - items count
-                    @binding {number} total - total count
-                -->
                 <slot name="counter" :items="inputLength" :total="maxlength">
                     {{ inputLength }} / {{ maxlength }}
                 </slot>
             </template>
 
             <template v-else-if="maxitems">
-                <!--
-                    @slot Override the counter
-                    @binding {number} items - items count
-                    @binding {number} total - total count
-                -->
                 <slot name="counter" :items="itemsLength" :total="maxitems">
                     {{ itemsLength }} / {{ maxitems }}
                 </slot>

@@ -7,7 +7,7 @@ import {
     vi,
     type MockInstance,
 } from "vitest";
-import { effectScope, nextTick, ref, type Ref } from "vue";
+import { effectScope, nextTick, ref } from "vue";
 
 import { useEventListener, type EventListenerOptions } from "../";
 
@@ -24,6 +24,7 @@ describe("useEventListener test", () => {
         target = document.createElement("div");
         removeSpy = vi.spyOn(target, "removeEventListener");
         addSpy = vi.spyOn(target, "addEventListener");
+        listener = vi.fn();
     });
 
     afterEach(() => {
@@ -36,10 +37,6 @@ describe("useEventListener test", () => {
 
     describe("given event", () => {
         const event = "click";
-
-        beforeEach(() => {
-            listener = vi.fn();
-        });
 
         test("should add listener", async () => {
             stop = useEventListener(target, event, listener, {
@@ -74,10 +71,12 @@ describe("useEventListener test", () => {
     });
 
     describe("reactive target", () => {
-        let target: Ref<HTMLDivElement | null>;
+        const target = ref<HTMLDivElement | null>(
+            document.createElement("div"),
+        );
 
         beforeEach(() => {
-            target = ref(document.createElement("div"));
+            target.value = document.createElement("div");
         });
 
         test("should not listen when target is invalid", async () => {

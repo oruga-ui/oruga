@@ -8,8 +8,8 @@ import OptionsCode from "./options.vue?raw";
 import OptionsGrouped from "./options-grouped.vue";
 import OptionsGroupedCode from "./options-grouped.vue?raw";
 
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Selection from "./selection.vue";
 import SelectionCode from "./selection.vue?raw";
@@ -67,15 +67,33 @@ import ScrollCode from "./scroll.vue?raw";
     <ExampleViewer :component="Options" :code="OptionsCode" />
     <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 
-    <h3 id="slots">Slots</h3>
+    <h3 id="templates">Templates</h3>
     <p>
-        A header and a footer can be added to the options list by using the
-        <code>header</code> and <code>footer</code> slots. The header and footer
-        can be made clickable by adding the <code>selectable-header</code> and
+        Instead of using the <code>options</code> prop the options can also be
+        defined by using the <code>o-dropdown-item</code> component in the
+        <code>default</code> template slot. Additionally a header and a footer
+        can be added to the options list by using the <code>header</code> and
+        <code>footer</code> template slots. The header and footer can be made
+        clickable by adding the <code>selectable-header</code> and
         <code>selectable-footer</code> props. Clicking them will clear the
         input.
     </p>
-    <ExampleViewer :component="Slots" :code="SlotsCode" />
+    <div class="info custom-block">
+        <p class="custom-block-title">Known limitations</p>
+        <p>
+            Due to the way the Vue reactivity system works, it is not possible
+            to define a JavaScript object for the <code>value</code> property of
+            the <code>o-dropdown-item</code> component directly in the template
+            block. This will result in a recursive rendering error. In order to
+            use an object as a value, the object must be defined as variable in
+            the script block. (See
+            <a href="https://github.com/oruga-ui/oruga/issues/1531">
+                <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
+                Issue #1531</a
+            >)
+        </p>
+    </div>
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
     <h3 id="scroll">Infinite Scroll & Async Data</h3>
     <p>

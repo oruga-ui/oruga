@@ -37,7 +37,7 @@ const promptModalCloseAll = async (): Promise<void> => {
         trapFocus: true,
     });
 
-    setTimeout(() => oruga.modal.closeAll({ action: "closeAll" }), 3 * 1000);
+    setTimeout(() => oruga.modal.closeAll(), 3 * 1000);
 
     // wait until the modal got closed
     const result = await instance.promise;

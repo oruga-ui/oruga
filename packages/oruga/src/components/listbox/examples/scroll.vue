@@ -13,7 +13,7 @@ function loadData(start: number): OptionsPropItem<number>[] {
 }
 
 function getMoreData(): void {
-    options.value = [...options.value, ...loadData(options.value.length)];
+    options.value = loadData(options.value.length);
 }
 </script>
 
@@ -27,9 +27,3 @@ function getMoreData(): void {
         <p><b>Selected:</b> {{ selectedValue }}</p>
     </section>
 </template>
-
-<style scoped>
-.ex-text-grey {
-    color: grey;
-}
-</style>

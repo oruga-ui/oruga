@@ -75,16 +75,16 @@ yarn add @oruga-ui/theme-oruga
 ```html [Cdn]
 <link
     rel="stylesheet"
-    href="https://unpkg.com/@oruga-ui/theme-oruga/dist/oruga.css" />
+    href="https://unpkg.com/@oruga-ui/theme-oruga/dist/theme.css" />
 ```
 
 :::
 
-This theme uses the component's default class configuration and only provides a `oruga.css` or `oruga.scss` file.
+This theme uses the component's default class configuration and only provides a `style.css` or `style.scss` file.
 The stylesheet contains a full custom Oruga style for each component (the default style for this documentation).
 
 ```js
-import "@oruga-ui/theme-oruga/dist/oruga.css";
+import "@oruga-ui/theme-oruga/style.css";
 ```
 
 This can also be the best starting point for creating your own theme if you want to do a full customisation.
@@ -123,7 +123,7 @@ yarn add @oruga-ui/theme-bulma
 ```html [Cdn]
 <link
     rel="stylesheet"
-    href="https://unpkg.com/@oruga-ui/theme-bulma/dist/bulma.css" />
+    href="https://unpkg.com/@oruga-ui/theme-bulma/dist/theme.css" />
 ```
 
 :::
@@ -136,7 +136,7 @@ import Oruga from '@oruga-ui/oruga-next';
 
 import { bulmaConfig } from '@oruga-ui/theme-bulma';
 
-import '@oruga-ui/theme-bulma/dist/bulma.css';
+import '@oruga-ui/theme-bulma/style.css';
 
 createApp(...)
     .use(Oruga, bulmaConfig)
@@ -162,7 +162,7 @@ yarn add @oruga-ui/theme-bootstrap
 ```html [Cdn]
 <link
     rel="stylesheet"
-    href="https://unpkg.com/@oruga-ui/theme-bootstrap/dist/bootstrap.css" />
+    href="https://unpkg.com/@oruga-ui/theme-bootstrap/dist/theme.css" />
 ```
 
 :::
@@ -176,7 +176,7 @@ import Oruga from '@oruga-ui/oruga-next';
 
 import { bootstrapConfig } from '@oruga-ui/theme-bootstrap';
 
-import '@oruga-ui/theme-bootstrap/dist/bootstrap.css';
+import '@oruga-ui/theme-bootstrap/style.css';
 
 createApp(...)
     .use(Oruga, bootstrapConfig)

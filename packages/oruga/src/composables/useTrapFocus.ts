@@ -9,9 +9,11 @@ import {
  * Returns all focusable elements inside the given element
  */
 export function findFocusable(
-    element: MaybeRefOrGetter<HTMLElement>,
+    element: MaybeRefOrGetter<HTMLElement | null>,
 ): NodeListOf<HTMLElement> {
-    return toValue(element).querySelectorAll(`a[href]:not([tabindex="-1"]),
+    const el = toValue(element);
+    if (!el) return [] as unknown as NodeListOf<HTMLElement>;
+    return el.querySelectorAll(`a[href]:not([tabindex="-1"]),
                                  area[href],
                                  input:not([disabled]):not([type="hidden"]),
                                  select:not([disabled]),

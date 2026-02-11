@@ -25,14 +25,6 @@ labels:
 
 <!--Description of the bug-->
 
-### Steps to reproduce
-
-<!--
-1. First Step
-2. Second Step
-3. and so on...
--->
-
 ### Expected behavior
 
 <!--What you expected to happen-->
@@ -40,3 +32,11 @@ labels:
 ### Actual behavior
 
 <!--What actually happened-->
+
+### Steps to reproduce
+
+<!--
+1. First Step
+2. Second Step
+3. and so on...
+-->

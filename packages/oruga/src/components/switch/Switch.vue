@@ -69,6 +69,11 @@ const emits = defineEmits<{
     invalid: [event: Event];
 }>();
 
+defineSlots<{
+    /** Override the label, default is label prop */
+    default?(): void;
+}>();
+
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
@@ -185,9 +190,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             :id="labelId"
             :for="id"
             :class="labelClasses">
-            <!--
-                @slot Override the label, default is label prop 
-            -->
             <slot>{{ label }}</slot>
         </label>
     </div>

@@ -1,4 +1,4 @@
-> Thanks for contributing!
+> Thanks for being interested in contributing to this project!
 
 # Raising an Issue
 
@@ -7,6 +7,7 @@
 
 # Submitting a Pull Request
 
+- Before you start working, it's better to open an issue to discuss first.
 - The `master` branch is a snapshot of the latest release. **Submit your PR in the `develop` branch**
 - Include **screenshots** or animated GIFs in your pull request whenever needed (if visual changes)
 - It's OK to have multiple small commits as you work on the PR - we will let GitHub automatically squash it before merging
@@ -26,27 +27,15 @@ It has to work, **and** have great UX on both platforms.
 - Performance is UX, keep it lightweight.
 - Avoid HTML-only components, if it doesn't need JavaScript, then it doesn't need Vue (with a few exceptions).
 
-### 3. Transitions / Animations GPU-based only
-
-The only properties that uses hardware acceleration are:
-
-- transform
-- opacity
-- filter
-
-These are two great articles about it: https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108 and https://www.sitepoint.com/introduction-to-hardware-acceleration-css-animations/.
-
-And here is one about the FLIP technique (which `<transition-group>` uses internally): https://aerotwist.com/blog/flip-your-animations/.
-
 ## Oruga JavaScript styleguide
 
 Add comments if method is too complex and/or whenever you judge necessary.
 
 # Development Setup
 
-You need at least [Node.js](http://nodejs.org/) **version 22**.
+You need at least [Node.js](http://nodejs.org/) **version 24**.
 
-After cloning the repository, install the dependencies:
+Clone this repo to your local machine and install the dependencies:
 
 ```bash
 $ npm install
@@ -54,7 +43,7 @@ $ npm install
 
 ## Common NPM scripts
 
-To compile the code in watch mode and start a local dev server on [http://localhost:8080](http://localhost:8080) run:
+We use VitePress for rapid development and documenting. To compile the code in watch mode and start a local dev server on [http://localhost:8080](http://localhost:8080) run:
 
 ```bash
 # build lib and docs in watch mode and launch live server of docs to see the changes
@@ -84,3 +73,16 @@ To build all packages run:
 # build the docs, the examples and the oruga packages
 $ npm run build
 ```
+
+## Code Style
+
+Don't worry about the code style as long as you install the dev dependencies, you can run the following script to lint your code:
+
+```bash
+# lint/format all files
+$ npm run lint
+```
+
+## Thanks
+
+Thank you again for being interested in this project! You are awesome!

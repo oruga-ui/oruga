@@ -65,9 +65,11 @@ Oruga is compatible with both [Material Design Icons](https://materialdesignicon
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable       | Default |
-| ------------------- | ------- |
-| $icon-spin-duration | 2s      |
+| SASS Variable                 | Default |
+| ----------------------------- | ------- |
+| $icon-color                   | inherit |
+| $icon-font-size               | inherit |
+| $icon-spin-animation-duration | 2s      |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_icon.scss)
 

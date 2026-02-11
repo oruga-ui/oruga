@@ -34,6 +34,8 @@ defineOptions({
 const props = withDefaults(defineProps<MenuItemProps<T>>(), {
     override: undefined,
     active: false,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     options: undefined,
     label: undefined,
     expanded: false,
@@ -61,7 +63,16 @@ const emits = defineEmits<{
     click: [value: T, event: Event];
 }>();
 
-const itemValue = props.value ?? useId();
+defineSlots<{
+    /**
+     * Override the label, default is label prop
+     * @param expanded {boolean} - item expanded state
+     * @param active {boolean} - item active state
+     */
+    label?(props: { expanded: boolean; active: boolean }): void;
+    /** Define submenu items here  */
+    default?(): void;
+}>();
 
 const rootRef = useTemplateRef("rootElement");
 
@@ -86,8 +97,9 @@ const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<MenuItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: props.value,
+    disabled: props.disabled,
+    hidden: props.hidden,
     parent: menuItem.parent.value,
     hasChildren: hasChildren.value,
     expanded: isExpanded.value,
@@ -123,7 +135,7 @@ function selectItem(event: Event): void {
     isActive.value = !isActive.value;
     if (parent.value.accordion) isExpanded.value = isActive.value;
     parent.value.selectItem(isActive.value ? item.value : undefined);
-    emits("click", itemValue as T, event);
+    emits("click", props.value as T, event);
 }
 
 function triggerReset(childs?: ProviderItem<MenuItemComponent<T>>[]): void {
@@ -230,11 +242,6 @@ const submenuClasses = defineClasses([
                 :icon="icon"
                 :pack="iconPack"
                 :size="iconSize" />
-            <!-- 
-                @slot Override label
-                @binding {boolean} expanded - item expanded state
-                @binding {boolean} active - item active state
-            -->
             <slot name="label" :expanded="isExpanded" :active="isActive">
                 <span>{{ label }}</span>
             </slot>
@@ -248,9 +255,6 @@ const submenuClasses = defineClasses([
                 :class="submenuClasses"
                 tabindex="-1"
                 role="group">
-                <!--
-                    @slot Place menu items here 
-                -->
                 <slot>
                     <OMenuItem
                         v-for="option in normalizedOptions"

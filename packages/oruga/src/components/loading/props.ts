@@ -5,15 +5,22 @@ export type LoadingProps = {
     override?: boolean;
     /** Whether loading is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Loader will overlay the full page. */
+    /** Loader will overlay the full page */
     fullPage?: boolean;
-    /** Show a label beside the icon, unnecessary when default slot is used. */
+    /** Show a label beside the icon, unnecessary when default slot is used */
     label?: string;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Is Loading cancable by pressing escape or clicking outside. */
+    /**
+     * Is Loading cancelable by pressing escape or clicking outside
+     * @deprecated use `closeOnOutside` and `closeOnEscape`
+     */
     cancelable?: boolean;
-    /** Icon name to show, unnecessary when default slot is used. */
+    /** Close when clicked outside of the panel */
+    closeOnOutside?: boolean;
+    /** Close when pressing escape key */
+    closeOnEscape?: boolean;
+    /** Icon name to show, unnecessary when default slot is used */
     icon?: string;
     /**
      * Icon pack to use for the close icon
@@ -34,7 +41,7 @@ export type LoadingProps = {
      */
     clipScroll?: boolean;
     /**
-     * DOM container element for programmatic usage.
+     * DOM container element for programmatic usage
      * @ignore internal property
      */
     container?: HTMLElement;

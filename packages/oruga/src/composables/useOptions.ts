@@ -1,4 +1,9 @@
-import { toValue, type MaybeRefOrGetter } from "vue";
+import {
+    computed,
+    toValue,
+    type ComputedRef,
+    type MaybeRefOrGetter,
+} from "vue";
 import { isEqual } from "@/utils/helpers";
 
 /**
@@ -468,4 +473,24 @@ export function getOptionsLength(
         }
         return length + 1;
     }, 0);
+}
+
+export function useKeyedOptions<T>(
+    options?: MaybeRefOrGetter<T[]>,
+): ComputedRef<{ key: string; value: T }[]> {
+    let key = 0;
+    return computed(
+        () =>
+            toValue(options)?.map((o) => ({ key: String(key++), value: o })) ??
+            [],
+    );
+}
+
+/** determines if the options are grouped or not */
+export function areOptionsGrouped(
+    options: MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>,
+): boolean {
+    const _options = toValue(options);
+    if (!_options?.length) return false;
+    return isGroupOption(_options[0]);
 }

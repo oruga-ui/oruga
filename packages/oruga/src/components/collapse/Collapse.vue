@@ -39,6 +39,16 @@ const emits = defineEmits<{
     close: [];
 }>();
 
+defineSlots<{
+    /** Content to collapse */
+    default?(): void;
+    /**
+     * Define the collapse trigger element
+     * @param open {boolean} - collapse open state
+     */
+    trigger?(props: { open: boolean }): void;
+}>();
+
 const isOpen = defineModel<boolean>("open", { default: true });
 
 /** Toggle and emit events */
@@ -85,10 +95,6 @@ const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
             @click="toggle"
             @keydown.enter.prevent="toggle"
             @keydown.space.prevent="toggle">
-            <!--
-                @slot Define the collapse trigger
-                @binding {boolean} open collapse open state 
-             -->
             <slot name="trigger" :open="isOpen" />
         </div>
 
@@ -98,9 +104,6 @@ const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
                 :id="contentId"
                 :class="contentClasses"
                 :aria-labelledby="triggerId">
-                <!--
-                    @slot Default content
-                -->
                 <slot />
             </div>
         </Transition>

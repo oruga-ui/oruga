@@ -327,22 +327,35 @@ describe("ODropdown tests", () => {
 
         test("react accordingly when mouse over without trigger", async () => {
             const wrapper = mount(ODropdown, {
-                props: { triggers: ["click"] },
+                props: { openOnClick: true },
                 attachTo: document.body,
             });
 
             const trigger = wrapper.find(".o-dropdown__trigger");
             await trigger.trigger("mouseenter");
             expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeFalsy();
+
+            await trigger.trigger("click");
+            expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeTruthy();
         });
 
         test("react accordingly when mouse over with trigger", async () => {
             const wrapper = mount(ODropdown, {
-                props: { triggers: ["hover"] },
+                props: { openOnHover: true },
                 attachTo: document.body,
             });
             const trigger = wrapper.find(".o-dropdown__trigger");
             await trigger.trigger("mouseenter");
+            expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeTruthy();
+        });
+
+        test("react accordingly when having cotextmenu trigger", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { openOnContextmenu: true },
+                attachTo: document.body,
+            });
+            const trigger = wrapper.find(".o-dropdown__trigger");
+            await trigger.trigger("contextmenu");
             expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeTruthy();
         });
 
@@ -589,6 +602,25 @@ describe("ODropdown tests", () => {
             expect(dropdown.emitted("close")).toBeUndefined();
         });
 
+        test("react accordingly when component has keepFirst", async () => {
+            const wrapper = mount(ODropdown, {
+                props: {
+                    active: true,
+                    options,
+                    keepFirst: true,
+                    selectable: true,
+                },
+            });
+            await nextTick(); // await dropdown item rendered
+
+            const dropdown = wrapper.find(".o-dropdown__menu");
+            expect(dropdown.exists()).toBeTruthy();
+
+            const focusedItem = wrapper.find(".o-dropdown__item--focused");
+            expect(focusedItem.exists()).toBeTruthy();
+            expect(focusedItem.text()).toContain(options[0].label);
+        });
+
         test("react accordingly when is disabled", async () => {
             const wrapper = mount(ODropdown, {
                 props: { options: simpleOptions, disabled: true, active: true },
@@ -665,8 +697,8 @@ describe("ODropdown tests", () => {
             });
             await nextTick(); // await dropdown item rendered
 
-            const items = wrapper.findAll(".o-dropdown__item");
-            expect(items.length).toBe(3);
+            const items = wrapper.findAll('[data-oruga="dropdown-item"]');
+            expect(items.length).toBe(options.length);
 
             items.forEach((item, index) =>
                 expect(item.text()).toEqual(options[index].label),

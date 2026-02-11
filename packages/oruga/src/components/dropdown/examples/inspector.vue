@@ -73,9 +73,9 @@ const inspectData: InspectData<
     hoverableClass: {
         class: "hoverableClass",
         description: "Class of the root element when trigger is hoverable.",
-        properties: ["triggers"],
+        properties: ["openOnHover"],
         action: (data): void => {
-            data.triggers = ["hover"];
+            data.openOnHover = true;
         },
     },
     positionClass: {

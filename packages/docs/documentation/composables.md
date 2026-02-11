@@ -96,6 +96,7 @@ Some components come with their own programmatic interface. These interfaces are
 
 List of components with an programmatic interface:
 
+- [`Dialog`](/components/Dialog.html#programmatically)
 - [`Loading`](/components/Loading.html#programmatically)
 - [`Modal`](/components/Modal.html#programmatically)
 - [`Notification`](/components/Notification.html#programmatically)
@@ -201,17 +202,18 @@ const oruga = useOruga();
 const slot = "My default slot content";
 
 oruga.programmatic.open(
+    // component to render
     MyComponent,
     {
-        // target container the programmatic component get rendered into
-        target: document.body,
         // HTML #id of the app div rendered into the target container
         appId: "programmatic-app",
          // component specific props
         props: { ... },
         // on close event handler
         onClose: (...args: unknown[]) => { ... },
-    }
+    },
+    // target container the programmatic component get rendered into
+    target: document.body,
 );
 ```
 

@@ -1,8 +1,9 @@
-import type { Component, MaybeRefOrGetter } from "vue";
+import type { Component } from "vue";
 import {
     ProgrammaticFactory,
     type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
+    type ProgrammaticTarget,
 } from "../programmatic";
 import { getOption } from "@/utils/config";
 
@@ -19,7 +20,6 @@ declare module "../../index" {
     }
 }
 
-/** useNotificationProgrammatic composable options */
 export type NotificationProgrammaticOptions<C extends Component> = Readonly<
     Omit<NotificationNoticeProps<C>, "container">
 > &
@@ -35,7 +35,7 @@ export class NotificationProgrammaticFactory extends ProgrammaticFactory {
      */
     public open<C extends Component>(
         options: string | NotificationProgrammaticOptions<C>,
-        target?: MaybeRefOrGetter<string | HTMLElement | null>,
+        target?: ProgrammaticTarget,
     ): ProgrammaticExpose<typeof NotificationNotice<C>> {
         const _options: NotificationProgrammaticOptions<C> =
             typeof options === "string" ? { message: options } : options;

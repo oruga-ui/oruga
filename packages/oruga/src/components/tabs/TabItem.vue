@@ -7,6 +7,7 @@ import {
     useTemplateRef,
     type Component,
     type Ref,
+    type VNode,
 } from "vue";
 
 import PlainButton from "../utils/PlainButton";
@@ -31,7 +32,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     override: undefined,
-    value: undefined,
+    // @ts-expect-error string is not assignable of generic type T
+    value: () => useId(),
     label: undefined,
     variant: undefined,
     disabled: false,
@@ -52,7 +54,18 @@ const emits = defineEmits<{
     deactivate: [];
 }>();
 
-const itemValue = props.value ?? useId();
+defineSlots<{
+    /**
+     * Define the tab item content here
+     * @param active {boolean} - if item is shown
+     */
+    default?(props: { active: boolean }): VNode[];
+    /**
+     * Override tab header label
+     * @param active {boolean} - if item is shown
+     */
+    header?(): VNode[];
+}>();
 
 const rootRef = useTemplateRef("rootElement");
 
@@ -60,8 +73,13 @@ const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: props.value,
+    label: props.label,
+    disabled: props.disabled,
+    visible: props.visible,
+    tag: props.tag,
+    icon: props.icon,
+    iconPack: props.iconPack,
     $slots: slots,
     tabClasses: tabClasses.value,
     iconClasses: tabIconClasses.value,
@@ -77,10 +95,9 @@ const { parent, item } = useProviderChild<TabsComponent, TabItemComponent<T>>(
     { data: providedData },
 );
 
-const transitionName = ref();
-
 const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
+const transitionName = ref<string>();
 const isTransitioning = ref(false);
 
 const nextAnimation = computed(() => {
@@ -111,14 +128,14 @@ function deactivate(newIndex: number): void {
     emits("deactivate");
 }
 
-/** Transition after-enter hook */
-function afterEnter(): void {
+/** Transition start hook. */
+function onTransitionStart(): void {
     isTransitioning.value = true;
 }
 
-/** Transition before-leave hook */
-function beforeLeave(): void {
-    isTransitioning.value = true;
+/** Transition end hook. */
+function onTransitionEnd(): void {
+    isTransitioning.value = false;
 }
 
 // #region --- Computed Component Classes ---
@@ -170,8 +187,10 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
         :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
-        @after-enter="afterEnter"
-        @before-leave="beforeLeave">
+        @before-enter="onTransitionStart"
+        @after-enter="onTransitionEnd"
+        @before-leave="onTransitionStart"
+        @after-leave="onTransitionEnd">
         <div
             v-show="isActive && visible"
             v-bind="$attrs"
@@ -184,10 +203,6 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <!-- 
-                @slot Override tab panel content
-                @binding {boolean} active - if item is shown 
-            -->
             <slot :active="isActive && visible">
                 <!-- injected component -->
                 <component
@@ -206,10 +221,6 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 Slots are defined in tabs component.
             -->
             <template v-if="false">
-                <!--
-                    @slot Override tab header label
-                    @binding {boolean} active - if item is shown 
-                -->
                 <slot name="header" :active="isActive && visible" />
             </template>
         </div>

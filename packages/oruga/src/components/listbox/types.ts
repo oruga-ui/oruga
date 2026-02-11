@@ -6,17 +6,21 @@ export type ListboxComponent<T> = {
     disabled: boolean;
     multiple: boolean;
     selectable: boolean;
+    // checkable: boolean;
     selected: T | T[] | undefined;
-    focsuedIdentifier: string | undefined;
+    focsuedItem: ListItem<T> | undefined;
     selectItem: (value: ListItem<T>, selection: boolean) => void;
-    setFocus: (value: ListItem<T>) => void;
+    focusItem: (value: ListItem<T>) => void;
 };
 
-export type ListItemComponent<T> = ListItemProps<T> & {
-    clickItem: (event: Event) => void;
+export type ListItemComponent<T> = Pick<
+    ListItemProps<T>,
+    "value" | "hidden"
+> & {
+    isViable: boolean;
     setHidden: (hidden: boolean) => void;
-    isViable: () => boolean;
     matches: (value: string) => boolean;
+    selectItem: (event: Event) => void;
 };
 
 export type ListItem<T> = ProviderItem<ListItemComponent<T>>;

@@ -64,4 +64,9 @@ shadowRoot.appendChild(link);
 .odocs-spaced p > *:not(:last-child) {
     margin-right: 0.5rem;
 }
+
+// bulma web component color fix
+[data-theme="light"] {
+    --bulma-label-color: var(--bulma-text-strong);
+}
 </style>

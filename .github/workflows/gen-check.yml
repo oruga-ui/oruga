@@ -1,29 +1,34 @@
-name: "Check if generated files are up to date"
+name: "Check generated files"
 on:
   pull_request:
     branches: [develop]
+
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
+
       - name: Install dependencies 📦
         run: npm ci
+
       - name: Generate files
         run: npm run gen
+
       - name: Check for changes 🧐
         run: |
           changes=$(git status --porcelain)
           # Check for changes in regenerated files
           if ! test -z "$changes"
           then
-            echo "Generated files not up to date. Perhaps you forgot to run `npm run gen`?"
+            echo "Generated files are not up to date. Perhaps you forgot to run `npm run gen`?"
             echo "$changes"
             exit 1
           fi

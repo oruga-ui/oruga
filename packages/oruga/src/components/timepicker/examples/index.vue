@@ -2,17 +2,17 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Inline from "./inline.vue";
+import InlineCode from "./inline.vue?raw";
+
 import MinMaxDate from "./min-max-date.vue";
 import MinMaxDateCode from "./min-max-date.vue?raw";
 
-import Slot from "./slot.vue";
-import SlotCode from "./slot.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Granularity from "./granularity.vue";
 import GranularityCode from "./granularity.vue?raw";
-
-import Inline from "./inline.vue";
-import InlineCode from "./inline.vue?raw";
 </script>
 
 <template>
@@ -33,12 +33,12 @@ import InlineCode from "./inline.vue?raw";
     </p>
     <ExampleViewer :component="MinMaxDate" :code="MinMaxDateCode" />
 
-    <h3 id="slot">Footer Slot</h3>
+    <h3 id="templates">Templates</h3>
     <p>
-        The component has an additional <code>footer</code> slot for
+        The component has an additional <code>footer</code> template slot for
         customization.
     </p>
-    <ExampleViewer :component="Slot" :code="SlotCode" />
+    <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
     <h3 id="granularity">Granularity</h3>
     <p>

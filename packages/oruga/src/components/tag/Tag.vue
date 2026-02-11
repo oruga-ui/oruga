@@ -42,6 +42,12 @@ const emits = defineEmits<{
     close: [event: Event];
 }>();
 
+defineSlots<{
+    /** Override the tag label */
+    default?(): void;
+    /** Define a custom close icon */
+    close?(): void;
+}>();
 /*
  * Emit close event when delete button is clicked
  * or delete key is pressed.
@@ -50,7 +56,7 @@ function onClose(event: Event): void {
     emits("close", event);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-tag"],
@@ -75,6 +81,8 @@ const iconClasses = defineClasses(["iconClass", "o-tag__icon"]);
 const labelClasses = defineClasses(["labelClass", "o-tag__label"]);
 
 const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -87,9 +95,6 @@ const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
             :size="size" />
 
         <span v-if="$slots.default || label" :class="labelClasses">
-            <!--
-                @slot Override the tag label
-            -->
             <slot>{{ label }}</slot>
         </span>
 
@@ -101,9 +106,6 @@ const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
             :label="ariaCloseLabel"
             :classes="closeClasses"
             @click="onClose">
-            <!--
-                @slot Override the close icon
-            -->
             <slot v-if="$slots['close']" name="close" />
         </CloseButton>
     </span>

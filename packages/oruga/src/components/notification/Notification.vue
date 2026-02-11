@@ -48,11 +48,25 @@ const emits = defineEmits<{
     "update:active": [value: boolean];
     /**
      * on component close event
-     * @param value {string} - close event method
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string]];
+    close: [...args: [] | [Event]];
 }>();
 
+defineSlots<{
+    /** Define a custom close icon */
+    close?(): void;
+    /**
+     * Notification inner content, outside of the message container
+     * @param close {(...args: [] | [Event]): void} - function to close the notification
+     */
+    inner?(props: { close: (...args: [] | [Event]) => void }): void;
+    /**
+     * Notification default content, default is message prop
+     * @param close {(...args: [] | [Event]): void} - function to close the notification
+     */
+    default?(props: { close: (...args: [] | [Event]) => void }): void;
+}>();
 const isActive = defineModel<boolean>("active", { default: true });
 
 /** Icon name (MDI) based on type. */
@@ -74,12 +88,12 @@ const computedIcon = computed(() => {
 });
 
 /** set active to false and emit close event */
-function close(...args: [] | [string]): void {
+function close(...args: [] | [Event]): void {
     isActive.value = false;
     emits("close", ...args);
 }
 
-// --- Animation Feature ---
+// #region --- Animation Feature ---
 
 const isAnimated = ref(props.active);
 
@@ -93,7 +107,9 @@ function beforeLeave(): void {
     isAnimated.value = false;
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Animation Feature ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-notification"],
@@ -130,6 +146,8 @@ const contentClasses = defineClasses([
 ]);
 
 const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -150,17 +168,10 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 :size="closeIconSize"
                 :label="ariaCloseLabel"
                 :classes="closeClasses"
-                @click="close('x')">
-                <!--
-                    @slot Override the close icon
-                -->
+                @click="close($event)">
                 <slot v-if="$slots['close']" name="close" />
             </CloseButton>
 
-            <!--
-                @slot Notification inner content, outside of the message container
-                @binding {(...args): void} close - function to close the notification
-            -->
             <slot name="inner" :close="close" />
 
             <div v-if="$slots.default || message" :class="wrapperClasses">
@@ -172,10 +183,6 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                     :size="iconSize"
                     aria-hidden="true" />
                 <div :class="contentClasses">
-                    <!--
-                        @slot Notification default content, default is message prop
-                        @binding {(...args): void} close - function to close the notification
-                    -->
                     <slot :close="close">
                         <span v-if="message">{{ message }} </span>
                     </slot>

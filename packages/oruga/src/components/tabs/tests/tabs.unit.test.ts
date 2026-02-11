@@ -104,35 +104,29 @@ describe("OTabs tests", () => {
 
     describe("OTab with OTabItem integration tests", () => {
         const componentWrapper = {
-            components: {
-                OTabs,
-                OTabItem,
-            },
+            components: { OTabs, OTabItem },
             template: `<OTabs modelValue="1">
-    <OTabItem label="Tab 1" value="1">
-      <p>Tab 1 Content</p>
-    </OTabItem>
-    <OTabItem label="Tab 2" value="2">
-      <p>Tab 2 Content</p>
-    </OTabItem>
-    <OTabItem label="Tab 3" value="3">
-      <p>Tab 3 Content</p>
-    </OTabItem>
-  </OTabs>
-`,
+                    <OTabItem label="Tab 1" value="1">
+                    <p>Tab 1 Content</p>
+                    </OTabItem>
+                    <OTabItem label="Tab 2" value="2">
+                    <p>Tab 2 Content</p>
+                    </OTabItem>
+                    <OTabItem label="Tab 3" value="3">
+                    <p>Tab 3 Content</p>
+                    </OTabItem>
+                </OTabs>
+                `,
         };
 
         function genTestcomponent(stepProps, itemProps) {
             return {
-                components: {
-                    OTabs,
-                    OTabItem,
-                },
+                components: { OTabs, OTabItem },
                 data: () => ({ stepProps, itemProps }),
                 template: `<OTabs v-bind="stepProps">
-            <OTabItem v-bind="itemProps" />
-          </OTabs>
-        `,
+                        <OTabItem v-bind="itemProps" />
+                    </OTabs>
+                    `,
             };
         }
 
@@ -405,7 +399,9 @@ describe("OTabs tests", () => {
                     },
                 ];
 
-                const wrapper = mount(OTabs, { props: { options } });
+                const wrapper = mount(OTabs, {
+                    props: { options },
+                });
                 await nextTick();
 
                 const navElements = wrapper.findAll(".o-tabs__tab");
@@ -433,13 +429,8 @@ describe("OTabs tests", () => {
 
     describe("OTabItem", () => {
         const componentWrapper = {
-            components: {
-                OTabs,
-                OTabItem,
-            },
-            data: () => ({
-                show1: true,
-            }),
+            components: { OTabs, OTabItem },
+            data: () => ({ show1: true }),
             template: `<OTabs>
             <OTabItem v-if="show1" value="tab1"/>
             <OTabItem ref="testItem" value="tab2"/>
@@ -489,20 +480,17 @@ describe("OTabs tests", () => {
 
         test("unregisters when destroyed", async () => {
             const wrapper = mount({
+                components: { OTabs, OTabItem },
                 template: `
-        <OTabs>
-            <OTabItem ref="item1"/>
-            <OTabItem v-if="item2" ref="item2"/>
-        </OTabs>`,
+                    <OTabs>
+                        <OTabItem ref="item1"/>
+                        <OTabItem v-if="item2" ref="item2"/>
+                    </OTabs>`,
                 props: {
                     item2: {
                         type: Boolean,
                         default: true,
                     },
-                },
-                components: {
-                    OTabs,
-                    OTabItem,
                 },
             });
             await nextTick();

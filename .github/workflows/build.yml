@@ -1,23 +1,25 @@
-name: Build Oruga
+name: Build Packages
 on:
   push:
     branches: [develop]
   pull_request:
     branches: [develop]
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 24
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
+
       - name: Install dependencies 📦
         run: npm ci
-      - name: Build lib 🛠️
-        run: npm run build:lib
+
+      - name: Build packages 🛠️
+        run: npm run build

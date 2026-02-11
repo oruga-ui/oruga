@@ -4,8 +4,9 @@ import {
     getCurrentScope,
     onScopeDispose,
     type MaybeRefOrGetter,
-    type Ref,
     type Component,
+    type WatchSource,
+    toValue,
 } from "vue";
 import { isObject } from "@/utils/helpers";
 import { unrefElement } from "./unrefElement";
@@ -15,7 +16,7 @@ export type EventListenerOptions = AddEventListenerOptions & {
     /** Register event listener immediate or on mounted hook. */
     immediate?: boolean;
     /** Trigger when the listener get registered and removed */
-    trigger?: Ref<boolean>;
+    trigger?: WatchSource<boolean>;
 };
 
 /**
@@ -71,7 +72,7 @@ export function useEventListener(
         onMounted(() => {
             if (
                 typeof options?.trigger === "undefined" ||
-                options.trigger.value
+                toValue(options.trigger)
             )
                 register();
         });

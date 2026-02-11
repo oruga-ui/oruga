@@ -17,12 +17,11 @@ export type TableColumnComponent<
 > = TableColumnProps<T, K> & {
     $slots: Slots;
     style: StyleValue;
+    matches: (row: T, value: string) => boolean;
+    getValue: (row: T) => string;
     thClasses: ClassBinding[];
+    thSubClasses: ClassBinding[];
     tdClasses: ClassBinding[];
-};
-
-export type TableComponent = {
-    isColumnSorted(column: ProviderItem): boolean;
 };
 
 export type TableColumnItem<T, K extends string = FieldKey<T>> = Omit<

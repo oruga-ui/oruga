@@ -97,6 +97,13 @@ const emits = defineEmits<{
     "icon-right-click": [event: Event];
 }>();
 
+defineSlots<{
+    /** Override the placeholder */
+    placeholder?(): void;
+    /** Define the select options here, default is options prop */
+    default?(): void;
+}>();
+
 const selectRef = useTemplateRef("selectElement");
 
 // use form input functionality
@@ -299,18 +306,12 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             @invalid="onInvalid">
             <template v-if="placeholder || $slots.placeholder">
                 <option v-if="placeholderVisible" value="" disabled hidden>
-                    <!--
-                        @slot Override the placeholder
-                    -->
                     <slot name="placeholder">
                         {{ placeholder }}
                     </slot>
                 </option>
             </template>
 
-            <!--
-                @slot Override the options, default is options prop
-            -->
             <slot>
                 <template v-for="option in normalizedOptions" :key="option.key">
                     <optgroup

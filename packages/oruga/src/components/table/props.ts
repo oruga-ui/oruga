@@ -112,7 +112,7 @@ export type TableProps<T> = {
     detailIcon?: string;
     /** Enable custom style on details (if detailed) */
     customDetailRow?: boolean;
-    /* Transition name to use when toggling row details (if detailed) */
+    /** Transition name to use when toggling row details (if detailed) */
     detailTransition?: string;
     /** Adds pagination to the table */
     paginated?: boolean;
@@ -229,9 +229,17 @@ export type TableClasses = Partial<{
     thDetailedClass: ComponentClass;
     /** Class of the table `th` element when sortable */
     thSortableClass: ComponentClass;
-    /** Class of the table `th` element that is currently sorted */
+    /**
+     * Class of the table `th` element that is currently sorted
+     *  @deprecated use `thSortedClass` instead
+     */
     thCurrentSortClass: ComponentClass;
-    /** Class of the table `th` element that is unsortable */
+    /** Class of the table `th` element when sorted */
+    thSortedClass: ComponentClass;
+    /**
+     * Class of the table `th` element that is unsortable
+     * @deprecated will be removed
+     */
     thUnselectableClass: ComponentClass;
     /** Class of the table `th` subheading element */
     thSubheadingClass: ComponentClass;
@@ -239,6 +247,8 @@ export type TableClasses = Partial<{
     thLabelClass: ComponentClass;
     /** Class of the table header sort icon element */
     thSortIconClass: ComponentClass;
+    /** Class of the table `tr` element */
+    trClass: ComponentClass;
     /** Class of the table `tr` element when selected */
     trSelectedClass: ComponentClass;
     /** Class of the table `tr` element when checkable and checked */
@@ -255,8 +265,13 @@ export type TableClasses = Partial<{
     tdStickyClass: ComponentClass;
     /** Class of the table `td` element when row is checkable */
     tdCheckboxClass: ComponentClass;
-    /** Class of the table `td` element that contains the chevron to trigger details */
+    /**
+     * Class of the table `td` element that contains the chevron to trigger details
+     * @deprecated use `tdDetailClass` instead
+     */
     tdDetailedChevronClass: ComponentClass;
+    /** Class of the table `td` element that contains the detail trigger */
+    tdDetailClass: ComponentClass;
     /** Class of the Table pagination wrapper element */
     paginationWrapperClass: ComponentClass;
     /** Class of the table footer element */
@@ -301,7 +316,10 @@ export type TableColumnProps<T, K extends string = FieldKey<T>> = {
     hidden?: boolean;
     /** Whether the column is sticky or not */
     sticky?: boolean;
-    /** Make header selectable */
+    /**
+     * Make header selectable
+     * @deprecated will be removed
+     */
     headerSelectable?: boolean;
     /** Define a custom sort function */
     customSort?: (a: T, b: T, isAsc: boolean) => number;
@@ -312,8 +330,16 @@ export type TableColumnProps<T, K extends string = FieldKey<T>> = {
     customSearch?: (row: T, filter: string) => boolean;
     /** Define a custom filter funtion when filterable */
     customFilter?: (row: T, filter: string) => boolean;
-    /** Adds native attributes to th */
+    /**
+     * Adds native attributes to th.
+     *
+     * *Due to a Vue reactivity system limitiation do not define an object value directly in the component template block - use a variable in the script block.*
+     */
     thAttrs?: object;
-    /** Adds native attributes to td */
+    /**
+     * Adds native attributes to td.
+     *
+     * *Due to a Vue reactivity system limitiation do not define an object value directly in the component template block - use a variable in the script block.*
+     */
     tdAttrs?: object;
 };

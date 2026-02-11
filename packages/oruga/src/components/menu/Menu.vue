@@ -55,6 +55,35 @@ defineEmits<{
     "update:model-value": [value: ModelValue];
 }>();
 
+defineSlots<{
+    /**
+     * Override icon and label
+     * @param focused {unknown | undefined} - the focused item value
+     * @param focusedIndex {number | undefined} - index of the focused item
+     * @param selected {unknown | undefined} - the selected item value
+     * @param selectedIndex {number | undefined} - index of the selected item
+     */
+    label?(props: {
+        focused?: MenuItemComponent<T>;
+        focusedIndex?: number;
+        selected?: MenuItemComponent<T>;
+        selectedIndex?: number;
+    }): void;
+    /**
+     * Define menu items here
+     * @param focused {unknown | undefined} - the focused item value
+     * @param focusedIndex {number | undefined} - index of the focused item
+     * @param selected {unknown | undefined} - the selected item value
+     * @param selectedIndex {number | undefined} - index of the selected item
+     */
+    default?(props: {
+        focused?: MenuItemComponent<T>;
+        focusedIndex?: number;
+        selected?: MenuItemComponent<T>;
+        selectedIndex?: number;
+    });
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
@@ -89,7 +118,7 @@ function resetMenu(
 ): void {
     childItems.value.forEach((item) => {
         if (!excludedItems.map((i) => i?.identifier).includes(item.identifier))
-            item.data?.reset();
+            item.data.reset();
     });
 }
 
@@ -103,7 +132,7 @@ const selectedItem = ref<MenuChildItem<T>>();
 function selectItem(
     item: ProviderItem<MenuItemComponent<T>> | undefined,
 ): void {
-    const value = item?.data?.value;
+    const value = item?.data.value;
     if (vmodel.value == value) return;
     vmodel.value = value;
     selectedItem.value = item;
@@ -122,8 +151,8 @@ function onCollapse(): void {
     if (!focusedItem.value) return;
 
     // collapse the item if already expanded
-    if (focusedItem.value.data?.expanded)
-        focusedItem.value.data?.setExpand(false);
+    if (focusedItem.value.data.expanded)
+        focusedItem.value.data.setExpand(false);
     // else move focus to the previus item
     else moveFocus(-1);
 }
@@ -132,11 +161,8 @@ function onExpend(): void {
     if (!focusedItem.value) return;
 
     // expand the item if not already expanded
-    if (
-        focusedItem.value.data?.hasChildren &&
-        !focusedItem.value.data?.expanded
-    )
-        focusedItem.value.data?.setExpand(true);
+    if (focusedItem.value.data.hasChildren && !focusedItem.value.data.expanded)
+        focusedItem.value.data.setExpand(true);
     // else move focus to the next item
     else moveFocus(1);
 }
@@ -164,7 +190,7 @@ function onDownPressed(): void {
 function onEnter(event: Event): void {
     if (!focusedItem.value) return;
     setFocus(focusedItem.value);
-    focusedItem.value.data?.selectItem(event);
+    focusedItem.value.data.selectItem(event);
 }
 
 /** Go to the first viable item */
@@ -211,9 +237,9 @@ function getFirstViableItem(
 
 function isItemViable(item: MenuChildItem<T>): boolean {
     return (
-        !item.data?.disabled &&
-        !item.data?.hidden &&
-        (item.data?.parent?.expanded ?? true)
+        !item.data.disabled &&
+        !item.data.hidden &&
+        (item.data.parent?.expanded ?? true)
     );
 }
 
@@ -241,13 +267,6 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
         :class="rootClasses"
         @focusout="onFocusLeave">
         <div v-if="label || $slots.label" :id="labelId" :class="labelClasses">
-            <!-- 
-                @slot Override icon and label
-                @binding {unknown} focused - the focused item value
-                @binding {number} focusedIndex - index of the focused item
-                @binding {unknown} selected - the selected item value
-                @binding {number} selectedIndex - index of the selected item
-            -->
             <slot
                 name="label"
                 :focused="focusedItem?.data"
@@ -277,13 +296,6 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
             @keydown.down.prevent="onDownPressed"
             @keydown.home.prevent="onHomePressed"
             @keydown.end.prevent="onEndPressed">
-            <!--
-                @slot Place menu items here 
-                @binding {unknown} focused - the focused item value
-                @binding {number} focusedIndex - index of the focused item
-                @binding {unknown} selected - the selected item value
-                @binding {number} selectedIndex - index of the selected item
-            -->
             <slot
                 :focused="focusedItem?.data"
                 :focused-index="focusedItem?.index"

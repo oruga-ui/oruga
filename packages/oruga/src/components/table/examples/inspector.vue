@@ -207,12 +207,19 @@ const inspectData: InspectData<
     },
     thCurrentSortClass: {
         class: "thCurrentSortClass",
+        deprecated: "use `thSortedClass` instead",
         description:
             "Class of the table `th` element that is currently sorted.",
         info: "Click on 'First Name' header to sort elements and see it in action!",
     },
+    thSortedClass: {
+        class: "thSortedClass",
+        description: "Class of the table `th` element when sorted.",
+        info: "Click on 'First Name' header to sort elements and see it in action!",
+    },
     thUnselectableClass: {
         class: "thUnselectableClass",
+        deprecated: "will be removed",
         description: "Class of the Table `th` element that is unsortable.",
         properties: ["headerSelectable", "sortable"],
     },
@@ -229,6 +236,10 @@ const inspectData: InspectData<
         class: "thSortIconClass",
         description: "Class of the table header sort icon element.",
         info: "Click on 'First Name' header to sort elements and see it in action!",
+    },
+    trClass: {
+        class: "trClass",
+        description: "Class of the table `tr` element.",
     },
     trSelectedClass: {
         class: "trSelectedClass",
@@ -291,11 +302,21 @@ const inspectData: InspectData<
     },
     tdDetailedChevronClass: {
         class: "tdDetailedChevronClass",
+        deprecated: "use `tdDetailClass` instead",
         description:
             "Class of the table `td` element that contains the chevron to trigger details.",
         properties: ["detailed"],
         action: (data): void => {
             data.mobileCards = true;
+            data.detailed = true;
+        },
+    },
+    tdDetailClass: {
+        class: "tdDetailClass",
+        description:
+            "Class of the table `td` element of the detail column of triggers.",
+        properties: ["detailed"],
+        action: (data): void => {
             data.detailed = true;
         },
     },

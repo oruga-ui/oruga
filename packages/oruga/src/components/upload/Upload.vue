@@ -67,6 +67,14 @@ const emits = defineEmits<{
     invalid: [event: Event];
 }>();
 
+defineSlots<{
+    /**
+     * Default content
+     * @param onclick {(event: Event): void} - click handler, only needed if a button is used
+     */
+    default?(props: { onclick: (event: Event) => void }): void;
+}>();
+
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionality
@@ -237,10 +245,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 <template>
     <label data-oruga="upload" :class="rootClasses">
         <template v-if="!dragDrop">
-            <!--
-                @slot Default content
-                @binding {(event: Event): void} onclick - click handler, only needed if a button is used
-            -->
             <slot :onclick="onClick" />
         </template>
 
@@ -255,10 +259,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
             @drop.prevent="onFileChange">
-            <!--
-                @slot Default content
-                @binding {(event: Event): void} onclick - click handler, only needed if a button is used
-            -->
             <slot :onclick="onClick" />
         </div>
 

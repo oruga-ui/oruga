@@ -146,13 +146,11 @@ Thank you to everyone involved for improving this project, day by day 💚
   <img src="https://contrib.rocks/image?repo=oruga-ui/oruga"/>
 </a>
 
-[Complete list](CONTRIBUTORS.md).
+[Complete list](.github/CONTRIBUTORS.md).
 
 ## Credits
 
 Oruga logo designed by [Matteo Guadagnini](mailto:matteoguadagnini67@gmail.com)
-
-Oruga svg images for Checkbox and Radio components and Holidays assets created by [Fabrizio Masini](https://github.com/Nemesis19)
 
 ## License <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@oruga-ui/oruga.svg?logo=github" /></a>
 

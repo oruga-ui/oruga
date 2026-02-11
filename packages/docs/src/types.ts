@@ -1,12 +1,3 @@
-export type ThemeConfig = {
-    label: string;
-    key: string;
-    path: string;
-    git: string;
-    src: string;
-    cdn: string;
-};
-
 export type InspectData<
     T extends object = object,
     P extends object = object,
@@ -33,6 +24,8 @@ export type InspectClassDescription<
     suffixes?: string[];
     /** disables the inspect button */
     nospec?: boolean;
+    /** show deprecation warning */
+    deprecated?: true | string;
     /** related component name */
     relatedComponent?: string;
     /** related class of another component */

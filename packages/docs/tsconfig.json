@@ -2,9 +2,10 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
     "allowJs": true,
+    // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
+    "noUncheckedIndexedAccess": false,
+
     "baseUrl": ".",
     "types": ["node", "vite/client", "vitepress/client"],
     "paths": {

@@ -12,9 +12,9 @@ import ONotification from "./Notification.vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses, getActiveClasses } from "@/composables";
-import type { CloseEventArgs } from "../programmatic";
 
 import type { NotificationNoticeProps } from "./props";
+import type { CloseEventArgs } from "../programmatic";
 
 /**
  * Notification Notice is an extension of the Notification component and is used for the programmatic usage.
@@ -44,9 +44,9 @@ const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
 const emits = defineEmits<{
     /**
      * on component close event
-     * @param value {string} - close event method
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string] | CloseEventArgs<C>];
+    close: [...args: [] | [Event] | CloseEventArgs<C>];
 }>();
 
 const notificationRef = useTemplateRef("notificationComponent");
@@ -158,16 +158,16 @@ function showNotice(): void {
 
 // --- Auto Close Feature  ---
 
-let timer: ReturnType<typeof setTimeout> | undefined;
+let timeout: ReturnType<typeof setTimeout> | undefined;
 
 /** Set timer to auto close message */
 function setAutoClose(): void {
     if (!props.infinite) {
         // clear old timer
-        if (timer) clearTimeout(timer);
+        if (timeout) clearTimeout(timeout);
         // set new timer
-        timer = setTimeout(() => {
-            if (isActive.value) close("timeout");
+        timeout = setTimeout(() => {
+            if (isActive.value) close();
         }, props.duration);
     }
 }
@@ -178,19 +178,19 @@ function onMouseEnter(): void {
     if (!props.pauseOnHover || props.infinite) return;
     isPaused = true;
     // stop auto close timeout
-    clearInterval(timer);
+    clearTimeout(timeout);
 }
 
-function onMouseLeave(): void {
+function onMouseLeave(event: Event): void {
     if (isPaused)
         // close when mouse leave and is paused before
-        close("mouseleave");
+        close(event);
 }
 
 /** set active to false and emit close event */
-function close(...args: [] | [string] | CloseEventArgs<C>): void {
+function close(...args: [] | [Event] | CloseEventArgs<C>): void {
     isActive.value = false;
-    if (timer) clearTimeout(timer);
+    if (timeout) clearTimeout(timeout);
     emits("close", ...args);
 }
 

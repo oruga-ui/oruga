@@ -1,6 +1,13 @@
 import themes from "./themes.json";
-import type { ThemeConfig } from "./types";
-export type { ThemeConfig };
+
+export type ThemeConfig = {
+    label: string;
+    key: string;
+    path: string;
+    git: string;
+    src: string;
+    cdn: string;
+};
 
 const Themes = themes as ThemeConfig[];
 export { Themes };

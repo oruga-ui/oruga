@@ -15,13 +15,20 @@ export type ModalProps<C extends Component = Component> = {
     width?: Numberish;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Show an overlay  */
+    /** Show an overlay background */
     overlay?: boolean;
     /**
-     * Is Modal cancleable by clicking 'X', pressing escape or clicking outside
+     * Is Modal cancelable by clicking 'X', pressing escape or clicking outside
      * @values escape, x, outside, button, true, false
+     * @deprecated use `closeable`, `closeOnOutside` and `closeOnEscape`
      */
     cancelable?: string[] | boolean;
+    /** Adds close button to the header */
+    closeable?: boolean;
+    /** Close when clicked outside of the panel */
+    closeOnOutside?: boolean;
+    /** Close when pressing escape key */
+    closeOnEscape?: boolean;
     /**
      * Set `true` to remove the body scrollbar.
      * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,

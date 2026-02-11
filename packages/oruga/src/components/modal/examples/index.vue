@@ -70,7 +70,7 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
         <a href="/documentation/composables.html">
             <code>useOruga()</code>
         </a>
-        composable. The composable can be used from outside the Vue instance.
+        composable. The composable can be used from outside of the Vue instance.
         For example, it can be used in Pinia or Vue Router with this syntax:
     </p>
 

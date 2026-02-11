@@ -71,6 +71,13 @@ const inspectData: InspectData<
         class: "listClass",
         description: "Class of the list container element.",
     },
+    animatedClass: {
+        class: "animatedClass",
+        description: "Class of the item element when animated.",
+        action: (data): void => {
+            data.animated = true;
+        },
+    },
     contentClass: {
         class: "contentClass",
         description: "Class of the panel container element.",

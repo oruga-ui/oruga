@@ -77,25 +77,28 @@ The component implements the W3C ARIA APG [Button Pattern](https://www.w3.org/WA
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                     | Default                                         |
-| --------------------------------- | ----------------------------------------------- |
-| $button-background-color          | transparent                                     |
-| $button-color                     | var(--#{$prefix}black)                          |
-| $button-border-radius             | var(--#{$prefix}base-border-radius)             |
-| $button-border-color              | var(--#{$prefix}grey-lighter)                   |
-| $button-border                    | 1px solid $button-border-color                  |
-| $button-box-shadow                | none                                            |
-| $button-font-weight               | 400                                             |
-| $button-line-height               | var(--#{$prefix}base-line-height)               |
-| $button-margin-icon-to-text       | 0.1875em                                        |
-| $button-margin                    | 0                                               |
-| $button-spacer                    | 0.5rem                                          |
-| $button-height                    | $control-height                                 |
-| $button-padding                   | $control-padding-vertical 0.75em                |
-| $button-rounded-border-radius     | var( --#{$prefix}#{base-border-radius-rounded}) |
-| $button-disabled-opacity          | var(--#{$prefix}#{base-disabled-opacity})       |
-| $button-outlined-background-color | transparent                                     |
-| $button-outlined-border-color     | var(--#{$prefix}grey-light)                     |
+| SASS Variable                      | Default                                                                     |
+| ---------------------------------- | --------------------------------------------------------------------------- |
+| $button-spacer                     | h.useVar("control-spacer")                                                  |
+| $button-height                     | h.useVar("control-height")                                                  |
+| $button-padding                    | h.useVar("control-padding-vertical") h.useVar("control-padding-horizontal") |
+| $button-loading-animation-duration | h.useVar("animation-speed-slow")                                            |
+| $button-disabled-opacity           | h.useVar("control-disabled-opacity")                                        |
+| $button-color                      | h.useVar("font-color")                                                      |
+| $button-font-size                  | h.useVar("font-size")                                                       |
+| $button-font-weight                | h.useVar("font-weight")                                                     |
+| $button-line-height                | h.useVar("line-height")                                                     |
+| $button-box-shadow                 | none                                                                        |
+| $button-border-width               | h.useVar("control-border-width")                                            |
+| $button-border-style               | solid                                                                       |
+| $button-border-color               | h.useVar("control-border-color")                                            |
+| $button-border-radius              | h.useVar("border-radius")                                                   |
+| $button-background-color           | h.useVar("control-brackground-color")                                       |
+| $button-hover-color                | $button-color                                                               |
+| $button-hover-background-color     | $button-background-color                                                    |
+| $button-hover-border-color         | h.useVar("grey-light")                                                      |
+| $button-outlined-background-color  | transparent                                                                 |
+| $button-outlined-border-color      | h.useVar("grey-light")                                                      |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
 

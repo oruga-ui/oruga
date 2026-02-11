@@ -1,10 +1,16 @@
 <script setup lang="ts">
+defineOptions({
+    inheritAttrs: false,
+});
+
 defineProps({
     email: { type: String, default: "" },
     password: { type: String, default: "" },
 });
 
-defineEmits<{ close: [] }>();
+defineEmits<{
+    close: [event: Event];
+}>();
 </script>
 
 <template>
@@ -15,7 +21,7 @@ defineEmits<{ close: [] }>();
                 clickable
                 native-type="button"
                 icon="times"
-                @click="$emit('close')" />
+                @click="$emit('close', $event)" />
         </header>
 
         <section>
@@ -42,7 +48,10 @@ defineEmits<{ close: [] }>();
         </section>
 
         <footer>
-            <o-button label="Close" type="button" @click="$emit('close')" />
+            <o-button
+                label="Close"
+                type="button"
+                @click="$emit('close', $event)" />
             <o-button label="Login" variant="primary" />
         </footer>
     </form>

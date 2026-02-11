@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
+import { userEvent } from "vitest/browser";
 import { render } from "vitest-browser-vue";
-import { userEvent } from "@vitest/browser/context";
 
 import { defineComponent, h, ref } from "vue";
 
@@ -61,5 +61,6 @@ describe("<Autocomplete>", () => {
         await expect.element(dropdown).toBeVisible();
         await userEvent.keyboard("{ArrowDown}{ArrowDown}{Enter}");
         await expect.element(input).toHaveValue("Node.js");
+        screen.unmount();
     });
 });

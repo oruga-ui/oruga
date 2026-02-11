@@ -108,6 +108,12 @@ const components = component_folders
                                 .sort((a, b) => a.localeCompare(b))
                                 .join(" | ");
 
+                        // set deprecated text if available
+                        prop.deprecated = prop.tags
+                            ?.filter((tag) => tag.name === "deprecated")
+                            .map((tag) => tag.text)
+                            .join("");
+
                         return prop;
                     });
             })
@@ -140,7 +146,14 @@ declare module "../index" {
             Partial<{${props
                 .map(
                     (prop) => `
-                /** ${prop.description} */
+                /**
+                 * ${prop.description}${
+                     prop.deprecated
+                         ? `
+                 * @deprecated ${prop.deprecated}`
+                         : ""
+                 }
+                 */
                 ${prop.name}: ${prop.type};`,
                 )
                 .join("")}

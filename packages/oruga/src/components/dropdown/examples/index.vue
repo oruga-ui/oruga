@@ -8,6 +8,9 @@ import TriggersCode from "./triggers.vue?raw";
 import Options from "./options.vue";
 import OptionsCode from "./options.vue?raw";
 
+import OptionsGrouped from "./options-grouped.vue";
+import OptionsGroupedCode from "./options-grouped.vue?raw";
+
 import Inline from "./inline.vue";
 import InlineCode from "./inline.vue?raw";
 
@@ -31,8 +34,12 @@ import PositionCode from "./position.vue?raw";
 
     <h3 id="triggers">Triggers</h3>
     <p>
-        The component accepts several different trigger variants, such as open
-        on hover or open only on right click instead of left click.
+        The component accepts several different trigger variants, such as
+        <code>openOnHover</code> or <code>openOnContextmenu</code> to only open
+        on right click instead of left click. By default, only
+        <code>openOnClick</code> is set. The action that close the component can
+        also be customized using the <code>closeable</code>,
+        <code>closeOnOutside</code> and <code>closeOnEscape</code> props.
     </p>
     <p>
         Adding the <code>teleport</code> prop will move the dropdown menu to the
@@ -74,6 +81,7 @@ import PositionCode from "./position.vue?raw";
         </p>
     </div>
     <ExampleViewer :component="Options" :code="OptionsCode" />
+    <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 
     <h3 id="selectable">Selectable</h3>
     <p>
