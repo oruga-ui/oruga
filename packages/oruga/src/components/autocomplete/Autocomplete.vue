@@ -223,7 +223,7 @@ const indexer = useIndexer();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions(props.options, indexer),
+    normalizeOptions(props.options, indexer, true),
 );
 
 // #region --- Child Items ---

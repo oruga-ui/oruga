@@ -188,7 +188,7 @@ const indexer = useIndexer();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions(props.options, indexer),
+    normalizeOptions(props.options, indexer, true),
 );
 
 // the selected item value, use v-model to make it two-way binding

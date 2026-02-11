@@ -2,12 +2,12 @@ import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick, defineComponent, type PropType, h } from "vue";
 
+import type { StepItemProps, StepsProps, StepsOptions } from "../props";
 import type { OptionsProp } from "@/composables";
 
 import OSteps from "@/components/steps/Steps.vue";
 import OStepItem from "@/components/steps/StepItem.vue";
 import OButton from "@/components/button/Button.vue";
-import type { StepItemProps, StepsProps } from "../props";
 
 describe("OSteps tests", () => {
     enableAutoUnmount(afterEach);
@@ -110,24 +110,24 @@ describe("OSteps tests", () => {
         });
 
         describe("handle navigation correctly", () => {
-            const options: OptionsProp<string> = [
-                { label: "Flint", value: "flint", attrs: { clickable: true } },
+            const options: StepsOptions<string> = [
+                { label: "Flint", value: "flint", clickable: true },
                 {
                     label: "Silver",
                     value: "silver",
-                    attrs: { clickable: true },
+                    clickable: true,
                 },
-                { label: "Vane", value: "vane", attrs: { clickable: true } },
-                { label: "Billy", value: "billy", attrs: { clickable: true } },
-                { label: "Jack", value: "jack", attrs: { clickable: true } },
+                { label: "Vane", value: "vane", clickable: true },
+                { label: "Billy", value: "billy", clickable: true },
+                { label: "Jack", value: "jack", clickable: true },
             ];
 
             test("render clickable state correctly", async () => {
-                const options: OptionsProp<string> = [
+                const options: StepsOptions<string> = [
                     {
                         label: "Flint",
                         value: "flint",
-                        attrs: { clickable: true },
+                        clickable: true,
                     },
                     {
                         label: "Vane",
@@ -136,7 +136,7 @@ describe("OSteps tests", () => {
                     {
                         label: "Billy",
                         value: "billy",
-                        attrs: { clickable: false },
+                        clickable: false,
                     },
                     {
                         label: "Jack",
@@ -154,7 +154,7 @@ describe("OSteps tests", () => {
 
                 stepElements.forEach((el, idx) => {
                     expect(el.classes("o-steps__step--clickable")).toBe(
-                        options[idx].attrs?.clickable ?? idx !== 3,
+                        options[idx].clickable ?? idx !== 3,
                     );
                 });
             });
@@ -368,28 +368,31 @@ describe("OSteps tests", () => {
             });
 
             test("handle options as options array correctly", async () => {
-                const options: OptionsProp<string | number> = [
+                const options: StepsOptions<string | number> = [
                     {
                         label: "Flint",
                         value: "flint",
-                        attrs: { content: "flint" },
+                        content: "flint",
                     },
                     {
                         label: "Silver",
                         value: "silver",
-                        attrs: { clickable: true, content: "silver" },
+                        clickable: true,
+                        content: "silver",
                     },
-                    { label: "Vane", value: "vane", attrs: { content: "abc" } },
-                    { label: "Zero", value: 0, attrs: { content: "x" } },
+                    { label: "Vane", value: "vane", content: "abc" },
+                    { label: "Zero", value: 0, content: "x" },
                     {
                         label: "One",
                         value: 1,
-                        attrs: { content: "y", disabled: true },
+                        content: "y",
+                        disabled: true,
                     },
                     {
                         label: "Two",
                         value: 2,
-                        attrs: { clickable: true, content: "test" },
+                        clickable: true,
+                        content: "test",
                     },
                 ];
 
@@ -407,15 +410,15 @@ describe("OSteps tests", () => {
                 navElements.forEach((el, idx) => {
                     expect(el.text()).toBe(options[idx].label);
                     expect(el.classes("o-steps__step--clickable")).toBe(
-                        options[idx].attrs?.clickable || false,
+                        options[idx].clickable || false,
                     );
                     expect(el.classes("o-steps__step--disabled")).toBe(
-                        options[idx].attrs?.disabled || false,
+                        options[idx].disabled || false,
                     );
                 });
 
                 optionElements.forEach((el, idx) => {
-                    expect(el.text()).toBe(options[idx].attrs?.content);
+                    expect(el.text()).toBe(options[idx].content);
                 });
             });
         });

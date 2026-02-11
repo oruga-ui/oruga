@@ -3,11 +3,13 @@ import type { OptionsOrGroupsProp } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
-export type SelectOption<T extends string | number = string | number> = {
+export type SelectOption<T = string | number> = {
     label: string;
     value: T;
     attrs?: Record<string, any>;
 };
+
+export type SelectOptions<T> = OptionsOrGroupsProp<SelectOption<T>>;
 
 export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
@@ -17,7 +19,7 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Allow multiple selection - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Select options, unnecessary when default slot is used */
-    options?: OptionsOrGroupsProp<SelectOption>;
+    options?: SelectOptions<T>;
     /**
      * Vertical size of input
      * @values small, medium, large

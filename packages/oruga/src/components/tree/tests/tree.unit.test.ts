@@ -5,142 +5,108 @@ import { nextTick, type ComponentPublicInstance, type PropType } from "vue";
 import OTree from "@/components/tree/Tree.vue";
 import OTreeItem from "@/components/tree/TreeItem.vue";
 
-import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
-import type { TreeItemProps } from "../props";
+import type { OptionsProp } from "@/composables";
+import type { TreeItemProps, TreeOptions } from "../props";
 
 describe("OTree tests", () => {
     enableAutoUnmount(afterEach);
 
-    const options: OptionsGroupProp = [
+    const options: TreeOptions<string> = [
         {
             label: "Documents",
-            attrs: {
-                icon: "folder",
-            },
+            icon: "folder",
             options: [
                 {
                     label: "Work",
                     value: "work",
-                    attrs: {
-                        icon: "cog",
-                        options: [
-                            {
-                                label: "Expenses.doc",
-                                value: "expenses",
-                                attrs: {
-                                    icon: "file",
-                                },
-                            },
-                            {
-                                label: "Resume.doc",
-                                value: "resume",
-                                attrs: {
-                                    icon: "file",
-                                },
-                            },
-                        ],
-                    },
+                    icon: "cog",
+                    options: [
+                        {
+                            label: "Expenses.doc",
+                            value: "expenses",
+                            icon: "file",
+                        },
+                        {
+                            label: "Resume.doc",
+                            value: "resume",
+                            icon: "file",
+                        },
+                    ],
                 },
                 {
                     label: "Home",
                     value: "home",
-                    attrs: {
-                        icon: "home",
-                        options: [
-                            {
-                                label: "Invoices.txt",
-                                value: "invoices",
-                                attrs: {
-                                    icon: "file",
-                                },
-                            },
-                        ],
-                    },
+                    icon: "home",
+                    options: [
+                        {
+                            label: "Invoices.txt",
+                            value: "invoices",
+                            icon: "file",
+                        },
+                    ],
                 },
             ],
         },
         {
             label: "Events",
             value: "events",
-            attrs: {
-                icon: "calendar",
-            },
+            icon: "calendar",
             options: [
                 {
                     label: "Meeting",
                     value: "meeting",
-                    attrs: {
-                        icon: "calendar-plus",
-                    },
+                    icon: "calendar-plus",
                 },
                 {
                     label: "Product Launch",
                     value: "product-launch",
-                    attrs: {
-                        icon: "calendar-plus",
-                    },
+                    icon: "calendar-plus",
                 },
                 {
                     label: "Report Review",
                     value: "report-review",
-                    attrs: {
-                        icon: "calendar-plus",
-                    },
+                    icon: "calendar-plus",
                 },
             ],
         },
         {
             label: "Movies",
             value: "movies",
-            attrs: {
-                icon: "star",
-            },
+            icon: "star",
             options: [
                 {
                     label: "Al Pacino",
                     value: "al-pacion",
-                    attrs: {
-                        icon: "star",
-                        options: [
-                            {
-                                label: "Scarface",
-                                value: "scarface",
-                                attrs: {
-                                    icon: "video",
-                                },
-                            },
-                            {
-                                label: "Serpico",
-                                value: "serpico",
-                                attrs: {
-                                    icon: "video",
-                                },
-                            },
-                        ],
-                    },
+                    icon: "star",
+                    options: [
+                        {
+                            label: "Scarface",
+                            value: "scarface",
+                            icon: "video",
+                        },
+                        {
+                            label: "Serpico",
+                            value: "serpico",
+                            icon: "video",
+                        },
+                    ],
                 },
                 {
                     label: "Robert De Niro",
                     value: "robert-de-niro",
-                    attrs: {
-                        icon: "star",
-                        options: [
-                            {
-                                label: "Goodfellas",
-                                value: "goodfellas",
-                                attrs: {
-                                    icon: "video",
-                                },
-                            },
-                            {
-                                label: "Untouchables",
-                                value: "untouchables",
-                                attrs: {
-                                    icon: "video",
-                                },
-                            },
-                        ],
-                    },
+                    icon: "star",
+                    options: [
+                        {
+                            label: "Goodfellas",
+                            value: "goodfellas",
+                            icon: "video",
+                        },
+                        {
+                            label: "Untouchables",
+                            value: "untouchables",
+                            icon: "video",
+                        },
+                    ],
                 },
             ],
         },
@@ -153,7 +119,7 @@ describe("OTree tests", () => {
         },
         props: {
             items: {
-                type: Array as PropType<TreeItemProps<string>[]>,
+                type: Array as PropType<TreeOptions<string>>,
                 required: true,
             },
         },
@@ -224,7 +190,7 @@ describe("OTree tests", () => {
     });
 
     describe("handle options props correctly", () => {
-        const options: OptionsProp = [
+        const options: TreeOptions<string> = [
             { label: "New York", value: "NY" },
             { label: "Rome", value: "RM" },
             { label: "London", value: "LDN" },
@@ -301,13 +267,13 @@ describe("OTree tests", () => {
         });
 
         test("handle options as options array correctly", async () => {
-            const options: OptionsProp<string | number> = [
+            const options: TreeOptions<string | number> = [
                 { label: "Flint", value: "flint" },
-                { label: "Silver", value: "silver", attrs: { disabled: true } },
+                { label: "Silver", value: "silver", disabled: true },
                 { label: "Vane", value: "vane" },
                 { label: "Zero", value: 0 },
                 { label: "One", value: 1 },
-                { label: "Two", value: 2, attrs: { disabled: true } },
+                { label: "Two", value: 2, disabled: true },
             ];
 
             const wrapper = mount(OTree, { props: { options } });
@@ -318,7 +284,7 @@ describe("OTree tests", () => {
             items.forEach((el, idx) => {
                 expect(el.text()).toBe(options[idx].label);
                 expect(el.attributes("aria-disabled")).toBe(
-                    options[idx].attrs?.disabled ? "true" : "false",
+                    options[idx].disabled ? "true" : "false",
                 );
                 expect(el.attributes("aria-hidden")).toBe("false");
                 expect(el.attributes("aria-selected")).toBe("false");
@@ -326,7 +292,7 @@ describe("OTree tests", () => {
         });
 
         test("handle grouped options correctly", async () => {
-            const options: OptionsGroupProp<string | number | object> = [
+            const options: TreeOptions<string | number | object> = [
                 {
                     label: "Black Sails",
                     options: [
@@ -347,7 +313,7 @@ describe("OTree tests", () => {
                 },
                 {
                     label: "Game of Thrones",
-                    attrs: { disabled: true },
+                    disabled: true,
                     options: [
                         "Tyrion Lannister",
                         "Jamie Lannister",
@@ -374,17 +340,17 @@ describe("OTree tests", () => {
                     expect(label.exists()).toBeTruthy();
                     expect(label.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
-                        option.attrs?.disabled ? "true" : "false",
+                        option.disabled ? "true" : "false",
                     );
                     expect(el.attributes("aria-hidden")).toBe("false");
                     expect(el.attributes("aria-selected")).toBe("false");
                 } else {
-                    const g_options = option.options;
+                    const g_options = option.options ?? [];
 
                     let optionLabel;
                     if (idx < 5) {
                         optionLabel =
-                            (g_options[o_idx] as OptionsItem).label ||
+                            (g_options[o_idx] as TreeItemProps<string>).label ||
                             g_options[o_idx];
                     } else if (idx < 10) {
                         optionLabel = Object.entries(g_options)[o_idx][1];
@@ -559,7 +525,7 @@ describe("OTree tests", () => {
     });
 
     describe("test selectable", () => {
-        const options: OptionsProp = [
+        const options: TreeOptions<string> = [
             { label: "New York", value: "NY" },
             { label: "Rome", value: "RM" },
             { label: "London", value: "LDN" },
@@ -754,7 +720,7 @@ describe("OTree tests", () => {
         });
 
         test("react accordingly when item has disabled prop", async () => {
-            const items = [
+            const items: TreeOptions<string> = [
                 { label: "label1", disabled: true },
                 { label: "label2", disabled: false },
             ];

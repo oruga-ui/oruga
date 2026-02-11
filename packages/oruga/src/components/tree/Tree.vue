@@ -25,7 +25,6 @@ import { isClient } from "@/utils/ssr";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
-    isGroupOption,
     normalizeOptions,
     scrollElementInView,
     unrefElement,
@@ -682,21 +681,10 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
             @keydown="onListKeyDown">
             <transition-group :name="animation">
                 <slot>
-                    <template
+                    <o-tree-item
                         v-for="option in normalizedOptions"
-                        :key="option.key">
-                        <o-tree-item
-                            v-if="isGroupOption(option)"
-                            v-bind="option.attrs"
-                            :label="option.label">
-                            <o-tree-item
-                                v-for="_option in option.options"
-                                v-bind="_option.item"
-                                :key="_option.key" />
-                        </o-tree-item>
-
-                        <o-tree-item v-else v-bind="option.item" />
-                    </template>
+                        :key="option.key"
+                        v-bind="option.item" />
                 </slot>
             </transition-group>
         </ul>

@@ -2,14 +2,15 @@ import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
-import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
+import type { OptionsProp } from "@/composables";
 
 import OSelect from "@/components/select/Select.vue";
+import type { SelectOption, SelectOptions } from "../props";
 
 describe("OSelect tests", () => {
     enableAutoUnmount(afterEach);
 
-    const options: OptionsItem<string>[] = [
+    const options: SelectOptions<string> = [
         { label: "Flint", value: "flint" },
         { label: "Silver", value: "silver" },
         { label: "Vane", value: "vane" },
@@ -288,7 +289,7 @@ describe("OSelect tests", () => {
         });
 
         test("handle options as options array correctly", () => {
-            const options: OptionsProp<string | number> = [
+            const options: SelectOptions<string | number> = [
                 { label: "Flint", value: "flint" },
                 { label: "Silver", value: "silver", attrs: { disabled: true } },
                 { label: "Vane", value: "vane" },
@@ -315,7 +316,7 @@ describe("OSelect tests", () => {
         });
 
         test("handle grouped options correctly", () => {
-            const options: OptionsGroupProp<string | number | object> = [
+            const options: SelectOptions<string | number | object> = [
                 {
                     label: "Black Sails",
                     options: [
@@ -364,9 +365,9 @@ describe("OSelect tests", () => {
                 let optionLabel;
                 let optionValue;
                 if (idx < 4) {
-                    optionLabel = (options[0].options[idx % 4] as OptionsItem)
+                    optionLabel = (options[0].options[idx % 4] as SelectOption)
                         .label;
-                    optionValue = (options[0].options[idx % 4] as OptionsItem)
+                    optionValue = (options[0].options[idx % 4] as SelectOption)
                         .value;
                 } else if (idx < 8) {
                     optionLabel = Object.entries(options[1].options)[

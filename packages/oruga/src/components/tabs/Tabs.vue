@@ -18,6 +18,7 @@ import { mod, isDefined } from "@/utils/helpers";
 import {
     defineClasses,
     normalizeOptions,
+    useIndexer,
     useProviderParent,
 } from "@/composables";
 
@@ -105,8 +106,13 @@ const { childItems, itemsCount } = useProviderParent<TabItemComponent<T>>({
     data: provideData,
 });
 
+/** unique key sequencer */
+const indexer = useIndexer();
+
 /** normalized programamtic options */
-const normalizedOptions = computed(() => normalizeOptions(props.options));
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer),
+);
 
 // #region --- Active Item Feature ---
 

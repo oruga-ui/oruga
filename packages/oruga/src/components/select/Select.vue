@@ -16,6 +16,7 @@ import {
     defineClasses,
     isGroupOption,
     normalizeOptions,
+    useIndexer,
     useInputHandler,
 } from "@/composables";
 
@@ -141,8 +142,13 @@ watch(
     { immediate: true, flush: "post" },
 );
 
+// create a unique id sequence
+const indexer = useIndexer();
+
 /** normalized programamtic options */
-const normalizedOptions = computed(() => normalizeOptions(props.options));
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer, true),
+);
 
 const placeholderVisible = computed(
     () =>

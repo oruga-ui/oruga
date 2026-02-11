@@ -1,6 +1,7 @@
 import type { ComponentClass, Numberish } from "@/types";
-import type { OptionsGroupsProp } from "@/composables";
-import type { DropdownItemProps } from "../dropdown/props";
+import type { AutocompleteOptions } from "../autocomplete/props";
+
+export type TaginputOptions<T> = AutocompleteOptions<T>;
 
 export type TaginputProps<T> = {
     /** Override existing theme classes completely */
@@ -10,7 +11,7 @@ export type TaginputProps<T> = {
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;
     /** Taginput options */
-    options?: OptionsGroupsProp<DropdownItemProps<T>>;
+    options?: TaginputOptions<T>;
     /** Function to filter the options based on the input value - default is label string comparison */
     filter?: (options: T, value: string) => boolean;
     /**

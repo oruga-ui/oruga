@@ -3,7 +3,8 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
 
-import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
+import type { ListboxOptions, ListItemProps } from "../props";
+import type { OptionsProp } from "@/composables";
 
 import OListbox from "@/components/listbox/Listbox.vue";
 import OListItem from "@/components/listbox/ListItem.vue";
@@ -11,7 +12,7 @@ import OListItem from "@/components/listbox/ListItem.vue";
 describe("OListbox tests", () => {
     enableAutoUnmount(afterEach);
 
-    const options: OptionsProp = [
+    const options: ListboxOptions<string> = [
         { label: "New York", value: "NY" },
         { label: "Rome", value: "RM" },
         { label: "London", value: "LDN" },
@@ -190,13 +191,13 @@ describe("OListbox tests", () => {
         });
 
         test("handle options as options array correctly", async () => {
-            const options: OptionsProp<string | number> = [
+            const options: ListboxOptions<string | number> = [
                 { label: "Flint", value: "flint" },
-                { label: "Silver", value: "silver", attrs: { disabled: true } },
+                { label: "Silver", value: "silver", disabled: true },
                 { label: "Vane", value: "vane" },
                 { label: "Zero", value: 0 },
                 { label: "One", value: 1 },
-                { label: "Two", value: 2, attrs: { disabled: true } },
+                { label: "Two", value: 2, disabled: true },
             ];
 
             const wrapper = mount(OListbox, { props: { options } });
@@ -207,7 +208,7 @@ describe("OListbox tests", () => {
             items.forEach((el, idx) => {
                 expect(el.text()).toBe(options[idx].label);
                 expect(el.attributes("aria-disabled")).toBe(
-                    options[idx].attrs?.disabled ? "true" : "false",
+                    options[idx].disabled ? "true" : "false",
                 );
                 expect(el.attributes("aria-hidden")).toBe("false");
                 expect(el.attributes("aria-selected")).toBe("false");
@@ -215,7 +216,7 @@ describe("OListbox tests", () => {
         });
 
         test("handle grouped options correctly", async () => {
-            const options: OptionsGroupProp<string | number | object> = [
+            const options: ListboxOptions<string | number | object> = [
                 {
                     label: "Black Sails",
                     options: [
@@ -269,7 +270,7 @@ describe("OListbox tests", () => {
                     let optionLabel;
                     if (idx < 5) {
                         optionLabel =
-                            (g_options[o_idx] as OptionsItem).label ||
+                            (g_options[o_idx] as ListItemProps<string>).label ||
                             g_options[o_idx];
                     } else if (idx < 10) {
                         optionLabel = Object.entries(g_options)[o_idx][1];

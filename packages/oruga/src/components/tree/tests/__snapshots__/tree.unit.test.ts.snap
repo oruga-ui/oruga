@@ -70,7 +70,7 @@ exports[`OTree tests > render correctly with deep options 1`] = `
           <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar mdi-24px"></i></span><span>Events</span>
         </div><!-- sub tree items -->
         <transition-stub name="slide" appear="false" persisted="true" css="true">
-          <ul id="v-9" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
+          <ul id="v-8" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
             <li id="v-0-8" data-oruga="tree-item" data-id="tree-8" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Meeting">
               <div class="o-tree__item-label">
                 <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-calendar-plus mdi-24px"></i></span><span>Meeting</span>
@@ -97,13 +97,13 @@ exports[`OTree tests > render correctly with deep options 1`] = `
           <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Movies</span>
         </div><!-- sub tree items -->
         <transition-stub name="slide" appear="false" persisted="true" css="true">
-          <ul id="v-14" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
+          <ul id="v-12" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
             <li id="v-0-12" data-oruga="tree-item" data-id="tree-12" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Al Pacino">
               <div class="o-tree__item-label">
                 <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Al Pacino</span>
               </div><!-- sub tree items -->
               <transition-stub name="slide" appear="false" persisted="true" css="true">
-                <ul id="v-15" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
+                <ul id="v-13" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
                   <li id="v-0-13" data-oruga="tree-item" data-id="tree-13" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Scarface">
                     <div class="o-tree__item-label">
                       <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Scarface</span>
@@ -124,7 +124,7 @@ exports[`OTree tests > render correctly with deep options 1`] = `
                 <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-star mdi-24px"></i></span><span>Robert De Niro</span>
               </div><!-- sub tree items -->
               <transition-stub name="slide" appear="false" persisted="true" css="true">
-                <ul id="v-18" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
+                <ul id="v-16" class="o-tree__subtree" tabindex="-1" aria-hidden="true" role="group" style="display: none;">
                   <li id="v-0-16" data-oruga="tree-item" data-id="tree-16" class="o-tree__item" role="treeitem" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Goodfellas">
                     <div class="o-tree__item-label">
                       <!--v-if--><span data-oruga="icon" class="o-icon o-tree__item-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-video mdi-24px"></i></span><span>Goodfellas</span>

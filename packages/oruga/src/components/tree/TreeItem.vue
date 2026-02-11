@@ -6,7 +6,6 @@ import OIcon from "../icon/Icon.vue";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
-    isGroupOption,
     normalizeOptions,
     useProviderChild,
     useProviderParent,
@@ -240,7 +239,7 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
 
 <template>
     <li
-        v-show="!hidden"
+        v-show="!isHidden"
         :id="`${parent.id}-${item.identifier}`"
         ref="rootElement"
         data-oruga="tree-item"
@@ -291,21 +290,10 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
                 :aria-hidden="!isExpanded"
                 role="group">
                 <slot>
-                    <template
+                    <o-tree-item
                         v-for="option in normalizedOptions"
-                        :key="option.key">
-                        <o-tree-item
-                            v-if="isGroupOption(option)"
-                            v-bind="option.attrs"
-                            :label="option.label">
-                            <o-tree-item
-                                v-for="_option in option.options"
-                                v-bind="_option.item"
-                                :key="_option.key" />
-                        </o-tree-item>
-
-                        <o-tree-item v-else v-bind="option.item" />
-                    </template>
+                        :key="option.key"
+                        v-bind="option.item" />
                 </slot>
             </ul>
         </transition>

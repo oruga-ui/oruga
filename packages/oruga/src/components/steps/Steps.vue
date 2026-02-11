@@ -20,6 +20,7 @@ import {
     normalizeOptions,
     useProviderParent,
     useMatchMedia,
+    useIndexer,
 } from "@/composables";
 
 import type { StepItem, StepItemComponent, StepsComponent } from "./types";
@@ -118,8 +119,13 @@ const { childItems, itemsCount } = useProviderParent<StepItemComponent<T>>({
     data: provideData,
 });
 
+/** unique key sequencer */
+const indexer = useIndexer();
+
 /** normalized programamtic options */
-const normalizedOptions = computed(() => normalizeOptions(props.options));
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer),
+);
 
 // #region --- Selected Item Feature ---
 

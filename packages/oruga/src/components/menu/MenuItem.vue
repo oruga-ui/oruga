@@ -7,7 +7,6 @@ import PlainButton from "../utils/PlainButton";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
-    isGroupOption,
     normalizeOptions,
     useProviderChild,
     useProviderParent,
@@ -255,21 +254,10 @@ const submenuClasses = defineClasses([
                 tabindex="-1"
                 role="group">
                 <slot>
-                    <template
+                    <o-menu-item
                         v-for="option in normalizedOptions"
-                        :key="option.key">
-                        <o-menu-item
-                            v-if="isGroupOption(option)"
-                            v-bind="option.attrs"
-                            :label="option.label">
-                            <o-menu-item
-                                v-for="_option in option.options"
-                                v-bind="_option.item"
-                                :key="_option.key" />
-                        </o-menu-item>
-
-                        <o-menu-item v-else v-bind="option.item" />
-                    </template>
+                        :key="option.key"
+                        v-bind="option.item" />
                 </slot>
             </ul>
         </transition>

@@ -3,6 +3,8 @@ import type { OptionsOrGroupsProp } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
+export type DropdownOptions<T> = OptionsOrGroupsProp<DropdownItemProps<T>>;
+
 export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
@@ -11,7 +13,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Dropdown options, unnecessary when default slot is used */
-    options?: OptionsOrGroupsProp<DropdownItemProps<T>>;
+    options?: DropdownOptions<T>;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Trigger label, unnecessary when trigger slot is used */

@@ -1,6 +1,6 @@
 import { toValue, type MaybeRefOrGetter } from "vue";
 import { isEqual } from "@/utils/helpers";
-import { useIndexer, type Indexer } from "./useIndexer";
+import { type Indexer } from "./useIndexer";
 
 //  --- PUBLIC API ---
 
@@ -9,7 +9,7 @@ import { useIndexer, type Indexer } from "./useIndexer";
  *
  * @public
  */
-export type Option<T extends object> = T;
+export type Option<T extends object> = {} & T;
 
 /**
  * Simplified types of options that can be passed to the options prop.
@@ -26,8 +26,8 @@ export type SimpleOptions =
  * @public
  */
 export type OptionsProp<T extends object = object> =
-    | Option<T>[]
-    | SimpleOptions;
+    | SimpleOptions
+    | Option<T>[];
 
 /**
  * Option groups should always be formatted as an array of group objects with nested options.
@@ -36,7 +36,7 @@ export type OptionsProp<T extends object = object> =
  */
 export type OptionsGroupsProp<T extends object = object> = {
     /** displayed option group label */
-    label?: string;
+    label: string;
     /** list of options */
     options: OptionsProp<T>;
     /** additional attributes bound to the options group element */
@@ -73,7 +73,7 @@ export type OptionGroupItem<T extends object> = {
     /** internal genereated uniqe option key */
     key: string;
     /** displayed option group label */
-    label?: string;
+    label: string;
     /** additional attributes bound to the options group element */
     attrs?: Record<string, any>;
     /** list of options */
@@ -82,12 +82,11 @@ export type OptionGroupItem<T extends object> = {
 
 // ------------------
 
-type SimpleOption = { label: string; value: string };
+type SimpleOption = { label: string; value: string | number };
 
-type NormalizedOption<T extends object> = OptionItem<T>; //& { isGroup: false };
+type NormalizedOption<T extends object> = OptionItem<T>;
 
 type NormalizedGroup<T extends object> = Omit<OptionGroupItem<T>, "options"> & {
-    // isGroup: true;
     options: NormalizedOption<T>[];
 };
 
@@ -104,22 +103,21 @@ type NormalizedItem<T extends object = any> =
  * @returns A list of normalized option items.
  */
 export function normalizeOptions<T extends object>(
-    options: OptionsGroupsProp<T> | undefined,
-    indexer?: Indexer,
-): NormalizedGroup<T>[];
-export function normalizeOptions<T extends object>(
     options: OptionsProp<T> | undefined,
-    indexer?: Indexer,
+    indexer: Indexer,
+    groupable?: false,
 ): NormalizedOption<T>[];
 export function normalizeOptions<T extends object>(
     options: OptionsOrGroupsProp<T> | undefined,
-    indexer?: Indexer,
+    indexer: Indexer,
+    groupable: boolean,
 ): NormalizedItem<T>[];
 export function normalizeOptions<T extends object>(
     options: OptionsProp<T> | OptionsGroupsProp<T> | undefined,
-    indexer: Indexer = useIndexer(),
+    indexer: Indexer,
+    groupable: boolean = false,
 ): NormalizedItem<T>[] {
-    if (!options) return [] as NormalizedItem<T>[];
+    if (!options) return [] as NormalizedOption<T>[];
 
     if (Array.isArray(options)) {
         return options.map(
@@ -132,47 +130,42 @@ export function normalizeOptions<T extends object>(
                 if (typeof option === "string" || typeof option === "number")
                     // create options item from primitive
                     return {
-                        // isGroup: false,
                         item: {
                             label: String(option),
-                            value: String(option),
+                            value: option,
                         },
                         key: indexer.nextIndex(),
                     } satisfies NormalizedOption<SimpleOption>;
 
-                if (typeof option == "object") {
-                    if ("options" in option) {
-                        const options = normalizeOptions(
-                            option.options,
-                            indexer,
-                        ) as NormalizedOption<T>[];
+                if (groupable && "options" in option) {
+                    const key = indexer.nextIndex();
+                    const options = normalizeOptions(
+                        option.options,
+                        indexer,
+                    ) as NormalizedOption<T>[];
 
-                        // create options group item
-                        return {
-                            // isGroup: true,
-                            label: option.label,
-                            attrs: option.attrs,
-                            options,
-                            key: indexer.nextIndex(),
-                        } satisfies NormalizedGroup<T>;
-                    } else {
-                        // create options item
-                        return {
-                            // isGroup: false,
-                            item: option,
-                            key: indexer.nextIndex(),
-                        } satisfies NormalizedOption<T>;
-                    }
+                    // create options group item
+                    return {
+                        label: option.label,
+                        attrs: option.attrs,
+                        options,
+                        key,
+                    } satisfies NormalizedGroup<T>;
                 }
+
+                // create options item
+                return {
+                    item: toValue(option),
+                    key: indexer.nextIndex(),
+                };
             },
         ) as NormalizedItem<T>[];
     }
 
     // options are from type SimpleOption and is an object
     return Object.keys(options).map(
-        (value: string) =>
+        (value: string | number) =>
             ({
-                // isGroup: false,
                 // create option from object key/value
                 item: {
                     label: options[value],
@@ -180,7 +173,7 @@ export function normalizeOptions<T extends object>(
                 },
                 key: indexer.nextIndex(),
             }) satisfies NormalizedOption<SimpleOption>,
-    ) as unknown as NormalizedItem<T>[];
+    ) as unknown as NormalizedOption<T>[];
 }
 
 /**

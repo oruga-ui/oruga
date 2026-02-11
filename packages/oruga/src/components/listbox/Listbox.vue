@@ -33,6 +33,7 @@ import {
     normalizeOptions,
     scrollElementInView,
     unrefElement,
+    useIndexer,
     useProviderParent,
     useScrollEvents,
 } from "@/composables";
@@ -145,8 +146,13 @@ const { parentField } = injectField();
 // if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField.value?.setInputId(props.id);
 
+/** unique key sequencer */
+const indexer = useIndexer();
+
 /** normalized programamtic options */
-const normalizedOptions = computed(() => normalizeOptions(props.options));
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer, true),
+);
 
 /** determines if the options are grouped or not */
 const optionsGrouped = computed(() => areOptionsGrouped(normalizedOptions));
