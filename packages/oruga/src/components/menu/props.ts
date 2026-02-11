@@ -1,5 +1,5 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
-import type { OptionsProp, OptionsOrGroupsProp } from "@/composables";
+import type { OptionsOrGroupsProp } from "@/composables";
 
 export type MenuProps<T> = {
     /** Override existing theme classes completely */

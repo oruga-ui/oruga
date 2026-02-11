@@ -1,8 +1,4 @@
-import type {
-    ComponentClass,
-    DynamicComponent,
-    OptionsProp,
-} from "@/types";
+import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
 
 export type BreadcrumbProps = {
     /** Override existing theme classes completely */
