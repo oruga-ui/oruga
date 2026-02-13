@@ -13,7 +13,8 @@ const IGNORE_CLASSES: Record<string, string[]> = {
 function formatValue(value: string): string {
     if (!value || value === "undefined") value = "";
     else if (
-        value.includes("getDefault") &&
+        (value.includes("getDefault") ||
+            value.includes("getDefaultFunction")) &&
         !value.includes("const ") &&
         !value.includes("if ") &&
         !value.includes("else ")
@@ -24,14 +25,26 @@ function formatValue(value: string): string {
         // get default params
         value = value.replace(/\r\n/g, "").replaceAll("\n", "");
         let f = "";
-        if (value.includes("getDefault("))
+        if (value.includes("getDefaultFunction("))
+            f = value.substring(
+                value.lastIndexOf("getDefaultFunction(") +
+                    "getDefaultFunction(".length,
+            );
+        else if (value.includes("getDefault("))
             f = value.substring(
                 value.lastIndexOf("getDefault(") + "getDefault(".length,
             );
-        else if (value.includes("getDefault<"))
+        else if (
+            value.includes("getDefault<") ||
+            value.includes("getDefaultFunction<")
+        )
             f = value.substring(value.indexOf(">(") + ">(".length);
 
         // remove new line (+)
+        value = value.replace(
+            /=>(.*?)getDefaultFunction/g,
+            "=> getDefaultFunction",
+        );
         value = value.replace(/=>(.*?)getDefault/g, "=> getDefault");
         // remove function prop invokation
         if (f.lastIndexOf("(") > 0) f = f.substring(0, f.lastIndexOf("("));
