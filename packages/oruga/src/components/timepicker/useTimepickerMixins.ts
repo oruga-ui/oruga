@@ -125,20 +125,28 @@ export function useTimepickerMixins(props: TimepickerProps) {
     });
 
     function timeCreator(): Date {
-        return typeof props.creator === "function"
-            ? props.creator()
-            : new Date();
+        if (typeof props.creator === "function") {
+            const r = props.creator();
+            if (r instanceof Date) return r;
+        }
+        return new Date();
     }
 
     function timeFormatter(time: typeof props.modelValue): string {
-        if (typeof props.formatter === "function") return props.formatter(time);
+        if (typeof props.formatter === "function") {
+            const r = props.formatter(time);
+            if (typeof r === "string") return r;
+        }
 
         if (!time) return "00:00";
         return dtf.value.format(time);
     }
 
     function timeParser(time: string): typeof props.modelValue {
-        if (typeof props.parser === "function") return props.parser(time);
+        if (typeof props.parser === "function") {
+            const r = props.parser(time);
+            if (r !== undefined) return r;
+        }
 
         if (!time) return undefined;
 

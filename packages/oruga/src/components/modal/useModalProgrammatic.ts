@@ -10,6 +10,7 @@ import Modal from "./Modal.vue";
 
 import type { ModalProps } from "./props";
 
+// extend the OrugaProgrammatic type with the `modal` programmatic interface
 declare module "../../index" {
     interface OrugaProgrammatic {
         modal: Required<InstanceType<typeof ModalProgrammaticFactory>>;

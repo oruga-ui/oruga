@@ -9,7 +9,7 @@ import {
 } from "vue";
 
 import InstanceRegistry from "@/components/programmatic/InstanceRegistry";
-import { VueInstance } from "@/utils/plugins";
+import { getActiveOruga } from "@/utils/config";
 import { getTeleportDefault, resolveElement } from "@/composables";
 
 import {
@@ -30,10 +30,16 @@ declare module "../../index" {
 /** programmatic component options */
 export type ProgrammaticOptions<C extends VNodeTypes> = {
     /**
-     * Specify the template `id` for the programmatic container element.
+     * Specify the template `id` attribute for the programmatic container element.
      * @default `programmatic-app`
      */
     appId?: string;
+    /**
+     * Configure a prefix for all IDs generated via [`useId()`](https://vuejs.org/api/composition-api-helpers.html#useid) inside this programmatic instance.
+     * By default a unique id prefix is generated.
+     * See {@link https://vuejs.org/api/application.html#app-config-idprefix}.
+     */
+    idPrefix?: string;
 } & Omit<ProgrammaticComponentProps<C>, "component"> & // component props
     EmitsToProps<Pick<Required<ProgrammaticComponentEmits<C>>, "close">>; // component emit props
 
@@ -128,9 +134,21 @@ export abstract class ProgrammaticFactory {
             onDestroy, // node destory cleanup handler
         });
 
-        // share the current context to the new app instance if running inside a nother app
-        if (VueInstance)
-            app._context = Object.assign(app._context, VueInstance._context);
+        // get the current active oruga instance
+        const orugaConfig = getActiveOruga();
+        // provide the oruga config to the new app instance
+        orugaConfig?.provide(app);
+        // if running inside another app share the current app context to the new app instance
+        if (orugaConfig?._app)
+            app._context = Object.assign(
+                app._context,
+                orugaConfig._app._context,
+            );
+
+        // set a prefix for all IDs generated via useId() to prevent duplication in multiple programmatic instances
+        app.config.idPrefix =
+            options.idPrefix ??
+            "programmatic-" + options.registry!.getCounter();
 
         // render the new vue instance into the container element
         const instance = app.mount(container);

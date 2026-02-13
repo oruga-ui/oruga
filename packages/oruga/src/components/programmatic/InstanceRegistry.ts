@@ -1,15 +1,22 @@
 import type { ComponentInternalInstance } from "vue";
 
 export default class InstanceRegistry<T = ComponentInternalInstance> {
-    entries: Array<T>;
+    private entries: Array<T>;
+    private counter: number;
 
     constructor() {
         this.entries = [];
+        this.counter = 0;
     }
 
     /** Returns the number of registered active instances. */
     count(): number {
         return this.entries.length;
+    }
+
+    /** Returns the total number of instances that have ever been created. */
+    getCounter(): number {
+        return this.counter;
     }
 
     /** Returns the first registered active instance. */
@@ -27,6 +34,7 @@ export default class InstanceRegistry<T = ComponentInternalInstance> {
     /** Adds a new instance to the instance stack. */
     add(entry: T): void {
         this.entries.push(entry);
+        this.counter++;
     }
 
     /** Removes an instance from the instance stack. */
@@ -40,7 +48,7 @@ export default class InstanceRegistry<T = ComponentInternalInstance> {
         // Walk a copy of the array so that the callback is allowed to remove the instance
         this.entries = [...this.entries].filter((e) => {
             const ret = callback(e);
-            return !(ret === true);
+            return ret !== true;
         });
     }
 }

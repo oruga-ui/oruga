@@ -3,8 +3,8 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick, shallowRef } from "vue";
 
 import type { OptionsProp } from "@/composables";
+import { setConfig, getConfig } from "@/utils/config";
 import type { TabsOptions } from "../props";
-import { getOptions, setOptions } from "@/utils/config";
 
 import OTabs from "@/components/tabs/Tabs.vue";
 import OTabItem from "@/components/tabs/TabItem.vue";
@@ -464,8 +464,8 @@ describe("OTabs tests", () => {
             expect(item.exists()).toBeTruthy();
             expect(item.element.tagName).toBe("BUTTON");
 
-            setOptions(
-                Object.assign(getOptions(), {
+            setConfig(
+                Object.assign(getConfig(), {
                     tabs: {
                         itemTag: "a",
                     },

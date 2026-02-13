@@ -1,15 +1,16 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Radio from "./Radio.vue";
 
 import { registerComponent } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export radio plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Radio);
     },
-} as Plugin;
+} satisfies OrugaComponentPlugin;
 
 /** export radio components */
 export { Radio as ORadio };

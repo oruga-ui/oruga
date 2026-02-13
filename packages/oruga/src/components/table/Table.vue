@@ -23,7 +23,7 @@ import OTableMobileSort from "./TableMobileSort.vue";
 import OTableColumn from "./TableColumn.vue";
 import OTablePagination from "./TablePagination.vue";
 
-import { getDefault } from "@/utils/config";
+import { getDefault, getDefaultFunction } from "@/utils/config";
 import {
     getValueByPath,
     toCssDimension,
@@ -66,7 +66,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     data: undefined,
     columns: undefined,
     rowKey: () => getDefault("table.rowKey"),
-    rowClass: getDefault("table.rowClass", () => ""),
+    rowClass: getDefaultFunction("table.rowClass", () => ""),
     thAttrs: undefined,
     tdAttrs: undefined,
     customCompare: undefined,
@@ -90,7 +90,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     checkboxPosition: () => getDefault("table.checkboxPosition", "left"),
     checkboxVariant: () => getDefault("table.checkboxVariant"),
     isRowChecked: undefined,
-    isRowCheckable: getDefault("table.isRowCheckable", () => true),
+    isRowCheckable: getDefaultFunction("table.isRowCheckable", () => true),
     backendSorting: () => getDefault("table.backendSorting", false),
     defaultSort: () => getDefault("table.defaultSort"),
     defaultSortDirection: () => getDefault("table.defaultSortDirection", "asc"),
@@ -99,7 +99,10 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     iconPack: () => getDefault("table.iconPack"),
     detailed: false,
     detailedRows: () => [],
-    isDetailedVisible: getDefault("table.isDetailedVisible", () => true),
+    isDetailedVisible: getDefaultFunction(
+        "table.isDetailedVisible",
+        () => true,
+    ),
     showDetailIcon: () => getDefault("table.showDetailIcon", true),
     detailIcon: () => getDefault("table.detailIcon", "chevron-right"),
     customDetailRow: false,

@@ -11,7 +11,7 @@ import InspectorWrapper from "./components/InspectorWrapper.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
 
-import Oruga, { type OrugaOptions } from "@oruga-ui/oruga-next";
+import Oruga, { type OrugaConfig } from "@oruga-ui/oruga-next";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
@@ -115,7 +115,8 @@ export default {
         }
 
         // basic docs config
-        let orugaConfig: OrugaOptions = {
+        let orugaConfig: OrugaConfig = {
+            globalComponents: true, // register all components globally
             iconPack: "fas",
             iconComponent: "vue-fontawesome",
         };

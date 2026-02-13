@@ -139,7 +139,7 @@ const code = `import type {
 
 // Auto generated component theme config definition
 declare module "../index" {
-    interface OrugaOptions {
+    interface OrugaConfig {
         ${components.map(
             ({ name, props }) =>
                 `${name.toLowerCase()}?: ComponentConfigBase &

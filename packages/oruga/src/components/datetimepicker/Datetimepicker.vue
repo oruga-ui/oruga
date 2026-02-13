@@ -5,7 +5,7 @@ import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
 import OInput from "../input/Input.vue";
 
-import { getDefault } from "@/utils/config";
+import { getDefault, getDefaultFunction } from "@/utils/config";
 import { isDate, isMobileAgent, pad } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
@@ -46,9 +46,9 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     inline: false,
     openOnFocus: () => getDefault("datetimepicker.openOnFocus", true),
     locale: () => getDefault("locale"),
-    formatter: getDefault("datetimepicker.dateFormatter"),
-    parser: getDefault("datetimepicker.dateParser"),
-    creator: getDefault("datetimepicker.datetimeCreator"),
+    formatter: getDefaultFunction("datetimepicker.dateFormatter"),
+    parser: getDefaultFunction("datetimepicker.dateParser"),
+    creator: getDefaultFunction("datetimepicker.datetimeCreator"),
     position: undefined,
     iconPack: () => getDefault("datetimepicker.iconPack"),
     icon: () => getDefault("datetimepicker.icon"),

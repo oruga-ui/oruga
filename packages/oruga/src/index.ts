@@ -1,19 +1,25 @@
-import type { App, Plugin } from "vue";
-import type { OrugaOptions } from "./types";
-
-import * as plugins from "./components/plugins";
-
-import { useProgrammaticConfig, OrugaConfig } from "./utils/config";
-import { registerPlugin } from "./utils/plugins";
+import { createOruga } from "./utils/config";
 
 // export all types
 export * from "./types";
 export * from "./components/types";
 
-// export all helper functions
+// export all vue components
+export * from "./components";
+// export all components as vue plugins
+export * from "./components/plugins";
+export * as OrugaComponentPlugins from "./components/plugins";
+
+// export main oruga composables
+export { createOruga, createTestingOruga, useOruga } from "./utils/config";
+
+// export programmatic composable
+export { useProgrammaticConfig, type OrugaProgrammatic } from "./utils/config";
+
+// export useful helper functions
 export * from "./utils/helpers";
 
-// export some useful composables
+// export some useful composables functions
 export {
     findFocusable,
     useTrapFocus,
@@ -25,30 +31,6 @@ export {
     getScrollingParent,
 } from "./composables";
 
-// export all vue components
-export * from "./components";
-// export all components as vue plugin
-export * from "./components/plugins";
-
-// export programmatic config
-export { OrugaConfig, useProgrammaticConfig };
-
-// export programmatic composable
-export { useOruga, type OrugaProgrammatic } from "./utils/programmatic";
-
-// main oruga vue plugin
-const plugin = {
-    install(app: App, options: OrugaOptions = {}): void {
-        // initialise config with options
-        registerPlugin(app, OrugaConfig, options);
-
-        // add all oruga vue components
-        for (const componentKey in plugins) {
-            registerPlugin(app, plugins[componentKey]);
-        }
-    },
-} satisfies Plugin;
-
-// export default oruga vue plugin
-export { plugin as Oruga };
-export default plugin;
+// default export main oruga vue plugin
+const oruga = createOruga();
+export default oruga;

@@ -13,7 +13,7 @@ import OPickerWrapper from "../utils/PickerWrapper.vue";
 import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
-import { getDefault } from "@/utils/config";
+import { getDefault, getDefaultFunction } from "@/utils/config";
 import { isDate, pad } from "@/utils/helpers";
 import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
@@ -63,9 +63,9 @@ const props = withDefaults(
         openOnFocus: () => getDefault("datepicker.openOnFocus", true),
         closeOnClick: () => getDefault("datepicker.closeOnClick", true),
         locale: () => getDefault("locale"),
-        formatter: getDefault("datepicker.formatter"),
-        parser: getDefault("datepicker.parser"),
-        creator: getDefault("datepicker.creator"),
+        formatter: getDefaultFunction("datepicker.formatter"),
+        parser: getDefaultFunction("datepicker.parser"),
+        creator: getDefaultFunction("datepicker.creator"),
         selectableDates: undefined,
         unselectableDates: undefined,
         unselectableDaysOfWeek: () =>

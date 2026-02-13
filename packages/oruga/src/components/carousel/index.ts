@@ -1,17 +1,18 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Carousel from "./Carousel.vue";
 import CarouselItem from "./CarouselItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export carousel plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Carousel);
         registerComponent(app, CarouselItem);
     },
-} as Plugin;
+} satisfies OrugaComponentPlugin;
 
 /** export carousel components */
 export { Carousel as OCarousel, CarouselItem as OCarouselItem };

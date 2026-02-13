@@ -1,17 +1,18 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Breadcrumb from "./Breadcrumb.vue";
 import BreadcrumbItem from "./BreadcrumbItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export breadcrumb plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Breadcrumb);
         registerComponent(app, BreadcrumbItem);
     },
-} as Plugin;
+} satisfies OrugaComponentPlugin;
 
 /** export Breadcrumb components */
 export { Breadcrumb as OBreadcrumb, BreadcrumbItem as OBreadcrumbItem };
