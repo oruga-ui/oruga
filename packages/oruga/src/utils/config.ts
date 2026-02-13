@@ -104,12 +104,12 @@ export function createOruga(): Oruga {
 
             // check if all components should be registered globaly
             if (oruga._config.globalComponents)
-                // register all oruga vue components globaly
-                for (const componentKey in ComponentPlugins) {
-                    app.use(ComponentPlugins[componentKey]);
-                }
+                // add all oruga components to register globaly
+                Object.values(ComponentPlugins).forEach((p) =>
+                    _plugins.push(p),
+                );
 
-            // register custom component plugins
+            // register oruga component plugins
             _plugins.forEach((p) => app.use(p, { oruga }));
         },
         // helper to register component plugins on install
