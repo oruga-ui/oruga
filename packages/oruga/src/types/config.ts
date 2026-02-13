@@ -55,8 +55,8 @@ export type GlobalConfig = Partial<{
      */
     override: boolean;
     /**
-     * Define if all components should be registered globaly.
-     * By default, no component will be registered globaly.
+     * Specify whether all components should be registered globally.
+     * By default, no components will be registered globally.
      */
     globalComponents: boolean;
     /** Define the Date format locale */
