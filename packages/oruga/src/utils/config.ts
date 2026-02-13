@@ -31,7 +31,7 @@ export interface Oruga extends ObjectPlugin<OrugaConfig> {
      * The vue instance oruga got registered into.
      * @internal
      */
-    _vue: App;
+    _app: App;
 
     /**
      * The global config object for this instance.
@@ -46,12 +46,25 @@ export interface Oruga extends ObjectPlugin<OrugaConfig> {
     _programmatic: OrugaProgrammatic;
 
     /**
+     * Defines if this oruga instance is a testing instance.
+     * @internal
+     */
+    _testing?: boolean;
+
+    /**
      * Adds a Oruga component plugin.
      *
      * @param plugin - Oruga component plugin to add
      * @returns Oruga plugin instance
      */
     use(plugin: OrugaComponentPlugin): Oruga;
+
+    /**
+     * Provides the oruga instance to the app context.
+     * This is useful when you need to use `useOruga()` in a different app instance than the one Oruga got installed in.
+     * @param app - The app instance to provide the oruga instance to.
+     */
+    provide(app: App): void;
 }
 
 /** provide/inject oruga key symbol */
@@ -63,13 +76,29 @@ const $ORUGA_SYMBOL = Symbol("$oruga") as InjectionKey<Oruga>;
  */
 let globalOruga: Oruga | undefined;
 
-/** create a new Oruga Vue plugin which sets the oruga config options. */
-export function createOruga(): Oruga {
+export function setActiveOruga(oruga: Oruga | undefined): void {
+    globalOruga = oruga;
+}
+
+/**
+ * Get the currently active oruga instance if there is any.
+ */
+export function getActiveOruga(): Oruga | undefined {
+    return (hasInjectionContext() && inject($ORUGA_SYMBOL)) || globalOruga;
+}
+
+/**
+ * Create a new Oruga Vue plugin which sets the oruga config options.
+ * @param config - Override or extend the default oruga config.
+ * @returns A new Oruga instance.
+ */
+export function createOruga(config: OrugaConfig = {}): Oruga {
     const _plugins: OrugaComponentPlugin[] = [];
 
     const oruga: Oruga = {
-        // @ts-expect-error it's actually undefined here
-        _vue: null,
+        // the vue instance Oruga gets installed in, it will be set in the install function
+        // @ts-expect-error it's actually empty here
+        _app: null,
         // default config is defined here
         _config: {
             override: false,
@@ -80,24 +109,24 @@ export function createOruga(): Oruga {
             transformClasses: undefined,
             mobileBreakpoint: "1023px",
             teleportTarget: () => (isClient ? document.body : "body"),
+            ...config,
         },
+        // map of all registered programmatic interfaces
         // @ts-expect-error it's empty at first
         _programmatic: {},
 
         // vue plugin install function
         install(app: App, options: OrugaConfig = {}): void {
             // set global vue instance for programmatic usage
-            oruga._vue = app;
+            oruga._app = app;
             // merge additional options with the base config
             oruga._config = merge(oruga._config, options, true);
 
             // set the global oruga instance
-            globalOruga = oruga;
+            setActiveOruga(oruga);
 
-            // provide the oruga instance
-            app.provide($ORUGA_SYMBOL, oruga);
-            // set the oruga instance as globalProperties
-            app.config.globalProperties.$oruga = oruga;
+            // provide the oruga instance to the app context
+            this.provide(app);
 
             // register the programmatic config interface to the programmatic oruga object
             addProgrammatic(oruga, "config", ConfigProgrammatic);
@@ -117,16 +146,28 @@ export function createOruga(): Oruga {
             _plugins.push(plugin);
             return oruga;
         },
+        // helper to provide the oruga instance to another app instance
+        provide(app: App): void {
+            // provide the oruga instance
+            app.provide($ORUGA_SYMBOL, oruga);
+            // set the oruga instance as globalProperties
+            app.config.globalProperties.$oruga = oruga;
+        },
     };
 
     return oruga;
 }
 
 /**
- * Get the currently active oruga instance if there is any.
+ * Create a new oruga instance and set it as active even the plugin got not installed yet.
+ * @param config - Override or extend the default oruga config.
+ * @returns A new Oruga instance.
  */
-export function getActiveOruga(): Oruga | undefined {
-    return (hasInjectionContext() && inject($ORUGA_SYMBOL)) || globalOruga;
+export function createTestingOruga(config: OrugaConfig = {}): Oruga {
+    const oruga = createOruga(config);
+    oruga._testing = true;
+    setActiveOruga(oruga);
+    return oruga;
 }
 
 /**
@@ -135,15 +176,8 @@ export function getActiveOruga(): Oruga | undefined {
  * @internal
  */
 function getOruga(): Oruga {
-    // check for inject context
-    if (!hasInjectionContext())
-        throw new Error(
-            "Oruga's config can only be accessed when an inject context is available.",
-        );
-
-    // inject the current oruga instance
-    const oruga = inject($ORUGA_SYMBOL);
-    // check for oruga instance
+    // inject the current active oruga instance
+    const oruga = getActiveOruga();
     if (!oruga)
         throw new Error(
             "No Oruga instance available. Have you installed the Oruga plugin yet?",
@@ -174,7 +208,7 @@ export function getConfig(): OrugaConfig {
  *
  * @param config - The new config to be mergen into the existing one.
  */
-function setConfig(config: OrugaConfig): void {
+export function setConfig(config: OrugaConfig): void {
     const oruga = getOruga();
     const _config = merge(oruga._config, config, true);
     oruga._config = _config;

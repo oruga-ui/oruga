@@ -128,12 +128,15 @@ export abstract class ProgrammaticFactory {
             onDestroy, // node destory cleanup handler
         });
 
-        // share the current context to the new app instance if running inside another app
+        // get the current active oruga instance
         const orugaConfig = getActiveOruga();
-        if (orugaConfig?._vue)
+        // provide the oruga config to the new app instance
+        orugaConfig?.provide(app);
+        // if running inside another app share the current app context to the new app instance
+        if (orugaConfig?._app)
             app._context = Object.assign(
                 app._context,
-                orugaConfig._vue._context,
+                orugaConfig._app._context,
             );
 
         // render the new vue instance into the container element
