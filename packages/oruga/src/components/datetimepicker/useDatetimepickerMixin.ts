@@ -73,20 +73,28 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
     });
 
     function datetimeCreator(): Date {
-        return typeof props.creator === "function"
-            ? props.creator()
-            : new Date();
+        if (typeof props.creator === "function") {
+            const r = props.creator();
+            if (r instanceof Date) return r;
+        }
+        return new Date();
     }
 
     function datetimeFormatter(date: Date): string {
-        if (typeof props.formatter === "function") return props.formatter(date);
+        if (typeof props.formatter === "function") {
+            const r = props.formatter(date);
+            if (typeof r === "string") return r;
+        }
 
         if (!date) return "";
         return dtf.value.format(date);
     }
 
     function datetimeParser(date: string): Date | undefined {
-        if (typeof props.parser === "function") return props.parser(date);
+        if (typeof props.parser === "function") {
+            const r = props.parser(date);
+            if (r !== undefined) return r;
+        }
 
         if (!date) return undefined;
         if (

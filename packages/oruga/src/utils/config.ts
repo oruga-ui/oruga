@@ -221,6 +221,21 @@ export function getDefault<T>(
     return getValueByPath(config, path, defaultValue) as T & {};
 }
 
+
+/**
+ * less type strict version of getOption for component prop default with type function
+ * @internal
+ */
+export const getDefaultFunction = <T>(
+    path: DeepKeys<OrugaConfig>,
+    defaultValue?: T,
+): ((...args) => any) => {
+    return (...args) => {
+        const f = getDefault(path, defaultValue);
+        if (typeof f === "function") return f(...args);
+    };
+};
+
 const ConfigProgrammatic = {
     getOption,
     setOption,
