@@ -6,10 +6,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export checkbox plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Checkbox);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export table components */
 export { Checkbox as OCheckbox };

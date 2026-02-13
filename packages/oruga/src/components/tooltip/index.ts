@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export tooltip plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Tooltip);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export tooltip components */
 export { Tooltip as OTooltip };

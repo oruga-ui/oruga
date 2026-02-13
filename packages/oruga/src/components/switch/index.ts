@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export switch plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Switch);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export switch components */
 export { Switch as OSwitch };

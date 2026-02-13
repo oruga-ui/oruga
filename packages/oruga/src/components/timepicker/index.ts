@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export timepicker plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Timepicker);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export timepicker components */
 export { Timepicker as OTimepicker };

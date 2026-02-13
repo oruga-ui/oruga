@@ -8,11 +8,11 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export carousel plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Carousel);
         registerComponent(app, CarouselItem);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export carousel components */
 export { Carousel as OCarousel, CarouselItem as OCarouselItem };

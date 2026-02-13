@@ -13,11 +13,11 @@ export type { LoadingProgrammaticOptions } from "./useLoadingProgrammatic";
 
 /** export loading plugin */
 export default {
-    install(app: App, { oruga }) {
+    install(app: App, { oruga }): void {
         registerComponent(app, Loading);
         registerProgrammatic(oruga, "loading", LoadingProgrammaticFactory);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export loading components & composables */
 export { Loading as OLoading, useLoadingProgrammatic };

@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export datetimepicker plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Datetimepicker);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export datetimepicker components */
 export { Datetimepicker as ODatetimepicker };

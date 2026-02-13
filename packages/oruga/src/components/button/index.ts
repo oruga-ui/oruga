@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export button plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Button);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export button components */
 export { Button as OButton };

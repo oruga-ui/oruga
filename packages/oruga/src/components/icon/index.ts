@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export icon plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Icon);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export icon components */
 export { Icon as OIcon };

@@ -8,11 +8,11 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export menu plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Menu);
         registerComponent(app, MenuItem);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export menu components */
 export { Menu as OMenu, MenuItem as OMenuItem };

@@ -11,11 +11,11 @@ export type { TableColumn, TableRow } from "./types";
 
 /** export table plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Table);
         registerComponent(app, TableColumn);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export table components */
 export { Table as OTable, TableColumn as OTableColumn };

@@ -8,11 +8,11 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export dropdown plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Dropdown);
         registerComponent(app, DropdownItem);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export dropdown components */
 export { Dropdown as ODropdown, DropdownItem as ODropdownItem };

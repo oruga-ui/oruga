@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export autocomplete plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Autocomplete);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export autocomplete components */
 export { Autocomplete as OAutocomplete };

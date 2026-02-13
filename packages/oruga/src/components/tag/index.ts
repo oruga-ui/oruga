@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export tag plugin */
 export default {
-    install(Vue: App) {
+    install(Vue: App): void {
         registerComponent(Vue, Tag);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export tag components */
 export { Tag as OTag };

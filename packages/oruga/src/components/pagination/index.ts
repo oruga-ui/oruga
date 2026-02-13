@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export pagination plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Pagination);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export pagination components */
 export { Pagination as OPagination };

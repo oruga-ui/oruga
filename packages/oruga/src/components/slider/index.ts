@@ -11,11 +11,11 @@ export type * from "./types";
 
 /** export slider plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Slider);
         registerComponent(app, SliderTick);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export slider components */
 export { Slider as OSlider, SliderTick as OSliderTick };

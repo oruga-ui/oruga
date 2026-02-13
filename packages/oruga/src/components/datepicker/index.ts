@@ -10,10 +10,10 @@ export type { DatepickerEvent, FocusedDate } from "./types";
 
 /** export datepicker plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Datepicker);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export datepicker components */
 export { Datepicker as ODatepicker };

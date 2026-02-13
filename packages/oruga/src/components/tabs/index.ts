@@ -11,11 +11,11 @@ export type * from "./types";
 
 /** export tabs plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Tabs);
         registerComponent(app, TabItem);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export tabs components */
 export { Tabs as OTabs, TabItem as OTabItem };

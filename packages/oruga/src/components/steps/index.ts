@@ -11,11 +11,11 @@ export type * from "./types";
 
 /** export steps plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Steps);
         registerComponent(app, StepItem);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export steps components */
 export { Steps as OSteps, StepItem as OStepItem };

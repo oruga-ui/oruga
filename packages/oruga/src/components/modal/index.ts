@@ -13,11 +13,11 @@ export type { ModalProgrammaticOptions } from "./useModalProgrammatic";
 
 /** export modal plugin */
 export default {
-    install(app: App, { oruga }) {
+    install(app: App, { oruga }): void {
         registerComponent(app, Modal);
         registerProgrammatic(oruga, "modal", ModalProgrammaticFactory);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export modal components & composables */
 export { Modal as OModal, useModalProgrammatic };

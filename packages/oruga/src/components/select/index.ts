@@ -10,10 +10,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export select plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Select);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export select components */
 export { Select as OSelect };

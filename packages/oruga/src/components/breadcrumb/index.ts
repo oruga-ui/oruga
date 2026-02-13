@@ -8,11 +8,11 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export breadcrumb plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Breadcrumb);
         registerComponent(app, BreadcrumbItem);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export Breadcrumb components */
 export { Breadcrumb as OBreadcrumb, BreadcrumbItem as OBreadcrumbItem };

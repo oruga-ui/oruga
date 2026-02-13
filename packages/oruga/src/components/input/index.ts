@@ -10,10 +10,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export input plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Input);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export input components */
 export { Input as OInput };

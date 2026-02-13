@@ -19,14 +19,14 @@ export type { CloseEventArgs } from "./ProgrammaticComponent";
 
 /** export programmatic plugin */
 export default {
-    install(app, { oruga }) {
+    install(app, { oruga }): void {
         registerProgrammatic(
             oruga,
             "programmatic",
             ProgrammaticComponentFactory,
         );
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export programmatic classes & composables here */
 export {

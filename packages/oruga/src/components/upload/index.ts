@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export upload plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Upload);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export upload components */
 export { Upload as OUpload };

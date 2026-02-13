@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export radio plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Radio);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export radio components */
 export { Radio as ORadio };

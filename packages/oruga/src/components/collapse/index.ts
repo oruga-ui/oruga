@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export collapse plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Collapse);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export collapse components */
 export { Collapse as OCollapse };

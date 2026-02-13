@@ -13,11 +13,11 @@ export type { DialogProgrammaticOptions } from "./useDialogProgrammatic";
 
 /** export dialog plugin */
 export default {
-    install(app: App, { oruga }) {
+    install(app: App, { oruga }): void {
         registerComponent(app, Dialog);
         registerProgrammatic(oruga, "dialog", DialogProgrammaticFactory);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export dialog components */
 export { Dialog as ODialog, useDialogProgrammatic };

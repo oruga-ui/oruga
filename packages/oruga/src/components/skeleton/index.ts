@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export skeleton plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Skeleton);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export skeleton components */
 export { Skeleton as OSkeleton };

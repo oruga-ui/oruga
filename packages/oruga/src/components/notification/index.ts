@@ -14,7 +14,7 @@ export type { NotificationProgrammaticOptions } from "./useNotificationProgramma
 
 /** export notification plugin */
 export default {
-    install(app: App, { oruga }) {
+    install(app: App, { oruga }): void {
         registerComponent(app, Notification);
         registerProgrammatic(
             oruga,
@@ -22,7 +22,7 @@ export default {
             NotificationProgrammaticFactory,
         );
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export notification components & composables */
 export {

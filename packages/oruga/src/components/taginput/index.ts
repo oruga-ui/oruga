@@ -7,10 +7,10 @@ import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export taginput plugin */
 export default {
-    install(Vue: App) {
+    install(Vue: App): void {
         registerComponent(Vue, Taginput);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export taginput components */
 export { Taginput as OTaginput };

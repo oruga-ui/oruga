@@ -13,11 +13,11 @@ export type { SidebarProgrammaticOptions } from "./useSidebarProgrammatic";
 
 /** export sidebar plugin */
 export default {
-    install(app: App, { oruga }) {
+    install(app: App, { oruga }): void {
         registerComponent(app, Sidebar);
         registerProgrammatic(oruga, "sidebar", SidebarProgrammaticFactory);
     },
-} as OrugaComponentPlugin;
+} satisfies OrugaComponentPlugin;
 
 /** export sidebar components & composables */
 export { Sidebar as OSidebar, useSidebarProgrammatic };
