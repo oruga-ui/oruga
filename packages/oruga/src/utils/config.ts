@@ -62,7 +62,7 @@ export const getDefaultFunction = <T>(
     defaultValue?: T,
 ): ((...args) => any) => {
     return (...args) => {
-        const f = getValueByPath(globalOptions.value, path, defaultValue) as T;
+        const f = getDefault(path, defaultValue);
         if (typeof f === "function") return f(...args);
     };
 };
