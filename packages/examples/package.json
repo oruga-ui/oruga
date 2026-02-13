@@ -60,7 +60,7 @@
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "@highlightjs/vue-plugin": "2.1.2",
     "highlight.js": "11.11.1",
-    "markdown-it": "^14.1.0",
+    "markdown-it": "^14.1.1",
     "markdown-it-highlightjs": "^4.2.0"
   },
   "devDependencies": {
