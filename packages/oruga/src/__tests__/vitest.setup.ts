@@ -1,5 +1,7 @@
 import { afterEach, beforeEach, expect, vi } from "vitest";
 import { toHaveNoViolations } from "jest-axe";
+import { config } from "@vue/test-utils";
+import { createTestingOruga } from "@/utils/config";
 
 expect.extend(toHaveNoViolations);
 
@@ -37,6 +39,9 @@ HTMLDialogElement.prototype.show = vi.fn(function mock(
 ) {
     this.open = true;
 });
+
+// create a global oruga instance for all tests
+config.global.plugins = [createTestingOruga()];
 
 beforeEach(() => {
     // Preserve original implementation

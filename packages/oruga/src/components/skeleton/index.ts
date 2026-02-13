@@ -1,15 +1,16 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Skeleton from "./Skeleton.vue";
 
 import { registerComponent } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export skeleton plugin */
 export default {
-    install(app: App) {
+    install(app: App): void {
         registerComponent(app, Skeleton);
     },
-} as Plugin;
+} satisfies OrugaComponentPlugin;
 
 /** export skeleton components */
 export { Skeleton as OSkeleton };

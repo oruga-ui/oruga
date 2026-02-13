@@ -45,9 +45,21 @@ yarn add @oruga-ui/oruga-next
 
 ### Oruga Plugin
 
-To import all Oruga components you can use the default `Oruga` export in your main entry point.
-To specify some global configuration, a configuration object can be passed as second argument of `app.use` when installing it.  
-See [configuration](/documentation/configuration) for details of the available configuration options.
+In order to use Oruga components, you have to register an `Oruga` instance to your Vue app.
+This instance manages the global components and configurations, as well as the current Vue app connection.
+
+A new instance can be created by the `createOruga` composable.
+
+```js
+import { createOruga } from "@oruga-ui/oruga-next";
+const Oruga = createOruga();
+```
+
+However, the package also comes with a main `Oruga` instance as the default package export.
+An `Oruga` instance is also a Vue plugin, so you must use the `app.use()` function to pass it to your current Vue app.
+
+To extend the default global configuration, pass either a custom configuration object when creating a new Oruga instance, or pass it as the second argument when installing the instance to the Vue app.  
+See [configuration](/documentation/configuration) for further details and available configuration options.
 
 ```js
 import { createApp } from "vue";
@@ -60,7 +72,27 @@ app.use(Oruga, {
 });
 ```
 
-After the installation, you can use all the components in an [SFC](https://vuejs.org/guide/scaling-up/sfc) like this:
+To take advantage of bundler’s [tree-shaking](https://en.wikipedia.org/wiki/Tree_shaking) optimisations, no components are registered globally by default.
+If you want to register a component globally, extend the main Oruga instance with the relevant component plugin.
+This makes the respective component and its subcomponents, as well as any related programmatic components, globally available.
+
+> Note: before v0.13 the main Oruga Vue plugin registered all components globally by default.
+
+```js
+import { createApp } from "vue";
+import Oruga, { Autocomplete, Sidebar } from "@oruga-ui/oruga-next";
+
+Oruga.use(Autocomplete);
+Oruga.use(Sidebar);
+
+const app = createApp(App);
+
+app.use(Oruga, {
+    // here goes the global config
+});
+```
+
+Once installed, you can use all your registered global components in an [SFC](https://vuejs.org/guide/scaling-up/sfc) like this:
 
 ```html
 <template>
@@ -68,40 +100,16 @@ After the installation, you can use all the components in an [SFC](https://vuejs
 </template>
 ```
 
-### Individual Components (tree shaking)
+However, if you just want to import a single component separately, without any additional programmatic functionalities, you can import the individual components as follows:
 
-To take advantage of bundler’s [tree-shaking](https://en.wikipedia.org/wiki/Tree_shaking) optimizations, each component can also be added individually using its own plugin. Doing so allows you to globally add only the components you need, including their sub- and programmatic components:
+```vue
+<script setup>
+import { OButton } from "@oruga-ui/oruga-next";
+</script>
 
-```js
-import { createApp } from 'vue';
-import { Autocomplete, Sidebar } from '@oruga-ui/oruga-next';
-
-createApp(...)
-  .use(Autocomplete)
-  .use(Sidebar);
-```
-
-When only using individual components, no global configuration is initialised by default.
-To add some global configuration we provide an additional `OrugaConfig` plugin:
-
-```js
-import { OrugaConfig } from '@oruga-ui/oruga-next';
-
-const options: OrugaOptions = { ... }
-
-createApp(...)
-  .use(OrugaConfig, options);
-```
-
-However, if you just need to import a single component separately, without any additional programmatic functionalities, you can import individual components like this:
-
-```js
-import { createApp } from 'vue';
-import { OAutocomplete, OSidebar } from '@oruga-ui/oruga-next';
-
-createApp(...)
-  .component(OAutocomplete)
-  .component(OSidebar);
+<template>
+    <o-button>oruga-ui</o-button>
+</template>
 ```
 
 ### Styling
@@ -133,9 +141,9 @@ yarn add @oruga-ui/theme-oruga
 @import "@oruga-ui/theme-oruga/dist/scss/oruga.scss";
 ```
 
-### Volar support
+### VSC support
 
-If you are using Volar, you can specify global component types by configuring `compilerOptions.types` in `tsconfig.json`.
+If you are using Visual Studio Code (VSC), you can specify global component types by configuring `compilerOptions.types` in your `tsconfig.json`:
 
 ```js
 // tsconfig.json

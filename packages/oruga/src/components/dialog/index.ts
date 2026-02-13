@@ -1,22 +1,23 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Dialog from "./Dialog.vue";
 import useDialogProgrammatic, {
     DialogProgrammaticFactory,
 } from "./useDialogProgrammatic";
 
-import { registerComponent, registerComponentInterface } from "@/utils/plugins";
+import { registerComponent, registerProgrammatic } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export dialog specific types */
 export type { DialogProgrammaticOptions } from "./useDialogProgrammatic";
 
 /** export dialog plugin */
 export default {
-    install(app: App) {
+    install(app: App, { oruga }): void {
         registerComponent(app, Dialog);
-        registerComponentInterface(app, "dialog", DialogProgrammaticFactory);
+        registerProgrammatic(oruga, "dialog", DialogProgrammaticFactory);
     },
-} as Plugin;
+} satisfies OrugaComponentPlugin;
 
 /** export dialog components */
 export { Dialog as ODialog, useDialogProgrammatic };

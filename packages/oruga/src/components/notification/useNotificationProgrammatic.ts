@@ -11,6 +11,7 @@ import NotificationNotice from "./NotificationNotice.vue";
 
 import type { NotificationProps, NotificationNoticeProps } from "./props";
 
+// extend the OrugaProgrammatic type with the `notification` programmatic interface
 declare module "../../index" {
     interface OrugaProgrammatic {
         notification: Required<

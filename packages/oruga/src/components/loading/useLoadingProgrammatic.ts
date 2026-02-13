@@ -9,6 +9,7 @@ import Loading from "./Loading.vue";
 
 import type { LoadingProps } from "./props";
 
+// extend the OrugaProgrammatic type with the `loading` programmatic interface
 declare module "../../index" {
     interface OrugaProgrammatic {
         loading: Required<InstanceType<typeof LoadingProgrammaticFactory>>;
