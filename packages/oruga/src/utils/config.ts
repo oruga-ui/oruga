@@ -56,6 +56,17 @@ export const getDefault = <T>(
     return getValueByPath(globalOptions.value, path, defaultValue) as T & {};
 };
 
+/** less type strict version of getOption for component prop default with type function */
+export const getDefaultFunction = <T>(
+    path: DeepKeys<OrugaOptions>,
+    defaultValue?: T,
+): ((...args) => any) => {
+    return (...args) => {
+        const f = getDefault(path, defaultValue);
+        if (typeof f === "function") return f(...args);
+    };
+};
+
 export const setOption = <K extends DeepKeys<OrugaOptions>>(
     path: K,
     value: DeepType<OrugaOptions, K>,

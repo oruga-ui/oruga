@@ -4,7 +4,7 @@ import { computed, ref, useTemplateRef, watch } from "vue";
 import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
-import { getDefault } from "@/utils/config";
+import { getDefault, getDefaultFunction } from "@/utils/config";
 import { isDate, isDefined, pad } from "@/utils/helpers";
 import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
@@ -49,9 +49,9 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     defaultMinutes: undefined,
     defaultSeconds: undefined,
     locale: () => getDefault("locale"),
-    formatter: getDefault("timepicker.formatter"),
-    parser: getDefault("timepicker.parser"),
-    creator: getDefault("timepicker.creator"),
+    formatter: getDefaultFunction("timepicker.formatter"),
+    parser: getDefaultFunction("timepicker.parser"),
+    creator: getDefaultFunction("timepicker.creator"),
     unselectableTimes: undefined,
     resetOnMeridianChange: false,
     position: undefined,

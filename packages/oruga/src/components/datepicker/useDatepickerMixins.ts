@@ -98,14 +98,19 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
     });
 
     function dateCreator(): Date {
-        return typeof props.creator === "function"
-            ? props.creator()
-            : new Date();
+        if (typeof props.creator === "function") {
+            const r = props.creator();
+            if (r instanceof Date) return r;
+        }
+        return new Date();
     }
 
     /** Format date into string */
     function dateFormatter(date: typeof props.modelValue): string {
-        if (typeof props.formatter === "function") return props.formatter(date);
+        if (typeof props.formatter === "function") {
+            const r = props.formatter(date);
+            if (typeof r === "string") return r;
+        }
 
         if (!date) return "";
         const targetDates: Date[] = Array.isArray(date) ? date : [date];
@@ -129,7 +134,10 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
 
     /** Parse a string into a date */
     function dateParser(date: string): typeof props.modelValue {
-        if (typeof props.parser === "function") return props.parser(date);
+        if (typeof props.parser === "function") {
+            const r = props.parser(date);
+            if (r !== undefined) return r;
+        }
 
         if (!date) return undefined;
         const isArray = isTrueish(props.multiple) || isTrueish(props.range);
