@@ -4,10 +4,22 @@ import { createOruga } from "./utils/config";
 export * from "./types";
 export * from "./components/types";
 
-// export all helper functions
+// export all vue components
+export * from "./components";
+// export all components as vue plugins
+export * from "./components/plugins";
+export * as OrugaComponentPlugins from "./components/plugins";
+
+// export main oruga composables
+export { createOruga, useOruga } from "./utils/config";
+
+// export programmatic composable
+export { useProgrammaticConfig, type OrugaProgrammatic } from "./utils/config";
+
+// export useful helper functions
 export * from "./utils/helpers";
 
-// export some useful composables
+// export some useful composables functions
 export {
     findFocusable,
     useTrapFocus,
@@ -19,21 +31,6 @@ export {
     getScrollingParent,
 } from "./composables";
 
-// export all vue components
-export * from "./components";
-// export all components as vue plugins
-export * from "./components/plugins";
-import * as plugins from "./components/plugins";
-
-// export main oruga composables
-export { createOruga, useOruga } from "./utils/config";
-
-// export programmatic composable
-export { useProgrammaticConfig, type OrugaProgrammatic } from "./utils/config";
-
-// main oruga vue plugin
-const plugin = createOruga();
-
-// export default oruga vue plugin
-export { plugin as Oruga, plugins };
-export default plugin;
+// default export main oruga vue plugin
+const oruga = createOruga();
+export default oruga;
