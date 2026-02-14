@@ -12,16 +12,6 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
         description: "Class of the root element when on mobile.",
         info: "Switch to mobile view to see it in action!",
     },
-    orderClass: {
-        class: "orderClass",
-        deprecated: "use `positionClass` instead",
-        description: "Class of the root element with order.",
-        properties: ["order"],
-        suffixes: ["centered", "right", "left"],
-        action: (data): void => {
-            data.order = "centered";
-        },
-    },
     positionClass: {
         class: "positionClass",
         description: "Class of the root element with position.",

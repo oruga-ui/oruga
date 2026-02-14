@@ -29,12 +29,6 @@ export type PaginationProps = {
     /** Enable simple style */
     simple?: boolean;
     /**
-     * Buttons order
-     * @values centered, right, left
-     * @deprecated will be renamed to `position`
-     */
-    order?: "centered" | "right" | "left";
-    /**
      * Buttons position order
      * @values centered, right, left
      */
@@ -68,11 +62,6 @@ export type PaginationClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /**
-     * Class of the root element with order
-     * @deprecated use `positionClass` instead
-     */
-    orderClass: ComponentClass;
     /** Class of the root element with position */
     positionClass: ComponentClass;
     /** Class of the root element with size */
