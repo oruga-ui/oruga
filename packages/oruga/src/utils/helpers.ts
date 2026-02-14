@@ -212,21 +212,6 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
 }
 
 /**
- * @deprecated not used
- * Returns true if it is a DOM element
- * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
- */
-export function isElement(el: any): el is Element {
-    return typeof HTMLElement === "object"
-        ? el instanceof HTMLElement //DOM2
-        : el &&
-              typeof el === "object" &&
-              el !== null &&
-              el.nodeType === 1 &&
-              typeof el.nodeName === "string";
-}
-
-/**
  * Merge function to replace Object.assign with deep merging possibility
  */
 export function merge(target: any, source: any, deep = false): any {
