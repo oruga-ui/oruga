@@ -101,37 +101,6 @@ export function getScrollingParent(target: HTMLElement): HTMLElement | null {
 }
 
 /**
- * Check if an element is visible in the browser viewport.
- * @deprecated currently unused - can be deleted
- */
-export function isElementInView(
-    elementRef: MaybeRefOrGetter<HTMLElement>,
-): boolean {
-    const element = unrefElement(elementRef);
-    const bounding = element.getBoundingClientRect();
-
-    return (
-        bounding.top >= 0 &&
-        bounding.left >= 0 &&
-        bounding.bottom <=
-            (window.innerHeight || document.documentElement.clientHeight) &&
-        bounding.right <=
-            (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
-
-/**
- * Check if an element is currently scrollable by comparing its clientHeight and scrollHeight.
- * @deprecated currently unused - can be deleted
- */
-export function isScrollable(
-    elementRef: MaybeRefOrGetter<HTMLElement>,
-): boolean {
-    const element = unrefElement(elementRef);
-    return element && element.clientHeight < element.scrollHeight;
-}
-
-/**
  * Ensure a given child element is within the parent's visible scroll area.
  * If the child is not visible, scroll the parent to the child's position.
  */
