@@ -124,18 +124,18 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!props.closeOnEscape && checkNotCloseable("escape")) return;
+    if (!props.closeOnEscape) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Close tooltip if clicked outside. */
 function onClickedOutside(event: Event): void {
-    if (!props.closeOnOutside && checkNotCloseable("outside")) return;
+    if (!props.closeOnOutside) return;
     close(event);
 }
 
 function onHoverLeave(event: Event): void {
-    if (props.closeOnOutside && checkNotCloseable("content")) return;
+    if (!props.closeable && !props.closeOnOutside) return;
     close(event);
 }
 
@@ -183,15 +183,8 @@ function open(event: Event): void {
     }
 }
 
-/** check if method is cancelable (for deprecreated check) */
-function checkNotCloseable(
-    method: Exclude<typeof props.closeable, boolean>[number],
-): boolean {
-    return !Array.isArray(props.closeable) || !props.closeable.includes(method);
-}
-
 function close(event: Event): void {
-    if (!isActive.value || !props.closeable) return;
+    if (!isActive.value) return;
     if (timeout) clearTimeout(timeout);
     isActive.value = false;
     emits("close", event);

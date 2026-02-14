@@ -57,12 +57,8 @@ export type TooltipProps = {
     openOnFocus?: boolean;
     /** Tooltip delay before it appears (number in ms) */
     delay?: number;
-    /**
-     * Tooltip auto close options (pressing escape, clicking the content or outside)
-     * @values true, false, content, outside, escape
-     * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
-     */
-    closeable?: Array<"content" | "outside" | "escape"> | boolean;
+    /** Close on hover out of the content */
+    closeable?: boolean;
     /** Close when clicked outside of the panel */
     closeOnOutside?: boolean;
     /** Close when pressing escape key */

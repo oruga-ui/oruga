@@ -240,7 +240,7 @@ describe("OTooltip tests", () => {
 
         test("react accordingly when has close on hover leave", async () => {
             const wrapper = mount(OTooltip, {
-                props: { active: true },
+                props: { active: true, closeable: true },
                 attachTo: document.body,
             });
             await setTimeout(); // await event handler get set
@@ -283,26 +283,6 @@ describe("OTooltip tests", () => {
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
             expect(activeEmits![0][0]).toBeFalsy();
-        });
-
-        test("react accordingly when pressing escape with closeable false", async () => {
-            const wrapper = mount(OTooltip, {
-                props: { active: true, closeOnEscape: true, closeable: false },
-            });
-            await setTimeout(); // await event handler get set
-
-            const trigger = wrapper.find(".o-tooltip__trigger");
-            expect(trigger.exists()).toBeTruthy();
-
-            const content = wrapper.find(".o-tooltip__content");
-            expect(content.exists()).toBeTruthy();
-            expect(content.isVisible()).toBeTruthy();
-
-            await trigger.trigger("keyup", { key: "Esc" });
-
-            expect(content.isVisible()).toBeTruthy();
-            expect(wrapper.emitted("close")).toBeUndefined();
-            expect(wrapper.emitted("update:active")).toBeUndefined();
         });
 
         test("react accordingly when has close on outside", async () => {

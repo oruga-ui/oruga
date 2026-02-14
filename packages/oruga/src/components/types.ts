@@ -3481,11 +3481,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 openOnFocus: boolean;
                 /**
-                 * Tooltip auto close options (pressing escape, clicking the content or outside)
-                 * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
-                 */
-                closeable: boolean | ("content" | "escape" | "outside")[];
-                /**
                  * Close when clicked outside of the panel
                  */
                 closeOnOutside: boolean;
