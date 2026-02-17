@@ -7,7 +7,8 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
         class: "rootClass",
         description: "Class of the root element.",
         action: (data): void => {
-            data.cancelable = true;
+            data.closeOnEscape = true;
+            data.closeOnOutside = true;
             data.fullPage = false;
             data.active = true;
         },
@@ -18,7 +19,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
         properties: ["fullPage"],
         action: (data): void => {
             data.fullPage = true;
-            data.cancelable = true;
+            data.closeOnEscape = true;
             data.active = true;
         },
     },
@@ -26,7 +27,8 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
         class: "overlayClass",
         description: "Class of the overlay element.",
         action: (data): void => {
-            data.cancelable = true;
+            data.closeOnEscape = true;
+            data.closeOnOutside = true;
             data.fullPage = false;
             data.active = true;
         },
@@ -35,7 +37,8 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
         class: "iconClass",
         description: "Class for the icon element.",
         action: (data): void => {
-            data.cancelable = true;
+            data.closeOnEscape = true;
+            data.closeOnOutside = true;
             data.fullPage = false;
             data.icon = "loading";
             data.active = true;
@@ -45,7 +48,8 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
         class: "labelClass",
         description: "Class for the label element.",
         action: (data): void => {
-            data.cancelable = true;
+            data.closeOnEscape = true;
+            data.closeOnOutside = true;
             data.fullPage = false;
             data.label = "Loading...";
             data.active = true;

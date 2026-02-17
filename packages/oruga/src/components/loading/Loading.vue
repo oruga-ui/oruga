@@ -31,7 +31,6 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     fullPage: true,
     label: undefined,
     animation: () => getDefault("loading.animation", "fade"),
-    cancelable: undefined,
     closeOnOutside: false,
     closeOnEscape: false,
     icon: () => getDefault("loading.icon", "loading"),
@@ -91,25 +90,14 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!props.closeOnEscape || checkNotCloseable("escape")) return;
+    if (!props.closeOnEscape) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener, when clicked on the overlay. */
 function clickedOutside(event: Event): void {
-    if (!props.closeOnOutside || checkNotCloseable("outside")) return;
+    if (!props.closeOnOutside) return;
     close(event);
-}
-
-/** check if method is cancelable (for deprecreated check) */
-function checkNotCloseable(method: string): boolean {
-    return (
-        typeof props.cancelable !== "undefined" &&
-        ((typeof props.cancelable === "boolean" && !props.cancelable) ||
-            !props.cancelable ||
-            (Array.isArray(props.cancelable) &&
-                !props.cancelable.includes(method)))
-    );
 }
 
 /** set active to false and emit close event */
