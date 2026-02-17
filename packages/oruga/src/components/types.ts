@@ -1970,11 +1970,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 simple: boolean;
                 /**
-                 * Buttons order
-                 * @deprecated will be renamed to `position`
-                 */
-                order: "centered" | "left" | "right";
-                /**
                  * Buttons position order
                  */
                 position: "centered" | "left" | "right";
@@ -2022,11 +2017,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element when on mobile
                  */
                 mobileClass: ClassDefinition;
-                /**
-                 * Class of the root element with order
-                 * @deprecated use `positionClass` instead
-                 */
-                orderClass: ClassDefinition;
                 /**
                  * Class of the root element with position
                  */
