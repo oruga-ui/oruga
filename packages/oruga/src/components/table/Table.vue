@@ -616,7 +616,7 @@ const filters = ref<Record<string, string>>({});
 
 /** check if any column has filterable active */
 const hasFilterColumns = computed(() =>
-    tableColumns.value.some((column) => column.searchable || column.filterable),
+    tableColumns.value.some((column) => column.filterable),
 );
 
 // emit filter change event
@@ -1460,22 +1460,9 @@ defineExpose({
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style">
-                                <template
-                                    v-if="
-                                        column.searchable || column.filterable
-                                    ">
+                                <template v-if="column.filterable">
                                     <o-slot-component
-                                        v-if="column.$slots?.searchable"
-                                        :component="column"
-                                        name="searchable"
-                                        tag="span"
-                                        :props="{
-                                            column: column.value,
-                                            index: column.index,
-                                            filters,
-                                        }" />
-                                    <o-slot-component
-                                        v-else-if="column.$slots?.filter"
+                                        v-if="column.$slots?.filter"
                                         :component="column"
                                         name="filter"
                                         tag="span"
