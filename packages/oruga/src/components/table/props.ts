@@ -153,11 +153,6 @@ export type TableProps<T> = {
     filtersIcon?: string;
     /** Placeholder of the column search input */
     filtersPlaceholder?: string;
-    /**
-     * Add a native event to filter
-     * @deprecated use `filter` event instead
-     */
-    filtersEvent?: string;
     /** Filtering debounce time (in milliseconds) */
     filterDebounce?: number;
     /** Label to be shown when the table is empty */

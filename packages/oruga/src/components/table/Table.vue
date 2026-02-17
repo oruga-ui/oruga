@@ -123,7 +123,6 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
     filterDebounce: () => getDefault("table.filterDebounce", 300),
-    filtersEvent: "",
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
     emptyIconSize: () => getDefault("table.emptyIconSize"),
@@ -622,11 +621,6 @@ const hasFilterColumns = computed(() =>
 
 // emit filter change event
 watch(filters, (value) => emits("filters-change", value), { deep: true });
-
-/** @deprecated */
-function onFiltersEvent(event: Event): void {
-    emits("filters-event", props.filtersEvent, filters.value, event);
-}
 
 /**
  * Set the hidden state for the given rows based on active filter values.
@@ -1504,7 +1498,6 @@ defineExpose({
                                         :pack="iconPack"
                                         size="small"
                                         :aria-label="`${column.label} filter`"
-                                        @[filtersEvent]="onFiltersEvent"
                                         @input="
                                             (v, e) =>
                                                 $emit('filter', column, v, e)
