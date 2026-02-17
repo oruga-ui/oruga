@@ -1763,11 +1763,6 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                  */
                 overlay: boolean;
                 /**
-                 * Is Modal cancelable by clicking 'X', pressing escape or clicking outside
-                 * @deprecated use `closeable`, `closeOnOutside` and `closeOnEscape`
-                 */
-                cancelable: boolean | string[];
-                /**
                  * Adds close button to the header
                  */
                 closeable: boolean;
