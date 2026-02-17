@@ -298,11 +298,6 @@ export type TableColumnProps<T, K extends string = FieldKey<T>> = {
      * @values left, centered, right
      */
     position?: "left" | "centered" | "right";
-    /**
-     * Enable an additional searchbar below the column header
-     * @deprecated use `filterable` instead
-     */
-    searchable?: boolean;
     /** Enable an additional filterbar below the column header */
     filterable?: boolean;
     /** Enable column sortability */
