@@ -2235,11 +2235,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 animation: string;
                 /**
-                 * Is Sidebar cancelable by pressing escape or clicking outside.
-                 * @deprecated use `closeOnOutside` and `closeOnEscape`
-                 */
-                cancelable: boolean | string[];
-                /**
                  * Close when clicked outside of the panel
                  */
                 closeOnOutside: boolean;
