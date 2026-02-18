@@ -841,7 +841,6 @@ const tableCheckedRows = defineModel<T[]>("checkedRows", {
 
 /** reset checkedRows whem page props changes */
 watch([tableCurrentPage, () => props.perPage], () => {
-    console.warn("???", props.keepCheckedOnPageChange);
     if (!props.keepCheckedOnPageChange) tableCheckedRows.value = [];
 });
 
