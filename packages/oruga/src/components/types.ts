@@ -2714,6 +2714,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 isRowCheckable: ((row: unknown) => boolean);
                 /**
+                 * Controls whether checked rows are cleared when table pagination changes
+                 */
+                keepCheckedOnPageChange: boolean;
+                /**
                  * Columns won't be sorted on clientside, use with `sort` event to sort in your backend
                  */
                 backendSorting: boolean;

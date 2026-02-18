@@ -38,6 +38,20 @@ const data = [
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
+    {
+        id: 6,
+        first_name: "Bonita",
+        last_name: "Cortez",
+        date: "2016-03-03 10:28:46",
+        gender: "Female",
+    },
+    {
+        id: 7,
+        first_name: "Randolf",
+        last_name: "Mayor",
+        date: "2016-07-04 14:38:38",
+        gender: "Male",
+    },
 ];
 
 const columns: TableColumn<(typeof data)[number]>[] = [
@@ -68,6 +82,7 @@ const columns: TableColumn<(typeof data)[number]>[] = [
 
 const checkboxPosition = ref<"left" | "right">("left");
 const checkedRows = ref([data[1], data[3]]);
+const keepCheckedOnPageChange = ref(false);
 </script>
 
 <template>
@@ -83,16 +98,22 @@ const checkedRows = ref([data[1], data[3]]);
                 <option value="left">Checkbox at left</option>
                 <option value="right">Checkbox at right</option>
             </o-select>
+            <o-switch
+                v-model="keepCheckedOnPageChange"
+                label="Keep Checked On Page Change" />
         </o-field>
 
         <o-table
             v-model:checked-rows="checkedRows"
             :data="data"
             :columns="columns"
+            :per-page="5"
+            paginated
             checkable
             row-key="id"
             :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
-            :checkbox-position="checkboxPosition">
+            :checkbox-position="checkboxPosition"
+            :keep-checked-on-page-change="keepCheckedOnPageChange">
             <template #bottomLeft>
                 <b>Total checked</b>: {{ checkedRows.length }}
             </template>

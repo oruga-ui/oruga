@@ -88,7 +88,7 @@ import DraggableCode from "./draggable.vue?raw";
         When the <code>checkable</code> prop is set, each row will have a
         checkbox. The checkbox position can be changed from left to right using
         the <code>checkbox-position</code> prop. The checked rows are combined
-        in the <code>checked-rows</code> prop, which is two-way bindable.
+        in the <code>checked-rows</code> prop, which is two-way bindable. When the user navigates to a new page <code>checked-rows</code> will reset, to bypass this reset add the <code>keep-checked-on-page-change</code> prop.
         Consider defining whether a row is checkable with a function given by
         the <code>is-row-checkable</code> prop.
         <ExampleViewer :component="Checkable" :code="CheckableCode" />

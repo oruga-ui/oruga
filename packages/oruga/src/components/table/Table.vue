@@ -91,6 +91,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     checkboxVariant: () => getDefault("table.checkboxVariant"),
     isRowChecked: undefined,
     isRowCheckable: getDefaultFunction("table.isRowCheckable", () => true),
+    keepCheckedOnPageChange: () => getDefault("table.keepCheckedOnPageChange", false),
     backendSorting: () => getDefault("table.backendSorting", false),
     defaultSort: () => getDefault("table.defaultSort"),
     defaultSortDirection: () => getDefault("table.defaultSortDirection", "asc"),
@@ -839,10 +840,10 @@ const tableCheckedRows = defineModel<T[]>("checkedRows", {
 });
 
 /** reset checkedRows whem page props changes */
-watch(
-    [tableCurrentPage, () => props.perPage],
-    () => (tableCheckedRows.value = []),
-);
+watch([tableCurrentPage, () => props.perPage], () => {
+    console.warn("???", props.keepCheckedOnPageChange);
+    if (!props.keepCheckedOnPageChange) tableCheckedRows.value = [];
+});
 
 /** check if all rows in the page are checked */
 const isAllChecked = computed(() => {
