@@ -75,7 +75,7 @@ export type TableProps<T> = {
     /**
      * Controls whether checked rows are cleared when table pagination changes
      */
-    keepCheckedOnPageChange: boolean;
+    keepCheckedOnPageChange?: boolean;
     /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
     backendSorting?: boolean;
     /**
