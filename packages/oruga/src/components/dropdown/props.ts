@@ -52,6 +52,8 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     menuId?: string;
     /** Dropdown menu tag name */
     menuTag?: DynamicComponent;
+    /** Dropdown item tag name */
+    itemTag?: DynamicComponent;
     /** Dropdown trigger tag name */
     triggerTag?: DynamicComponent;
     /**

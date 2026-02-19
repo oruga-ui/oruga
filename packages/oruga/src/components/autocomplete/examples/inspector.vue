@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
+import type { OptionsGroupsProp } from "@oruga-ui/oruga-next";
 import type { InspectData } from "@docs";
 import type { AutocompleteClasses, AutocompleteProps } from "../props";
 
-const options: OptionsGroupProp<string> = [
+const options: OptionsGroupsProp = [
     {
         label: "Frameworks",
         options: ["Vue.js"],

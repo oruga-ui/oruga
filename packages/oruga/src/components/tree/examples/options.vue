@@ -1,136 +1,102 @@
 <script setup lang="ts">
-import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
+import type { TreeOptions } from "@oruga-ui/oruga-next";
 
-const options: OptionsGroupProp = [
+const options: TreeOptions<string> = [
     {
         label: "Documents",
-        attrs: {
-            icon: "folder",
-        },
+        icon: "folder",
         options: [
             {
                 label: "Work",
                 value: "work",
-                attrs: {
-                    icon: "cog",
-                    options: [
-                        {
-                            label: "Expenses.doc",
-                            value: "expenses",
-                            attrs: {
-                                icon: "file",
-                            },
-                        },
-                        {
-                            label: "Resume.doc",
-                            value: "resume",
-                            attrs: {
-                                icon: "file",
-                            },
-                        },
-                    ],
-                },
+                icon: "cog",
+                options: [
+                    {
+                        label: "Expenses.doc",
+                        value: "expenses",
+                        icon: "file",
+                    },
+                    {
+                        label: "Resume.doc",
+                        value: "resume",
+                        icon: "file",
+                    },
+                ],
             },
             {
                 label: "Home",
                 value: "home",
-                attrs: {
-                    icon: "home",
-                    options: [
-                        {
-                            label: "Invoices.txt",
-                            value: "invoices",
-                            attrs: {
-                                icon: "file",
-                            },
-                        },
-                    ],
-                },
+                icon: "home",
+                options: [
+                    {
+                        label: "Invoices.txt",
+                        value: "invoices",
+                        icon: "file",
+                    },
+                ],
             },
         ],
     },
     {
         label: "Events",
         value: "events",
-        attrs: {
-            icon: "calendar",
-        },
+        icon: "calendar",
         options: [
             {
                 label: "Meeting",
                 value: "meeting",
-                attrs: {
-                    icon: "calendar-plus",
-                },
+                icon: "calendar-plus",
             },
             {
                 label: "Product Launch",
                 value: "product-launch",
-                attrs: {
-                    icon: "calendar-plus",
-                },
+                icon: "calendar-plus",
             },
             {
                 label: "Report Review",
                 value: "report-review",
-                attrs: {
-                    icon: "calendar-plus",
-                },
+                icon: "calendar-plus",
             },
         ],
     },
     {
         label: "Movies",
         value: "movies",
-        attrs: {
-            icon: "star",
-        },
+        icon: "star",
         options: [
             {
                 label: "Al Pacino",
                 value: "al-pacion",
-                attrs: {
-                    icon: "star",
-                    options: [
-                        {
-                            label: "Scarface",
-                            value: "scarface",
-                            attrs: {
-                                icon: "video",
-                            },
-                        },
-                        {
-                            label: "Serpico",
-                            value: "serpico",
-                            attrs: {
-                                icon: "video",
-                            },
-                        },
-                    ],
-                },
+                icon: "star",
+                options: [
+                    {
+                        label: "Scarface",
+                        value: "scarface",
+                        icon: "video",
+                    },
+                    {
+                        label: "Serpico",
+                        value: "serpico",
+                        icon: "video",
+                    },
+                ],
             },
             {
                 label: "Robert De Niro",
                 value: "robert-de-niro",
-                attrs: {
-                    icon: "star",
-                    options: [
-                        {
-                            label: "Goodfellas",
-                            value: "goodfellas",
-                            attrs: {
-                                icon: "video",
-                            },
-                        },
-                        {
-                            label: "Untouchables",
-                            value: "untouchables",
-                            attrs: {
-                                icon: "video",
-                            },
-                        },
-                    ],
-                },
+                icon: "star",
+                options: [
+                    {
+                        label: "Goodfellas",
+                        value: "goodfellas",
+                        icon: "video",
+                    },
+                    {
+                        label: "Untouchables",
+                        value: "untouchables",
+                        icon: "video",
+                    },
+                ],
             },
         ],
     },

@@ -29,8 +29,8 @@ import {
     unrefElement,
     useIndexer,
     isGroupOption,
-    type Option,
     type OptionGroupItem,
+    type OptionItem,
 } from "@/composables";
 
 import type {
@@ -77,6 +77,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     maxHeight: () => getDefault("dropdown.maxHeight", 200),
     menuId: () => useId(),
     menuTag: () => getDefault("dropdown.menuTag", "div"),
+    itemTag: () => getDefault("dropdown.itemTag", "div"),
     triggerTag: () => getDefault("dropdown.triggerTag", "div"),
     triggers: () => getDefault("dropdown.triggers", []),
     openOnClick: () => getDefault("tooltip.openOnClick", true),
@@ -171,7 +172,7 @@ defineSlots<{
      * Override the label, default is label prop
      * @param option {object} - option item
      */
-    option?(props: { option: Option<DropdownItemProps<T>> }): void;
+    option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
 }>();
 
 const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
@@ -248,6 +249,7 @@ watch(
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
     menuId: props.menuId,
+    itemTag: props.itemTag,
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
     selectable: props.selectable,
@@ -748,14 +750,14 @@ defineExpose({ value: vmodel, items: childItems });
                                     v-for="_option in option.options"
                                     v-bind="_option.item"
                                     :key="_option.key">
-                                    <slot name="option" :option="_option.item">
+                                    <slot name="option" :option="_option">
                                         <span> {{ _option.item.label }} </span>
                                     </slot>
                                 </o-dropdown-item>
                             </template>
 
                             <o-dropdown-item v-else v-bind="option.item">
-                                <slot name="option" :option="option.item">
+                                <slot name="option" :option="option">
                                     <span> {{ option.item.label }} </span>
                                 </slot>
                             </o-dropdown-item>

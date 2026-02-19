@@ -22,11 +22,11 @@ import {
     useIndexer,
     isGroupOption,
     type OptionGroupItem,
+    type OptionItem,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { Option } from "@/types";
 import type { AutocompleteProps } from "./props";
 import type { DropdownItemProps } from "../dropdown/props";
 import type { ComponentExposed } from "vue-component-type-helpers";
@@ -193,7 +193,7 @@ const slots = defineSlots<{
      * Override the select option
      * @param option {object} - option object
      */
-    option?(props: { option: Option<DropdownItemProps<T>> }): void;
+    option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
 }>();
 
 const dropdownRef =
@@ -485,6 +485,7 @@ defineExpose({
         :class="rootClasses"
         :menu-id="menuId"
         :menu-tag="menuTag"
+        :item-tag="itemTag"
         scrollable
         selectable
         :open-on-click="false"
@@ -539,7 +540,6 @@ defineExpose({
         <template #before="{ toggle }">
             <o-dropdown-item
                 v-if="$slots.header"
-                :tag="itemTag"
                 :value="SpecialOption.Header"
                 :clickable="selectableHeader"
                 :class="[...itemClasses, ...itemHeaderClasses]">
@@ -554,7 +554,6 @@ defineExpose({
                         <o-dropdown-item
                             v-bind="option.attrs"
                             :label="option.label"
-                            :tag="itemTag"
                             role="presentation"
                             :clickable="false"
                             :class="[...itemClasses, ...itemGroupClasses]">
@@ -567,9 +566,8 @@ defineExpose({
                             v-for="_option in option.options"
                             :key="_option.key"
                             v-bind="_option.item"
-                            :tag="itemTag"
                             :class="itemClasses">
-                            <slot name="option" :option="_option.item">
+                            <slot name="option" :option="_option">
                                 <span> {{ _option.item.label }} </span>
                             </slot>
                         </o-dropdown-item>
@@ -578,9 +576,8 @@ defineExpose({
                     <o-dropdown-item
                         v-else
                         v-bind="option.item"
-                        :tag="itemTag"
                         :class="itemClasses">
-                        <slot name="option" :option="option.item">
+                        <slot name="option" :option="option">
                             <span> {{ option.item.label }} </span>
                         </slot>
                     </o-dropdown-item>
@@ -590,7 +587,6 @@ defineExpose({
 
         <template v-if="$slots.empty" #empty="{ toggle }">
             <o-dropdown-item
-                :tag="itemTag"
                 :value="SpecialOption.EMPTY"
                 :clickable="false"
                 :class="[...itemClasses, ...itemEmptyClasses]">
@@ -601,7 +597,6 @@ defineExpose({
         <template #after="{ toggle }">
             <o-dropdown-item
                 v-if="$slots.footer"
-                :tag="itemTag"
                 :value="SpecialOption.Footer"
                 :clickable="selectableFooter"
                 :class="[...itemClasses, ...itemFooterClasses]">
