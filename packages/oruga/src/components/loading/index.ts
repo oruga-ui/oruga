@@ -9,6 +9,7 @@ import { registerComponent, registerProgrammatic } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export loading specific types */
+export type * from "./props";
 export type { LoadingProgrammaticOptions } from "./useLoadingProgrammatic";
 
 /** export loading plugin */

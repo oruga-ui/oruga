@@ -6,6 +6,9 @@ import MenuItem from "./MenuItem.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export menu specific types */
+export type * from "./props";
+
 /** export menu plugin */
 export default {
     install(app: App): void {

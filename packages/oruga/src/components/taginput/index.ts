@@ -5,6 +5,9 @@ import Taginput from "./Taginput.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export taginput specific types */
+export type * from "./props";
+
 /** export taginput plugin */
 export default {
     install(Vue: App): void {

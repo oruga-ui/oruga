@@ -6,6 +6,9 @@ import CarouselItem from "./CarouselItem.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export carousel specific types */
+export type * from "./props";
+
 /** export carousel plugin */
 export default {
     install(app: App): void {

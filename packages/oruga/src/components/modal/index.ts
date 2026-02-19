@@ -9,6 +9,7 @@ import { registerComponent, registerProgrammatic } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export modal specific types */
+export type * from "./props";
 export type { ModalProgrammaticOptions } from "./useModalProgrammatic";
 
 /** export modal plugin */
