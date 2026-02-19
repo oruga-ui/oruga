@@ -6,6 +6,9 @@ import ListItem from "./ListItem.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export listbox specific types */
+export type * from "./props";
+
 /** export listbox plugin */
 export default {
     install(Vue: App): void {

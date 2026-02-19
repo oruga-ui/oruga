@@ -5,6 +5,9 @@ import Pagination from "./Pagination.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export pagination specific types */
+export type * from "./props";
+
 /** export pagination plugin */
 export default {
     install(app: App): void {

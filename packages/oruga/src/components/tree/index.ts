@@ -6,6 +6,9 @@ import TreeItem from "./TreeItem.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export tree specific types */
+export type * from "./props";
+
 /** export tree plugin */
 export default {
     install(app: App): void {

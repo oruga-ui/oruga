@@ -6,6 +6,9 @@ import DropdownItem from "./DropdownItem.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export dropdown specific types */
+export type * from "./props";
+
 /** export dropdown plugin */
 export default {
     install(app: App): void {

@@ -9,6 +9,7 @@ import { registerComponent, registerProgrammatic } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export sidebar specific types */
+export type * from "./props";
 export type { SidebarProgrammaticOptions } from "./useSidebarProgrammatic";
 
 /** export sidebar plugin */
