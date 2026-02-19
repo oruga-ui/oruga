@@ -6,6 +6,7 @@ import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export datepicker specific types */
+export type * from "./props";
 export type { DatepickerEvent, FocusedDate } from "./types";
 
 /** export datepicker plugin */

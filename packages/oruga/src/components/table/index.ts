@@ -7,6 +7,7 @@ import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export table specific types */
+export type * from "./props";
 export type { TableColumn, TableRow } from "./types";
 
 /** export table plugin */

@@ -153,11 +153,6 @@ export type TableProps<T> = {
     filtersIcon?: string;
     /** Placeholder of the column search input */
     filtersPlaceholder?: string;
-    /**
-     * Add a native event to filter
-     * @deprecated use `filter` event instead
-     */
-    filtersEvent?: string;
     /** Filtering debounce time (in milliseconds) */
     filterDebounce?: number;
     /** Label to be shown when the table is empty */
@@ -303,11 +298,6 @@ export type TableColumnProps<T, K extends string = FieldKey<T>> = {
      * @values left, centered, right
      */
     position?: "left" | "centered" | "right";
-    /**
-     * Enable an additional searchbar below the column header
-     * @deprecated use `filterable` instead
-     */
-    searchable?: boolean;
     /** Enable an additional filterbar below the column header */
     filterable?: boolean;
     /** Enable column sortability */

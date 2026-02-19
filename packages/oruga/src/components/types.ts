@@ -1763,11 +1763,6 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                  */
                 overlay: boolean;
                 /**
-                 * Is Modal cancelable by clicking 'X', pressing escape or clicking outside
-                 * @deprecated use `closeable`, `closeOnOutside` and `closeOnEscape`
-                 */
-                cancelable: boolean | string[];
-                /**
                  * Adds close button to the header
                  */
                 closeable: boolean;
@@ -1975,11 +1970,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 simple: boolean;
                 /**
-                 * Buttons order
-                 * @deprecated will be renamed to `position`
-                 */
-                order: "centered" | "left" | "right";
-                /**
                  * Buttons position order
                  */
                 position: "centered" | "left" | "right";
@@ -2027,11 +2017,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element when on mobile
                  */
                 mobileClass: ClassDefinition;
-                /**
-                 * Class of the root element with order
-                 * @deprecated use `positionClass` instead
-                 */
-                orderClass: ClassDefinition;
                 /**
                  * Class of the root element with position
                  */
@@ -2249,11 +2234,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Custom animation (transition name)
                  */
                 animation: string;
-                /**
-                 * Is Sidebar cancelable by pressing escape or clicking outside.
-                 * @deprecated use `closeOnOutside` and `closeOnEscape`
-                 */
-                cancelable: boolean | string[];
                 /**
                  * Close when clicked outside of the panel
                  */

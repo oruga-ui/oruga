@@ -123,7 +123,6 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
     filterDebounce: () => getDefault("table.filterDebounce", 300),
-    filtersEvent: "",
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
     emptyIconSize: () => getDefault("table.emptyIconSize"),
@@ -617,16 +616,11 @@ const filters = ref<Record<string, string>>({});
 
 /** check if any column has filterable active */
 const hasFilterColumns = computed(() =>
-    tableColumns.value.some((column) => column.searchable || column.filterable),
+    tableColumns.value.some((column) => column.filterable),
 );
 
 // emit filter change event
 watch(filters, (value) => emits("filters-change", value), { deep: true });
-
-/** @deprecated */
-function onFiltersEvent(event: Event): void {
-    emits("filters-event", props.filtersEvent, filters.value, event);
-}
 
 /**
  * Set the hidden state for the given rows based on active filter values.
@@ -1466,22 +1460,9 @@ defineExpose({
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style">
-                                <template
-                                    v-if="
-                                        column.searchable || column.filterable
-                                    ">
+                                <template v-if="column.filterable">
                                     <o-slot-component
-                                        v-if="column.$slots?.searchable"
-                                        :component="column"
-                                        name="searchable"
-                                        tag="span"
-                                        :props="{
-                                            column: column.value,
-                                            index: column.index,
-                                            filters,
-                                        }" />
-                                    <o-slot-component
-                                        v-else-if="column.$slots?.filter"
+                                        v-if="column.$slots?.filter"
                                         :component="column"
                                         name="filter"
                                         tag="span"
@@ -1504,7 +1485,6 @@ defineExpose({
                                         :pack="iconPack"
                                         size="small"
                                         :aria-label="`${column.label} filter`"
-                                        @[filtersEvent]="onFiltersEvent"
                                         @input="
                                             (v, e) =>
                                                 $emit('filter', column, v, e)

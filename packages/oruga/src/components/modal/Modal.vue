@@ -47,7 +47,6 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     width: () => getDefault("modal.width", 960),
     animation: () => getDefault("modal.animation", "zoom-out"),
     overlay: () => getDefault("modal.overlay", true),
-    cancelable: () => getDefault("modal.cancelable"),
     closeable: () => getDefault("modal.closeable", true),
     closeOnOutside: () => getDefault("modal.closeOnOutside", true),
     closeOnEscape: () => getDefault("modal.closeOnEscape", true),
@@ -128,7 +127,7 @@ onMounted(() => {
 
 // #region --- Events Feature ---
 
-const showX = computed(() => props.closeable ?? !checkNotCancelable("x"));
+const showX = computed(() => props.closeable);
 
 if (isClient) {
     // register onKeyup event listener when is active
@@ -143,14 +142,14 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!props.closeOnEscape || checkNotCancelable("escape")) return;
+    if (!props.closeOnEscape) return;
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener. */
 function onClickedOutside(event: Event): void {
-    if (!props.closeOnOutside || checkNotCancelable("outside")) return;
+    if (!props.closeOnOutside) return;
     if (!isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
@@ -158,19 +157,6 @@ function onClickedOutside(event: Event): void {
     )
         event.preventDefault();
     close(event);
-}
-
-/** Check if the method is not in cancelable (for deprecreated check) */
-function checkNotCancelable(
-    method: Exclude<typeof props.cancelable, boolean>[number],
-): boolean {
-    return (
-        typeof props.cancelable !== "undefined" &&
-        ((typeof props.cancelable === "boolean" && !props.cancelable) ||
-            !props.cancelable ||
-            (Array.isArray(props.cancelable) &&
-                !props.cancelable.includes(method)))
-    );
 }
 
 /** set active to false and emit close event */

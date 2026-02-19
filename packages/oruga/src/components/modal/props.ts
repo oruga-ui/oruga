@@ -17,12 +17,6 @@ export type ModalProps<C extends Component = Component> = {
     animation?: string;
     /** Show an overlay background */
     overlay?: boolean;
-    /**
-     * Is Modal cancelable by clicking 'X', pressing escape or clicking outside
-     * @values escape, x, outside, button, true, false
-     * @deprecated use `closeable`, `closeOnOutside` and `closeOnEscape`
-     */
-    cancelable?: string[] | boolean;
     /** Adds close button to the header */
     closeable?: boolean;
     /** Close when clicked outside of the panel */

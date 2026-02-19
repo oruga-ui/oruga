@@ -5,6 +5,9 @@ import Button from "./Button.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export button specific types */
+export type * from "./props";
+
 /** export button plugin */
 export default {
     install(app: App): void {

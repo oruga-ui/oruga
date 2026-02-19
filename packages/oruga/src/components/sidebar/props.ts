@@ -27,12 +27,6 @@ export type SidebarProps<C extends Component = Component> = {
     mobile?: "expanded" | "reduced" | "fullwidth" | "fullheight" | "hidden";
     /** Custom animation (transition name) */
     animation?: string;
-    /**
-     * Is Sidebar cancelable by pressing escape or clicking outside.
-     * @values escape, outside, true, false
-     * @deprecated use `closeOnOutside` and `closeOnEscape`
-     */
-    cancelable?: string[] | boolean;
     /** Close when clicked outside of the panel */
     closeOnOutside?: boolean;
     /** Close when pressing escape key */

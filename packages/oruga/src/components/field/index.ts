@@ -5,6 +5,9 @@ import Field from "./Field.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export field specific types */
+export type * from "./props";
+
 /** export field plugin */
 export default {
     install(app: App): void {

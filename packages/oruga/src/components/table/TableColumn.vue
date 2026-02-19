@@ -31,7 +31,6 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     width: undefined,
     numeric: false,
     position: undefined,
-    searchable: false,
     filterable: false,
     sortable: false,
     hidden: false,
@@ -75,18 +74,6 @@ defineSlots<{
      * @param index {number} - column index
      */
     subheading?(props: { column: TableColumn<T>; index: number }): VNode[];
-    /**
-     * Override searchable input
-     * @deprecated use `filter` instead
-     * @param column {TableColumn} - column definition
-     * @param index {number} - column index
-     * @param filters {object} - active filters object
-     */
-    searchable?(props: {
-        column: TableColumn<T>;
-        index: number;
-        filters: Record<string, string>;
-    }): VNode[];
     /**
      * Override filter input
      * @param column {TableColumn} - column definition
@@ -242,12 +229,6 @@ const filters = {} as Record<string, string>;
             <slot name="header" :column="column" :index="index" />
 
             <slot name="subheading" :column="column" :index="index" />
-
-            <slot
-                name="searchable"
-                :column="column"
-                :index="index"
-                :filters="filters" />
 
             <slot
                 name="filter"

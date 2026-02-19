@@ -37,13 +37,13 @@ const columns: TableColumn[] = [
     {
         field: "first_name",
         label: "First Name",
-        searchable: true,
+        filterable: true,
         sortable: true,
     },
     {
         field: "last_name",
         label: "Last Name",
-        searchable: true,
+        filterable: true,
     },
     {
         field: "date",
