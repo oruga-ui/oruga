@@ -591,7 +591,10 @@ function paginateRows(rows: TableRow<T>[]): TableRow<T>[] {
 
     // calculate pagination information
     const perPage = Number(props.perPage);
-    const currentPage = Math.min(rows.length / perPage, tableCurrentPage.value);
+    const currentPage = Math.min(
+        Math.ceil(rows.length / perPage),
+        tableCurrentPage.value,
+    );
     const pageStart = (currentPage - 1) * perPage;
     const pageEnd = pageStart + perPage;
 
