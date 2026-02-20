@@ -2918,19 +2918,9 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 thSortableClass: ClassDefinition;
                 /**
-                 * Class of the table `th` element that is currently sorted
-                 * @deprecated use `thSortedClass` instead
-                 */
-                thCurrentSortClass: ClassDefinition;
-                /**
                  * Class of the table `th` element when sorted
                  */
                 thSortedClass: ClassDefinition;
-                /**
-                 * Class of the table `th` element that is unsortable
-                 * @deprecated will be removed
-                 */
-                thUnselectableClass: ClassDefinition;
                 /**
                  * Class of the table `th` subheading element
                  */
@@ -2979,11 +2969,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the table `td` element when row is checkable
                  */
                 tdCheckboxClass: ClassDefinition;
-                /**
-                 * Class of the table `td` element that contains the chevron to trigger details
-                 * @deprecated use `tdDetailClass` instead
-                 */
-                tdDetailedChevronClass: ClassDefinition;
                 /**
                  * Class of the table `td` element that contains the detail trigger
                  */
