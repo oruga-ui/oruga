@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { AutocompleteOptions } from "@oruga-ui/oruga-next";
+import type { ListboxOptions } from "@oruga-ui/oruga-next";
 
-const groupOptions: AutocompleteOptions<string> = [
+const options: ListboxOptions<string> = [
     {
         label: "Black Sails",
         attrs: { disabled: true },
@@ -11,7 +11,7 @@ const groupOptions: AutocompleteOptions<string> = [
             { label: "Silver", value: "silver" },
             { label: "Vane", value: "vane" },
             { label: "Billy", value: "billy" },
-            { label: "Jack", value: "silver", disabled: true },
+            { label: "Jack", value: "jack", disabled: true },
         ],
     },
     {
@@ -36,19 +36,13 @@ const groupOptions: AutocompleteOptions<string> = [
     },
 ];
 
-const groupSelected = ref();
+const selected = ref<string>();
 </script>
 
 <template>
     <section>
-        <o-autocomplete
-            v-model="groupSelected"
-            :options="groupOptions"
-            placeholder="Find a name grouped by film..."
-            open-on-focus>
-            <template #header>Film Character Groups</template>
-        </o-autocomplete>
+        <o-listbox v-model="selected" :options="options" />
 
-        <p><b>Selected:</b> {{ groupSelected }}</p>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

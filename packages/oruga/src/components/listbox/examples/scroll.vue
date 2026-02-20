@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsPropItem } from "@oruga-ui/oruga-next";
+import type { ListItemProps } from "@oruga-ui/oruga-next";
 
-const options = ref<OptionsPropItem<number>[]>(loadData(0));
+const options = ref<ListItemProps<number>[]>(loadData(0));
 const selectedValue = ref<number>();
 
-function loadData(start: number): OptionsPropItem<number>[] {
+function loadData(start: number): ListItemProps<number>[] {
     return Array.from({ length: start + 20 }, (_, i) => ({
         label: `Item #${i}`,
         value: i,

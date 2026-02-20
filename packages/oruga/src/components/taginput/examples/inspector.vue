@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { InspectData } from "@docs";
-import type { TaginputClasses, TaginputProps } from "../props";
-import type { OptionsPropItem } from "@oruga-ui/oruga-next";
+import type { TaginputOptions, TaginputClasses, TaginputProps } from "../props";
 
-const options: OptionsPropItem[] = [
+type Entity = {
+    id: number;
+    user: {
+        first_name: string;
+        last_name: string;
+    };
+    date: string;
+    gender: string;
+};
+
+const options: TaginputOptions<Entity> = [
     {
         label: "Jesse Simmons",
         value: {

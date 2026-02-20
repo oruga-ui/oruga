@@ -2,8 +2,8 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
-import Options from "./options.vue";
-import OptionsCode from "./options.vue?raw";
+import OptionsArray from "./options-array.vue";
+import OptionsArrayCode from "./options-array.vue?raw";
 
 import OptionsGrouped from "./options-grouped.vue";
 import OptionsGroupedCode from "./options-grouped.vue?raw";
@@ -35,8 +35,12 @@ import ScrollCode from "./scroll.vue?raw";
 
     <h3 id="options">Options</h3>
     <p>
-        The <code>options</code> prop can accept several different formats of
-        values:
+        There are several ways to define options for the component. They are
+        similiar to the options definition of the
+        <a href="/components/dropdown.html">
+            <b>Dropdown</b>
+        </a>
+        component:
     </p>
     <ul>
         <li>An array of primitives <code>['A', 'B', 'C']</code></li>
@@ -44,27 +48,41 @@ import ScrollCode from "./scroll.vue?raw";
             An object literal with key-value pairs
             <code>{ a: 'A', b: 'B', c: 'C' }</code>
         </li>
+        <li>An array of item objects where each object represent an item</li>
         <li>
-            An array of objects with <code>label</code> and
-            <code>value</code> properties
+            An array of grouped items where each group object has its own
+            <code>options</code> property
         </li>
         <li>
-            Grouped options by adding additional
-            <code>options</code> to the option object.
+            Using the native <code>&lt;o-dropdown-item&gt;</code>
+            component directly inside the default template slot
         </li>
     </ul>
 
     <div class="info custom-block">
-        <p class="custom-block-title">Note</p>
+        <p class="custom-block-title">TypeScript</p>
         <p>
-            The <code>options</code> prop works the same as the
-            <a href="/components/select.html">
-                <b>Select</b>
-            </a>
-            input component <code>options</code> prop.
+            The options property type is defined by the
+            <code>AutocompleteOptions</code> type.
         </p>
     </div>
-    <ExampleViewer :component="Options" :code="OptionsCode" />
+
+    <h4 id="options-array">Array of objects</h4>
+    <p>
+        The most flexible way to define options is to provide an array of
+        objects. The object has the same properties as the
+        <code>&lt;o-dropdown-item&gt;</code> component.
+    </p>
+    <ExampleViewer :component="OptionsArray" :code="OptionsArrayCode" />
+
+    <h4 id="options-grouped">Grouped options</h4>
+    <p>
+        You can also use the array of objects syntax to create grouped options,
+        wrapping each group of options in an object with a
+        <code>label</code> and an <code>options</code> property. You can also
+        define an <code>attrs</code> property for additional attributes, which
+        will be applied to the group header option.
+    </p>
     <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 
     <h3 id="templates">Templates</h3>

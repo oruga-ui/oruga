@@ -11,7 +11,7 @@ import {
     getActiveClasses,
     useInputHandler,
     useIndexer,
-    type Option,
+    type OptionItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
@@ -160,7 +160,7 @@ defineSlots<{
      * Define a selected option here
      * @param option {object} - option object
      */
-    option?(props: { option: Option<DropdownItemProps<T>> }): void;
+    option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
     /**
      * Override the counter
      * @param items {number} - items count

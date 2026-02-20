@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsProp } from "@/composables";
+import type { ListboxOptions } from "@oruga-ui/oruga-next";
 
 const selectedValue = ref();
 
-const options: OptionsProp = [
+const options: ListboxOptions<string> = [
     { label: "New York", value: "NY" },
     { label: "Rome", value: "RM" },
     { label: "London", value: "LDN" },

@@ -9,7 +9,7 @@ import { type Indexer } from "./useIndexer";
  *
  * @public
  */
-export type Option<T extends object> = {} & T;
+export type Option<T extends object> = {} & T & Record<string, any>;
 
 /**
  * Simplified types of options that can be passed to the options prop.
