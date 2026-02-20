@@ -14,7 +14,7 @@ export * as OrugaComponentPlugins from "./components/plugins";
 export { createOruga, createTestingOruga, useOruga } from "./utils/config";
 
 // export programmatic composable
-export { useProgrammaticConfig, type OrugaProgrammatic } from "./utils/config";
+export { useConfigProgrammatic, type OrugaProgrammatic } from "./utils/config";
 
 // export useful helper functions
 export * from "./utils/helpers";
