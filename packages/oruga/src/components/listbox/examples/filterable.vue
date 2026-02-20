@@ -2,8 +2,6 @@
 import { ref } from "vue";
 import type { ListboxOptions } from "@oruga-ui/oruga-next";
 
-const selectedValue = ref();
-
 const options: ListboxOptions<string> = [
     { label: "New York", value: "NY" },
     { label: "Rome", value: "RM" },
@@ -11,17 +9,19 @@ const options: ListboxOptions<string> = [
     { label: "Istanbul", value: "IST" },
     { label: "Paris", value: "PRS" },
 ];
+
+const selected = ref<string>();
 </script>
 
 <template>
     <section class="odocs-spaced">
         <o-listbox
-            v-model="selectedValue"
+            v-model="selected"
             :options="options"
             filterable
             filter-placeholder="Search..."
             empty-label="No Results." />
 
-        <p><b>Selected:</b> {{ selectedValue }}</p>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

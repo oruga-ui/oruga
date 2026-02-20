@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { ListboxOptions } from "@oruga-ui/oruga-next";
+import type { TreeOptions } from "@oruga-ui/oruga-next";
 
-const options: ListboxOptions<string> = {
+const options: TreeOptions<string> = {
     heisenberg: "Heisenberg",
     jesse: "Jesse",
     saul: "Saul",
@@ -15,7 +15,7 @@ const selected = ref<string>();
 
 <template>
     <section>
-        <o-listbox v-model="selected" :options="options" />
+        <o-tree v-model="selected" :options="options" selectable />
 
         <p><b>Selected:</b> {{ selected }}</p>
     </section>

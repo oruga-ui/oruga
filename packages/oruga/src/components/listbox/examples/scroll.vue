@@ -3,7 +3,7 @@ import { ref } from "vue";
 import type { ListItemProps } from "@oruga-ui/oruga-next";
 
 const options = ref<ListItemProps<number>[]>(loadData(0));
-const selectedValue = ref<number>();
+const selected = ref<number>();
 
 function loadData(start: number): ListItemProps<number>[] {
     return Array.from({ length: start + 20 }, (_, i) => ({
@@ -20,10 +20,10 @@ function getMoreData(): void {
 <template>
     <section class="odocs-spaced">
         <o-listbox
-            v-model="selectedValue"
+            v-model="selected"
             :options="options"
             @scroll-end="getMoreData" />
 
-        <p><b>Selected:</b> {{ selectedValue }}</p>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

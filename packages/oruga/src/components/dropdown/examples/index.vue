@@ -66,7 +66,7 @@ import PositionCode from "./position.vue?raw";
             An object literal with key-value pairs
             <code>{ a: 'A', b: 'B', c: 'C' }</code>
         </li>
-        <li>An array of item objects where each object represent an item</li>
+        <li>An array of objects where each object represent an item</li>
         <li>
             An array of grouped items where each group object has its own
             <code>options</code> property

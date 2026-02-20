@@ -60,7 +60,7 @@ import TagsCode from "./tags.vue?raw";
             An object literal with key-value pairs
             <code>{ a: 'A', b: 'B', c: 'C' }</code>
         </li>
-        <li>An array of item objects where each object represent an item</li>
+        <li>An array of objects where each object represent an item</li>
     </ul>
     <ExampleViewer :component="Options" :code="OptionsCode" />
 
