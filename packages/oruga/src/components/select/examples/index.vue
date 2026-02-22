@@ -82,14 +82,14 @@ import WithIconsCode from "./icons.vue?raw";
     <p>
         The most flexible way to define options is to provide an array of
         objects. The object is defined as: <br />
-        <code>{ value: any, label: string, attrs?: object }</code>
+        <code>{ value: any, label: string }</code>
         <br />
         The
         <code>value</code> attribute is the real value which will be used by the
         <code>v-model</code> property and other events. The
         <code>label</code> attribute is the visible representation of the
-        option. The <code>attrs</code> attribute is an object for additional
-        attributes, which will be applied to the option item tag.
+        option. The object can be extended by additional attribute, which will
+        be applied to the option item tag.
     </p>
     <ExampleViewer :component="OptionsArray" :code="OptionsArrayCode" />
 

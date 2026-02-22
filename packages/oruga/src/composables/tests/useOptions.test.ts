@@ -95,8 +95,9 @@ describe("useOptions tests", () => {
             expect(normOptions).toStrictEqual([
                 {
                     key: "0",
-                    attrs: undefined,
-                    label: "foo",
+                    item: {
+                        label: "foo",
+                    },
                     options: [
                         {
                             key: "1",
@@ -118,8 +119,9 @@ describe("useOptions tests", () => {
                 },
                 {
                     key: "5",
-                    attrs: undefined,
-                    label: "Other",
+                    item: {
+                        label: "Other",
+                    },
                     options: [
                         { key: "6", item: { label: "Red", value: "#ff0000" } },
                     ],
@@ -149,8 +151,9 @@ describe("useOptions tests", () => {
             expect(normOptions).toStrictEqual([
                 {
                     key: "0",
-                    label: "Foo",
-                    attrs: undefined,
+                    item: {
+                        label: "Foo",
+                    },
                     options: [
                         { key: "1", item: { label: "A", value: 0 } },
                         { key: "2", item: { label: "B", value: 1 } },
@@ -158,8 +161,9 @@ describe("useOptions tests", () => {
                 },
                 {
                     key: "3",
-                    label: "Bar",
-                    attrs: undefined,
+                    item: {
+                        label: "Bar",
+                    },
                     options: [
                         { key: "4", item: { label: "D", value: 3 } },
                         { key: "5", item: { label: "E", value: 4 } },
@@ -221,7 +225,9 @@ describe("useOptions tests", () => {
         test("test is group option item", () => {
             const option = {
                 key: "foo",
-                label: "my group",
+                item: {
+                    label: "my group",
+                },
                 options: [{ key: "foo", item: { value: "bar" } }],
             };
             expect(isGroupOption(option)).toBeTruthy();
@@ -262,12 +268,16 @@ describe("useOptions tests", () => {
         const groupedOptions = [
             {
                 key: "15",
-                label: "foo",
+                item: {
+                    label: "foo",
+                },
                 options: options,
             },
             {
                 key: "16",
-                label: "Other",
+                item: {
+                    label: "Other",
+                },
                 hidden: true,
                 options: [
                     {

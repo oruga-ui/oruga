@@ -780,8 +780,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                         :key="option.key">
                         <ul v-if="isGroupOption(option)" role="group">
                             <o-listbox-item
-                                v-bind="option.attrs"
-                                :label="option.label"
+                                v-bind="option.item"
                                 disabled
                                 role="presentation" />
 

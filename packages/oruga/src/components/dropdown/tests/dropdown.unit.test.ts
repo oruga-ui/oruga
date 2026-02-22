@@ -814,7 +814,7 @@ describe("ODropdown tests", () => {
                 },
                 {
                     label: "Game of Thrones",
-                    attrs: { disabled: true },
+                    disabled: true,
                     options: [
                         "Tyrion Lannister",
                         "Jamie Lannister",
@@ -841,7 +841,7 @@ describe("ODropdown tests", () => {
                     const option = options[g_idx];
                     expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
-                        option.attrs?.disabled ? "true" : "false",
+                        option.disabled ? "true" : "false",
                     );
                 } else {
                     const g_options = options[g_idx].options;

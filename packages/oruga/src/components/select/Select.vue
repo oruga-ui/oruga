@@ -314,15 +314,12 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 
             <slot>
                 <template v-for="option in normalizedOptions" :key="option.key">
-                    <optgroup
-                        v-if="isGroupOption(option)"
-                        v-bind="option.attrs"
-                        :label="option.label">
+                    <optgroup v-if="isGroupOption(option)" v-bind="option.item">
                         <option
                             v-for="_option in option.options"
-                            v-bind="_option.item.attrs"
+                            v-bind="_option.item"
                             :key="_option.key"
-                            :value="_option.item.value"
+                            :label="undefined"
                             :selected="_option.item.value === vmodel">
                             {{ _option.item.label }}
                         </option>
@@ -330,8 +327,8 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 
                     <option
                         v-else
-                        v-bind="option.item.attrs"
-                        :value="option.item.value"
+                        v-bind="option.item"
+                        :label="undefined"
                         :selected="option.item.value === vmodel">
                         {{ option.item.label }}
                     </option>

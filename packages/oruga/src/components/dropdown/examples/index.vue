@@ -111,9 +111,9 @@ import PositionCode from "./position.vue?raw";
     <p>
         You can also use the array of objects syntax to create grouped options,
         wrapping each group of options in an object with a
-        <code>label</code> and an <code>options</code> property. You can also
-        define an <code>attrs</code> property for additional attributes, which
-        will be applied to the group header option.
+        <code>label</code> and an <code>options</code> property. The object has
+        the same properties as the
+        <code>&lt;o-dropdown-item&gt;</code> component.
     </p>
     <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 

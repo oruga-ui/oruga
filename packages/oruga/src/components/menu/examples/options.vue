@@ -6,16 +6,12 @@
             :options="[
                 {
                     label: 'Fruits',
-                    attrs: {
-                        icon: 'info-circle',
-                    },
+                    icon: 'info-circle',
                     options: ['Apple', 'Banana', 'Watermelon'],
                 },
                 {
                     label: 'Vegetables',
-                    attrs: {
-                        icon: 'info-circle',
-                    },
+                    icon: 'info-circle',
                     options: ['Carrot', 'Broccoli', 'Cucumber', 'Onion'],
                 },
             ]" />

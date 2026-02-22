@@ -110,7 +110,7 @@ const inspectData: InspectData<
                 {
                     label: "Frameworks",
                     options: ["Vue.js"],
-                    attrs: { disabled: true },
+                    disabled: true,
                 },
             ];
         },

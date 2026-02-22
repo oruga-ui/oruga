@@ -291,7 +291,7 @@ const listOfMonths = computed<SelectOption<number>[]>(() => {
     return computedMonthNames.value.map((name, index) => ({
         label: name,
         value: index,
-        attrs: { disabled: index < minMonth || index > maxMonth },
+        disabled: index < minMonth || index > maxMonth,
     }));
 });
 

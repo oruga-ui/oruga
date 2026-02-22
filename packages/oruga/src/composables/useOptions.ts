@@ -34,14 +34,10 @@ export type OptionsProp<T extends object = object> =
  *
  * @public
  */
-export type OptionsGroupsProp<T extends object = object> = {
-    /** displayed option group label */
-    label: string;
-    /** list of options */
+export type OptionsGroupsProp<T extends object = object> = (Option<T> & {
+    /** list of options in this group */
     options: OptionsProp<T>;
-    /** additional attributes bound to the options group element */
-    attrs?: Record<string, any>;
-}[];
+})[];
 
 /**
  * A list of options that can either be a list of option items or a list of group items.
@@ -72,10 +68,8 @@ export type OptionItem<T extends object> = {
 export type OptionGroupItem<T extends object> = {
     /** internal genereated uniqe option key */
     key: string;
-    /** displayed option group label */
-    label: string;
-    /** additional attributes bound to the options group element */
-    attrs?: Record<string, any>;
+    /** the option item object */
+    item: Option<T>;
     /** list of options */
     options: OptionItem<T>[];
 };
@@ -144,10 +138,12 @@ export function normalizeOptions<T extends object>(
                         indexer,
                     ) as NormalizedOption<T>[];
 
-                    // create options group item
+                    const item = { ...toValue(option) };
+                    delete item.options; // delete options from item to prevent loop
+
+                    // create group options item
                     return {
-                        label: option.label,
-                        attrs: option.attrs,
+                        item,
                         options,
                         key,
                     } satisfies NormalizedGroup<T>;

@@ -12,7 +12,7 @@
                 {
                     label: 'Jack',
                     value: 'jack',
-                    attrs: { disabled: true },
+                    disabled: true,
                 },
             ]" />
     </section>

@@ -202,10 +202,10 @@ function formatNumber(value: number, prependZero: boolean): string {
     return isHourFormat24.value || prependZero ? pad(value) : String(value);
 }
 
-const hours = computed<SelectOption<number>[]>(() => {
+const hours = computed<(SelectOption<number> & { value: number })[]>(() => {
     if (!props.incrementHours || props.incrementHours < 1)
         throw new Error("Hour increment cannot be null or less than 1.");
-    const hours: SelectOption<number>[] = [];
+    const hours: (SelectOption<number> & { value: number })[] = [];
     const numberOfHours = isHourFormat24.value ? 24 : 12;
     for (let i = 0; i < numberOfHours; i += props.incrementHours) {
         let value = i;
@@ -227,10 +227,10 @@ const hours = computed<SelectOption<number>[]>(() => {
     return hours;
 });
 
-const minutes = computed<SelectOption<number>[]>(() => {
+const minutes = computed<(SelectOption<number> & { value: number })[]>(() => {
     if (!props.incrementMinutes || props.incrementMinutes < 1)
         throw new Error("Minute increment cannot be null or less than 1.");
-    const minutes: SelectOption<number>[] = [];
+    const minutes: (SelectOption<number> & { value: number })[] = [];
     for (let i = 0; i < 60; i += props.incrementMinutes) {
         minutes.push({
             label: formatNumber(i, true),
@@ -240,10 +240,10 @@ const minutes = computed<SelectOption<number>[]>(() => {
     return minutes;
 });
 
-const seconds = computed<SelectOption<number>[]>(() => {
+const seconds = computed<(SelectOption<number> & { value: number })[]>(() => {
     if (!props.incrementSeconds || props.incrementSeconds < 1)
         throw new Error("Second increment cannot be null or less than 1.");
-    const seconds: SelectOption<number>[] = [];
+    const seconds: (SelectOption<number> & { value: number })[] = [];
     for (let i = 0; i < 60; i += props.incrementSeconds) {
         seconds.push({
             label: formatNumber(i, true),

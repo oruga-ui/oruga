@@ -237,7 +237,7 @@ describe("OListbox tests", () => {
                 },
                 {
                     label: "Game of Thrones",
-                    attrs: { disabled: true },
+                    disabled: true,
                     options: [
                         "Tyrion Lannister",
                         "Jamie Lannister",

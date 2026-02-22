@@ -552,13 +552,12 @@ defineExpose({
                 <template v-for="option in normalizedOptions" :key="option.key">
                     <template v-if="isGroupOption(option)">
                         <o-dropdown-item
-                            v-bind="option.attrs"
-                            :label="option.label"
+                            v-bind="option.item"
                             role="presentation"
                             :clickable="false"
                             :class="[...itemClasses, ...itemGroupClasses]">
                             <slot name="group" :group="option">
-                                <span> {{ option.label }} </span>
+                                <span> {{ option.item.label }} </span>
                             </slot>
                         </o-dropdown-item>
 

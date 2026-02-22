@@ -5,9 +5,8 @@ type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type SelectOption<T = string | number> = {
     label: string;
-    value: T;
-    attrs?: Record<string, any>;
-};
+    value?: T;
+} & Record<string, any>;
 
 export type SelectOptions<T> = OptionsOrGroupsProp<SelectOption<T>>;
 

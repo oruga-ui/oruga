@@ -5,7 +5,7 @@ import type { DropdownOptions } from "@oruga-ui/oruga-next";
 const options: DropdownOptions<string> = [
     {
         label: "Black Sails",
-        attrs: { disabled: true },
+        disabled: true,
         options: [
             { label: "Flint", value: "flint" },
             { label: "Silver", value: "silver" },
@@ -16,7 +16,7 @@ const options: DropdownOptions<string> = [
     },
     {
         label: "Breaking Bad",
-        attrs: { disabled: true },
+        disabled: true,
         options: {
             heisenberg: "Heisenberg",
             jesse: "Jesse",
@@ -26,7 +26,7 @@ const options: DropdownOptions<string> = [
     },
     {
         label: "Game of Thrones",
-        attrs: { disabled: true },
+        disabled: true,
         options: [
             "Tyrion Lannister",
             "Jamie Lannister",

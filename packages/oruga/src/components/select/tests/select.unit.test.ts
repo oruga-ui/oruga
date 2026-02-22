@@ -15,7 +15,7 @@ describe("OSelect tests", () => {
         { label: "Silver", value: "silver" },
         { label: "Vane", value: "vane" },
         { label: "Billy", value: "billy" },
-        { label: "Jack", value: "silver", attrs: { disabled: true } },
+        { label: "Jack", value: "silver", disabled: true },
     ];
 
     test("render correctly", () => {
@@ -291,11 +291,11 @@ describe("OSelect tests", () => {
         test("handle options as options array correctly", () => {
             const options: SelectOptions<string | number> = [
                 { label: "Flint", value: "flint" },
-                { label: "Silver", value: "silver", attrs: { disabled: true } },
+                { label: "Silver", value: "silver", disabled: true },
                 { label: "Vane", value: "vane" },
                 { label: "Zero", value: 0 },
                 { label: "One", value: 1 },
-                { label: "Two", value: 2, attrs: { disabled: true } },
+                { label: "Two", value: 2, disabled: true },
             ];
 
             const wrapper = mount(OSelect, { props: { options } });
@@ -310,7 +310,7 @@ describe("OSelect tests", () => {
                 expect(el.text()).toBe(options[idx].label);
                 expect(el.attributes("value")).toBe(String(options[idx].value));
                 expect(el.attributes("disabled")).toBe(
-                    options[idx].attrs?.disabled ? "" : undefined,
+                    options[idx].disabled ? "" : undefined,
                 );
             });
         });
@@ -337,7 +337,7 @@ describe("OSelect tests", () => {
                 },
                 {
                     label: "Game of Thrones",
-                    attrs: { disabled: true },
+                    disabled: true,
                     options: [
                         "Tyrion Lannister",
                         "Jamie Lannister",
@@ -354,7 +354,7 @@ describe("OSelect tests", () => {
 
             groupedElements.forEach((el, idx) => {
                 expect(el.attributes("disabled")).toBe(
-                    options[idx].attrs?.disabled ? "" : undefined,
+                    options[idx]?.disabled ? "" : undefined,
                 );
             });
 
