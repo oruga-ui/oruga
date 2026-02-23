@@ -9,6 +9,7 @@ import { registerComponent, registerProgrammatic } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export dialog specific types */
+export type * from "./props";
 export type { DialogProgrammaticOptions } from "./useDialogProgrammatic";
 
 /** export dialog plugin */

@@ -107,10 +107,10 @@ const keepCheckedOnPageChange = ref(false);
             v-model:checked-rows="checkedRows"
             :data="data"
             :columns="columns"
-            :per-page="5"
-            paginated
-            checkable
             row-key="id"
+            checkable
+            paginated
+            :per-page="5"
             :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
             :checkbox-position="checkboxPosition"
             :keep-checked-on-page-change="keepCheckedOnPageChange">

@@ -35,8 +35,6 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     sortable: false,
     hidden: false,
     sticky: false,
-    /** @deprecated remove */
-    headerSelectable: false,
     customSort: undefined,
     customSearch: undefined,
     customFilter: undefined,
@@ -146,13 +144,6 @@ const thClasses = defineClasses(
         "o-table__th--sortable",
         null,
         computed(() => props.sortable),
-    ],
-    /** @deprecated will be removed*/
-    [
-        "thUnselectableClass",
-        "o-table__th--unselectable",
-        null,
-        computed(() => props.sortable && !props.headerSelectable),
     ],
     [
         "thPositionClass",

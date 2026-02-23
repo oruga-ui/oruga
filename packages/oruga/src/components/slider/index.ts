@@ -7,6 +7,7 @@ import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export slider specific types */
+export type * from "./props";
 export type * from "./types";
 
 /** export slider plugin */

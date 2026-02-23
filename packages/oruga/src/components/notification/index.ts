@@ -10,6 +10,7 @@ import { registerComponent, registerProgrammatic } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export notification specific types */
+export type * from "./props";
 export type { NotificationProgrammaticOptions } from "./useNotificationProgrammatic";
 
 /** export notification plugin */

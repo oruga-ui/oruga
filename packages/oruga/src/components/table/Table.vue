@@ -593,7 +593,10 @@ function paginateRows(rows: TableRow<T>[]): TableRow<T>[] {
 
     // calculate pagination information
     const perPage = Number(props.perPage);
-    const currentPage = Math.min(rows.length / perPage, tableCurrentPage.value);
+    const currentPage = Math.min(
+        Math.ceil(rows.length / perPage),
+        tableCurrentPage.value,
+    );
     const pageStart = (currentPage - 1) * perPage;
     const pageEnd = pageStart + perPage;
 
@@ -1123,11 +1126,7 @@ const thCheckboxClasses = defineClasses(
     ],
 );
 
-const thSortedClasses = defineClasses(
-    /** @deprecated use `thSortedClass` instead */
-    ["thCurrentSortClass", "o-table__th-current-sort"],
-    ["thSortedClass", "o-table__th--sorted"],
-);
+const thSortedClasses = defineClasses(["thSortedClass", "o-table__th--sorted"]);
 
 const thDetailedClasses = defineClasses([
     "thDetailedClass",
@@ -1172,11 +1171,10 @@ const tdCheckboxClasses = defineClasses(
     ],
 );
 
-const tdDetailedClasses = defineClasses(
-    /** @deprecated use `tdDetailClass` instead */
-    ["tdDetailedChevronClass", "o-table__td-chevron"],
-    ["tdDetailClass", "o-table__td-detail"],
-);
+const tdDetailedClasses = defineClasses([
+    "tdDetailClass",
+    "o-table__td-detail",
+]);
 
 const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 

@@ -276,6 +276,6 @@ const ConfigProgrammatic = {
     setConfig,
 };
 
-export function useProgrammaticConfig(): typeof ConfigProgrammatic {
+export function useConfigProgrammatic(): typeof ConfigProgrammatic {
     return ConfigProgrammatic;
 }

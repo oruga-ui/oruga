@@ -5,6 +5,9 @@ import Icon from "./Icon.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export icon specific types */
+export type * from "./props";
+
 /** export icon plugin */
 export default {
     install(app: App): void {

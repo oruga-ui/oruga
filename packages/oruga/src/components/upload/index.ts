@@ -5,6 +5,9 @@ import Upload from "./Upload.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export upload specific types */
+export type * from "./props";
+
 /** export upload plugin */
 export default {
     install(app: App): void {
