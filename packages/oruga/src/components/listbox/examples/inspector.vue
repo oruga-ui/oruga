@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
 import type { InspectData } from "@docs";
 import type {
+    ListboxOptions,
     ListboxClasses,
     ListboxProps,
     ListItemClasses,
     ListItemProps,
 } from "@/components/listbox/props";
 
-const options: OptionsGroupProp<string> = [
+const options: ListboxOptions<string> = [
     {
         label: "Frameworks",
         options: ["Vue.js"],
@@ -110,7 +110,7 @@ const inspectData: InspectData<
                 {
                     label: "Frameworks",
                     options: ["Vue.js"],
-                    attrs: { disabled: true },
+                    disabled: true,
                 },
             ];
         },

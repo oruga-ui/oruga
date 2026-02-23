@@ -22,7 +22,8 @@ import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    useKeyedOptions,
+    normalizeOptions,
+    useIndexer,
     useProviderParent,
     type ProviderItem,
 } from "@/composables";
@@ -166,8 +167,13 @@ const { childItems, itemsCount } = useProviderParent<CarouselItemComponent<T>>({
     data: provideData,
 });
 
-/** keyed programamtic options */
-const keyedOptions = useKeyedOptions(props.options);
+/** unique key sequencer */
+const indexer = useIndexer();
+
+/** normalized programamtic options */
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer),
+);
 
 const indicatorItems = computed(() =>
     childItems.value.filter(
@@ -675,10 +681,10 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                 @touchmove="onDragOver"
                 @touchend="onDragEnd">
                 <slot>
-                    <OCarouselItem
-                        v-for="option in keyedOptions"
+                    <o-carousel-item
+                        v-for="option in normalizedOptions"
                         :key="option.key"
-                        v-bind="option.value" />
+                        v-bind="option.item" />
                 </slot>
             </div>
         </div>

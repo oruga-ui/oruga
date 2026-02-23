@@ -1118,6 +1118,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 menuTag: DynamicComponent;
                 /**
+                 * Dropdown item tag name
+                 */
+                itemTag: DynamicComponent;
+                /**
                  * Dropdown trigger tag name
                  */
                 triggerTag: DynamicComponent;
@@ -1257,10 +1261,6 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class of the body when dropdown is open and scroll is keeped
                  */
                 scrollKeepClass: ClassDefinition;
-                /**
-                 * Dropdown item tag name
-                 */
-                itemTag: DynamicComponent;
                 /**
                  * Class of the item element.
                  */

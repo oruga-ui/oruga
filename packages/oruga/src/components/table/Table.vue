@@ -36,7 +36,7 @@ import {
     getActiveClasses,
     useProviderParent,
     useMatchMedia,
-    useSequentialId,
+    useIndexer,
 } from "@/composables";
 
 import type { ClassBinding, Numberish } from "@/types";
@@ -485,7 +485,7 @@ const isScrollable = computed(() => {
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 // create a unique id sequence
-const { nextSequence } = useSequentialId();
+const indexer = useIndexer();
 
 /** All defined data elements as normalized rows with a unique key. */
 const tableRows = computed<TableRow<T>[]>(() => {
@@ -496,7 +496,7 @@ const tableRows = computed<TableRow<T>[]>(() => {
         index: idx, // row index
         key:
             // if no key is given and data is object, create unique row id for each row
-            String(getValueByPath(value, props.rowKey) || nextSequence()),
+            String(getValueByPath(value, props.rowKey) || indexer.nextIndex()),
         hidden: false,
     }));
 });
@@ -755,7 +755,7 @@ function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
     if (props.backendSorting) return rows;
 
     // sort rows by mutating the rows array
-    return sortBy<TableRow<T>>(
+    return sortBy<TableRow<T>, string>(
         rows,
         column.field ? "value." + column.field : "",
         column.customSort

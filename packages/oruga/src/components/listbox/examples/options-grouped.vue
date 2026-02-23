@@ -1,0 +1,48 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import type { ListboxOptions } from "@oruga-ui/oruga-next";
+
+const options: ListboxOptions<string> = [
+    {
+        label: "Black Sails",
+        disabled: true,
+        options: [
+            { label: "Flint", value: "flint" },
+            { label: "Silver", value: "silver" },
+            { label: "Vane", value: "vane" },
+            { label: "Billy", value: "billy" },
+            { label: "Jack", value: "jack", disabled: true },
+        ],
+    },
+    {
+        label: "Breaking Bad",
+        disabled: true,
+        options: {
+            heisenberg: "Heisenberg",
+            jesse: "Jesse",
+            saul: "Saul",
+            mike: "Mike",
+        },
+    },
+    {
+        label: "Game of Thrones",
+        disabled: true,
+        options: [
+            "Tyrion Lannister",
+            "Jamie Lannister",
+            "Daenerys Targaryen",
+            "Jon Snow",
+        ],
+    },
+];
+
+const selected = ref<string>();
+</script>
+
+<template>
+    <section>
+        <o-listbox v-model="selected" :options="options" />
+
+        <p><b>Selected:</b> {{ selected }}</p>
+    </section>
+</template>

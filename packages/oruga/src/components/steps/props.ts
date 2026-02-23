@@ -7,6 +7,8 @@ import type {
 } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
+export type StepsOptions<T> = OptionsProp<StepItemProps<T>>;
+
 export type StepsProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
@@ -16,7 +18,7 @@ export type StepsProps<T> = {
      */
     modelValue?: T;
     /** Steps options, unnecessary when default slot is used */
-    options?: OptionsProp<T>;
+    options?: StepsOptions<T>;
     /**
      * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color

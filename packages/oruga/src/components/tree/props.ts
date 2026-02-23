@@ -1,7 +1,9 @@
 import type { ComponentClass } from "@/types";
-import type { OptionsProp, OptionsPropWithGroups } from "@/composables";
+import type { OptionsProp } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+export type TreeOptions<T> = OptionsProp<TreeItemProps<T>>;
 
 export type TreeProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
@@ -11,7 +13,7 @@ export type TreeProps<T, IsMultiple extends boolean = false> = {
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Tree items, unnecessary when default slot is used */
-    options?: OptionsPropWithGroups<T>;
+    options?: TreeOptions<T>;
     /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
     id?: string;
     /** If sub tree items are shown as a accordion */
@@ -72,7 +74,7 @@ export type TreeItemProps<T> = {
     /** Item value (it will be used as the v-model of the wrapper component) - default is an uuid */
     value?: T;
     /** Subtree items, unnecessary when default slot is used */
-    options?: OptionsProp<T>;
+    options?: TreeOptions<T>;
     /** Tree item label */
     label?: string; // TODO: make required
     /** Override item selectable state */

@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="T">
 import { useId, computed, useTemplateRef, ref } from "vue";
 
-import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
@@ -26,7 +25,7 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     disabled: false,
     clickable: true,
     hidden: false,
-    tag: () => getDefault("dropdown.itemTag", "div"),
+    tag: undefined,
 });
 
 const emits = defineEmits<{
@@ -120,7 +119,7 @@ const rootClasses = defineClasses(
 
 <template>
     <component
-        :is="tag"
+        :is="tag ?? parent.itemTag"
         v-show="!isHidden"
         :id="`${parent.menuId}-${item.identifier}`"
         ref="rootElement"
