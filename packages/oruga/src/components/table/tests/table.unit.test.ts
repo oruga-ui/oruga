@@ -45,6 +45,20 @@ describe("OTable tests", () => {
             date: "2016-12-06 14:38:38",
             gender: "Female",
         },
+        {
+            id: 6,
+            first_name: "Bonita",
+            last_name: "Cortez",
+            date: "2016-03-03 10:28:46",
+            gender: "Female",
+        },
+        {
+            id: 7,
+            first_name: "Randolf",
+            last_name: "Mayor",
+            date: "2016-07-04 14:38:39",
+            gender: "Male",
+        },
     ];
 
     const columns: TableColumn<(typeof data)[number]>[] = [
@@ -135,7 +149,7 @@ describe("OTable tests", () => {
         await nextTick();
 
         const bodyRows = wrapper.findAll("tbody tr");
-        expect(bodyRows).toHaveLength(5);
+        expect(bodyRows).toHaveLength(data.length);
     });
 
     describe("test column props", () => {
@@ -827,10 +841,10 @@ describe("OTable tests", () => {
     });
 
     describe("test pageable", () => {
-        test("show correct amount of rows per page", async () => {
-            let perPage = 3;
+        test("show correct amount of rows when per page is set to 3", async () => {
+            const perPage = 3;
 
-            let wrapper = mount(OTable, {
+            const wrapper = mount(OTable, {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
@@ -843,28 +857,42 @@ describe("OTable tests", () => {
             });
             await nextTick(); // await child component rendering
 
-            let body = wrapper.find("tbody");
-            let trs = body.findAll("tr");
-            expect(trs).toHaveLength(perPage);
+            const trsPageOne = wrapper.findAll("tbody tr");
+            expect(trsPageOne).toHaveLength(perPage);
 
-            perPage = 5;
+            await wrapper.setProps({ currentPage: 2 });
 
-            wrapper = mount(OTable, {
+            const trsPageTwo = wrapper.findAll("tbody tr");
+            expect(trsPageTwo).toHaveLength(
+                Math.min(data.length - perPage, perPage),
+            );
+        });
+
+        test("show correct amount of rows when per page is set to 5", async () => {
+            const perPage = 5;
+
+            const wrapper = mount(OTable, {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
                         { label: "Name", field: "name", filterable: true },
                     ],
-                    data: data,
                     paginated: true,
+                    data: data,
                     perPage: perPage,
                 },
             });
             await nextTick(); // await child component rendering
 
-            body = wrapper.find("tbody");
-            trs = body.findAll("tr");
-            expect(trs).toHaveLength(perPage);
+            const trsPageOne = wrapper.findAll("tbody tr");
+            expect(trsPageOne).toHaveLength(perPage);
+
+            await wrapper.setProps({ currentPage: 2 });
+
+            const trsPageTwo = wrapper.findAll("tbody tr");
+            expect(trsPageTwo).toHaveLength(
+                Math.min(data.length - perPage, perPage),
+            );
         });
 
         test("show correct amount of rows when pageable and has filter", async () => {
