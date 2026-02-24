@@ -120,8 +120,8 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     paginationRangeBefore: undefined,
     paginationRangeAfter: undefined,
     backendFiltering: () => getDefault("table.backendFiltering", false),
-    filtersIcon: () => getDefault("table.filterIcon"),
-    filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
+    filterIcon: () => getDefault("table.filterIcon"),
+    filterPlaceholder: () => getDefault("table.filterPlaceholder"),
     filterDebounce: () => getDefault("table.filterDebounce", 300),
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
@@ -1477,9 +1477,9 @@ defineExpose({
                                             column.numeric ? 'number' : 'search'
                                         "
                                         role="searchbox"
-                                        :placeholder="filtersPlaceholder"
+                                        :placeholder="filterPlaceholder"
                                         :debounce="filterDebounce"
-                                        :icon="filtersIcon"
+                                        :icon="filterIcon"
                                         :pack="iconPack"
                                         size="small"
                                         :aria-label="`${column.label} filter`"
