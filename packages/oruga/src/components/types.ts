@@ -3425,21 +3425,21 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 triggerTag: DynamicComponent;
                 /**
-                 * Show when clicked on the trigger
-                 */
-                openOnClick: boolean;
-                /**
                  * Show when hover over the trigger
                  */
                 openOnHover: boolean;
                 /**
-                 * Show when right clicked on the trigger
-                 */
-                openOnContextmenu: boolean;
-                /**
                  * Show when trigger get focused
                  */
                 openOnFocus: boolean;
+                /**
+                 * Show when clicked on the trigger
+                 */
+                openOnClick: boolean;
+                /**
+                 * Show when right clicked on the trigger
+                 */
+                openOnContextmenu: boolean;
                 /**
                  * Tooltip auto close options (pressing escape, clicking the content or outside)
                  * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
