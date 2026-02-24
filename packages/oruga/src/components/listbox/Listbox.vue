@@ -33,9 +33,9 @@ import {
     normalizeOptions,
     scrollElementInView,
     unrefElement,
+    useIndexer,
     useProviderParent,
     useScrollEvents,
-    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "@/components/field/fieldInjection";
@@ -146,12 +146,12 @@ const { parentField } = injectField();
 // if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField.value?.setInputId(props.id);
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
+    normalizeOptions(props.options, indexer, true),
 );
 
 /** determines if the options are grouped or not */
@@ -780,19 +780,14 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                         :key="option.key">
                         <ul v-if="isGroupOption(option)" role="group">
                             <o-listbox-item
-                                v-bind="option.attrs"
-                                :label="option.label"
-                                :hidden="option.hidden"
+                                v-bind="option.item"
                                 disabled
                                 role="presentation" />
 
                             <o-listbox-item
                                 v-for="_option in option.options"
-                                v-bind="_option.attrs"
+                                v-bind="_option.item"
                                 :key="_option.key"
-                                :value="_option.value"
-                                :label="_option.label"
-                                :hidden="_option.hidden"
                                 :aria-setsize="getOptionsLength(option.options)"
                                 :aria-posinset="
                                     findOptionIndex(option.options, _option) + 1
@@ -801,10 +796,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
 
                         <o-listbox-item
                             v-else
-                            v-bind="option.attrs"
-                            :value="option.value"
-                            :label="option.label"
-                            :hidden="option.hidden"
+                            v-bind="option.item"
                             :aria-setsize="getOptionsLength(normalizedOptions)"
                             :aria-posinset="
                                 findOptionIndex(normalizedOptions, option) + 1

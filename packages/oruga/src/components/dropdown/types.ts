@@ -1,7 +1,9 @@
 import type { ProviderItem } from "@/composables";
+import type { DynamicComponent } from "@/types";
 
 export type DropdownComponent<T> = {
     menuId: string;
+    itemTag: DynamicComponent;
     disabled: boolean;
     multiple: boolean;
     selectable: boolean;

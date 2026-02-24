@@ -2,7 +2,7 @@
     <section class="odocs-spaced">
         <p>
             <o-tooltip label="Tooltip">
-                <o-button label="Hover me! " />
+                <o-button label="Hover me!" />
             </o-tooltip>
 
             <o-tooltip label="delayed by 1000ms" :delay="1000">

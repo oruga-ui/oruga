@@ -99,7 +99,13 @@ export default defineConfig({
                 extends: true,
                 test: {
                     name: "browser",
-                    setupFiles: ["vitest-browser-vue"],
+                    setupFiles: [
+                        "vitest-browser-vue",
+                        resolve(
+                            __dirname,
+                            "./src/__tests__/vitest.browser.setup.ts",
+                        ),
+                    ],
                     // only run browser tests
                     include: ["src/**/*.browser.test.{ts,js}"],
                     browser: {

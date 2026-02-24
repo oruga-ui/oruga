@@ -18,15 +18,17 @@ import { isEqual } from "@/utils/helpers";
 import {
     defineClasses,
     normalizeOptions,
-    toOptionsGroup,
     useInputHandler,
-    useSequentialId,
+    useIndexer,
+    isGroupOption,
+    type OptionGroupItem,
+    type OptionItem,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { OptionsItem, OptionsGroupItem } from "@/types";
 import type { AutocompleteProps } from "./props";
+import type { DropdownItemProps } from "../dropdown/props";
 import type { ComponentExposed } from "vue-component-type-helpers";
 
 enum SpecialOption {
@@ -185,16 +187,13 @@ const slots = defineSlots<{
     /**
      * Override the option group
      * @param group {object} - options group
-     * @param index {number} - option index
      */
-    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    group?(props: { group: OptionGroupItem<DropdownItemProps<T>> }): void;
     /**
      * Override the select option
      * @param option {object} - option object
-     * @param index {number} - option index
-     * @param value {unknown} - option value
      */
-    option?(props: { option: OptionsItem<T>; index: number; value: T }): void;
+    option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
 }>();
 
 const dropdownRef =
@@ -219,15 +218,13 @@ const inputValue = defineModel<string>("input", { default: "" });
 /** create a unique id for the menu */
 const menuId = useId();
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
-const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
-    return groupedOptions;
-});
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer, true),
+);
 
 // #region --- Child Items ---
 
@@ -488,6 +485,7 @@ defineExpose({
         :class="rootClasses"
         :menu-id="menuId"
         :menu-tag="menuTag"
+        :item-tag="itemTag"
         scrollable
         selectable
         :open-on-click="false"
@@ -542,7 +540,6 @@ defineExpose({
         <template #before="{ toggle }">
             <o-dropdown-item
                 v-if="$slots.header"
-                :tag="itemTag"
                 :value="SpecialOption.Header"
                 :clickable="selectableHeader"
                 :class="[...itemClasses, ...itemHeaderClasses]">
@@ -552,40 +549,35 @@ defineExpose({
 
         <template #default="{ toggle }">
             <slot :toggle>
-                <template v-for="(group, groupIndex) in groupedOptions">
-                    <o-dropdown-item
-                        v-if="group.label"
-                        v-show="!group.hidden"
-                        :key="group.key"
-                        v-bind="group.attrs"
-                        :hidden="group.hidden"
-                        :value="group.value"
-                        :label="String(group.value)"
-                        :tag="itemTag"
-                        role="presentation"
-                        :clickable="false"
-                        :class="[...itemClasses, ...itemGroupClasses]">
-                        <slot name="group" :group="group" :index="groupIndex">
-                            <span> {{ group.label }} </span>
-                        </slot>
-                    </o-dropdown-item>
+                <template v-for="option in normalizedOptions" :key="option.key">
+                    <template v-if="isGroupOption(option)">
+                        <o-dropdown-item
+                            v-bind="option.item"
+                            role="presentation"
+                            :clickable="false"
+                            :class="[...itemClasses, ...itemGroupClasses]">
+                            <slot name="group" :group="option">
+                                <span> {{ option.item.label }} </span>
+                            </slot>
+                        </o-dropdown-item>
+
+                        <o-dropdown-item
+                            v-for="_option in option.options"
+                            :key="_option.key"
+                            v-bind="_option.item"
+                            :class="itemClasses">
+                            <slot name="option" :option="_option">
+                                <span> {{ _option.item.label }} </span>
+                            </slot>
+                        </o-dropdown-item>
+                    </template>
 
                     <o-dropdown-item
-                        v-for="(option, optionIndex) in group.options"
-                        v-show="!option.hidden"
-                        :key="option.key"
-                        v-bind="option.attrs"
-                        :value="option.value"
-                        :label="option.label"
-                        :hidden="option.hidden"
-                        :tag="itemTag"
+                        v-else
+                        v-bind="option.item"
                         :class="itemClasses">
-                        <slot
-                            name="option"
-                            :option="option"
-                            :value="option.value"
-                            :index="optionIndex">
-                            <span> {{ option.label }} </span>
+                        <slot name="option" :option="option">
+                            <span> {{ option.item.label }} </span>
                         </slot>
                     </o-dropdown-item>
                 </template>
@@ -594,7 +586,6 @@ defineExpose({
 
         <template v-if="$slots.empty" #empty="{ toggle }">
             <o-dropdown-item
-                :tag="itemTag"
                 :value="SpecialOption.EMPTY"
                 :clickable="false"
                 :class="[...itemClasses, ...itemEmptyClasses]">
@@ -605,7 +596,6 @@ defineExpose({
         <template #after="{ toggle }">
             <o-dropdown-item
                 v-if="$slots.footer"
-                :tag="itemTag"
                 :value="SpecialOption.Footer"
                 :clickable="selectableFooter"
                 :class="[...itemClasses, ...itemFooterClasses]">

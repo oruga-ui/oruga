@@ -10,8 +10,8 @@ import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
-import type { OptionsItem } from "@/types";
 import type { TimepickerProps } from "./props";
+import type { SelectOption } from "../select";
 
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile.
@@ -202,10 +202,10 @@ function formatNumber(value: number, prependZero: boolean): string {
     return isHourFormat24.value || prependZero ? pad(value) : String(value);
 }
 
-const hours = computed<OptionsItem<number>[]>(() => {
+const hours = computed<(SelectOption<number> & { value: number })[]>(() => {
     if (!props.incrementHours || props.incrementHours < 1)
         throw new Error("Hour increment cannot be null or less than 1.");
-    const hours: OptionsItem<number>[] = [];
+    const hours: (SelectOption<number> & { value: number })[] = [];
     const numberOfHours = isHourFormat24.value ? 24 : 12;
     for (let i = 0; i < numberOfHours; i += props.incrementHours) {
         let value = i;
@@ -227,10 +227,10 @@ const hours = computed<OptionsItem<number>[]>(() => {
     return hours;
 });
 
-const minutes = computed<OptionsItem<number>[]>(() => {
+const minutes = computed<(SelectOption<number> & { value: number })[]>(() => {
     if (!props.incrementMinutes || props.incrementMinutes < 1)
         throw new Error("Minute increment cannot be null or less than 1.");
-    const minutes: OptionsItem<number>[] = [];
+    const minutes: (SelectOption<number> & { value: number })[] = [];
     for (let i = 0; i < 60; i += props.incrementMinutes) {
         minutes.push({
             label: formatNumber(i, true),
@@ -240,10 +240,10 @@ const minutes = computed<OptionsItem<number>[]>(() => {
     return minutes;
 });
 
-const seconds = computed<OptionsItem<number>[]>(() => {
+const seconds = computed<(SelectOption<number> & { value: number })[]>(() => {
     if (!props.incrementSeconds || props.incrementSeconds < 1)
         throw new Error("Second increment cannot be null or less than 1.");
-    const seconds: OptionsItem<number>[] = [];
+    const seconds: (SelectOption<number> & { value: number })[] = [];
     for (let i = 0; i < 60; i += props.incrementSeconds) {
         seconds.push({
             label: formatNumber(i, true),

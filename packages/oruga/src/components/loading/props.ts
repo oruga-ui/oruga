@@ -11,11 +11,6 @@ export type LoadingProps = {
     label?: string;
     /** Custom animation (transition name) */
     animation?: string;
-    /**
-     * Is Loading cancelable by pressing escape or clicking outside
-     * @deprecated use `closeOnOutside` and `closeOnEscape`
-     */
-    cancelable?: boolean;
     /** Close when clicked outside of the panel */
     closeOnOutside?: boolean;
     /** Close when pressing escape key */

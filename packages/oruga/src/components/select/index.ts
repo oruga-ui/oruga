@@ -6,7 +6,7 @@ import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export select specific types */
-// no types to export here
+export type * from "./props";
 
 /** export select plugin */
 export default {

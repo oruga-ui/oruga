@@ -36,7 +36,7 @@ import {
     getActiveClasses,
     useProviderParent,
     useMatchMedia,
-    useSequentialId,
+    useIndexer,
 } from "@/composables";
 
 import type { ClassBinding, Numberish } from "@/types";
@@ -123,7 +123,6 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
     filterDebounce: () => getDefault("table.filterDebounce", 300),
-    filtersEvent: "",
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
     emptyIconSize: () => getDefault("table.emptyIconSize"),
@@ -486,7 +485,7 @@ const isScrollable = computed(() => {
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 // create a unique id sequence
-const { nextSequence } = useSequentialId();
+const indexer = useIndexer();
 
 /** All defined data elements as normalized rows with a unique key. */
 const tableRows = computed<TableRow<T>[]>(() => {
@@ -497,7 +496,7 @@ const tableRows = computed<TableRow<T>[]>(() => {
         index: idx, // row index
         key:
             // if no key is given and data is object, create unique row id for each row
-            String(getValueByPath(value, props.rowKey) || nextSequence()),
+            String(getValueByPath(value, props.rowKey) || indexer.nextIndex()),
         hidden: false,
     }));
 });
@@ -592,7 +591,10 @@ function paginateRows(rows: TableRow<T>[]): TableRow<T>[] {
 
     // calculate pagination information
     const perPage = Number(props.perPage);
-    const currentPage = Math.min(rows.length / perPage, tableCurrentPage.value);
+    const currentPage = Math.min(
+        Math.ceil(rows.length / perPage),
+        tableCurrentPage.value,
+    );
     const pageStart = (currentPage - 1) * perPage;
     const pageEnd = pageStart + perPage;
 
@@ -617,16 +619,11 @@ const filters = ref<Record<string, string>>({});
 
 /** check if any column has filterable active */
 const hasFilterColumns = computed(() =>
-    tableColumns.value.some((column) => column.searchable || column.filterable),
+    tableColumns.value.some((column) => column.filterable),
 );
 
 // emit filter change event
 watch(filters, (value) => emits("filters-change", value), { deep: true });
-
-/** @deprecated */
-function onFiltersEvent(event: Event): void {
-    emits("filters-event", props.filtersEvent, filters.value, event);
-}
 
 /**
  * Set the hidden state for the given rows based on active filter values.
@@ -758,7 +755,7 @@ function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
     if (props.backendSorting) return rows;
 
     // sort rows by mutating the rows array
-    return sortBy<TableRow<T>>(
+    return sortBy<TableRow<T>, string>(
         rows,
         column.field ? "value." + column.field : "",
         column.customSort
@@ -1128,11 +1125,7 @@ const thCheckboxClasses = defineClasses(
     ],
 );
 
-const thSortedClasses = defineClasses(
-    /** @deprecated use `thSortedClass` instead */
-    ["thCurrentSortClass", "o-table__th-current-sort"],
-    ["thSortedClass", "o-table__th--sorted"],
-);
+const thSortedClasses = defineClasses(["thSortedClass", "o-table__th--sorted"]);
 
 const thDetailedClasses = defineClasses([
     "thDetailedClass",
@@ -1177,11 +1170,10 @@ const tdCheckboxClasses = defineClasses(
     ],
 );
 
-const tdDetailedClasses = defineClasses(
-    /** @deprecated use `tdDetailClass` instead */
-    ["tdDetailedChevronClass", "o-table__td-chevron"],
-    ["tdDetailClass", "o-table__td-detail"],
-);
+const tdDetailedClasses = defineClasses([
+    "tdDetailClass",
+    "o-table__td-detail",
+]);
 
 const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
@@ -1466,22 +1458,9 @@ defineExpose({
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style">
-                                <template
-                                    v-if="
-                                        column.searchable || column.filterable
-                                    ">
+                                <template v-if="column.filterable">
                                     <o-slot-component
-                                        v-if="column.$slots?.searchable"
-                                        :component="column"
-                                        name="searchable"
-                                        tag="span"
-                                        :props="{
-                                            column: column.value,
-                                            index: column.index,
-                                            filters,
-                                        }" />
-                                    <o-slot-component
-                                        v-else-if="column.$slots?.filter"
+                                        v-if="column.$slots?.filter"
                                         :component="column"
                                         name="filter"
                                         tag="span"
@@ -1504,7 +1483,6 @@ defineExpose({
                                         :pack="iconPack"
                                         size="small"
                                         :aria-label="`${column.label} filter`"
-                                        @[filtersEvent]="onFiltersEvent"
                                         @input="
                                             (v, e) =>
                                                 $emit('filter', column, v, e)

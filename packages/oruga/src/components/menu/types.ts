@@ -1,4 +1,4 @@
-import type { ProviderItem } from "@/composables";
+import type { Indexer, ProviderItem } from "@/composables";
 import type { MenuItemProps } from "./props";
 
 export type MenuComponent<T> = {
@@ -7,7 +7,7 @@ export type MenuComponent<T> = {
     disabled: boolean;
     role: string;
     menuId: string;
-    nextSequence: () => string;
+    indexer: Indexer;
     selectItem: (value: ProviderItem<MenuItemComponent<T>> | undefined) => void;
     resetMenu: (excludedItems?: ProviderItem<MenuItemComponent<T>>[]) => void;
 };

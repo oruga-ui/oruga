@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsPropWithGroups } from "@oruga-ui/oruga-next";
+import type { DropdownOptions } from "@oruga-ui/oruga-next";
 
-const groupOptions: OptionsPropWithGroups<string> = [
+const options: DropdownOptions<string> = [
     {
         label: "Black Sails",
-        attrs: { disabled: true },
+        disabled: true,
         options: [
             { label: "Flint", value: "flint" },
             { label: "Silver", value: "silver" },
             { label: "Vane", value: "vane" },
             { label: "Billy", value: "billy" },
-            { label: "Jack", value: "jack", attrs: { disabled: true } },
+            { label: "Jack", value: "jack", disabled: true },
         ],
     },
     {
         label: "Breaking Bad",
-        attrs: { disabled: true },
+        disabled: true,
         options: {
             heisenberg: "Heisenberg",
             jesse: "Jesse",
@@ -26,7 +26,7 @@ const groupOptions: OptionsPropWithGroups<string> = [
     },
     {
         label: "Game of Thrones",
-        attrs: { disabled: true },
+        disabled: true,
         options: [
             "Tyrion Lannister",
             "Jamie Lannister",
@@ -36,27 +36,25 @@ const groupOptions: OptionsPropWithGroups<string> = [
     },
 ];
 
-const groupSelected = ref<string>();
+const selected = ref<string>();
 </script>
 
 <template>
     <section>
-        <o-field label="Grouped Options">
-            <o-dropdown
-                v-model="groupSelected"
-                :options="groupOptions"
-                selectable
-                scrollable
-                aria-label="group example">
-                <template #trigger="{ active }">
-                    <o-button
-                        variant="primary"
-                        label="Click me!"
-                        :icon-right="active ? 'caret-up' : 'caret-down'" />
-                </template>
-            </o-dropdown>
+        <o-dropdown
+            v-model="selected"
+            :options="options"
+            selectable
+            scrollable
+            aria-label="group example">
+            <template #trigger="{ active }">
+                <o-button
+                    variant="primary"
+                    label="Open Dropdown!"
+                    :icon-right="active ? 'caret-up' : 'caret-down'" />
+            </template>
+        </o-dropdown>
 
-            <p><b>Selected:</b> {{ groupSelected }}</p>
-        </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

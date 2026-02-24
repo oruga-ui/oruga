@@ -4,6 +4,7 @@ import { nextTick, shallowRef } from "vue";
 
 import type { OptionsProp } from "@/composables";
 import { setConfig, getConfig } from "@/utils/config";
+import type { TabsOptions } from "../props";
 
 import OTabs from "@/components/tabs/Tabs.vue";
 import OTabItem from "@/components/tabs/TabItem.vue";
@@ -231,16 +232,15 @@ describe("OTabs tests", () => {
         });
 
         describe("handle navigation correctly", () => {
-            const options: OptionsProp<string> = [
-                { label: "Flint", value: "flint", attrs: { clickable: true } },
+            const options: TabsOptions<string> = [
+                { label: "Flint", value: "flint" },
                 {
                     label: "Silver",
                     value: "silver",
-                    attrs: { clickable: true },
                 },
-                { label: "Vane", value: "vane", attrs: { clickable: true } },
-                { label: "Billy", value: "billy", attrs: { clickable: true } },
-                { label: "Jack", value: "jack", attrs: { clickable: true } },
+                { label: "Vane", value: "vane" },
+                { label: "Billy", value: "billy" },
+                { label: "Jack", value: "jack" },
             ];
 
             test("render accordingly when item is clicked", async () => {
@@ -341,7 +341,7 @@ describe("OTabs tests", () => {
                 });
 
                 expect(wrapper.emitted("update:modelValue")).toStrictEqual([
-                    ["0"],
+                    [0],
                 ]);
             });
 
@@ -374,28 +374,29 @@ describe("OTabs tests", () => {
             });
 
             test("handle options as options array correctly", async () => {
-                const options: OptionsProp<string | number> = [
+                const options: TabsOptions<string | number> = [
                     {
                         label: "Flint",
                         value: "flint",
-                        attrs: { content: "flint" },
+                        content: "flint",
                     },
                     {
                         label: "Silver",
                         value: "silver",
-                        attrs: { clickable: true, content: "silver" },
+                        content: "silver",
                     },
-                    { label: "Vane", value: "vane", attrs: { content: "abc" } },
-                    { label: "Zero", value: 0, attrs: { content: "x" } },
+                    { label: "Vane", value: "vane", content: "abc" },
+                    { label: "Zero", value: 0, content: "x" },
                     {
                         label: "One",
                         value: 1,
-                        attrs: { content: "y", disabled: true },
+                        content: "y",
+                        disabled: true,
                     },
                     {
                         label: "Two",
                         value: 2,
-                        attrs: { clickable: true, content: "test" },
+                        content: "test",
                     },
                 ];
 
@@ -416,12 +417,12 @@ describe("OTabs tests", () => {
                     expect(el.text()).toBe(options[idx].label);
                     expect(el.element.tagName).toBe("BUTTON");
                     expect(el.classes("o-tabs__tab--disabled")).toBe(
-                        options[idx].attrs?.disabled || false,
+                        options[idx].disabled || false,
                     );
                 });
 
                 optionElements.forEach((el, idx) => {
-                    expect(el.text()).toBe(options[idx].attrs?.content);
+                    expect(el.text()).toBe(options[idx].content);
                 });
             });
         });

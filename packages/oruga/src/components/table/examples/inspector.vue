@@ -37,13 +37,13 @@ const columns: TableColumn[] = [
     {
         field: "first_name",
         label: "First Name",
-        searchable: true,
+        filterable: true,
         sortable: true,
     },
     {
         field: "last_name",
         label: "Last Name",
-        searchable: true,
+        filterable: true,
     },
     {
         field: "date",
@@ -205,23 +205,10 @@ const inspectData: InspectData<
         description: "Class of the table `th` element when sortable.",
         properties: ["sortable"],
     },
-    thCurrentSortClass: {
-        class: "thCurrentSortClass",
-        deprecated: "use `thSortedClass` instead",
-        description:
-            "Class of the table `th` element that is currently sorted.",
-        info: "Click on 'First Name' header to sort elements and see it in action!",
-    },
     thSortedClass: {
         class: "thSortedClass",
         description: "Class of the table `th` element when sorted.",
         info: "Click on 'First Name' header to sort elements and see it in action!",
-    },
-    thUnselectableClass: {
-        class: "thUnselectableClass",
-        deprecated: "will be removed",
-        description: "Class of the Table `th` element that is unsortable.",
-        properties: ["headerSelectable", "sortable"],
     },
     thSubheadingClass: {
         class: "thSubheadingClass",
@@ -298,17 +285,6 @@ const inspectData: InspectData<
         properties: ["checkable"],
         action: (data): void => {
             data.checkable = true;
-        },
-    },
-    tdDetailedChevronClass: {
-        class: "tdDetailedChevronClass",
-        deprecated: "use `tdDetailClass` instead",
-        description:
-            "Class of the table `td` element that contains the chevron to trigger details.",
-        properties: ["detailed"],
-        action: (data): void => {
-            data.mobileCards = true;
-            data.detailed = true;
         },
     },
     tdDetailClass: {

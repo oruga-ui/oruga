@@ -135,9 +135,9 @@ export function alternateArray<T>(arr: T[], startIndex: number): T[] {
  * @param mutate - Whether to mutate the original array.
  * @returns Sorted array.
  */
-export function sortBy<T extends object>(
+export function sortBy<T extends object, K extends string = DeepKeys<T>>(
     array: T[],
-    key: DeepKeys<T>,
+    key: K,
     fn?: (a: T, b: T, asc: boolean) => number,
     isAsc: boolean = false,
     mutate: boolean = false,
@@ -209,21 +209,6 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
     }
 
     return false;
-}
-
-/**
- * @deprecated not used
- * Returns true if it is a DOM element
- * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
- */
-export function isElement(el: any): el is Element {
-    return typeof HTMLElement === "object"
-        ? el instanceof HTMLElement //DOM2
-        : el &&
-              typeof el === "object" &&
-              el !== null &&
-              el.nodeType === 1 &&
-              typeof el.nodeName === "string";
 }
 
 /**

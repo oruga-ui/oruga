@@ -6,6 +6,9 @@ import BreadcrumbItem from "./BreadcrumbItem.vue";
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
+/** export breadcrumb specific types */
+export type * from "./props";
+
 /** export breadcrumb plugin */
 export default {
     install(app: App): void {

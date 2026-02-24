@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsPropItem } from "@oruga-ui/oruga-next";
+import type { Option } from "@oruga-ui/oruga-next";
 
 const isFetching = ref(false);
 const page = ref(1);
 const totalPages = ref(1);
 
-const options = ref<OptionsPropItem<any>[]>([]);
+const options = ref<Option<any>>([]);
 const selected = ref<any>();
 const value = ref("");
 
@@ -37,7 +37,7 @@ async function getAsyncData(_value: string): Promise<void> {
             `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${_value}&page=${page.value}`,
         ).then((response) => response.json());
 
-        const movies: OptionsPropItem[] = _data.results.map((v) => ({
+        const movies: Option<any> = _data.results.map((v) => ({
             value: v,
             label: v.title,
         }));
@@ -70,19 +70,20 @@ function getMoreAsyncData(): void {
                 :debounce="500"
                 @input="getAsyncData"
                 @scroll-end="getMoreAsyncData">
-                <template #option="{ value }">
+                <template #option="{ option }">
                     <div class="media">
                         <div class="media-left">
                             <img
                                 width="32"
-                                :src="`https://image.tmdb.org/t/p/w500/${value.poster_path}`" />
+                                :src="`https://image.tmdb.org/t/p/w500/${option.item.value.poster_path}`" />
                         </div>
                         <div class="media-content">
-                            {{ value.title }}
+                            {{ option.item.value.title }}
                             <br />
                             <small>
-                                Released at {{ value.release_date }}, rated
-                                <b>{{ value.vote_average }}</b>
+                                Released at
+                                {{ option.item.value.release_date }}, rated
+                                <b>{{ option.item.value.vote_average }}</b>
                             </small>
                         </div>
                     </div>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsProp } from "@oruga-ui/oruga-next";
+import type { AutocompleteOptions } from "@oruga-ui/oruga-next";
 
-const options: OptionsProp<string> = [
+const options: AutocompleteOptions<string> = [
     "Angular",
     "Angular 2",
     "Aurelia",

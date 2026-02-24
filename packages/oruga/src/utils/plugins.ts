@@ -3,7 +3,7 @@ import type { ProgrammaticFactory } from "@/components/programmatic/useProgramma
 import { type Oruga } from "./config";
 
 /**
- * register a component to the vue app instance
+ * Register a component to the vue app instance.
  * @internal
  */
 export const registerComponent = (
@@ -14,7 +14,7 @@ export const registerComponent = (
 };
 
 /**
- * register a global programmatic component factory interface to the oruga object
+ * Register a global programmatic component factory interface to the oruga object.
  * @internal
  */
 export const registerProgrammatic = (
@@ -36,5 +36,5 @@ export function addProgrammatic(
     component: object,
 ): void {
     // add the component on the property to the programmatic interface
-    oruga[property] = component;
+    oruga._programmatic[property] = component;
 }

@@ -1118,6 +1118,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 menuTag: DynamicComponent;
                 /**
+                 * Dropdown item tag name
+                 */
+                itemTag: DynamicComponent;
+                /**
                  * Dropdown trigger tag name
                  */
                 triggerTag: DynamicComponent;
@@ -1257,10 +1261,6 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class of the body when dropdown is open and scroll is keeped
                  */
                 scrollKeepClass: ClassDefinition;
-                /**
-                 * Dropdown item tag name
-                 */
-                itemTag: DynamicComponent;
                 /**
                  * Class of the item element.
                  */
@@ -1763,11 +1763,6 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                  */
                 overlay: boolean;
                 /**
-                 * Is Modal cancelable by clicking 'X', pressing escape or clicking outside
-                 * @deprecated use `closeable`, `closeOnOutside` and `closeOnEscape`
-                 */
-                cancelable: boolean | string[];
-                /**
                  * Adds close button to the header
                  */
                 closeable: boolean;
@@ -1975,11 +1970,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 simple: boolean;
                 /**
-                 * Buttons order
-                 * @deprecated will be renamed to `position`
-                 */
-                order: "centered" | "left" | "right";
-                /**
                  * Buttons position order
                  */
                 position: "centered" | "left" | "right";
@@ -2027,11 +2017,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element when on mobile
                  */
                 mobileClass: ClassDefinition;
-                /**
-                 * Class of the root element with order
-                 * @deprecated use `positionClass` instead
-                 */
-                orderClass: ClassDefinition;
                 /**
                  * Class of the root element with position
                  */
@@ -2249,11 +2234,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Custom animation (transition name)
                  */
                 animation: string;
-                /**
-                 * Is Sidebar cancelable by pressing escape or clicking outside.
-                 * @deprecated use `closeOnOutside` and `closeOnEscape`
-                 */
-                cancelable: boolean | string[];
                 /**
                  * Close when clicked outside of the panel
                  */
@@ -2938,19 +2918,9 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 thSortableClass: ClassDefinition;
                 /**
-                 * Class of the table `th` element that is currently sorted
-                 * @deprecated use `thSortedClass` instead
-                 */
-                thCurrentSortClass: ClassDefinition;
-                /**
                  * Class of the table `th` element when sorted
                  */
                 thSortedClass: ClassDefinition;
-                /**
-                 * Class of the table `th` element that is unsortable
-                 * @deprecated will be removed
-                 */
-                thUnselectableClass: ClassDefinition;
                 /**
                  * Class of the table `th` subheading element
                  */
@@ -2999,11 +2969,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the table `td` element when row is checkable
                  */
                 tdCheckboxClass: ClassDefinition;
-                /**
-                 * Class of the table `td` element that contains the chevron to trigger details
-                 * @deprecated use `tdDetailClass` instead
-                 */
-                tdDetailedChevronClass: ClassDefinition;
                 /**
                  * Class of the table `td` element that contains the detail trigger
                  */
@@ -3460,26 +3425,25 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 triggerTag: DynamicComponent;
                 /**
-                 * Tooltip trigger events
-                 * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
+                 * Show when hover over the trigger
                  */
-                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
+                openOnHover: boolean;
+                /**
+                 * Show when trigger get focused
+                 */
+                openOnFocus: boolean;
                 /**
                  * Show when clicked on the trigger
                  */
                 openOnClick: boolean;
                 /**
-                 * Show when hover over the trigger
-                 */
-                openOnHover: boolean;
-                /**
                  * Show when right clicked on the trigger
                  */
                 openOnContextmenu: boolean;
                 /**
-                 * Show when trigger get focused
+                 * Close on hover out of the content
                  */
-                openOnFocus: boolean;
+                closeable: boolean;
                 /**
                  * Close when clicked outside of the panel
                  */

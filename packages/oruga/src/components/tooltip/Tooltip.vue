@@ -3,7 +3,6 @@ import {
     ref,
     computed,
     watch,
-    nextTick,
     useId,
     useTemplateRef,
     type Component,
@@ -37,6 +36,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
     override: undefined,
     active: false,
     label: undefined,
+    id: () => useId(),
     variant: () => getDefault("tooltip.variant"),
     position: () => getDefault("tooltip.position", "auto"),
     always: false,
@@ -45,11 +45,10 @@ const props = withDefaults(defineProps<TooltipProps>(), {
     multiline: false,
     maxWidth: () => getDefault("tooltip.maxWidth"),
     triggerTag: () => getDefault("tooltip.triggerTag", "div"),
-    triggers: () => getDefault("tooltip.triggers", []),
-    openOnClick: () => getDefault("tooltip.openOnClick", false),
-    openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
     openOnHover: () => getDefault("tooltip.openOnHover", true),
     openOnFocus: () => getDefault("tooltip.openOnFocus", false),
+    openOnClick: () => getDefault("tooltip.openOnClick", false),
+    openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
     delay: undefined,
     closeable: () => getDefault("tooltip.closeable", true),
     closeOnEscape: () => getDefault("tooltip.closeOnEscape", false),
@@ -87,8 +86,6 @@ defineSlots<{
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-const tooltipId = useId();
-
 const autoPosition = ref(props.position);
 
 /** update autoPosition on prop change */
@@ -108,7 +105,6 @@ const contentStyle = computed(() => ({
 
 // #region --- Event Handler ---
 
-// set click outside handler
 if (isClient) {
     // register onKeyup event listener when is active
     useEventListener(rootRef, "keyup", onKeyup, {
@@ -116,6 +112,7 @@ if (isClient) {
         passive: true,
     });
 
+    // set click outside handler
     useClickOutside([contentRef, triggerRef], onClickedOutside, {
         trigger: isActive,
         passive: true,
@@ -134,35 +131,33 @@ function onClickedOutside(event: Event): void {
     close(event);
 }
 
+/** Close tooltip if content lost focus. */
 function onHoverLeave(event: Event): void {
     if (!props.closeable && !props.closeOnOutside) return;
     close(event);
 }
 
 function onClick(event: Event): void {
-    if (!props.openOnClick && !props.triggers.includes("click")) return;
-    // if not active, toggle after clickOutside event
-    // this fixes toggling programmatic
-    nextTick(() => setTimeout(() => open(event)));
+    if (!props.openOnClick) return;
+    open(event);
 }
 
+/** Open content when trigger is right clicked. */
 function onContextMenu(event: Event): void {
-    if (!props.openOnContextmenu && !props.triggers.includes("contextmenu"))
-        return;
+    if (!props.openOnContextmenu) return;
     event.preventDefault();
     open(event);
 }
 
+/** Open content when trigger receives focus. */
 function onFocus(event: Event): void {
-    if (!props.openOnFocus && !props.triggers.includes("focus")) return;
+    if (!props.openOnFocus) return;
     open(event);
 }
 
+/** Open content when trigger is hovered. */
 function onHover(event: Event): void {
-    if (
-        (!props.openOnHover || props.openOnClick || props.openOnContextmenu) &&
-        !props.triggers.includes("hover")
-    )
+    if (!props.openOnHover || props.openOnClick || props.openOnContextmenu)
         return;
     open(event);
 }
@@ -170,17 +165,14 @@ function onHover(event: Event): void {
 let timeout: ReturnType<typeof setTimeout> | undefined;
 
 function open(event: Event): void {
-    if (props.disabled) return;
-    if (props.delay) {
-        timeout = setTimeout(() => {
-            isActive.value = true;
-            timeout = undefined;
-            emits("open", event);
-        }, props.delay);
-    } else {
-        nextTick(() => (isActive.value = true));
+    if (isActive.value || props.disabled) return;
+
+    // always open on the next JS loop after all events have been handled
+    timeout = setTimeout(() => {
+        isActive.value = true;
+        timeout = undefined;
         emits("open", event);
-    }
+    }, props.delay);
 }
 
 function close(event: Event): void {
@@ -260,7 +252,7 @@ const arrowClasses = defineClasses(
             :is="triggerTag"
             ref="triggerRef"
             :class="triggerClasses"
-            :aria-describedby="tooltipId"
+            :aria-describedby="id"
             @click="onClick"
             @contextmenu="onContextMenu"
             @mouseenter="onHover"
@@ -281,7 +273,7 @@ const arrowClasses = defineClasses(
             <transition :name="animation">
                 <div
                     v-show="isActive || (always && !disabled)"
-                    :id="tooltipId"
+                    :id="id"
                     :ref="(el) => (contentRef = setContent(el as HTMLElement))"
                     :class="contentClasses"
                     :style="contentStyle"

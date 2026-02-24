@@ -7,6 +7,8 @@ import type {
 } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
+export type TabsOptions<T> = OptionsProp<TabItemProps<T>>;
+
 export type TabsProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
@@ -16,7 +18,7 @@ export type TabsProps<T> = {
      */
     modelValue?: T;
     /** Tabs options, unnecessary when default slot is used */
-    options?: OptionsProp<T>;
+    options?: TabsOptions<T>;
     /**
      * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color

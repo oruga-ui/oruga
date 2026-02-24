@@ -45,7 +45,6 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     fullwidth: () => getDefault("sidebar.fullwidth", false),
     mobile: () => getDefault("sidebar.mobile"),
     animation: () => getDefault("sidebar.animation"),
-    cancelable: () => getDefault("sidebar.cancelable"),
     closeOnOutside: () => getDefault("sidebar.closeOnOutside", true),
     closeOnEscape: () => getDefault("sidebar.closeOnEscape", true),
     trapFocus: () => getDefault("sidebar.trapFocus", true),
@@ -142,14 +141,14 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!props.closeOnEscape || checkNotCancelable("escape")) return;
+    if (!props.closeOnEscape) return;
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener. */
 function clickedOutside(event: Event): void {
-    if (!props.closeOnOutside || checkNotCancelable("outside")) return;
+    if (!props.closeOnOutside) return;
     if (props.inline || !isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
@@ -157,19 +156,6 @@ function clickedOutside(event: Event): void {
     )
         event.preventDefault();
     close(event);
-}
-
-/** Check if the method is not in cancelable (for deprecreated check) */
-function checkNotCancelable(
-    method: Exclude<typeof props.cancelable, boolean>[number],
-): boolean {
-    return (
-        typeof props.cancelable !== "undefined" &&
-        ((typeof props.cancelable === "boolean" && !props.cancelable) ||
-            !props.cancelable ||
-            (Array.isArray(props.cancelable) &&
-                !props.cancelable.includes(method)))
-    );
 }
 
 /** set active to false and emit close event */

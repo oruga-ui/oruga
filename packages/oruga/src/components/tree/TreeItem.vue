@@ -115,11 +115,11 @@ const { parent, item } = useProviderChild<
     TreeItemComponent<T>
 >(rootRef, { data: providedData });
 
-const nextSequence = parent.value.nextSequence;
+const indexer = parent.value.indexer;
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
+    normalizeOptions(props.options, indexer),
 );
 
 const hasChildren = computed(() => !!childItems.value.length);
@@ -239,7 +239,7 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
 
 <template>
     <li
-        v-show="!hidden"
+        v-show="!isHidden"
         :id="`${parent.id}-${item.identifier}`"
         ref="rootElement"
         data-oruga="tree-item"
@@ -293,10 +293,7 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
                     <o-tree-item
                         v-for="option in normalizedOptions"
                         :key="option.key"
-                        v-bind="option.attrs"
-                        :value="option.value"
-                        :label="option.label"
-                        :hidden="option.hidden" />
+                        v-bind="option.item" />
                 </slot>
             </ul>
         </transition>

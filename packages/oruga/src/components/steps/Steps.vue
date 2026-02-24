@@ -20,7 +20,7 @@ import {
     normalizeOptions,
     useProviderParent,
     useMatchMedia,
-    useSequentialId,
+    useIndexer,
 } from "@/composables";
 
 import type { StepItem, StepItemComponent, StepsComponent } from "./types";
@@ -119,12 +119,12 @@ const { childItems, itemsCount } = useProviderParent<StepItemComponent<T>>({
     data: provideData,
 });
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
+    normalizeOptions(props.options, indexer),
 );
 
 // #region --- Selected Item Feature ---
@@ -388,11 +388,8 @@ const navigationClasses = defineClasses([
             <slot>
                 <o-step-item
                     v-for="option in normalizedOptions"
-                    v-show="!option.hidden"
-                    v-bind="option.attrs"
-                    :key="option.key"
-                    :value="option.value"
-                    :label="option.label" />
+                    v-bind="option.item"
+                    :key="option.key" />
             </slot>
         </section>
 
