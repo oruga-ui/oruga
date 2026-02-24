@@ -11,12 +11,15 @@ const active = ref(true);
                 <o-switch v-model="active" label="Toggle" />
             </o-field>
 
-            <o-tooltip label="I'm never closing" open-on-click close-on-outside>
+            <o-tooltip
+                label="Click somewhere to close"
+                open-on-click
+                close-on-outside>
                 <o-button label="Click me" />
             </o-tooltip>
 
             <o-tooltip
-                label="I'm never closing"
+                label="Click somewhere to close"
                 open-on-contextmenu
                 close-on-outside>
                 <o-button label="Right click me" />
