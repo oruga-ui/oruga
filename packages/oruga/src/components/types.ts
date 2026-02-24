@@ -3441,10 +3441,9 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 openOnContextmenu: boolean;
                 /**
-                 * Tooltip auto close options (pressing escape, clicking the content or outside)
-                 * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
+                 * Close on hover out of the content
                  */
-                closeable: boolean | ("content" | "escape" | "outside")[];
+                closeable: boolean;
                 /**
                  * Close when clicked outside of the panel
                  */
