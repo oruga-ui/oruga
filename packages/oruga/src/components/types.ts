@@ -1126,25 +1126,21 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 triggerTag: DynamicComponent;
                 /**
-                 * Dropdown will be triggered by any events
+                 * Show when hover over the trigger
                  */
-                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
+                openOnHover: boolean;
+                /**
+                 * Show when trigger get focused
+                 */
+                openOnFocus: boolean;
                 /**
                  * Show when clicked on the trigger
                  */
                 openOnClick: boolean;
                 /**
-                 * Show when hover over the trigger
-                 */
-                openOnHover: boolean;
-                /**
                  * Show when right clicked on the trigger
                  */
                 openOnContextmenu: boolean;
-                /**
-                 * Show when trigger get focused
-                 */
-                openOnFocus: boolean;
                 /**
                  * Keep dropdown list open when item get selected
                  */
@@ -3441,10 +3437,9 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 openOnContextmenu: boolean;
                 /**
-                 * Tooltip auto close options (pressing escape, clicking the content or outside)
-                 * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
+                 * Close on hover out of the content
                  */
-                closeable: boolean | ("content" | "escape" | "outside")[];
+                closeable: boolean;
                 /**
                  * Close when clicked outside of the panel
                  */

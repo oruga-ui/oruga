@@ -196,18 +196,6 @@ const emits = defineEmits<{
      */
     filter: [column: TableColumn<T>, value: string, event: Event];
     /**
-     * on native filter event based on props filtersEvent
-     * @deprecated use `filter` event instead
-     * @param filtersEvent {string} - props filtersEvent value
-     * @param filters {object} - filter object
-     * @param event {Event} - native event
-     */
-    "filters-event": [
-        filtersEvent: string,
-        filters: Record<string, string>,
-        event: Event,
-    ];
-    /**
      * detailedRows prop two-way binding
      * @param value {unknown[]} - updated detailedRows prop
      */
