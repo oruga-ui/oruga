@@ -79,7 +79,6 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     menuTag: () => getDefault("dropdown.menuTag", "div"),
     itemTag: () => getDefault("dropdown.itemTag", "div"),
     triggerTag: () => getDefault("dropdown.triggerTag", "div"),
-    triggers: () => getDefault("dropdown.triggers", []),
     openOnClick: () => getDefault("tooltip.openOnClick", true),
     openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
     openOnHover: () => getDefault("tooltip.openOnHover", false),
@@ -224,9 +223,7 @@ const menuStyle = computed(() => ({
     overflow: props.scrollable ? "auto" : null,
 }));
 
-const hoverable = computed(
-    () => props.openOnHover || props.triggers.includes("hover"),
-);
+const hoverable = computed(() => props.openOnHover);
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 
@@ -362,31 +359,30 @@ function onTriggerClick(event: Event): void {
     // check if is mobile native and hoverable together
     if (isMobileNative && hoverable.value) toggle(event);
     // check normal click conditions
-    if (!(props.openOnClick || props.triggers.includes("click"))) return;
+    if (!props.openOnClick) return;
     toggle(event);
 }
 
 function onTriggerContextMenu(event: Event): void {
-    if (!(props.openOnContextmenu || props.triggers.includes("contextmenu")))
-        return;
+    if (!props.openOnContextmenu) return;
     event.preventDefault();
     open(event);
 }
 
 function onTriggerFocus(event: Event): void {
-    if (!(props.openOnFocus || props.triggers.includes("focus"))) return;
+    if (!props.openOnFocus) return;
     open(event);
 }
 
 function onTriggerHover(event: Event): void {
     if (isMobileNative) return;
-    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
+    if (!props.openOnHover) return;
     open(event);
 }
 
 function onTriggerHoverLeave(event: Event): void {
     if (isMobileNative) return;
-    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
+    if (!props.openOnHover) return;
     close(event);
 }
 
