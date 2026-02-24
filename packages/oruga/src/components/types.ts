@@ -3425,11 +3425,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 triggerTag: DynamicComponent;
                 /**
-                 * Tooltip trigger events
-                 * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
-                 */
-                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
-                /**
                  * Show when clicked on the trigger
                  */
                 openOnClick: boolean;
