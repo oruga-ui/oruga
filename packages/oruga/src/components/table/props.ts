@@ -147,13 +147,13 @@ export type TableProps<T> = {
      * @values centered, right, left
      */
     paginationOrder?: "centered" | "right" | "left";
-    /** Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend */
+    /** Columns won't be filtered on clientside, use with `filterable` prop to the columns to filter in your backend */
     backendFiltering?: boolean;
-    /** Icon of the column search input */
-    filtersIcon?: string;
-    /** Placeholder of the column search input */
-    filtersPlaceholder?: string;
-    /** Filtering debounce time (in milliseconds) */
+    /** Icon of the column filter inputs */
+    filterIcon?: string;
+    /** Placeholder of the column filter inputs */
+    filterPlaceholder?: string;
+    /** Debounce column filter input change events (in milliseconds) */
     filterDebounce?: number;
     /** Label to be shown when the table is empty */
     emptyLabel?: string;
