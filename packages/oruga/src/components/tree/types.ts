@@ -1,4 +1,4 @@
-import type { ProviderItem } from "@/composables";
+import type { Indexer, ProviderItem } from "@/composables";
 import type { TreeItemProps } from "./props";
 
 export type TreeComponent<T> = {
@@ -13,7 +13,7 @@ export type TreeComponent<T> = {
     toggleIcon: string;
     iconPack: string;
     iconSize: string;
-    nextSequence: () => string;
+    indexer: Indexer;
     selectItem: (value: TreeItem<T>, selection: boolean) => void;
     focusItem: (value: TreeItem<T>) => void;
 };

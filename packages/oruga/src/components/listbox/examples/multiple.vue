@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const selectedValue = ref([]);
+const selected = ref<string[]>([]);
 </script>
 
 <template>
     <section class="odocs-spaced">
         <o-field label="Select multiple cities">
-            <o-listbox v-model="selectedValue" multiple>
+            <o-listbox v-model="selected" multiple>
                 <o-list-item label="New York" value="NY" />
                 <o-list-item label="Rome" value="RM" />
                 <o-list-item label="London" value="LDN" />
@@ -16,6 +16,6 @@ const selectedValue = ref([]);
             </o-listbox>
         </o-field>
 
-        <p><b>Selected:</b> {{ selectedValue }}</p>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

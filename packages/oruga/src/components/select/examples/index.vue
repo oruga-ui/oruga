@@ -47,16 +47,23 @@ import WithIconsCode from "./icons.vue?raw";
             <code>value</code> properties
         </li>
         <li>
-            Using the native
-            <code>&lt;option&gt;</code>
-            tags directly inside the default slot.
+            Using the native <code>&lt;option&gt;</code>
+            tags directly inside the default template slot.
         </li>
     </ul>
+
+    <div class="info custom-block">
+        <p class="custom-block-title">TypeScript</p>
+        <p>
+            The options property type is defined by the
+            <code>SelectOptions</code> type.
+        </p>
+    </div>
 
     <h4 id="options-primitives">Array of primitives</h4>
     <p>
         The simplest way to provide options is an array of primitives like
-        strings or numbers, where the primitive will be used for both thestring
+        strings or numbers, where the primitive will be used for both the string
         casted <code>label</code> representation and the <code>value</code> of
         the option.
     </p>
@@ -75,18 +82,18 @@ import WithIconsCode from "./icons.vue?raw";
     <p>
         The most flexible way to define options is to provide an array of
         objects. The object is defined as: <br />
-        <code>{ value: any, label: string, attrs?: object }</code>
+        <code>{ value: any, label: string }</code>
         <br />
         The
         <code>value</code> attribute is the real value which will be used by the
         <code>v-model</code> property and other events. The
         <code>label</code> attribute is the visible representation of the
-        option. The <code>attrs</code> attribute is an object for additional
-        attributes, which will be applied to the option item tag.
+        option. The object can be extended by additional attribute, which will
+        be applied to the option item tag.
     </p>
     <ExampleViewer :component="OptionsArray" :code="OptionsArrayCode" />
 
-    <h4 id="options-grouped">Option groups</h4>
+    <h4 id="options-grouped">Grouped options</h4>
     <p>
         Using the array of objects syntax you can also create grouped options
         (<code>&lt;optgroup&gt;</code> in HTML) by adding an

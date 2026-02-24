@@ -1118,29 +1118,29 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 menuTag: DynamicComponent;
                 /**
+                 * Dropdown item tag name
+                 */
+                itemTag: DynamicComponent;
+                /**
                  * Dropdown trigger tag name
                  */
                 triggerTag: DynamicComponent;
-                /**
-                 * Dropdown will be triggered by any events
-                 */
-                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
-                /**
-                 * Show when clicked on the trigger
-                 */
-                openOnClick: boolean;
                 /**
                  * Show when hover over the trigger
                  */
                 openOnHover: boolean;
                 /**
-                 * Show when right clicked on the trigger
-                 */
-                openOnContextmenu: boolean;
-                /**
                  * Show when trigger get focused
                  */
                 openOnFocus: boolean;
+                /**
+                 * Show when clicked on the trigger
+                 */
+                openOnClick: boolean;
+                /**
+                 * Show when right clicked on the trigger
+                 */
+                openOnContextmenu: boolean;
                 /**
                  * Keep dropdown list open when item get selected
                  */
@@ -1257,10 +1257,6 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class of the body when dropdown is open and scroll is keeped
                  */
                 scrollKeepClass: ClassDefinition;
-                /**
-                 * Dropdown item tag name
-                 */
-                itemTag: DynamicComponent;
                 /**
                  * Class of the item element.
                  */
@@ -2786,19 +2782,19 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 paginationOrder: "centered" | "left" | "right";
                 /**
-                 * Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend
+                 * Columns won't be filtered on clientside, use with `filterable` prop to the columns to filter in your backend
                  */
                 backendFiltering: boolean;
                 /**
-                 * Icon of the column search input
+                 * Icon of the column filter inputs
                  */
                 filterIcon: string;
                 /**
-                 * Placeholder of the column search input
+                 * Placeholder of the column filter inputs
                  */
                 filterPlaceholder: string;
                 /**
-                 * Filtering debounce time (in milliseconds)
+                 * Debounce column filter input change events (in milliseconds)
                  */
                 filterDebounce: number;
                 /**
@@ -3429,31 +3425,25 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 triggerTag: DynamicComponent;
                 /**
-                 * Tooltip trigger events
-                 * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
-                 */
-                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
-                /**
-                 * Show when clicked on the trigger
-                 */
-                openOnClick: boolean;
-                /**
                  * Show when hover over the trigger
                  */
                 openOnHover: boolean;
-                /**
-                 * Show when right clicked on the trigger
-                 */
-                openOnContextmenu: boolean;
                 /**
                  * Show when trigger get focused
                  */
                 openOnFocus: boolean;
                 /**
-                 * Tooltip auto close options (pressing escape, clicking the content or outside)
-                 * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
+                 * Show when clicked on the trigger
                  */
-                closeable: boolean | ("content" | "escape" | "outside")[];
+                openOnClick: boolean;
+                /**
+                 * Show when right clicked on the trigger
+                 */
+                openOnContextmenu: boolean;
+                /**
+                 * Close on hover out of the content
+                 */
+                closeable: boolean;
                 /**
                  * Close when clicked outside of the panel
                  */

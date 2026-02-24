@@ -1,8 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsProp } from "@oruga-ui/oruga-next";
+import type { AutocompleteOptions } from "@oruga-ui/oruga-next";
 
-const options: OptionsProp = [
+type Entity = {
+    id: number;
+    user: {
+        first_name: string;
+        last_name: string;
+    };
+    date: string;
+    gender: string;
+};
+
+const options: AutocompleteOptions<Entity> = [
     {
         label: "Jesse Simmons",
         value: {
@@ -199,15 +209,13 @@ const selected = ref();
 
 <template>
     <section>
-        <o-field label="Options List">
-            <o-autocomplete
-                v-model="selected"
-                :options="options"
-                placeholder="Find a name..."
-                open-on-focus>
-            </o-autocomplete>
+        <o-autocomplete
+            v-model="selected"
+            :options="options"
+            placeholder="Find a name..."
+            open-on-focus>
+        </o-autocomplete>
 
-            <p><b>Selected:</b> {{ selected }}</p>
-        </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

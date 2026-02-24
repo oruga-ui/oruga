@@ -50,16 +50,17 @@ import TagsCode from "./tags.vue?raw";
     <h3 id="options">Options</h3>
     <p>
         Instead of using the <code>&lt;o-breadcrumb-item&gt;</code> component
-        directly inside the default slot, an <code>options</code> prop can be
-        set, which allows the options to be set programmatically. It accepts
-        several different formats of values:
+        directly inside the default template slot, an <code>options</code> prop
+        can be set, which allows the options to be set programmatically. It
+        accepts several different formats of values:
     </p>
     <ul>
         <li>An array of primitives <code>['A', 'B', 'C']</code></li>
         <li>
-            An array of objects with <code>label</code> and
-            <code>attrs</code> properties
+            An object literal with key-value pairs
+            <code>{ a: 'A', b: 'B', c: 'C' }</code>
         </li>
+        <li>An array of objects where each object represent an item</li>
     </ul>
     <ExampleViewer :component="Options" :code="OptionsCode" />
 

@@ -14,9 +14,7 @@ exports[`OTaginput tests > render correctly 1`] = `
       <!--teleport start-->
       <!--v-if-->
       <transition-stub name="fade" appear="false" persisted="true" css="true">
-        <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-multiselectable="false">
-          <!--v-if-->
-        </div>
+        <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-multiselectable="false"></div>
       </transition-stub>
       <!--teleport end-->
     </div>

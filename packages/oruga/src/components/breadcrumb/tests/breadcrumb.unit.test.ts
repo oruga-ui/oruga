@@ -2,7 +2,7 @@ import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
-import type { SimpleOptionsProp } from "@/composables";
+import type { OptionsProp } from "@/composables";
 
 import OBreadcrumb from "@/components/breadcrumb/Breadcrumb.vue";
 import OBreadcrumbItem from "@/components/breadcrumb/BreadcrumbItem.vue";
@@ -139,14 +139,7 @@ describe("OBreadcrumb tests", () => {
 
     describe("handle options correctly", () => {
         test("handle options as primitves correctly", async () => {
-            const options: SimpleOptionsProp = [
-                "Flint",
-                "Silver",
-                "Vane",
-                0,
-                1,
-                2,
-            ];
+            const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
 
             const wrapper = mount(OBreadcrumb, {
                 global: { components: { OBreadcrumb, OBreadcrumbItem } },
@@ -165,19 +158,19 @@ describe("OBreadcrumb tests", () => {
         });
 
         test("handle options as options array correctly", async () => {
-            const options: SimpleOptionsProp = [
-                { label: "Item 1", attrs: { tag: "router-link", to: "/" } },
+            const options: OptionsProp = [
+                { label: "Item 1", tag: "router-link", to: "/" },
                 {
                     label: "Item 2",
-                    attrs: {
-                        tag: "router-link",
-                        to: "/documentation/",
-                        disabled: true,
-                    },
+
+                    tag: "router-link",
+                    to: "/documentation/",
+                    disabled: true,
                 },
                 {
                     label: "Item 3",
-                    attrs: { tag: "router-link", to: "/components/Breadcrumb" },
+                    tag: "router-link",
+                    to: "/components/Breadcrumb",
                 },
             ];
 

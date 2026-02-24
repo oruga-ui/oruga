@@ -7,6 +7,8 @@ export type TooltipProps = {
     active?: boolean;
     /** Tooltip text, unnecessary when content slot is used */
     label?: string;
+    /** A unique HTML id for the tooltip element */
+    id?: string;
     /**
      * Color of the tooltip
      * @values primary, info, success, warning, danger, and any other custom color
@@ -41,28 +43,18 @@ export type TooltipProps = {
     maxWidth?: string;
     /** Tooltip trigger tag name */
     triggerTag?: DynamicComponent;
-    /**
-     * Tooltip trigger events
-     * @values hover, click, focus, contextmenu
-     * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
-     */
-    triggers?: Array<"click" | "hover" | "contextmenu" | "focus">;
-    /** Show when clicked on the trigger */
-    openOnClick?: boolean;
     /** Show when hover over the trigger */
     openOnHover?: boolean;
-    /** Show when right clicked on the trigger */
-    openOnContextmenu?: boolean;
     /** Show when trigger get focused */
     openOnFocus?: boolean;
+    /** Show when clicked on the trigger */
+    openOnClick?: boolean;
+    /** Show when right clicked on the trigger */
+    openOnContextmenu?: boolean;
     /** Tooltip delay before it appears (number in ms) */
     delay?: number;
-    /**
-     * Tooltip auto close options (pressing escape, clicking the content or outside)
-     * @values true, false, content, outside, escape
-     * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
-     */
-    closeable?: Array<"content" | "outside" | "escape"> | boolean;
+    /** Close on hover out of the content */
+    closeable?: boolean;
     /** Close when clicked outside of the panel */
     closeOnOutside?: boolean;
     /** Close when pressing escape key */

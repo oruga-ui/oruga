@@ -2,19 +2,20 @@ import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
-import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
+import type { OptionsProp } from "@/composables";
+import type { SelectOption, SelectOptions } from "../props";
 
 import OSelect from "@/components/select/Select.vue";
 
 describe("OSelect tests", () => {
     enableAutoUnmount(afterEach);
 
-    const options: OptionsItem<string>[] = [
+    const options: SelectOptions<string> = [
         { label: "Flint", value: "flint" },
         { label: "Silver", value: "silver" },
         { label: "Vane", value: "vane" },
         { label: "Billy", value: "billy" },
-        { label: "Jack", value: "silver", attrs: { disabled: true } },
+        { label: "Jack", value: "silver", disabled: true },
     ];
 
     test("render correctly", () => {
@@ -288,13 +289,13 @@ describe("OSelect tests", () => {
         });
 
         test("handle options as options array correctly", () => {
-            const options: OptionsProp<string | number> = [
+            const options: SelectOptions<string | number> = [
                 { label: "Flint", value: "flint" },
-                { label: "Silver", value: "silver", attrs: { disabled: true } },
+                { label: "Silver", value: "silver", disabled: true },
                 { label: "Vane", value: "vane" },
                 { label: "Zero", value: 0 },
                 { label: "One", value: 1 },
-                { label: "Two", value: 2, attrs: { disabled: true } },
+                { label: "Two", value: 2, disabled: true },
             ];
 
             const wrapper = mount(OSelect, { props: { options } });
@@ -309,13 +310,13 @@ describe("OSelect tests", () => {
                 expect(el.text()).toBe(options[idx].label);
                 expect(el.attributes("value")).toBe(String(options[idx].value));
                 expect(el.attributes("disabled")).toBe(
-                    options[idx].attrs?.disabled ? "" : undefined,
+                    options[idx].disabled ? "" : undefined,
                 );
             });
         });
 
         test("handle grouped options correctly", () => {
-            const options: OptionsGroupProp<string | number | object> = [
+            const options: SelectOptions<string | number | object> = [
                 {
                     label: "Black Sails",
                     options: [
@@ -336,7 +337,7 @@ describe("OSelect tests", () => {
                 },
                 {
                     label: "Game of Thrones",
-                    attrs: { disabled: true },
+                    disabled: true,
                     options: [
                         "Tyrion Lannister",
                         "Jamie Lannister",
@@ -353,7 +354,7 @@ describe("OSelect tests", () => {
 
             groupedElements.forEach((el, idx) => {
                 expect(el.attributes("disabled")).toBe(
-                    options[idx].attrs?.disabled ? "" : undefined,
+                    options[idx]?.disabled ? "" : undefined,
                 );
             });
 
@@ -364,9 +365,9 @@ describe("OSelect tests", () => {
                 let optionLabel;
                 let optionValue;
                 if (idx < 4) {
-                    optionLabel = (options[0].options[idx % 4] as OptionsItem)
+                    optionLabel = (options[0].options[idx % 4] as SelectOption)
                         .label;
-                    optionValue = (options[0].options[idx % 4] as OptionsItem)
+                    optionValue = (options[0].options[idx % 4] as SelectOption)
                         .value;
                 } else if (idx < 8) {
                     optionLabel = Object.entries(options[1].options)[

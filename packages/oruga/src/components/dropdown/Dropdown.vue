@@ -18,19 +18,19 @@ import { toCssDimension, isMobileAgent, isTrueish, mod } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    toOptionsGroup,
     normalizeOptions,
     useProviderParent,
     useMatchMedia,
     useClickOutside,
     usePreventScrolling,
-    useSequentialId,
     useEventListener,
     useScrollEvents,
     scrollElementInView,
     unrefElement,
-    type OptionsGroupItem,
-    type OptionsItem,
+    useIndexer,
+    isGroupOption,
+    type OptionGroupItem,
+    type OptionItem,
 } from "@/composables";
 
 import type {
@@ -38,7 +38,7 @@ import type {
     DropdownComponent,
     DropdownItemComponent,
 } from "./types";
-import type { DropdownProps } from "./props";
+import type { DropdownItemProps, DropdownProps } from "./props";
 import { injectField } from "../field/fieldInjection";
 
 /**
@@ -77,8 +77,8 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     maxHeight: () => getDefault("dropdown.maxHeight", 200),
     menuId: () => useId(),
     menuTag: () => getDefault("dropdown.menuTag", "div"),
+    itemTag: () => getDefault("dropdown.itemTag", "div"),
     triggerTag: () => getDefault("dropdown.triggerTag", "div"),
-    triggers: () => getDefault("dropdown.triggers", []),
     openOnClick: () => getDefault("tooltip.openOnClick", true),
     openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
     openOnHover: () => getDefault("tooltip.openOnHover", false),
@@ -165,14 +165,13 @@ defineSlots<{
     /**
      * Override the option group
      * @param group {object} - options group item
-     * @param index {number} - option index
      */
-    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    group?(props: { group: OptionGroupItem<DropdownItemProps<T>> }): void;
     /**
      * Override the label, default is label prop
      * @param option {object} - option item
      */
-    option?(props: { option: OptionsItem<T> }): void;
+    option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
 }>();
 
 const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
@@ -184,15 +183,13 @@ const { parentField } = injectField();
 // set field labelId or create a unique label id if a label is given
 const labelId = props.labelledby ?? parentField.value?.labelId;
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
+/** unique key sequencer */
+const indexer = useIndexer();
 
 /** normalized programamtic options */
-const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
-    return groupedOptions;
-});
+const normalizedOptions = computed(() =>
+    normalizeOptions(props.options, indexer, true),
+);
 
 // the selected item value, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -226,9 +223,7 @@ const menuStyle = computed(() => ({
     overflow: props.scrollable ? "auto" : null,
 }));
 
-const hoverable = computed(
-    () => props.openOnHover || props.triggers.includes("hover"),
-);
+const hoverable = computed(() => props.openOnHover);
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 
@@ -251,6 +246,7 @@ watch(
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
     menuId: props.menuId,
+    itemTag: props.itemTag,
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
     selectable: props.selectable,
@@ -363,31 +359,30 @@ function onTriggerClick(event: Event): void {
     // check if is mobile native and hoverable together
     if (isMobileNative && hoverable.value) toggle(event);
     // check normal click conditions
-    if (!(props.openOnClick || props.triggers.includes("click"))) return;
+    if (!props.openOnClick) return;
     toggle(event);
 }
 
 function onTriggerContextMenu(event: Event): void {
-    if (!(props.openOnContextmenu || props.triggers.includes("contextmenu")))
-        return;
+    if (!props.openOnContextmenu) return;
     event.preventDefault();
     open(event);
 }
 
 function onTriggerFocus(event: Event): void {
-    if (!(props.openOnFocus || props.triggers.includes("focus"))) return;
+    if (!props.openOnFocus) return;
     open(event);
 }
 
 function onTriggerHover(event: Event): void {
     if (isMobileNative) return;
-    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
+    if (!props.openOnHover) return;
     open(event);
 }
 
 function onTriggerHoverLeave(event: Event): void {
     if (isMobileNative) return;
-    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
+    if (!props.openOnHover) return;
     close(event);
 }
 
@@ -733,35 +728,32 @@ defineExpose({ value: vmodel, items: childItems });
                     <slot name="before" :toggle="toggle" />
 
                     <slot :toggle="toggle">
-                        <template v-for="(group, groupIndex) in groupedOptions">
-                            <o-dropdown-item
-                                v-if="group.label"
-                                v-show="!group.hidden"
-                                v-bind="group.attrs"
-                                :key="group.key"
-                                :value="group.value"
-                                :hidden="group.hidden"
-                                role="presentation"
-                                :clickable="false">
-                                <slot
-                                    name="group"
-                                    :group="group"
-                                    :index="groupIndex">
-                                    <span>
-                                        {{ group.label }}
-                                    </span>
-                                </slot>
-                            </o-dropdown-item>
+                        <template
+                            v-for="option in normalizedOptions"
+                            :key="option.key">
+                            <template v-if="isGroupOption(option)">
+                                <o-dropdown-item
+                                    v-bind="option.item"
+                                    role="presentation"
+                                    :clickable="false">
+                                    <slot name="group" :group="option">
+                                        <span> {{ option.item.label }} </span>
+                                    </slot>
+                                </o-dropdown-item>
 
-                            <o-dropdown-item
-                                v-for="option in group.options"
-                                v-show="!option.hidden"
-                                v-bind="option.attrs"
-                                :key="option.key"
-                                :value="option.value"
-                                :hidden="option.hidden">
+                                <o-dropdown-item
+                                    v-for="_option in option.options"
+                                    v-bind="_option.item"
+                                    :key="_option.key">
+                                    <slot name="option" :option="_option">
+                                        <span> {{ _option.item.label }} </span>
+                                    </slot>
+                                </o-dropdown-item>
+                            </template>
+
+                            <o-dropdown-item v-else v-bind="option.item">
                                 <slot name="option" :option="option">
-                                    <span> {{ option.label }} </span>
+                                    <span> {{ option.item.label }} </span>
                                 </slot>
                             </o-dropdown-item>
                         </template>

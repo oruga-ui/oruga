@@ -1,6 +1,8 @@
 import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
-import type { OptionsPropWithGroups } from "@/composables";
 import type { InputProps } from "../input/props";
+import type { DropdownOptions } from "../dropdown/props";
+
+export type AutocompleteOptions<T> = DropdownOptions<T>;
 
 export type AutocompleteProps<T> = {
     /** Override existing theme classes completely */
@@ -15,7 +17,7 @@ export type AutocompleteProps<T> = {
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Autocomplete options */
-    options?: OptionsPropWithGroups<T>;
+    options?: AutocompleteOptions<T>;
     /** Options won't be filtered based on the input value on clientside */
     backendFiltering?: boolean;
     /** Function to filter the option based on the input value - default is label string comparison */

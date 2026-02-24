@@ -1,7 +1,9 @@
 import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
-import type { OptionsPropWithGroups } from "@/composables";
+import type { OptionsOrGroupsProp } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+export type DropdownOptions<T> = OptionsOrGroupsProp<DropdownItemProps<T>>;
 
 export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
@@ -11,7 +13,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Dropdown options, unnecessary when default slot is used */
-    options?: OptionsPropWithGroups<T>;
+    options?: DropdownOptions<T>;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Trigger label, unnecessary when trigger slot is used */
@@ -50,21 +52,18 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     menuId?: string;
     /** Dropdown menu tag name */
     menuTag?: DynamicComponent;
+    /** Dropdown item tag name */
+    itemTag?: DynamicComponent;
     /** Dropdown trigger tag name */
     triggerTag?: DynamicComponent;
-    /**
-     * Dropdown will be triggered by any events
-     * @values click, hover, contextmenu, focus
-     */
-    triggers?: ("click" | "hover" | "contextmenu" | "focus")[];
-    /** Show when clicked on the trigger */
-    openOnClick?: boolean;
     /** Show when hover over the trigger */
     openOnHover?: boolean;
-    /** Show when right clicked on the trigger */
-    openOnContextmenu?: boolean;
     /** Show when trigger get focused */
     openOnFocus?: boolean;
+    /** Show when clicked on the trigger */
+    openOnClick?: boolean;
+    /** Show when right clicked on the trigger */
+    openOnContextmenu?: boolean;
     /** Dropdown delay before it appears (number in ms) */
     delay?: number;
     /** Keep dropdown list open when item get selected */

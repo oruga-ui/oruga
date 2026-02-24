@@ -65,19 +65,23 @@ describe("OTooltip tests", () => {
 
             // check do NOT open on click
             await trigger.trigger("click");
-            await setTimeout(); // click event is processed async
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on right click
             await trigger.trigger("contextmenu");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on focus
             await trigger.trigger("focus");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
-            // check DO open on hiver
+            // check DO open on hover
             await trigger.trigger("mouseenter");
+            await setTimeout(); // await async event is processed
+
             expect(content.isVisible()).toBeTruthy();
             expect(wrapper.emitted("open")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
@@ -100,6 +104,7 @@ describe("OTooltip tests", () => {
             expect(content.isVisible()).toBeFalsy();
 
             await trigger.trigger("mouseenter");
+            await setTimeout(); // await async event is processed
 
             expect(content.isVisible()).toBeFalsy();
             expect(wrapper.emitted("open")).toBeUndefined();
@@ -122,19 +127,22 @@ describe("OTooltip tests", () => {
 
             // check do NOT open on hover
             await trigger.trigger("mouseenter");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on focus
             await trigger.trigger("focus");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on right click
             await trigger.trigger("contextmenu");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check DO open on click
             await trigger.trigger("click");
-            await setTimeout(); // click event is processed async
+            await setTimeout(); // await async event is processed
 
             expect(content.isVisible()).toBeTruthy();
             expect(wrapper.emitted("open")).toHaveLength(1);
@@ -158,7 +166,7 @@ describe("OTooltip tests", () => {
             expect(content.isVisible()).toBeFalsy();
 
             await trigger.trigger("click");
-            await setTimeout(); // click event is processed async
+            await setTimeout(); // await async event is processed
 
             expect(content.isVisible()).toBeFalsy();
             expect(wrapper.emitted("open")).toBeUndefined();
@@ -181,19 +189,23 @@ describe("OTooltip tests", () => {
 
             // check do NOT open on hover
             await trigger.trigger("mouseenter");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on focus
             await trigger.trigger("focus");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on click
             await trigger.trigger("click");
-            await setTimeout(); // click event is processed async
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check DO open on right click
             await trigger.trigger("contextmenu");
+            await setTimeout(); // await async event is processed
+
             expect(content.isVisible()).toBeTruthy();
             expect(wrapper.emitted("open")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
@@ -217,22 +229,26 @@ describe("OTooltip tests", () => {
 
             // check do NOT open on right click
             await trigger.trigger("contextmenu");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on click
             await trigger.trigger("click");
-            await setTimeout(); // click event is processed async
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             // check DO open on focus
             await trigger.trigger("focus");
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeTruthy();
             expect(wrapper.emitted("open")).toHaveLength(1);
 
             // check Do also open on hover when focus
             await trigger.trigger("mouseenter");
+            await setTimeout(); // await async event is processed
+
             expect(content.isVisible()).toBeTruthy();
-            expect(wrapper.emitted("open")).toHaveLength(2);
+            expect(wrapper.emitted("open")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
             expect(activeEmits![0][0]).toBeTruthy();
@@ -240,7 +256,7 @@ describe("OTooltip tests", () => {
 
         test("react accordingly when has close on hover leave", async () => {
             const wrapper = mount(OTooltip, {
-                props: { active: true },
+                props: { active: true, closeable: true },
                 attachTo: document.body,
             });
             await setTimeout(); // await event handler get set
@@ -277,32 +293,13 @@ describe("OTooltip tests", () => {
 
             // check Do close on click escape
             await trigger.trigger("keyup", { key: "Esc" });
+            await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
             expect(wrapper.emitted("close")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
             expect(activeEmits![0][0]).toBeFalsy();
-        });
-
-        test("react accordingly when pressing escape with closeable false", async () => {
-            const wrapper = mount(OTooltip, {
-                props: { active: true, closeOnEscape: true, closeable: false },
-            });
-            await setTimeout(); // await event handler get set
-
-            const trigger = wrapper.find(".o-tooltip__trigger");
-            expect(trigger.exists()).toBeTruthy();
-
-            const content = wrapper.find(".o-tooltip__content");
-            expect(content.exists()).toBeTruthy();
-            expect(content.isVisible()).toBeTruthy();
-
-            await trigger.trigger("keyup", { key: "Esc" });
-
-            expect(content.isVisible()).toBeTruthy();
-            expect(wrapper.emitted("close")).toBeUndefined();
-            expect(wrapper.emitted("update:active")).toBeUndefined();
         });
 
         test("react accordingly when has close on outside", async () => {

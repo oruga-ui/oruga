@@ -2,8 +2,14 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
-import Options from "./options.vue";
-import OptionsCode from "./options.vue?raw";
+import OptionsPrimitives from "./options-primitives.vue";
+import OptionsPrimitivesCode from "./options-primitives.vue?raw";
+
+import OptionsObject from "./options-object.vue";
+import OptionsObjectCode from "./options-object.vue?raw";
+
+import OptionsArray from "./options-array.vue";
+import OptionsArrayCode from "./options-array.vue?raw";
 
 import Selection from "./selection.vue";
 import SelectionCode from "./selection.vue?raw";
@@ -42,9 +48,9 @@ import TemplatesCode from "./templates.vue?raw";
     <h3 id="options">Options</h3>
     <p>
         Instead of using the <code>&lt;o-tree-item&gt;</code> component directly
-        inside the default slot, an <code>options</code> prop can be set, which
-        can be used to define the options programmatically. It accepts several
-        different formats of values:
+        inside the default template slot, an <code>options</code> prop can be
+        set, which can be used to define the options programmatically. It
+        accepts several different formats of values:
     </p>
     <ul>
         <li>An array of primitives <code>['A', 'B', 'C']</code></li>
@@ -52,26 +58,42 @@ import TemplatesCode from "./templates.vue?raw";
             An object literal with key-value pairs
             <code>{ a: 'A', b: 'B', c: 'C' }</code>
         </li>
-        <li>
-            An array of objects with <code>label</code> and
-            <code>value</code> properties
-        </li>
-        <li>
-            Grouped options by adding additional
-            <code>options</code> to the option object.
-        </li>
+        <li>An array of objects where each object represent an item</li>
     </ul>
+
     <div class="info custom-block">
-        <p class="custom-block-title">Note</p>
+        <p class="custom-block-title">TypeScript</p>
         <p>
-            The <code>options</code> prop works the same as the
-            <a href="/components/select.html">
-                <b>Select</b>
-            </a>
-            input component <code>options</code> prop.
+            The options property type is defined by the
+            <code>TreeOptions</code> type.
         </p>
     </div>
-    <ExampleViewer :component="Options" :code="OptionsCode" />
+
+    <h4 id="options-primitives">Array of primitives</h4>
+    <p>
+        The simplest way to provide options is an array of primitives like
+        strings or numbers, where the primitive will be used for both the string
+        casted <code>label</code> representation and the <code>value</code> of
+        the option.
+    </p>
+    <ExampleViewer
+        :component="OptionsPrimitives"
+        :code="OptionsPrimitivesCode" />
+
+    <h4 id="options-object">Key-Value pair object</h4>
+    <p>
+        You may also provide the <code>options</code> prop where the keys are
+        values and the values of each property are the labels.
+    </p>
+    <ExampleViewer :component="OptionsObject" :code="OptionsObjectCode" />
+
+    <h4 id="options-array">Array of objects</h4>
+    <p>
+        The most flexible way to define options is to provide an array of
+        objects. The object has the same properties as the
+        <code>&lt;o-list-item&gt;</code> component.
+    </p>
+    <ExampleViewer :component="OptionsArray" :code="OptionsArrayCode" />
 
     <h3 id="Selection">Selection</h3>
     <p>
