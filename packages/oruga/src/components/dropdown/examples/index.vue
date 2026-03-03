@@ -17,9 +17,6 @@ import OptionsArrayCode from "./options-array.vue?raw";
 import OptionsGrouped from "./options-grouped.vue";
 import OptionsGroupedCode from "./options-grouped.vue?raw";
 
-import Inline from "./inline.vue";
-import InlineCode from "./inline.vue?raw";
-
 import Modal from "./modal.vue";
 import ModalCode from "./modal.vue?raw";
 
@@ -127,13 +124,6 @@ import PositionCode from "./position.vue?raw";
         <code>modelValue</code> prop to an array of selected options.
     </p>
     <ExampleViewer :component="Selectable" :code="SelectableCode" />
-
-    <h3 id="inline">Inline</h3>
-    <p>
-        Components with the <code>inline</code> prop set will render the options
-        list directly, and will not have a trigger element rendered.
-    </p>
-    <ExampleViewer :component="Inline" :code="InlineCode" />
 
     <h3 id="scrollable">Scrollable</h3>
     <p>
