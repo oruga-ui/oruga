@@ -65,7 +65,7 @@
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
     "@types/jest-axe": "^3.5.9",
-    "@types/jsdom": "^27.0.0",
+    "@types/jsdom": "^28.0.0",
     "@types/node": "^24.11.0",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vitest/browser-playwright": "^4.0.18",
