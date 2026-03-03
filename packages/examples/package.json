@@ -61,11 +61,11 @@
     "@highlightjs/vue-plugin": "2.1.2",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.1.1",
-    "markdown-it-highlightjs": "^4.2.0"
+    "markdown-it-highlightjs": "^4.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.4",
-    "sass": "^1.94.2",
+    "sass": "^1.97.3",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
     "vite-tsconfig-paths": "^6.1.1",
