@@ -21,6 +21,7 @@ import type { MenuProps } from "./props";
  * A simple menu, for any type of vertical navigation.
  * @displayName Menu
  * @requires ./MenuItem.vue
+ * @deprecated Since v0.13.0 - use the `OTree` component instead
  * @style _menu.scss
  */
 defineOptions({
