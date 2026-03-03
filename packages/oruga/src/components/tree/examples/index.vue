@@ -50,7 +50,7 @@ import TemplatesCode from "./templates.vue?raw";
         Instead of using the <code>&lt;o-tree-item&gt;</code> component directly
         inside the default template slot, an <code>options</code> prop can be
         set, which can be used to define the options programmatically. It
-        accepts several different formats of values:
+        accepts several different value formats:
     </p>
     <ul>
         <li>An array of primitives <code>['A', 'B', 'C']</code></li>

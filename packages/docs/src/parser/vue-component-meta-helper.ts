@@ -12,7 +12,7 @@ import {
     createChecker,
 } from "vue-component-meta";
 import type { EventMeta, PropertyMeta, SlotMeta } from "vue-component-meta";
-import { lowercaseFirstLetter } from "../utils";
+import { anonymiseTypes, lowercaseFirstLetter } from "../utils";
 
 export type MetaSource = {
     exportName: string;
@@ -26,8 +26,6 @@ export function createVueComponentMetaChecker(
     tsconfigPath: string,
 ): ComponentMetaChecker {
     const checkerOptions: MetaCheckerOptions = {
-        forceUseTs: true,
-        noDeclarations: true,
         printer: { newLine: 1 },
     };
 
@@ -184,6 +182,9 @@ export function mapProps(
             // remove duplicate object type
             if (prop.type.includes("{} | {}"))
                 prop.type = prop.type.replace("{} | {}", "{}");
+
+            // override specific types
+            prop.type = anonymiseTypes(prop.type);
 
             // trim leading and trailing white space
             prop.type = prop.type.trim();

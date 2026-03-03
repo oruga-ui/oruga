@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { parse } from "node:path";
 
-// Components blacklist which will be ignored
+/** Components blacklist which will be ignored */
 const IGNORE = [
     "SliderThumb",
     "TableMobileSort",
@@ -14,6 +14,22 @@ const IGNORE = [
     "DatepickerMonth",
     "Programmatic",
 ];
+
+const TYPEMAP = {
+    "DatepickerType<IsRange, IsMultiple>": "[] | Date | Date[] | [Date, Date]",
+    "DeepKeys<T>": "string",
+    "(?<!DeepKeys<)\\bT\\b(?=\\s*(?:[,);\\|>\\]\\[]|$))": "unknown",
+};
+
+/** Replace specific types in a type string. */
+export function anonymiseTypes(type: string): string {
+    const pattern = Object.keys(TYPEMAP).join("|");
+    const regex = new RegExp(pattern, "g");
+
+    return type.replace(regex, (match) => {
+        return TYPEMAP[match as keyof typeof TYPEMAP] || "unknown";
+    });
+}
 
 function filterFile(f: string): boolean {
     return (
