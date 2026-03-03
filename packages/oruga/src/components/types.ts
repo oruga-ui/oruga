@@ -2668,7 +2668,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended)
                  */
-                rowKey: undefined;
+                rowKey: string;
                 /**
                  * Define individual class for a row
                  */
