@@ -60,7 +60,7 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "vue-component-type-helpers": "^3.1.8"
+    "vue-component-type-helpers": "^3.2.5"
   },
   "devDependencies": {
     "@babel/core": "7.28.5",
@@ -70,7 +70,7 @@
     "@types/jest-axe": "^3.5.9",
     "@types/jsdom": "^27.0.0",
     "@types/node": "^24.10.1",
-    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitejs/plugin-vue": "^6.0.4",
     "@vitest/coverage-v8": "^4.0.15",
     "@vitest/browser-playwright": "^4.0.15",
     "@vue/test-utils": "^2.4.6",
@@ -80,13 +80,13 @@
     "jsdom": "^27.3.0",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3",
-    "vite": "^7.2.6",
+    "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
-    "vite-tsconfig-paths": "^5.1.4",
+    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.15",
     "vitest-browser-vue": "^2.0.1",
-    "vue": "^3.5.25",
-    "vue-component-meta": "^3.1.8",
-    "vue-tsc": "^3.1.8"
+    "vue": "^3.5.29",
+    "vue-component-meta": "^3.2.5",
+    "vue-tsc": "^3.2.5"
   }
 }
