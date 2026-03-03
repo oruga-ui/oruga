@@ -25,7 +25,7 @@ import OptionsCode from "./options.vue?raw";
         Instead of using the <code>&lt;o-menu-item&gt;</code> component directly
         inside the default slot, an <code>options</code> prop can be set, which
         can be used to define the options programmatically. It accepts several
-        different formats of values:
+        different value formats:
     </p>
     <ul>
         <li>An array of primitives <code>['A', 'B', 'C']</code></li>
