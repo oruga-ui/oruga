@@ -583,6 +583,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    /** @deprecated */
     ["inlineClass", "o-dropdown--inline", null, computed(() => props.inline)],
     ["mobileClass", "o-dropdown--mobile", null, isMobile],
     ["modalClass", "o-dropdown--modal", null, isModal],

@@ -3,12 +3,13 @@ import fs from "fs";
 import path from "path";
 import process from "process";
 
-import { createChecker } from "vue-component-meta";
+import { createChecker, PropertyMeta } from "vue-component-meta";
 
 import {
     getComponents,
     fileExist,
     getFolders,
+    anonymiseTypes,
 } from "../packages/docs/src/utils.ts";
 
 const __dirname = process.cwd();
@@ -22,7 +23,7 @@ console.log("Creating vue-component-meta checker...");
 // create component meta checker
 const checker = createChecker(
     path.resolve(__dirname, "./packages/oruga/tsconfig.app.json"),
-    { forceUseTs: true, printer: { newLine: 1 } },
+    { printer: { newLine: 1 } },
 );
 
 // get all component folders
@@ -69,7 +70,7 @@ const components = component_folders
                         }
                         return false;
                     })
-                    .map((prop) => {
+                    .map((prop: PropertyMeta & { deprecated?: string }) => {
                         // remove undefined because we wrap the object with partial
                         if (prop.type.includes("| undefined"))
                             prop.type = prop.type.replace(" | undefined", "");
@@ -77,6 +78,8 @@ const components = component_folders
                         // change type for class props
                         if (prop.type === "ComponentClass")
                             prop.type = "ClassDefinition";
+                        // override specific types
+                        else prop.type = anonymiseTypes(prop.type);
 
                         if (prop.name.includes("Classes")) {
                             prop.type = "Record<string, any>";

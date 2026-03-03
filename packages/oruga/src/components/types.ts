@@ -1207,6 +1207,7 @@ but will set the body to a fixed position, which may break some layouts.
                 teleportClass: ClassDefinition;
                 /**
                  * Class of the root element when inlined
+                 * @deprecated since 0.13.0, use the `OListbox` component instead
                  */
                 inlineClass: ClassDefinition;
                 /**
@@ -2668,7 +2669,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended)
                  */
-                rowKey: undefined;
+                rowKey: string;
                 /**
                  * Define individual class for a row
                  */

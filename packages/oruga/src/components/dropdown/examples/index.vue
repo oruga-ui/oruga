@@ -17,9 +17,6 @@ import OptionsArrayCode from "./options-array.vue?raw";
 import OptionsGrouped from "./options-grouped.vue";
 import OptionsGroupedCode from "./options-grouped.vue?raw";
 
-import Inline from "./inline.vue";
-import InlineCode from "./inline.vue?raw";
-
 import Modal from "./modal.vue";
 import ModalCode from "./modal.vue?raw";
 
@@ -34,18 +31,36 @@ import PositionCode from "./position.vue?raw";
 </script>
 
 <template>
-    <h3 id="base">Base</h3>
-    <p>The dropdown will be a simple unselectable menu list by default.</p>
+    <h3 id="base">Base (Menu)</h3>
+    <p>
+        By default the dropdown will be a simple unselectable menu using the
+        <a
+            href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/menu_role">
+            ARIA: menu role
+        </a>
+        . A menu generally represents a list of actions or functions that the
+        user can invoke.
+    </p>
+    <p>
+        When a user clicks an option in a menu that has been opened, the menu
+        usually closes. This can be changed with the
+        <code>keepOpen</code> property. When a menu opens, keyboard focus can be
+        placed on the first menu item using the <code>keepFirst</code> property.
+    </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="triggers">Triggers</h3>
     <p>
-        The component accepts several different trigger variants, such as
+        The trigger can be defined by placing any element in the
+        <code>trigger</code> template slot. To open the dropdown, the component
+        can detect several different interaction variants, such as
         <code>openOnHover</code> or <code>openOnContextmenu</code> to only open
         on right click instead of left click. By default, only
-        <code>openOnClick</code> is set. The action that close the component can
-        also be customized using the <code>closeable</code>,
-        <code>closeOnOutside</code> and <code>closeOnEscape</code> props.
+        <code>openOnClick</code> is set.
+    </p>
+    <p>
+        The action that close the component can also be customised using the
+        <code>closeOnOutside</code> and <code>closeOnScroll</code> properties.
     </p>
     <p>
         Adding the <code>teleport</code> prop will move the dropdown menu to the
@@ -58,7 +73,7 @@ import PositionCode from "./position.vue?raw";
         Instead of using the <code>&lt;o-dropdown-item&gt;</code> component
         directly inside the default template slot, an <code>options</code> prop
         can be defined, which can be used to specify the options
-        programmatically. It accepts several different formats of values:
+        programmatically. It accepts several different value formats:
     </p>
     <ul>
         <li>An array of primitives <code>['A', 'B', 'C']</code></li>
@@ -117,29 +132,37 @@ import PositionCode from "./position.vue?raw";
     </p>
     <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 
-    <h3 id="selectable">Selectable</h3>
+    <h3 id="selectable">Selectable (Combobox)</h3>
     <p>
-        Components with the prop <code>selectable</code> will have options as a
-        selectable list.
+        The component can be configured to have the options as a selectable list
+        by adding the <code>selectable</code> property. This applies the
+        <a
+            href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/combobox_role">
+            ARIA: combobox role
+        </a>
+        to the root element and changes the menu to an
+        <a
+            href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/listbox_role">
+            ARIA: listbox role
+        </a>
+        . The combobox role identifies an element as either an input or a button
+        that controls another element, that can dynamically pop up to help the
+        user set a value.
     </p>
     <p>
-        Adding the <code>multiple</code> prop will change the
-        <code>modelValue</code> prop to an array of selected options.
+        By default only one option can be selected and the selected option will
+        be refereced by the <code>modelValue</code> property. Adding the
+        <code>multiple</code> property will change the
+        <code>modelValue</code> to an array of selected options.
     </p>
     <ExampleViewer :component="Selectable" :code="SelectableCode" />
-
-    <h3 id="inline">Inline</h3>
-    <p>
-        Components with the <code>inline</code> prop set will render the options
-        list directly, and will not have a trigger element rendered.
-    </p>
-    <ExampleViewer :component="Inline" :code="InlineCode" />
 
     <h3 id="scrollable">Scrollable</h3>
     <p>
         When having to many options, consider adding the
-        <code>scrollable</code> prop, which allows the menu to remain at a fixed
-        height.
+        <code>scrollable</code> property, which allows the options container to
+        remain at a fixed height. The <code>max-height</code> property can be
+        used to define the max container height.
     </p>
     <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
@@ -147,17 +170,17 @@ import PositionCode from "./position.vue?raw";
     <p>
         The content can be opened in an <i>modal</i> mode either for mobile or
         desktop only, or for both, by adding the <code>mobile-modal</code> and
-        <code>desktop-modal</code> props.
+        <code>desktop-modal</code> properties.
     </p>
     <ExampleViewer :component="Modal" :code="ModalCode" />
 
     <h3 id="position">Position</h3>
     <p>
-        The direction in which the dropdown menu opens can be defined by the
-        <code>position</code> prop. By default, the direction is automatically
-        calculated from the distance to the edge of the window. Adding the
-        <code>teleport</code> prop additionally will move the dropdown menu to
-        the referenced DOM location instead.
+        The direction in which the dropdown menu opens can be changed by the
+        <code>position</code> property. By default, the direction is
+        automatically calculated from the distance to the edges of the window.
+        Adding the <code>teleport</code> prop additionally will move the
+        dropdown menu to the referenced DOM location instead.
     </p>
     <ExampleViewer :component="Position" :code="PositionCode" />
 </template>

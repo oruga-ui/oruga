@@ -36,7 +36,6 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     hidden: false,
     sticky: false,
     customSort: undefined,
-    customSearch: undefined,
     customFilter: undefined,
     thAttrs: undefined,
     tdAttrs: undefined,
@@ -111,10 +110,6 @@ const style = computed(() => ({
 
 /** Check if the formated row value for this column matches the given value. */
 function matches(row: T, value: string): boolean {
-    // if column has custom search funtion return result
-    if (typeof props.customSearch === "function")
-        return props.customSearch(row, value);
-
     // if column has custom filter funtion return result
     if (typeof props.customFilter === "function")
         return props.customFilter(row, value);
