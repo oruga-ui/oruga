@@ -63,9 +63,6 @@
     "vue-component-type-helpers": "^3.2.5"
   },
   "devDependencies": {
-    "@babel/core": "7.28.5",
-    "@babel/preset-env": "7.28.5",
-    "@rollup/plugin-babel": "6.1.0",
     "@tsconfig/node24": "^24.0.3",
     "@types/jest-axe": "^3.5.9",
     "@types/jsdom": "^27.0.0",
