@@ -28,8 +28,8 @@
     "markdown-it-highlightjs": "^4.2.0"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
-    "@vue/tsconfig": "^0.8.1",
+    "@types/node": "^24.11.0",
+    "@vue/tsconfig": "^0.9.0",
     "sass": "^1.94.2",
     "tsx": "^4.21.0",
     "typescript": "5.9.3",

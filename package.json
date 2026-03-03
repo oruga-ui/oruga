@@ -43,7 +43,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.4.0",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/eslint-config-typescript": "^14.7.0",
     "conventional-changelog": "^7.2.0",
     "conventional-changelog-conventionalcommits": "9.2.0",
     "eslint": "^9.36.0",
