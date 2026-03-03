@@ -58,10 +58,10 @@ const isActive = ref(false);
 
             <o-dropdown>
                 <template #trigger>
-                    <div role="button" tabindex="0">
+                    <button role="button" tabindex="0">
                         Custom
                         <o-icon variant="success" icon="caret-down" />
-                    </div>
+                    </button>
                 </template>
 
                 <o-dropdown-item label="Action" />
@@ -83,12 +83,7 @@ const isActive = ref(false);
         <p>
             <o-field grouped>
                 <o-dropdown v-model:active="isActive" :open-on-click="false">
-                    <template #trigger="{ active }">
-                        <o-icon
-                            variant="success"
-                            :icon="active ? 'caret-up' : 'caret-down'" />
-                        Click the button beside!
-                    </template>
+                    <template #trigger> Click the button beside! </template>
 
                     <o-dropdown-item label="Action" />
                     <o-dropdown-item label="Another action" />
