@@ -6,9 +6,10 @@ sidebarDepth: 2
 
 <section class="odocs-head">
 
-The **Dropdown** component is very versatile and can be used as contextual overlays for displaying lists as a quick menu or even toggleable to allow users to select a value from a list of content options.
+The **Dropdown** component is highly versatile and can be used in various ways, such as for displaying lists as contextual overlays, as a quick menu, or as a selectable list of content options.
+
 Unlike native select elements, the dropdown input allows you to customize both its appearance and behavior.
-The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
+The component implements both the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) as well as the W3C ARIA APG [Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/examples/menu-button-actions-active-descendant/), depending on whether the options are selectable.
 
 </section>
 
