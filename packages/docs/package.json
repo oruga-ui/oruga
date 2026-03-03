@@ -25,12 +25,12 @@
     "@oruga-ui/theme-oruga": "0.8.1",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.1.1",
-    "markdown-it-highlightjs": "^4.2.0"
+    "markdown-it-highlightjs": "^4.3.0"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
     "@vue/tsconfig": "^0.8.1",
-    "sass": "^1.94.2",
+    "sass": "^1.97.3",
     "tsx": "^4.21.0",
     "typescript": "5.9.3",
     "vitepress": "^1.6.4",
