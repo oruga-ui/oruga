@@ -4,6 +4,10 @@ on:
     tags:
       - v*
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: write # Required to create GitHub Release
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -25,6 +29,12 @@ jobs:
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
+      - name: Install dependencies 📦
+        run: npm ci
+
+      - name: Build packages 🛠️
+        run: npm run build
+
       - name: Install release dependency 📦
         run: npm i extract-changelog-release
 
@@ -36,14 +46,34 @@ jobs:
         with:
           bodyFile: "RELEASE_BODY.md"
           # define prerelease based on the tag name
-          prerelease: ${{ github.ref == 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
+          prerelease: ${{ contains(github.ref, '-pre.') }}
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Oruga pre-release 🐛
+        if: ${{ contains(github.ref, '-pre.') }} # only for pre-release
+        working-directory: ./packages/oruga
+        run: npm publish --tag pre
+
+      - name: Publish Oruga release 🐛
+        if: ${{ !contains(github.ref, '-pre.') }} # only for main release
+        working-directory: ./packages/oruga
+        run: npm publish
+
+      - name: Publish Examples pre-release 🦋
+        if: ${{ contains(github.ref, '-pre.') }} # only for pre-release
+        working-directory: ./packages/examples
+        run: npm publish --tag pre
+
+      - name: Publish Examples release 🦋
+        if: ${{ !contains(github.ref, '-pre.') }} # only for main release
+        working-directory: ./packages/examples
+        run: npm publish
 
       - name: Publish documentation 📰
         # only update documentation for main releases
-        if: ${{ github.ref != 'refs/tags/v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+' }}
+        if: ${{ !contains(github.ref, '-pre.') }}
         run: |
-          git fetch origin develop:develop 
+          git fetch origin develop:develop
           git push origin develop:master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
