@@ -82,7 +82,7 @@ const columns: TableColumn<(typeof data)[number]>[] = [
 
 const checkboxPosition = ref<"left" | "right">("left");
 const checkedRows = ref([data[1], data[3]]);
-const keepCheckedOnPageChange = ref(false);
+const keepChecked = ref(false);
 </script>
 
 <template>
@@ -99,7 +99,7 @@ const keepCheckedOnPageChange = ref(false);
                 <option value="right">Checkbox at right</option>
             </o-select>
             <o-switch
-                v-model="keepCheckedOnPageChange"
+                v-model="keepChecked"
                 label="Keep Checked On Page Change" />
         </o-field>
 
@@ -113,7 +113,7 @@ const keepCheckedOnPageChange = ref(false);
             :per-page="5"
             :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
             :checkbox-position="checkboxPosition"
-            :keep-checked-on-page-change="keepCheckedOnPageChange">
+            :keep-checked="keepChecked">
             <template #bottomLeft>
                 <b>Total checked</b>: {{ checkedRows.length }}
             </template>

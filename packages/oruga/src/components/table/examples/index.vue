@@ -91,7 +91,7 @@ import DraggableCode from "./draggable.vue?raw";
         in the <code>checked-rows</code> prop, which is two-way bindable. When
         the user navigates to a new page <code>checked-rows</code> will reset,
         to bypass this reset add the
-        <code>keep-checked-on-page-change</code> prop. Consider defining whether
+        <code>keep-checked</code> prop. Consider defining whether
         a row is checkable with a function given by the
         <code>is-row-checkable</code> prop.
         <ExampleViewer :component="Checkable" :code="CheckableCode" />
