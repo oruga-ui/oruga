@@ -91,8 +91,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     checkboxVariant: () => getDefault("table.checkboxVariant"),
     isRowChecked: undefined,
     isRowCheckable: getDefaultFunction("table.isRowCheckable", () => true),
-    keepChecked: () =>
-        getDefault("table.keepChecked", false),
+    keepChecked: () => getDefault("table.keepChecked", false),
     backendSorting: () => getDefault("table.backendSorting", false),
     defaultSort: () => getDefault("table.defaultSort"),
     defaultSortDirection: () => getDefault("table.defaultSortDirection", "asc"),
