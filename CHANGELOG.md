@@ -1,3 +1,5 @@
+## [0.13.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.13.0-pre.1...v0.13.0-pre.2) (2026-03-04)
+
 ## [0.13.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.12.6...v0.13.0-pre.1) (2026-03-03)
 
 ### ⚠ BREAKING CHANGES
