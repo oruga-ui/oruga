@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const maxHeight = 200;
 const menus = [
     { icon: "users", text: "People" },
     { icon: "box", text: "Orders" },
@@ -25,7 +24,7 @@ const currentMenu = ref({ icon: "users", text: "People" });
         <o-dropdown
             v-model="currentMenu"
             :scrollable="isScrollable"
-            :max-height="maxHeight"
+            :max-height="200"
             selectable
             check-scroll>
             <template #trigger>

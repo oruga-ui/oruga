@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.12.6",
+  "version": "0.13.0-pre.2",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "gen:types": "tsx .scripts/gen-comp-types.ts",
     "gen:docs": "npm run docs:gen --workspace @oruga-ui/docs-next",
     "version": "tsx .scripts/sync-version.ts && npm i",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",
     "release": "npm run version && npm run changelog",
     "postrelease": "echo \"You can now create a tag push it with 'git push --follow-tags'\"",
     "update": "ncu -u --workspaces --root"
@@ -43,15 +43,15 @@
   "devDependencies": {
     "@eslint/compat": "^1.4.0",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.6.0",
-    "conventional-changelog": "^7.1.1",
-    "conventional-changelog-cli": "^5.0.0",
+    "@vue/eslint-config-typescript": "^14.7.0",
+    "conventional-changelog": "^7.2.0",
+    "conventional-changelog-conventionalcommits": "9.2.0",
     "eslint": "^9.36.0",
     "eslint-plugin-vue": "^10.5.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
-    "npm-check-updates": "^19.1.2",
+    "npm-check-updates": "^19.6.3",
     "npm-run-all2": "^8.0.4",
-    "prettier": "^3.6.2",
+    "prettier": "^3.8.1",
     "replace-in-file": "^8.4.0",
     "tsx": "^4.21.0"
   }

@@ -6,8 +6,6 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 import { playwright } from "@vitest/browser-playwright";
 
-import babel from "@rollup/plugin-babel";
-
 import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
 
@@ -67,12 +65,6 @@ export default defineConfig({
                     vue: "Vue",
                 },
             },
-            // rollup plugins
-            plugins: [
-                babel({
-                    babelHelpers: "bundled",
-                }),
-            ],
         },
     },
     test: {

@@ -297,11 +297,6 @@ export type TableColumnProps<T, K extends string = FieldKey<T>> = {
     sticky?: boolean;
     /** Define a custom sort function */
     customSort?: (a: T, b: T, isAsc: boolean) => number;
-    /**
-     * Define a custom filter funtion for the search
-     * @deprecated use `customFilter` instead
-     */
-    customSearch?: (row: T, filter: string) => boolean;
     /** Define a custom filter funtion when filterable */
     customFilter?: (row: T, filter: string) => boolean;
     /**
