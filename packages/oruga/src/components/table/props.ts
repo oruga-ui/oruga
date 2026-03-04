@@ -72,9 +72,7 @@ export type TableProps<T> = {
     isRowChecked?: (row: T) => boolean;
     /** Custom method to verify if a row is checkable (if checkable) */
     isRowCheckable?: (row: T) => boolean;
-    /**
-     * Controls whether checked rows are cleared when table pagination changes
-     */
+    /** Controls whether checked rows are cleared when table pagination changes */
     keepChecked?: boolean;
     /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
     backendSorting?: boolean;
