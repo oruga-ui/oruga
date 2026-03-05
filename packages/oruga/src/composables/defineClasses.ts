@@ -202,61 +202,64 @@ function computeClass(
     if (!componentKey)
         throw new Error("component must define the 'configField' option.");
 
-    // get the component global config if it's not locally overridden
+    // get the component config if it's not overridden by current instance
     const config = isTrueish(props.override) ? {} : getConfig();
 
     // --- Override Definition ---
 
-    // get local instance override property
-    const localOverride: boolean = isTrueish(props.override);
-    // get global config override property
-    const globalOverride =
-        // check global config override property
+    // define instance override
+    const instanceOverride: boolean = isTrueish(props.override);
+
+    // define config override
+    const configOverride =
+        // do not have to check if config is already overridden
+        instanceOverride ||
+        // check root config override property
         getValueByPath(config, "override") ||
         // check component field config override property
         getValueByPath(config, `${componentKey}.${field}.override`) ||
         // check component config override property
         getValueByPath(config, `${componentKey}.override`);
 
-    const overrideClass = localOverride || globalOverride;
-
     // --- Class Definition ---
 
-    // process component default class definition
-    let defaultClassString: string;
-    if (defaultValue.includes("{*}")) {
-        defaultClassString = defaultValue.replace(
-            /\{\*\}/g,
-            blankIfUndefined(suffix),
-        );
-    } else {
-        defaultClassString = defaultValue + blankIfUndefined(suffix);
+    let instanceClassString: string | undefined = undefined;
+    let configClassString: string | undefined = undefined;
+    let defaultClassString: string | undefined = undefined;
+
+    // procsess instance class definition if available
+    const instanceClass: ComponentClass | undefined =
+        // get instance class definition
+        getValueByPath(props, field);
+    // compile instance class
+    instanceClassString = compileClass(instanceClass, props, suffix);
+
+    if (!instanceOverride) {
+        if (!configOverride) {
+            // process default class definition if not overridden by instance or config
+            defaultClassString = combileDefaultClass(defaultValue, suffix);
+        }
+
+        // process config class definition if not overriden by instance
+        const configClass: ComponentClass | undefined =
+            // get config class definition
+            getValueByPath(config, `${componentKey}.${field}.class`) ||
+            getValueByPath(config, `${componentKey}.${field}`);
+        // compile config class
+        configClassString = compileClass(configClass, props, suffix);
     }
-
-    // get local instance class definition
-    const localClass: ComponentClass | undefined = getValueByPath(props, field);
-
-    // procsess local instance class definition
-    const localClassString = compileClass(localClass, props, suffix);
-
-    // get global config class definition
-    const globalClass: ComponentClass | undefined =
-        getValueByPath(config, `${componentKey}.${field}.class`) ||
-        getValueByPath(config, `${componentKey}.${field}`);
-
-    // process global config class definition
-    const globalClassString = compileClass(globalClass, props, suffix);
 
     // --- Define Applied Classes ---
 
-    // if override is false add default value
-    // add global config classes
-    // add instance classes
-    let appliedClasses = (
-        `${!isTrueish(overrideClass) ? defaultClassString : ""} ` +
-        `${globalClassString} ` +
-        `${localClassString}`
-    )
+    // add default classes if available
+    // add config classes if available
+    // add instance classes if available
+    let appliedClasses = [
+        defaultClassString ?? "",
+        configClassString ?? "",
+        instanceClassString ?? "",
+    ]
+        .join(" ")
         .trim()
         .replace(/\s\s+/g, " ");
 
@@ -268,7 +271,7 @@ function computeClass(
         `${componentKey}.transformClasses`,
     );
     if (!transformClasses)
-        // get global config transform function
+        // get root config transform function
         transformClasses = getValueByPath(config, "transformClasses");
 
     // apply transform function if available
@@ -312,6 +315,15 @@ function compileClass(
         classString = suffixProcessor(classString, suffix);
 
     return classString;
+}
+
+/** Format a default class with suffix if available. */
+function combileDefaultClass(defaultValue: string, suffix?: string): string {
+    if (defaultValue.includes("{*}")) {
+        return defaultValue.replace(/\{\*\}/g, blankIfUndefined(suffix));
+    } else {
+        return defaultValue + blankIfUndefined(suffix);
+    }
 }
 
 /** Transform a classBinding object into a string. */
