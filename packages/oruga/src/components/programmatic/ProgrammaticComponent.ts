@@ -38,7 +38,7 @@ export type CloseEventArgs<T extends VNodeTypes> =
 
 /** The ProgrammaticComponent close funtion definition. */
 type CloseFunction<C extends VNodeTypes> = (
-    ...args: CloseEventArgs<C> | never[]
+    ...args: CloseEventArgs<C> | unknown[]
 ) => void;
 
 export type ProgrammaticComponentEmits<C extends VNodeTypes> = {
