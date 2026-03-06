@@ -11,6 +11,10 @@ default class.
 * **config:** change the `override` prop to also override classes defined by the config ([#1575](https://github.com/oruga-ui/oruga/issues/1575)) ([604b5c2](https://github.com/oruga-ui/oruga/commit/604b5c2ec6952a5d30575463a18c6e1cecc86612))
 * **table:** add `keepChecked` prop to keep checked on page change ([#1548](https://github.com/oruga-ui/oruga/issues/1548)) ([f9587a9](https://github.com/oruga-ui/oruga/commit/f9587a9f69659af4624b2c4202f3bba313db3c7e))
 
+### Bug Fixes
+
+* **programmatic:** solve close function type mismatch ([#1576](https://github.com/oruga-ui/oruga/issues/1576)) ([01b7b9a](https://github.com/oruga-ui/oruga/commit/01b7b9a1ec4f14af4738e2c4bbbc85c436af827d))
+
 ## [0.13.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.13.0-pre.1...v0.13.0-pre.2) (2026-03-04)
 
 ## [0.13.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.12.6...v0.13.0-pre.1) (2026-03-03)
