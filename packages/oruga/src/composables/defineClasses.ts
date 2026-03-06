@@ -58,6 +58,11 @@ type DefineClassesOptions = {
      * @default vm.proxy?.$props
      */
     props?: Record<string, any>;
+    /**
+     * Pass a custom component instance.
+     * By default the current component instance is used.
+     */
+    vm?: ComponentInternalInstance;
 };
 
 export function defineClasses(
@@ -85,7 +90,7 @@ export function defineClasses(
     ) as ComputedClass[];
 
     // getting a hold of the internal instance of the component in setup()
-    const vm = getCurrentInstance();
+    const vm = options?.vm || getCurrentInstance();
     if (!vm)
         throw new Error(
             "defineClasses must be called within a component setup function.",
@@ -237,7 +242,7 @@ function computeClass(
     if (!instanceOverride) {
         if (!configOverride) {
             // process default class definition if not overridden by instance or config
-            defaultClassString = combileDefaultClass(defaultValue, suffix);
+            defaultClassString = applySuffix(defaultValue, suffix);
         }
 
         // process config class definition if not overriden by instance
@@ -312,18 +317,9 @@ function compileClass(
     // if suffix is not already applied by the classFunction
     if (typeof classDefinition !== "function")
         // apply suffix to the class string
-        classString = suffixProcessor(classString, suffix);
+        classString = applySuffix(classString, suffix);
 
     return classString;
-}
-
-/** Format a default class with suffix if available. */
-function combileDefaultClass(defaultValue: string, suffix?: string): string {
-    if (defaultValue.includes("{*}")) {
-        return defaultValue.replace(/\{\*\}/g, blankIfUndefined(suffix));
-    } else {
-        return defaultValue + blankIfUndefined(suffix);
-    }
 }
 
 /** Transform a classBinding object into a string. */
@@ -343,10 +339,16 @@ function processClassBinding(classBinding: ClassBinding): string {
 }
 
 /** Add a suffix to each word of an input string. */
-function suffixProcessor(input: string, suffix: string): string {
-    return blankIfUndefined(input)
+function applySuffix(value: string, suffix: string): string {
+    return blankIfUndefined(value)
         .split(" ")
-        .map((cls) => cls + blankIfUndefined(suffix))
+        .map((cls) => {
+            if (cls.includes("{*}")) {
+                return cls.replace(/\{\*\}/g, blankIfUndefined(suffix));
+            } else {
+                return cls + blankIfUndefined(suffix);
+            }
+        })
         .join(" ");
 }
 
