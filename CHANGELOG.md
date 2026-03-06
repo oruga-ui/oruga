@@ -1,3 +1,16 @@
+## [0.13.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.13.0-pre.2...v0.13.0-pre.3) (2026-03-06)
+
+### ⚠ BREAKING CHANGES
+
+* **config:** The `override` prop passed to a component instance will
+now also override any previously defined classes in the config; not only the
+default class.
+
+### Features
+
+* **config:** change the `override` prop to also override classes defined by the config ([#1575](https://github.com/oruga-ui/oruga/issues/1575)) ([604b5c2](https://github.com/oruga-ui/oruga/commit/604b5c2ec6952a5d30575463a18c6e1cecc86612))
+* **table:** add `keepChecked` prop to keep checked on page change ([#1548](https://github.com/oruga-ui/oruga/issues/1548)) ([f9587a9](https://github.com/oruga-ui/oruga/commit/f9587a9f69659af4624b2c4202f3bba313db3c7e))
+
 ## [0.13.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.13.0-pre.1...v0.13.0-pre.2) (2026-03-04)
 
 ## [0.13.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.12.6...v0.13.0-pre.1) (2026-03-03)
