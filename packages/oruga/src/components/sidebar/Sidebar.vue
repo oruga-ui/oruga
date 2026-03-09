@@ -39,6 +39,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     override: undefined,
     active: false,
     overlay: () => getDefault("sidebar.overlay", false),
+    /** @deprecated */
     inline: false,
     position: () => getDefault("sidebar.position", "left"),
     fullheight: () => getDefault("sidebar.fullheight", false),
@@ -179,7 +180,7 @@ function beforeLeave(): void {
     isAnimated.value = false;
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-sidebar"],
@@ -191,6 +192,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => !!props.teleport),
     ],
+    /** @deprecated */
     ["inlineClass", "o-sidebar--inline", null, computed(() => props.inline)],
 );
 
@@ -230,10 +232,15 @@ const contentClasses = defineClasses(
         computed(() => !isActive.value),
     ],
 );
-// --- Expose Public Functionalities ---
+
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
