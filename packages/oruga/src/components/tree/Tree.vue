@@ -40,7 +40,6 @@ import type { TreeComponent, TreeItem, TreeItemComponent } from "./types";
 
 /**
  * A simple tree view, for any type of hierarchical list.
- * @experimental
  * @displayName Tree
  * @requires ./TreeItem.vue
  * @style _tree.scss
