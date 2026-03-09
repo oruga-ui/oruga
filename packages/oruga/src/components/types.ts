@@ -2277,6 +2277,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 teleportClass: ClassDefinition;
                 /**
                  * Class of the root element when inlined
+                 * @deprecated Since v0.13.0 - will be removed
                  */
                 inlineClass: ClassDefinition;
                 /**
