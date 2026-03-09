@@ -11,7 +11,7 @@ export type SidebarProps<C extends Component = Component> = {
     overlay?: boolean;
     /**
      * Display the Sidebear inline
-     * @deprecated - will be removed
+     * @deprecated Since v0.13.0 - will be removed
      */
     inline?: boolean;
     /**
@@ -78,7 +78,7 @@ export type SidebarClasses = Partial<{
     teleportClass: ComponentClass;
     /**
      * Class of the root element when inlined
-     * @deprecated - will be removed
+     * @deprecated Since v0.13.0 - will be removed
      */
     inlineClass: ComponentClass;
     /** Class of the overlay element */
