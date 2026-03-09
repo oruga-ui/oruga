@@ -1,68 +1,44 @@
-## [0.13.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.13.0-pre.2...v0.13.0-pre.3) (2026-03-06)
+## [0.13.0](https://github.com/oruga-ui/oruga/compare/v0.12.6...v0.13.0) (2026-03-09)
 
 ### ⚠ BREAKING CHANGES
 
-* **config:** The `override` prop passed to a component instance will
-now also override any previously defined classes in the config; not only the
-default class.
-
-### Features
-
-* **config:** change the `override` prop to also override classes defined by the config ([#1575](https://github.com/oruga-ui/oruga/issues/1575)) ([604b5c2](https://github.com/oruga-ui/oruga/commit/604b5c2ec6952a5d30575463a18c6e1cecc86612))
-* **table:** add `keepChecked` prop to keep checked on page change ([#1548](https://github.com/oruga-ui/oruga/issues/1548)) ([f9587a9](https://github.com/oruga-ui/oruga/commit/f9587a9f69659af4624b2c4202f3bba313db3c7e))
-
-### Bug Fixes
-
-* **programmatic:** solve close function type mismatch ([#1576](https://github.com/oruga-ui/oruga/issues/1576)) ([01b7b9a](https://github.com/oruga-ui/oruga/commit/01b7b9a1ec4f14af4738e2c4bbbc85c436af827d))
-
-## [0.13.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.13.0-pre.1...v0.13.0-pre.2) (2026-03-04)
-
-## [0.13.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.12.6...v0.13.0-pre.1) (2026-03-03)
-
-### ⚠ BREAKING CHANGES
-
-* The `options` property type of components with child
-items has changed. The type got simplified to a more abstract type
-interface.
-* **config:** To improve tree shaking, the main Oruga Vue plugin no
-longer registers all components globally by default. You now have to
-manually register the components you need.
-* **config:** The `OrugaConfig` object has been removed in favour of
-the `useOruga()` composable.
+* The `options` property type of components with child items has changed. The type got simplified to a more abstract type interface.
+* **config:** To improve tree shaking, the main Oruga Vue plugin no longer registers all components globally by default. You now have to manually register the components you need.
+* **config:** The `override` prop passed to a component instance will now also override any previously defined classes in the config; not only the default class.
+* **config:** The `OrugaConfig` object has been removed in favour of the `useOruga()` composable.
 * **autocomplete|taginput:** The OAutocomplete `default` slot has changed.
+* **dropdown:** The deprecated `triggers` prop in ODropdown got removed.
+* **dropdown:** The ODropdown `before` and `after` template slots are no longer encapsulated by the 'default' slot, so they can be used alongside it.
+* **dropdown:** Some props got removed from the ODropdown `default` slot.
 * **loading:** The deprecated `cancelable` prop in OLoading got removed.
 * **modal:** The deprecated `cancelable` prop in OModal got removed.
 * **sidebar:** The deprecated `cancelable` prop in OSidebar got removed.
-* **pagination:** The deprecated`order` prop in OPagination got removed.
-* **dropdown:** The deprecated `triggers` prop in ODropdown got removed.
-* **dropdown:** The ODropdown 'before' and 'after' slots are no longer
-encapsulated by the 'default' slot, so they can be used alongside it.
-* **dropdown:** Some props got removed from the ODropdown `default`
-slot.
+* **pagination:** The deprecated `order` prop in OPagination got removed.
 * **table:** The deprecated `filtersEvent` prop in OTable got removed.
-* **table:** The deprecated `customSearch` prop in OTable got
-removed.
-* **table:** The property names for filter related properties in the
-OTable component got unified.
-* **table:** The deprecated `searchable` prop and the `searchable` slot in
-OTable got removed.
-* **tooltip:** The type of the `closeable` prop in OTooltip has
-changed.
+* **table:** The deprecated `customSearch` prop in OTable got removed.
+* **table:** The property names for filter related properties in the OTable component ot unified.
+* **table:** The deprecated `searchable` prop and the `searchable` slot in OTable got removed.
+* **tooltip:** The type of the `closeable` prop in OTooltip has changed.
 * **tooltip:** The deprecated `triggers` prop in OTooltip got removed.
 
 ### Features
 
 * **autocomplete|taginput:** handle options the same as any other component ([#1534](https://github.com/oruga-ui/oruga/issues/1534)) ([29e84d7](https://github.com/oruga-ui/oruga/commit/29e84d7c5fad9934e219c7c6fa2d97b5a30694c9))
 * **config:** add `createOruga` composable to create an Oruga instance ([#1407](https://github.com/oruga-ui/oruga/issues/1407)) ([743cf41](https://github.com/oruga-ui/oruga/commit/743cf41453218af5572eb8e018fdc83d872ef4eb))
+* **config:** change the `override` prop to also override classes defined by the config ([#1575](https://github.com/oruga-ui/oruga/issues/1575)) ([604b5c2](https://github.com/oruga-ui/oruga/commit/604b5c2ec6952a5d30575463a18c6e1cecc86612))
+* **config:** remove `globalComponents` config ([#1582](https://github.com/oruga-ui/oruga/issues/1582)) ([3601b7c](https://github.com/oruga-ui/oruga/commit/3601b7cbeb6dfa6376c99bf97b5f66db254ef519))
+* **dialog|tree|listbox:** remove experimental state ([#1580](https://github.com/oruga-ui/oruga/issues/1580)) ([dae1e71](https://github.com/oruga-ui/oruga/commit/dae1e71d6a4d53c055663721862cffa52edbfbf5))
 * **dropdown:** deprecate `inline` feature ([#1566](https://github.com/oruga-ui/oruga/issues/1566)) ([9dc0c83](https://github.com/oruga-ui/oruga/commit/9dc0c830574c53b46eb1a71f94d39a993af92744))
 * **dropdown:** make `before` and `after` slots useable alongside the `default` slot ([#1535](https://github.com/oruga-ui/oruga/issues/1535)) ([c6b8436](https://github.com/oruga-ui/oruga/commit/c6b8436e8bc3af51030e3c45212438b529443947))
 * **dropdown:** remove deprecated `triggers` prop ([#1557](https://github.com/oruga-ui/oruga/issues/1557)) ([7d7c272](https://github.com/oruga-ui/oruga/commit/7d7c2727eb3c0eef9543cac8447db0e246eeb120))
 * **loading:** remove deprecated `cancelable` prop ([#1540](https://github.com/oruga-ui/oruga/issues/1540)) ([a7044af](https://github.com/oruga-ui/oruga/commit/a7044af001c7c3bd2871894f8901ad4a1ed8db21))
-* **menu:** deprecate OMenu component in favor of OTree component ([#1567](https://github.com/oruga-ui/oruga/issues/1567)) ([c25d6b5](https://github.com/oruga-ui/oruga/commit/c25d6b5d08c64e3b3b69dee1c680e155c96dd3fc))
+* **menu:** deprecate OMenu component in favour of OTree component ([#1567](https://github.com/oruga-ui/oruga/issues/1567)) ([c25d6b5](https://github.com/oruga-ui/oruga/commit/c25d6b5d08c64e3b3b69dee1c680e155c96dd3fc))
+* **modal:** deprecate OModal component in favour of ODialog component ([#1579](https://github.com/oruga-ui/oruga/issues/1579)) ([0fd9d7f](https://github.com/oruga-ui/oruga/commit/0fd9d7febd1f1b6c404d8d9b501f4535c577cdc4))
 * **modal:** remove deprecated `cancelable` prop ([#1542](https://github.com/oruga-ui/oruga/issues/1542)) ([c624ab0](https://github.com/oruga-ui/oruga/commit/c624ab0ba7fceb5b737ebf94dd67997f6dae4484))
 * **pagination:** remove deprecated `order` prop ([#1541](https://github.com/oruga-ui/oruga/issues/1541)) ([b95af63](https://github.com/oruga-ui/oruga/commit/b95af6359182897f5d3f5704f772f30490a19f5f))
 * restructure `options` properties and types ([#1517](https://github.com/oruga-ui/oruga/issues/1517)) ([6142da5](https://github.com/oruga-ui/oruga/commit/6142da5bca812773e3782ab2dc783629d43ffbc7))
 * **sidebar:** remove deprecated `cancelable` prop ([#1546](https://github.com/oruga-ui/oruga/issues/1546)) ([3c79c0a](https://github.com/oruga-ui/oruga/commit/3c79c0a27800bec6f28fcd8d32527971d825ba53))
+* **table:** add `keepChecked` prop to keep checked on page change ([#1548](https://github.com/oruga-ui/oruga/issues/1548)) ([f9587a9](https://github.com/oruga-ui/oruga/commit/f9587a9f69659af4624b2c4202f3bba313db3c7e))
 * **table:** remove depracted classes ([#1552](https://github.com/oruga-ui/oruga/issues/1552)) ([51ae5a8](https://github.com/oruga-ui/oruga/commit/51ae5a8a73d20380d82469243ca9ddc5a282523a))
 * **table:** remove deprecated `customSearch` property ([#1569](https://github.com/oruga-ui/oruga/issues/1569)) ([a26f5ea](https://github.com/oruga-ui/oruga/commit/a26f5ea903ce4f2a298d154e1c4e75a83f7c8e4e))
 * **table:** remove deprecated `filtersEvent` prop ([#1544](https://github.com/oruga-ui/oruga/issues/1544)) ([6ecfaca](https://github.com/oruga-ui/oruga/commit/6ecfaca9ff08dc8ee97423024228d039aa2aceea))
@@ -77,6 +53,7 @@ changed.
 
 * **config:** register programmatic components correctly ([#1551](https://github.com/oruga-ui/oruga/issues/1551)) ([6aa73c2](https://github.com/oruga-ui/oruga/commit/6aa73c2adbb2390bbb67179e963c82ae618af014))
 * **programmatic:** define a unique `idPrefix` for each programmatic instance ([#1533](https://github.com/oruga-ui/oruga/issues/1533)) ([7ade501](https://github.com/oruga-ui/oruga/commit/7ade501da7707430fadeab473539b7b0f06a6e7d))
+* **programmatic:** solve close function type mismatch ([#1576](https://github.com/oruga-ui/oruga/issues/1576)) ([01b7b9a](https://github.com/oruga-ui/oruga/commit/01b7b9a1ec4f14af4738e2c4bbbc85c436af827d))
 * **table:** solve a page pagination calculation issue ([#1550](https://github.com/oruga-ui/oruga/issues/1550)) ([30acdaa](https://github.com/oruga-ui/oruga/commit/30acdaaaed0c457031dd376547a79b86902f6a82))
 * **tree:** correct toggle icon issues ([#1530](https://github.com/oruga-ui/oruga/issues/1530)) ([0886378](https://github.com/oruga-ui/oruga/commit/08863785105e8002461bf860c9ce6f12a54775cc))
 
