@@ -49,50 +49,44 @@ In order to use Oruga components, you have to register an `Oruga` instance to yo
 This instance manages the global components and configurations, as well as the current Vue app connection.
 
 A new instance can be created by the `createOruga` composable.
+However, for a convenient usage, the package also comes with a main `Oruga` instance as the default package export.
+The instance then has to be passed to the `app.use()` function of your current Vue app.
 
-```js
-import { createOruga } from "@oruga-ui/oruga-next";
-const Oruga = createOruga();
-```
+<!-- The created instance is also a Vue plugin, so you have to use the `app.use()` function to pass it to your current Vue app. -->
 
-However, the package also comes with a main `Oruga` instance as the default package export.
-An `Oruga` instance is also a Vue plugin, so you must use the `app.use()` function to pass it to your current Vue app.
-
-To extend the default global configuration, pass either a custom configuration object when creating a new Oruga instance, or pass it as the second argument when installing the instance to the Vue app.  
+To extend the default global configuration, either pass a custom configuration object when creating a new Oruga instance, or as the second argument when installing the instance to the Vue app.  
 See [configuration](/documentation/configuration) for further details and available configuration options.
 
 ```js
 import { createApp } from "vue";
-import Oruga from "@oruga-ui/oruga-next";
+import { createOruga } from "@oruga-ui/oruga-next";
+import App from "./App.vue";
 
+const oruga = createOruga();
 const app = createApp(App);
 
-app.use(Oruga, {
+app.use(oruga, {
     // here goes the global config
 });
 ```
 
 To take advantage of bundler’s [tree-shaking](https://en.wikipedia.org/wiki/Tree_shaking) optimisations, no components are registered globally by default.
-If you want to register a component globally, extend the main Oruga instance with the relevant component plugin.
+If you want to register a component globally, extend the your Oruga instance with the relevant component plugin.
 This makes the respective component and its subcomponents, as well as any related programmatic components, globally available.
 
-> Note: before v0.13 the main Oruga Vue plugin registered all components globally by default.
+> Note: Before v0.13 the main Oruga Vue plugin had registered all components globally by default.
 
 ```js
-import { createApp } from "vue";
-import Oruga, { Autocomplete, Sidebar } from "@oruga-ui/oruga-next";
+import { createOruga, Autocomplete, Sidebar } from "@oruga-ui/oruga-next";
 
-Oruga.use(Autocomplete);
-Oruga.use(Sidebar);
+const oruga = createOruga();
 
-const app = createApp(App);
-
-app.use(Oruga, {
-    // here goes the global config
-});
+// register any necessary components globally
+oruga.use(Autocomplete);
+oruga.use(Sidebar);
 ```
 
-Once installed, you can use all your registered global components in an [SFC](https://vuejs.org/guide/scaling-up/sfc) like this:
+Once installed, you can use all your global registered components in an [SFC](https://vuejs.org/guide/scaling-up/sfc) like this:
 
 ```html
 <template>
@@ -100,7 +94,7 @@ Once installed, you can use all your registered global components in an [SFC](ht
 </template>
 ```
 
-However, if you just want to import a single component separately, without any additional programmatic functionalities, you can import the individual components as follows:
+However, if you just want to import a single component separately, without any additional programmatic functionality, you can import the individual components as needed:
 
 ```vue
 <script setup>

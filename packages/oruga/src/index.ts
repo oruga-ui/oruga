@@ -1,4 +1,4 @@
-import { createOruga } from "./utils/config";
+import { createOruga, type OrugaComponentPlugin } from "./utils/config";
 
 // export all types
 export * from "./types";
@@ -8,7 +8,6 @@ export * from "./components/types";
 export * from "./components";
 // export all components as vue plugins
 export * from "./components/plugins";
-export * as OrugaComponentPlugins from "./components/plugins";
 
 // export main oruga composables
 export { createOruga, createTestingOruga, useOruga } from "./utils/config";
@@ -26,10 +25,12 @@ export {
     useEventListener,
     useClickOutside,
     useDebounce,
-    useScrollEvents,
     unrefElement,
-    getScrollingParent,
 } from "./composables";
+
+import * as plugins from "./components/plugins";
+const OrugaComponentPlugins = Object.values(plugins) as OrugaComponentPlugin[];
+export { OrugaComponentPlugins };
 
 // default export main oruga vue plugin
 const oruga = createOruga();

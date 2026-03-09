@@ -9,7 +9,6 @@ import { getValueByPath, merge, setValueByPath } from "./helpers";
 import { isClient } from "./ssr";
 import { addProgrammatic } from "./plugins";
 import type { DeepKeys, DeepType, OrugaConfig } from "@/types";
-import * as ComponentPlugins from "@/components/plugins";
 
 // extend the OrugaProgrammatic interface with `config` programmatic interface
 declare module "../index" {
@@ -26,7 +25,7 @@ export interface OrugaProgrammatic {
 export type OrugaComponentPlugin = ObjectPlugin<{ oruga: Oruga }>;
 
 /** Oruga Vue Plugin Object */
-export interface Oruga extends ObjectPlugin<OrugaConfig> {
+export interface Oruga extends ObjectPlugin<OrugaConfig | undefined> {
     /**
      * The vue instance oruga got registered into.
      * @internal
@@ -58,6 +57,7 @@ export interface Oruga extends ObjectPlugin<OrugaConfig> {
      * @returns Oruga plugin instance
      */
     use(plugin: OrugaComponentPlugin): Oruga;
+    use(...plugins: OrugaComponentPlugin[]): Oruga;
 
     /**
      * Provides the oruga instance to the app context.
@@ -90,9 +90,13 @@ export function getActiveOruga(): Oruga | undefined {
 /**
  * Create a new Oruga Vue plugin which sets the oruga config options.
  * @param config - Override or extend the default oruga config.
+ * @param plugins - A list of component plugins to register them globally. By default, no components will be registered globally.
  * @returns A new Oruga instance.
  */
-export function createOruga(config: OrugaConfig = {}): Oruga {
+export function createOruga(
+    config: OrugaConfig = {},
+    plugins: OrugaComponentPlugin[] = [],
+): Oruga {
     const _plugins: OrugaComponentPlugin[] = [];
 
     const oruga: Oruga = {
@@ -102,7 +106,6 @@ export function createOruga(config: OrugaConfig = {}): Oruga {
         // default config is defined here
         _config: {
             override: false,
-            globalComponents: false,
             iconPack: "mdi",
             useHtml5Validation: true,
             statusIcon: true,
@@ -131,19 +134,12 @@ export function createOruga(config: OrugaConfig = {}): Oruga {
             // register the programmatic config interface to the programmatic oruga object
             addProgrammatic(oruga, "config", ConfigProgrammatic);
 
-            // check if all components should be registered globaly
-            if (oruga._config.globalComponents)
-                // add all oruga components to register globaly
-                Object.values(ComponentPlugins).forEach((p) =>
-                    _plugins.push(p),
-                );
-
             // register oruga component plugins
             _plugins.forEach((p) => app.use(p, { oruga }));
         },
         // helper to register component plugins on install
-        use(plugin: OrugaComponentPlugin): Oruga {
-            _plugins.push(plugin);
+        use(...plugins: OrugaComponentPlugin[]): Oruga {
+            plugins.forEach((p) => _plugins.push(p));
             return oruga;
         },
         // helper to provide the oruga instance to another app instance
@@ -154,6 +150,9 @@ export function createOruga(config: OrugaConfig = {}): Oruga {
             app.config.globalProperties.$oruga = oruga;
         },
     };
+
+    // register global components
+    oruga.use(...plugins);
 
     return oruga;
 }

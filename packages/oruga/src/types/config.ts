@@ -51,11 +51,6 @@ export type GlobalConfig = Partial<{
      * you can specify the override behaviour here globaly.
      */
     override: boolean;
-    /**
-     * Specify whether all components should be registered globally.
-     * By default, no components will be registered globally.
-     */
-    globalComponents: boolean;
     /** Define the Date format locale */
     locale: string;
     /** Define the icon pack be used */
