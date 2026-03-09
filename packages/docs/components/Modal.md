@@ -1,6 +1,12 @@
-# Modal
+---
+title: Modal
+---
+
+# ~~Modal~~
 
 <section class="odocs-head">
+
+> **Deprecated** Since v0.13.0 - use the `ODialog` component instead
 
 The **Modal** component is a classic modal overlay in which you can include any content you like.
 The content under the overlay is inert, meaning users cannot interact with content outside the active modal window.
