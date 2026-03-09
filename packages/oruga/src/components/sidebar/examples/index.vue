@@ -2,9 +2,6 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
-import Inline from "./inline.vue";
-import InlineCode from "./inline.vue?raw";
-
 import Teleport from "./teleport.vue";
 import TeleportCode from "./teleport.vue?raw";
 
@@ -25,14 +22,6 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     </p>
 
     <ExampleViewer :component="Base" :code="BaseCode" />
-
-    <h3 id="inline">Inline</h3>
-    <p>
-        When the property <code>inline</code> is set, the component will be
-        rendered in place. The appearance can be triggered with the
-        <code>active</code> prop as usual.
-    </p>
-    <ExampleViewer :component="Inline" :code="InlineCode" />
 
     <h3 id="base">Teleport</h3>
     <p>
