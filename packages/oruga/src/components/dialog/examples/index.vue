@@ -39,19 +39,19 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <p>
-        A dialog is seperated into <i>header</i>, <i>body</i> and
-        <i>footer</i> sections, which can be defined separately either through
-        properties or template slots.
-        <br />
-        Be sure to provide a mechanism that allows users to close the dialog.
-        The most reliable way to enable all users to close the dialogue box is
-        to include an explicit button for this purpose, such as a 'Confirm',
-        'Cancel' or 'Close' button. The component specifies different types of
-        user action that can be used to close the dialogue box. The main
-        <code>closeable</code> property will add a close button to the dialog
-        header. The <code>closeOnBackdrop</code> property adds a a light dismiss
-        user action, which closes the dialog box when the user clicks or taps
-        outside of it. The <code>closeOnEscape</code> property allows
+        As dialogs are generally placed as an overlay on top of the rest of the
+        page content, every dialog needs a mechanism that allows users to close
+        it. The most reliable way is to include an explicit button for this
+        purpose, such as a
+        <i>Confirm</i>, <i>Cancel</i> or <i>Close</i> button. The component
+        itself can handle different types of user actions that can be used to
+        close the dialog box.
+    </p>
+    <p>
+        The main <code>closeable</code> property will add a close button to the
+        dialog header. The <code>closeOnBackdrop</code> property adds a a light
+        dismiss user action, which closes the dialog box when the user clicks or
+        taps outside of it. The <code>closeOnEscape</code> property allows
         platform-specific user actions, such as pressing the <kbd>ESC</kbd> key
         on desktop platforms, or performing a "back" or "dismiss" gesture on
         mobile platforms, to close the dialog box. Furthermore, by setting the
@@ -66,24 +66,30 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
     <p>
         A simple <i>modal</i> dialog box is created by setting the
         <code>backdrop</code> property, which inert the background. By default,
-        attempting to interact with the backdrop closes the dialog box. Setting
-        the <code>blockScroll</code> property removes the body scrollbar.
-        However, the body retains a non-scrollable scrollbar to prevent the
-        background from shifting. This will set the body to
+        attempting to interact with the backdrop closes the dialog box.
+    </p>
+    <p>
+        Setting the <code>blockScroll</code> property removes the body
+        scrollbar. However, the body retains a non-scrollable scrollbar to
+        prevent the background from shifting. This will set the body to
         <code>position="fixed"</code>, which may cause some layouts to break.
     </p>
     <ExampleViewer :component="Modal" :code="ModalCode" />
 
     <h3 id="alert">Alert</h3>
     <p>
-        An <i>alert</i> dialog box is a modal dialog that interrupts the user's
-        workflow to communicate an important message and acquire a response. It
-        is defined by setting the <code>alert</code> property. Examples include
-        action confirmation prompts and error message confirmations. The dialog
-        will have the <code>alertdialog</code> <i>WAI-ARIA role</i>, enabling
-        assistive technologies and browsers to distinguish it from other dialogs
-        and giving them the option to treat it specially, e.g. by playing a
-        system alert sound.
+        An <i>alert</i> dialog box is a type of modal dialog that interrupts the
+        user's workflow in order to communicate an important message and to
+        acquire a response. It is defined by setting the
+        <code>alert</code> property. Examples include action confirmation
+        prompts and error message confirmations. The dialog will have the
+        <a
+            href="http://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alertdialog_role">
+            ARIA: alertdialog role
+        </a>
+        , enabling assistive technologies and browsers to distinguish it from
+        other dialogs and giving them the option to treat it specially, e.g. by
+        playing a system alert sound.
     </p>
     <ExampleViewer :component="Alert" :code="AlertCode" />
 
@@ -106,9 +112,8 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 
     <h3 id="fullscreen">Fullscreen</h3>
     <p>
-        Another variant of the component is the option to display a dialog that
-        covers the full user viewport, which is available via the
-        <code>fullscreen</code> property.
+        Using the <code>fullscreen</code> property, the dialog will cover the
+        entire user viewport.
     </p>
     <ExampleViewer :component="Fullscreen" :code="FullscreenCode" />
 
@@ -132,10 +137,13 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 
     <h3 id="templates">Templates</h3>
     <p>
-        The component provides a <code>header</code>, <code>title</code>,
-        <code>subtitle</code>, <code>content</code>, <code>footer</code> as well
-        as <code>confirmButton</code> and <code>cancelButton</code> named
-        template slots. These can be used to customise HTML content.
+        The dialog container is seperated into a <i>header</i>, <i>body</i> and
+        <i>footer</i> section, which can be defined separately either through
+        properties or template slots. Therefore, the component provides a
+        <code>header</code>, <code>title</code>, <code>subtitle</code>,
+        <code>content</code>, <code>footer</code> as well as
+        <code>confirmButton</code> and <code>cancelButton</code> named template
+        slots, which can be used to customise HTML content.
     </p>
     <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
