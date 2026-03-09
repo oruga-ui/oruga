@@ -30,6 +30,7 @@ import type { CloseEventArgs } from "../programmatic";
 /**
  * Classic modal overlay to include any content you may need.
  * @displayName Modal
+ * @deprecated Since v0.13.0 - use the `ODialog` component instead
  * @style _modal.scss
  */
 defineOptions({
