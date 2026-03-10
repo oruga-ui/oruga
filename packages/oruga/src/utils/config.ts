@@ -25,7 +25,9 @@ export interface OrugaProgrammatic {
 export type OrugaComponentPlugin = ObjectPlugin<{ oruga: Oruga }>;
 
 /** Oruga Vue Plugin Object */
-export interface Oruga extends ObjectPlugin<OrugaConfig | undefined> {
+export interface Oruga {
+    install(app: App, options?: OrugaConfig): void;
+
     /**
      * The vue instance oruga got registered into.
      * @internal
