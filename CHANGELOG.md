@@ -1,3 +1,9 @@
+## [0.13.1](https://github.com/oruga-ui/oruga/compare/v0.13.0...v0.13.1) (2026-03-10)
+
+### Bug Fixes
+
+* **type:** adjust Oruga plugin type ([#1584](https://github.com/oruga-ui/oruga/issues/1584)) ([4525ac7](https://github.com/oruga-ui/oruga/commit/4525ac7ece66e114d53da50895e1c56141a0311f))
+
 ## [0.13.0](https://github.com/oruga-ui/oruga/compare/v0.12.6...v0.13.0) (2026-03-09)
 
 ### ⚠ BREAKING CHANGES
