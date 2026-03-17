@@ -7,21 +7,17 @@ import {
 } from "vue";
 
 export type MaybeElement =
-    | Element
-    | Document
-    | Window
     | HTMLElement
     | Component
     | ComponentPublicInstance
     | undefined
     | null;
 
-export type UnRefElementReturn<T extends MaybeElement = MaybeElement> =
-    T extends ComponentPublicInstance
-        ? Exclude<MaybeElement, ComponentPublicInstance | Component>
-        : T extends Component
-          ? HTMLElement
-          : T | undefined;
+export type UnRefElementReturn<T extends MaybeElement> = T extends
+    | ComponentPublicInstance
+    | Component
+    ? HTMLElement
+    : T;
 
 /** Get the dom element of a ref of element or Vue component instance */
 export function unrefElement<T extends MaybeElement>(
