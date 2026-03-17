@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, useId } from "vue";
+import { computed, useId, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
-import { defineClasses } from "@/composables";
+import { defineClasses, unrefElement } from "@/composables";
 
 import type { CollapseProps } from "./props";
 
@@ -20,8 +20,8 @@ defineOptions({
 const props = withDefaults(defineProps<CollapseProps>(), {
     override: undefined,
     open: true,
+    name: undefined,
     expanded: false,
-    animation: () => getDefault("collapse.animation", "fade"),
     position: () => getDefault("collapse.position", "top"),
     contentId: () => useId(),
     triggerId: () => useId(),
@@ -49,16 +49,22 @@ defineSlots<{
     trigger?(props: { open: boolean }): void;
 }>();
 
+const detailsRef = useTemplateRef("detailsElement");
+
 const isOpen = defineModel<boolean>("open", { default: true });
 
-/** Toggle and emit events */
-function toggle(): void {
-    isOpen.value = !isOpen.value;
-    if (isOpen.value) emits("open");
+/** detail open state toggle handler */
+function onToggle(): void {
+    const el = unrefElement(detailsRef);
+    if (!el) return;
+
+    isOpen.value = el.open;
+
+    if (el.open) emits("open");
     else emits("close");
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-collapse"],
@@ -81,31 +87,24 @@ const triggerClasses = defineClasses(
 );
 
 const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <div data-oruga="collapse" :class="rootClasses">
-        <div
-            :id="triggerId"
-            :class="triggerClasses"
-            role="button"
-            tabindex="0"
-            :aria-controls="contentId"
-            :aria-expanded="isOpen"
-            @click="toggle"
-            @keydown.enter.prevent="toggle"
-            @keydown.space.prevent="toggle">
+    <details
+        ref="detailsElement"
+        data-oruga="collapse"
+        :class="rootClasses"
+        :open="isOpen"
+        :name="name"
+        @toggle="onToggle">
+        <summary :id="triggerId" :class="triggerClasses">
             <slot name="trigger" :open="isOpen" />
-        </div>
+        </summary>
 
-        <Transition :name="animation">
-            <div
-                v-show="isOpen"
-                :id="contentId"
-                :class="contentClasses"
-                :aria-labelledby="triggerId">
-                <slot />
-            </div>
-        </Transition>
-    </div>
+        <div :id="contentId" :class="contentClasses">
+            <slot />
+        </div>
+    </details>
 </template>

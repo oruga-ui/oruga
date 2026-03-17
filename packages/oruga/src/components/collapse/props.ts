@@ -5,8 +5,12 @@ export type CollapseProps = {
     override?: boolean;
     /** Whether collapse is open or not, use v-model:open to make it two-way binding */
     open?: boolean;
-    /** Custom animation (transition name) */
-    animation?: string;
+    /**
+     * Setting the same name to multiple collapse elements connects them together,
+     * with only one open at a time.
+     * This allows to easily create UI features such as accordions.
+     */
+    name?: string;
     /**
      * Trigger position
      * @values top, bottom
