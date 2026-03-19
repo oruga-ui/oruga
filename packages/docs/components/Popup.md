@@ -1,0 +1,91 @@
+# Popup
+
+<section class="odocs-head">
+
+The **Tooltip** component displays a short contextual information text bubble when the user hovers over an element, or when that owning element receives focus, but is otherwise not visible on the page.
+The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
+
+</section>
+
+<section class="odocs-examples">
+
+## Examples
+
+<example-popup />
+
+</section>
+
+<section class="odocs-specs">
+
+## Popup Component
+
+> A popup is a content container that displays the content over the top of other content.
+
+```html
+<o-popup></o-popup>
+```
+
+### Props
+
+| Prop name | Description                                                                                                                                                                      | Type                        | Values                                                                                           | Default                                                                                                                                            |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active    | Whether popup is active or not, use v-model:active to make it two-way binding                                                                                                    | boolean                     | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| animation | Show and dismiss animation                                                                                                                                                       | string                      | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>popup: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>  |
+| content   | Content text, unnecessary when content slot is used                                                                                                                              | string                      | -                                                                                                |                                                                                                                                                    |
+| delay     | Delay before the content appears (number in ms)                                                                                                                                  | number                      | -                                                                                                |                                                                                                                                                    |
+| disabled  | Component will be disabled                                                                                                                                                       | boolean                     | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| id        | A unique HTML id for the popup element                                                                                                                                           | string                      | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                      |
+| override  | Override existing theme classes completely                                                                                                                                       | boolean                     | -                                                                                                |                                                                                                                                                    |
+| position  | Position of the popup relative to the trigger                                                                                                                                    | PopupPosition               | `auto`, `top`, `bottom`, `left`, `right`, `top-right`, `top-left`, `bottom-left`, `bottom-right` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>popup: {<br>&nbsp;&nbsp;position: "top"<br>}</code>    |
+| teleport  | Append the component to another part of the DOM.<br/>Set `true` to append the component to the body.<br/>In addition, any CSS selector string or an actual DOM node can be used. | boolean \| object \| string | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;teleport: false<br>}</code> |
+| variant   | Color variant of the popup                                                                                                                                                       | string                      | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>popup: {<br>&nbsp;&nbsp;variant: undefined<br>}</code> |
+
+### Events
+
+| Event name    | Properties                                | Description                      |
+| ------------- | ----------------------------------------- | -------------------------------- |
+| update:active | **value** `boolean` - updated active prop | active prop two-way binding      |
+| close         | **event** `Event` - native event          | on active state changes to false |
+| open          | **event** `Event` - native event          | on active state changes to true  |
+
+### Slots
+
+| Name    | Description                                         | Bindings                                  |
+| ------- | --------------------------------------------------- | ----------------------------------------- |
+| default | Define a trigger here                               | **active** `boolean` - popup active state |
+| content | Override the popup content, default is content prop | **dismiss** - undefined                   |
+
+</section>
+
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-popup-viewer />
+
+</section>
+
+<section class="odocs-style">
+
+## Sass Variables
+
+<div class="theme-oruga">
+
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div>
+<div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div>
+<div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div>
+
+</section>

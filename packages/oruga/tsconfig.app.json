@@ -7,7 +7,6 @@
     "composite": true,
     "sourceMap": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "skipLibCheck": true,
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitThis": false,
@@ -15,6 +14,8 @@
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
+
+    "lib": ["ESNext", "DOM", ],
     "baseUrl": ".",
     "types": ["vite/client", "./components.d.ts"],
     "paths": {

@@ -2071,6 +2071,43 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 buttonClasses: Record<string, any>;
             }>;
+        popup?: ComponentConfigBase &
+            Partial<{
+                /**
+                 * Color variant of the popup
+                 */
+                variant: string;
+                /**
+                 * Position of the popup relative to the trigger
+                 */
+                position: PopupPosition;
+                /**
+                 * Show and dismiss animation
+                 */
+                animation: string;
+                /**
+                 * Append the component to another part of the DOM.
+Set `true` to append the component to the body.
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
+                teleport: boolean | object | string;
+                /**
+                 * Class of the root element
+                 */
+                rootClass: ClassDefinition;
+                /**
+                 * Class of the trigger element
+                 */
+                triggerClass: ClassDefinition;
+                /**
+                 * Class of the content element
+                 */
+                contentClass: ClassDefinition;
+                /**
+                 * Class of the content element with variant
+                 */
+                variantClass: ClassDefinition;
+            }>;
         radio?: ComponentConfigBase &
             Partial<{
                 /**

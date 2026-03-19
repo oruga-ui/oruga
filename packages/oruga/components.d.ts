@@ -26,6 +26,7 @@ declare module "vue" {
         ONotification: (typeof import("../oruga/src/components"))["ONotification"];
         ONotificationNotice: (typeof import("../oruga/src/components"))["ONotificationNotice"];
         OPagination: (typeof import("../oruga/src/components"))["OPagination"];
+        OPopup: (typeof import("../oruga/src/components"))["OPopup"];
         ORadio: (typeof import("../oruga/src/components"))["ORadio"];
         OSelect: (typeof import("../oruga/src/components"))["OSelect"];
         OSidebar: (typeof import("../oruga/src/components"))["OSidebar"];
