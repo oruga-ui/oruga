@@ -2,7 +2,7 @@
 
 exports[`OCollapse tests > render correctly 1`] = `
 "<details data-oruga="collapse" class="o-collapse o-collapse--bottom" open="">
-  <summary id="v-1" class="o-collapse__trigger"><button>Trigger Button</button></summary>
+  <summary id="v-1" class="o-collapse__trigger">Trigger Button</summary>
   <div id="v-0" class="o-collapse__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
 </details>"
 `;

@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<CollapseProps>(), {
     override: undefined,
     open: true,
     name: undefined,
+    label: undefined,
     expanded: false,
     position: () => getDefault("collapse.position", "bottom"),
     contentId: () => useId(),
@@ -103,7 +104,7 @@ const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
         :name="name"
         @toggle="onToggle">
         <summary :id="triggerId" :class="triggerClasses">
-            <slot name="trigger" :open="isOpen" />
+            <slot name="trigger" :open="isOpen"> {{ label }}</slot>
         </summary>
 
         <div :id="contentId" :class="contentClasses">

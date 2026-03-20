@@ -5,6 +5,8 @@ export type CollapseProps = {
     override?: boolean;
     /** Whether collapse is open or not, use v-model:open to make it two-way binding */
     open?: boolean;
+    /** Some label displayed in the summary element - unnecessary when trigger slot is used */
+    label?: string;
     /**
      * Setting the same name to multiple collapse elements connects them together,
      * with only one open at a time.

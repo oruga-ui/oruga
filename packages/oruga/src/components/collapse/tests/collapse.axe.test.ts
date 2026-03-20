@@ -42,6 +42,11 @@ describe("OCollapse axe test", () => {
     test.each(a11yCases)("$title", async ({ props }) => {
         const wrapper = mount(OCollapse, {
             props: { open: false, ...props },
+            slots: {
+                trigger: "<div>Trigger Button</div>",
+                default:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            },
             attachTo: document.body,
         });
         await nextTick(); // await all content got rendered

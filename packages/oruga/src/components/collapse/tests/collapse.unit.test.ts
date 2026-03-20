@@ -9,8 +9,8 @@ describe("OCollapse tests", () => {
 
     test("render correctly", () => {
         const wrapper = mount(OCollapse, {
+            props: { label: "Trigger Button" },
             slots: {
-                trigger: "<button>Trigger Button</button>",
                 default:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             },
@@ -37,7 +37,7 @@ describe("OCollapse tests", () => {
         const wrapper = mount(OCollapse, {
             props: { open: false },
             slots: {
-                trigger: "<button>Trigger Button</button>",
+                trigger: "Trigger Button",
                 default:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             },
