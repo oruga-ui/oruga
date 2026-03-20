@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const isOpen = ref(0);
-
 const collapses = ref([
     {
         title: "Open to read something intersting written for you!",
-        text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.  <br />
-          Nulla accumsan, metus ultrices eleifend gravida,   <br />
-          nulla nunc varius lectus, nec rutrum justo nibh eu lectus.  <br />
+        text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
+          Nulla accumsan, metus ultrices eleifend gravida, <br />
+          nulla nunc varius lectus, nec rutrum justo nibh eu lectus. <br />
           Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`,
     },
     {
@@ -28,10 +26,9 @@ const collapses = ref([
             v-for="(collapse, index) of collapses"
             :key="index"
             class="card"
-            animation="slide"
+            name="my-accordion"
             expanded
-            :open="isOpen == index"
-            @update:open="isOpen = index">
+            :open="index === 0">
             <template #trigger="{ open }">
                 <div class="card-header">
                     <span class="card-header-title">

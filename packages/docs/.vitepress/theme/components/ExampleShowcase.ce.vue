@@ -69,4 +69,36 @@ shadowRoot.appendChild(link);
 [data-theme="light"] {
     --bulma-label-color: var(--bulma-text-strong);
 }
+
+details {
+    interpolate-size: allow-keywords;
+}
+/* Chromium / Firefox */
+details summary {
+    /* Either remove the list style ... */
+    list-style: none;
+
+    /* ... or change the `display` property to something else */
+    display: flex;
+}
+
+/* Webkit */
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* This won't work yet */
+details::details-content {
+    overflow: hidden;
+    height: 0;
+    /* Enable transitioning of `content-visibility` */
+    transition:
+        height 0.3s,
+        content-visibility 0.3s;
+    transition-behavior: allow-discrete;
+}
+
+details[open]::details-content {
+    height: auto;
+}
 </style>
