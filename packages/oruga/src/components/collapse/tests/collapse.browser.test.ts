@@ -35,6 +35,7 @@ const SimpleCollapse = defineComponent(() => {
                         key: index,
                         "data-testid": `collapse-${index}`,
                         name: "browser-test-collapsables",
+                        open: index === 0,
                     },
                     {
                         trigger: ({ open }) =>

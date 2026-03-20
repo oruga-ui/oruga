@@ -1,8 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OCollapse tests > render correctly 1`] = `
-"<details data-oruga="collapse" class="o-collapse o-collapse--bottom" open="">
-  <summary id="v-1" class="o-collapse__trigger">Trigger Button</summary>
+"<details data-oruga="collapse" class="o-collapse o-collapse--bottom">
+  <summary id="v-1" role="button" tabindex="0" class="o-collapse__trigger" aria-controls="v-0" aria-expanded="false">Trigger Button</summary>
   <div id="v-0" class="o-collapse__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
 </details>"
 `;
