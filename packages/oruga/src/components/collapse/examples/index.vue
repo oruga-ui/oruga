@@ -2,6 +2,9 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Position from "./position.vue";
+import PositionCode from "./position.vue?raw";
+
 import Accordion from "./accordion.vue";
 import AccordionCode from "./accordion.vue?raw";
 </script>
@@ -22,6 +25,13 @@ import AccordionCode from "./accordion.vue?raw";
         accessibility problems.
     </div>
     <ExampleViewer :component="Base" :code="BaseCode" />
+
+    <h3 id="position">Position</h3>
+    <p>
+        The collapse can be configured by the <code>position</code> property to
+        open to top instead of bottom.
+    </p>
+    <ExampleViewer :component="Position" :code="PositionCode" />
 
     <h3 id="accordion">Accordion</h3>
     <p>

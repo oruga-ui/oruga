@@ -2,12 +2,12 @@
 import { computed, useId, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
-import { defineClasses, unrefElement } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import type { CollapseProps } from "./props";
 
 /**
- * An easy way to toggle what you want.
+ * An easy disclosure widget to toggle content visability.
  * @displayName Collapse
  * @style _collapse.scss
  */
@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<CollapseProps>(), {
     open: true,
     name: undefined,
     expanded: false,
-    position: () => getDefault("collapse.position", "top"),
+    position: () => getDefault("collapse.position", "bottom"),
     contentId: () => useId(),
     triggerId: () => useId(),
 });
@@ -33,10 +33,14 @@ const emits = defineEmits<{
      * @param value {boolean} - updated open prop
      */
     "update:open": [value: boolean];
-    /** on collapse opened */
-    open: [];
-    /** on collapse closed */
-    close: [];
+    /** on collapse opened
+     * @param event {ToggleEvent} - the native toggle event
+     */
+    open: [event: ToggleEvent];
+    /** on collapse closed
+     * @param event {ToggleEvent} - the native toggle event
+     */
+    close: [event: ToggleEvent];
 }>();
 
 defineSlots<{
@@ -54,14 +58,13 @@ const detailsRef = useTemplateRef("detailsElement");
 const isOpen = defineModel<boolean>("open", { default: true });
 
 /** detail open state toggle handler */
-function onToggle(): void {
-    const el = unrefElement(detailsRef);
-    if (!el) return;
+function onToggle(event: ToggleEvent): void {
+    if (!detailsRef.value) return;
 
-    isOpen.value = el.open;
+    isOpen.value = detailsRef.value.open;
 
-    if (el.open) emits("open");
-    else emits("close");
+    if (detailsRef.value.open) emits("open", event);
+    else emits("close", event);
 }
 
 // #region --- Computed Component Classes ---
