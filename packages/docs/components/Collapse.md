@@ -2,9 +2,9 @@
 
 <section class="odocs-head">
 
-The **Collapse** component is an easy way to toggle the visibility of content with show/hide functionality.
-It has two elements: a disclosure button and a section of content whose visibility is controlled by the button.
-The component implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/) and also supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+The **Collapse** component is a disclosure widget that displ information only when toggled to the open state.
+The component is implemented based on the [HTML \<details\> element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details) and consists of two elements: a disclosure label (trigger) and a section of content whose visibility it controls.
+This component also implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/) and also supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
 
 </section>
 
@@ -34,7 +34,7 @@ The component implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https
 | expanded  | Expand the trigger to fullwidth                                                                                                                                                | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | label     | Some label displayed in the summary element - unnecessary when trigger slot is used                                                                                            | string            | -               |                                                                                                                                                       |
 | name      | Setting the same name to multiple collapse elements connects them together,<br/>with only one open at a time.<br/>This allows to easily create UI features such as accordions. | string            | -               |                                                                                                                                                       |
-| open      | Whether collapse is open or not, use v-model:open to make it two-way binding                                                                                                   | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                            |
+| open      | Whether collapse is open or not, use v-model:open to make it two-way binding                                                                                                   | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | override  | Override existing theme classes completely                                                                                                                                     | boolean           | -               |                                                                                                                                                       |
 | position  | Trigger position                                                                                                                                                               | "bottom" \| "top" | `top`, `bottom` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;position: "bottom"<br>}</code> |
 | triggerId | Id property of the trigger container - default is an uuid                                                                                                                      | string            | -               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                         |

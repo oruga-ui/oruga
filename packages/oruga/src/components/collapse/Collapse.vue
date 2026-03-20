@@ -19,7 +19,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<CollapseProps>(), {
     override: undefined,
-    open: true,
+    open: false,
     name: undefined,
     label: undefined,
     expanded: false,
@@ -56,7 +56,7 @@ defineSlots<{
 
 const detailsRef = useTemplateRef("detailsElement");
 
-const isOpen = defineModel<boolean>("open", { default: true });
+const isOpen = defineModel<boolean>("open", { default: false });
 
 /** detail open state toggle handler */
 function onToggle(event: ToggleEvent): void {
@@ -103,8 +103,16 @@ const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
         :open="isOpen"
         :name="name"
         @toggle="onToggle">
-        <summary :id="triggerId" :class="triggerClasses">
-            <slot name="trigger" :open="isOpen"> {{ label }}</slot>
+        <summary
+            :id="triggerId"
+            role="button"
+            tabindex="0"
+            :class="triggerClasses"
+            :aria-controls="contentId"
+            :aria-expanded="isOpen">
+            <slot name="trigger" :open="isOpen">
+                {{ label }}
+            </slot>
         </summary>
 
         <div :id="contentId" :class="contentClasses">

@@ -26,8 +26,9 @@ const collapses = ref([
             v-for="(collapse, index) of collapses"
             :key="index"
             class="card"
-            name="accordion"
-            expanded>
+            name="my-accordion"
+            expanded
+            :open="index === 0">
             <template #trigger="{ open }">
                 <div class="card-header">
                     <span class="card-header-title">

@@ -11,7 +11,13 @@ import AccordionCode from "./accordion.vue?raw";
 
 <template>
     <h3 id="base">Base</h3>
-    <p>A custom trigger can be passed in the <code>trigger</code> slot.</p>
+    <p>
+        A custom trigger can be passed in the <code>trigger</code> slot. When
+        the controlled content is hidden, the trigger is often styled as a
+        typical push button with a right-pointing arrow or triangle, to indicate
+        that activating the trigger will display the hidden content. When the
+        content is visible, the arrow or triangle usually points down.
+    </p>
     <div class="info custom-block">
         <p class="custom-block-title">Accessibility Note:</p>
         The trigger container is already an interactive element with the
@@ -35,7 +41,13 @@ import AccordionCode from "./accordion.vue?raw";
 
     <h3 id="accordion">Accordion</h3>
     <p>
-        Combine multiple collapse components to create an accordion behaviour.
+        Using the
+        <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details#name">
+            <code>name</code>
+        </a>
+        property multiple collapse components can be connected to create an
+        accordion behaviour, with only one open at a time.
     </p>
     <ExampleViewer :component="Accordion" :code="AccordionCode" />
 </template>
