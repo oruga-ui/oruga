@@ -53,6 +53,18 @@
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.1",
     "replace-in-file": "^8.4.0",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  },
+  "overrides": {
+    "@typescript-eslint/eslint": {
+      "typescript": "$typescript"
+    },
+    "@typescript-eslint/eslint-plugin": {
+      "typescript": "$typescript"
+    },
+    "@typescript-eslint/parser": {
+      "typescript": "$typescript"
+    }
   }
 }
