@@ -79,20 +79,20 @@ The component can be used to show an overlay for navigation, shopping carts, and
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                     | Default                                |
-| --------------------------------- | -------------------------------------- |
-| $sidebar-zindex                   | map.get(vars.$zindex, "fixed")         |
-| $sidebar-overlay-background-color | h.useVar( "overlay-background-color")  |
-| $sidebar-overlay-zindex           | map.get(vars.$zindex, "overlay")       |
-| $sidebar-content-zindex           | map.get(vars.$zindex, "sidebar")       |
-| $sidebar-content-max-width        | 50vw                                   |
-| $sidebar-content-max-height       | 50vh                                   |
-| $sidebar-content-box-shadow       | h.useVar("overlay-box-shadow")         |
-| $sidebar-content-background-color | h.useVar( "control-brackground-color") |
-| $sidebar-content-border-radius    | h.useVar("border-radius")              |
-| $sidebar-content-border-width     | h.useVar("control-border-width")       |
-| $sidebar-content-border-style     | solid                                  |
-| $sidebar-content-border-color     | h.useVar("control-border-color")       |
+| SASS Variable                     | Default                               |
+| --------------------------------- | ------------------------------------- |
+| $sidebar-zindex                   | map.get(vars.$zindex, "fixed")        |
+| $sidebar-overlay-background-color | h.useVar( "overlay-background-color") |
+| $sidebar-overlay-zindex           | map.get(vars.$zindex, "overlay")      |
+| $sidebar-content-zindex           | map.get(vars.$zindex, "sidebar")      |
+| $sidebar-content-max-width        | 50vw                                  |
+| $sidebar-content-max-height       | 50vh                                  |
+| $sidebar-content-box-shadow       | h.useVar("overlay-box-shadow")        |
+| $sidebar-content-background-color | h.useVar( "control-background-color") |
+| $sidebar-content-border-radius    | h.useVar("border-radius")             |
+| $sidebar-content-border-width     | h.useVar("control-border-width")      |
+| $sidebar-content-border-style     | solid                                 |
+| $sidebar-content-border-color     | h.useVar("control-border-color")      |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_sidebar.scss)
 

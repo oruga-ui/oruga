@@ -100,7 +100,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $select-font-weight           | h.useVar("font-weight")                                                     |
 | $select-line-height           | h.useVar("line-height")                                                     |
 | $select-box-shadow            | h.useVar("control-box-shadow-inset")                                        |
-| $select-background-color      | h.useVar("control-brackground-color")                                       |
+| $select-background-color      | h.useVar("control-background-color")                                        |
 | $select-border-color          | h.useVar("control-border-color")                                            |
 | $select-border-style          | solid                                                                       |
 | $select-border-width          | h.useVar("control-border-width")                                            |

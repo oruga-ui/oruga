@@ -139,7 +139,7 @@ Breaking things down into multiple steps can improve the user experience by keep
 | $steps-step-font-size                                                               | h.useVar("font-size")                   |
 | $steps-step-font-weight                                                             | 500                                     |
 | $steps-step-line-height                                                             | h.useVar("line-height")                 |
-| $steps-step-border-color                                                            | h.useVar( "control-brackground-color")  |
+| $steps-step-border-color                                                            | h.useVar( "control-background-color")   |
 | // color scheme is inverted for steps$steps-step-background-color                   | h.useVar( "control-border-color")       |
 | // color scheme is inverted for steps$steps-step-active-border-color                | h.useVar("primary")                     |
 | $steps-step-active-background-color                                                 | h.useVar("primary-invert")              |

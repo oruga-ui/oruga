@@ -111,7 +111,7 @@ $border-radius: 4px !default;
 $border-radius-rounded: 9999px !default;
 
 $control-spacer: 0.5em !default;
-$control-brackground-color: $white !default;
+$control-background-color: $white !default;
 $control-border-color: $grey-lighter !default;
 $control-border-width: 1px !default;
 $control-height: 2.25em !default;
