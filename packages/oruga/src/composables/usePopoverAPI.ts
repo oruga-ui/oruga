@@ -49,7 +49,6 @@ export function usePopoverAPI(options: {
 
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
-            // @ts-expect-error Popover API is not yet fully included in TypeScript
             content.showPopover({ source: trigger });
             timeout = undefined;
             active.value = true;
