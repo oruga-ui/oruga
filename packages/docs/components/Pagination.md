@@ -103,7 +103,7 @@ The component uses the [Button](/components/Button) component for the navigation
 | $pagination-button-border-style             | solid                                   |
 | $pagination-button-border-radius            | h.useVar("border-radius")               |
 | $pagination-button-border-radius-rounded    | h.useVar( "border-radius-rounded")      |
-| $pagination-button-background-color         | h.useVar( "control-brackground-color")  |
+| $pagination-button-background-color         | h.useVar( "control-background-color")   |
 | $pagination-button-hover-color              | $pagination-button-color                |
 | $pagination-button-hover-background-color   | $pagination-button-background-color     |
 | $pagination-button-hover-border-color       | $pagination-button-border-color         |

@@ -93,7 +93,7 @@ The component implements the W3C ARIA APG [Button Pattern](https://www.w3.org/WA
 | $button-border-style               | solid                                                                       |
 | $button-border-color               | h.useVar("control-border-color")                                            |
 | $button-border-radius              | h.useVar("border-radius")                                                   |
-| $button-background-color           | h.useVar("control-brackground-color")                                       |
+| $button-background-color           | h.useVar("control-background-color")                                        |
 | $button-hover-color                | $button-color                                                               |
 | $button-hover-background-color     | $button-background-color                                                    |
 | $button-hover-border-color         | h.useVar("grey-light")                                                      |
