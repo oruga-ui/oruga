@@ -50,12 +50,6 @@ defineSlots<{
     default?(): void;
 }>();
 
-const computedTag = computed(() =>
-    typeof props.disabled !== "undefined" && props.disabled !== false
-        ? "button"
-        : props.tag,
-);
-
 const computedNativeType = computed(() =>
     props.tag === "button" || props.tag === "input" ? props.type : null,
 );
@@ -122,16 +116,17 @@ const iconRightClasses = defineClasses([
 
 <template>
     <component
-        :is="computedTag"
+        :is="tag"
         data-oruga="button"
         :type="computedNativeType"
         role="button"
         tabindex="0"
         :class="rootClasses"
         :disabled="disabled ? true : null"
+        :aria-disabled="disabled ? true : null"
         @click="$emit('click', $event)"
-        @keydown.enter="$emit('click', $event)"
-        @keydown.space="$emit('click', $event)">
+        @keydown.enter.prevent="$emit('click', $event)"
+        @keydown.space.prevent="$emit('click', $event)">
         <span :class="wrapperClasses">
             <o-icon
                 v-if="iconLeft"
