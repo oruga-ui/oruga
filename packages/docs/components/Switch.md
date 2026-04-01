@@ -100,7 +100,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $switch-border-radius            | h.useVar("border-radius")            |
 | $switch-border-radius-rounded    | h.useVar("border-radius-rounded")    |
 | $switch-background-color         | h.useVar("grey-light")               |
-| $switch-toggle-background-color  | vars.$control-brackground-color      |
+| $switch-toggle-background-color  | vars.$control-background-color       |
 | $switch-checked-background-color | h.useVar("primary")                  |
 | $switch-checked-border-color     | h.useVar("primary")                  |
 | $switch-disabled-opacity         | h.useVar("control-disabled-opacity") |

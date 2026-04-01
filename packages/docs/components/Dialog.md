@@ -120,7 +120,7 @@ The component implements the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w
 | $dialog-spacer                    | calc(2 \* h.useVar("control-spacer")) |
 | $dialog-zindex                    | map.get(vars.$zindex, "fixed")        |
 | $dialog-box-shadow                | h.useVar("overlay-box-shadow")        |
-| $dialog-background-color          | h.useVar("control-brackground-color") |
+| $dialog-background-color          | h.useVar("control-background-color")  |
 | $dialog-border-width              | h.useVar("control-border-width")      |
 | $dialog-border-style              | solid                                 |
 | $dialog-border-color              | h.useVar("control-border-color")      |

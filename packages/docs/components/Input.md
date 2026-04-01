@@ -105,7 +105,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 | $input-border-color          | h.useVar("control-border-color")                                            |
 | $input-border-radius         | h.useVar("border-radius")                                                   |
 | $input-border-radius-rounded | h.useVar("border-radius-rounded")                                           |
-| $input-background-color      | h.useVar("control-brackground-color")                                       |
+| $input-background-color      | h.useVar("control-background-color")                                        |
 | $input-textarea-min-height   | 120px                                                                       |
 | $input-textarea-max-height   | 600px                                                                       |
 | $input-textarea-padding      | h.useVar("control-spacer")                                                  |

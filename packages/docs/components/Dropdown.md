@@ -158,7 +158,7 @@ The component implements both the W3C ARIA APG [Combobox Pattern](https://www.w3
 | $dropdown-menu-spacer                  | 0px                                                                          |
 | $dropdown-menu-padding                 | h.useVar("control-spacer") 0                                                 |
 | $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
-| $dropdown-menu-background-color        | h.useVar("control-brackground-color")                                        |
+| $dropdown-menu-background-color        | h.useVar("control-background-color")                                         |
 | $dropdown-menu-border-color            | h.useVar("control-border-color")                                             |
 | $dropdown-menu-border-style            | solid                                                                        |
 | $dropdown-menu-border-width            | h.useVar("control-border-width")                                             |

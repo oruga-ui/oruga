@@ -127,7 +127,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $slider-track-border-color          | h.useVar("grey")                                                      |
 | $slider-track-border-radius         | h.useVar("border-radius")                                             |
 | $slider-track-background-color      | h.useVar("grey-lighter")                                              |
-| $slider-fill-box-shadow             | h.useVar("control-focus-box-shadow")                                  |
+| $slider-fill-box-shadow             | h.useVar("control-box-shadow")                                        |
 | $slider-fill-background-color       | h.useVar("primary")                                                   |
 | $slider-thumb-size                  | h.useVar("slider-font-size")                                          |
 | $slider-thumb-font-size             | calc(0.85 \* h.useVar("slider-font-size"))                            |
@@ -139,7 +139,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $slider-thumb-border-color          | h.useVar("grey-light")                                                |
 | $slider-thumb-border-radius         | h.useVar("border-radius")                                             |
 | $slider-thumb-border-radius-rounded | h.useVar("border-radius-rounded")                                     |
-| $slider-thumb-background-color      | h.useVar("control-brackground-color")                                 |
+| $slider-thumb-background-color      | h.useVar("control-background-color")                                  |
 | $slider-thumb-transform             | scale(1.25)                                                           |
 | $slider-tick-to-track-ratio         | 0.5                                                                   |
 | $slider-tick-size                   | calc( h.useVar("slider-track-height") \* $slider-tick-to-track-ratio) |

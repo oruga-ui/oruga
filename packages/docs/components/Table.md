@@ -224,7 +224,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | $table-border-style                       | solid                                                                                  |
 | $table-border-color                       | transparent                                                                            |
 | $table-border-radius                      | h.useVar("border-radius")                                                              |
-| $table-background-color                   | h.useVar("control-brackground-color")                                                  |
+| $table-background-color                   | h.useVar("control-background-color")                                                   |
 | $table-focus-border-color                 | h.useVar("primary")                                                                    |
 | $table-focus-box-shadow                   | vars.$control-focus-box-shadow h.useVar("focus")                                       |
 | $table-sticky-zindex                      | 1                                                                                      |

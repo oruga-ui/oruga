@@ -137,7 +137,26 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                      | Default                              |
+| ---------------------------------- | ------------------------------------ |
+| $tree-spacer                       | 0.25rem                              |
+| $tree-border                       | 1px solid h.useVar("secondary")      |
+| $tree-disabled-opacity             | h.useVar("control-disabled-opacity") |
+| $tree-item-padding                 | 0.5em 0.75em                         |
+| $tree-item-color                   | h.useVar("font-color")               |
+| $tree-item-font-size               | h.useVar("font-size")                |
+| $tree-item-font-weight             | h.useVar("font-weight")              |
+| $tree-item-line-heigth             | h.useVar("line-height")              |
+| $tree-item-border                  | unset                                |
+| $tree-item-border-radius           | h.useVar("border-radius")            |
+| $tree-item-background-color        | transparent                          |
+| $tree-item-hover-color             | h.useVar("black")                    |
+| $tree-item-hover-background-color  | h.useVar("grey-lightest")            |
+| $tree-item-active-color            | h.useVar("primary-invert")           |
+| $tree-item-active-background-color | h.useVar("primary")                  |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tree.scss)
+
 </div>
 <div class="theme-bulma">
 
@@ -149,7 +168,27 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable             | Default                        |
+| ------------------------- | ------------------------------ |
+| $tree-list-line-height    | 1.25em                         |
+| $tree-item-padding        | 0.5em 0.75em                   |
+| $tree-item-margin         | 0.2em 0                        |
+| $tree-item-bg             | transparent                    |
+| $tree-item-border-radius  | var(--#{$prefix}border-radius) |
+| $tree-item-color          | var(--#{$prefix}body-color)    |
+| $tree-item-active-bg      | var(--#{$prefix}primary)       |
+| $tree-item-active-color   | var(--#{$prefix}white)         |
+| $tree-item-disabled-bg    | transparent                    |
+| $tree-item-disabled-color | var(--#{$prefix}secondary)     |
+| $tree-item-hover-bg       | var(--#{$prefix}tertiary-bg)   |
+| $tree-item-hover-color    | var(--#{$prefix}body-color)    |
+| $tree-icon-spacer         | 0.25rem                        |
+| $tree-subtree-border-left | 1px solid #445e00              |
+| $tree-subtree-padding     | 0 0.5em                        |
+| $tree-subtree-margin      | 0.5em 1.3em                    |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tree.scss)
+
 </div>
 
 </section>
