@@ -25,7 +25,6 @@ export default defineConfig({
         }),
     ],
     resolve: {
-        tsconfigPaths: true,
         alias: {
             // add '@oruga-ui/oruga-next' alias to sry entry point
             "@oruga-ui/oruga-next": fileURLToPath(
