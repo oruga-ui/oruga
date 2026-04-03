@@ -26,7 +26,7 @@ export function getThemePath(
     return "";
 }
 
-export function createThemeDocs(cwd: string): void {
+export function createThemeDocs(cwd: string, outDir: string): void {
     Themes.forEach((theme) => {
         // define all files with variables for a component
         const paths = variablePaths();
@@ -94,6 +94,6 @@ See ➜ 📄 [SCSS files](${theme.src}/scss/)
 </div>
 `;
         // write markdown doc file for the theme
-        fs.writeFileSync(`./pages/themes/${theme.key}.md`, md);
+        fs.writeFileSync(`${outDir}/${theme.key}.md`, md);
     });
 }
