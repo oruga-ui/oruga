@@ -1,3 +1,9 @@
+## [0.13.2](https://github.com/oruga-ui/oruga/compare/v0.13.1...v0.13.2) (2026-04-03)
+
+### Bug Fixes
+
+* **button:** prevent button trigger click event twice ([#1595](https://github.com/oruga-ui/oruga/issues/1595)) ([51376a1](https://github.com/oruga-ui/oruga/commit/51376a11f7f842e2590186c4ff3d7b689bffeb80))
+
 ## [0.13.1](https://github.com/oruga-ui/oruga/compare/v0.13.0...v0.13.1) (2026-03-10)
 
 ### Bug Fixes
