@@ -11,7 +11,8 @@
   "workspaces": [
     "packages/oruga",
     "packages/examples",
-    "packages/docs"
+    "packages/docs",
+    "packages/nuxt"
   ],
   "scripts": {
     "dev": "run-p build:lib:watch build:docs:watch",
