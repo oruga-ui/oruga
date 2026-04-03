@@ -33,7 +33,7 @@
     "sass": "^1.97.3",
     "tsx": "^4.21.0",
     "typescript": "5.9.3",
-    "vitepress": "^1.6.4",
+    "vitepress": "^2.0.0-alpha.17",
     "vue": "^3.5.32",
     "vue-component-meta": "^3.2.6",
     "vue-docgen-cli": "4.79.0",

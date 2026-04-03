@@ -70,7 +70,7 @@ export async function run(): Promise<void> {
         watch: watch,
         componentsRoot: path.resolve(__dirname, "../oruga/src/components"),
         components: "*/[A-Z]*.vue",
-        outDir: "./components",
+        outDir: "./pages/components",
         docsRepo: "oruga-ui/oruga",
         docsBranch: "develop",
         docsFolder: "packages/docs",
