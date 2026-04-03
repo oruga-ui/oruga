@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OPagination tests > render correctly 1`] = `
-"<nav data-oruga="pagination" class="o-pagination o-pagination--right"><button data-oruga="button" role="button" tabindex="0" class="o-button o-button--disabled o-pagination__button o-pagination__button-previous o-pagination__button--disabled" disabled="" iscurrent="false" number="0" aria-label="Previous page" aria-current="false"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+"<nav data-oruga="pagination" class="o-pagination o-pagination--right"><button data-oruga="button" role="button" tabindex="0" class="o-button o-button--disabled o-pagination__button o-pagination__button-previous o-pagination__button--disabled" disabled="" aria-disabled="true" iscurrent="false" number="0" aria-label="Previous page" aria-current="false"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
     <!--v-if-->
     <!--v-if--></span>
   </button><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button o-pagination__button-next" iscurrent="false" number="2" aria-label="Next page" aria-current="false"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
