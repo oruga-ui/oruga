@@ -1,18 +1,23 @@
-.DS_Store
+# Dependencies
 node_modules
-**/dist
-**/coverage
 
 # local env files
 .env.local
 .env.*.local
 
 # Log files
+*.log*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Temp directories
+.temp
+.tmp
+.cache
+
 # Editor directories and files
+*.iml
 .idea
 .vscode
 *.suo
@@ -22,6 +27,8 @@ yarn-error.log*
 *.sw?
 
 # generated files
+**/dist
+**/coverage
 packages/oruga/README.md
 
 # vitepress files
@@ -33,3 +40,11 @@ packages/docs/.vitepress/dist/
 # vite temp files
 **/vite.config.js.timestamp**
 **/vite.config.ts.timestamp**
+
+# Nuxt
+.nuxt
+.output
+.data
+.vercel_build_output
+.build-*
+.netlify
