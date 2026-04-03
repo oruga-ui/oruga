@@ -99,15 +99,15 @@ export default {
             );
         }
 
-        // import example components
-        const examples = import.meta.glob<DefineComponent>(
-            "../../../oruga/src/components/**/examples/index.vue",
-            { eager: true },
-        );
-        for (const path in examples) {
-            const v = path.split("/");
-            app.component("example-" + v[6], markRaw(examples[path].default));
-        }
+        // // import example components
+        // const examples = import.meta.glob<DefineComponent>(
+        //     "../../../oruga/src/components/**/examples/index.vue",
+        //     { eager: true },
+        // );
+        // for (const path in examples) {
+        //     const v = path.split("/");
+        //     app.component("example-" + v[6], markRaw(examples[path].default));
+        // }
 
         // import inspector components
         const inspectors = import.meta.glob<DefineComponent>(

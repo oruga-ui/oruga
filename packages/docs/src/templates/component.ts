@@ -37,6 +37,8 @@ export function renderer(
     const tag = (component.match(/[A-Z][a-z]+/g) || []).join("-").toLowerCase();
 
     return `
+[//]: # (This file is generated and should not be edited by hand!)
+    
 ${isSubComponent ? "" : `# ${deprecated ? `~~${displayName}~~` : displayName}`}
 
 ${
@@ -61,7 +63,7 @@ ${
         ? ""
         : `
 <section class="odocs-examples">
-${renderExamples(component)}
+${renderExamples(component, config)}
 </section>
 `
 }
