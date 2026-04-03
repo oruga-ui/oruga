@@ -1,7 +1,8 @@
 import { defineCustomElement, markRaw } from "vue";
 import type { App, DefineComponent } from "vue";
+import type { Theme } from "vitepress";
 
-// THEME
+// Custom Theme
 import DefaultTheme, { VPBadge } from "vitepress/theme";
 import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
@@ -17,13 +18,16 @@ import {
     type OrugaConfig,
 } from "@oruga-ui/oruga-next";
 
+// Themes
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
 
+// Icons
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+// Code Editor
 import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -70,7 +74,7 @@ export function saveTheme(theme: ThemeConfig): void {
 }
 
 export default {
-    ...DefaultTheme,
+    extends: DefaultTheme,
     Layout,
     enhanceApp({ app }: { app: App }): void {
         // add vitepress components
@@ -147,4 +151,4 @@ export default {
 
         app.use(oruga);
     },
-};
+} satisfies Theme;
