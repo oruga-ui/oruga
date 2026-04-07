@@ -1,3 +1,9 @@
+## [0.13.3](https://github.com/oruga-ui/oruga/compare/v0.13.2...v0.13.3) (2026-04-07)
+
+### Bug Fixes
+
+* **datepicker:** add missing `week-number-click` event ([#1602](https://github.com/oruga-ui/oruga/issues/1602)) ([ee172c7](https://github.com/oruga-ui/oruga/commit/ee172c774fb10a35736c6ab98b4296b255c84c79)), closes [#1600](https://github.com/oruga-ui/oruga/issues/1600)
+
 ## [0.13.2](https://github.com/oruga-ui/oruga/compare/v0.13.1...v0.13.2) (2026-04-03)
 
 ### Bug Fixes
