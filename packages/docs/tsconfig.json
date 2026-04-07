@@ -12,13 +12,5 @@
       "@oruga-ui/oruga-next": ["../oruga/src"]
     }
   },
-  "include": [
-    ".vitepress/**/*",
-    "src/**/*",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": [".vitepress/**/*", "src/**/*", "src/**/*.ts"]
 }
