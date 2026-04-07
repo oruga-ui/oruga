@@ -29,7 +29,7 @@
     "test:prettier": "prettier --check .",
     "test": "npm run test --workspace @oruga-ui/oruga-next",
     "test:coverage": "npm run test:coverage --workspace @oruga-ui/oruga-next",
-    "test:ts": "npm run test:ts --workspace @oruga-ui/oruga-next",
+    "test:ts": "tsc --build --emitDeclarationOnly",
     "gen": "npm run gen:types && npm run gen:volar && npm run gen:docs",
     "gen:volar": "tsx .scripts/gen-volar-dts.ts",
     "gen:types": "tsx .scripts/gen-comp-types.ts",
@@ -42,8 +42,11 @@
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.0",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.11.0",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.7.0",
+    "@vue/tsconfig": "^0.9.1",
     "conventional-changelog": "^7.2.0",
     "conventional-changelog-conventionalcommits": "9.3.0",
     "eslint": "^9.36.0",
@@ -53,6 +56,7 @@
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.1",
     "replace-in-file": "^8.4.0",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
   }
 }

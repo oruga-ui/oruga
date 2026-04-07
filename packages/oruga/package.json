@@ -49,11 +49,11 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vite build",
+    "build": "vite build",
     "build:watch": "(npm link || true) && vite build --watch",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ts": "vue-tsc --noEmit --project tsconfig.app.json",
+    "test:ts": "vue-tsc --build --emitDeclarationOnly",
     "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {
@@ -63,20 +63,15 @@
     "vue-component-type-helpers": "^3.2.6"
   },
   "devDependencies": {
-    "@tsconfig/node24": "^24.0.4",
     "@types/jest-axe": "^3.5.9",
     "@types/jsdom": "^28.0.0",
-    "@types/node": "^24.11.0",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vitest/browser-playwright": "^4.0.18",
     "@vitest/coverage-v8": "^4.0.18",
     "@vue/test-utils": "^2.4.6",
-    "@vue/tsconfig": "^0.9.1",
     "core-js": "3.45.1",
     "jest-axe": "^10.0.0",
     "jsdom": "^28.1.0",
-    "rimraf": "^6.1.3",
-    "typescript": "^6.0.2",
     "vite": "^7.3.2",
     "vite-plugin-dts": "^4.5.4",
     "vite-tsconfig-paths": "^6.1.1",
