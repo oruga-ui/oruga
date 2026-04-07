@@ -95,6 +95,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | icon-right-click   | **event** `Event` - native event                     | on icon right click event        |
 | range-start        | **value** `Date` - range start date                  | on range start is selected event |
 | range-end          | **value** `Date` - range end date                    | on range end is selected event   |
+| week-number-click  | **value** `number` - week number                     | on week number click event       |
 | update:model-value | **value** `Date \| Date[]` - updated modelValue prop | modelValue prop two-way binding  |
 | update:active      | **value** `boolean` - updated active prop            | active prop two-way binding      |
 | change-month       | **value** `number` - month number                    | on month change event            |

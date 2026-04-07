@@ -139,6 +139,11 @@ const emits = defineEmits<{
      */
     "change-year": [value: number];
     /**
+     *  on week number click event
+     * @param value {number} - week number
+     */
+    "week-number-click": [value: number];
+    /**
      * on input focus event
      * @param event {Event} - native event
      */
@@ -660,8 +665,8 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 v-model:focused-date="focusedDateData"
                 :month-names="computedMonthNames"
                 :picker-props="props"
-                @range-start="(date) => $emit('range-start', date)"
-                @range-end="(date) => $emit('range-end', date)" />
+                @range-start="$emit('range-start', $event)"
+                @range-end="$emit('range-end', $event)" />
 
             <o-datepicker-table
                 v-else
@@ -670,8 +675,9 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 :day-names="computedDayNames"
                 :month-names="computedMonthNames"
                 :picker-props="props"
-                @range-start="(date) => $emit('range-start', date)"
-                @range-end="(date) => $emit('range-end', date)" />
+                @week-number-click="$emit('week-number-click', $event)"
+                @range-start="$emit('range-start', $event)"
+                @range-end="$emit('range-end', $event)" />
         </slot>
 
         <footer v-if="$slots.footer" :class="footerClasses">
