@@ -21,6 +21,9 @@ export function renderer(name: string, config: SafeDocgenCLIConfig): string {
         const file = fs.readFileSync(mdPath);
         const examples = file.toString().replaceAll('"./', `"@/${importPath}/`);
 
+        // const xpath = "../../../oruga/src/" + importPath + "/index.md";
+        // const examples = `<!--@include: ${xpath} -->`;
+
         return header + examples;
     }
 

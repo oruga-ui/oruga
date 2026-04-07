@@ -1,3 +1,5 @@
+[//]: # "This file is generated and should not be edited by hand!"
+
 # Skeleton
 
 <section class="odocs-head">
@@ -10,7 +12,43 @@ The **Skeleton** component can be used as a loading animations or space-fillers 
 
 ## Examples
 
-<example-skeleton />
+<script setup>
+import Base from "@/components/Skeleton/examples/base.vue";
+import BaseCode from "@/components/Skeleton/examples/base.vue?raw";
+
+import Circle from "@/components/Skeleton/examples/circle.vue";
+import CircleCode from "@/components/Skeleton/examples/circle.vue?raw";
+
+import Sizes from "@/components/Skeleton/examples/sizes.vue";
+import SizesCode from "@/components/Skeleton/examples/sizes.vue?raw";
+
+import Position from "@/components/Skeleton/examples/position.vue";
+import PositionCode from "@/components/Skeleton/examples/position.vue?raw";
+</script>
+
+### Base
+
+The length of the loading beam can be defined using the `width` prop.
+
+<ExampleViewer :component="Base" :code="BaseCode" />
+
+### Circle
+
+Make in round using the `circle` prop.
+
+<ExampleViewer :component="Circle" :code="CircleCode" />
+
+### Sizes
+
+The component can be displayed in different sizes using the `size` prop.
+
+<ExampleViewer :component="Sizes" :code="SizesCode" />
+
+### Position
+
+Use the `position` prop to define the vertical placement.
+
+<ExampleViewer :component="Position" :code="PositionCode" />
 
 </section>
 

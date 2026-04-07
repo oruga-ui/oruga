@@ -2,6 +2,8 @@
 sidebarDepth: 2
 ---
 
+[//]: # "This file is generated and should not be edited by hand!"
+
 # Steps
 
 <section class="odocs-head">
@@ -15,7 +17,48 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 ## Examples
 
-<example-steps />
+<script setup>
+import Base from "@/components/Steps/examples/base.vue";
+import BaseCode from "@/components/Steps/examples/base.vue?raw";
+
+import Customise from "@/components/Steps/examples/customise.vue";
+import CustomiseCode from "@/components/Steps/examples/customise.vue?raw";
+
+import Variants from "@/components/Steps/examples/variants.vue";
+import VariantsCode from "@/components/Steps/examples/variants.vue?raw";
+
+import Sizes from "@/components/Steps/examples/sizes.vue";
+import SizesCode from "@/components/Steps/examples/sizes.vue?raw";
+
+import Vertical from "@/components/Steps/examples/vertical.vue";
+import VerticalCode from "@/components/Steps/examples/vertical.vue?raw";
+</script>
+
+### Base
+
+<ExampleViewer :component="Base" :code="BaseCode" />
+
+### Variants
+
+Different styles can be achieved with the `variant` prop. The `variant` prop can be set on the `Steps` as well as on the `StepItem` component.
+
+<ExampleViewer :component="Variants" :code="VariantsCode" />
+
+### Sizes
+
+The component can be displayed in different sizes using the `size` prop.
+
+<ExampleViewer :component="Sizes" :code="SizesCode" />
+
+### Customise
+
+<ExampleViewer :component="Customise" :code="CustomiseCode" />
+
+### Vertical
+
+Adding the `vertical` prop displays the component vertically instead of horizontally.
+
+<ExampleViewer :component="Vertical" :code="VerticalCode" />
 
 </section>
 
@@ -70,6 +113,8 @@ Breaking things down into multiple steps can improve the user experience by keep
 | navigation | Override the step navigation | **previous** `{disabled: boolean, action: (): void }` - previous button configs<br/>**next** `{disabled: boolean, action: (): void }` - next button configs |
 
 </section>
+
+[//]: # "This file is generated and should not be edited by hand!"
 
 <section class="odocs-specs">
 

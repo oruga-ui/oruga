@@ -1,3 +1,5 @@
+[//]: # "This file is generated and should not be edited by hand!"
+
 # Input
 
 <section class="odocs-head">
@@ -12,7 +14,41 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 ## Examples
 
-<example-input />
+<script setup>
+import Base from "@/components/Input/examples/base.vue";
+import BaseCode from "@/components/Input/examples/base.vue?raw";
+
+import Variants from "@/components/Input/examples/variants.vue";
+import VariantsCode from "@/components/Input/examples/variants.vue?raw";
+
+import Sizes from "@/components/Input/examples/sizes.vue";
+import SizesCode from "@/components/Input/examples/sizes.vue?raw";
+
+import WithIcons from "@/components/Input/examples/with-icons.vue";
+import WithIconsCode from "@/components/Input/examples/with-icons.vue?raw";
+</script>
+
+### Base
+
+<ExampleViewer :component="Base" :code="BaseCode" />
+
+### Variants
+
+<p>Different styles can be achieved with the <code>variant</code> prop.</p>
+<ExampleViewer :component="Variants" :code="VariantsCode" />
+
+### Sizes
+
+<p>
+    The component can be displayed in different sizes using the
+    <code>size</code> prop.
+</p>
+<ExampleViewer :component="Sizes" :code="SizesCode" />
+
+### With Icons
+
+<p>Add an icon to the component to explain its function more visually.</p>
+<ExampleViewer :component="WithIcons" :code="WithIconsCode" />
 
 </section>
 

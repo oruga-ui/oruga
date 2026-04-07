@@ -1,3 +1,5 @@
+[//]: # "This file is generated and should not be edited by hand!"
+
 # Button
 
 <section class="odocs-head">
@@ -13,7 +15,74 @@ The component implements the W3C ARIA APG [Button Pattern](https://www.w3.org/WA
 
 ## Examples
 
-<example-button />
+<script setup>
+import Base from "@/components/Button/examples/base.vue";
+import BaseCode from "@/components/Button/examples/base.vue?raw";
+
+import Variants from "@/components/Button/examples/variants.vue";
+import VariantsCode from "@/components/Button/examples/variants.vue?raw";
+
+import States from "@/components/Button/examples/states.vue";
+import StatesCode from "@/components/Button/examples/states.vue?raw";
+
+import Outlined from "@/components/Button/examples/outlined.vue";
+import OutlinedCode from "@/components/Button/examples/outlined.vue?raw";
+
+import Inverted from "@/components/Button/examples/inverted.vue";
+import InvertedCode from "@/components/Button/examples/inverted.vue?raw";
+
+import Sizes from "@/components/Button/examples/sizes.vue";
+import SizesCode from "@/components/Button/examples/sizes.vue?raw";
+
+import Icons from "@/components/Button/examples/icons.vue";
+import IconsCode from "@/components/Button/examples/icons.vue?raw";
+
+import Tags from "@/components/Button/examples/tags.vue";
+import TagsCode from "@/components/Button/examples/tags.vue?raw";
+</script>
+
+### Base
+
+<ExampleViewer :component="Base" :code="BaseCode" />
+
+### States
+
+<ExampleViewer :component="States" :code="StatesCode" />
+
+### Variants
+
+Different styles can be achieved with the `variant` prop.
+
+<ExampleViewer :component="Variants" :code="VariantsCode" />
+
+### Outlined
+
+Use the `outlined` prop in combination with the `variant` prop for a lightweight look.
+
+<ExampleViewer :component="Outlined" :code="OutlinedCode" />
+
+### Inverted
+
+Use the `inverted` prop in combination with the `variant` prop for a clickable label look.
+
+<ExampleViewer :component="Inverted" :code="InvertedCode" />
+
+### Sizes
+
+The component can be displayed in different sizes using the `size` prop.
+
+<ExampleViewer :component="Sizes" :code="SizesCode" />
+
+### Icons
+
+<p>Add an icon to the button to explain its function more visually.</p>
+<ExampleViewer :component="Icons" :code="IconsCode" />
+
+### Tags
+
+Instead of using the HTML `button` tag, the HTML tag can be customised using the `tag` prop, for example to define links using [vue-router](https://router.vuejs.org/) and `router-link` tag.
+
+<ExampleViewer :component="Tags" :code="TagsCode" />
 
 </section>
 
