@@ -1,7 +1,8 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist",
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitThis": false,
@@ -9,7 +10,6 @@
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
-    "baseUrl": ".",
     "types": ["node", "vite/client"],
     "paths": {
       "@/*": ["../oruga/src/*"],
@@ -21,12 +21,7 @@
     "src/**/*.vue",
     "../oruga/src/**/*.ts",
     "../oruga/src/**/*.vue",
-    "vite.config.*"
+    "../docs/.vitepress/**/*.vue"
   ],
-  "exclude": [
-    "../oruga/src/__tests__/**",
-    "../oruga/src/**/*.test.ts",
-    "node_modules",
-    "dist"
-  ]
+  "exclude": ["../oruga/src/__tests__/**", "../oruga/src/**/*.test.ts"]
 }

@@ -142,18 +142,18 @@ describe("useProgrammatic tests", () => {
     test("test using custom instance registry", async () => {
         const instanceRegistry = new InstanceRegistry();
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+        expect(instanceRegistry.count()).toBe(0);
 
         const { close } = factory.open("div", {
             registry: instanceRegistry,
         });
 
-        expect(instanceRegistry.entries).toHaveLength(1);
+        expect(instanceRegistry.count()).toBe(1);
 
         close();
         vi.runAllTimers();
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+        expect(instanceRegistry.count()).toBe(0);
     });
 
     test("test closeAll is working correctly", async () => {

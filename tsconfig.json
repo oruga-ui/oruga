@@ -1,0 +1,17 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./packages/oruga"
+    },
+    {
+      "path": "./packages/examples"
+    },
+    {
+      "path": "./packages/docs"
+    }
+  ]
+}

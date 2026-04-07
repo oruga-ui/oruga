@@ -123,7 +123,7 @@ describe("ProgrammaticComponent tests", () => {
     test("test instance registry is called correctly", async () => {
         const instanceRegistry = new InstanceRegistry();
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+        expect(instanceRegistry.count()).toBe(0);
 
         const wrapper = mount(ProgrammaticComponent, {
             props: {
@@ -132,10 +132,10 @@ describe("ProgrammaticComponent tests", () => {
             },
         });
 
-        expect(instanceRegistry.entries).toHaveLength(1);
+        expect(instanceRegistry.count()).toBe(1);
 
         wrapper.unmount();
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+        expect(instanceRegistry.count()).toBe(0);
     });
 });
