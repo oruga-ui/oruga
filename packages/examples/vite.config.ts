@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
+import Markdown from "unplugin-vue-markdown/vite";
 
 import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
@@ -10,7 +11,13 @@ import { peerDependencies } from "./package.json";
 // https://vitejs.dev/config/
 export default defineConfig({
     root: __dirname,
-    plugins: [vue(), dts({ outDir: "./dist/types" })],
+    plugins: [
+        vue({
+            include: [/\.vue$/, /\.md$/], // <-- allows Vue to compile Markdown files
+        }),
+        Markdown({}),
+        dts({ outDir: "./dist/types" }),
+    ],
     resolve: {
         alias: {
             // add '@oruga-ui/oruga-next' alias to sry entry point
