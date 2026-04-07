@@ -1,3 +1,5 @@
+[//]: # "This file is generated and should not be edited by hand!"
+
 # Collapse
 
 <section class="odocs-head">
@@ -12,7 +14,29 @@ The component implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https
 
 ## Examples
 
-<example-collapse />
+<script setup>
+import Base from "@/components/Collapse/examples/base.vue";
+import BaseCode from "@/components/Collapse/examples/base.vue?raw";
+
+import Accordion from "@/components/Collapse/examples/accordion.vue";
+import AccordionCode from "@/components/Collapse/examples/accordion.vue?raw";
+</script>
+
+### Base
+
+A custom trigger can be passed in the `trigger` slot.
+
+::: info Accessibility Note:
+The trigger container is already an interactive element with the `role="button"` attribute. For accessibility reasons, prevent adding other interactive elements such as buttons to avoid [nested-interactive](https://accessibilityinsights.io/info-examples/web/nested-interactive/) accessibility problems.
+:::
+
+<ExampleViewer :component="Base" :code="BaseCode" />
+
+### Accordion
+
+Combine multiple collapse components to create an accordion behaviour.
+
+<ExampleViewer :component="Accordion" :code="AccordionCode" />
 
 </section>
 

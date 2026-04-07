@@ -1,3 +1,5 @@
+[//]: # "This file is generated and should not be edited by hand!"
+
 # Field
 
 <section class="odocs-head">
@@ -10,7 +12,57 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 ## Examples
 
-<example-field />
+<script setup >
+import Base from "@/components/Field/examples/base.vue";
+import BaseCode from "@/components/Field/examples/base.vue?raw";
+
+import Addons from "@/components/Field/examples/addons.vue";
+import AddonsCode from "@/components/Field/examples/addons.vue?raw";
+
+import Grouped from "@/components/Field/examples/grouped.vue";
+import GroupedCode from "@/components/Field/examples/grouped.vue?raw";
+
+import Horizontal from "@/components/Field/examples/horizontal.vue";
+import HorizontalCode from "@/components/Field/examples/horizontal.vue?raw";
+
+import Templates from "@/components/Field/examples/templates.vue";
+import TemplatesCode from "@/components/Field/examples/templates.vue?raw";
+</script>
+
+### Base
+
+<ExampleViewer :component="Base" :code="BaseCode" />
+
+### Addons
+
+<p>
+    Use the <code>addons</code> prop to attach multiple controls together.
+</p>
+<ExampleViewer :component="Addons" :code="AddonsCode" />
+
+### Grouped
+
+<p>
+    Use the <code>grouped</code> prop to group several controls that belong
+    together.
+</p>
+<ExampleViewer :component="Grouped" :code="GroupedCode" />
+
+### Horizontal
+
+<p>
+    When the <code>horizontal</code> prop is set, the component will align
+    horizontally.
+</p>
+<ExampleViewer :component="Horizontal" :code="HorizontalCode" />
+
+### Templates
+
+<p>
+    The <code>label</code> and the <code>message</code> can be customised
+    using template slots if needed.
+</p>
+<ExampleViewer :component="Templates" :code="TemplatesCode" />
 
 </section>
 
