@@ -31,6 +31,7 @@
     "@types/node": "^24.11.0",
     "@vue/tsconfig": "^0.9.1",
     "sass": "^1.97.3",
+    "typescript": "^6.0.2",
     "vitepress": "^1.6.4",
     "vue": "^3.5.32",
     "vue-component-meta": "^3.2.6",
