@@ -1,0 +1,229 @@
+---
+sidebarDepth: 2
+---
+
+[//]: # "This file is generated and should not be edited by hand!"
+
+# Breadcrumb
+
+<section class="odocs-head">
+
+The **Breadcrumb** is a simple navigational component that indicates the location of the current page within a list to parent pages in the navigation hierarchy. It helps users find their place within a website or web application. Breadcrumbs are often placed horizontally in front of the main content of a page. The elements are split by a sperator, either by css or by a given string.
+The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/).
+
+</section>
+
+<section class="odocs-examples">
+
+## Examples
+
+<script setup>
+import Base from "@/components/Breadcrumb/examples/base.vue";
+import BaseCode from "@/components/Breadcrumb/examples/base.vue?raw";
+
+import Options from "@/components/Breadcrumb/examples/options.vue";
+import OptionsCode from "@/components/Breadcrumb/examples/options.vue?raw";
+
+import Separators from "@/components/Breadcrumb/examples/separators.vue";
+import SeparatorsCode from "@/components/Breadcrumb/examples/separators.vue?raw";
+
+import Icons from "@/components/Breadcrumb/examples/icons.vue";
+import IconsCode from "@/components/Breadcrumb/examples/icons.vue?raw";
+
+import Sizes from "@/components/Breadcrumb/examples/sizes.vue";
+import SizesCode from "@/components/Breadcrumb/examples/sizes.vue?raw";
+
+import Variants from "@/components/Breadcrumb/examples/variants.vue";
+import VariantsCode from "@/components/Breadcrumb/examples/variants.vue?raw";
+
+import Positions from "@/components/Breadcrumb/examples/positions.vue";
+import PositionsCode from "@/components/Breadcrumb/examples/positions.vue?raw";
+
+import Tags from "@/components/Breadcrumb/examples/tags.vue";
+import TagsCode from "@/components/Breadcrumb/examples/tags.vue?raw";
+</script>
+
+### Base
+
+Since breadcrumbs provide a navigation, it's a good idea to add a meaningful label such as `aria-label="breadcrumb"` to describe the type of navigation provided in the `nav` element. To determine the current page, set the `active` prop. This applies an `aria-current="page"` to the item to indicate that it represents the current page. Individual items can also be disabled using the `disabled` prop.
+
+<ExampleViewer :component="Base" :code="BaseCode" />
+
+### Separators
+
+Dividers are automatically added in CSS by the theme. In addition, the component allows you to customise the sperator using the `seperator` prop.
+The `seperator` slot can be used if further customisation is needed.
+
+<ExampleViewer :component="Separators" :code="SeparatorsCode" />
+
+### Options
+
+Instead of using the `<o-breadcrumb-item>` component directly inside the default template slot, an `options` prop can be set, which allows the options to be set programmatically.
+It accepts several different value formats:
+
+- An array of primitives `['A', 'B', 'C']`
+- An object literal with key-value pairs `{ a: 'A', b: 'B', c: 'C' }`
+- An array of objects where each object represent an item
+
+<ExampleViewer :component="Options" :code="OptionsCode" />
+
+### Variants
+
+Different styles can be achieved with the `variant` prop.
+
+<ExampleViewer :component="Variants" :code="VariantsCode" />
+
+### Sizes
+
+The component can be displayed in different sizes using the `size` prop.
+
+<ExampleViewer :component="Sizes" :code="SizesCode" />
+
+### Positions
+
+For alternative alignments, the breadcrumb can be positioned by the `position` prop.
+
+<ExampleViewer :component="Positions" :code="PositionsCode" />
+
+### Icons
+
+You can add an icon to the item to explain its function more visually.
+
+<ExampleViewer :component="Icons" :code="IconsCode" />
+
+### Tags
+
+By default the breadcrumb items are represented as HTML `a` tag elements.
+The HTML tag can be customised using the `tag` prop for an item, for example to define links using [vue-router](https://router.vuejs.org/) and `router-link` tag.
+
+<ExampleViewer :component="Tags" :code="TagsCode" />
+
+</section>
+
+<section class="odocs-specs">
+
+## Breadcrumb Component
+
+> The classic breadcrumb, in different colors, sizes, and states
+
+```html
+<o-breadcrumb></o-breadcrumb>
+```
+
+### Props
+
+| Prop name | Description                                                      | Type                            | Values                                                                          | Default                                                                                                                                                  |
+| --------- | ---------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaLabel | Accessibility aria-label to be passed to the nav wrapper element | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaLabel: "Breadcrumb"<br>}</code>  |
+| options   | breadcrumb items, unnecessary when default slot is used          | BreadcrumnOptions               | -                                                                               |                                                                                                                                                          |
+| override  | Override existing theme classes completely                       | boolean                         | -                                                                               |                                                                                                                                                          |
+| position  | Position of the breadcrumb                                       | "centered" \| "left" \| "right" | `left`, `centered`, `right`                                                     | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;position: undefined<br>}</code> |
+| separator | The separator between breadcrumb items                           | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: "/"<br>}</code>      |
+| size      | Size of the breadcrumb                                           | string                          | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;size: undefined<br>}</code>     |
+| variant   | Color variant of the breadcrumb                                  | string                          | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
+
+### Slots
+
+| Name    | Description                 | Bindings |
+| ------- | --------------------------- | -------- |
+| default | Place breadcrumb items here |          |
+
+</section>
+
+[//]: # "This file is generated and should not be edited by hand!"
+
+<section class="odocs-specs">
+
+## BreadcrumbItem Component
+
+> The classic breadrcumb item, in different colors, sizes, and states
+
+```html
+<o-breadcrumb-item></o-breadcrumb-item>
+```
+
+### Props
+
+| Prop name | Description                                       | Type             | Values                                                      | Default                                                                                                                                                  |
+| --------- | ------------------------------------------------- | ---------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active    | Whether item is active or not                     | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| disabled  | Item is disabled                                  | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| hidden    | Define whether the item is visible or not         | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| iconLeft  | Icon name to show on the left                     | string           | -                                                           |                                                                                                                                                          |
+| iconPack  | Icon pack to use                                  | string           | `mdi`, `fa`, `fas and any other custom icon pack`           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconRight | Icon name to show on the right                    | string           | -                                                           |                                                                                                                                                          |
+| iconSize  | Icon size                                         | string           | `small`, `medium`, `large`                                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code> |
+| label     | Item label, unnecessary when default slot is used | string           | -                                                           |                                                                                                                                                          |
+| override  | Override existing theme classes completely        | boolean          | -                                                           |                                                                                                                                                          |
+| tag       | Item tag name                                     | DynamicComponent | `li`, `a`, `router-link`, `nuxt-link (or other nuxt alias)` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;tag: "a"<br>}</code>            |
+
+### Slots
+
+| Name      | Description                               | Bindings |
+| --------- | ----------------------------------------- | -------- |
+| seperator | Item seperator                            |          |
+| default   | Override the label, default is label prop |          |
+
+</section>
+
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-breadcrumb-viewer />
+
+</section>
+
+<section class="odocs-style">
+
+## Sass Variables
+
+<div class="theme-oruga">
+
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                            | Default                                 |
+| ---------------------------------------- | --------------------------------------- |
+| $breadcrumb-line-height                  | 1.25em                                  |
+| $breadcrumb-seperator-color              | inherit                                 |
+| $breadcrumb-disabled-opacity             | h.useVar("control-disabled-opacity")    |
+| $breadcrumb-item-spacer                  | calc(0.5 \* h.useVar("control-spacer")) |
+| $breadcrumb-item-padding                 | 0.3em                                   |
+| $breadcrumb-item-color                   | h.useVar("font-color")                  |
+| $breadcrumb-item-font-size               | h.useVar("font-size")                   |
+| $breadcrumb-item-font-weight             | h.useVar("font-weight")                 |
+| $breadcrumb-item-line-height             | h.useVar("line-height")                 |
+| $breadcrumb-item-border-radius           | h.useVar("border-radius")               |
+| $breadcrumb-item-background-color        | transparent                             |
+| $breadcrumb-item-active-color            | h.useVar("primary")                     |
+| $breadcrumb-item-active-background-color | transparent                             |
+| $breadcrumb-item-hover-color             | h.useVar("white")                       |
+| $breadcrumb-item-hover-background-color  | h.useVar("secondary")                   |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
+</div>
+<div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+| SASS Variable      | Default    |
+| ------------------ | ---------- |
+| $breadcrumb-colors | dv.$colors |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
+</div>
+<div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable     | Default                  |
+| ----------------- | ------------------------ |
+| $breadcrumb-color | var(--#{$prefix}primary) |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
+</div>
+
+</section>
