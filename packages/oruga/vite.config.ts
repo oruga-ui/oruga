@@ -2,7 +2,6 @@
 
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 import { playwright } from "@vitest/browser-playwright";
 
@@ -18,7 +17,6 @@ export default defineConfig({
     root: __dirname,
     plugins: [
         vue(),
-        tsconfigPaths(),
         dts({
             tsconfigPath: "./tsconfig.app.json",
             entryRoot: "./src",
@@ -52,7 +50,7 @@ export default defineConfig({
             entry: resolve(__dirname, "src/index.ts"),
             fileName: "index",
         },
-        rollupOptions: {
+        rolldownOptions: {
             // make sure to externalize deps that shouldn't be bundled
             // into your library
             external: [...Object.keys(peerDependencies)],
