@@ -50,6 +50,7 @@ export default defineConfig({
         lib: {
             name: "Oruga",
             entry: resolve(__dirname, "src/index.ts"),
+            formats: ["es"],
             fileName: "index",
         },
         rollupOptions: {
