@@ -179,7 +179,10 @@ const hasBackdrop = computed(
     () => props.backdrop || props.alert || rootRef.value?.ariaModal,
 );
 
-/** Specifies the types of user actions that can be used to close the dialog. */
+/**
+ * Specifies the types of user actions that can be used to close the dialog.
+ * See https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby
+ */
 const closedBy = computed(() => {
     // The dialog can be dismissed when the user clicks or taps outside it,
     // and with a platform-specific user action or a developer-specified mechanism.
@@ -228,7 +231,7 @@ onMounted(() => toggleDialog(isActive.value));
 
 watch(isActive, toggleDialog);
 
-/** show of close the dialog element */
+/** show or close the dialog element */
 function toggleDialog(value: boolean): void {
     if (!rootRef.value) return;
 
@@ -247,7 +250,7 @@ function toggleDialog(value: boolean): void {
 }
 
 /** request the dialog to close when active */
-function cancel(returnValue?: string): void {
+function close(returnValue?: string): void {
     if (!isActive.value || !rootRef.value) return;
 
     // trigger dialog close event
@@ -257,7 +260,7 @@ function cancel(returnValue?: string): void {
     else rootRef.value.close(returnValue);
 }
 
-/** confirm button click event */
+/** emit a confirm event when active */
 function confirm(): void {
     if (!isActive.value || !rootRef.value) return;
 
@@ -359,7 +362,7 @@ const cancelButtonClasses = defineClasses([
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ close: cancel });
+defineExpose({ close, confirm });
 
 // #endregion --- Expose Public Functionalities ---
 </script>
@@ -396,7 +399,7 @@ defineExpose({ close: cancel });
                             closeable
                         "
                         :class="headerClasses">
-                        <slot name="header" :close="cancel" :confirm="confirm">
+                        <slot name="header" :close="close" :confirm="confirm">
                             <h1
                                 v-if="$slots['title'] || title"
                                 :id="titleId"
@@ -418,7 +421,7 @@ defineExpose({ close: cancel });
                             :size="closeIconSize"
                             :label="ariaCloseLabel"
                             :classes="closeClasses"
-                            @click="cancel">
+                            @click="close">
                             <slot v-if="$slots['close']" name="close" />
                         </CloseButton>
                     </header>
@@ -443,19 +446,19 @@ defineExpose({ close: cancel });
                         </slot>
 
                         <!-- Main Content -->
-                        <slot :close="cancel" :confirm="confirm">
+                        <slot :close="close" :confirm="confirm">
                             <!-- injected component for programmatic usage -->
                             <component
                                 :is="$props.component"
                                 v-if="$props.component"
                                 v-bind="$props.props"
                                 v-on="$props.events || {}"
-                                @close="cancel" />
+                                @close="close" />
 
                             <p v-else :class="contentClasses">
                                 <slot
                                     name="content"
-                                    :close="cancel"
+                                    :close="close"
                                     :confirm="confirm">
                                     {{ content }}
                                 </slot>
@@ -474,7 +477,7 @@ defineExpose({ close: cancel });
                     <footer
                         v-if="$slots['footer'] || cancelButton || confirmButton"
                         :class="footerClasses">
-                        <slot name="footer" :close="cancel" :confirm="confirm">
+                        <slot name="footer" :close="close" :confirm="confirm">
                             <OButton
                                 v-if="cancelButton || $slots['cancelButton']"
                                 ref="cancelButton"
@@ -483,7 +486,7 @@ defineExpose({ close: cancel });
                                 :variant="cancelVariant"
                                 :disabled="disableCancel"
                                 autofocus
-                                @click="cancel('cancel')"
+                                @click="close('cancel')"
                                 @keyup.right="focusConfirmButton">
                                 <slot name="cancelButton">
                                     {{ cancelButton }}
