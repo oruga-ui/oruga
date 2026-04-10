@@ -58,7 +58,7 @@ npm install @oruga-ui/oruga-next
 
 2. Import the components:
 
-- To get started, create a new `Oruga` instance by the createOruga composable. The instance then has to be passed to the app.use() function of your current Vue app.
+- To get started, create a new Oruga instance by the `createOruga` composable. The instance then has to be passed to the `app.use()` function of your current Vue app.
 
     ```js
     import { createApp } from "vue"
@@ -70,7 +70,7 @@ npm install @oruga-ui/oruga-next
     });
     ```
 
-- To take advantage of bundler’s tree-shaking optimisations, no components are registered globally by default. If you want to register a component globally, extend the your Oruga instance with the relevant component plugin. This makes the respective component and its subcomponents, as well as any related programmatic components, globally available.
+- To take advantage of bundler’s tree-shaking optimisations, no components are registered globally by default. If you want to register a component globally, extend your Oruga instance with the relevant component plugin. This makes the respective component and its subcomponents, as well as any related programmatic components, globally available.
 
     ```js
     import { createOruga, Autocomplete, Sidebar } from "@oruga-ui/oruga-next";
