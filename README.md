@@ -63,7 +63,7 @@ npm install @oruga-ui/oruga-next
     ```js
     import { createApp } from "vue"
     import { createOruga } from "@oruga-ui/oruga-next";
-    
+
     const oruga = createOruga();
 
     createApp(...).use(oruga, {
