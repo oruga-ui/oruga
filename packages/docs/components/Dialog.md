@@ -75,27 +75,27 @@ The component implements the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w
 
 ### Events
 
-| Event name    | Properties                                | Description                                                              |
-| ------------- | ----------------------------------------- | ------------------------------------------------------------------------ |
-| update:active | **value** `boolean` - updated active prop | active prop two-way binding                                              |
-| close         | **event** `Event` - native event          | the event is fired when the dialog has been closed                       |
-| cancel        | **event** `Event` - native event          | the event is fired when the user wish to dismiss the current open dialog |
-| confirm       | **event** `Event` - native event          | the event is fired when the confirm button get clicked                   |
+| Event name    | Properties                                                                                      | Description                                                              |
+| ------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| update:active | **value** `boolean` - updated active prop                                                       | active prop two-way binding                                              |
+| close         | **event** `Event` - native event<br/>**value** `String \| undefined` - an optional return value | the event is fired when the dialog has been closed                       |
+| cancel        | **event** `Event` - native event<br/>**value** `String \| undefined` - an optional return value | the event is fired when the user wish to dismiss the current open dialog |
+| confirm       |                                                                                                 | the event is fired when the confirm button get clicked                   |
 
 ### Slots
 
-| Name          | Description                                            | Bindings                                                                                                                                        |
-| ------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| header        | Override the header                                    | **close** `(event: Event): void` - function to emit a `close` event                                                                             |
-| title         | Override the header title, default is title prop       |                                                                                                                                                 |
-| subtitle      | Override the header subtitle, default is subtitle prop |                                                                                                                                                 |
-| close         | Define a custom close icon                             |                                                                                                                                                 |
-| image         | Override the image element                             |                                                                                                                                                 |
-| default       | Override the default dialog body                       | **close** `(event: Event): void` - function to emit a `close` event<br/>**confirm** `(event: Event): void` - function to emit a `confirm` event |
-| content       | Override the body content, default is content prop     | **close** `(event: Event): void` - function to emit a `close` event<br/>**confirm** `(event: Event): void` - function to emit a `confirm` event |
-| footer        | Override the footer                                    | **close** `(event: Event): void` - function to emit a `close` event<br/>**confirm** `(event: Event): void` - function to emit a `confirm` event |
-| cancelButton  | Define the cancel button label                         |                                                                                                                                                 |
-| confirmButton | Define the confirm button label                        |                                                                                                                                                 |
+| Name          | Description                                            | Bindings                                                                                                                                    |
+| ------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| header        | Override the header                                    | **close** `(returnValue?: string): void` - function to emit a `close` event<br/>**confirm** `(): void` - function to emit a `confirm` event |
+| title         | Override the header title, default is title prop       |                                                                                                                                             |
+| subtitle      | Override the header subtitle, default is subtitle prop |                                                                                                                                             |
+| close         | Define a custom close icon                             |                                                                                                                                             |
+| image         | Override the image element                             |                                                                                                                                             |
+| default       | Override the default dialog body                       | **close** `(returnValue?: string): void` - function to emit a `close` event<br/>**confirm** `(): void` - function to emit a `confirm` event |
+| content       | Override the body content, default is content prop     | **close** `(returnValue?: string): void` - function to emit a `close` event<br/>**confirm** `(): void` - function to emit a `confirm` event |
+| footer        | Override the footer                                    | **close** `(returnValue?: string): void` - function to emit a `close` event<br/>**confirm** `(): void` - function to emit a `confirm` event |
+| cancelButton  | Define the cancel button label                         |                                                                                                                                             |
+| confirmButton | Define the confirm button label                        |                                                                                                                                             |
 
 </section>
 
