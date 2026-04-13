@@ -1,11 +1,12 @@
 {
-  "extends": "./tsconfig.app.json",
+  "extends": "./tsconfig.lib.json",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
+    "skipLibCheck": true,
 
-    "lib": ["ESNext", "DOM"],
-    "types": ["node", "vite/client", "./components.d.ts"]
+    // override types with node extension
+    "types": ["node", "vite/client", "./volar.d.ts"]
   },
   "exclude": []
 }

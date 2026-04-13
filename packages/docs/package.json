@@ -14,7 +14,7 @@
     "docs:build": "npm run build",
     "docs:gen": "tsx src/docgen.ts",
     "docs:gen:watch": "tsx src/docgen.ts --watch",
-    "test:ts": "vue-tsc --build --emitDeclarationOnly"
+    "test:ts": "vue-tsc --build --noEmit"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",

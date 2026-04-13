@@ -53,7 +53,7 @@
     "build:watch": "(npm link || true) && vite build --watch",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ts": "vue-tsc --build --emitDeclarationOnly",
+    "test:ts": "vue-tsc --build --noEmit",
     "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {

@@ -47,7 +47,7 @@
   ],
   "scripts": {
     "build": "vite build",
-    "test:ts": "vue-tsc --build --emitDeclarationOnly",
+    "test:ts": "vue-tsc --build --noEmit",
     "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {

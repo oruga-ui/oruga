@@ -6,28 +6,32 @@
   "compilerOptions": {
     "composite": true,
     "sourceMap": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
     "importHelpers": true,
-    "allowSyntheticDefaultImports": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
-    "types": ["vite/client", "./components.d.ts"],
+    "types": ["vite/client", "./volar.d.ts"],
     "paths": {
       "@/*": ["./src/*"],
+      "@oruga-ui/oruga-next": ["./src/index"],
       "@docs": ["../docs/src/types"],
-      "@oruga-ui/oruga-next": ["./src/index"]
     }
   },
   "include": [
-    "../docs/src/types.ts",
+    // include lib code
     "src/**/*",
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    // include docs types
+    "../docs/src/types.ts",
   ],
-  "exclude": ["src/**/__tests__/*", "src/**/*.test.ts"]
+  "exclude": [
+    // exclude test code
+    "src/**/__tests__/*",
+    "src/**/*.test.ts"
+  ]
 }

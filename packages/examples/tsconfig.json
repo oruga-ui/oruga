@@ -2,9 +2,9 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "composite": true,
+    "sourceMap": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "importHelpers": true,
-    "allowSyntheticDefaultImports": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
@@ -19,9 +19,17 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.vue",
+    // include lib code
     "../oruga/src/**/*.ts",
     "../oruga/src/**/*.vue",
-    "../docs/.vitepress/**/*.vue"
+    // include docs components
+    "../docs/.vitepress/theme/components/ExampleViewer.vue"
   ],
-  "exclude": ["../oruga/src/__tests__/**", "../oruga/src/**/*.test.ts"]
+  "exclude": [
+    // exclude docs only code
+    "../oruga/src/**/inspector.vue",
+    // exclude test code
+    "../oruga/src/__tests__/**",
+    "../oruga/src/**/*.test.ts"
+  ]
 }

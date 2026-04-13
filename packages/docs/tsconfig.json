@@ -1,17 +1,36 @@
 {
-  "extends": ["@tsconfig/node24/tsconfig.json", "@vue/tsconfig/tsconfig.json"],
+  "extends": [
+    "@tsconfig/node24/tsconfig.json",
+    "@vue/tsconfig/tsconfig.json"
+  ],
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "skipLibCheck": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
     "types": ["node", "vite/client", "vitepress/client"],
     "paths": {
+      "@/*": ["../oruga/src/*"],
       "@docs": ["./src"],
       "@docs/*": ["./src/*"],
       "@oruga-ui/oruga-next": ["../oruga/src"]
     }
   },
-  "include": [".vitepress/**/*", "src/**/*"]
+  "include": [
+    // include docs runtime files
+    ".vitepress/**/*",
+    // include docs generation files
+    "src/**/*",
+    // include lib files
+    "../oruga/src/**/*.ts",
+    "../oruga/src/**/*.vue"
+  ],
+  "exclude": [
+    "../oruga/src/__tests__/**",
+    "../oruga/src/**/*.test.ts"
+  ]
 }

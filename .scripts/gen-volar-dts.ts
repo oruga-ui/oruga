@@ -39,7 +39,7 @@ export {};
 // generate export types volar file
 generateComponentsType("@oruga-ui/oruga-next", "./packages/oruga/volar.d.ts");
 // generate main package types volar file
-generateComponentsType(
-    "../oruga/src/components",
-    "./packages/oruga/components.d.ts",
-);
+// generateComponentsType(
+//     "../oruga/src/components",
+//     "./packages/oruga/components.d.ts",
+// );
