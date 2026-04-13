@@ -1,7 +1,8 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.json",
+  "extends": ["@tsconfig/node24/tsconfig.json", "@vue/tsconfig/tsconfig.json"],
   "compilerOptions": {
-    "allowJs": true,
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
@@ -12,13 +13,5 @@
       "@oruga-ui/oruga-next": ["../oruga/src"]
     }
   },
-  "include": [
-    ".vitepress/**/*",
-    "src/**/*",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": [".vitepress/**/*", "src/**/*"]
 }

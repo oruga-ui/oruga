@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { h } from "vue";
 
 import OField from "@/components/field/Field.vue";
 import OInput from "@/components/input/Input.vue";
@@ -20,7 +21,7 @@ describe("OField tests", () => {
         const variant = "danger";
         const wrapper = mount(OField, {
             props: { variant },
-            slots: { default: [OInput] },
+            slots: { default: h(OInput) },
         });
         const input = wrapper.find('[data-oruga="input"]');
         expect(input.exists()).toBeTruthy();
@@ -32,7 +33,7 @@ describe("OField tests", () => {
             const message = "Some string message";
             const wrapper = mount(OField, {
                 props: { message },
-                slots: { default: [OInput] },
+                slots: { default: h(OInput) },
             });
             const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
@@ -44,7 +45,7 @@ describe("OField tests", () => {
             const messageTag = "a";
             const wrapper = mount(OField, {
                 props: { message, messageTag },
-                slots: { default: [OInput] },
+                slots: { default: h(OInput) },
             });
             const messageDiv = wrapper.find(messageTag + ".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
@@ -54,7 +55,7 @@ describe("OField tests", () => {
         test('react accordingly when "message" prop is changed dynamically', async () => {
             const message = "Some string message";
             const wrapper = mount(OField, {
-                slots: { default: [OInput] },
+                slots: { default: h(OInput) },
             });
 
             await wrapper.setProps({ message });
@@ -68,7 +69,7 @@ describe("OField tests", () => {
             const message = ["Selected option is wrong", "Option is required"];
             const wrapper = mount(OField, {
                 props: { message },
-                slots: { default: [OInput] },
+                slots: { default: h(OInput) },
             });
 
             const messageDiv = wrapper.find(".o-field__message");
@@ -86,7 +87,10 @@ describe("OField tests", () => {
             const wrapper = mount(OField, {
                 props: { grouped: true },
                 slots: {
-                    default: [OInput, '<button class="button">Button</button>'],
+                    default: [
+                        h(OInput),
+                        '<button class="button">Button</button>',
+                    ],
                 },
             });
 
@@ -100,7 +104,10 @@ describe("OField tests", () => {
             const wrapper = mount(OField, {
                 props: { multiline: true },
                 slots: {
-                    default: [OInput, '<button class="button">Button</button>'],
+                    default: [
+                        h(OInput),
+                        '<button class="button">Button</button>',
+                    ],
                 },
             });
 
@@ -117,7 +124,10 @@ describe("OField tests", () => {
             const wrapper = mount(OField, {
                 props: { label },
                 slots: {
-                    default: [OInput, '<button class="button">Button</button>'],
+                    default: [
+                        h(OInput),
+                        '<button class="button">Button</button>',
+                    ],
                 },
                 attachTo: document.body,
             });
@@ -142,7 +152,10 @@ describe("OField tests", () => {
             const wrapper = mount(OField, {
                 props: { grouped: true, horizontal: true },
                 slots: {
-                    default: [OInput, '<button class="button">Button</button>'],
+                    default: [
+                        h(OInput),
+                        '<button class="button">Button</button>',
+                    ],
                 },
             });
 
@@ -156,7 +169,10 @@ describe("OField tests", () => {
             const wrapper = mount(OField, {
                 props: { groupMultiline: true, horizontal: true },
                 slots: {
-                    default: [OInput, '<button class="button">Button</button>'],
+                    default: [
+                        h(OInput),
+                        '<button class="button">Button</button>',
+                    ],
                 },
             });
 
@@ -173,7 +189,10 @@ describe("OField tests", () => {
             const wrapper = mount(OField, {
                 props: { message, horizontal: true },
                 slots: {
-                    default: [OInput, '<button class="button">Button</button>'],
+                    default: [
+                        h(OInput),
+                        '<button class="button">Button</button>',
+                    ],
                 },
             });
 
