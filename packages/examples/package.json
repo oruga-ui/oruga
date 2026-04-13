@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/examples",
-  "version": "0.13.1",
+  "version": "0.13.4",
   "homepage": "https://oruga-ui.com",
   "description": "Oruga UI component examples",
   "license": "MIT",
@@ -50,7 +50,7 @@
     "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {
-    "@oruga-ui/oruga-next": "0.13.1",
+    "@oruga-ui/oruga-next": "0.13.4",
     "vue": "^3.0.0"
   },
   "dependencies": {
@@ -64,11 +64,10 @@
     "markdown-it-highlightjs": "^4.3.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitejs/plugin-vue": "^6.0.5",
     "sass": "^1.97.3",
-    "vite": "^7.3.1",
+    "vite": "^8.0.6",
     "vite-plugin-dts": "^4.5.4",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitepress": "^1.6.4"
   }
 }

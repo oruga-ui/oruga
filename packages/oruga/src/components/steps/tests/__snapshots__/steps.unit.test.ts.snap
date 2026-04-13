@@ -11,10 +11,10 @@ exports[`OSteps tests > integration tests > test render correctly 1`] = `
       </div>
     </transition-stub>
   </section>
-  <nav class="o-steps__navigation"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled" disabled="" aria-label="Previous"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+  <nav class="o-steps__navigation"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled" disabled="" aria-disabled="true" aria-label="Previous"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
       <!--v-if-->
       <!--v-if--></span>
-    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled" disabled="" aria-label="Next"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled" disabled="" aria-disabled="true" aria-label="Next"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
       <!--v-if-->
       <!--v-if--></span>
     </button></nav>
@@ -25,10 +25,10 @@ exports[`OSteps tests > render correctly 1`] = `
 "<div data-oruga="steps" class="o-steps">
   <ol class="o-steps__list o-steps__list--animated" role="tablist" aria-orientation="horizontal"></ol>
   <section class="o-steps__content"></section>
-  <nav class="o-steps__navigation"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled" disabled="" aria-label="Previous"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+  <nav class="o-steps__navigation"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled" disabled="" aria-disabled="true" aria-label="Previous"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
       <!--v-if-->
       <!--v-if--></span>
-    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled" disabled="" aria-label="Next"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled" disabled="" aria-disabled="true" aria-label="Next"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
       <!--v-if-->
       <!--v-if--></span>
     </button></nav>
