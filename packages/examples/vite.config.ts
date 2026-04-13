@@ -12,7 +12,6 @@ export default defineConfig({
     root: __dirname,
     plugins: [vue(), dts({ outDir: "./dist/types" })],
     resolve: {
-        tsconfigPaths: true,
         alias: {
             // add '@oruga-ui/oruga-next' alias to sry entry point
             "@oruga-ui/oruga-next": fileURLToPath(
@@ -34,7 +33,7 @@ export default defineConfig({
         rolldownOptions: {
             // make sure to externalize deps that shouldn't be bundled
             // into your library
-            external: [...Object.keys(peerDependencies)],
+            external: Object.keys(peerDependencies),
             output: {
                 // Browser build minified version
                 exports: "named",

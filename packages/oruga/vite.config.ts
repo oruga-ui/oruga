@@ -53,7 +53,7 @@ export default defineConfig({
         rolldownOptions: {
             // make sure to externalize deps that shouldn't be bundled
             // into your library
-            external: [...Object.keys(peerDependencies)],
+            external: Object.keys(peerDependencies),
             output: {
                 banner: bannerTxt,
                 exports: "named",
