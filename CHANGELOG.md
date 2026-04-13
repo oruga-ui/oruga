@@ -1,3 +1,19 @@
+## [0.13.4](https://github.com/oruga-ui/oruga/compare/v0.13.3...v0.13.4) (2026-04-10)
+
+### Features
+
+* **dialog:** add `returnValue` to component emits ([#1605](https://github.com/oruga-ui/oruga/issues/1605)) ([b0fe77c](https://github.com/oruga-ui/oruga/commit/b0fe77c60e65e5c6594955b2d700da7b5c05cf9c)), closes [#1604](https://github.com/oruga-ui/oruga/issues/1604)
+
+### Bug Fixes
+
+* **tree:** correct export component name ([#1606](https://github.com/oruga-ui/oruga/issues/1606)) ([3d291fa](https://github.com/oruga-ui/oruga/commit/3d291fa027691644d4ec149b508657ddbd2e7491))
+
+## [0.13.3](https://github.com/oruga-ui/oruga/compare/v0.13.2...v0.13.3) (2026-04-07)
+
+### Bug Fixes
+
+* **datepicker:** add missing `week-number-click` event ([#1602](https://github.com/oruga-ui/oruga/issues/1602)) ([ee172c7](https://github.com/oruga-ui/oruga/commit/ee172c774fb10a35736c6ab98b4296b255c84c79)), closes [#1600](https://github.com/oruga-ui/oruga/issues/1600)
+
 ## [0.13.2](https://github.com/oruga-ui/oruga/compare/v0.13.1...v0.13.2) (2026-04-03)
 
 ### Bug Fixes
