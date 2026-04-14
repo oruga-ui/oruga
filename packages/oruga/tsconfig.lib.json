@@ -17,7 +17,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@oruga-ui/oruga-next": ["./src/index"],
-      "@docs": ["../docs/src/types"],
+      "@docs": ["../docs/src/types"]
     }
   },
   "include": [
@@ -27,7 +27,7 @@
     "src/**/*.d.ts",
     "src/**/*.vue",
     // include docs types
-    "../docs/src/types.ts",
+    "../docs/src/types.ts"
   ],
   "exclude": [
     // exclude test code

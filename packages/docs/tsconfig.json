@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "@tsconfig/node24/tsconfig.json",
-    "@vue/tsconfig/tsconfig.json"
-  ],
+  "extends": ["@tsconfig/node24/tsconfig.json", "@vue/tsconfig/tsconfig.json"],
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
@@ -29,8 +26,5 @@
     "../oruga/src/**/*.ts",
     "../oruga/src/**/*.vue"
   ],
-  "exclude": [
-    "../oruga/src/__tests__/**",
-    "../oruga/src/**/*.test.ts"
-  ]
+  "exclude": ["../oruga/src/__tests__/**", "../oruga/src/**/*.test.ts"]
 }
