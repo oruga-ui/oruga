@@ -35,7 +35,7 @@ export default [
   // add vue with ts configs
   ...defineConfigWithVueTs(
     vuePlugin.configs["flat/recommended"],
-    vueTsConfigs.recommended,
+    vueTsConfigs.strict,
   ),
 
   // add vue a11y configs
@@ -48,12 +48,16 @@ export default [
   {
     rules: {
       // TypeScript
-      "@typescript-eslint/no-explicit-any": ["warn"],
-      "@typescript-eslint/ban-ts-comment": ["warn"],
-      "@typescript-eslint/explicit-function-return-type": ["warn"],
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/ban-ts-comment": "warn",
+      "@typescript-eslint/explicit-function-return-type": "warn",
+      // "@typescript-eslint/await-thenable": "off",
+      "@typescript-eslint/unified-signatures": "off",
+
       // Vue
       "vue/padding-line-between-blocks": ["error", "always"],
-      "vue/multi-word-component-names": ["off"],
+      "vue/multi-word-component-names": "off",
+      "vue/no-empty-component-block": "error",
       "vue/block-order": ["error", { order: ["script", "template", "style"] }],
       "vue/block-lang": ["error", { script: { lang: "ts" } }],
       "vue/html-closing-bracket-newline": [

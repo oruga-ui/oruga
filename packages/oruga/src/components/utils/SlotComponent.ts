@@ -34,14 +34,16 @@ export default defineComponent<SlotComponentProps<{ $slots: Slots }>>(
         const _props = { tag: "div", name: "default", ...props };
 
         return (): VNode => {
-            let slot: VNodeChild | (() => VNodeChild) = (): VNodeChild =>
+            let slot: VNodeChild | (() => VNodeChild) = (): VNodeChild => {
+                const _slot = props.component.$slots[_props.name];
                 // render the component slot if available
-                typeof props.component.$slots[_props.name] === "function"
-                    ? props.component.$slots[_props.name]!(props.props)
+                return typeof _slot === "function"
+                    ? _slot(props.props)
                     : // render the default if no component slot override is available
                       typeof slots.default === "function"
                       ? slots.default()
                       : undefined;
+            };
             if (typeof _props.tag === "string") {
                 // Vue prefers components' children to be passed as functions,
                 // but native elements' children can't be passed that way.

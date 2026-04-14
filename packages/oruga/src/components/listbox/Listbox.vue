@@ -265,8 +265,8 @@ function updateSelectedItems(items: ListItem<T>[]): void {
 function selectItem(item: ListItem<T>, selection: boolean = true): void {
     if (!props.selectable) return;
 
-    const value = item.data.value!;
-    if (selection) emits("select", value);
+    const value = item.data.value;
+    if (selection) emits("select", value as T);
 
     // set selected option
     if (isTrueish(props.multiple)) {
@@ -523,7 +523,7 @@ if (!props.backendFiltering) {
             const isVisible =
                 typeof props.filter === "function"
                     ? // call filter function if available
-                      props.filter(item.data.value!, toValue(filterValue))
+                      props.filter(item.data.value as T, toValue(filterValue))
                     : // else check filter value matches item value
                       item.data.matches(toValue(filterValue));
 

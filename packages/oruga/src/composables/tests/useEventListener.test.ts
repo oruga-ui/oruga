@@ -93,7 +93,9 @@ describe("useEventListener test", () => {
         test(`should listen event`, async () => {
             useEventListener(target, "click", listener, { immediate: true });
             vi.runAllTimers();
-            target.value!.dispatchEvent(new MouseEvent("click"));
+            expect(target.value).toBeDefined();
+            if (target.value)
+                target.value.dispatchEvent(new MouseEvent("click"));
 
             await nextTick();
 
@@ -107,7 +109,9 @@ describe("useEventListener test", () => {
 
             stop();
 
-            target.value!.dispatchEvent(new MouseEvent("click"));
+            expect(target.value).toBeDefined();
+            if (target.value)
+                target.value.dispatchEvent(new MouseEvent("click"));
 
             await nextTick();
 
@@ -124,7 +128,9 @@ describe("useEventListener test", () => {
 
             await scope.stop();
 
-            target.value!.dispatchEvent(new MouseEvent("click"));
+            expect(target.value).toBeDefined();
+            if (target.value)
+                target.value.dispatchEvent(new MouseEvent("click"));
 
             await nextTick();
 

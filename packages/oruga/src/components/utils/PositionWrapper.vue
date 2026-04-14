@@ -133,8 +133,12 @@ onBeforeUnmount(() => removeHandler());
 /** add event listener */
 function addHandler(): void {
     if (isClient && !scrollingParent.value && contentRef.value) {
+        const el = unrefElement(contentRef);
+        if (!el) return;
+
         // get parent container
-        scrollingParent.value = getScrollingParent(unrefElement(contentRef)!);
+        scrollingParent.value = getScrollingParent(el);
+
         // set event listener
         if (
             scrollingParent.value &&
@@ -230,7 +234,10 @@ function updatePositioning(): void {
 /** calculate best position if auto */
 function getAutoPosition(): string {
     let bestPosition = props.defaultPosition;
-    if (!props.trigger || !contentRef.value) return bestPosition;
+    const contentEl = unrefElement(contentRef);
+    const triggerEl = unrefElement(props.trigger);
+
+    if (!contentEl || !triggerEl) return bestPosition;
     if (!scrollingParent.value) return bestPosition;
 
     // get viewport from container
@@ -241,8 +248,8 @@ function getAutoPosition(): string {
         scrollingParent.value.clientHeight,
     );
 
-    const contentRect = unrefElement(contentRef)!.getBoundingClientRect();
-    const triggerRect = unrefElement(props.trigger).getBoundingClientRect();
+    const contentRect = contentEl.getBoundingClientRect();
+    const triggerRect = triggerEl.getBoundingClientRect();
 
     // detect auto position
     const triggerAnchors = anchors(triggerRect);

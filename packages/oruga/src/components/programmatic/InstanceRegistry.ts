@@ -44,7 +44,7 @@ export default class InstanceRegistry<T = ComponentInternalInstance> {
     }
 
     /** Call a function for every registered active instance. */
-    walk(callback: (value: T) => boolean | void): void {
+    walk(callback: (value: T) => boolean): void {
         // Walk a copy of the array so that the callback is allowed to remove the instance
         this.entries = [...this.entries].filter((e) => {
             const ret = callback(e);

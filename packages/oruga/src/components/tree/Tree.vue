@@ -241,8 +241,8 @@ function updateSelectedItems(items: TreeItem<T>[]): void {
 function selectItem(item: TreeItem<T>, selection: boolean = true): void {
     if (!props.selectable) return;
 
-    const value = item.data.value!;
-    if (selection) emits("select", value);
+    const value = item.data.value;
+    if (selection) emits("select", value as T);
 
     // set selected option
     if (isTrueish(props.multiple)) {

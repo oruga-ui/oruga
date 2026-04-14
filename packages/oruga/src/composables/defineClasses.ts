@@ -125,7 +125,7 @@ export function defineClasses(
         function getClassBind(): ClassBinding {
             // compute class based on definition parameter
             const computedClass = computeClass(
-                vm!,
+                vm,
                 className,
                 defaultClass,
                 toValue(suffix) || undefined,
@@ -195,11 +195,16 @@ export function defineClasses(
  * Compute a class by a field name
  */
 function computeClass(
-    vm: ComponentInternalInstance,
+    vm: ComponentInternalInstance | null,
     field: string,
     defaultValue: string,
     suffix = "",
 ): string {
+    if (!vm)
+        throw new Error(
+            "computeClass must be called with an active component instance.",
+        );
+
     // get component instance props
     const props = getProps(vm);
 
@@ -228,6 +233,7 @@ function computeClass(
 
     // --- Class Definition ---
 
+    // eslint-disable-next-line no-useless-assignment
     let instanceClassString: string | undefined = undefined;
     let configClassString: string | undefined = undefined;
     let defaultClassString: string | undefined = undefined;

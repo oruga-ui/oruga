@@ -443,7 +443,7 @@ function close(event: Event): void {
  *   3. Close the dropdown.
  */
 function selectItem(item: DropdownChildItem<T>, event?: Event): void {
-    const value = item.data!.value!;
+    const value = item.data.value;
     emits("select", value);
 
     if (props.selectable) {
