@@ -49,7 +49,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vite build",
+    "build": "vite build",
     "build:watch": "(npm link || true) && vite build --watch",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -75,7 +75,6 @@
     "core-js": "3.49.0",
     "jest-axe": "^10.0.0",
     "jsdom": "^29.0.1",
-    "rimraf": "^6.1.3",
     "typescript": "^5.9.3",
     "vite": "^8.0.6",
     "vite-plugin-dts": "^4.5.4",
