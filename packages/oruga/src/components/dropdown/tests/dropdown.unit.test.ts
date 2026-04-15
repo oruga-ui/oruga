@@ -101,7 +101,7 @@ describe("ODropdown tests", () => {
 
         expect(documentDummyListener).toHaveBeenCalledTimes(1);
         // remove scroll listener
-        expect(windowDummyListener).toHaveBeenCalledWith(
+        expect(documentDummyListener).toHaveBeenCalledWith(
             "scroll",
             expect.any(Function),
         );
