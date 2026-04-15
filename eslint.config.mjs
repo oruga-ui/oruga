@@ -74,6 +74,7 @@ export default defineConfigWithVueTs([
       "@typescript-eslint/ban-ts-comment": "warn",
       "@typescript-eslint/explicit-function-return-type": "warn",
       // "@typescript-eslint/await-thenable": "off",
+      "@typescript-eslint/no-floating-promises": "off",
 
       // Vue
       "vue/padding-line-between-blocks": ["error", "always"],
