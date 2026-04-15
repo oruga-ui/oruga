@@ -133,7 +133,7 @@ function selectItem(event: Event): void {
     isActive.value = !isActive.value;
     if (parent.value.accordion) isExpanded.value = isActive.value;
     parent.value.selectItem(isActive.value ? item.value : undefined);
-    emits("click", props.value as T, event);
+    emits("click", props.value, event);
 }
 
 function triggerReset(childs?: ProviderItem<MenuItemComponent<T>>[]): void {

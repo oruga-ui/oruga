@@ -412,7 +412,7 @@ const { childItems } = useProviderParent<TableColumnComponent<T>>({
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
     if (!childItems.value.length) return [];
     return childItems.value.map((columnItem) => {
-        const column = toValue(columnItem.data!);
+        const column = toValue(columnItem.data);
 
         // create additional th attrs data
         let thAttrsData =
@@ -670,10 +670,10 @@ function isColumnSorted(column: TableColumnItem<T>): boolean {
 }
 
 // calculate default sort on columns change and on initial load
-watch(tableColumns, defaultSort, { immediate: true });
+watch(tableColumns, doDefaultSort, { immediate: true });
 
 /** sort column based on the default-sort prop if not already sorted */
-function defaultSort(): void {
+function doDefaultSort(): void {
     // prevent sort when not columns or already sorted (for example async data)
     if (!tableColumns.value.length || currentSortColumn.value) return;
     if (!props.defaultSort) return;

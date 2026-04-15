@@ -27,7 +27,7 @@ export function useMatchMedia(mobileBreakpoint?: string): {
         throw new Error("component must define the 'configField' option.");
 
     // get mobileBreakpoint width value
-    let width = props.mobileBreakpoint;
+    let width: string | undefined = String(props.mobileBreakpoint);
     if (!width) {
         const defaultWidth = getOption(`mobileBreakpoint`, mobileBreakpoint);
         width = getOption(`${componentKey}.mobileBreakpoint`, defaultWidth);

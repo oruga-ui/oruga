@@ -84,7 +84,7 @@ export type GlobalConfig = Partial<{
     /** Custom HTML5 validation invalid handler */
     invalidHandler: (
         validatable: ValidatableFormElement,
-        fieldElement?: Element | undefined,
+        fieldElement?: Element,
     ) => void;
     /** You can use transformClasses globally if you need to transform classes for any component. */
     transformClasses: TransformFunction;

@@ -101,7 +101,7 @@ const { parent: parentSubtree } = useProviderChild<SubtreeComponent>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TreeItemComponent<T>>(() => ({
-    value: props.value as T,
+    value: props.value,
     expanded: isExpanded.value,
     isViable: isViable.value,
     hasChildren: hasChildren.value,
@@ -180,7 +180,7 @@ function clickItem(event: Event): void {
         parent.value.selectItem(item.value, !isSelected.value);
     }
 
-    emits("click", props.value as T, event);
+    emits("click", props.value, event);
 }
 
 /** Set the item as focused element. */

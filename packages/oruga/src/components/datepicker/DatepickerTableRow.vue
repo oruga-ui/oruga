@@ -106,19 +106,15 @@ function getWeekNumber(mom): number {
     const doy = props.pickerProps.rulesForFirstWeek;
     const weekOffset = firstWeekOffset(mom.getFullYear(), dow, doy);
     const week = Math.floor((getDayOfYear(mom) - weekOffset - 1) / 7) + 1;
-    let resWeek;
-    let resYear;
+
     if (week < 1) {
-        resYear = mom.getFullYear() - 1;
-        resWeek = week + weeksInYear(resYear, dow, doy);
+        const resYear = mom.getFullYear() - 1;
+        return week + weeksInYear(resYear, dow, doy);
     } else if (week > weeksInYear(mom.getFullYear(), dow, doy)) {
-        resWeek = week - weeksInYear(mom.getFullYear(), dow, doy);
-        resYear = mom.getFullYear() + 1;
+        return week - weeksInYear(mom.getFullYear(), dow, doy);
     } else {
-        resYear = mom.getFullYear();
-        resWeek = week;
+        return week;
     }
-    return resWeek;
 }
 
 function eventsDateMatch(day: Date): DatepickerEvent[] {

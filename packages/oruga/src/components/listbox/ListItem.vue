@@ -112,7 +112,7 @@ function focusItem(): void {
 function clickItem(event: Event): void {
     if (!isSelectable.value) return;
     parent.value.selectItem(item.value, !isSelected.value);
-    emits("click", props.value as T, event);
+    emits("click", props.value, event);
 }
 
 /** Check if a given value matches the item label (startsWith). */

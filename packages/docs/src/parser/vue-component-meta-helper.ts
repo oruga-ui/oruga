@@ -42,7 +42,7 @@ export function createVueComponentMetaChecker(
  *
  * @source https://github.com/storybookjs/storybook/blob/next/code/frameworks/vue3-vite/src/plugins/vue-component-meta.ts
  */
-export async function vueComponentMeta(
+export function vueComponentMeta(
     checker: ComponentMetaChecker,
     componentPath: string,
 ): Promise<MetaSource[] | undefined> {

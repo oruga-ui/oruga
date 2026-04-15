@@ -91,7 +91,7 @@ const isFocused = computed(
 function onClick(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, event);
-    emits("click", props.value as T, event);
+    emits("click", props.value, event);
 }
 
 /** Hover listener, focus the item. */
