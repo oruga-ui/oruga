@@ -16,8 +16,8 @@
     "types": ["vite/client", "./volar.d.ts"],
     "paths": {
       "@/*": ["./src/*"],
-      "@oruga-ui/oruga-next": ["./src/index"],
-      "@docs": ["../docs/src/types"]
+      "@docs": ["../docs/src"],
+      "@oruga-ui/oruga-next": ["./src/index"]
     }
   },
   "include": [

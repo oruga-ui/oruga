@@ -46,7 +46,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.4.0",
     "@tsconfig/node24": "^24.0.4",
-    "@types/node": "^24.11.0",
+    "@types/node": "^24.12.2",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.9.1",

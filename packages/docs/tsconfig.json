@@ -1,7 +1,6 @@
 {
   "extends": ["@tsconfig/node24/tsconfig.json", "@vue/tsconfig/tsconfig.json"],
   "compilerOptions": {
-    "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "skipLibCheck": true,
     "noImplicitThis": false,
@@ -23,8 +22,7 @@
     // include docs generation files
     "src/**/*",
     // include lib files
-    "../oruga/src/**/*.ts",
-    "../oruga/src/**/*.vue"
+    "../oruga/src/**/*",
   ],
   "exclude": ["../oruga/src/__tests__/**", "../oruga/src/**/*.test.ts"]
 }

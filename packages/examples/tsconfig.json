@@ -1,7 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "composite": true,
     "sourceMap": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "importHelpers": true,
@@ -17,11 +16,9 @@
     }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.vue",
+    "src/**/*",
     // include lib code
-    "../oruga/src/**/*.ts",
-    "../oruga/src/**/*.vue",
+    "../oruga/src/**/*",
     // include docs components
     "../docs/.vitepress/theme/components/ExampleViewer.vue"
   ],
