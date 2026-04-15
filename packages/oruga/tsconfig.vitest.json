@@ -6,7 +6,7 @@
     "skipLibCheck": true,
 
     // override types with node extension
-    "types": ["node", "vite/client"]
+    "types": ["node", "jsdom", "vite/client"]
   },
   "exclude": [
     // exclude examples code

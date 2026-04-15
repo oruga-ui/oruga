@@ -3,7 +3,6 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "skipLibCheck": true,
-    "noImplicitThis": false,
     "noImplicitAny": false,
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,

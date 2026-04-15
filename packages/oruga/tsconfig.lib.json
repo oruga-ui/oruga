@@ -8,7 +8,6 @@
     "sourceMap": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
     "importHelpers": true,
-    "noImplicitThis": false,
     "noImplicitAny": false,
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
