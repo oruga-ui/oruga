@@ -22,7 +22,7 @@ if (!fileExist(path.resolve(__dirname, componentDirectory)))
 console.log("Creating vue-component-meta checker...");
 // create component meta checker
 const checker = createChecker(
-    path.resolve(__dirname, "./packages/oruga/tsconfig.app.json"),
+    path.resolve(__dirname, "./packages/oruga/tsconfig.lib.json"),
     { printer: { newLine: 1 } },
 );
 
