@@ -28,7 +28,7 @@ const SimpleAutocomplete = defineComponent(() => {
             {
                 default: () =>
                     h(OAutocomplete, {
-                        modelValue: name,
+                        modelValue: name.value,
                         "onUpdate:modelValue": (val) => {
                             name.value = val as string;
                         },
