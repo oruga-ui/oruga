@@ -2,7 +2,8 @@
 import { useTemplateRef, ref, computed, watch } from "vue";
 import DefaultTheme from "vitepress/theme";
 import ThemeSelector from "../components/ThemeSelector.vue";
-import { useSidebar } from "vitepress/dist/client/theme-default/composables/sidebar.ts";
+// @ts-expect-error types not found
+import { useSidebar } from "vitepress/dist/client/theme-default/composables/sidebar";
 import { useOruga } from "@oruga-ui/oruga-next";
 import type { ThemeConfig } from "@docs";
 
