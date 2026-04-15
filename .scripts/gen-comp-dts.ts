@@ -31,15 +31,12 @@ declare module "vue" {
 export {};
 `;
 
-    fs.writeFileSync(path.resolve(__dirname, file), code, { encoding: "utf8" });
+    fs.writeFileSync(file, code, { encoding: "utf8" });
 
     console.log(`File '${file}' generated.`);
 }
 
-// generate export types volar file
-generateComponentsType("@oruga-ui/oruga-next", "./packages/oruga/volar.d.ts");
-// generate main package types volar file
-generateComponentsType(
-    "../oruga/src/components",
-    "./packages/oruga/components.d.ts",
-);
+const file = path.resolve(__dirname, "./packages/oruga/components.d.ts");
+
+// generate export component types file
+generateComponentsType("@oruga-ui/oruga-next", file);
