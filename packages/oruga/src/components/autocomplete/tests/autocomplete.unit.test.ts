@@ -366,6 +366,8 @@ describe("OAutocomplete tests", () => {
             await input.setValue(OPTIONS[2]);
             vi.runAllTimers(); // await debounce input handler
 
+            await nextTick(); // await child component rendering
+
             // check that there are no out filtered elements
             optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
             expect(optionElements).toHaveLength(OPTIONS.length);
@@ -398,6 +400,8 @@ describe("OAutocomplete tests", () => {
 
             await input.setValue("j");
             vi.runAllTimers(); // await debounce input handler
+
+            await nextTick(); // await child component rendering
 
             // check that there are no out filtered elements
             optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
