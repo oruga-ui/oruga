@@ -36,7 +36,7 @@ describe("OInput tests", () => {
 
         const value = "some value";
         await input.setValue(value);
-        await vi.runAllTimers(); // await debounce timer
+        vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
@@ -137,7 +137,7 @@ describe("OInput tests", () => {
         expect(input.attributes("readonly")).toBe("");
     });
 
-    test("expands input when expanded property is passed", async () => {
+    test("expands input when expanded property is passed", () => {
         const wrapper = mount(OInput, { props: { expanded: true } });
 
         expect(wrapper.classes()).toContain("o-input--expanded");
@@ -184,7 +184,7 @@ describe("OInput tests", () => {
 
         await input.setValue("bar");
         await input.trigger("blur");
-        await vi.runAllTimers(); // await debounce timer
+        vi.runAllTimers(); // await debounce timer
 
         const emits = wrapper.emitted("input");
         expect(emits).toHaveLength(1);
@@ -240,7 +240,7 @@ describe("OInput tests", () => {
         expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
     });
 
-    test("check is empty when null", async () => {
+    test("check is empty when null", () => {
         const wrapper = mount(OInput, {
             // @ts-expect-error special check for null instead of undefined
             props: { modelValue: null },
@@ -255,11 +255,12 @@ describe("OInput tests", () => {
         const wrapper = mount(OInput);
 
         const input = wrapper.find("input");
-        input.element.focus = vi.fn();
+        const dummyFocus = vi.fn();
+        input.element.focus = dummyFocus;
 
         wrapper.vm.focus();
         await nextTick(() => {
-            expect(input.element.focus).toHaveBeenCalled();
+            expect(dummyFocus).toHaveBeenCalled();
         });
     });
 });

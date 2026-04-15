@@ -433,10 +433,9 @@ describe("OTable tests", () => {
             let bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(2); // Jesse and João
 
-            wrapper.setProps({
+            await wrapper.setProps({
                 data: [...data, { id: 6, name: "Justin" }],
             });
-            await nextTick();
 
             bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(3); // Jesse, João and Justin

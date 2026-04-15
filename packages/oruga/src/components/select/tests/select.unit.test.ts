@@ -157,7 +157,7 @@ describe("OSelect tests", () => {
         expect(select.attributes("disabled")).toBeDefined();
     });
 
-    test("expands input when expanded property is passed", async () => {
+    test("expands input when expanded property is passed", () => {
         const wrapper = mount(OSelect, {
             props: { expanded: true },
         });
@@ -189,11 +189,12 @@ describe("OSelect tests", () => {
         const wrapper = mount(OSelect);
 
         const select = wrapper.find("select");
-        select.element.focus = vi.fn();
+        const dummyFocus = vi.fn();
+        select.element.focus = dummyFocus;
 
         wrapper.vm.focus();
         await nextTick(() => {
-            expect(select.element.focus).toHaveBeenCalled();
+            expect(dummyFocus).toHaveBeenCalled();
         });
     });
 

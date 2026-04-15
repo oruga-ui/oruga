@@ -38,7 +38,7 @@ describe("useEventListener test", () => {
     describe("given event", () => {
         const event = "click";
 
-        test("should add listener", async () => {
+        test("should add listener", () => {
             stop = useEventListener(target, event, listener, {
                 immediate: true,
             });
@@ -116,13 +116,13 @@ describe("useEventListener test", () => {
 
         test(`should auto stop listening event`, async () => {
             const scope = effectScope();
-            await scope.run(async () => {
+            scope.run(() => {
                 useEventListener(target, "click", listener, {
                     immediate: true,
                 });
             });
 
-            await scope.stop();
+            scope.stop();
 
             target.value!.dispatchEvent(new MouseEvent("click"));
 

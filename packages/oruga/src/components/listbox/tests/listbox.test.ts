@@ -79,7 +79,7 @@ describe("OListbox tests", () => {
         });
     });
 
-    test("render header and footer correctly", async () => {
+    test("render header and footer correctly", () => {
         const wrapper = mount(OListbox, {
             slots: {
                 header: "<h1 class='header'>SLOT HEADER</h1>",
@@ -100,7 +100,7 @@ describe("OListbox tests", () => {
                 options,
                 modelValue: options[2].value,
                 "onUpdate:modelValue": (modelValue) => {
-                    wrapper.setProps({ modelValue });
+                    void wrapper.setProps({ modelValue });
                 },
             },
         });
@@ -151,7 +151,7 @@ describe("OListbox tests", () => {
             );
         });
 
-        test("handle options as primitves correctly", async () => {
+        test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
 
             const wrapper = mount(OListbox, { props: { options } });
@@ -167,7 +167,7 @@ describe("OListbox tests", () => {
             });
         });
 
-        test("handle options as object correctly", async () => {
+        test("handle options as object correctly", () => {
             const options: OptionsProp = {
                 flint: "Flint",
                 silver: "Silver",
@@ -190,7 +190,7 @@ describe("OListbox tests", () => {
             });
         });
 
-        test("handle options as options array correctly", async () => {
+        test("handle options as options array correctly", () => {
             const options: ListboxOptions<string | number> = [
                 { label: "Flint", value: "flint" },
                 { label: "Silver", value: "silver", disabled: true },
@@ -215,7 +215,7 @@ describe("OListbox tests", () => {
             });
         });
 
-        test("handle grouped options correctly", async () => {
+        test("handle grouped options correctly", () => {
             const options: ListboxOptions<string | number | object> = [
                 {
                     label: "Black Sails",
@@ -460,7 +460,7 @@ describe("OListbox tests", () => {
     });
 
     describe("test filterable", () => {
-        test("should have correct custom icon", async () => {
+        test("should have correct custom icon", () => {
             const wrapper = mount(OListbox, {
                 props: {
                     options,

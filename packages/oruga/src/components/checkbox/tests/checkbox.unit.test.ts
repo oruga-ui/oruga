@@ -128,11 +128,12 @@ describe("OCheckbox tests", () => {
         const wrapper = mount(OCheckbox);
 
         const input = wrapper.find("input");
-        input.element.focus = vi.fn();
+        const dummyFocus = vi.fn();
+        input.element.focus = dummyFocus;
 
         wrapper.vm.focus();
         await nextTick(() => {
-            expect(input.element.focus).toHaveBeenCalled();
+            expect(dummyFocus).toHaveBeenCalled();
         });
     });
 });

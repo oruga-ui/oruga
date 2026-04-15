@@ -150,11 +150,12 @@ describe("OSwitch tests", () => {
         const wrapper = mount(OSwitch);
 
         const input = wrapper.find("input");
-        input.element.focus = vi.fn();
+        const dummyFocus = vi.fn();
+        input.element.focus = dummyFocus;
 
         wrapper.vm.focus();
         await nextTick(() => {
-            expect(input.element.focus).toHaveBeenCalled();
+            expect(dummyFocus).toHaveBeenCalled();
         });
     });
 });

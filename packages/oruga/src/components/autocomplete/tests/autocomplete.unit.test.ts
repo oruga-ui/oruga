@@ -311,8 +311,10 @@ describe("OAutocomplete tests", () => {
     });
 
     test("reset events before destroy", async () => {
-        document.removeEventListener = vi.fn();
-        window.removeEventListener = vi.fn();
+        const documentDummyListener = vi.fn();
+        const windowDummyListener = vi.fn();
+        document.removeEventListener = documentDummyListener;
+        window.removeEventListener = windowDummyListener;
 
         const wrapper = mount(OAutocomplete, {
             props: { options: OPTIONS },
@@ -321,16 +323,16 @@ describe("OAutocomplete tests", () => {
 
         wrapper.unmount();
 
-        expect(document.removeEventListener).toBeCalledTimes(2);
+        expect(documentDummyListener).toHaveBeenCalledTimes(2);
         // remove scroll listener
-        expect(document.removeEventListener).toBeCalledWith(
+        expect(documentDummyListener).toHaveBeenCalledWith(
             "scroll",
             expect.any(Function),
         );
 
-        expect(window.removeEventListener).toBeCalledTimes(2);
+        expect(windowDummyListener).toHaveBeenCalledTimes(2);
         // remove position listener
-        expect(window.removeEventListener).toBeCalledWith(
+        expect(windowDummyListener).toHaveBeenCalledWith(
             "resize",
             expect.any(Function),
         );
@@ -362,7 +364,7 @@ describe("OAutocomplete tests", () => {
             );
 
             await input.setValue(OPTIONS[2]);
-            await vi.runAllTimers(); // await debounce input handler
+            vi.runAllTimers(); // await debounce input handler
 
             // check that there are no out filtered elements
             optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
@@ -395,7 +397,7 @@ describe("OAutocomplete tests", () => {
             );
 
             await input.setValue("j");
-            await vi.runAllTimers(); // await debounce input handler
+            vi.runAllTimers(); // await debounce input handler
 
             // check that there are no out filtered elements
             optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
@@ -411,7 +413,7 @@ describe("OAutocomplete tests", () => {
     });
 
     describe("clear button", () => {
-        test("clear button does not exist when the search input is empty", async () => {
+        test("clear button does not exist when the search input is empty", () => {
             const wrapper = mount(OAutocomplete, {
                 props: {
                     options: OPTIONS,

@@ -106,7 +106,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(1);
     });
 
-    test("test mounting with custom component correctly", async () => {
+    test("test mounting with custom component correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', 'abc')">Fancy Label</button>`,
         });
@@ -139,7 +139,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(notification).toBeNull();
     });
 
-    test("test close event working correctly", async () => {
+    test("test close event working correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
         });

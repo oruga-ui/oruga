@@ -108,7 +108,7 @@ describe("ProgrammaticComponent tests", () => {
 
         // check promise get called
         const handler = vi.fn();
-        component.promise.then(() => handler());
+        void component.promise.then(() => handler());
         expect(handler).not.toHaveBeenCalled();
 
         component.close(); // call close programmaticaly
@@ -120,10 +120,10 @@ describe("ProgrammaticComponent tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test instance registry is called correctly", async () => {
+    test("test instance registry is called correctly", () => {
         const instanceRegistry = new InstanceRegistry();
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+        expect(instanceRegistry.count()).toBe(0);
 
         const wrapper = mount(ProgrammaticComponent, {
             props: {
@@ -132,10 +132,10 @@ describe("ProgrammaticComponent tests", () => {
             },
         });
 
-        expect(instanceRegistry.entries).toHaveLength(1);
+        expect(instanceRegistry.count()).toBe(1);
 
         wrapper.unmount();
 
-        expect(instanceRegistry.entries).toHaveLength(0);
+        expect(instanceRegistry.count()).toBe(0);
     });
 });

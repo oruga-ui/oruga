@@ -150,7 +150,7 @@ describe("OTree tests", () => {
         expect(items.length).toBe(1);
     });
 
-    test("render correctly with options", async () => {
+    test("render correctly with options", () => {
         const items = [
             { label: "label1", icon: "user" },
             { label: "label2", icon: "mobile" },
@@ -166,9 +166,9 @@ describe("OTree tests", () => {
         expect(itemComps.length).toBe(items.length);
 
         items.forEach((value, idx) => {
-            expect(itemComps[idx]!.attributes("data-oruga")).toBe("tree-item");
-            expect(itemComps[idx]!.text()).toBe(value.label);
-            expect(itemComps[idx]!.classes()).toContain("o-tree__item");
+            expect(itemComps[idx].attributes("data-oruga")).toBe("tree-item");
+            expect(itemComps[idx].text()).toBe(value.label);
+            expect(itemComps[idx].classes()).toContain("o-tree__item");
         });
     });
 
@@ -184,8 +184,8 @@ describe("OTree tests", () => {
         expect(items.length).toBe(17);
 
         items.forEach((value, idx) => {
-            expect(items[idx]!.attributes("data-oruga")).toBe("tree-item");
-            expect(items[idx]!.classes()).toContain("o-tree__item");
+            expect(items[idx].attributes("data-oruga")).toBe("tree-item");
+            expect(items[idx].classes()).toContain("o-tree__item");
         });
     });
 
@@ -227,7 +227,7 @@ describe("OTree tests", () => {
             );
         });
 
-        test("handle options as primitves correctly", async () => {
+        test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
 
             const wrapper = mount(OTree, { props: { options } });
@@ -243,7 +243,7 @@ describe("OTree tests", () => {
             });
         });
 
-        test("handle options as object correctly", async () => {
+        test("handle options as object correctly", () => {
             const options: OptionsProp = {
                 flint: "Flint",
                 silver: "Silver",
@@ -266,7 +266,7 @@ describe("OTree tests", () => {
             });
         });
 
-        test("handle options as options array correctly", async () => {
+        test("handle options as options array correctly", () => {
             const options: TreeOptions<string | number> = [
                 { label: "Flint", value: "flint" },
                 { label: "Silver", value: "silver", disabled: true },
@@ -291,7 +291,7 @@ describe("OTree tests", () => {
             });
         });
 
-        test("handle grouped options correctly", async () => {
+        test("handle grouped options correctly", () => {
             const options: TreeOptions<string | number | object> = [
                 {
                     label: "Black Sails",
@@ -719,7 +719,7 @@ describe("OTree tests", () => {
             expect(wrapper.classes("o-tree--disabled")).toBeTruthy();
         });
 
-        test("react accordingly when item has disabled prop", async () => {
+        test("react accordingly when item has disabled prop", () => {
             const items: TreeOptions<string> = [
                 { label: "label1", disabled: true },
                 { label: "label2", disabled: false },

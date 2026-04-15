@@ -34,9 +34,9 @@ describe("ODropdown tests", () => {
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
         options.forEach((option, idx) => {
-            expect(items[idx]!.attributes("data-oruga")).toBe("dropdown-item");
-            expect(items[idx]!.classes("o-dropdown__item")).toBeTruthy();
-            expect(items[idx]!.text()).toBe(option.label);
+            expect(items[idx].attributes("data-oruga")).toBe("dropdown-item");
+            expect(items[idx].classes("o-dropdown__item")).toBeTruthy();
+            expect(items[idx].text()).toBe(option.label);
         });
     });
 
@@ -72,9 +72,9 @@ describe("ODropdown tests", () => {
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
         simpleOptions.forEach((option, idx) => {
-            expect(items[idx]!.attributes("data-oruga")).toBe("dropdown-item");
-            expect(items[idx]!.classes("o-dropdown__item")).toBeTruthy();
-            expect(items[idx]!.text()).toBe(option);
+            expect(items[idx].attributes("data-oruga")).toBe("dropdown-item");
+            expect(items[idx].classes("o-dropdown__item")).toBeTruthy();
+            expect(items[idx].text()).toBe(option);
         });
     });
 
@@ -89,29 +89,31 @@ describe("ODropdown tests", () => {
     });
 
     test("reset events before destroy", async () => {
-        document.removeEventListener = vi.fn();
-        window.removeEventListener = vi.fn();
+        const documentDummyListener = vi.fn();
+        const windowDummyListener = vi.fn();
+        document.removeEventListener = documentDummyListener;
+        window.removeEventListener = windowDummyListener;
 
         const wrapper = mount(ODropdown, { props: { active: true } });
         await setTimeout(); // await event handler get set
 
         wrapper.unmount();
 
-        expect(document.removeEventListener).toBeCalledTimes(1);
+        expect(documentDummyListener).toHaveBeenCalledTimes(1);
         // remove scroll listener
-        expect(document.removeEventListener).toBeCalledWith(
+        expect(windowDummyListener).toHaveBeenCalledWith(
             "scroll",
             expect.any(Function),
         );
 
-        expect(window.removeEventListener).toBeCalledTimes(2);
+        expect(windowDummyListener).toHaveBeenCalledTimes(2);
         // remove position listener
-        expect(window.removeEventListener).toBeCalledWith(
+        expect(windowDummyListener).toHaveBeenCalledWith(
             "resize",
             expect.any(Function),
         );
         // remove click outside listener
-        expect(window.removeEventListener).toBeCalledWith(
+        expect(windowDummyListener).toHaveBeenCalledWith(
             "click",
             expect.any(Function),
             expect.any(Object),
