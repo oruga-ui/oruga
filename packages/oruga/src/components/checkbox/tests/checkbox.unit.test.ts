@@ -68,20 +68,20 @@ describe("OCheckbox tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(true);
+        expect(emits?.[0]).toContainEqual(true);
         expect(wrapper.vm.value).toEqual(true);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits![1]).toContainEqual(false);
+        expect(emits?.[1]).toContainEqual(false);
         expect(wrapper.vm.value).toEqual(false);
     });
 
     test("react accordingly when custom string values are given", async () => {
         const trueValue = "Yes";
         const falseValue = "No";
-        const wrapper = mount<typeof OCheckbox<string>>(OCheckbox, {
+        const wrapper = mount(OCheckbox, {
             props: { trueValue, falseValue },
         });
 
@@ -91,20 +91,20 @@ describe("OCheckbox tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(trueValue);
+        expect(emits?.[0]).toContainEqual(trueValue);
         expect(wrapper.vm.value).toEqual(trueValue);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits![1]).toContainEqual(falseValue);
+        expect(emits?.[1]).toContainEqual(falseValue);
         expect(wrapper.vm.value).toEqual(falseValue);
     });
 
     test("react accordingly when custom object values are given", async () => {
         const trueValue = { a: "a", b: "b" };
         const falseValue = { y: "y", x: "X" };
-        const wrapper = mount<typeof OCheckbox<object>>(OCheckbox, {
+        const wrapper = mount(OCheckbox, {
             props: { modelValue: falseValue, trueValue, falseValue },
         });
 
@@ -114,13 +114,13 @@ describe("OCheckbox tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(trueValue);
+        expect(emits?.[0]).toContainEqual(trueValue);
         expect(wrapper.vm.value).toEqual(trueValue);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits![1]).toContainEqual(falseValue);
+        expect(emits?.[1]).toContainEqual(falseValue);
         expect(wrapper.vm.value).toEqual(falseValue);
     });
 

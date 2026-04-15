@@ -73,7 +73,7 @@ describe("OAutocomplete tests", () => {
         vi.runAllTimers(); // run debounce timers
 
         expect(wrapper.emitted("update:input")).toHaveLength(1);
-        expect(wrapper.emitted("update:input")![0]).toContain(VALUE_TYPED);
+        expect(wrapper.emitted("update:input")?.[0]).toContain(VALUE_TYPED);
 
         await input.trigger("blur");
         expect(wrapper.emitted("blur")).toBeDefined();
@@ -359,9 +359,9 @@ describe("OAutocomplete tests", () => {
                 '[data-oruga="dropdown-item"]',
             );
             expect(optionElements).toHaveLength(OPTIONS.length);
-            optionElements.forEach((option) =>
-                expect(option.attributes("disabled")).toBeUndefined(),
-            );
+            optionElements.forEach((option) => {
+                expect(option.attributes("disabled")).toBeUndefined();
+            });
 
             await input.setValue(OPTIONS[2]);
             vi.runAllTimers(); // await debounce input handler
@@ -394,9 +394,9 @@ describe("OAutocomplete tests", () => {
                 '[data-oruga="dropdown-item"]',
             );
             expect(optionElements).toHaveLength(OPTIONS.length);
-            optionElements.forEach((option) =>
-                expect(option.attributes("disabled")).toBeUndefined(),
-            );
+            optionElements.forEach((option) => {
+                expect(option.attributes("disabled")).toBeUndefined();
+            });
 
             await input.setValue("j");
             vi.runAllTimers(); // await debounce input handler

@@ -93,7 +93,7 @@ describe("useEventListener test", () => {
         test(`should listen event`, async () => {
             useEventListener(target, "click", listener, { immediate: true });
             vi.runAllTimers();
-            target.value!.dispatchEvent(new MouseEvent("click"));
+            target.value?.dispatchEvent(new MouseEvent("click"));
 
             await nextTick();
 
@@ -107,7 +107,7 @@ describe("useEventListener test", () => {
 
             stop();
 
-            target.value!.dispatchEvent(new MouseEvent("click"));
+            target.value?.dispatchEvent(new MouseEvent("click"));
 
             await nextTick();
 
@@ -124,7 +124,7 @@ describe("useEventListener test", () => {
 
             scope.stop();
 
-            target.value!.dispatchEvent(new MouseEvent("click"));
+            target.value?.dispatchEvent(new MouseEvent("click"));
 
             await nextTick();
 

@@ -188,10 +188,10 @@ describe("OInput tests", () => {
 
         const emits = wrapper.emitted("input");
         expect(emits).toHaveLength(1);
-        expect(emits![0][0]).toBe("bar");
+        expect(emits?.[0][0]).toBe("bar");
         expect(wrapper.emitted("blur")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")![0][0]).toBe("bar");
+        expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe("bar");
         expect(wrapper.props("modelValue")).toBe("bar");
     });
 

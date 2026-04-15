@@ -206,9 +206,9 @@ describe("OTree tests", () => {
             const items = wrapper.findAll('[data-oruga="tree-item"]');
             expect(items.length).toBe(options.length);
 
-            items.forEach((item, index) =>
-                expect(item.text()).toEqual(options[index].label),
-            );
+            items.forEach((item, index) => {
+                expect(item.text()).toEqual(options[index].label);
+            });
 
             const itemLabel = items[1].find(".o-tree__item-label");
             expect(itemLabel.exists()).toBeTruthy();
@@ -218,11 +218,11 @@ describe("OTree tests", () => {
             expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
 
             expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toStrictEqual(
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toStrictEqual(
                 options[1].value,
             );
             expect(wrapper.emitted("select")).toHaveLength(1);
-            expect(wrapper.emitted("select")![0][0]).toStrictEqual(
+            expect(wrapper.emitted("select")?.[0][0]).toStrictEqual(
                 options[1].value,
             );
         });
@@ -560,11 +560,11 @@ describe("OTree tests", () => {
             expect(items[2].classes("o-tree__item--selected")).toBeTruthy();
 
             expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toBe(
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe(
                 options[2].value,
             );
             expect(wrapper.emitted("select")).toHaveLength(1);
-            expect(wrapper.emitted("select")![0][0]).toBe(options[2].value);
+            expect(wrapper.emitted("select")?.[0][0]).toBe(options[2].value);
         });
 
         test("react accordingly when item is clicked without selectable", async () => {
@@ -614,7 +614,9 @@ describe("OTree tests", () => {
             expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
 
             expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toBe(undefined);
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe(
+                undefined,
+            );
             expect(wrapper.emitted("select")).toBeUndefined();
         });
 
@@ -646,10 +648,12 @@ describe("OTree tests", () => {
             expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
 
             expect(wrapper.emitted("select")).toHaveLength(1);
-            expect(wrapper.emitted("select")![0]).toContain(options[0].value);
+            expect(wrapper.emitted("select")?.[0]).toContain(options[0].value);
             expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toContain(
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toHaveLength(
+                1,
+            );
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toContain(
                 options[0].value,
             );
 
@@ -663,13 +667,15 @@ describe("OTree tests", () => {
             expect(items[2].classes("o-tree__item--selected")).toBeTruthy();
 
             expect(wrapper.emitted("select")).toHaveLength(2);
-            expect(wrapper.emitted("select")![1]).toContain(options[2].value);
+            expect(wrapper.emitted("select")?.[1]).toContain(options[2].value);
             expect(wrapper.emitted("update:modelValue")).toHaveLength(2);
-            expect(wrapper.emitted("update:modelValue")![1][0]).toHaveLength(2);
-            expect(wrapper.emitted("update:modelValue")![1][0]).toContain(
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toHaveLength(
+                2,
+            );
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toContain(
                 options[0].value,
             );
-            expect(wrapper.emitted("update:modelValue")![1][0]).toContain(
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toContain(
                 options[2].value,
             );
 
@@ -684,11 +690,13 @@ describe("OTree tests", () => {
 
             expect(wrapper.emitted("select")).toHaveLength(2);
             expect(wrapper.emitted("update:modelValue")).toHaveLength(3);
-            expect(wrapper.emitted("update:modelValue")![2][0]).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![2][0]).not.toContain(
+            expect(wrapper.emitted("update:modelValue")?.[2][0]).toHaveLength(
+                1,
+            );
+            expect(wrapper.emitted("update:modelValue")?.[2][0]).not.toContain(
                 options[0].value,
             );
-            expect(wrapper.emitted("update:modelValue")![2][0]).toContain(
+            expect(wrapper.emitted("update:modelValue")?.[2][0]).toContain(
                 options[2].value,
             );
         });
@@ -703,15 +711,15 @@ describe("OTree tests", () => {
             const items = wrapper.findAll(".o-tree__item");
             expect(items.length).toBe(options.length);
 
-            items.forEach((item) =>
-                expect(item.classes("o-tree__item--selected")).toBeFalsy(),
-            );
+            items.forEach((item) => {
+                expect(item.classes("o-tree__item--selected")).toBeFalsy();
+            });
 
             await items[0].trigger("click");
 
-            items.forEach((item) =>
-                expect(item.classes("o-tree__item--selected")).toBeFalsy(),
-            );
+            items.forEach((item) => {
+                expect(item.classes("o-tree__item--selected")).toBeFalsy();
+            });
 
             expect(wrapper.emitted("update:modelValue")).toBeUndefined();
             expect(wrapper.emitted("select")).toBeUndefined();
