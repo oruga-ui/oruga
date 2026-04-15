@@ -19,7 +19,7 @@
       "@/*": ["./src/*"],
       // path used by inspector files
       "@docs": ["../docs/src/types"],
-      // path used by examples files
+      // path used by example files
       "@oruga-ui/oruga-next": ["./src/index"]
     }
   },

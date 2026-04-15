@@ -21,8 +21,6 @@
     ".vitepress/**/*",
     // include docs generation files
     "src/**/*",
-    // include lib files
-    "../oruga/src/**/*",
   ],
   "exclude": ["../oruga/src/__tests__/**", "../oruga/src/**/*.test.ts"]
 }
