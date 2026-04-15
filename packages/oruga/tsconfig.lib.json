@@ -15,8 +15,11 @@
 
     "types": ["vite/client", "./components.d.ts"],
     "paths": {
+      // path used by lib files 
       "@/*": ["./src/*"],
-      "@docs": ["../docs/src"],
+      // path used by inspector files
+      "@docs": ["../docs/src/types"],
+      // path used by examples files
       "@oruga-ui/oruga-next": ["./src/index"]
     }
   },
