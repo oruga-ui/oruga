@@ -10,7 +10,7 @@ const __dirname = process.cwd();
 const componentDirectory = "./packages/oruga/src/components";
 
 if (!fileExist(path.resolve(__dirname, componentDirectory)))
-    throw new Error("Path not exist: " + componentDirectory);
+    throw new Error("Path does  not exist: " + componentDirectory);
 
 // get all vue components
 const globalComponents = getComponents(componentDirectory);

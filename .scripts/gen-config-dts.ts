@@ -17,7 +17,10 @@ const __dirname = process.cwd();
 const componentDirectory = "./packages/oruga/src/components";
 
 if (!fileExist(path.resolve(__dirname, componentDirectory)))
-    throw new Error("Path not exist: " + componentDirectory);
+    throw new Error("Path does not exist: " + componentDirectory);
+
+// get all component folders
+const component_folders = getFolders(componentDirectory);
 
 console.log("Creating vue-component-meta checker...");
 // create component meta checker
@@ -26,11 +29,9 @@ const checker = createChecker(
     { printer: { newLine: 1 } },
 );
 
-// get all component folders
-const component_folders = getFolders(componentDirectory);
-
 function generateConfigType(filePath: string): void {
     console.log(`Processing components...`);
+
     const components = component_folders
         .map((folder) => {
             const name = folder.toLowerCase();
@@ -148,7 +149,7 @@ function generateConfigType(filePath: string): void {
 } from "@/types";
 
 // Auto generated component theme config declarations
-declare module "../index" {
+declare module "./index" {
     interface OrugaConfig {
         ${components.map(
             ({ name, props }) =>
