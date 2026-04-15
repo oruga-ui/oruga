@@ -9,19 +9,20 @@ const __dirname = process.cwd();
 
 const componentDirectory = "./packages/oruga/src/components";
 
-function generateComponentsType(module: string, file: string): void {
-    if (!fileExist(path.resolve(__dirname, componentDirectory)))
-        throw new Error("Path not exist: " + componentDirectory);
+if (!fileExist(path.resolve(__dirname, componentDirectory)))
+    throw new Error("Path not exist: " + componentDirectory);
 
-    const globalComponents = getComponents(componentDirectory);
+// get all vue components
+const globalComponents = getComponents(componentDirectory);
 
+function generateComponentsType(module: string, filePath: string): void {
     const lines = globalComponents
         // add global "O" prefix
         .map((dir) => "O" + dir)
         // convert to type declaration format
         .map((key) => `${key}: (typeof import("${module}"))["${key}"];`);
 
-    const code = `// Auto generated component declarations
+    const code = `// Auto generated global component declarations
 declare module "vue" {
     export interface GlobalComponents {
         ${lines.join(`
@@ -31,12 +32,14 @@ declare module "vue" {
 export {};
 `;
 
+    const file = path.resolve(__dirname, filePath);
     fs.writeFileSync(file, code, { encoding: "utf8" });
 
     console.log(`File '${file}' generated.`);
 }
 
-const file = path.resolve(__dirname, "./packages/oruga/components.d.ts");
-
-// generate export component types file
-generateComponentsType("@oruga-ui/oruga-next", file);
+// generate global component types file
+generateComponentsType(
+    "@oruga-ui/oruga-next",
+    "./packages/oruga/src/components.d.ts",
+);

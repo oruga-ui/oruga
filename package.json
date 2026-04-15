@@ -32,7 +32,7 @@
     "test:ts": "npm run test:ts --workspace @oruga-ui/oruga-next",
     "gen": "run-s gen:*",
     "gen:volar": "tsx .scripts/gen-comp-dts.ts",
-    "gen:types": "tsx .scripts/gen-config-type.ts",
+    "gen:types": "tsx .scripts/gen-config-dts.ts",
     "gen:docs": "npm run docs:gen --workspace @oruga-ui/docs-next",
     "version": "tsx .scripts/sync-version.ts && npm i",
     "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",

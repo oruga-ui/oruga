@@ -1,8 +1,8 @@
 import { createOruga, type OrugaComponentPlugin } from "./utils/config";
 
 // export all types
-export * from "./types";
-export * from "./components/types";
+export type * from "./types";
+export type * from "./config";
 
 // export all vue components
 export * from "./components";

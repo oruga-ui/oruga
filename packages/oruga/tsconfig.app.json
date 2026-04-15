@@ -16,7 +16,7 @@
     "noUncheckedIndexedAccess": false,
 
     "baseUrl": ".",
-    "types": ["vite/client", "./components.d.ts"],
+    "types": ["vite/client", "./src/components.d.ts"],
     "paths": {
       "@/*": ["src/*"],
       "@docs": ["../docs/src/types"],

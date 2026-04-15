@@ -18,13 +18,12 @@
     },
     "./*": "./dist/*",
     "./volar": {
-      "types": "./components.d.ts"
+      "types": "./dist/components.d.ts"
     }
   },
   "files": [
     "dist",
     "src",
-    "components.d.ts",
     "LICENSE",
     "README.md"
   ],
