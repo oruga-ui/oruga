@@ -5,16 +5,22 @@
   ],
   "compilerOptions": {
     "composite": true,
-    "sourceMap": true,
+    // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking
+    // specified here to keep it out of the root directory
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
-    "importHelpers": true,
-    "noImplicitAny": false,
+
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
+    "sourceMap": true,
+    "importHelpers": true,
+    "noImplicitAny": false,
+
     "types": ["vite/client", "./components.d.ts"],
+
+    // path mapping for cleaner imports
     "paths": {
-      // path used by lib files 
+      // Path used by lib files .
       "@/*": ["./src/*"],
       // path used by inspector files
       "@docs": ["../docs/src/types"],

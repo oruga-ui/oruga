@@ -1,14 +1,20 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "sourceMap": true,
+    // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking
+    // specified here to keep it out of the root directory
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
-    "importHelpers": true,
-    "noImplicitAny": false,
+
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
+    "sourceMap": true,
+    "importHelpers": true,
+    "noImplicitAny": false,
+
     "types": ["node", "vite/client"],
+
+    // path mapping for cleaner imports
     "paths": {
       "@/*": ["../oruga/src/*"],
       "@oruga-ui/oruga-next": ["../oruga/src/index"]
