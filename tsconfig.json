@@ -19,5 +19,5 @@
     // include Node.js types and avoid accidentally including other `@types/*` packages
     "types": ["node"]
   },
-  "include": ["*", "**/*", ".*/*"]
+  "include": ["*.config.*", "**/*.config.*", ".*/*"]
 }
