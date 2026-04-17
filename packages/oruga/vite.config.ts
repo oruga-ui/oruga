@@ -22,6 +22,7 @@ export default defineConfig({
             entryRoot: "./src",
             outDir: "./dist/types",
             bundledPackages: ["vue-component-type-helpers"],
+            copyDtsFiles: true,
         }),
     ],
     resolve: {
@@ -48,6 +49,7 @@ export default defineConfig({
         lib: {
             name: "Oruga",
             entry: resolve(__dirname, "src/index.ts"),
+            formats: ["es"],
             fileName: "index",
         },
         rolldownOptions: {

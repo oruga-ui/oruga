@@ -84,7 +84,7 @@ describe("ProgrammaticComponent tests", () => {
 
         const closeEmits = wrapper.emitted("close");
         expect(closeEmits).toHaveLength(1);
-        expect(closeEmits![0][0]).toBe("abc");
+        expect(closeEmits?.[0][0]).toBe("abc");
         const destroyEmits = wrapper.emitted("destroy");
         expect(destroyEmits).toHaveLength(1);
 
@@ -108,7 +108,7 @@ describe("ProgrammaticComponent tests", () => {
 
         // check promise get called
         const handler = vi.fn();
-        component.promise.then(() => handler());
+        void component.promise.then(() => handler());
         expect(handler).not.toHaveBeenCalled();
 
         component.close(); // call close programmaticaly
@@ -120,7 +120,7 @@ describe("ProgrammaticComponent tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test instance registry is called correctly", async () => {
+    test("test instance registry is called correctly", () => {
         const instanceRegistry = new InstanceRegistry();
 
         expect(instanceRegistry.count()).toBe(0);

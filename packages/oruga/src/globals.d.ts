@@ -1,4 +1,4 @@
-// Auto generated component declarations
+// Auto generated global component declarations
 declare module "vue" {
     export interface GlobalComponents {
         OAutocomplete: (typeof import("@oruga-ui/oruga-next"))["OAutocomplete"];

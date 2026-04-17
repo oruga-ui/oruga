@@ -17,7 +17,7 @@ describe("OField tests", () => {
         expect(wrapper.classes("o-field")).toBeTruthy();
     });
 
-    test('react accordingly when "variant" prop is changed dynamically', async () => {
+    test('react accordingly when "variant" prop is changed dynamically', () => {
         const variant = "danger";
         const wrapper = mount(OField, {
             props: { variant },
@@ -65,7 +65,7 @@ describe("OField tests", () => {
             expect(messageDiv.text()).toEqual(message);
         });
 
-        test('react accordingly when "message" is array', async () => {
+        test('react accordingly when "message" is array', () => {
             const message = ["Selected option is wrong", "Option is required"];
             const wrapper = mount(OField, {
                 props: { message },

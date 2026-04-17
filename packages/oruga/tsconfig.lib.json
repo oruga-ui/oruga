@@ -16,7 +16,7 @@
     "importHelpers": true,
     "noImplicitAny": false,
 
-    "types": ["vite/client", "./components.d.ts"],
+    "types": ["vite/client", "./globals.d.ts"],
 
     // path mapping for cleaner imports
     "paths": {

@@ -31,7 +31,7 @@ describe("OPagination tests", () => {
         expect(currentItem.text()).toEqual("5");
     });
 
-    test("should emit change with value of 1 when calling first", async () => {
+    test("should emit change with value of 1 when calling first", () => {
         let wrapper = mount(OPagination, { props: { current: 1, total: 100 } });
         wrapper.vm.first();
         expect(wrapper.emitted()["change"]).toBeUndefined();

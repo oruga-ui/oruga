@@ -157,7 +157,7 @@ describe("OSelect tests", () => {
         expect(select.attributes("disabled")).toBeDefined();
     });
 
-    test("expands input when expanded property is passed", async () => {
+    test("expands input when expanded property is passed", () => {
         const wrapper = mount(OSelect, {
             props: { expanded: true },
         });
@@ -175,13 +175,13 @@ describe("OSelect tests", () => {
         await select.setValue(options[1].value);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContain(options[1].value);
+        expect(emits?.[0]).toContain(options[1].value);
         expect(wrapper.vm.value).toEqual(options[1].value);
 
         await select.setValue(options[2].value);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits![1]).toContain(options[2].value);
+        expect(emits?.[1]).toContain(options[2].value);
         expect(wrapper.vm.value).toEqual(options[2].value);
     });
 
@@ -189,11 +189,12 @@ describe("OSelect tests", () => {
         const wrapper = mount(OSelect);
 
         const select = wrapper.find("select");
-        select.element.focus = vi.fn();
+        const dummyFocus = vi.fn();
+        select.element.focus = dummyFocus;
 
         wrapper.vm.focus();
         await nextTick(() => {
-            expect(select.element.focus).toHaveBeenCalled();
+            expect(dummyFocus).toHaveBeenCalled();
         });
     });
 
@@ -217,29 +218,29 @@ describe("OSelect tests", () => {
         expect(optionValues.length).toBe(options.length);
 
         // check nochting got emmited yet
-        let emit = wrapper.emitted("update:modelValue");
-        expect(emit).toBeUndefined();
+        let emits = wrapper.emitted("update:modelValue");
+        expect(emits).toBeUndefined();
 
         // click one option
         await wrapper.setValue([options[1].value]);
 
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(1);
-        expect(emit![0][0]).toHaveLength(1);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
+        expect(emits?.[0][0]).toHaveLength(1);
 
         // click second option
         await wrapper.setValue([options[1].value, options[3].value]);
 
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(2);
-        expect(emit![1][0]).toHaveLength(2);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(2);
+        expect(emits?.[1][0]).toHaveLength(2);
 
         // click first option again
         await wrapper.setValue([options[1].value]);
 
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(3);
-        expect(emit![2][0]).toHaveLength(1);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(3);
+        expect(emits?.[2][0]).toHaveLength(1);
     });
 
     describe("handle options props correctly", () => {
