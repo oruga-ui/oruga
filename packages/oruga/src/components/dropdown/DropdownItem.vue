@@ -46,7 +46,7 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
-    value: props.value,
+    value: props.value as T,
     label: props.label,
     isViable: isViable.value,
     setHidden,
@@ -67,7 +67,9 @@ function setHidden(hidden: boolean): void {
 }
 
 /** Shows if the item is viable or not (not disabled or hidden). */
-const isViable = computed(() => !isHidden.value && isClickable.value);
+const isViable = computed(
+    () => !isHidden.value && !props.disabled && props.clickable,
+);
 
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
