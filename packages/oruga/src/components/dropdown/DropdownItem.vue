@@ -46,7 +46,7 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
-    value: props.value,
+    value: props.value as T,
     label: props.label,
     isViable: isViable.value,
     setHidden,
@@ -67,7 +67,9 @@ function setHidden(hidden: boolean): void {
 }
 
 /** Shows if the item is viable or not (not disabled or hidden). */
-const isViable = computed(() => !isHidden.value && isClickable.value);
+const isViable = computed(
+    () => !isHidden.value && !props.disabled && props.clickable,
+);
 
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
@@ -83,7 +85,7 @@ const isSelected = computed(() => {
     return isEqual(item.value.data.value, parent.value.selected);
 });
 
-const isFocused = computed(
+const isFocused = computed<boolean>(
     () => item.value.identifier === parent.value.focsuedIdentifier,
 );
 
@@ -91,7 +93,7 @@ const isFocused = computed(
 function onClick(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, event);
-    emits("click", props.value, event);
+    emits("click", providedData.value.value, event);
 }
 
 /** Hover listener, focus the item. */
