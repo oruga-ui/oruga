@@ -8,9 +8,6 @@
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
-    // reset root to include files from other packages
-    "rootDir": "../",
-
     "sourceMap": true,
     "importHelpers": true,
     "noImplicitAny": false,
