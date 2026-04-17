@@ -10,7 +10,7 @@
 
     "noImplicitAny": false,
 
-    // vitepress includes a node and client environments
+    // vitepress includes a node and client environment
     "types": ["node", "vite/client", "vitepress/client"],
 
     // path mapping for cleaner imports
