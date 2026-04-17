@@ -14,13 +14,13 @@ export function useDebounce<A extends Array<unknown>>(
 
     return (...args: A) => {
         if (toValue(ms) <= 0) {
-            fn.apply(this, args);
+            fn(...args);
             return;
         }
 
         const debouncedFunc = (): void => {
             timeout = undefined;
-            fn.apply(this, args);
+            fn(...args);
         };
 
         // clear old timeout

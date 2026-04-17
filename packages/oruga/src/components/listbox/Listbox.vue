@@ -523,7 +523,7 @@ if (!props.backendFiltering) {
             const isVisible =
                 typeof props.filter === "function"
                     ? // call filter function if available
-                      props.filter(item.data.value as T, toValue(filterValue))
+                      props.filter(item.data.value, toValue(filterValue))
                     : // else check filter value matches item value
                       item.data.matches(toValue(filterValue));
 

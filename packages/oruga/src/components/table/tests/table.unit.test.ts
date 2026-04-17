@@ -92,8 +92,10 @@ describe("OTable tests", () => {
         },
     ];
 
+    type TableType = typeof OTable<(typeof data)[number]>;
+
     test("render correctly", async () => {
-        const wrapper = mount<typeof OTable<(typeof data)[number]>>(OTable, {
+        const wrapper = mount<TableType>(OTable, {
             props: { data, columns },
         });
         await nextTick(); // await child component rendering
@@ -121,7 +123,7 @@ describe("OTable tests", () => {
 
         expect(headers).toHaveLength(4);
 
-        const cols = headers.filter((th) => th.find("span"));
+        const cols = headers.filter((th) => th.find("span").exists());
         expect(cols).toHaveLength(4);
 
         expect(cols[0].attributes("style")).toBe(
@@ -154,10 +156,9 @@ describe("OTable tests", () => {
 
     describe("test column props", () => {
         test("test column label", async () => {
-            const wrapper = mount<typeof OTable<(typeof data)[number]>>(
-                OTable,
-                { props: { data, columns } },
-            );
+            const wrapper = mount<TableType>(OTable, {
+                props: { data, columns },
+            });
             await nextTick(); // await child component rendering
 
             const table = wrapper.find("table");
@@ -171,10 +172,9 @@ describe("OTable tests", () => {
         });
 
         test("test column field", async () => {
-            const wrapper = mount<typeof OTable<(typeof data)[number]>>(
-                OTable,
-                { props: { data, columns } },
-            );
+            const wrapper = mount<TableType>(OTable, {
+                props: { data, columns },
+            });
             await nextTick(); // await child component rendering
 
             const table = wrapper.find("table");
@@ -217,10 +217,9 @@ describe("OTable tests", () => {
                 },
             ];
 
-            const wrapper = mount<typeof OTable<(typeof data)[number]>>(
-                OTable,
-                { props: { data, columns } },
-            );
+            const wrapper = mount<TableType>(OTable, {
+                props: { data, columns },
+            });
             await nextTick(); // await child component rendering
 
             const table = wrapper.find("table");
@@ -234,7 +233,7 @@ describe("OTable tests", () => {
 
                 for (let j = 0; j < columns.length; j++) {
                     expect(tds[j].text()).toBe(
-                        columns[j].formatter!(data[i], data[i]),
+                        columns[j].formatter?.(data[i], data[i]),
                     );
                 }
             }
@@ -260,10 +259,9 @@ describe("OTable tests", () => {
                 },
             ];
 
-            const wrapper = mount<typeof OTable<(typeof data)[number]>>(
-                OTable,
-                { props: { data, columns } },
-            );
+            const wrapper = mount<TableType>(OTable, {
+                props: { data, columns },
+            });
             await nextTick(); // await child component rendering
 
             const table = wrapper.find("table");
@@ -433,10 +431,9 @@ describe("OTable tests", () => {
             let bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(2); // Jesse and João
 
-            wrapper.setProps({
+            await wrapper.setProps({
                 data: [...data, { id: 6, name: "Justin" }],
             });
-            await nextTick();
 
             bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(3); // Jesse, João and Justin
@@ -820,23 +817,23 @@ describe("OTable tests", () => {
             const checkboxes = body.findAll("input");
             expect(checkboxes).toHaveLength(data.length);
             // assert no row is checked
-            checkboxes.forEach((checkbox) =>
-                expect(checkbox.element.checked).toBeFalsy(),
-            );
+            checkboxes.forEach((checkbox) => {
+                expect(checkbox.element.checked).toBeFalsy();
+            });
 
             // check checkAll checkbox
             await checkAllCheckbox.setValue(true);
             // assert all rows area are checked
-            checkboxes.forEach((checkbox) =>
-                expect(checkbox.element.checked).toBeTruthy(),
-            );
+            checkboxes.forEach((checkbox) => {
+                expect(checkbox.element.checked).toBeTruthy();
+            });
 
             // decheck checkAll checkbox again
             await checkAllCheckbox.setValue(false);
             // assert no row is checked
-            checkboxes.forEach((checkbox) =>
-                expect(checkbox.element.checked).toBeFalsy(),
-            );
+            checkboxes.forEach((checkbox) => {
+                expect(checkbox.element.checked).toBeFalsy();
+            });
         });
     });
 

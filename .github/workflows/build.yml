@@ -1,9 +1,9 @@
 name: Build Packages
 on:
   push:
-    branches: [develop]
+    branches: [develop, major]
   pull_request:
-    branches: [develop]
+    branches: [develop, major]
 
 jobs:
   build:

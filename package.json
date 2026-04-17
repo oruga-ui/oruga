@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "dev": "run-p build:lib:watch build:docs:watch",
-    "build": "npm run build:lib && npm run build:examples && npm run build:docs",
+    "build": "run-s build:*",
     "build:docs": "npm run docs:build --workspace @oruga-ui/docs-next",
     "build:docs:watch": "npm run docs:dev --workspace @oruga-ui/docs-next",
     "build:lib": "npm run build --workspace @oruga-ui/oruga-next",
@@ -29,10 +29,13 @@
     "test:prettier": "prettier --check .",
     "test": "npm run test --workspace @oruga-ui/oruga-next",
     "test:coverage": "npm run test:coverage --workspace @oruga-ui/oruga-next",
-    "test:ts": "npm run test:ts --workspace @oruga-ui/oruga-next",
-    "gen": "npm run gen:types && npm run gen:volar && npm run gen:docs",
-    "gen:volar": "tsx .scripts/gen-volar-dts.ts",
-    "gen:types": "tsx .scripts/gen-comp-types.ts",
+    "test:ts": "run-s test:ts:*",
+    "test:ts:lib": "npm run test:ts --workspace @oruga-ui/oruga-next",
+    "test:ts:docs": "npm run test:ts --workspace @oruga-ui/docs-next",
+    "test:ts:examples": "npm run test:ts --workspace @oruga-ui/examples",
+    "gen": "run-s gen:*",
+    "gen:volar": "tsx .scripts/gen-globals-dts.ts",
+    "gen:types": "tsx .scripts/gen-config-dts.ts",
     "gen:docs": "npm run docs:gen --workspace @oruga-ui/docs-next",
     "version": "tsx .scripts/sync-version.ts && npm i",
     "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",
@@ -43,8 +46,11 @@
   "devDependencies": {
     "@eslint/compat": "^2.0.5",
     "@eslint/js": "^10.0.1",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.12.2",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.7.0",
+    "@vue/tsconfig": "^0.9.1",
     "conventional-changelog": "^7.2.0",
     "conventional-changelog-conventionalcommits": "9.3.0",
     "eslint": "^10.2.0",
@@ -54,6 +60,7 @@
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.2",
     "replace-in-file": "^8.4.0",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
   }
 }

@@ -86,7 +86,7 @@ describe("OTooltip tests", () => {
             expect(wrapper.emitted("open")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeTruthy();
+            expect(activeEmits?.[0][0]).toBeTruthy();
         });
 
         test("react accordingly when mouse over without trigger", async () => {
@@ -148,7 +148,7 @@ describe("OTooltip tests", () => {
             expect(wrapper.emitted("open")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeTruthy();
+            expect(activeEmits?.[0][0]).toBeTruthy();
         });
 
         test("react accordingly when clicking trigger with disabled", async () => {
@@ -210,7 +210,7 @@ describe("OTooltip tests", () => {
             expect(wrapper.emitted("open")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeTruthy();
+            expect(activeEmits?.[0][0]).toBeTruthy();
         });
 
         test("react accordingly when has focus trigger", async () => {
@@ -251,7 +251,7 @@ describe("OTooltip tests", () => {
             expect(wrapper.emitted("open")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeTruthy();
+            expect(activeEmits?.[0][0]).toBeTruthy();
         });
 
         test("react accordingly when has close on hover leave", async () => {
@@ -274,7 +274,7 @@ describe("OTooltip tests", () => {
             expect(wrapper.emitted("close")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeFalsy();
+            expect(activeEmits?.[0][0]).toBeFalsy();
         });
 
         test("react accordingly when has close on escape", async () => {
@@ -299,7 +299,7 @@ describe("OTooltip tests", () => {
             expect(wrapper.emitted("close")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeFalsy();
+            expect(activeEmits?.[0][0]).toBeFalsy();
         });
 
         test("react accordingly when has close on outside", async () => {
@@ -324,7 +324,7 @@ describe("OTooltip tests", () => {
             expect(wrapper.emitted("close")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeFalsy();
+            expect(activeEmits?.[0][0]).toBeFalsy();
         });
 
         test("react accordingly when clicking outside with closeable false", async () => {

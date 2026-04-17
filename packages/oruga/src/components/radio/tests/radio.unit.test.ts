@@ -68,8 +68,8 @@ describe("ORadio tests", () => {
                 modelValue: model,
                 nativeValue: value1,
                 "onUpdate:modelValue": (modelValue) => {
-                    wrapper1.setProps({ modelValue });
-                    wrapper2.setProps({ modelValue });
+                    void wrapper1.setProps({ modelValue });
+                    void wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -78,8 +78,8 @@ describe("ORadio tests", () => {
                 modelValue: model,
                 nativeValue: value2,
                 "onUpdate:modelValue": (modelValue) => {
-                    wrapper1.setProps({ modelValue });
-                    wrapper2.setProps({ modelValue });
+                    void wrapper1.setProps({ modelValue });
+                    void wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -95,14 +95,14 @@ describe("ORadio tests", () => {
 
         let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(value1);
+        expect(emits?.[0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
         emits = wrapper2.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(value2);
+        expect(emits?.[0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);
         expect(wrapper2.vm.value).toEqual(value2);
     });
@@ -116,8 +116,8 @@ describe("ORadio tests", () => {
                 modelValue: model,
                 nativeValue: value1,
                 "onUpdate:modelValue": (modelValue) => {
-                    wrapper1.setProps({ modelValue });
-                    wrapper2.setProps({ modelValue });
+                    void wrapper1.setProps({ modelValue });
+                    void wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -126,8 +126,8 @@ describe("ORadio tests", () => {
                 modelValue: model,
                 nativeValue: value2,
                 "onUpdate:modelValue": (modelValue) => {
-                    wrapper1.setProps({ modelValue });
-                    wrapper2.setProps({ modelValue });
+                    void wrapper1.setProps({ modelValue });
+                    void wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -142,14 +142,14 @@ describe("ORadio tests", () => {
 
         let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(value1);
+        expect(emits?.[0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
         emits = wrapper2.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(value2);
+        expect(emits?.[0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);
         expect(wrapper2.vm.value).toEqual(value2);
     });
@@ -163,8 +163,8 @@ describe("ORadio tests", () => {
                 modelValue: model,
                 nativeValue: value1,
                 "onUpdate:modelValue": (modelValue) => {
-                    wrapper1.setProps({ modelValue });
-                    wrapper2.setProps({ modelValue });
+                    void wrapper1.setProps({ modelValue });
+                    void wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -173,8 +173,8 @@ describe("ORadio tests", () => {
                 modelValue: model,
                 nativeValue: value2,
                 "onUpdate:modelValue": (modelValue) => {
-                    wrapper1.setProps({ modelValue });
-                    wrapper2.setProps({ modelValue });
+                    void wrapper1.setProps({ modelValue });
+                    void wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -189,14 +189,14 @@ describe("ORadio tests", () => {
 
         let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(value1);
+        expect(emits?.[0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
         emits = wrapper2.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toContainEqual(value2);
+        expect(emits?.[0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);
         expect(wrapper2.vm.value).toEqual(value2);
     });
@@ -205,11 +205,12 @@ describe("ORadio tests", () => {
         const wrapper = mount(ORadio);
 
         const input = wrapper.find("input");
-        input.element.focus = vi.fn();
+        const dummyFocus = vi.fn();
+        input.element.focus = dummyFocus;
 
         wrapper.vm.focus();
         await nextTick(() => {
-            expect(input.element.focus).toHaveBeenCalled();
+            expect(dummyFocus).toHaveBeenCalled();
         });
     });
 });
