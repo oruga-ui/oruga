@@ -670,10 +670,10 @@ function isColumnSorted(column: TableColumnItem<T>): boolean {
 }
 
 // calculate default sort on columns change and on initial load
-watch(tableColumns, doDefaultSort, { immediate: true });
+watch(tableColumns, setDefaultSort, { immediate: true });
 
 /** sort column based on the default-sort prop if not already sorted */
-function doDefaultSort(): void {
+function setDefaultSort(): void {
     // prevent sort when not columns or already sorted (for example async data)
     if (!tableColumns.value.length || currentSortColumn.value) return;
     if (!props.defaultSort) return;

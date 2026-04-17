@@ -116,14 +116,14 @@ export function useInputHandler<T extends ValidatableFormElement>(
 
     /** Focus the underlaying input element. */
     function setFocus(): void {
-        void nextTick(() => {
+        nextTick(() => {
             if (element.value) element.value.focus();
         });
     }
 
     /** Click the underlaying input element. */
     function doClick(): void {
-        void nextTick(() => {
+        nextTick(() => {
             if (element.value) element.value.click();
         });
     }
@@ -158,7 +158,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
     const isValid = ref(true);
 
     function setFieldValidity(variant, message): void {
-        void nextTick(() => {
+        nextTick(() => {
             if (parentField?.value) {
                 // Set type only if not defined
                 if (!parentField.value.props.variant)

@@ -86,7 +86,7 @@ const isSelected = computed(() => {
     return isEqual(item.value.data.value, parent.value.selected);
 });
 
-const isFocused = computed<boolean>(
+const isFocused = computed(
     () => item.value.identifier === parent.value.focsuedIdentifier,
 );
 
