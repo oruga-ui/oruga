@@ -46,6 +46,7 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     value: props.value as T,
     label: props.label,
     isViable: isViable.value,
