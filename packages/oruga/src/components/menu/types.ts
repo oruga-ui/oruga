@@ -12,9 +12,8 @@ export type MenuComponent<T> = {
     resetMenu: (excludedItems?: ProviderItem<MenuItemComponent<T>>[]) => void;
 };
 
-export type MenuItemComponent<T> = Pick<
-    MenuItemProps<T>,
-    "value" | "disabled" | "hidden"
+export type MenuItemComponent<T> = Required<
+    Pick<MenuItemProps<T>, "value" | "disabled" | "hidden">
 > & {
     parent: MenuItemProvider<T> | undefined;
     hasChildren: boolean;
