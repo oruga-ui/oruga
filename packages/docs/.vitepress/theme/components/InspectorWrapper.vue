@@ -15,9 +15,9 @@ const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 const inspectClass = ref<InspectClass>({} as InspectClass);
 
 /** additional data applied to the inspected component */
-const data = ref({});
+const data = ref<Record<string, any>>({});
 /** additional classes applied to the inspected component */
-const classes = ref({});
+const classes = ref<Record<string, any>>({});
 /** applied classed of the HTML element */
 const appliedClasses = ref<string | undefined>();
 

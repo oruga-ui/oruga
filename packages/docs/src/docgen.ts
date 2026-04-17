@@ -61,7 +61,7 @@ export async function run(): Promise<void> {
 
     // create vue-component-meta checker
     const checker = createVueComponentMetaChecker(
-        path.resolve(__dirname, "../oruga/tsconfig.app.json"),
+        path.resolve(__dirname, "../oruga/tsconfig.lib.json"),
     );
 
     // create vue-docgen-api config

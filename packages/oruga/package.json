@@ -52,7 +52,7 @@
     "build:watch": "(npm link || true) && vite build --watch",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ts": "vue-tsc --noEmit --skipLibCheck --project tsconfig.app.json",
+    "test:ts": "vue-tsc --build --noEmit",
     "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {
@@ -62,20 +62,16 @@
     "vue-component-type-helpers": "^3.3.3"
   },
   "devDependencies": {
-    "@tsconfig/node24": "^24.0.4",
     "@types/jest-axe": "^3.5.9",
-    "@types/jsdom": "^28.0.3",
-    "@types/node": "^24.11.0",
+    "@types/jsdom": "^28.0.1",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vitest/browser-playwright": "^4.1.8",
     "@vitest/coverage-v8": "^4.1.8",
     "@vue/test-utils": "^2.4.11",
-    "@vue/tsconfig": "^0.9.1",
-    "core-js": "3.49.0",
+    "core-js": "^3.49.0",
     "jest-axe": "^10.0.0",
     "jsdom": "^29.1.1",
-    "typescript": "^5.9.3",
-    "vite": "^8.0.6",
+    "vite": "^8.0.8",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.1.8",
     "vitest-browser-vue": "^2.1.0",
