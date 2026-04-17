@@ -92,8 +92,10 @@ describe("OTable tests", () => {
         },
     ];
 
+    type TableType = typeof OTable<(typeof data)[number]>;
+
     test("render correctly", async () => {
-        const wrapper = mount(OTable, {
+        const wrapper = mount<TableType>(OTable, {
             props: { data, columns },
         });
         await nextTick(); // await child component rendering
@@ -154,7 +156,9 @@ describe("OTable tests", () => {
 
     describe("test column props", () => {
         test("test column label", async () => {
-            const wrapper = mount(OTable, { props: { data, columns } });
+            const wrapper = mount<TableType>(OTable, {
+                props: { data, columns },
+            });
             await nextTick(); // await child component rendering
 
             const table = wrapper.find("table");
@@ -168,7 +172,9 @@ describe("OTable tests", () => {
         });
 
         test("test column field", async () => {
-            const wrapper = mount(OTable, { props: { data, columns } });
+            const wrapper = mount<TableType>(OTable, {
+                props: { data, columns },
+            });
             await nextTick(); // await child component rendering
 
             const table = wrapper.find("table");
@@ -211,7 +217,9 @@ describe("OTable tests", () => {
                 },
             ];
 
-            const wrapper = mount(OTable, { props: { data, columns } });
+            const wrapper = mount<TableType>(OTable, {
+                props: { data, columns },
+            });
             await nextTick(); // await child component rendering
 
             const table = wrapper.find("table");
@@ -251,7 +259,9 @@ describe("OTable tests", () => {
                 },
             ];
 
-            const wrapper = mount(OTable, { props: { data, columns } });
+            const wrapper = mount<TableType>(OTable, {
+                props: { data, columns },
+            });
             await nextTick(); // await child component rendering
 
             const table = wrapper.find("table");
