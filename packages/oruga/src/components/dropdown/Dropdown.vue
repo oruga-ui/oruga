@@ -139,7 +139,7 @@ defineSlots<{
      */
     trigger?(props: {
         active: boolean;
-        value: unknown | unknown[];
+        value: ModelValue;
         toggle: (event: Event) => void;
     }): void;
     /**
