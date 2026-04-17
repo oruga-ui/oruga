@@ -5,8 +5,8 @@ import type {
     Numberish,
 } from "@/types";
 
-// Auto generated component theme config definition
-declare module "../index" {
+// Auto generated component theme config declarations
+declare module "./index" {
     interface OrugaConfig {
         autocomplete?: ComponentConfigBase &
             Partial<{
