@@ -59,6 +59,7 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     value: props.value as T,
     hidden: isHidden.value,
     isViable: isViable.value,

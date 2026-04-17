@@ -101,6 +101,7 @@ const { parent: parentSubtree } = useProviderChild<SubtreeComponent>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TreeItemComponent<T>>(() => ({
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     value: props.value as T,
     expanded: isExpanded.value,
     isViable: isViable.value,

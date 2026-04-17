@@ -97,6 +97,7 @@ const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<MenuItemComponent<T>>(() => ({
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     value: props.value as T,
     disabled: props.disabled,
     hidden: props.hidden,

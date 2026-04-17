@@ -678,7 +678,7 @@ function doDefaultSort(): void {
     if (!tableColumns.value.length || currentSortColumn.value) return;
     if (!props.defaultSort) return;
 
-    let sortField = props.defaultSort;
+    let sortField;
     let sortDirection = props.defaultSortDirection;
     if (Array.isArray(props.defaultSort)) {
         sortField = props.defaultSort[0];
