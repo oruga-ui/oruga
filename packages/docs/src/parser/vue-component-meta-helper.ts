@@ -45,7 +45,7 @@ export function createVueComponentMetaChecker(
 export function vueComponentMeta(
     checker: ComponentMetaChecker,
     componentPath: string,
-): Promise<MetaSource[] | undefined> {
+): MetaSource[] | undefined {
     try {
         // create component meta for each name export in the component
         const exportNames = checker.getExportNames(componentPath);
