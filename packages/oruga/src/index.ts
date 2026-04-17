@@ -5,7 +5,7 @@ export type * from "./types";
 export type * from "./config";
 
 // export all vue components
-export * from "./components/index";
+export * from "./components";
 // export all components as vue plugins
 export * from "./components/plugins";
 

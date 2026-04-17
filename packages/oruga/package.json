@@ -18,7 +18,7 @@
     },
     "./*": "./dist/*",
     "./volar": {
-      "types": "./dist/components.d.ts"
+      "types": "./dist/globals.d.ts"
     }
   },
   "files": [

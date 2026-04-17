@@ -23,7 +23,7 @@ export default [
     // prevent lint for generated files
     "CHANGELOG.md",
     "**/packages/oruga/src/config.d.ts",
-    "**/packages/oruga/src/components.d.ts",
+    "**/packages/oruga/src/globals.d.ts",
     "**/theme-*.md",
   ]),
 

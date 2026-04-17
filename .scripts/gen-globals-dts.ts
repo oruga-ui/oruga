@@ -41,5 +41,5 @@ export {};
 // generate global component types file
 generateComponentsType(
     "@oruga-ui/oruga-next",
-    "./packages/oruga/src/components.d.ts",
+    "./packages/oruga/src/globals.d.ts",
 );
