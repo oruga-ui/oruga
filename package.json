@@ -44,7 +44,8 @@
     "update": "ncu -u --workspaces --root"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.4.0",
+    "@eslint/compat": "^2.0.5",
+    "@eslint/js": "^10.0.1",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.12.2",
     "@vue/eslint-config-prettier": "^10.2.0",
@@ -52,9 +53,9 @@
     "@vue/tsconfig": "^0.9.1",
     "conventional-changelog": "^7.2.0",
     "conventional-changelog-conventionalcommits": "9.3.1",
-    "eslint": "^9.36.0",
-    "eslint-plugin-vue": "^10.5.0",
-    "eslint-plugin-vuejs-accessibility": "^2.4.1",
+    "eslint": "^10.2.0",
+    "eslint-plugin-vue": "^10.8.0",
+    "eslint-plugin-vuejs-accessibility": "^2.5.0",
     "npm-check-updates": "^21.0.3",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.3",
