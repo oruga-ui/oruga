@@ -4,29 +4,26 @@ import { axe } from "jest-axe";
 import { nextTick } from "vue";
 
 import type { OptionsProp } from "@/composables";
-import type { MenuProps } from "../props";
+import type { MenuItemProps, MenuProps } from "../props";
 
 import OMenu from "../Menu.vue";
 
 describe("Menu axe tests", () => {
     enableAutoUnmount(afterEach);
 
-    const options: OptionsProp<string> = [
+    const options: OptionsProp<MenuItemProps<string>> = [
         {
             label: "Fruits",
             value: "fruits",
-            attrs: {
-                icon: "info-circle",
-                options: ["Apple", "Banana", "Watermelon"],
-            },
+
+            icon: "info-circle",
+            options: ["Apple", "Banana", "Watermelon"],
         },
         {
             label: "Vegetables",
             value: "vegetables",
-            attrs: {
-                icon: "info-circle",
-                options: ["Carrot", "Broccoli", "Cucumber", "Onion"],
-            },
+            icon: "info-circle",
+            options: ["Carrot", "Broccoli", "Cucumber", "Onion"],
         },
     ];
 
