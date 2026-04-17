@@ -28,6 +28,7 @@ export default defineConfig({
             // build minified version with index.ts entry
             name: "Oruga Examples",
             entry: resolve(__dirname, "src/index.ts"),
+            formats: ["es"],
             fileName: "index",
         },
         rolldownOptions: {
