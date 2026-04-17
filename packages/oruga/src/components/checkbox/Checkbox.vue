@@ -101,7 +101,7 @@ const isChecked = computed(
     () =>
         isTrueish(props.multiple) &&
         (Array.isArray(vmodel.value)
-            ? vmodel.value.includes(props.nativeValue as T)
+            ? vmodel.value.includes(props.nativeValue)
             : vmodel.value === (props.trueValue ?? true)),
 );
 

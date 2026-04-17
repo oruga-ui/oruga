@@ -13,9 +13,8 @@ export type ListboxComponent<T> = {
     focusItem: (value: ListItem<T>) => void;
 };
 
-export type ListItemComponent<T> = Pick<
-    ListItemProps<T>,
-    "value" | "hidden"
+export type ListItemComponent<T> = Required<
+    Pick<ListItemProps<T>, "value" | "hidden">
 > & {
     isViable: boolean;
     setHidden: (hidden: boolean) => void;

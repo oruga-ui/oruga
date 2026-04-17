@@ -14,6 +14,7 @@ describe("OTabs axe tests", () => {
 
     const a11yCases: {
         title: string;
+        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         props?: TabsProps<unknown> & ExampleProps;
     }[] = [
         {
