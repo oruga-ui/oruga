@@ -3,6 +3,7 @@ import { globalIgnores } from "eslint/config";
 import { includeIgnoreFile } from "@eslint/compat";
 import vuePlugin from "eslint-plugin-vue";
 import {
+  configureVueProject,
   defineConfigWithVueTs,
   vueTsConfigs,
 } from "@vue/eslint-config-typescript";
@@ -16,7 +17,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const gitignorePath = path.resolve(__dirname, ".gitignore");
 
-export default [
+configureVueProject({
+  rootDir: import.meta.dirname, // monorepo root
+  // available after https://github.com/vuejs/eslint-config-typescript/pull/278 is released
+  includeDotFolders: true,
+});
+
+export default defineConfigWithVueTs([
   // define specific ignore patterns
   globalIgnores([
     "*.d.ts",
@@ -30,14 +37,28 @@ export default [
   // include .gitignore ignore patterns
   includeIgnoreFile(gitignorePath),
 
+  // override ts config for .vitepress with explizit tsconfig
+  // can be removed when https://github.com/vuejs/eslint-config-typescript/pull/278 is released
+  {
+    name: "vitepress-overrides",
+    files: ["**/.*/**/*.{ts,vue}"],
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        projectService: {
+          defaultProject: "./packages/docs/tsconfig.json",
+          loadTypeScriptPlugins: true,
+        },
+      },
+    },
+  },
+
   // add js configs
   eslint.configs.recommended,
 
   // add vue with ts configs
-  ...defineConfigWithVueTs(
-    vuePlugin.configs["flat/recommended"],
-    vueTsConfigs.recommended,
-  ),
+  vuePlugin.configs["flat/recommended"],
+  vueTsConfigs.recommendedTypeChecked,
 
   // add vue a11y configs
   // ...vueA11yPlugin.configs["flat/recommended"],
@@ -45,16 +66,22 @@ export default [
   // add prettier configs
   prettierConfig,
 
-  // your modifications
+  // project modifications
   {
+    name: "overrides",
     rules: {
       // TypeScript
-      "@typescript-eslint/no-explicit-any": ["warn"],
-      "@typescript-eslint/ban-ts-comment": ["warn"],
-      "@typescript-eslint/explicit-function-return-type": ["warn"],
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/ban-ts-comment": "warn",
+      "@typescript-eslint/explicit-function-return-type": "warn",
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/no-redundant-type-constituents": "warn",
+      "@typescript-eslint/restrict-template-expressions": "off",
+
       // Vue
       "vue/padding-line-between-blocks": ["error", "always"],
-      "vue/multi-word-component-names": ["off"],
+      "vue/multi-word-component-names": "off",
+      "vue/no-empty-component-block": "error",
       "vue/block-order": ["error", { order: ["script", "template", "style"] }],
       "vue/block-lang": ["error", { script: { lang: "ts" } }],
       "vue/html-closing-bracket-newline": [
@@ -70,4 +97,4 @@ export default [
       ],
     },
   },
-];
+]);

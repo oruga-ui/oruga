@@ -59,7 +59,8 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({
-    value: props.value,
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    value: props.value as T,
     hidden: isHidden.value,
     isViable: isViable.value,
     setHidden,
@@ -112,7 +113,7 @@ function focusItem(): void {
 function clickItem(event: Event): void {
     if (!isSelectable.value) return;
     parent.value.selectItem(item.value, !isSelected.value);
-    emits("click", props.value as T, event);
+    emits("click", providedData.value.value, event);
 }
 
 /** Check if a given value matches the item label (startsWith). */

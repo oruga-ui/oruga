@@ -18,9 +18,8 @@ export type TreeComponent<T> = {
     focusItem: (value: TreeItem<T>) => void;
 };
 
-export type TreeItemComponent<T> = Pick<
-    TreeItemProps<T>,
-    "value" | "expanded"
+export type TreeItemComponent<T> = Required<
+    Pick<TreeItemProps<T>, "value" | "expanded">
 > & {
     hasChildren: boolean;
     isViable: boolean;

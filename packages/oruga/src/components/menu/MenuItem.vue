@@ -97,7 +97,8 @@ const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<MenuItemComponent<T>>(() => ({
-    value: props.value,
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    value: props.value as T,
     disabled: props.disabled,
     hidden: props.hidden,
     parent: menuItem.parent.value,
@@ -133,7 +134,7 @@ function selectItem(event: Event): void {
     isActive.value = !isActive.value;
     if (parent.value.accordion) isExpanded.value = isActive.value;
     parent.value.selectItem(isActive.value ? item.value : undefined);
-    emits("click", props.value as T, event);
+    emits("click", providedData.value.value, event);
 }
 
 function triggerReset(childs?: ProviderItem<MenuItemComponent<T>>[]): void {
