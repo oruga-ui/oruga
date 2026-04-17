@@ -2,15 +2,6 @@ import { Comment, Fragment, Text } from "vue";
 import type { DeepKeys, DeepType, Numberish } from "@/types";
 
 /**
- * +/- function to native math sign
- */
-function signPoly(value: number): number {
-    if (value < 0) return -1;
-    return value > 0 ? 1 : 0;
-}
-export const sign = Math.sign || signPoly;
-
-/**
  * Native modulo bug with negative numbers
  * @param n
  * @param mod

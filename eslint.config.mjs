@@ -58,6 +58,7 @@ export default defineConfigWithVueTs([
 
   // add vue with ts configs
   vuePlugin.configs["flat/recommended"],
+  // TODO: revert to recommended after some issues got fixed
   vueTsConfigs.strictTypeChecked,
 
   // add vue a11y configs
@@ -77,7 +78,26 @@ export default defineConfigWithVueTs([
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-redundant-type-constituents": "warn",
       "@typescript-eslint/restrict-template-expressions": "off",
+
+      "@typescript-eslint/no-deprecated": "warn",
+      // "@typescript-eslint/no-dynamic-delete": "error",
+      // "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
+      // "@typescript-eslint/no-invalid-void-type": "error",
+      // "@typescript-eslint/no-misused-spread": "error",
+      // "@typescript-eslint/no-mixed-enums": "error",
+      // "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
+      // "@typescript-eslint/no-non-null-assertion": "error",
+      // "@typescript-eslint/no-unnecessary-condition": "error",
+      // "@typescript-eslint/no-unnecessary-template-expression": "error",
+      // "@typescript-eslint/no-useless-default-assignment": "error",
+      // "@typescript-eslint/prefer-literal-enum-member": "error",
+
       "@typescript-eslint/unified-signatures": "off",
+      "@typescript-eslint/restrict-plus-operands": "off",
+      "@typescript-eslint/no-confusing-void-expression": "off",
+      "@typescript-eslint/no-unnecessary-type-assertion": "off",
+      "@typescript-eslint/no-unnecessary-type-parameters": "off",
+      "@typescript-eslint/no-unnecessary-boolean-literal-compare": "off",
 
       // Vue
       "vue/padding-line-between-blocks": ["error", "always"],

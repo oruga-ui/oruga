@@ -266,7 +266,7 @@ function selectItem(item: ListItem<T>, selection: boolean = true): void {
     if (!props.selectable) return;
 
     const value = item.data.value;
-    if (selection) emits("select", value as T);
+    if (selection) emits("select", value);
 
     // set selected option
     if (isTrueish(props.multiple)) {

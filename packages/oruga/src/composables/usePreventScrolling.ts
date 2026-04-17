@@ -42,7 +42,6 @@ export function usePreventScrolling(
 
     function toggleScroll(active: boolean): void {
         if (!isClient) return;
-        if (!scrollClass.value) return;
 
         savedScrollTop.value = savedScrollTop.value
             ? savedScrollTop.value

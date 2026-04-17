@@ -132,7 +132,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
     /** Unset focused and emit blur event. */
     function onBlur(event?: Event): void {
         isFocused.value = false;
-        if (parentField?.value) parentField.value.setFocus(false);
+        if (parentField.value) parentField.value.setFocus(false);
         emits(
             "blur",
             event
@@ -145,7 +145,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
     /** Set focused and emit focus event. */
     function onFocus(event?: Event): void {
         isFocused.value = true;
-        if (parentField?.value) parentField.value.setFocus(true);
+        if (parentField.value) parentField.value.setFocus(true);
         emits(
             "focus",
             event
@@ -160,7 +160,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
 
     function setFieldValidity(variant, message): void {
         nextTick(() => {
-            if (parentField?.value) {
+            if (parentField.value) {
                 // Set type only if not defined
                 if (!parentField.value.props.variant)
                     parentField.value.setVariant(variant);
@@ -200,7 +200,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         checkHtml5Validity();
         const validatable = asValidatableFormElement(event.target);
 
-        if (validatable && parentField?.value && props.useHtml5Validation) {
+        if (validatable && parentField.value && props.useHtml5Validation) {
             // We provide our own error message on the field, so we should suppress the browser's default tooltip.
             // We still want to focus the form's first invalid input, though.
             event.preventDefault();

@@ -242,7 +242,7 @@ function selectItem(item: TreeItem<T>, selection: boolean = true): void {
     if (!props.selectable) return;
 
     const value = item.data.value;
-    if (selection) emits("select", value as T);
+    if (selection) emits("select", value);
 
     // set selected option
     if (isTrueish(props.multiple)) {
@@ -507,7 +507,7 @@ function onFocusin(event: FocusEvent): void {
 
 function onFocusout(event: FocusEvent): void {
     // check if focus is still inside the component
-    const listElement = event.currentTarget as HTMLElement;
+    const listElement = event.currentTarget as HTMLElement | undefined;
     const newFocus = event.relatedTarget as HTMLElement;
     if (listElement?.contains(newFocus)) return;
 

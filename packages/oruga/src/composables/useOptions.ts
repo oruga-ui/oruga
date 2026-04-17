@@ -194,7 +194,7 @@ export function areOptionsGrouped(
     options: MaybeRefOrGetter<NormalizedItem[]>,
 ): boolean {
     const _options = toValue(options);
-    if (!_options?.length) return false;
+    if (!_options.length) return false;
     return isGroupOption(_options[0]);
 }
 
@@ -215,7 +215,7 @@ export function findOptionIndex<T extends object>(
 
     let idx = 0;
     for (const item of toValue(options)) {
-        if (typeof item !== "object" && item) continue;
+        if (item && typeof item !== "object") continue;
 
         // check if the first item has an options propery which defines it as group
         if (isGroupOption(item)) {

@@ -432,7 +432,7 @@ function rightIconClick(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
+    ...parentField.value?.inputAttrs,
     ...attrs,
     ...props.inputClasses,
 }));

@@ -69,7 +69,7 @@ watch(
             if (showcaseElement.value)
                 window.scrollTo({
                     left: 0,
-                    top: showcaseElement.value?.offsetTop,
+                    top: showcaseElement.value.offsetTop,
                     behavior: "smooth",
                 });
         });

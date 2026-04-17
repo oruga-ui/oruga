@@ -80,9 +80,9 @@ export function vueComponentMeta(
                     (key) => {
                         meta[key].forEach((value) => {
                             if (Array.isArray(value.schema)) {
-                                value.schema.forEach((eventSchema) =>
-                                    removeNestedSchemas(eventSchema),
-                                );
+                                value.schema.forEach((eventSchema) => {
+                                    removeNestedSchemas(eventSchema);
+                                });
                             } else {
                                 removeNestedSchemas(value.schema);
                             }
@@ -160,7 +160,9 @@ function removeNestedSchemas(schema: PropertyMetaSchema): void {
     if (schema.kind === "enum") {
         // for enum types, we do not want to remove the schemas because otherwise the controls will be missing
         // instead we remove the nested schemas for the enum entries to prevent out of memory errors for types like "HTMLElement | MouseEvent"
-        schema.schema?.forEach((enumSchema) => removeNestedSchemas(enumSchema));
+        schema.schema?.forEach((enumSchema) => {
+            removeNestedSchemas(enumSchema);
+        });
         return;
     }
     delete schema.schema;

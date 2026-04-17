@@ -18,9 +18,9 @@ if (!shadowRoot)
 onMounted(() => {
     if (host?.children)
         // add bulma light theme attribute to the slot content
-        Array.from(host.children).forEach((child) =>
-            child.setAttribute("data-theme", "light"),
-        );
+        Array.from(host.children).forEach((child) => {
+            child.setAttribute("data-theme", "light");
+        });
 
     // The slot content must be moved to the shadow root
     // for the scoped style above to be applied.

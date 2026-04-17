@@ -24,7 +24,7 @@ export function unrefElement<T extends MaybeElement>(
     elRef: MaybeRefOrGetter<T> | MaybeRef<T>,
 ): UnRefElementReturn<T> {
     const plain = toValue(elRef);
-    return (plain as ComponentPublicInstance)?.$el ?? plain;
+    return (plain && (plain as ComponentPublicInstance).$el) ?? plain;
 }
 
 /** Resolve an HTML element based on query selector or an explizit dom element */

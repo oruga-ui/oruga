@@ -36,7 +36,7 @@ export function renderer(descriptor: SlotDescriptor[]): string {
                 ? slot.tags["params"]
                 : slot.bindings;
 
-        const readableBindings = slot.bindings ? `${formatParams(params)}` : "";
+        const readableBindings = slot.bindings ? formatParams(params) : "";
 
         // slot name
         let name = mdclean(slot.name);

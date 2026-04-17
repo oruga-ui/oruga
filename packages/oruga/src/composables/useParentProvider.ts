@@ -71,7 +71,7 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
     const configField = String(vm.proxy?.$options.configField);
     const key =
         (typeof options?.key === "symbol"
-            ? options.key?.toString()
+            ? options.key.toString()
             : options?.key) || configField;
 
     const childItems = ref<ProviderItem<ItemData>[]>([]);
@@ -100,8 +100,7 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
 
             // update the index attribute of the child items
             items.forEach(
-                (item) =>
-                    (item.index = sortedIds.indexOf(`${item.identifier}`)),
+                (item) => (item.index = sortedIds.indexOf(item.identifier)),
             );
 
             // sort items according to their index position
@@ -252,9 +251,9 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
 
     const configField = String(vm.proxy?.$options.configField);
     const key =
-        (typeof options?.key === "symbol"
+        (typeof options.key === "symbol"
             ? options.key.toString()
-            : options?.key) || configField;
+            : options.key) || configField;
 
     /** Inject parent component functionality if used inside one **/
     const parent = inject<PovidedData<ParentData, ItemData> | undefined>(

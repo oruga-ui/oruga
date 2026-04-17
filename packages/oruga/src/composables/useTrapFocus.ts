@@ -56,12 +56,11 @@ export function useTrapFocus(): {
         // create onKeyDown event listener
         onKeyDown = (event: KeyboardEvent): void => {
             const target = event.target as HTMLElement;
-            if (!target) return;
 
             // Need to get focusable each time since it can change between key events
             // ex. changing month in a datepicker
             const focusable = findFocusable(el);
-            if (!focusable?.length) {
+            if (!focusable.length) {
                 event.preventDefault();
                 return;
             }
