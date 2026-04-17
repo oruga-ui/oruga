@@ -1,7 +1,9 @@
 name: "Check generated files"
 on:
+  push:
+    branches: [develop, major]
   pull_request:
-    branches: [develop]
+    branches: [develop, major]
 
 jobs:
   check:
