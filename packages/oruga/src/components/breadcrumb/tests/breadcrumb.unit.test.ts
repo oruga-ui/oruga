@@ -38,9 +38,9 @@ describe("OBreadcrumb tests", () => {
         const items = wrapper.findAllComponents(OBreadcrumbItem);
         expect(items.length).toBe(3);
 
-        expect(items[0]!.attributes("data-oruga")).toBe("breadcrumb-item");
-        expect(items[0]!.classes("o-breadcrumb__item")).toBeTruthy();
-        expect(items[0]!.text()).toBe("Home");
+        expect(items[0].attributes("data-oruga")).toBe("breadcrumb-item");
+        expect(items[0].classes("o-breadcrumb__item")).toBeTruthy();
+        expect(items[0].text()).toBe("Home");
     });
 
     test("render correctly with default slot items", async () => {
@@ -184,11 +184,11 @@ describe("OBreadcrumb tests", () => {
             expect(items).toHaveLength(options.length);
 
             options.forEach((option, idx) => {
-                expect(items[idx]!.attributes("data-oruga")).toBe(
+                expect(items[idx].attributes("data-oruga")).toBe(
                     "breadcrumb-item",
                 );
-                expect(items[idx]!.classes("o-breadcrumb__item")).toBeTruthy();
-                expect(items[idx]!.text()).toBe(option.label);
+                expect(items[idx].classes("o-breadcrumb__item")).toBeTruthy();
+                expect(items[idx].text()).toBe(option.label);
             });
         });
     });

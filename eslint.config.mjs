@@ -29,7 +29,8 @@ export default defineConfigWithVueTs([
     "*.d.ts",
     // prevent lint for generated files
     "CHANGELOG.md",
-    "**/packages/oruga/src/components/types.ts",
+    "**/packages/oruga/src/config.d.ts",
+    "**/packages/oruga/src/globals.d.ts",
     "**/theme-*.md",
   ]),
 
