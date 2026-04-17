@@ -228,6 +228,7 @@ function computeClass(
 
     // --- Class Definition ---
 
+    // eslint-disable-next-line no-useless-assignment
     let instanceClassString: string | undefined = undefined;
     let configClassString: string | undefined = undefined;
     let defaultClassString: string | undefined = undefined;

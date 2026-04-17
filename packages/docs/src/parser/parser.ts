@@ -17,7 +17,7 @@ export async function parser(
     filePath: string,
 ): Promise<ComponentDoc[]> {
     // analyse component with vue-component-meta
-    const metaSources = await vueComponentMeta(checker, filePath);
+    const metaSources = vueComponentMeta(checker, filePath);
 
     if (!metaSources) return [];
 
