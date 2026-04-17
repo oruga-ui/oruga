@@ -38,9 +38,9 @@ describe("ODatepicker", () => {
 
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toHaveLength(1);
-        expect(emits![0][0]).toBeInstanceOf(Date);
-        expect((emits![0][0] as Date).toISOString()).toBe(date.toISOString());
+        expect(emits?.[0]).toHaveLength(1);
+        expect(emits?.[0][0]).toBeInstanceOf(Date);
+        expect((emits?.[0][0] as Date).toISOString()).toBe(date.toISOString());
         expect(input.element.value).toBe("10/04/2024");
         await input.setValue("2021-04-18");
 
@@ -48,9 +48,9 @@ describe("ODatepicker", () => {
 
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits![1]).toHaveLength(1);
-        expect(emits![1][0]).toBeInstanceOf(Date);
-        expect((emits![1][0] as Date).toISOString()).toBe(date.toISOString());
+        expect(emits?.[1]).toHaveLength(1);
+        expect(emits?.[1][0]).toBeInstanceOf(Date);
+        expect((emits?.[1][0] as Date).toISOString()).toBe(date.toISOString());
         expect(input.element.value).toBe("18/04/2021");
     });
 
@@ -65,8 +65,8 @@ describe("ODatepicker", () => {
 
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits![0]).toHaveLength(1);
-        expect(emits![0][0]).toBeUndefined();
+        expect(emits?.[0]).toHaveLength(1);
+        expect(emits?.[0][0]).toBeUndefined();
         expect(input.element.value).toBe("");
 
         await input.setValue("21/06/wrong");
@@ -90,8 +90,8 @@ describe("ODatepicker", () => {
         expect(selectedCells.length).toBe(1);
 
         // check nothing got emitted yet
-        let emit = wrapper.emitted("update:modelValue");
-        expect(emit).toBeUndefined();
+        let emits = wrapper.emitted("update:modelValue");
+        expect(emits).toBeUndefined();
 
         // select another date
         const cellToSelect1 = cells.find(
@@ -100,12 +100,12 @@ describe("ODatepicker", () => {
                 !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect1).toBeDefined();
-        await cellToSelect1!.trigger("click");
+        await cellToSelect1?.trigger("click");
 
         // check modelValue got updated
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(1);
-        expect(emit![0][0]).toHaveLength(2);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
+        expect(emits?.[0][0]).toHaveLength(2);
 
         // check two dates are selected
         selectedCells = cells.filter((c) =>
@@ -120,12 +120,12 @@ describe("ODatepicker", () => {
                 !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect2).toBeDefined();
-        await cellToSelect2!.trigger("click");
+        await cellToSelect2?.trigger("click");
 
         // check modelValue got updated
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(2);
-        expect(emit![1][0]).toHaveLength(3);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(2);
+        expect(emits?.[1][0]).toHaveLength(3);
 
         // check three dates are selected
         selectedCells = cells.filter((c) =>
@@ -134,12 +134,12 @@ describe("ODatepicker", () => {
         expect(selectedCells.length).toBe(3);
 
         // deselect preveus selected date
-        await cellToSelect1!.trigger("click");
+        await cellToSelect1?.trigger("click");
 
         // check modelValue got updated
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(3);
-        expect(emit![2][0]).toHaveLength(2);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(3);
+        expect(emits?.[2][0]).toHaveLength(2);
 
         // check two dates are selected
         selectedCells = cells.filter((c) =>
@@ -162,8 +162,8 @@ describe("ODatepicker", () => {
         expect(selectedCells.length).toBe(0);
 
         // check nothing got emitted yet
-        let emit = wrapper.emitted("update:modelValue");
-        expect(emit).toBeUndefined();
+        let emits = wrapper.emitted("update:modelValue");
+        expect(emits).toBeUndefined();
 
         // select first date
         let cellToSelect = cells.find(
@@ -172,11 +172,11 @@ describe("ODatepicker", () => {
                 !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect).toBeDefined();
-        await cellToSelect!.trigger("click");
+        await cellToSelect?.trigger("click");
 
         // check nothing got emitted yet
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toBeUndefined();
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toBeUndefined();
 
         // check one date is selected
         selectedCells = cells.filter((c) =>
@@ -190,12 +190,12 @@ describe("ODatepicker", () => {
                 c.classes("o-datepicker__table__cell--selectable") &&
                 !c.classes("o-datepicker__table__cell--selected"),
         );
-        await cellToSelect!.trigger("click");
+        await cellToSelect?.trigger("click");
 
         // check modelValue got updated
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(1);
-        expect(emit![0][0]).toHaveLength(2);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
+        expect(emits?.[0][0]).toHaveLength(2);
 
         // check two dates are selected
         selectedCells = cells.filter((c) =>
@@ -223,11 +223,11 @@ describe("ODatepicker", () => {
         );
         expect(cellToSelect).toBeDefined();
         // select another date
-        await cellToSelect!.trigger("click");
+        await cellToSelect?.trigger("click");
 
         // check nothing got emitted yet
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(1);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
 
         // select second date
         cellToSelect = cells.find(
@@ -236,7 +236,7 @@ describe("ODatepicker", () => {
                 !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect).toBeDefined();
-        await cellToSelect!.trigger("click");
+        await cellToSelect?.trigger("click");
 
         // check two dates are selected
         selectedCells = cells.filter((c) =>
@@ -257,8 +257,8 @@ describe("ODatepicker", () => {
         expect(selectedCells.length).toBe(1);
 
         // check modelValue got updated
-        emit = wrapper.emitted("update:modelValue");
-        expect(emit).toHaveLength(2);
-        expect(emit![1][0]).toHaveLength(2);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(2);
+        expect(emits?.[1][0]).toHaveLength(2);
     });
 });

@@ -34,9 +34,9 @@ describe("ODropdown tests", () => {
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
         options.forEach((option, idx) => {
-            expect(items[idx]!.attributes("data-oruga")).toBe("dropdown-item");
-            expect(items[idx]!.classes("o-dropdown__item")).toBeTruthy();
-            expect(items[idx]!.text()).toBe(option.label);
+            expect(items[idx].attributes("data-oruga")).toBe("dropdown-item");
+            expect(items[idx].classes("o-dropdown__item")).toBeTruthy();
+            expect(items[idx].text()).toBe(option.label);
         });
     });
 
@@ -72,9 +72,9 @@ describe("ODropdown tests", () => {
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
         simpleOptions.forEach((option, idx) => {
-            expect(items[idx]!.attributes("data-oruga")).toBe("dropdown-item");
-            expect(items[idx]!.classes("o-dropdown__item")).toBeTruthy();
-            expect(items[idx]!.text()).toBe(option);
+            expect(items[idx].attributes("data-oruga")).toBe("dropdown-item");
+            expect(items[idx].classes("o-dropdown__item")).toBeTruthy();
+            expect(items[idx].text()).toBe(option);
         });
     });
 
@@ -89,29 +89,31 @@ describe("ODropdown tests", () => {
     });
 
     test("reset events before destroy", async () => {
-        document.removeEventListener = vi.fn();
-        window.removeEventListener = vi.fn();
+        const documentDummyListener = vi.fn();
+        const windowDummyListener = vi.fn();
+        document.removeEventListener = documentDummyListener;
+        window.removeEventListener = windowDummyListener;
 
         const wrapper = mount(ODropdown, { props: { active: true } });
         await setTimeout(); // await event handler get set
 
         wrapper.unmount();
 
-        expect(document.removeEventListener).toBeCalledTimes(1);
+        expect(documentDummyListener).toHaveBeenCalledTimes(1);
         // remove scroll listener
-        expect(document.removeEventListener).toBeCalledWith(
+        expect(documentDummyListener).toHaveBeenCalledWith(
             "scroll",
             expect.any(Function),
         );
 
-        expect(window.removeEventListener).toBeCalledTimes(2);
+        expect(windowDummyListener).toHaveBeenCalledTimes(2);
         // remove position listener
-        expect(window.removeEventListener).toBeCalledWith(
+        expect(windowDummyListener).toHaveBeenCalledWith(
             "resize",
             expect.any(Function),
         );
         // remove click outside listener
-        expect(window.removeEventListener).toBeCalledWith(
+        expect(windowDummyListener).toHaveBeenCalledWith(
             "click",
             expect.any(Function),
             expect.any(Object),
@@ -165,7 +167,7 @@ describe("ODropdown tests", () => {
                 '[data-oruga="dropdown"]',
             );
             expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0][0]).toBe(simpleOptions[1]);
+            expect(dropdown.emitted("select")?.[0][0]).toBe(simpleOptions[1]);
             expect(dropdown.emitted("close")).toHaveLength(1);
 
             expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
@@ -191,7 +193,7 @@ describe("ODropdown tests", () => {
             // check dropdown closed
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeFalsy();
+            expect(activeEmits?.[0][0]).toBeFalsy();
             expect(wrapper.emitted("close")).toHaveLength(1);
             expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
@@ -381,7 +383,7 @@ describe("ODropdown tests", () => {
             // check dropdown closed
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeFalsy();
+            expect(activeEmits?.[0][0]).toBeFalsy();
             expect(wrapper.emitted("close")).toHaveLength(1);
             expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
@@ -452,7 +454,7 @@ describe("ODropdown tests", () => {
             );
             expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
             expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0][0]).toBe(options[2].value);
+            expect(dropdown.emitted("select")?.[0][0]).toBe(options[2].value);
             expect(dropdown.emitted("close")).toHaveLength(1);
         });
 
@@ -484,7 +486,7 @@ describe("ODropdown tests", () => {
             );
             expect(dropdown.emitted("update:modelValue")).toBeUndefined();
             expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0][0]).toBe(options[0].value);
+            expect(dropdown.emitted("select")?.[0][0]).toBe(options[0].value);
             expect(dropdown.emitted("close")).toHaveLength(1);
         });
 
@@ -524,12 +526,12 @@ describe("ODropdown tests", () => {
                 '[data-oruga="dropdown"]',
             );
             expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0]).toContain(options[0].value);
+            expect(dropdown.emitted("select")?.[0]).toContain(options[0].value);
             expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("update:modelValue")![0][0]).toHaveLength(
+            expect(dropdown.emitted("update:modelValue")?.[0][0]).toHaveLength(
                 1,
             );
-            expect(dropdown.emitted("update:modelValue")![0][0]).toContain(
+            expect(dropdown.emitted("update:modelValue")?.[0][0]).toContain(
                 options[0].value,
             );
             expect(dropdown.emitted("close")).toBeUndefined();
@@ -542,15 +544,15 @@ describe("ODropdown tests", () => {
             expect(menu.isVisible()).toBeTruthy();
 
             expect(dropdown.emitted("select")).toHaveLength(2);
-            expect(dropdown.emitted("select")![1]).toContain(options[2].value);
+            expect(dropdown.emitted("select")?.[1]).toContain(options[2].value);
             expect(dropdown.emitted("update:modelValue")).toHaveLength(2);
-            expect(dropdown.emitted("update:modelValue")![1][0]).toHaveLength(
+            expect(dropdown.emitted("update:modelValue")?.[1][0]).toHaveLength(
                 2,
             );
-            expect(dropdown.emitted("update:modelValue")![1][0]).toContain(
+            expect(dropdown.emitted("update:modelValue")?.[1][0]).toContain(
                 options[0].value,
             );
-            expect(dropdown.emitted("update:modelValue")![1][0]).toContain(
+            expect(dropdown.emitted("update:modelValue")?.[1][0]).toContain(
                 options[2].value,
             );
             expect(dropdown.emitted("close")).toBeUndefined();
@@ -561,12 +563,12 @@ describe("ODropdown tests", () => {
             expect(items[2].classes("o-dropdown__item--active")).toBeTruthy();
 
             expect(dropdown.emitted("select")).toHaveLength(3);
-            expect(dropdown.emitted("select")![2]).toContain(options[0].value);
+            expect(dropdown.emitted("select")?.[2]).toContain(options[0].value);
             expect(dropdown.emitted("update:modelValue")).toHaveLength(3);
-            expect(dropdown.emitted("update:modelValue")![2][0]).toHaveLength(
+            expect(dropdown.emitted("update:modelValue")?.[2][0]).toHaveLength(
                 1,
             );
-            expect(dropdown.emitted("update:modelValue")![2][0]).toContain(
+            expect(dropdown.emitted("update:modelValue")?.[2][0]).toContain(
                 options[2].value,
             );
             expect(dropdown.emitted("close")).toBeUndefined();
@@ -701,9 +703,9 @@ describe("ODropdown tests", () => {
             const items = wrapper.findAll('[data-oruga="dropdown-item"]');
             expect(items.length).toBe(options.length);
 
-            items.forEach((item, index) =>
-                expect(item.text()).toEqual(options[index].label),
-            );
+            items.forEach((item, index) => {
+                expect(item.text()).toEqual(options[index].label);
+            });
 
             const item = items[1];
             await item.trigger("click");
@@ -715,11 +717,11 @@ describe("ODropdown tests", () => {
                 '[data-oruga="dropdown"]',
             );
             expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("update:modelValue")![0][0]).toStrictEqual(
+            expect(dropdown.emitted("update:modelValue")?.[0][0]).toStrictEqual(
                 options[1].value,
             );
             expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0][0]).toStrictEqual(
+            expect(dropdown.emitted("select")?.[0][0]).toStrictEqual(
                 options[1].value,
             );
             expect(dropdown.emitted("close")).toHaveLength(1);

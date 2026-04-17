@@ -79,7 +79,7 @@ describe("OListbox tests", () => {
         });
     });
 
-    test("render header and footer correctly", async () => {
+    test("render header and footer correctly", () => {
         const wrapper = mount(OListbox, {
             slots: {
                 header: "<h1 class='header'>SLOT HEADER</h1>",
@@ -100,7 +100,7 @@ describe("OListbox tests", () => {
                 options,
                 modelValue: options[2].value,
                 "onUpdate:modelValue": (modelValue) => {
-                    wrapper.setProps({ modelValue });
+                    void wrapper.setProps({ modelValue });
                 },
             },
         });
@@ -132,9 +132,9 @@ describe("OListbox tests", () => {
             const items = wrapper.findAll('[data-oruga="listbox-item"]');
             expect(items.length).toBe(options.length);
 
-            items.forEach((item, index) =>
-                expect(item.text()).toEqual(options[index].label),
-            );
+            items.forEach((item, index) => {
+                expect(item.text()).toEqual(options[index].label);
+            });
 
             await items[1].trigger("click");
             expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
@@ -142,16 +142,16 @@ describe("OListbox tests", () => {
             expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
 
             expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toStrictEqual(
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toStrictEqual(
                 options[1].value,
             );
             expect(wrapper.emitted("select")).toHaveLength(1);
-            expect(wrapper.emitted("select")![0][0]).toStrictEqual(
+            expect(wrapper.emitted("select")?.[0][0]).toStrictEqual(
                 options[1].value,
             );
         });
 
-        test("handle options as primitves correctly", async () => {
+        test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
 
             const wrapper = mount(OListbox, { props: { options } });
@@ -167,7 +167,7 @@ describe("OListbox tests", () => {
             });
         });
 
-        test("handle options as object correctly", async () => {
+        test("handle options as object correctly", () => {
             const options: OptionsProp = {
                 flint: "Flint",
                 silver: "Silver",
@@ -190,7 +190,7 @@ describe("OListbox tests", () => {
             });
         });
 
-        test("handle options as options array correctly", async () => {
+        test("handle options as options array correctly", () => {
             const options: ListboxOptions<string | number> = [
                 { label: "Flint", value: "flint" },
                 { label: "Silver", value: "silver", disabled: true },
@@ -215,7 +215,7 @@ describe("OListbox tests", () => {
             });
         });
 
-        test("handle grouped options correctly", async () => {
+        test("handle grouped options correctly", () => {
             const options: ListboxOptions<string | number | object> = [
                 {
                     label: "Black Sails",
@@ -313,11 +313,11 @@ describe("OListbox tests", () => {
             expect(items[2].classes("o-listbox__item--selected")).toBeTruthy();
 
             expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toBe(
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe(
                 options[2].value,
             );
             expect(wrapper.emitted("select")).toHaveLength(1);
-            expect(wrapper.emitted("select")![0][0]).toBe(options[2].value);
+            expect(wrapper.emitted("select")?.[0][0]).toBe(options[2].value);
         });
 
         test("react accordingly when same item is deselected", async () => {
@@ -343,7 +343,9 @@ describe("OListbox tests", () => {
             expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
 
             expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toBe(undefined);
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe(
+                undefined,
+            );
             expect(wrapper.emitted("select")).toBeUndefined();
         });
 
@@ -372,10 +374,12 @@ describe("OListbox tests", () => {
             expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
 
             expect(wrapper.emitted("select")).toHaveLength(1);
-            expect(wrapper.emitted("select")![0]).toContain(options[0].value);
+            expect(wrapper.emitted("select")?.[0]).toContain(options[0].value);
             expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![0][0]).toContain(
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toHaveLength(
+                1,
+            );
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toContain(
                 options[0].value,
             );
 
@@ -386,13 +390,15 @@ describe("OListbox tests", () => {
             expect(items[2].classes("o-listbox__item--selected")).toBeTruthy();
 
             expect(wrapper.emitted("select")).toHaveLength(2);
-            expect(wrapper.emitted("select")![1]).toContain(options[2].value);
+            expect(wrapper.emitted("select")?.[1]).toContain(options[2].value);
             expect(wrapper.emitted("update:modelValue")).toHaveLength(2);
-            expect(wrapper.emitted("update:modelValue")![1][0]).toHaveLength(2);
-            expect(wrapper.emitted("update:modelValue")![1][0]).toContain(
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toHaveLength(
+                2,
+            );
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toContain(
                 options[0].value,
             );
-            expect(wrapper.emitted("update:modelValue")![1][0]).toContain(
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toContain(
                 options[2].value,
             );
 
@@ -404,11 +410,13 @@ describe("OListbox tests", () => {
 
             expect(wrapper.emitted("select")).toHaveLength(2);
             expect(wrapper.emitted("update:modelValue")).toHaveLength(3);
-            expect(wrapper.emitted("update:modelValue")![2][0]).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")![2][0]).not.toContain(
+            expect(wrapper.emitted("update:modelValue")?.[2][0]).toHaveLength(
+                1,
+            );
+            expect(wrapper.emitted("update:modelValue")?.[2][0]).not.toContain(
                 options[0].value,
             );
-            expect(wrapper.emitted("update:modelValue")![2][0]).toContain(
+            expect(wrapper.emitted("update:modelValue")?.[2][0]).toContain(
                 options[2].value,
             );
         });
@@ -423,15 +431,15 @@ describe("OListbox tests", () => {
             const items = wrapper.findAll(".o-listbox__item");
             expect(items.length).toBe(options.length);
 
-            items.forEach((item) =>
-                expect(item.classes("o-listbox__item--selected")).toBeFalsy(),
-            );
+            items.forEach((item) => {
+                expect(item.classes("o-listbox__item--selected")).toBeFalsy();
+            });
 
             await items[0].trigger("click");
 
-            items.forEach((item) =>
-                expect(item.classes("o-listbox__item--selected")).toBeFalsy(),
-            );
+            items.forEach((item) => {
+                expect(item.classes("o-listbox__item--selected")).toBeFalsy();
+            });
 
             expect(wrapper.emitted("update:modelValue")).toBeUndefined();
             expect(wrapper.emitted("select")).toBeUndefined();
@@ -460,7 +468,7 @@ describe("OListbox tests", () => {
     });
 
     describe("test filterable", () => {
-        test("should have correct custom icon", async () => {
+        test("should have correct custom icon", () => {
             const wrapper = mount(OListbox, {
                 props: {
                     options,
@@ -500,7 +508,7 @@ describe("OListbox tests", () => {
             expect(items[4].attributes("aria-hidden")).toBe("true");
 
             expect(wrapper.emitted("filter")).toBeDefined();
-            expect(wrapper.emitted("filter")![0][0]).contain("is");
+            expect(wrapper.emitted("filter")?.[0][0]).contain("is");
         });
 
         test("should correctly filter groups", async () => {
@@ -538,9 +546,9 @@ describe("OListbox tests", () => {
             const items = wrapper.findAll('[data-oruga="listbox-item"]');
             expect(items).toHaveLength(10);
 
-            items.forEach((item) =>
-                expect(item.attributes("aria-hidden")).toBe("false"),
-            );
+            items.forEach((item) => {
+                expect(item.attributes("aria-hidden")).toBe("false");
+            });
 
             expect(items[0].attributes("aria-disabled")).toBe("true");
             expect(items[5].attributes("aria-disabled")).toBe("true");
@@ -563,7 +571,7 @@ describe("OListbox tests", () => {
             });
 
             expect(wrapper.emitted("filter")).toBeDefined();
-            expect(wrapper.emitted("filter")![0][0]).contain("ch");
+            expect(wrapper.emitted("filter")?.[0][0]).contain("ch");
         });
 
         test("do not sort when `backend-filtering` is given", async () => {
@@ -573,9 +581,9 @@ describe("OListbox tests", () => {
 
             const items = wrapper.findAll('[data-oruga="listbox-item"]');
             expect(items).toHaveLength(options.length);
-            items.forEach((item) =>
-                expect(item.attributes("disabled")).toBeFalsy(),
-            );
+            items.forEach((item) => {
+                expect(item.attributes("disabled")).toBeFalsy();
+            });
 
             const filterInput = wrapper.find('[data-oruga="input"] input');
             expect(filterInput.exists()).toBeTruthy();
@@ -586,12 +594,12 @@ describe("OListbox tests", () => {
 
             // check that there are no items hidden
             expect(items).toHaveLength(options.length);
-            items.forEach((item) =>
-                expect(item.attributes("disabled")).toBeFalsy(),
-            );
+            items.forEach((item) => {
+                expect(item.attributes("disabled")).toBeFalsy();
+            });
 
             expect(wrapper.emitted("filter")).toBeDefined();
-            expect(wrapper.emitted("filter")![0][0]).contain(options[2].value);
+            expect(wrapper.emitted("filter")?.[0][0]).contain(options[2].value);
         });
     });
 });

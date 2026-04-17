@@ -41,7 +41,7 @@ describe("ODialog test", () => {
         expect(backdrop.exists()).toBeFalsy();
     });
 
-    test("test modal case", async () => {
+    test("test modal case", () => {
         const wrapper = mount(ODialog, {
             props: {
                 active: true,
@@ -70,7 +70,7 @@ describe("ODialog test", () => {
         expect(backdrop.exists()).toBeTruthy();
     });
 
-    test("test alert case", async () => {
+    test("test alert case", () => {
         const wrapper = mount(ODialog, {
             props: {
                 active: true,
@@ -117,7 +117,7 @@ describe("ODialog test", () => {
         expect(dialog.classes("o-dialog--active")).toBeFalsy();
     });
 
-    test("test loading", async () => {
+    test("test loading", () => {
         const wrapper = mount(ODialog, {
             props: { loading: true },
         });
@@ -272,7 +272,7 @@ describe("ODialog test", () => {
     });
 
     describe("test buttons", () => {
-        test("test rendering correct", async () => {
+        test("test rendering correct", () => {
             const wrapper = mount(ODialog, {
                 props: { confirmButton: "ok", cancelButton: "cancel" },
             });
