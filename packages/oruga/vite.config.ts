@@ -18,7 +18,7 @@ export default defineConfig({
     plugins: [
         vue(),
         dts({
-            tsconfigPath: "./tsconfig.app.json",
+            tsconfigPath: "./tsconfig.lib.json",
             entryRoot: "./src",
             outDir: "./dist/types",
             bundledPackages: ["vue-component-type-helpers"],
