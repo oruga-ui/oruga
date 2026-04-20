@@ -36,7 +36,7 @@ const props = defineProps({
         type: [Date, Array] as PropType<Date | Date[]>,
         default: undefined,
     },
-    events: { type: Array as PropType<DatepickerEvent[]>, default: undefined },
+    events: { type: Array as PropType<DatepickerEvent[]>, required: true },
     hoveredDateRange: { type: Array as PropType<Date[]>, required: true },
     pickerProps: {
         type: Object as PropType<DatepickerProps<IsRange, IsMultiple>>,
@@ -55,7 +55,7 @@ const { isDateSelectable, dateCreator } = useDatepickerMixins(
     props.pickerProps,
 );
 
-const hasEvents = computed(() => !!props.events?.length);
+const hasEvents = computed(() => !!props.events.length);
 
 const dayRefs = ref(new Map());
 
@@ -91,7 +91,7 @@ function clickWeekNumber(week: number): void {
     if (props.pickerProps.weekNumberClickable) emits("week-number-click", week);
 }
 
-function getDayOfYear(input): number {
+function getDayOfYear(input: Date): number {
     return (
         Math.round(
             (input.getTime() - new Date(input.getFullYear(), 0, 1).getTime()) /
@@ -100,25 +100,21 @@ function getDayOfYear(input): number {
     );
 }
 
-function getWeekNumber(mom): number {
+function getWeekNumber(day: Date): number {
     const dow = props.pickerProps.firstDayOfWeek; // first day of week
     // Rules for the first week : 1 for the 1st January, 4 for the 4th January
     const doy = props.pickerProps.rulesForFirstWeek;
-    const weekOffset = firstWeekOffset(mom.getFullYear(), dow, doy);
-    const week = Math.floor((getDayOfYear(mom) - weekOffset - 1) / 7) + 1;
-    let resWeek;
-    let resYear;
+    const weekOffset = firstWeekOffset(day.getFullYear(), dow, doy);
+    const week = Math.floor((getDayOfYear(day) - weekOffset - 1) / 7) + 1;
+
     if (week < 1) {
-        resYear = mom.getFullYear() - 1;
-        resWeek = week + weeksInYear(resYear, dow, doy);
-    } else if (week > weeksInYear(mom.getFullYear(), dow, doy)) {
-        resWeek = week - weeksInYear(mom.getFullYear(), dow, doy);
-        resYear = mom.getFullYear() + 1;
+        const resYear = day.getFullYear() - 1;
+        return week + weeksInYear(resYear, dow, doy);
+    } else if (week > weeksInYear(day.getFullYear(), dow, doy)) {
+        return week - weeksInYear(day.getFullYear(), dow, doy);
     } else {
-        resYear = mom.getFullYear();
-        resWeek = week;
+        return week;
     }
-    return resWeek;
 }
 
 function eventsDateMatch(day: Date): DatepickerEvent[] {
@@ -193,7 +189,7 @@ function setRangeHoverEndDate(day): void {
     if (isTrueish(props.pickerProps.range)) emits("hover-enddate", day);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 function dateMatch(
     dateOne: Date,
@@ -403,6 +399,8 @@ const cellEventsClass = defineClasses(
     // passing the picker props will add reactivity to property changes
     { props: props.pickerProps },
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -452,6 +450,14 @@ const cellEventsClass = defineClasses(
 
             <div v-else :class="cellClasses(weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
+                <div
+                    v-if="eventsDateMatch(weekDay).length"
+                    :class="tableEventsClasses">
+                    <div
+                        v-for="(event, index) in eventsDateMatch(weekDay)"
+                        :key="index"
+                        :class="eventClasses(event)" />
+                </div>
             </div>
         </template>
     </div>
