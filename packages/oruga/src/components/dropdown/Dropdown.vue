@@ -139,7 +139,7 @@ defineSlots<{
      */
     trigger?(props: {
         active: boolean;
-        value: unknown | unknown[];
+        value: ModelValue;
         toggle: (event: Event) => void;
     }): void;
     /**
@@ -676,7 +676,7 @@ defineExpose({ value: vmodel, items: childItems });
             <slot
                 name="trigger"
                 :active="isActive"
-                :value="modelValue"
+                :value="modelValue as ModelValue"
                 :toggle="onTriggerClick">
                 {{ label }}
             </slot>
