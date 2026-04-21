@@ -5,8 +5,8 @@
 <section class="odocs-head">
 
 The **Taginput** input component allows users to search through a list of options and apply any number of tags.
-The component is based on the [Autocomplete](/components/Autocomplete) component and implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
-Use it with the [Field](/components/Field) component to access all functionalities.
+The component is based on the [Autocomplete](/components/Autocomplete.html) component and implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
+Use it with the [Field](/components/Field.html) component to access all functionalities.
 
 </section>
 
@@ -45,7 +45,7 @@ import SizesCode from "@/components/Taginput/examples/sizes.vue?raw";
 
 Unlike the dropdown or autocomplete components, the taginput component allows you to enter an arbitrary value (a value that is not in the list of options). This is useful for creating new tags on the fly. To enable this feature, set the `allow-new` prop to true.
 
-The `options` prop can accept several different formats of values. They are similiar to the options definition of the [**Dropdown**](/components/dropdown.html) component:
+The `options` prop can accept several different formats of values. They are similiar to the options definition of the [**Dropdown**](/components/Dropdown.html) component:
 
 - An array of primitives `['A', 'B', 'C']`
 - An object literal with key-value pairs `{ a: 'A', b: 'B', c: 'C' }`

@@ -29,7 +29,7 @@ import SizesCode from "./sizes.vue?raw";
 
 Unlike the dropdown or autocomplete components, the taginput component allows you to enter an arbitrary value (a value that is not in the list of options). This is useful for creating new tags on the fly. To enable this feature, set the `allow-new` prop to true.
 
-The `options` prop can accept several different formats of values. They are similiar to the options definition of the [**Dropdown**](/components/dropdown.html) component:
+The `options` prop can accept several different formats of values. They are similiar to the options definition of the [**Dropdown**](/components/Dropdown.html) component:
 
 - An array of primitives `['A', 'B', 'C']`
 - An object literal with key-value pairs `{ a: 'A', b: 'B', c: 'C' }`

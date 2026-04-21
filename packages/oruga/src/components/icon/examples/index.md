@@ -6,7 +6,7 @@ import CustomIconPack from "./custom-icon-pack.vue";
 import CustomIconPackCode from "./custom-icon-pack.vue?raw";
 
 const customIconConfigCode = `
-<script setup lang="ts">
+<script setup>
 const customIconConfig = {
     customIconPacks: {
         fas: {
@@ -30,7 +30,7 @@ app.use(Oruga, {
 `;
 
 const faIconConfigCode = `
-<script setup lang="ts">
+<script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
 // internal icons
 import {

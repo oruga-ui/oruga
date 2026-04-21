@@ -29,7 +29,7 @@ Instead of using the `<o-menu-item>` component directly inside the default slot,
 - Grouped options by adding additional `options` to the option object.
 
 ::: info Note
-The `options` prop works the same as the [**Select**](/components/select.html) input component `options` prop.
+The `options` prop works the same as the [**Select**](/components/Select.html) input component `options` prop.
 :::
 
 <ExampleViewer :component="Options" :code="OptionsCode" />
