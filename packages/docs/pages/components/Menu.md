@@ -7,7 +7,7 @@ sidebarDepth: 2
 
 # ~~Menu~~
 
-<section class="odocs-head">
+<section class="odocs-hea">
 
 > **Deprecated** Since v0.13.0 - use the `OTree` component instead
 

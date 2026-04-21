@@ -38,13 +38,13 @@ export function renderer(
 
     return `
 [//]: # (This file is generated and should not be edited by hand!)
-    
+
 ${isSubComponent ? "" : `# ${deprecated ? `~~${displayName}~~` : displayName}`}
 
 ${
     !isSubComponent
         ? `
-<section class="odocs-head">
+<section class="odocs-hea">
 ${experimental ? `<Badge type="warning" text="experimental" />` : ""}
 ${badges ? Object.keys(badges).map((b) => `<Badge text="${b}" />`) : ""}
 ${deprecated ? `> **Deprecated** ${(deprecated[0] as ParamTag).description}\n` : ""}

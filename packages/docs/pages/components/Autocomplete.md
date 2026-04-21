@@ -2,7 +2,7 @@
 
 # Autocomplete
 
-<section class="odocs-head">
+<section class="odocs-hea">
 
 The **Autocomplete** input component allows you to search through a list of options.
 It is an advanced input that provides suggestions as the user types.

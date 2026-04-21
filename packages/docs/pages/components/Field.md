@@ -2,7 +2,7 @@
 
 # Field
 
-<section class="odocs-head">
+<section class="odocs-hea">
 
 The **Field** component is used to add functionality to controls and to attach/group components and elements together.
 

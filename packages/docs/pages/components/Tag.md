@@ -2,7 +2,7 @@
 
 # Tag
 
-<section class="odocs-head">
+<section class="odocs-hea">
 
 The **Tag** component (also known as _Badge_) is a small but versatile element. It's very useful as a way to attach information to a block or other components. Its size makes it also easy to display in numbers, making it appropriate for long lists of items.
 

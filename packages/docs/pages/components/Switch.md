@@ -2,7 +2,7 @@
 
 # Switch
 
-<section class="odocs-head">
+<section class="odocs-hea">
 
 The **Switch** input component — sometimes called "toggle" — offers a choice between one of two values;
 it's a great option when you want the user to toggle a feature on or off.

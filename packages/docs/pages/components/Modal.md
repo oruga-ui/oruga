@@ -6,7 +6,7 @@ title: Modal
 
 # ~~Modal~~
 
-<section class="odocs-head">
+<section class="odocs-hea">
 
 > **Deprecated** Since v0.13.0 - use the `ODialog` component instead
 

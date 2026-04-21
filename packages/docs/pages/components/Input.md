@@ -2,7 +2,7 @@
 
 # Input
 
-<section class="odocs-head">
+<section class="odocs-hea">
 
 The **Input** component uses [HTML's native text input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text).
 It allows a user to enter a single line of text.
