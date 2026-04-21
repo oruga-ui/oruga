@@ -867,10 +867,18 @@ function updateCheckedRows(checkAll?: boolean): void {
         // if all rows are already checked, check nothing
         tableCheckedRows.value = [];
     else {
-        // else set all visible rows as checked
-        tableCheckedRows.value = availableRows.value
-            .map((row) => row.value)
-            .filter((value) => props.isRowCheckable(value));
+        // keep previously checked rows from other pages if keepChecked is enabled
+        const previouslyChecked = props.keepChecked
+            ? tableCheckedRows.value
+            : [];
+
+        // set all visible rows as checked
+        tableCheckedRows.value = [
+            ...previouslyChecked,
+            ...availableRows.value
+                .map((row) => row.value)
+                .filter((value) => props.isRowCheckable(value)),
+        ];
     }
 
     // emit event after the reactive checked rows list got updated
