@@ -10,7 +10,14 @@ import { peerDependencies } from "./package.json";
 // https://vitejs.dev/config/
 export default defineConfig({
     root: __dirname,
-    plugins: [vue(), dts({ outDir: "./dist/types" })],
+    plugins: [
+        vue(),
+        dts({
+            entryRoot: "../", // reset root to inclusion of files from other packages
+            outDir: "./dist/types",
+            copyDtsFiles: true,
+        }),
+    ],
     resolve: {
         alias: {
             // add '@oruga-ui/oruga-next' alias to sry entry point
