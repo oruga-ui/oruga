@@ -1,19 +1,19 @@
 import type { App } from "vue";
 
-import Popup from "./Popup.vue";
+import Popover from "./Popover.vue";
 
 import { registerComponent } from "@/utils/plugins";
 import type { OrugaComponentPlugin } from "@/utils/config";
 
-/** export popup specific types */
+/** export popover specific types */
 export type * from "./props";
 
-/** export popup plugin */
+/** export popover plugin */
 export default {
     install(app: App): void {
-        registerComponent(app, Popup);
+        registerComponent(app, Popover);
     },
 } satisfies OrugaComponentPlugin;
 
-/** export popup components */
-export { Popup as OPopup };
+/** export popover components */
+export { Popover as OPopover };

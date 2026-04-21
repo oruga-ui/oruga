@@ -8,36 +8,32 @@ import {
     usePopoverAPI,
 } from "@/composables";
 
-import type { PopupProps } from "./props";
+import type { PopoverProps } from "./props";
 
 /**
- * A popup is a content container that displays the content over the top of other content.
- * @displayName Popup
- * @style _popup.scss
+ * A popover is a content container that displays rich content over the top of other content.
+ * @displayName Popover
+ * @style _popover.scss
  */
 defineOptions({
     isOruga: true,
-    name: "OPopup",
-    configField: "popup",
+    name: "OPopover",
+    configField: "popover",
 });
 
-const props = withDefaults(defineProps<PopupProps>(), {
+const props = withDefaults(defineProps<PopoverProps>(), {
     override: undefined,
     active: false,
     id: () => useId(),
     content: undefined,
     disabled: false,
-    variant: () => getDefault("popup.variant"),
-    position: () => getDefault("popup.position", "top"),
-    animation: () => getDefault("popup.animation", "fade"),
-    maxWidth: () => getDefault("popup.maxWidth"),
-    triggerTag: () => getDefault("popup.triggerTag", "div"),
-    openOnClick: () => getDefault("popup.openOnClick", false),
-    openOnContextmenu: () => getDefault("popup.openOnContextmenu", false),
+    variant: () => getDefault("popover.variant"),
+    position: () => getDefault("popover.position", "top"),
+    animation: () => getDefault("popover.animation", "fade"),
     delay: undefined,
-    closeOnEscape: () => getDefault("popup.closeOnEscape", false),
-    closeOnOutside: () => getDefault("popup.closeOnOutside", false),
-    teleport: () => getDefault("dropdown.teleport", false),
+    // closeOnEscape: () => getDefault("popover.closeOnEscape", false),
+    // closeOnOutside: () => getDefault("popover.closeOnOutside", false),
+    teleport: () => getDefault("popover.teleport", false),
 });
 
 const emits = defineEmits<{
@@ -61,22 +57,14 @@ const emits = defineEmits<{
 defineSlots<{
     /**
      * Define a trigger here
-     * @param active {boolean} - popup active state
+     * @param active {boolean} - popover active state
      */
     default?(props: { active: boolean }): void;
-    /** Override the popup content, default is content prop */
+    /** Override the popover content, default is content prop */
     content?(): void;
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });
-
-const autoPosition = ref(props.position);
-
-/** update autoPosition on prop change */
-watch(
-    () => props.position,
-    (v) => (autoPosition.value = v),
-);
 
 const rootRef = useTemplateRef("rootElement");
 const contentRef = useTemplateRef("contentElement");
@@ -84,9 +72,19 @@ const triggerRef = ref<Element>();
 
 onMounted(() => {
     if (!rootRef.value) return;
+
     // get the trigger element which should be the first element in the default slot
     const trigger = rootRef.value.firstElementChild;
-    if (trigger && trigger !== contentRef.value) triggerRef.value = trigger;
+
+    if (!trigger || trigger === contentRef.value)
+        throw new Error("The popover require an element in the default slot.");
+
+    if (!(trigger instanceof Element))
+        throw new Error(
+            "The popover trigger element must be a valid HTMLElement.",
+        );
+
+    triggerRef.value = trigger;
 });
 
 const {
@@ -109,7 +107,7 @@ const _teleport = computed(() =>
         : { to: props.teleport, disabled: false },
 );
 
-// show/hode popover when active prop changes
+// show/hide popover when active prop changes
 watch(isActive, (value) => {
     if (activePopover.value === value) return;
     if (value) open();
@@ -132,8 +130,17 @@ function onToggle(event: ToggleEvent): void {
 
 // #region --- Computed Component Classes ---
 
-const rootClasses = defineClasses(["rootClass", "o-popup"]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-popover"],
+    [
+        "teleportClass",
+        "o-popover--teleport",
+        null,
+        computed(() => !!props.teleport),
+    ],
+);
 
+// TODO: rename to popover
 const contentClasses = defineClasses(
     ["contentClass", "o-tooltip__content"],
     [

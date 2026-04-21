@@ -3,6 +3,7 @@ import type {
     ComponentConfigBase,
     DynamicComponent,
     Numberish,
+    PopoverPosition
 } from "@/types";
 
 // Auto generated component theme config declarations
@@ -2071,16 +2072,16 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 buttonClasses: Record<string, any>;
             }>;
-        popup?: ComponentConfigBase &
+        popover?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Color variant of the popup
+                 * Color variant of the popover
                  */
                 variant: string;
                 /**
-                 * Position of the popup relative to the trigger
+                 * Position of the popover relative to the trigger
                  */
-                position: PopupPosition;
+                position: PopoverPosition;
                 /**
                  * Show and dismiss animation
                  */
@@ -2095,6 +2096,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element
                  */
                 rootClass: ClassDefinition;
+                /**
+                 * Class of the root element when teleported
+                 */
+                teleportClass: ClassDefinition;
                 /**
                  * Class of the trigger element
                  */

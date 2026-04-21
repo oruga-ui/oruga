@@ -17,7 +17,7 @@ export * from "./menu";
 export * from "./modal";
 export * from "./notification";
 export * from "./pagination";
-export * from "./popup";
+export * from "./popover";
 export * from "./programmatic";
 export * from "./radio";
 export * from "./select";
