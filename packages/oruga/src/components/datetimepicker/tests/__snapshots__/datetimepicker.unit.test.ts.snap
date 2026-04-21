@@ -173,12 +173,24 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
             <div class="o-datepicker__table__body">
               <div class="o-datepicker__table__row">
                 <!--v-if-->
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>26</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>27</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>28</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>29</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>30</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--today o-datepicker__table__cell--unselectable"><span>31</span></div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>26</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>27</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>28</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>29</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>30</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--today o-datepicker__table__cell--unselectable"><span>31</span>
+                  <!--v-if-->
+                </div>
                 <div class="o-datepicker__table__cell o-datepicker__table__cell--selected o-datepicker__table__cell--selectable" role="button"><span>1</span>
                   <!--v-if-->
                 </div>
@@ -287,11 +299,21 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-datepicker__table__cell o-datepicker__table__cell--selectable" role="button" tabindex="0"><span>31</span>
                   <!--v-if-->
                 </div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>1</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>2</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>3</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>4</span></div>
-                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>5</span></div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>1</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>2</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>3</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>4</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-datepicker__table__cell o-datepicker__table__cell--unselectable"><span>5</span>
+                  <!--v-if-->
+                </div>
               </div>
             </div>
           </section>
