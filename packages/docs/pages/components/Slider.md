@@ -6,7 +6,7 @@ sidebarDepth: 2
 
 # Slider
 
-<section class="odocs-hea">
+<section class="odocs-head">
 
 The **Slider** input component let user select a value or range from a given range with a graphic slider.
 The component implements the W3C ARIA APG [Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/).

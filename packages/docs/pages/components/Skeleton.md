@@ -2,7 +2,7 @@
 
 # Skeleton
 
-<section class="odocs-hea">
+<section class="odocs-head">
 
 The **Skeleton** component can be used as a loading animations or space-fillers while waiting for the actual content to load.
 

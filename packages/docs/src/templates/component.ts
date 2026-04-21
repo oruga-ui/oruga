@@ -44,7 +44,7 @@ ${isSubComponent ? "" : `# ${deprecated ? `~~${displayName}~~` : displayName}`}
 ${
     !isSubComponent
         ? `
-<section class="odocs-hea">
+<section class="odocs-head">
 ${experimental ? `<Badge type="warning" text="experimental" />` : ""}
 ${badges ? Object.keys(badges).map((b) => `<Badge text="${b}" />`) : ""}
 ${deprecated ? `> **Deprecated** ${(deprecated[0] as ParamTag).description}\n` : ""}

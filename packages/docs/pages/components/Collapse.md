@@ -2,7 +2,7 @@
 
 # Collapse
 
-<section class="odocs-hea">
+<section class="odocs-head">
 
 The **Collapse** component is an easy way to toggle the visibility of content with show/hide functionality.
 It has two elements: a disclosure button and a section of content whose visibility is controlled by the button.

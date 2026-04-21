@@ -6,7 +6,7 @@ sidebarDepth: 2
 
 # Tabs
 
-<section class="odocs-hea">
+<section class="odocs-head">
 
 The **Tabs** component is a responsive horizontal navigation bar that allows the user to easily switch between content.
 *Tab panels*are a set of individual content sections, where only one content panel can be displayed at a time.

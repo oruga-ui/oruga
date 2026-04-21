@@ -2,7 +2,7 @@
 
 # Select
 
-<section class="odocs-hea">
+<section class="odocs-head">
 
 The **Select** input component uses [HTML's native select input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select).
 Select inputs can be single value selections, or multi-value selections by using the `multiple` attribute.

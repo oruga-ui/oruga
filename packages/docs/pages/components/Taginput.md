@@ -2,7 +2,7 @@
 
 # Taginput
 
-<section class="odocs-hea">
+<section class="odocs-head">
 
 The **Taginput** input component allows users to search through a list of options and apply any number of tags.
 The component is based on the [Autocomplete](/components/Autocomplete.html) component and implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).

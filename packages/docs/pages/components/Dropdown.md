@@ -6,7 +6,7 @@ sidebarDepth: 2
 
 # Dropdown
 
-<section class="odocs-hea">
+<section class="odocs-head">
 
 The **Dropdown** component is highly versatile and can be used in various ways, such as for displaying lists as contextual overlays, as a quick menu, or as a selectable list of content options.
 
