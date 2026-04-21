@@ -34,20 +34,20 @@ import WithIconsCode from "@/components/Input/examples/with-icons.vue?raw";
 
 ### Variants
 
-<p>Different styles can be achieved with the <code>variant</code> prop.</p>
+Different styles can be achieved with the `variant` prop.
+
 <ExampleViewer :component="Variants" :code="VariantsCode" />
 
 ### Sizes
 
-<p>
-    The component can be displayed in different sizes using the
-    <code>size</code> prop.
-</p>
+The component can be displayed in different sizes using the `size` prop.
+
 <ExampleViewer :component="Sizes" :code="SizesCode" />
 
 ### With Icons
 
-<p>Add an icon to the component to explain its function more visually.</p>
+Add an icon to the component to explain its function more visually.
+
 <ExampleViewer :component="WithIcons" :code="WithIconsCode" />
 
 </section>

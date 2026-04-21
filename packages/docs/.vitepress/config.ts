@@ -85,7 +85,6 @@ export default defineConfig({
             // {
             //     icon: "x",
             //     link: "https://x.com/oruga_ui",
-
             //     ariaLabel: "Go to Oruga on x",
             // },
             {

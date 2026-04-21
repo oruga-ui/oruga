@@ -35,33 +35,26 @@ import TemplatesCode from "@/components/Field/examples/templates.vue?raw";
 
 ### Addons
 
-<p>
-    Use the <code>addons</code> prop to attach multiple controls together.
-</p>
+Use the `addons` prop to attach multiple controls together.
+
 <ExampleViewer :component="Addons" :code="AddonsCode" />
 
 ### Grouped
 
-<p>
-    Use the <code>grouped</code> prop to group several controls that belong
-    together.
-</p>
+Use the `grouped` prop to group several controls that belong together.
+
 <ExampleViewer :component="Grouped" :code="GroupedCode" />
 
 ### Horizontal
 
-<p>
-    When the <code>horizontal</code> prop is set, the component will align
-    horizontally.
-</p>
+When the `horizontal` prop is set, the component will align horizontally.
+
 <ExampleViewer :component="Horizontal" :code="HorizontalCode" />
 
 ### Templates
 
-<p>
-    The <code>label</code> and the <code>message</code> can be customised
-    using template slots if needed.
-</p>
+The `label` and the `message` can be customised using template slots if needed.
+
 <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
 </section>
