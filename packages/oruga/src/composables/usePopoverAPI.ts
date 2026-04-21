@@ -11,14 +11,14 @@ type BasePosition = "top" | "bottom" | "left" | "right" | "center";
 export type PopupPosition = BasePosition | [BasePosition, BasePosition];
 
 /**
- * TODO: remove @ts-expect-error
+ * TODO: add jsdoc
  * @param options
  * @returns Popover API handler
  */
 export function usePopoverAPI(options: {
     position: PopupPosition;
     /** see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value */
-    behavior: "auto" | "hint" | "manuell";
+    behavior?: "auto" | "hint" | "manuell";
     delay?: number;
     triggerRef: MaybeRefOrGetter<MaybeElement>;
     contentRef: MaybeRefOrGetter<MaybeElement>;
@@ -110,9 +110,7 @@ export function usePopoverAPI(options: {
         trigger.setAttribute("aria-details", id);
 
         // add content position styles
-        // @ts-expect-error Popover API is not yet fully included in TypeScript
-        content.style.positionArea = position;
-        // @ts-expect-error Popover API is not yet fully included in TypeScript
+        content.style.positionArea = position.toString();
         content.style.positionTryFallbacks =
             "flip-block, flip-inline, flip-block flip-inline";
 
