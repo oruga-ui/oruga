@@ -32,7 +32,7 @@ import DelayCode from "./delay.vue?raw";
         Use the <code>aria-haspopup</code> attribute on the trigger to indicate
         the type of interactive popup that this element triggers, usually
         <code>dialog</code> or <code>menu</code>; this should match the role of
-        the popover. You can see all possible values
+        the popover content. You can see all possible values
         <a
             href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-haspopup">
             here

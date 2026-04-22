@@ -139,7 +139,7 @@ const rootClasses = defineClasses(
         "teleportClass",
         "o-popover--teleport",
         null,
-        computed(() => !!props.teleport),
+        computed(() => !_teleport.value.disabled),
     ],
 );
 
@@ -156,7 +156,7 @@ defineExpose({ close, open, toggle });
 </script>
 
 <template>
-    <div ref="rootElement" data-oruga="popup" :class="rootClasses">
+    <div ref="rootElement" data-oruga="popover" :class="rootClasses">
         <slot :active="isActive" :open="open" />
 
         <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
