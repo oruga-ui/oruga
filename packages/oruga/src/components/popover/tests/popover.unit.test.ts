@@ -4,7 +4,7 @@ import { setTimeout } from "timers/promises";
 
 import OPopover from "@/components/popover/Popover.vue";
 
-describe.only("OPopover tests", () => {
+describe("OPopover tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {

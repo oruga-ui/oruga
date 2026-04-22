@@ -2075,11 +2075,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
         popover?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Color variant of the popover
-                 */
-                variant: string;
-                /**
-                 * Position of the popover relative to the trigger
+                 * The position of the popover relative to the trigger
                  */
                 position: PopoverPosition;
                 /**
@@ -2108,10 +2104,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element
                  */
                 contentClass: ClassDefinition;
-                /**
-                 * Class of the content element with variant
-                 */
-                variantClass: ClassDefinition;
             }>;
         radio?: ComponentConfigBase &
             Partial<{

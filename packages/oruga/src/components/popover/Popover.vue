@@ -12,6 +12,7 @@ import type { PopoverProps } from "./props";
 
 /**
  * A popover is a content container that displays rich content over the top of other content.
+ * @experimental
  * @displayName Popover
  * @style _popover.scss
  */

@@ -24,24 +24,23 @@ export type PopoverPosition = BasePosition | [BasePosition, BasePosition];
  * - Event listeners are registered on mount and cleaned up on unmount.
  *
  * @param options - Configuration options for the popover behavior.
- * @param options.position - Positioning area used for the popover (mapped to `CSS position-area`).
- * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value
- * @param options.behavior - Native popover behavior - defaults to `"auto"`.
- * @param options.delay - Optional delay (in ms) before opening the popover.
  * @param options.triggerRef - Reference or getter resolving to the trigger element.
  * @param options.contentRef - Reference or getter resolving to the popover content element.
+ * @param options.position - Positioning area used for the popover (mapped to `CSS position-area`).
+ * @param options.behavior - Native popover behavior - defaults to `"auto"`.
+ * @param options.delay - Optional delay (in ms) before opening the popover.
  * @param options.onToggle - Optional listener for the native `toggle` event.
  * @param options.onBeforeToggle - Optional listener for the native `beforetoggle` event.
  *
  * @returns Popover API handler.
  */
 export function usePopoverAPI(options: {
-    position: PopoverPosition;
+    position?: PopoverPosition;
+    triggerRef: MaybeRefOrGetter<EventTarget>;
+    contentRef: MaybeRefOrGetter<EventTarget>;
     /** see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value */
     behavior?: "auto" | "hint" | "manuell";
     delay?: number;
-    triggerRef: MaybeRefOrGetter<EventTarget>;
-    contentRef: MaybeRefOrGetter<EventTarget>;
     onToggle?: (e: ToggleEvent) => void;
     onBeforeToggle?: (e: ToggleEvent) => void;
 }): {
@@ -51,7 +50,7 @@ export function usePopoverAPI(options: {
     toggle: () => void;
 } {
     const {
-        position,
+        position = "top",
         behavior = "auto",
         delay,
         triggerRef,
