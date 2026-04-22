@@ -26,13 +26,11 @@ const props = withDefaults(defineProps<PopoverProps>(), {
     active: false,
     id: () => useId(),
     content: undefined,
-    disabled: false,
-    variant: () => getDefault("popover.variant"),
+    behavior: "auto",
     position: () => getDefault("popover.position", "top"),
-    animation: () => getDefault("popover.animation", "fade"),
     delay: undefined,
-    // closeOnEscape: () => getDefault("popover.closeOnEscape", false),
-    // closeOnOutside: () => getDefault("popover.closeOnOutside", false),
+    disabled: false,
+    animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
 });
 
@@ -58,10 +56,14 @@ defineSlots<{
     /**
      * Define a trigger here
      * @param active {boolean} - popover active state
+     * @param open {(): void} - function to open the popover
      */
-    default?(props: { active: boolean }): void;
-    /** Override the popover content, default is content prop */
-    content?(): void;
+    default?(props: { active: boolean; open: () => void }): void;
+    /**
+     * Override the popover content, default is content prop
+     * @param close {(): void} - function to close the popover
+     */
+    content?(props: { close: () => void }): void;
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });
@@ -95,6 +97,7 @@ const {
 } = usePopoverAPI({
     position: props.position,
     delay: props.delay,
+    behavior: props.behavior,
     triggerRef,
     contentRef,
     onToggle,
@@ -140,16 +143,7 @@ const rootClasses = defineClasses(
     ],
 );
 
-// TODO: rename to popover
-const contentClasses = defineClasses(
-    ["contentClass", "o-tooltip__content"],
-    [
-        "variantClass",
-        "o-tooltip__content--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
-);
+const contentClasses = defineClasses(["contentClass", "o-popover__content"]);
 
 // #endregion --- Computed Component Classes ---
 
@@ -163,7 +157,7 @@ defineExpose({ close, open, toggle });
 
 <template>
     <div ref="rootElement" data-oruga="popup" :class="rootClasses">
-        <slot :active="isActive" />
+        <slot :active="isActive" :open="open" />
 
         <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
             <transition :name="animation">
@@ -173,7 +167,7 @@ defineExpose({ close, open, toggle });
                     ref="contentElement"
                     :class="contentClasses"
                     popover>
-                    <slot name="content" :dismiss="close">
+                    <slot name="content" :close="close">
                         {{ content }}
                     </slot>
                 </div>

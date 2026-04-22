@@ -12,20 +12,20 @@ export type PopoverProps = {
     id?: string;
     /** Content text, unnecessary when content slot is used */
     content?: string;
-    /** Component will be disabled */
-    disabled?: boolean;
     /**
-     * Color variant of the popover
-     * @values primary, info, success, warning, danger, and any other custom color
+     * The behavior of the popover.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value
      */
-    variant?: string;
+    behavior?: "auto" | "hint" | "manuell";
     /**
-     * Position of the popover relative to the trigger
+     * The position of the popover relative to the trigger
      * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
      */
     position?: PopoverPosition;
-    /** Delay before the content appears (number in ms) */
+    /** Defines a delay (in ms) before the content appears */
     delay?: number;
+    /** The component will be disabled */
+    disabled?: boolean;
     /** Show and dismiss animation */
     animation?: string;
     /**
@@ -46,6 +46,4 @@ export type PopoverClasses = Partial<{
     triggerClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
-    /** Class of the content element with variant */
-    variantClass: ComponentClass;
 }>;

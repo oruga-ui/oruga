@@ -23,31 +23,22 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
         class: "contentClass",
         description: "Class of the content element.",
     },
-    // positionClass: {
-    //     class: "positionClass",
-    //     description: "Class of the content element with position.",
-    //     properties: ["position"],
-    //     suffixes: ["top", "bottom", "left", "right"],
-    //     action: (data): void => {
-    //         data.position = "right";
-    //     },
-    // },
-    variantClass: {
-        class: "variantClass",
-        description: "Class of the content element with variant.",
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (data): void => {
-            data.variant = "warning";
-        },
-    },
 };
 </script>
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-tooltip label="Tooltip!" always v-bind="props">
-            <o-button label="Delayed" />
-        </o-tooltip>
+        <o-popover content="Tooltip!" v-bind="props">
+            <o-button label="Open Popover!" />
+
+            <template #content>
+                <h4>Heading</h4>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur warning elit. Fusce
+                    id fermentum quam
+                </p>
+                <a href="#">Some Link</a>
+            </template>
+        </o-popover>
     </inspector-wrapper>
 </template>

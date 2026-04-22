@@ -103,8 +103,17 @@ export function usePopoverAPI(options: {
         open();
     }
 
-    // add click event listener on trigger element
+    function onTriggerKeydown(event: KeyboardEvent): void {
+        if (event.code !== "Enter" && event.code !== "Space") return;
+        event.preventDefault();
+
+        // open popover
+        open();
+    }
+
+    // add event listener on trigger element
     useEventListener(triggerRef, "click", onTriggerClick);
+    useEventListener(triggerRef, "keydown", onTriggerKeydown);
 
     // add toggle event listener on content element
     if (options.onToggle)
@@ -138,14 +147,17 @@ export function usePopoverAPI(options: {
             trigger instanceof HTMLButtonElement ||
             (trigger instanceof HTMLInputElement && trigger.type === "button")
         ) {
-            // add related poper properties
+            // add related popover properties
             trigger.setAttribute("popovertarget", id);
+        } else {
+            // add interactive proptiers
+            trigger.role = "button";
+            trigger.tabIndex = 0;
         }
-
-        trigger.addEventListener("click", (event) => event.preventDefault());
 
         // set a11y attributes
         trigger.setAttribute("aria-details", id);
+        trigger.setAttribute("aria-controls", id);
 
         // add content position styles
         content.style.positionArea = position.toString();

@@ -6,35 +6,62 @@ const teleport = ref(false);
 
 <template>
     <section class="odocs-spaced">
+        <o-field>
+            <o-switch v-model="teleport" label="Teleport to Body" />
+        </o-field>
+
         <p>
-            <o-field>
-                <o-switch v-model="teleport" label="teleport" />
-            </o-field>
+            <o-popover position="right" :teleport="teleport">
+                <o-button label="Right Popover" />
 
-            <o-tooltip
-                label="Tooltip right"
-                :teleport="teleport"
-                position="right">
-                <o-button label="Right" />
-            </o-tooltip>
+                <template #content>
+                    <h4>Heading</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur warning elit.
+                        Fusce id fermentum quam
+                    </p>
+                    <a href="#">Some Link</a>
+                </template>
+            </o-popover>
 
-            <o-tooltip label="Tooltip top" :teleport="teleport" position="top">
-                <o-button label="Top" />
-            </o-tooltip>
+            <o-popover position="top" :teleport="teleport">
+                <o-button label="Top Popover" />
 
-            <o-tooltip
-                label="Tooltip bottom"
-                :teleport="teleport"
-                position="bottom">
-                <o-button label="Bottom" />
-            </o-tooltip>
+                <template #content>
+                    <h4>Heading</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur warning elit.
+                        Fusce id fermentum quam
+                    </p>
+                    <a href="#">Some Link</a>
+                </template>
+            </o-popover>
 
-            <o-tooltip
-                label="Tooltip left"
-                :teleport="teleport"
-                position="left">
-                <o-button label="Left" />
-            </o-tooltip>
+            <o-popover position="bottom" :teleport="teleport">
+                <o-button label="Bottom Popover" />
+
+                <template #content>
+                    <h4>Heading</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur warning elit.
+                        Fusce id fermentum quam
+                    </p>
+                    <a href="#">Some Link</a>
+                </template>
+            </o-popover>
+
+            <o-popover position="left" :teleport="teleport">
+                <o-button label="Left Popover" />
+
+                <template #content>
+                    <h4>Heading</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur warning elit.
+                        Fusce id fermentum quam
+                    </p>
+                    <a href="#">Some Link</a>
+                </template>
+            </o-popover>
         </p>
     </section>
 </template>

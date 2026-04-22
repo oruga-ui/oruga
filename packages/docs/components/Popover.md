@@ -2,8 +2,8 @@
 
 <section class="odocs-head">
 
-The **Tooltip** component displays a short contextual information text bubble when the user hovers over an element, or when that owning element receives focus, but is otherwise not visible on the page.
-The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
+The **Popover** component is a wrapper for rich content that floats above other elements on the page. It is shown or hidden by interacting with a trigger element such as a button; it differs from a _tooltip_ in that it is usually triggered via click instead of hover and can contain interactive elements.
+The component is implemented using the native [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API).
 
 </section>
 
@@ -50,10 +50,10 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 
 ### Slots
 
-| Name    | Description                                           | Bindings                                    |
-| ------- | ----------------------------------------------------- | ------------------------------------------- |
-| default | Define a trigger here                                 | **active** `boolean` - popover active state |
-| content | Override the popover content, default is content prop | **dismiss** - undefined                     |
+| Name    | Description                                           | Bindings                                                                                           |
+| ------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| default | Define a trigger here                                 | **active** `boolean` - popover active state<br/>**open** `(): void` - function to open the popover |
+| content | Override the popover content, default is content prop | **close** `(): void` - function to close the popover                                               |
 
 </section>
 
