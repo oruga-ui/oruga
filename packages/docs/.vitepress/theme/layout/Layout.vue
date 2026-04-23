@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { useTemplateRef, ref, computed, watch } from "vue";
-import DefaultTheme from "vitepress/theme";
+import DefaultTheme, { useLayout } from "vitepress/theme";
 import ThemeSelector from "../components/ThemeSelector.vue";
-// @ts-expect-error types not found
-import { useSidebar } from "vitepress/dist/client/theme-default/composables/sidebar";
 import { useOruga } from "@oruga-ui/oruga-next";
 import type { ThemeConfig } from "@docs";
 
 const { Layout } = DefaultTheme;
-const { hasSidebar } = useSidebar();
+const { hasSidebar } = useLayout();
 
 const theme = ref<ThemeConfig>();
 

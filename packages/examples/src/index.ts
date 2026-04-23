@@ -48,7 +48,7 @@ const plugin = {
 
         // add examples components
         const examples = import.meta.glob<DefineComponent>(
-            "../../oruga/src/components/**/examples/index.vue",
+            "../../oruga/src/components/**/examples/index.{vue,md}",
             { eager: true },
         );
         for (const path in examples) {
