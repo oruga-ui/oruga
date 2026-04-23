@@ -13,7 +13,7 @@ export default defineConfig({
     plugins: [
         vue(),
         dts({
-            entryRoot: "../", // reset root to inclusion of files from other packages
+            entryRoot: "../", // reset root to include files from other packages
             outDir: "./dist/types",
             copyDtsFiles: true,
         }),
