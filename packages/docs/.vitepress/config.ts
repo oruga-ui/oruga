@@ -144,6 +144,7 @@ export default defineConfig({
     },
 
     vue: {
+        include: [/\.vue$/, /\.md$/], // <-- allows Vue to compile Markdown files
         template: {
             compilerOptions: {
                 // prevent compiling for exmaple-showcase web component

@@ -3,7 +3,7 @@ import type { App, DefineComponent } from "vue";
 import type { Theme } from "vitepress";
 
 // Custom Theme
-import DefaultTheme, { VPBadge } from "vitepress/theme";
+import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
 
@@ -77,9 +77,6 @@ export default {
     extends: DefaultTheme,
     Layout,
     enhanceApp({ app }: { app: App }): void {
-        // add vitepress components
-        app.component("Badge", VPBadge);
-
         // add fortawesome icons
         library.add(fas);
         app.component("VueFontawesome", FontAwesomeIcon);
@@ -99,15 +96,15 @@ export default {
             );
         }
 
-        // // import example components
-        // const examples = import.meta.glob<DefineComponent>(
-        //     "../../../oruga/src/components/**/examples/index.vue",
-        //     { eager: true },
-        // );
-        // for (const path in examples) {
-        //     const v = path.split("/");
-        //     app.component("example-" + v[6], markRaw(examples[path].default));
-        // }
+        // import example components
+        const examples = import.meta.glob<DefineComponent>(
+            "../../../oruga/src/components/**/examples/index.{vue,md}",
+            { eager: true },
+        );
+        for (const path in examples) {
+            const v = path.split("/");
+            app.component("example-" + v[6], markRaw(examples[path].default));
+        }
 
         // import inspector components
         const inspectors = import.meta.glob<DefineComponent>(
@@ -117,7 +114,7 @@ export default {
         for (const path in inspectors) {
             const v = path.split("/");
             app.component(
-                "inspector-" + v[6] + "-viewer",
+                "inspector-" + v[6],
                 markRaw(inspectors[path].default),
             );
         }

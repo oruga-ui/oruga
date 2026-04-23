@@ -13,41 +13,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Upload/examples/base.vue";
-import BaseCode from "@/components/Upload/examples/base.vue?raw";
-
-import DragDrop from "@/components/Upload/examples/drag-drop.vue";
-import DragDropCode from "@/components/Upload/examples/drag-drop.vue?raw";
-
-import Disabled from "@/components/Upload/examples/disabled.vue";
-import DisabledCode from "@/components/Upload/examples/disabled.vue?raw";
-
-import Variants from "@/components/Upload/examples/variants.vue";
-import VariantsCode from "@/components/Upload/examples/variants.vue?raw";
-</script>
-
-### Base
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Drag&Drop
-
-Enable drag and drop using the `drag-drop` prop. To allow multiple files to be uploaded, set the `multiple` prop.
-
-<ExampleViewer :component="DragDrop" :code="DragDropCode" />
-
-### Disabled
-
-Prevent inputs with the `disabled` prop.
-
-<ExampleViewer :component="Disabled" :code="DisabledCode" />
-
-### Variants
-
-Different styles can be achieved with the `variant` prop.
-
-<ExampleViewer :component="Variants" :code="VariantsCode" />
+<example-upload />
 
 </section>
 
@@ -98,7 +64,7 @@ Different styles can be achieved with the `variant` prop.
 
 ## Class Inspector
 
-<inspector-upload-viewer />
+<inspector-upload />
 
 </section>
 

@@ -12,50 +12,7 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 ## Examples
 
-<script setup >
-import Base from "@/components/Field/examples/base.vue";
-import BaseCode from "@/components/Field/examples/base.vue?raw";
-
-import Addons from "@/components/Field/examples/addons.vue";
-import AddonsCode from "@/components/Field/examples/addons.vue?raw";
-
-import Grouped from "@/components/Field/examples/grouped.vue";
-import GroupedCode from "@/components/Field/examples/grouped.vue?raw";
-
-import Horizontal from "@/components/Field/examples/horizontal.vue";
-import HorizontalCode from "@/components/Field/examples/horizontal.vue?raw";
-
-import Templates from "@/components/Field/examples/templates.vue";
-import TemplatesCode from "@/components/Field/examples/templates.vue?raw";
-</script>
-
-### Base
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Addons
-
-Use the `addons` prop to attach multiple controls together.
-
-<ExampleViewer :component="Addons" :code="AddonsCode" />
-
-### Grouped
-
-Use the `grouped` prop to group several controls that belong together.
-
-<ExampleViewer :component="Grouped" :code="GroupedCode" />
-
-### Horizontal
-
-When the `horizontal` prop is set, the component will align horizontally.
-
-<ExampleViewer :component="Horizontal" :code="HorizontalCode" />
-
-### Templates
-
-The `label` and the `message` can be customised using template slots if needed.
-
-<ExampleViewer :component="Templates" :code="TemplatesCode" />
+<example-field />
 
 </section>
 
@@ -103,7 +60,7 @@ The `label` and the `message` can be customised using template slots if needed.
 
 ## Class Inspector
 
-<inspector-field-viewer />
+<inspector-field />
 
 </section>
 

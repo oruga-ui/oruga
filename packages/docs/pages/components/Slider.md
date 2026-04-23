@@ -18,57 +18,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Slider/examples/base.vue";
-import BaseCode from "@/components/Slider/examples/base.vue?raw";
-
-import Sizes from "@/components/Slider/examples/sizes.vue";
-import SizesCode from "@/components/Slider/examples/sizes.vue?raw";
-
-import Variants from "@/components/Slider/examples/variants.vue";
-import VariantsCode from "@/components/Slider/examples/variants.vue?raw";
-
-import Customise from "@/components/Slider/examples/customise.vue";
-import CustomiseCode from "@/components/Slider/examples/customise.vue?raw";
-
-import TickAndLabel from "@/components/Slider/examples/tick-and-label.vue";
-import TickAndLabelCode from "@/components/Slider/examples/tick-and-label.vue?raw";
-
-import Range from "@/components/Slider/examples/range.vue";
-import RangeCode from "@/components/Slider/examples/range.vue?raw";
-</script>
-
-### Base
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Sizes
-
-The component can be displayed in different sizes using the `size` prop.
-
-<ExampleViewer :component="Sizes" :code="SizesCode" />
-
-### Variants
-
-Different styles can be achieved with the `variant` prop.
-
-<ExampleViewer :component="Variants" :code="VariantsCode" />
-
-### Customise
-
-<ExampleViewer :component="Customise" :code="CustomiseCode" />
-
-### Tick and label
-
-Customise the labels using slots.
-
-<ExampleViewer :component="TickAndLabel" :code="TickAndLabelCode" />
-
-### Range
-
-When the `range` prop is set, the `modelValue` property will be an array of two values instead of a single value.
-
-<ExampleViewer :component="Range" :code="RangeCode" />
+<example-slider />
 
 </section>
 
@@ -156,7 +106,7 @@ When the `range` prop is set, the `modelValue` property will be an array of two 
 
 ## Class Inspector
 
-<inspector-slider-viewer />
+<inspector-slider />
 
 </section>
 

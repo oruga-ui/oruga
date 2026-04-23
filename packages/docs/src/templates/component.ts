@@ -63,7 +63,7 @@ ${
         ? ""
         : `
 <section class="odocs-examples">
-${renderExamples(component, config)}
+${renderExamples(component)}
 </section>
 `
 }

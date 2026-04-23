@@ -14,41 +14,7 @@ The component is based on the [Datepicker](/components/Datepicker) component.
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Datetimepicker/examples/base.vue";
-import BaseCode from "@/components/Datetimepicker/examples/base.vue?raw";
-
-import FooterSlot from "@/components/Datetimepicker/examples/footer-slot.vue";
-import FooterSlotCode from "@/components/Datetimepicker/examples/footer-slot.vue?raw";
-
-import Inline from "@/components/Datetimepicker/examples/inline.vue";
-import InlineCode from "@/components/Datetimepicker/examples/inline.vue?raw";
-
-import MinMax from "@/components/Datetimepicker/examples/min-max.vue";
-import MinMaxCode from "@/components/Datetimepicker/examples/min-max.vue?raw";
-</script>
-
-### Base
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Inline
-
-To render the component inline instead of a dropdown/modal use the `inline` prop.
-
-<ExampleViewer :component="Inline" :code="InlineCode" />
-
-### Footer slot
-
-The component has an additional `footer` slot for customization.
-
-<ExampleViewer :component="FooterSlot" :code="FooterSlotCode" />
-
-### Min/Max Datetime
-
-Use the `min-datetime` and `max-datetime` props to define a limited date range for the user to choose from.
-
-<ExampleViewer :component="MinMax" :code="MinMaxCode" />
+<example-datetimepicker />
 
 </section>
 
@@ -125,7 +91,7 @@ Use the `min-datetime` and `max-datetime` props to define a limited date range f
 
 ## Class Inspector
 
-<inspector-datetimepicker-viewer />
+<inspector-datetimepicker />
 
 </section>
 

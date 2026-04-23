@@ -15,43 +15,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Switch/examples/base.vue";
-import BaseCode from "@/components/Switch/examples/base.vue?raw";
-
-import Variants from "@/components/Switch/examples/variants.vue";
-import VariantsCode from "@/components/Switch/examples/variants.vue?raw";
-
-import Sizes from "@/components/Switch/examples/sizes.vue";
-import SizesCode from "@/components/Switch/examples/sizes.vue?raw";
-
-import Customise from "@/components/Switch/examples/customise.vue";
-import CustomiseCode from "@/components/Switch/examples/customise.vue?raw";
-</script>
-
-### Base
-
-The default value of a checkbox is `false` when unchecked and `true` wenn checked. Use the `true-value` and `false-value` properties to specify different value that will be used as the `modelValue` property when the specific radio is checked and unchecked
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Variants
-
-Different styles can be achieved with the `variant` prop.
-
-<ExampleViewer :component="Variants" :code="VariantsCode" />
-
-### Sizes
-
-The component can be displayed in different sizes using the `size` prop.
-
-<ExampleViewer :component="Sizes" :code="SizesCode" />
-
-### Customise
-
-By default, the component supports a label which is displayed to the right of the toggle unless the `position` prop is set to "left".
-
-<ExampleViewer :component="Customise" :code="CustomiseCode" />
+<example-switch />
 
 </section>
 
@@ -110,7 +74,7 @@ By default, the component supports a label which is displayed to the right of th
 
 ## Class Inspector
 
-<inspector-switch-viewer />
+<inspector-switch />
 
 </section>
 

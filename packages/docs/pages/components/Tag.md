@@ -12,50 +12,7 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Tag/examples/base.vue";
-import BaseCode from "@/components/Tag/examples/base.vue?raw";
-
-import Closeable from "@/components/Tag/examples/closeable.vue";
-import CloseableCode from "@/components/Tag/examples/closeable.vue?raw";
-
-import Badge from "@/components/Tag/examples/badge.vue";
-import BadgeCode from "@/components/Tag/examples/badge.vue?raw";
-
-import Variants from "@/components/Tag/examples/variants.vue";
-import VariantsCode from "@/components/Tag/examples/variants.vue?raw";
-
-import Sizes from "@/components/Tag/examples/sizes.vue";
-import SizesCode from "@/components/Tag/examples/sizes.vue?raw";
-</script>
-
-### Base
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Closeable
-
-Closeable tags have a button that can be focused, it emits a `close` event when clicked. The button can be overriden by the `close` slot.
-
-<ExampleViewer :component="Closeable" :code="CloseableCode" />
-
-### Badge
-
-Using the badge style with the `badge` prop can highlight information to a user or draw their attention to a specific element. Badges typically display numbers or icons.
-
-<ExampleViewer :component="Badge" :code="BadgeCode" />
-
-### Variants
-
-Like with buttons, different styles can be achieved with the `variant` prop.
-
-<ExampleViewer :component="Variants" :code="VariantsCode" />
-
-### Sizes
-
-The component can also be displayed in different sizes using the `size` prop.
-
-<ExampleViewer :component="Sizes" :code="SizesCode" />
+<example-tag />
 
 </section>
 
@@ -105,7 +62,7 @@ The component can also be displayed in different sizes using the `size` prop.
 
 ## Class Inspector
 
-<inspector-tag-viewer />
+<inspector-tag />
 
 </section>
 

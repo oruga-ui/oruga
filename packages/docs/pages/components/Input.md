@@ -14,41 +14,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Input/examples/base.vue";
-import BaseCode from "@/components/Input/examples/base.vue?raw";
-
-import Variants from "@/components/Input/examples/variants.vue";
-import VariantsCode from "@/components/Input/examples/variants.vue?raw";
-
-import Sizes from "@/components/Input/examples/sizes.vue";
-import SizesCode from "@/components/Input/examples/sizes.vue?raw";
-
-import WithIcons from "@/components/Input/examples/with-icons.vue";
-import WithIconsCode from "@/components/Input/examples/with-icons.vue?raw";
-</script>
-
-### Base
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Variants
-
-Different styles can be achieved with the `variant` prop.
-
-<ExampleViewer :component="Variants" :code="VariantsCode" />
-
-### Sizes
-
-The component can be displayed in different sizes using the `size` prop.
-
-<ExampleViewer :component="Sizes" :code="SizesCode" />
-
-### With Icons
-
-Add an icon to the component to explain its function more visually.
-
-<ExampleViewer :component="WithIcons" :code="WithIconsCode" />
+<example-input />
 
 </section>
 
@@ -114,7 +80,7 @@ Add an icon to the component to explain its function more visually.
 
 ## Class Inspector
 
-<inspector-input-viewer />
+<inspector-input />
 
 </section>
 

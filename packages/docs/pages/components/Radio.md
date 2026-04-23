@@ -14,34 +14,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Radio/examples/base.vue";
-import BaseCode from "@/components/Radio/examples/base.vue?raw";
-
-import Variants from "@/components/Radio/examples/variants.vue";
-import VariantsCode from "@/components/Radio/examples/variants.vue?raw";
-
-import Sizes from "@/components/Radio/examples/sizes.vue";
-import SizesCode from "@/components/Radio/examples/sizes.vue?raw";
-</script>
-
-### Base
-
-A radio component will render one selection at a time. Use the `native-value` property to specify the value that will be used as the `modelValue` property when the specific radio is checked.
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Variants
-
-Different styles can be achieved with the `variant` prop.
-
-<ExampleViewer :component="Variants" :code="VariantsCode" />
-
-### Sizes
-
-The component can be displayed in different sizes using the `size` prop.
-
-<ExampleViewer :component="Sizes" :code="SizesCode" />
+<example-radio />
 
 </section>
 
@@ -95,7 +68,7 @@ The component can be displayed in different sizes using the `size` prop.
 
 ## Class Inspector
 
-<inspector-radio-viewer />
+<inspector-radio />
 
 </section>
 

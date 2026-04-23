@@ -19,88 +19,7 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Tabs/examples/base.vue";
-import BaseCode from "@/components/Tabs/examples/base.vue?raw";
-
-import Types from "@/components/Tabs/examples/types.vue";
-import TypesCode from "@/components/Tabs/examples/types.vue?raw";
-
-import Positions from "@/components/Tabs/examples/positions.vue";
-import PositionsCode from "@/components/Tabs/examples/positions.vue?raw";
-
-import Expanded from "@/components/Tabs/examples/expanded.vue";
-import ExpandedCode from "@/components/Tabs/examples/expanded.vue?raw";
-
-import Variants from "@/components/Tabs/examples/variants.vue";
-import VariantsCode from "@/components/Tabs/examples/variants.vue?raw";
-
-import Sizes from "@/components/Tabs/examples/sizes.vue";
-import SizesCode from "@/components/Tabs/examples/sizes.vue?raw";
-
-import CustomHeader from "@/components/Tabs/examples/custom-header.vue";
-import CustomHeaderCode from "@/components/Tabs/examples/custom-header.vue?raw";
-
-import LongHeader from "@/components/Tabs/examples/long-header.vue";
-import LongHeaderCode from "@/components/Tabs/examples/long-header.vue?raw";
-
-import Vertical from "@/components/Tabs/examples/vertical.vue";
-import VerticalCode from "@/components/Tabs/examples/vertical.vue?raw";
-</script>
-
-### Base
-
-Each item component can have a `value` prop. The active tab is represented by the value of the item as the `modelValue` prop of the tabs component.
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Types
-
-The tabs header can be displayed in different styles using the `type` prop.
-
-<ExampleViewer :component="Types" :code="TypesCode" />
-
-### Positions
-
-The tabs header can be positioned by the `position` prop.
-
-<ExampleViewer :component="Positions" :code="PositionsCode" />
-
-### Expanded
-
-When the `expanded` prop is set, the tabs header will be occupy the full with it can have.
-
-<ExampleViewer :component="Expanded" :code="ExpandedCode" />
-
-### Variants
-
-Different styles can be achieved with the `variant` prop. The `variant` prop can be set for the whole `Tabs` component as well as for each `TabItem`.
-
-<ExampleViewer :component="Variants" :code="VariantsCode" />
-
-### Sizes
-
-The component can be displayed in different sizes using the `size` prop.
-
-<ExampleViewer :component="Sizes" :code="SizesCode" />
-
-### Vertical
-
-Adding the `vertical` prop displays the component vertically instead of horizontally.
-
-<ExampleViewer :component="Vertical" :code="VerticalCode" />
-
-### Custom header
-
-The individual tab label can be customised using the `header` slot.
-
-<ExampleViewer :component="CustomHeader" :code="CustomHeaderCode" />
-
-### Long header
-
-The `multiple` prop allows to break the tab header to be broken into multiple lines if there are too many tabs for one line.
-
-<ExampleViewer :component="LongHeader" :code="LongHeaderCode" />
+<example-tabs />
 
 </section>
 
@@ -202,7 +121,7 @@ The `multiple` prop allows to break the tab header to be broken into multiple li
 
 ## Class Inspector
 
-<inspector-tabs-viewer />
+<inspector-tabs />
 
 </section>
 

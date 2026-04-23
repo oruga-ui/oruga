@@ -17,76 +17,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ## Examples
 
-<script setup>
-import Base from "@/components/Notification/examples/base.vue";
-import BaseCode from "@/components/Notification/examples/base.vue?raw";
-
-import Variants from "@/components/Notification/examples/variants.vue";
-import VariantsCode from "@/components/Notification/examples/variants.vue?raw";
-
-import UseTypes from "@/components/Notification/examples/use-types.vue";
-import UseTypesCode from "@/components/Notification/examples/use-types.vue?raw";
-
-import AddCustomButtons from "@/components/Notification/examples/add-custom-buttons.vue";
-import AddCustomButtonsCode from "@/components/Notification/examples/add-custom-buttons.vue?raw";
-
-import ProgrammaticallyDefault from "@/components/Notification/examples/programmatically-default.vue";
-import ProgrammaticallyDefaultCode from "@/components/Notification/examples/programmatically-default.vue?raw";
-
-import ProgrammaticallyToast from "@/components/Notification/examples/programmatically-toast.vue";
-import ProgrammaticallyToastCode from "@/components/Notification/examples/programmatically-toast.vue?raw";
-
-import ProgrammaticallyCustom from "@/components/Notification/examples/programmatically-custom.vue";
-import ProgrammaticallyCustomCode from "@/components/Notification/examples/programmatically-custom.vue?raw";
-</script>
-
-### Base
-
-When a dialogue box seems a bit overkill for the task, notifications are a good way to display a simple message to inform the user.
-
-<ExampleViewer :component="Base" :code="BaseCode" />
-
-### Variants
-
-Different styles can be achieved with the `variant` prop.
-
-<ExampleViewer :component="Variants" :code="VariantsCode" />
-
-### Use types
-
-The `type` prop in combination with the `variant` prop adds specific icons to the notification.
-
-<ExampleViewer :component="UseTypes" :code="UseTypesCode" />
-
-### Add custom buttons
-
-<ExampleViewer :component="AddCustomButtons" :code="AddCustomButtonsCode" />
-
-### Programmatically
-
-This component provides a programmatic interface that can be accessed by the [`useOruga()`](/documentation/composables.html) composable. The composable can be used from outside the Vue instance. For example, it can be used in Pinia or Vue Router with this syntax:
-
-```js
-import { useOruga } from "@oruga-ui/oruga-next";
-const oruga = useOruga();
-oruga.notification.open("Notify!");
-```
-
-<ExampleViewer
-    :component="ProgrammaticallyDefault"
-    :code="ProgrammaticallyDefaultCode" />
-
-Toasts are lightweight notifications designed to resemble the push notifications popularised by mobile and desktop operating systems. They should consist of simple text only and be queued so as not to overwhelm the user.
-
-<ExampleViewer
-    :component="ProgrammaticallyToast"
-    :code="ProgrammaticallyToastCode" />
-
-For a more advanced experience, you can also pass any custom component via the `component` prop.
-
-<ExampleViewer
-    :component="ProgrammaticallyCustom"
-    :code="ProgrammaticallyCustomCode" />
+<example-notification />
 
 </section>
 
@@ -182,7 +113,7 @@ For a more advanced experience, you can also pass any custom component via the `
 
 ## Class Inspector
 
-<inspector-notification-viewer />
+<inspector-notification />
 
 </section>
 
