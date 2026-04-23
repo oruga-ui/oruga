@@ -2077,7 +2077,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * The position of the popover relative to the trigger
                  */
-                position: PopoverPosition;
+                position: "bottom" | "center" | "left" | "right" | "top";
                 /**
                  * Show and dismiss animation
                  */

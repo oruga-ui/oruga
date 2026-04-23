@@ -10,8 +10,7 @@ import DelayCode from "./delay.vue?raw";
 </script>
 
 <template>
-    <h3>Base</h3>
-
+    <h3 id="base">Base</h3>
     <p>
         Usually the trigger element for a popover is a `button` element.
         However, you can also use any other HTML element. By default, opening a
@@ -42,8 +41,7 @@ import DelayCode from "./delay.vue?raw";
 
     <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3>Position</h3>
-
+    <h3 id="position">Position</h3>
     <p>
         The direction in which the popover opens can be explicity defined using
         the `position` property. By default, the direction is automatically
@@ -55,7 +53,7 @@ import DelayCode from "./delay.vue?raw";
     </p>
     <ExampleViewer :component="Position" :code="PositionCode" />
 
-    <h3>Delay</h3>
+    <h3 id="delay">Delay</h3>
     <p>
         The appearance of the content can be delayed using the
         <code>delay</code> property.

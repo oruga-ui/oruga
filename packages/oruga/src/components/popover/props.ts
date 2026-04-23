@@ -15,13 +15,14 @@ export type PopoverProps = {
     /**
      * The behavior of the popover.
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value
+     * @values auto, hint, manuell
      */
     behavior?: "auto" | "hint" | "manuell";
     /**
      * The position of the popover relative to the trigger
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     * @values top, bottom, left, right, center
      */
-    position?: PopoverPosition;
+    position?: "top" | "bottom" | "left" | "right" | "center";
     /** Defines a delay (in ms) before the content appears */
     delay?: number;
     /** The component will be disabled */
