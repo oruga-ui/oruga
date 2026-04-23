@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
+import Markdown from "unplugin-vue-markdown/vite";
 
 import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
@@ -11,7 +12,10 @@ import { peerDependencies } from "./package.json";
 export default defineConfig({
     root: __dirname,
     plugins: [
-        vue(),
+        vue({
+            include: [/\.vue$/, /\.md$/], // <-- allows Vue to compile Markdown files
+        }),
+        Markdown({}),
         dts({
             entryRoot: "../", // reset root to include files from other packages
             outDir: "./dist/types",
