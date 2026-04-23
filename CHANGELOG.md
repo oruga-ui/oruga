@@ -1,3 +1,11 @@
+## [0.13.5](https://github.com/oruga-ui/oruga/compare/v0.13.4...v0.13.5) (2026-04-23)
+
+### Bug Fixes
+
+* **datepicker:** show events in prev and next days of a month ([#1617](https://github.com/oruga-ui/oruga/issues/1617)) ([71b484b](https://github.com/oruga-ui/oruga/commit/71b484be25f758eded6b11f5319ed9e83bc71113)), closes [#1614](https://github.com/oruga-ui/oruga/issues/1614)
+* **dropdown:** solve type issues ([#1615](https://github.com/oruga-ui/oruga/issues/1615)) ([0332164](https://github.com/oruga-ui/oruga/commit/03321643c08fc0a746386284b1a536637387df10))
+* **table:** check all preserves previously checked rows if keep-checked is true ([#1616](https://github.com/oruga-ui/oruga/issues/1616)) ([680f2a1](https://github.com/oruga-ui/oruga/commit/680f2a1399c0eab4be27977ef70ff7882d30f3a5))
+
 ## [0.13.4](https://github.com/oruga-ui/oruga/compare/v0.13.3...v0.13.4) (2026-04-10)
 
 ### Features
