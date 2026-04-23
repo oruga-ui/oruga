@@ -146,7 +146,6 @@ function generateConfigType(filePath: string): void {
     ComponentConfigBase,
     DynamicComponent,
     Numberish,
-    PopoverPosition
 } from "@/types";
 
 // Auto generated component theme config declarations
