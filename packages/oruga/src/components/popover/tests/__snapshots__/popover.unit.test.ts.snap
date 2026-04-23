@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OPopover tests > render correctly 1`] = `
+"<div data-oruga="popover" class="o-popover">
+  <p role="button" tabindex="0" aria-details="v-0" aria-controls="v-0"> Open Popover! </p>
+  <!--teleport start-->
+  <transition-stub name="fade" appear="false" persisted="false" css="true">
+    <div id="v-0" class="o-popover__content" popover="" style="position-area: top; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;">Lorem ipsum dolor sit amet, consectetur warning elit.</div>
+  </transition-stub>
+  <!--teleport end-->
+</div>"
+`;
