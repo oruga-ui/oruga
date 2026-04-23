@@ -45,13 +45,13 @@
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.7.0",
     "conventional-changelog": "^7.2.0",
-    "conventional-changelog-conventionalcommits": "9.3.0",
+    "conventional-changelog-conventionalcommits": "9.3.1",
     "eslint": "^9.36.0",
     "eslint-plugin-vue": "^10.5.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
-    "npm-check-updates": "^19.6.5",
+    "npm-check-updates": "^21.0.3",
     "npm-run-all2": "^8.0.4",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.3",
     "replace-in-file": "^8.4.0",
     "tsx": "^4.21.0"
   }
