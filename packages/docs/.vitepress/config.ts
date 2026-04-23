@@ -1,4 +1,4 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, type DefaultTheme } from "vitepress";
 
 import { fileURLToPath } from "url";
 import path from "path";
@@ -6,12 +6,12 @@ import fs from "fs";
 
 import { version } from "../../oruga/package.json";
 
-const componentsFolder = path.join(__dirname, "../components/");
+const componentsFolder = path.join(__dirname, "../pages/components/");
 const components = fs
     .readdirSync(componentsFolder)
     .map((c) => c.replace(".md", ""));
 
-const componentsItems = components
+const componentsItems: DefaultTheme.SidebarItem[] = components
     .map((c) => `/components/${c}`)
     .map((c) => {
         const name = c.split("/")[2];
@@ -21,7 +21,7 @@ const componentsItems = components
         };
     });
 
-const getStartedItems = [
+const getStartedItems: DefaultTheme.SidebarItem[] = [
     {
         text: "Introduction",
         link: "/documentation/#introduction",
@@ -64,6 +64,7 @@ export default defineConfig({
         ['meta', { name: 'twitter:image', content: 'https://oruga-ui.com/logo-banner.png?v=3' }],
     ],
     appearance: false,
+    srcDir: "./pages",
     themeConfig: {
         logo: "/logo.png",
         outline: [2, 4],
@@ -71,18 +72,39 @@ export default defineConfig({
             provider: "local",
         },
         socialLinks: [
-            { icon: "discord", link: "https://discord.gg/RuKuBYN" },
-            { icon: "twitter", link: "https://twitter.com/oruga_ui" },
-            { icon: "github", link: "https://github.com/oruga-ui/oruga" },
+            {
+                icon: "kofi",
+                link: "https://ko-fi.com/mlmoravek",
+                ariaLabel: "Support the project",
+            },
+            {
+                icon: "discord",
+                link: "https://discord.gg/RuKuBYN",
+                ariaLabel: "Join the Oruga Discord server",
+            },
+            // {
+            //     icon: "x",
+            //     link: "https://x.com/oruga_ui",
+            //     ariaLabel: "Go to Oruga on x",
+            // },
+            {
+                icon: "github",
+                link: "https://github.com/oruga-ui/oruga",
+                ariaLabel: "Go to Oruga on Github",
+            },
         ],
         nav: [
-            { text: "Home", link: "/" },
-            { text: "Documentation", link: "/documentation/" },
-            { text: "Expo", link: "/expo/" },
+            // { text: "Home", link: "/" },
             {
-                text: "Support",
-                items: [{ text: "Ko-fi", link: "https://ko-fi.com/mlmoravek" }],
+                text: "Documentation",
+                link: "/documentation",
+                activeMatch: "^/documentation",
             },
+            // { text: "Expo", link: "/expo/" },
+            // {
+            //     text: "Support",
+            //     items: [{ text: "Ko-fi", link: "https://ko-fi.com/mlmoravek" }],
+            // },
             {
                 text: `v${version}`,
                 items: [
@@ -90,35 +112,25 @@ export default defineConfig({
                         text: "Changelog",
                         link: "https://github.com/oruga-ui/oruga/releases",
                     },
+                    {
+                        text: "Contributing",
+                        link: "https://github.com/oruga-ui/oruga/blob/develop/.github/CONTRIBUTING.md",
+                    },
                 ],
             },
         ],
-        sidebar: {
-            "/documentation/": [
-                {
-                    text: "Get Started",
-                    collapsed: false,
-                    items: getStartedItems,
-                },
-                {
-                    text: "Components",
-                    collapsed: false,
-                    items: componentsItems,
-                },
-            ],
-            "/components/": [
-                {
-                    text: "Get Started",
-                    collapsed: false,
-                    items: getStartedItems,
-                },
-                {
-                    text: "Components",
-                    collapsed: false,
-                    items: componentsItems,
-                },
-            ],
-        },
+        sidebar: [
+            {
+                text: "Get Started",
+                collapsed: false,
+                items: getStartedItems,
+            },
+            {
+                text: "Components",
+                collapsed: false,
+                items: componentsItems,
+            },
+        ],
         footer: {
             message: "Released under the MIT License.",
             copyright: `Copyright © 2020-${new Date().getFullYear()} Oruga Ui`,
@@ -132,6 +144,7 @@ export default defineConfig({
     },
 
     vue: {
+        include: [/\.vue$/, /\.md$/], // <-- allows Vue to compile Markdown files
         template: {
             compilerOptions: {
                 // prevent compiling for exmaple-showcase web component
@@ -154,13 +167,6 @@ export default defineConfig({
                 ),
                 // add '@docs' alias to docs src folder
                 "@docs": fileURLToPath(new URL("./../src", import.meta.url)),
-            },
-        },
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    api: "modern-compiler",
-                },
             },
         },
     },

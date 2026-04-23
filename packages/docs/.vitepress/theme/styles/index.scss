@@ -6,7 +6,7 @@
     scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
-        width: 16px;
+        width: 14px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -14,7 +14,7 @@
         border-radius: 8px;
         border: 2px solid transparent;
         background-clip: content-box;
-        background-color: var(--vp-c-bg-soft-down);
+        background-color: var(--vp-c-gray-1);
     }
 }
 

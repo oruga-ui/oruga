@@ -1,0 +1,131 @@
+[//]: # "This file is generated and should not be edited by hand!"
+
+# Select
+
+<section class="odocs-head">
+
+The **Select** input component uses [HTML's native select input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select).
+Select inputs can be single value selections, or multi-value selections by using the `multiple` attribute.
+Use it with the [Field](/components/Field.html) component to access all the functionalities.
+
+</section>
+
+<section class="odocs-examples">
+
+## Examples
+
+<example-select />
+
+</section>
+
+<section class="odocs-specs">
+
+## Select Component
+
+> Select an item in a list. Use with Field to access all functionalities.
+
+```html
+<o-select></o-select>
+```
+
+### Props
+
+| Prop name          | Description                                                                           | Type                                                                                                                      | Values                                                                          | Default                                                                                                                                               |
+| ------------------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| autocomplete       | Same as native autocomplete options to use in HTML5 validation                        | string                                                                                                                    | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>  |
+| customValidity     | Custom HTML 5 validation error to set on the form control                             | string \| ((currentValue: ValueType&lt;unknown, IsMultiple&gt; \| null , state: ValidityState) =&gt; string) \| undefined | -                                                                               |                                                                                                                                                       |
+| disabled           | Disable the input - same as native disabled                                           | boolean                                                                                                                   | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| expanded           | Makes input full width when inside a grouped or addon field                           | boolean                                                                                                                   | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;expanded: false<br>}</code>      |
+| icon               | Icon to be shown                                                                      | string                                                                                                                    | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>      |
+| iconClickable      | Makes the icon clickable                                                              | boolean                                                                                                                   | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| iconPack           | Icon pack to use                                                                      | string                                                                                                                    | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>  |
+| iconRight          | Icon to be added on the right side                                                    | string                                                                                                                    | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;iconRight: undefined<br>}</code> |
+| iconRightClickable | Make the icon right clickable                                                         | boolean                                                                                                                   | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| iconRightVariant   | Variant of right icon                                                                 | string                                                                                                                    | -                                                                               |                                                                                                                                                       |
+| id                 | Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. | string                                                                                                                    | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                         |
+| v-model            | The input value state                                                                 | ValueType&lt;unknown, IsMultiple&gt;                                                                                      | -                                                                               |                                                                                                                                                       |
+| multiple           | Allow multiple selection - converts the `modelValue` into an array                    | IsMultiple                                                                                                                | -                                                                               |                                                                                                                                                       |
+| nativeSize         | Same as native size                                                                   | Numberish                                                                                                                 | -                                                                               |                                                                                                                                                       |
+| options            | Select options, unnecessary when default slot is used                                 | SelectOptions&lt;unknown&gt;                                                                                              | -                                                                               |                                                                                                                                                       |
+| override           | Override existing theme classes completely                                            | boolean                                                                                                                   | -                                                                               |                                                                                                                                                       |
+| placeholder        | Text when nothing is selected                                                         | string                                                                                                                    | -                                                                               |                                                                                                                                                       |
+| required           | Same as native required                                                               | boolean                                                                                                                   | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| rounded            | Makes the element rounded                                                             | boolean                                                                                                                   | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| size               | Vertical size of input                                                                | string                                                                                                                    | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;size: undefined<br>}</code>      |
+| statusIcon         | Show status icon using field and variant prop                                         | boolean                                                                                                                   | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;statusIcon: true<br>}</code>             |
+| useHtml5Validation | Enable HTML 5 native validation                                                       | boolean                                                                                                                   | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;useHtml5Validation: true<br>}</code>     |
+| variant            | Color variant of the control                                                          | string                                                                                                                    | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>   |
+
+### Events
+
+| Event name         | Properties                                                 | Description                     |
+| ------------------ | ---------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown \| unknown[]` - updated modelValue prop | modelValue prop two-way binding |
+| focus              | **event** `Event` - native event                           | on input focus event            |
+| blur               | **event** `Event` - native event                           | on input blur event             |
+| invalid            | **event** `Event` - native event                           | on input invalid event          |
+| icon-click         | **event** `Event` - native event                           | on icon click event             |
+| icon-right-click   | **event** `Event` - native event                           | on icon right click event       |
+
+### Slots
+
+| Name        | Description                                             | Bindings |
+| ----------- | ------------------------------------------------------- | -------- |
+| placeholder | Override the placeholder                                |          |
+| default     | Define the select options here, default is options prop |          |
+
+</section>
+
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-select />
+
+</section>
+
+<section class="odocs-style">
+
+## Sass Variables
+
+<div class="theme-oruga">
+
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                 | Default                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| $select-height                | h.useVar("control-height")                                                  |
+| $select-padding               | h.useVar("control-padding-vertical") h.useVar("control-padding-horizontal") |
+| $select-disabled-opacity      | h.useVar("control-disabled-opacity")                                        |
+| $select-color                 | h.useVar("font-color")                                                      |
+| $select-font-size             | h.useVar("font-size")                                                       |
+| $select-font-weight           | h.useVar("font-weight")                                                     |
+| $select-line-height           | h.useVar("line-height")                                                     |
+| $select-box-shadow            | h.useVar("control-box-shadow-inset")                                        |
+| $select-background-color      | h.useVar("control-background-color")                                        |
+| $select-border-color          | h.useVar("control-border-color")                                            |
+| $select-border-style          | solid                                                                       |
+| $select-border-width          | h.useVar("control-border-width")                                            |
+| $select-border-radius         | h.useVar("border-radius")                                                   |
+| $select-border-radius-rounded | h.useVar("border-radius-rounded")                                           |
+| $select-multiple-padding      | h.useVar("control-spacer")                                                  |
+| $select-arrow-color           | vars.$font-color                                                            |
+| $select-arrow-size            | 1em                                                                         |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
+
+</div>
+<div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div>
+<div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div>
+
+</section>

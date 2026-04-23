@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "sass": "^1.100.0",
-    "vitepress": "^1.6.4",
+    "vitepress": "^2.0.0-alpha.17",
     "vue": "^3.5.35",
     "vue-docgen-cli": "4.79.0"
   }
