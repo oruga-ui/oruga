@@ -1,8 +1,9 @@
 import { defineCustomElement, markRaw } from "vue";
 import type { App, DefineComponent } from "vue";
+import type { Theme } from "vitepress";
 
-// THEME
-import DefaultTheme, { VPBadge } from "vitepress/theme";
+// Custom Theme
+import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
 
@@ -17,13 +18,16 @@ import {
     type OrugaConfig,
 } from "@oruga-ui/oruga-next";
 
+// Themes
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
 
+// Icons
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+// Code Editor
 import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -70,12 +74,9 @@ export function saveTheme(theme: ThemeConfig): void {
 }
 
 export default {
-    ...DefaultTheme,
+    extends: DefaultTheme,
     Layout,
     enhanceApp({ app }: { app: App }): void {
-        // add vitepress components
-        app.component("Badge", VPBadge);
-
         // add fortawesome icons
         library.add(fas);
         app.component("VueFontawesome", FontAwesomeIcon);
@@ -97,7 +98,7 @@ export default {
 
         // import example components
         const examples = import.meta.glob<DefineComponent>(
-            "../../../oruga/src/components/**/examples/index.vue",
+            "../../../oruga/src/components/**/examples/index.{vue,md}",
             { eager: true },
         );
         for (const path in examples) {
@@ -113,7 +114,7 @@ export default {
         for (const path in inspectors) {
             const v = path.split("/");
             app.component(
-                "inspector-" + v[6] + "-viewer",
+                "inspector-" + v[6],
                 markRaw(inspectors[path].default),
             );
         }
@@ -147,4 +148,4 @@ export default {
 
         app.use(oruga);
     },
-};
+} satisfies Theme;
