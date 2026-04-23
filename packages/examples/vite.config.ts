@@ -12,7 +12,6 @@ import { peerDependencies } from "./package.json";
 export default defineConfig({
     root: __dirname,
     plugins: [
-        
         vue({
             include: [/\.vue$/, /\.md$/], // <-- allows Vue to compile Markdown files
         }),
@@ -22,7 +21,6 @@ export default defineConfig({
             outDir: "./dist/types",
             copyDtsFiles: true,
         }),
-    ,
     ],
     resolve: {
         alias: {
