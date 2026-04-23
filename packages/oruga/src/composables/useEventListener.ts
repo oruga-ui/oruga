@@ -11,7 +11,14 @@ import {
 import { isObject } from "@/utils/helpers";
 import { unrefElement } from "./unrefElement";
 
-export type EventTarget = Element | Document | Window | Component;
+export type EventTarget =
+    | Element
+    | Document
+    | Window
+    | Component
+    | null
+    | undefined;
+
 export type EventListenerOptions = AddEventListenerOptions & {
     /** Register event listener immediate or on mounted hook. */
     immediate?: boolean;
@@ -23,11 +30,11 @@ export type EventListenerOptions = AddEventListenerOptions & {
  * Register DOM events using addEventListener on mounted, and removeEventListener automatically on unmounted.
  * Adaption of {@link  https://vueuse.org/core/useEventListener}
  *
- * @param element DOM element to add the listener to
- * @param event Event name
- * @param handler Event handler function
- * @param options EventListenerOptions
- * @return stop function
+ * @param element - Target DOM element to add the listener to.
+ * @param event - The event name.
+ * @param handler - An event handler function.
+ * @param options - Optional additional configuration options.
+ * @return Returns a `stop` function to clear the listener.
  */
 export function useEventListener(
     element: MaybeRefOrGetter<EventTarget>,
@@ -38,9 +45,9 @@ export function useEventListener(
     let cleanup: () => void;
 
     const register = (): void => {
-        if (!element) return;
-
         const target = unrefElement(element);
+        if (!target) return;
+
         // create a clone of options, to avoid it being changed reactively on removal
         const optionsClone = isObject(options) ? { ...options } : options;
         // register listener with timeout to prevent animation collision
