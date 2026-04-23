@@ -53,14 +53,14 @@
     "@vue/tsconfig": "^0.9.1",
     "conventional-changelog": "^7.2.0",
     "conventional-changelog-conventionalcommits": "9.3.0",
-    "eslint": "^10.2.0",
-    "eslint-plugin-vue": "^10.8.0",
+    "eslint": "^10.2.1",
+    "eslint-plugin-vue": "^10.9.0",
     "eslint-plugin-vuejs-accessibility": "^2.5.0",
     "npm-check-updates": "^19.6.5",
     "npm-run-all2": "^8.0.4",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.3",
     "replace-in-file": "^8.4.0",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   }
 }
