@@ -68,6 +68,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.5",
     "sass": "^1.97.3",
+    "unplugin": "^2.3.11",
     "vite": "^7.3.2",
     "vite-plugin-dts": "^4.5.4",
     "vitepress": "^2.0.0-alpha.17"
