@@ -29,7 +29,7 @@
     "markdown-it-highlightjs": "^4.3.0"
   },
   "devDependencies": {
-    "sass": "^1.97.3",
+    "sass": "^1.99.0",
     "vitepress": "^1.6.4",
     "vue": "^3.5.32",
     "vue-component-meta": "^3.2.6",
