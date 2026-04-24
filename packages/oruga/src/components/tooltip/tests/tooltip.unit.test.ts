@@ -79,7 +79,7 @@ describe("OTooltip tests", () => {
             expect(content.isVisible()).toBeFalsy();
 
             // check DO open on hover
-            await trigger.trigger("mouseenter");
+            await trigger.trigger("pointerenter");
             await setTimeout(); // await async event is processed
 
             expect(content.isVisible()).toBeTruthy();
@@ -103,7 +103,7 @@ describe("OTooltip tests", () => {
             expect(content.exists()).toBeTruthy();
             expect(content.isVisible()).toBeFalsy();
 
-            await trigger.trigger("mouseenter");
+            await trigger.trigger("pointerenter");
             await setTimeout(); // await async event is processed
 
             expect(content.isVisible()).toBeFalsy();
@@ -126,7 +126,7 @@ describe("OTooltip tests", () => {
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on hover
-            await trigger.trigger("mouseenter");
+            await trigger.trigger("pointerenter");
             await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
@@ -188,7 +188,7 @@ describe("OTooltip tests", () => {
             expect(content.isVisible()).toBeFalsy();
 
             // check do NOT open on hover
-            await trigger.trigger("mouseenter");
+            await trigger.trigger("pointerenter");
             await setTimeout(); // await async event is processed
             expect(content.isVisible()).toBeFalsy();
 
@@ -244,7 +244,7 @@ describe("OTooltip tests", () => {
             expect(wrapper.emitted("open")).toHaveLength(1);
 
             // check Do also open on hover when focus
-            await trigger.trigger("mouseenter");
+            await trigger.trigger("pointerenter");
             await setTimeout(); // await async event is processed
 
             expect(content.isVisible()).toBeTruthy();
@@ -269,7 +269,7 @@ describe("OTooltip tests", () => {
             expect(content.isVisible()).toBeTruthy();
 
             // check Do close on hover out
-            await trigger.trigger("mouseleave");
+            await trigger.trigger("pointerleave");
             expect(content.isVisible()).toBeFalsy();
             expect(wrapper.emitted("close")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");

@@ -192,7 +192,7 @@ function getSliderSize(): number {
     return sliderRef.value?.getBoundingClientRect().width || 0;
 }
 
-function onSliderClick(event: MouseEvent): void {
+function onSliderClick(event: PointerEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
     if (
         !sliderRef.value ||
