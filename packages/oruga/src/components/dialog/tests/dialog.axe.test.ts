@@ -22,7 +22,7 @@ describe("ODialog axe test", () => {
             },
         },
         {
-            title: "axe dialog - modal case case",
+            title: "axe dialog - modal case",
             props: {
                 backdrop: true,
                 title: "Adcanced Title",

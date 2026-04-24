@@ -1,15 +1,14 @@
 <template>
     <section>
-        <o-collapse expanded>
+        <o-collapse expanded position="top">
             <template #trigger="{ open }">
-                <h3 class="trigger">
+                <p class="trigger">
                     <o-icon :icon="open ? 'chevron-down' : 'chevron-right'" />
                     {{ open ? "Close" : "Open" }} Collapse!
-                </h3>
+                </p>
             </template>
 
             <div class="notification">
-                <h4>Subtitle</h4>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     <br />
@@ -27,7 +26,7 @@
 <style scoped>
 .trigger {
     padding: 1rem;
-    background-color: var(--vp-c-brand-2);
+    background-color: var(--vp-c-brand-3);
     color: white;
     box-shadow:
         0 2px 3px hsla(0, 0%, 4%, 0.1),
