@@ -56,7 +56,7 @@ describe("<Popover>", () => {
         await expect.element(content).not.toBeVisible();
 
         // check do not open on right click
-        trigger.element().dispatchEvent(new MouseEvent("contextmenu"));
+        trigger.element().dispatchEvent(new PointerEvent("contextmenu"));
         await new Promise((r) => setTimeout(r, 10)); // await event handler get set
 
         content = screen.getByTestId("content");

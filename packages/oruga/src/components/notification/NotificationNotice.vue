@@ -174,14 +174,14 @@ function setAutoClose(): void {
 
 let isPaused = false;
 
-function onMouseEnter(): void {
+function onHoverEnter(): void {
     if (!props.pauseOnHover || props.infinite) return;
     isPaused = true;
     // stop auto close timeout
     clearTimeout(timeout);
 }
 
-function onMouseLeave(event: Event): void {
+function onHoverLeave(event: PointerEvent): void {
     if (isPaused)
         // close when mouse leave and is paused before
         close(event);
@@ -231,8 +231,8 @@ defineExpose({ close });
         :role="isAlert ? 'alert' : 'status'"
         :aria-atomic="true"
         @close="close"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave">
+        @pointerenter="onHoverEnter"
+        @pointerleave="onHoverLeave">
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->
             <component

@@ -50,7 +50,7 @@ describe("OPopover tests", () => {
             await setTimeout(); // await async event is processed
 
             // check do not open on hover
-            await trigger.trigger("mouseenter");
+            await trigger.trigger("pointerenter");
             await setTimeout(); // await async event is processed
 
             const content = wrapper.find(".o-popover__content");

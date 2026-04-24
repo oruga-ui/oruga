@@ -713,7 +713,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         data-oruga="listbox"
         :class="rootClasses"
         @focusout="onFocusout"
-        @mouseleave="isFocused && onFocusout($event)">
+        @pointerleave="isFocused && onFocusout($event)">
         <div v-if="$slots.header" :class="headerClasses">
             <slot name="header" />
         </div>
@@ -770,7 +770,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
             :aria-disabled="disabled"
             @focusin="onFocusin"
             @blur="onBlur"
-            @mouseleave="focusItem(undefined)"
+            @pointerleave="focusItem(undefined)"
             @keydown="onListKeyDown">
             <transition-group :name="animation">
                 <slot>
