@@ -504,10 +504,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
         collapse?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Custom animation (transition name)
-                 */
-                animation: string;
-                /**
                  * Trigger position
                  */
                 position: "bottom" | "top";

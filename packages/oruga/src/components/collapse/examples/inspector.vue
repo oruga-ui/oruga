@@ -36,25 +36,15 @@ const inspectData: InspectData<CollapseClasses, CollapseProps> = {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-collapse
-            animation="slide"
-            :open="true"
-            expanded
-            class="card"
-            v-bind="props">
-            <template #trigger="props">
-                <div class="card-header" role="button">
-                    <span class="card-header-title"> Collapse Title </span>
-                    <span class="card-header-icon">
-                        <o-icon
-                            :icon="props.open ? 'caret-up' : 'caret-down'" />
-                    </span>
-                </div>
+        <o-collapse open expanded v-bind="props">
+            <template #trigger="{ open }">
+                <p>
+                    <o-icon :icon="open ? 'chevron-down' : 'chevron-right'" />
+                    {{ open ? "Close" : "Open" }} Collapse!
+                </p>
             </template>
 
-            <div class="card-content">
-                <div class="content">Collapse Content</div>
-            </div>
+            <div>Collapse Content</div>
         </o-collapse>
     </inspector-wrapper>
 </template>
