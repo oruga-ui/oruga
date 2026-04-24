@@ -643,7 +643,7 @@ defineExpose({ value: vmodel, items: childItems });
     <div
         data-oruga="dropdown"
         :class="rootClasses"
-        @mouseleave="onTriggerHoverLeave"
+        @pointerleave="onTriggerHoverLeave"
         @focusout="onTriggerHoverLeave">
         <component
             :is="triggerTag"
@@ -663,7 +663,7 @@ defineExpose({ value: vmodel, items: childItems });
             :aria-label="selectable ? ariaLabel : undefined"
             @click="onTriggerClick"
             @contextmenu="onTriggerContextMenu"
-            @mouseenter="onTriggerHover"
+            @pointerenter="onTriggerHover"
             @focus.capture="onTriggerFocus"
             @keydown.tab="onEscape"
             @keydown.escape="onEscape"
@@ -719,7 +719,7 @@ defineExpose({ value: vmodel, items: childItems });
                     :aria-multiselectable="
                         selectable ? isTrueish(multiple) : undefined
                     "
-                    @mouseleave="onMenuHoverLeave"
+                    @pointerleave="onMenuHoverLeave"
                     @keydown.enter.prevent="inline && onEnter($event)"
                     @keydown.space.prevent="inline && onEnter($event)"
                     @keydown.up.prevent="inline && onUpPressed($event)"

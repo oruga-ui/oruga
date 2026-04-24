@@ -238,14 +238,14 @@ const emits = defineEmits<{
      * @param index {number} - index of clicked row
      * @param event {Event} - native mouseenter event
      */
-    mouseenter: [row: T, index: number, event: Event];
+    mouseenter: [row: T, index: number, event: PointerEvent];
     /**
      * on row mouseleave event
      * @param row {unknown} - row data
      * @param index {number} - index of clicked row
      * @param event {Event} - native mouseleave event
      */
-    mouseleave: [row: T, index: number, event: Event];
+    mouseleave: [row: T, index: number, event: PointerEvent];
     /**
      * on cell click event
      * @param row {unknown} - row data
@@ -1554,7 +1554,7 @@ defineExpose({
                             @dblclick="
                                 $emit('dblclick', row.value, row.index, $event)
                             "
-                            @mouseenter="
+                            @pointerenter="
                                 $emit(
                                     'mouseenter',
                                     row.value,
@@ -1562,7 +1562,7 @@ defineExpose({
                                     $event,
                                 )
                             "
-                            @mouseleave="
+                            @pointerleave="
                                 $emit(
                                     'mouseleave',
                                     row.value,

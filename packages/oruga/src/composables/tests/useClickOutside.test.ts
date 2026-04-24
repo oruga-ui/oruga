@@ -19,7 +19,9 @@ describe("useClickOutside test", () => {
         vi.runAllTimers();
 
         // Simulate click outside
-        document.body.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        document.body.dispatchEvent(
+            new PointerEvent("click", { bubbles: true }),
+        );
 
         expect(handler).toHaveBeenCalled();
 
@@ -36,7 +38,7 @@ describe("useClickOutside test", () => {
         vi.runAllTimers();
 
         // Simulate click inside
-        element.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        element.dispatchEvent(new PointerEvent("click", { bubbles: true }));
 
         expect(handler).not.toHaveBeenCalled();
 
@@ -57,7 +59,9 @@ describe("useClickOutside test", () => {
         vi.runAllTimers();
 
         // Simulate click on ignored element
-        ignoreElement.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        ignoreElement.dispatchEvent(
+            new PointerEvent("click", { bubbles: true }),
+        );
 
         expect(handler).not.toHaveBeenCalled();
 

@@ -538,7 +538,7 @@ function eventClasses(event: DatepickerEvent): ClassBinding[] {
                         focusedDate.month === date.getMonth() ? undefined : 0
                     "
                     @click.prevent="selectDate(date)"
-                    @mouseenter="onRangeHoverEndDate(date)"
+                    @pointerenter="onRangeHoverEndDate(date)"
                     @focus="onRangeHoverEndDate(date)"
                     @keydown.prevent="onKeydown($event, date)">
                     {{ monthNames[date.getMonth()] }}

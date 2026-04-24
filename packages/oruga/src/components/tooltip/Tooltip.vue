@@ -255,10 +255,10 @@ const arrowClasses = defineClasses(
             :aria-describedby="id"
             @click="onClick"
             @contextmenu="onContextMenu"
-            @mouseenter="onHover"
+            @pointerenter="onHover"
             @focus.capture="onFocus"
             @blur.capture="onHoverLeave"
-            @mouseleave="onHoverLeave">
+            @pointerleave="onHoverLeave">
             <slot :active="isActive" />
         </component>
 
