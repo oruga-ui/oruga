@@ -6,7 +6,7 @@
 
 The **Collapse** component (also known as _accordion_) is a disclosure widget which is used to toggle the display of further information.
 The component is implemented based on the [HTML \<details\> element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details) and consists of two elements: a short disclosure label (trigger) and a section of content whose visibility it controls; the content can be 'collapsed' or 'expanded'.
-This component also implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/) and also supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+This component implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/) and also supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
 
 </section>
 
