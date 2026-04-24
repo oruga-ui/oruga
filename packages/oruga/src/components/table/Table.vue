@@ -233,17 +233,17 @@ const emits = defineEmits<{
      */
     contextmenu: [row: T, index: number, event: Event];
     /**
-     * on row pointerenter event
+     * on row mouseenter event
      * @param row {unknown} - row data
      * @param index {number} - index of clicked row
-     * @param event {Event} - native pointerenter event
+     * @param event {Event} - native mouseenter event
      */
     mouseenter: [row: T, index: number, event: PointerEvent];
     /**
-     * on row pointerleave event
+     * on row mouseleave event
      * @param row {unknown} - row data
      * @param index {number} - index of clicked row
-     * @param event {Event} - native pointerleave event
+     * @param event {Event} - native mouseleave event
      */
     mouseleave: [row: T, index: number, event: PointerEvent];
     /**
