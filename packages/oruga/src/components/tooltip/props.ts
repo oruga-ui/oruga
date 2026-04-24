@@ -45,39 +45,39 @@ export type TooltipProps = {
     triggerTag?: DynamicComponent;
     /**
      * Show when hover over the trigger
-     * @deprecated - will be removed
+     * @deprecated will be removed
      */
     openOnHover?: boolean;
     /**
      * Show when trigger get focused
-     * @deprecated - will be removed
+     * @deprecated will be removed
      */
     openOnFocus?: boolean;
     /**
      * Show when clicked on the trigger
-     * @deprecated - will be removed - use OPopover instead
+     * @deprecated will be removed - use OPopover instead
      */
     openOnClick?: boolean;
     /**
      * Show when right clicked on the trigger
-     * @deprecated - will be removed - use OPopover instead
+     * @deprecated will be removed - use OPopover instead
      */
     openOnContextmenu?: boolean;
     /** Tooltip delay before it appears (number in ms) */
     delay?: number;
     /**
      * Close on hover out of the content
-     * @deprecated - will be removed
+     * @deprecated will be removed
      */
     closeable?: boolean;
     /**
      * Close when clicked outside of the panel
-     * @deprecated - will be removed
+     * @deprecated will be removed
      */
     closeOnOutside?: boolean;
     /**
      * Close when pressing escape key
-     * @deprecated - will be removed
+     * @deprecated will be removed
      */
     closeOnEscape?: boolean;
     /**
