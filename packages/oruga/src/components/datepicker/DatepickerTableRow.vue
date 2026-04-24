@@ -434,7 +434,7 @@ const cellEventsClass = defineClasses(
                         : 0
                 "
                 @click.prevent="selectDate(weekDay)"
-                @mouseenter="setRangeHoverEndDate(weekDay)"
+                @pointerenter="setRangeHoverEndDate(weekDay)"
                 @focus="setRangeHoverEndDate(weekDay)"
                 @keydown.enter.prevent="onKeydown($event, weekDay)">
                 <span>{{ weekDay.getDate() }}</span>

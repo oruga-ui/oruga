@@ -335,7 +335,7 @@ describe("ODropdown tests", () => {
             });
 
             const trigger = wrapper.find(".o-dropdown__trigger");
-            await trigger.trigger("mouseenter");
+            await trigger.trigger("pointerenter");
             expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeFalsy();
 
             await trigger.trigger("click");
@@ -348,7 +348,7 @@ describe("ODropdown tests", () => {
                 attachTo: document.body,
             });
             const trigger = wrapper.find(".o-dropdown__trigger");
-            await trigger.trigger("mouseenter");
+            await trigger.trigger("pointerenter");
             expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeTruthy();
         });
 
