@@ -54,6 +54,7 @@
     "conventional-changelog": "^7.2.0",
     "conventional-changelog-conventionalcommits": "9.3.1",
     "eslint": "^10.2.0",
+    "eslint-plugin-compat": "^7.0.1",
     "eslint-plugin-vue": "^10.8.0",
     "eslint-plugin-vuejs-accessibility": "^2.5.0",
     "npm-check-updates": "^21.0.3",
@@ -62,5 +63,9 @@
     "replace-in-file": "^8.4.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not op_mini all"
+  ]
 }

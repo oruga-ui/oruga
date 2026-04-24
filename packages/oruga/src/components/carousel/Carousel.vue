@@ -181,10 +181,11 @@ const indicatorItems = computed(() =>
     ),
 );
 
-const resizeObserver =
-    isClient && window.ResizeObserver
-        ? new window.ResizeObserver(onRefresh)
-        : undefined;
+let resizeObserver: ResizeObserver | undefined;
+
+if (isClient && window.ResizeObserver) {
+    resizeObserver = new window.ResizeObserver(onRefresh);
+}
 
 const windowWidth = ref(0);
 
