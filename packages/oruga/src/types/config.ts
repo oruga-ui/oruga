@@ -75,7 +75,7 @@ export type GlobalConfig = Partial<{
      * Teleport and programmatic default target
      * @default document.body
      */
-    teleportTarget: MaybeRefOrGetter<string | HTMLElement>;
+    teleportTarget: MaybeRefOrGetter<string | HTMLElement | ShadowRoot>;
     /**
      * Enable default form components HTML5 validation attribute
      * @default true
@@ -84,7 +84,7 @@ export type GlobalConfig = Partial<{
     /** Custom HTML5 validation invalid handler */
     invalidHandler: (
         validatable: ValidatableFormElement,
-        fieldElement?: Element | undefined,
+        fieldElement?: Element,
     ) => void;
     /** You can use transformClasses globally if you need to transform classes for any component. */
     transformClasses: TransformFunction;

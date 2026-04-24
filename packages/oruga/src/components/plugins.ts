@@ -17,6 +17,7 @@ import Menu from "./menu";
 import Modal from "./modal";
 import Notification from "./notification";
 import Pagination from "./pagination";
+import Popover from "./popover";
 import Programmatic from "./programmatic";
 import Radio from "./radio";
 import Select from "./select";
@@ -54,6 +55,7 @@ export {
     Modal,
     Notification,
     Pagination,
+    Popover,
     Programmatic,
     Radio,
     Select,

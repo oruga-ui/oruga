@@ -46,7 +46,8 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
-    value: props.value,
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    value: props.value as T,
     label: props.label,
     isViable: isViable.value,
     setHidden,
@@ -67,7 +68,9 @@ function setHidden(hidden: boolean): void {
 }
 
 /** Shows if the item is viable or not (not disabled or hidden). */
-const isViable = computed(() => !isHidden.value && isClickable.value);
+const isViable = computed(
+    () => !isHidden.value && !props.disabled && props.clickable,
+);
 
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
@@ -91,7 +94,7 @@ const isFocused = computed(
 function onClick(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, event);
-    emits("click", props.value as T, event);
+    emits("click", providedData.value.value, event);
 }
 
 /** Hover listener, focus the item. */

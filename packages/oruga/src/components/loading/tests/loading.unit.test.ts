@@ -57,7 +57,7 @@ describe("OLoading tests", () => {
             expect(wrapper.emitted("close")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeFalsy();
+            expect(activeEmits?.[0][0]).toBeFalsy();
         });
 
         test("react accordingly when pressing escape with  close on escape false", async () => {
@@ -96,7 +96,7 @@ describe("OLoading tests", () => {
             expect(wrapper.emitted("close")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
             expect(activeEmits).toHaveLength(1);
-            expect(activeEmits![0][0]).toBeFalsy();
+            expect(activeEmits?.[0][0]).toBeFalsy();
         });
 
         test("react accordingly when clicking outside with close on outside false", async () => {

@@ -52,6 +52,9 @@ const IGNORE_COMPONENTS = [
     "*/examples/**",
 ];
 
+const outDirComponents = "./pages/components";
+const outDirThemes = "./pages/themes";
+
 /** generate documentation via vue-docgen-cli */
 export async function run(): Promise<void> {
     const __dirname = process.cwd();
@@ -61,7 +64,7 @@ export async function run(): Promise<void> {
 
     // create vue-component-meta checker
     const checker = createVueComponentMetaChecker(
-        path.resolve(__dirname, "../oruga/tsconfig.app.json"),
+        path.resolve(__dirname, "../oruga/tsconfig.lib.json"),
     );
 
     // create vue-docgen-api config
@@ -70,7 +73,7 @@ export async function run(): Promise<void> {
         watch: watch,
         componentsRoot: path.resolve(__dirname, "../oruga/src/components"),
         components: "*/[A-Z]*.vue",
-        outDir: "./components",
+        outDir: outDirComponents,
         docsRepo: "oruga-ui/oruga",
         docsBranch: "develop",
         docsFolder: "packages/docs",
@@ -131,12 +134,12 @@ export async function run(): Promise<void> {
 
     console.log("Start generating docs...");
 
-    // generate documentation via vue-docgen-cli
+    // generate component documentation via vue-docgen-cli
     // @ts-expect-error .default call is unexpected
     await docgen.default(docgenConfig);
 
     // generate theme config documentations
-    createThemeDocs(__dirname);
+    createThemeDocs(__dirname, outDirThemes);
 
     console.log("Generating docs finished.");
 }

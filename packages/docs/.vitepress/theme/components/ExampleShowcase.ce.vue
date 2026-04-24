@@ -46,7 +46,7 @@ link.href =
 shadowRoot.appendChild(link);
 </script>
 
-<!-- eslint-disable-next-line vue/valid-template-root -->
+<!-- eslint-disable-next-line vue/valid-template-root vue/no-empty-component-block -->
 <template></template>
 
 <style lang="scss">

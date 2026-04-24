@@ -1,3 +1,33 @@
+## [0.13.5](https://github.com/oruga-ui/oruga/compare/v0.13.4...v0.13.5) (2026-04-23)
+
+### Bug Fixes
+
+* **datepicker:** show events in prev and next days of a month ([#1617](https://github.com/oruga-ui/oruga/issues/1617)) ([71b484b](https://github.com/oruga-ui/oruga/commit/71b484be25f758eded6b11f5319ed9e83bc71113)), closes [#1614](https://github.com/oruga-ui/oruga/issues/1614)
+* **dropdown:** solve type issues ([#1615](https://github.com/oruga-ui/oruga/issues/1615)) ([0332164](https://github.com/oruga-ui/oruga/commit/03321643c08fc0a746386284b1a536637387df10))
+* **table:** check all preserves previously checked rows if keep-checked is true ([#1616](https://github.com/oruga-ui/oruga/issues/1616)) ([680f2a1](https://github.com/oruga-ui/oruga/commit/680f2a1399c0eab4be27977ef70ff7882d30f3a5))
+
+## [0.13.4](https://github.com/oruga-ui/oruga/compare/v0.13.3...v0.13.4) (2026-04-10)
+
+### Features
+
+* **dialog:** add `returnValue` to component emits ([#1605](https://github.com/oruga-ui/oruga/issues/1605)) ([b0fe77c](https://github.com/oruga-ui/oruga/commit/b0fe77c60e65e5c6594955b2d700da7b5c05cf9c)), closes [#1604](https://github.com/oruga-ui/oruga/issues/1604)
+
+### Bug Fixes
+
+* **tree:** correct export component name ([#1606](https://github.com/oruga-ui/oruga/issues/1606)) ([3d291fa](https://github.com/oruga-ui/oruga/commit/3d291fa027691644d4ec149b508657ddbd2e7491))
+
+## [0.13.3](https://github.com/oruga-ui/oruga/compare/v0.13.2...v0.13.3) (2026-04-07)
+
+### Bug Fixes
+
+* **datepicker:** add missing `week-number-click` event ([#1602](https://github.com/oruga-ui/oruga/issues/1602)) ([ee172c7](https://github.com/oruga-ui/oruga/commit/ee172c774fb10a35736c6ab98b4296b255c84c79)), closes [#1600](https://github.com/oruga-ui/oruga/issues/1600)
+
+## [0.13.2](https://github.com/oruga-ui/oruga/compare/v0.13.1...v0.13.2) (2026-04-03)
+
+### Bug Fixes
+
+* **button:** prevent button trigger click event twice ([#1595](https://github.com/oruga-ui/oruga/issues/1595)) ([51376a1](https://github.com/oruga-ui/oruga/commit/51376a11f7f842e2590186c4ff3d7b689bffeb80))
+
 ## [0.13.1](https://github.com/oruga-ui/oruga/compare/v0.13.0...v0.13.1) (2026-03-10)
 
 ### Bug Fixes

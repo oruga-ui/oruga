@@ -22,6 +22,10 @@
                 password-reveal />
         </o-field>
 
+        <o-field label="Clearable">
+            <o-input model-value="John Silver" clearable />
+        </o-field>
+
         <o-field label="Message">
             <o-input
                 :maxlength="200"

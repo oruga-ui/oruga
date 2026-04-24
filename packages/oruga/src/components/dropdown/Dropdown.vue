@@ -139,7 +139,7 @@ defineSlots<{
      */
     trigger?(props: {
         active: boolean;
-        value: unknown | unknown[];
+        value: ModelValue;
         toggle: (event: Event) => void;
     }): void;
     /**
@@ -443,7 +443,7 @@ function close(event: Event): void {
  *   3. Close the dropdown.
  */
 function selectItem(item: DropdownChildItem<T>, event?: Event): void {
-    const value = item.data!.value!;
+    const value = item.data.value!;
     emits("select", value);
 
     if (props.selectable) {
@@ -676,7 +676,7 @@ defineExpose({ value: vmodel, items: childItems });
             <slot
                 name="trigger"
                 :active="isActive"
-                :value="modelValue"
+                :value="modelValue as ModelValue"
                 :toggle="onTriggerClick">
                 {{ label }}
             </slot>

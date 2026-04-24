@@ -412,7 +412,7 @@ const { childItems } = useProviderParent<TableColumnComponent<T>>({
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
     if (!childItems.value.length) return [];
     return childItems.value.map((columnItem) => {
-        const column = toValue(columnItem.data!);
+        const column = toValue(columnItem.data);
 
         // create additional th attrs data
         let thAttrsData =
@@ -670,15 +670,15 @@ function isColumnSorted(column: TableColumnItem<T>): boolean {
 }
 
 // calculate default sort on columns change and on initial load
-watch(tableColumns, defaultSort, { immediate: true });
+watch(tableColumns, setDefaultSort, { immediate: true });
 
 /** sort column based on the default-sort prop if not already sorted */
-function defaultSort(): void {
+function setDefaultSort(): void {
     // prevent sort when not columns or already sorted (for example async data)
     if (!tableColumns.value.length || currentSortColumn.value) return;
     if (!props.defaultSort) return;
 
-    let sortField = props.defaultSort;
+    let sortField;
     let sortDirection = props.defaultSortDirection;
     if (Array.isArray(props.defaultSort)) {
         sortField = props.defaultSort[0];
@@ -867,10 +867,18 @@ function updateCheckedRows(checkAll?: boolean): void {
         // if all rows are already checked, check nothing
         tableCheckedRows.value = [];
     else {
-        // else set all visible rows as checked
-        tableCheckedRows.value = availableRows.value
-            .map((row) => row.value)
-            .filter((value) => props.isRowCheckable(value));
+        // keep previously checked rows from other pages if keepChecked is enabled
+        const previouslyChecked = props.keepChecked
+            ? tableCheckedRows.value
+            : [];
+
+        // set all visible rows as checked
+        tableCheckedRows.value = [
+            ...previouslyChecked,
+            ...availableRows.value
+                .map((row) => row.value)
+                .filter((value) => props.isRowCheckable(value)),
+        ];
     }
 
     // emit event after the reactive checked rows list got updated

@@ -23,7 +23,7 @@
     </section>
 </template>
 
-<style lang="css" scoped>
+<style scoped>
 .trigger {
     padding: 1rem;
     background-color: var(--vp-c-brand-3);

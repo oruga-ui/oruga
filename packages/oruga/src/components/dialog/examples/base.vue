@@ -48,7 +48,7 @@ const isActive = ref(false);
             </template>
 
             <template #footer="{ close }">
-                <o-button label="Close" @click="close" />
+                <o-button label="Close" @click="close()" />
             </template>
         </o-dialog>
     </section>
