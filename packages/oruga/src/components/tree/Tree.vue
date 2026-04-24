@@ -655,7 +655,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
         data-oruga="tree"
         :class="rootClasses"
         @focusout="onFocusout"
-        @mouseleave="isFocused && onFocusout($event)">
+        @pointerleave="isFocused && onFocusout($event)">
         <div v-if="$slots.header" :class="headerClasses">
             <slot name="header" />
         </div>
@@ -676,7 +676,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
             :aria-labelledby="props.ariaLabelledby ?? parentField?.labelId"
             :aria-disabled="disabled"
             @focusin="onFocusin"
-            @mouseleave="focusItem(undefined)"
+            @pointerleave="focusItem(undefined)"
             @keydown="onListKeyDown">
             <transition-group :name="animation">
                 <slot>

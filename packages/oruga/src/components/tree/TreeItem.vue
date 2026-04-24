@@ -255,7 +255,7 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         :aria-label="ariaLabel ?? label"
         :aria-labelledby="ariaLabelledby"
         :aria-owns="hasChildren ? subtreeId : undefined">
-        <div :class="labelClasses" @mouseenter="focusItem" @click="clickItem">
+        <div :class="labelClasses" @pointerenter="focusItem" @click="clickItem">
             <o-icon
                 v-if="hasToggleIcon"
                 data-toggle

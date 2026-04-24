@@ -135,7 +135,7 @@ const rootClasses = defineClasses(
         :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"
-        @mouseenter="focusItem"
+        @pointerenter="focusItem"
         @keydown.enter="onClick"
         @keydown.space="onClick">
         <slot>{{ label }}</slot>

@@ -52,7 +52,7 @@ describe("useEventListener test", () => {
             });
             vi.runAllTimers();
             expect(listener).not.toBeCalled();
-            target.dispatchEvent(new MouseEvent(event));
+            target.dispatchEvent(new PointerEvent(event));
             expect(listener).toBeCalledTimes(1);
         });
 
@@ -71,6 +71,7 @@ describe("useEventListener test", () => {
     });
 
     describe("reactive target", () => {
+        const event = "click";
         const target = ref<HTMLDivElement | null>(
             document.createElement("div"),
         );
@@ -80,20 +81,20 @@ describe("useEventListener test", () => {
         });
 
         test("should not listen when target is invalid", async () => {
-            useEventListener(target, "click", listener);
+            useEventListener(target, event, listener);
             const el = target.value;
             target.value = null;
             await nextTick();
-            el?.dispatchEvent(new MouseEvent("click"));
+            el?.dispatchEvent(new PointerEvent(event));
             await nextTick();
 
             expect(listener).toHaveBeenCalledTimes(0);
         });
 
         test(`should listen event`, async () => {
-            useEventListener(target, "click", listener, { immediate: true });
+            useEventListener(target, event, listener, { immediate: true });
             vi.runAllTimers();
-            target.value?.dispatchEvent(new MouseEvent("click"));
+            target.value?.dispatchEvent(new PointerEvent(event));
 
             await nextTick();
 
@@ -101,13 +102,13 @@ describe("useEventListener test", () => {
         });
 
         test(`should manually stop listening event`, async () => {
-            const stop = useEventListener(target, "click", listener, {
+            const stop = useEventListener(target, event, listener, {
                 immediate: true,
             });
 
             stop();
 
-            target.value?.dispatchEvent(new MouseEvent("click"));
+            target.value?.dispatchEvent(new PointerEvent(event));
 
             await nextTick();
 
@@ -117,14 +118,14 @@ describe("useEventListener test", () => {
         test(`should auto stop listening event`, async () => {
             const scope = effectScope();
             scope.run(() => {
-                useEventListener(target, "click", listener, {
+                useEventListener(target, event, listener, {
                     immediate: true,
                 });
             });
 
             scope.stop();
 
-            target.value?.dispatchEvent(new MouseEvent("click"));
+            target.value?.dispatchEvent(new PointerEvent(event));
 
             await nextTick();
 

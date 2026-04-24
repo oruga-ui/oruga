@@ -398,7 +398,7 @@ const translation = computed(
 );
 
 /** handle drag event */
-function onDragStart(event: TouchEvent | MouseEvent): void {
+function onDragStart(event: TouchEvent | DragEvent): void {
     if (
         isDragging.value ||
         !settings.value.dragable ||
@@ -416,14 +416,14 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
     pauseTimer();
 }
 
-function onDragOver(event: TouchEvent | MouseEvent): void {
+function onDragOver(event: TouchEvent | DragEvent): void {
     if (!isDragging.value) return;
 
     const dragEndX =
         ((event as TouchEvent).touches
             ? (event as TouchEvent).changedTouches[0] ||
               (event as TouchEvent).touches[0]
-            : (event as MouseEvent)
+            : (event as DragEvent)
         ).clientX ?? 0;
     // calc transition delta value
     delta.value = (dragX.value ?? 0) - dragEndX;
@@ -608,8 +608,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         :class="rootClasses"
         role="region"
         aria-roledescription="carousel"
-        @mouseenter="onHoverEnter"
-        @mouseleave="onHoverLeave"
+        @pointerenter="onHoverEnter"
+        @pointerleave="onHoverLeave"
         @focusin="onHoverEnter"
         @focusout="onHoverLeave"
         @keydown.left.prevent="onPrev"

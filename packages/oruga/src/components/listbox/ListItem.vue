@@ -156,7 +156,7 @@ const itmeClasses = defineClasses(
         :aria-label="ariaLabel ?? label"
         :aria-labelledby="ariaLabelledby"
         @click.prevent="clickItem"
-        @mouseenter="focusItem">
+        @pointerenter="focusItem">
         <!-- TODO: add checkbox for checkable -->
         <slot :selected="isSelected" :disabled="isDisabled">
             <o-icon

@@ -105,16 +105,14 @@ function onBlur(): void {
     isFocused.value = false;
 }
 
-function onButtonDown(event): void {
+function onButtonDown(event: PointerEvent): void {
     if (disabled.value) return;
     event.preventDefault();
     onDragStart(event);
 
     if (isClient) {
-        document.addEventListener("mousemove", onDragging);
-        document.addEventListener("touchmove", onDragging);
-        document.addEventListener("mouseup", onDragEnd);
-        document.addEventListener("touchend", onDragEnd);
+        document.addEventListener("pointermove", onDragging);
+        document.addEventListener("pointerup", onDragEnd);
         document.addEventListener("contextmenu", onDragEnd);
     }
 }
@@ -151,21 +149,17 @@ function onEndKeyDown(): void {
     emits("change");
 }
 
-function onDragStart(event): void {
+function onDragStart(event: PointerEvent): void {
     dragging.value = true;
     emits("dragstart");
-    if (event.type === "touchstart") event.clientX = event.touches[0].clientX;
 
     startX.value = event.clientX;
     startPosition.value = parseFloat(currentPosition.value);
     newPosition.value = startPosition.value;
 }
 
-function onDragging(event): void {
+function onDragging(event: PointerEvent): void {
     if (dragging.value) {
-        if (event.type === "touchmove")
-            event.clientX = event.touches[0].clientX;
-
         const diff =
             ((event.clientX - startX.value) / props.sliderSize()) * 100;
         newPosition.value = startPosition.value + diff;
@@ -180,10 +174,8 @@ function onDragEnd(): void {
 
     setPosition(newPosition.value);
     if (isClient) {
-        document.removeEventListener("mousemove", onDragging);
-        document.removeEventListener("touchmove", onDragging);
-        document.removeEventListener("mouseup", onDragEnd);
-        document.removeEventListener("touchend", onDragEnd);
+        document.removeEventListener("pointermove", onDragging);
+        document.removeEventListener("pointerup", onDragEnd);
         document.removeEventListener("contextmenu", onDragEnd);
     }
 }
@@ -228,8 +220,7 @@ defineExpose({ setPosition });
                 :aria-valuemax="max"
                 :aria-disabled="disabled"
                 aria-orientation="horizontal"
-                @mousedown="onButtonDown"
-                @touchstart.passive="onButtonDown"
+                @pointerdown.passive="onButtonDown"
                 @focus="onFocus"
                 @blur="onBlur"
                 @keydown.left.prevent="onLeftKeyDown"

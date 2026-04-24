@@ -5,7 +5,7 @@ export type CarouselComponent<T> = {
     indicators: boolean;
     itemWidth: number;
     onClick: (event: Event) => void;
-    onDrag: (event: TouchEvent | MouseEvent) => void;
+    onDrag: (event: TouchEvent | DragEvent) => void;
     setActive: (value: T) => void;
 };
 
