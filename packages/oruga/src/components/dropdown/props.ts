@@ -20,11 +20,6 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     label?: string;
     /** Interaction is disabled */
     disabled?: boolean;
-    /**
-     * Menu content (items) are shown inline, trigger is removed
-     * @deprecated since 0.13.0, use the `OListbox` component instead
-     */
-    inline?: boolean;
     /** Enables item selection */
     selectable?: boolean;
     /** Menu content will be scrollable */
@@ -115,11 +110,6 @@ export type DropdownClasses = Partial<{
     modalClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
-    /**
-     * Class of the root element when inlined
-     * @deprecated since 0.13.0, use the `OListbox` component instead
-     */
-    inlineClass: ComponentClass;
     /** Class of the root element when disabled */
     disabledClass: ComponentClass;
     /** Class of the root element when expanded */

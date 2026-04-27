@@ -63,7 +63,6 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     active: false,
     label: undefined,
     disabled: false,
-    inline: false,
     selectable: false,
     keepOpen: () => getDefault("dropdown.keepOpen", false),
     keepFirst: () => getDefault("dropdown.keepFirst", false),
@@ -213,9 +212,8 @@ const isMobileNative = isClient && isMobileAgent.any();
 // check if should be shown as modal
 const isModal = computed(
     () =>
-        !props.inline &&
-        ((isMobile.value && props.mobileModal) ||
-            (!isMobile.value && props.desktopModal)),
+        (isMobile.value && props.mobileModal) ||
+        (!isMobile.value && props.desktopModal),
 );
 
 const menuStyle = computed(() => ({
@@ -233,8 +231,7 @@ watch(
         // on active set event handler if not open as modal
         if (value) {
             // keep first option always pre-focused
-            if (!props.inline && props.keepFirst && !focusedItem.value)
-                moveFocus(1);
+            if (props.keepFirst && !focusedItem.value) moveFocus(1);
         }
         if (isModal.value) toggleScroll(value);
     },
@@ -269,7 +266,7 @@ watch(
     childItems,
     () => {
         // change pre-focused element when items change and keepFirst
-        if (isActive.value && !props.inline && props.keepFirst) {
+        if (isActive.value && props.keepFirst) {
             focusedItem.value = undefined;
             moveFocus(1);
         }
@@ -344,14 +341,14 @@ if (isClient) {
 /** Close dropdown if clicked outside. */
 function onClickedOutside(event: Event): void {
     if (!props.closeOnOutside) return;
-    if (!isActive.value || props.inline) return;
+    if (!isActive.value) return;
     close(event);
 }
 
 /** Close dropdown if page get scrolled. */
 function onPageScroll(event: Event): void {
     if (!props.closeOnScroll) return;
-    if (!isActive.value || props.inline) return;
+    if (!isActive.value) return;
     close(event);
 }
 
@@ -583,8 +580,6 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
-    /** @deprecated */
-    ["inlineClass", "o-dropdown--inline", null, computed(() => props.inline)],
     ["mobileClass", "o-dropdown--mobile", null, isMobile],
     ["modalClass", "o-dropdown--modal", null, isModal],
     ["hoverableClass", "o-dropdown--hoverable", null, hoverable],
@@ -594,12 +589,7 @@ const rootClasses = defineClasses(
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
-    [
-        "activeClass",
-        "o-dropdown--active",
-        null,
-        computed(() => isActive.value || props.inline),
-    ],
+    ["activeClass", "o-dropdown--active", null, computed(() => isActive.value)],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-dropdown__trigger"]);
@@ -625,7 +615,7 @@ const menuClasses = defineClasses(
         "menuActiveClass",
         "o-dropdown__menu--active",
         null,
-        computed(() => isActive.value || props.inline),
+        computed(() => isActive.value),
     ],
 );
 
@@ -647,7 +637,6 @@ defineExpose({ value: vmodel, items: childItems });
         @focusout="onTriggerHoverLeave">
         <component
             :is="triggerTag"
-            v-if="!inline"
             ref="triggerRef"
             :class="triggerClasses"
             :role="selectable ? 'combobox' : undefined"
@@ -702,30 +691,22 @@ defineExpose({ value: vmodel, items: childItems });
             <transition :name="animation">
                 <component
                     :is="menuTag"
-                    v-show="(!disabled && isActive) || inline"
+                    v-show="!disabled && isActive"
                     :id="menuId"
                     :ref="(el) => (menuRef = setContent(el))"
-                    :tabindex="inline ? 0 : -1"
+                    :tabindex="-1"
                     :class="menuClasses"
                     :style="menuStyle"
                     :role="selectable ? 'listbox' : 'menu'"
                     :aria-labelledby="labelId"
                     :aria-label="ariaLabel"
                     :aria-hidden="
-                        !selectable && !inline
-                            ? disabled || !isActive
-                            : undefined
+                        !selectable ? disabled || !isActive : undefined
                     "
                     :aria-multiselectable="
                         selectable ? isTrueish(multiple) : undefined
                     "
-                    @pointerleave="onMenuHoverLeave"
-                    @keydown.enter.prevent="inline && onEnter($event)"
-                    @keydown.space.prevent="inline && onEnter($event)"
-                    @keydown.up.prevent="inline && onUpPressed($event)"
-                    @keydown.down.prevent="inline && onDownPressed($event)"
-                    @keydown.home="inline && onHomePressed($event)"
-                    @keydown.end="inline && onEndPressed($event)">
+                    @pointerleave="onMenuHoverLeave">
                     <slot name="before" :toggle="toggle" />
 
                     <slot :toggle="toggle">
