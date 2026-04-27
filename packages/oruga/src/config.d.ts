@@ -1202,11 +1202,6 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 teleportClass: ClassDefinition;
                 /**
-                 * Class of the root element when inlined
-                 * @deprecated since 0.13.0, use the `OListbox` component instead
-                 */
-                inlineClass: ClassDefinition;
-                /**
                  * Class of the root element when disabled
                  */
                 disabledClass: ClassDefinition;
