@@ -1,6 +1,7 @@
 import eslint from "@eslint/js";
 import { globalIgnores } from "eslint/config";
 import { includeIgnoreFile } from "@eslint/compat";
+import compat from "eslint-plugin-compat";
 import vuePlugin from "eslint-plugin-vue";
 import {
   configureVueProject,
@@ -52,6 +53,9 @@ export default defineConfigWithVueTs([
       },
     },
   },
+
+  // add browser compatibility configs
+  compat.configs["flat/recommended"],
 
   // add js configs
   eslint.configs.recommended,
