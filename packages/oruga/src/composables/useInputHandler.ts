@@ -53,6 +53,7 @@ const constraintValidationAttributes = [
 /**
  * Form input handler functionalities
  */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function useInputHandler<T extends ValidatableFormElement>(
     /** input ref element - can be a html element or a vue component*/
     inputRef: Readonly<MaybeRefOrGetter<T | Component>>,

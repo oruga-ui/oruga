@@ -15,7 +15,7 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getDefault, getDefaultFunction } from "@/utils/config";
 import { isDate, pad } from "@/utils/helpers";
-import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
+import { defineClasses, useMatchMedia } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
@@ -79,7 +79,7 @@ const props = withDefaults(
         firstDayOfWeek: () => getDefault("datepicker.firstDayOfWeek", 0),
         rulesForFirstWeek: 4,
         yearsRange: () => getDefault("datepicker.yearsRange", [-100, 10]),
-        position: undefined,
+        position: "bottom",
         iconPack: () => getDefault("datepicker.iconPack"),
         icon: () => getDefault("datepicker.icon"),
         iconRight: () => getDefault("datepicker.iconRight"),
@@ -185,6 +185,9 @@ const { dtf, dateCreator, dateFormatter, dateParser } =
     useDatepickerMixins(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
+const isModal = computed(() =>
+    isMobile ? props.mobileModal : props.desktopModal,
+);
 
 const pickerRef = useTemplateRef("pickerComponent");
 
@@ -278,6 +281,16 @@ const computedMonthNames = computed(() =>
         : getMonthNames(props.locale),
 );
 
+const computedDayNames = computed(() =>
+    Array.isArray(props.dayNames)
+        ? props.dayNames
+        : getWeekdayNames(props.locale),
+);
+
+/**
+ * Rerturns an array of months for the month select.If earliest/latest
+ * dates are set by props, range of years will fall within those dates.
+ */
 const listOfMonths = computed<SelectOption<number>[]>(() => {
     let minMonth = 0;
     let maxMonth = 12;
@@ -300,14 +313,8 @@ const listOfMonths = computed<SelectOption<number>[]>(() => {
     }));
 });
 
-const computedDayNames = computed(() =>
-    Array.isArray(props.dayNames)
-        ? props.dayNames
-        : getWeekdayNames(props.locale),
-);
-
 /*
- * Returns an array of years for the year dropdown. If earliest/latest
+ * Returns an array of years for the year select. If earliest/latest
  * dates are set by props, range of years will fall within those dates.
  */
 const listOfYears = computed<SelectOption<number>[]>(() => {
@@ -536,8 +543,14 @@ const rootClasses = defineClasses(
     ],
 );
 
-const boxClasses = defineClasses(["boxClass", "o-datepicker__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses));
+const triggerClasses = defineClasses(["triggerClass", "o-datepicker__trigger"]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-datepicker__content"],
+    ["boxClass", "o-datepicker__box"],
+);
+
+// TODO Unnötig?
+// const boxClasses = defineClasses(["boxClass", "o-datepicker__box"]);
 
 const headerClasses = defineClasses(["headerClass", "o-datepicker__header"]);
 
@@ -558,11 +571,6 @@ const listsClasses = defineClasses([
 
 const footerClasses = defineClasses(["footerClass", "o-datepicker__footer"]);
 
-const pickerDropdownClasses = defineClasses([
-    "dropdownClass",
-    "o-datepicker__dropdown",
-]);
-
 // #endregion --- Computed Component Classes ---
 
 // #region --- Expose Public Functionalities ---
@@ -574,114 +582,116 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 </script>
 
 <template>
-    <OPickerWrapper
-        ref="pickerComponent"
-        v-model:active="isActive"
-        v-model:value="vmodel"
-        data-oruga="datepicker"
-        :picker-props="props"
-        :formatter="format"
-        :parser="parse"
-        :type="!isTypeMonth ? 'date' : 'month'"
-        :max="maxDate"
-        :min="minDate"
-        :stay-open="props.multiple"
-        :root-classes="rootClasses"
-        :dropdown-classes="pickerDropdownClasses"
-        :box-class="boxClassBind"
-        :dtf="dtf"
-        @focus="$emit('focus', $event)"
-        @blur="$emit('blur', $event)"
-        @invalid="$emit('invalid', $event)"
-        @left="prevDate"
-        @right="nextDate"
-        @icon-click="$emit('icon-click', $event)"
-        @icon-right-click="$emit('icon-right-click', $event)">
-        <template v-if="$slots.trigger" #trigger>
-            <slot name="trigger" />
-        </template>
+    <div data-oruga="datepicker" :class="rootClasses">
+        <OPickerWrapper
+            ref="pickerComponent"
+            v-model:active="isActive"
+            v-model:value="vmodel"
+            :picker-props="props"
+            :formatter="format"
+            :parser="parse"
+            :type="!isTypeMonth ? 'date' : 'month'"
+            :max="maxDate"
+            :min="minDate"
+            :stay-open="props.multiple"
+            :modal="isModal"
+            :inline="inline"
+            :dtf="dtf"
+            :trigger-class="triggerClasses"
+            :content-class="contentClasses"
+            @focus="$emit('focus', $event)"
+            @blur="$emit('blur', $event)"
+            @invalid="$emit('invalid', $event)"
+            @icon-click="$emit('icon-click', $event)"
+            @icon-right-click="$emit('icon-right-click', $event)">
+            <template v-if="$slots.trigger" #trigger>
+                <slot name="trigger" />
+            </template>
 
-        <header :class="headerClasses">
-            <slot name="header">
-                <OButton
-                    v-if="!disabled"
-                    :class="prevButtonClasses"
-                    :disabled="!showPrev"
-                    :icon-pack="iconPack"
-                    :icon-left="iconPrev"
-                    :size="size"
-                    :aria-label="ariaPreviousLabel"
-                    @click.prevent="prev"
-                    @keydown.enter.prevent="prev"
-                    @keydown.space.prevent="prev" />
-
-                <OButton
-                    v-if="!disabled"
-                    :class="nextButtonClasses"
-                    :disabled="!showNext"
-                    :icon-pack="iconPack"
-                    :icon-left="iconNext"
-                    :size="size"
-                    :aria-label="ariaNextLabel"
-                    @click.prevent="next"
-                    @keydown.enter.prevent="next"
-                    @keydown.space.prevent="next" />
-
-                <div :class="listsClasses">
-                    <o-select
-                        v-if="!isTypeMonth"
-                        v-bind="selectClasses"
-                        v-model="focusedDateData.month"
-                        :disabled="disabled"
+            <!-- <div :class="boxClasses" @left="prevDate" @right="nextDate"> -->
+            <header :class="headerClasses">
+                <slot name="header">
+                    <OButton
+                        v-if="!disabled"
+                        :class="prevButtonClasses"
+                        :disabled="!showPrev"
+                        :icon-pack="iconPack"
+                        :icon-left="iconPrev"
                         :size="size"
-                        :options="listOfMonths"
-                        :aria-label="ariaSelectMonthLabel"
-                        :use-html5-validation="false"
-                        @keydown.left.stop.prevent="prev"
-                        @keydown.right.stop.prevent="next" />
+                        :aria-label="ariaPreviousLabel"
+                        @click.prevent="prev"
+                        @keydown.enter.prevent="prev"
+                        @keydown.space.prevent="prev" />
 
-                    <o-select
-                        v-bind="selectClasses"
-                        v-model="focusedDateData.year"
-                        :disabled="disabled"
+                    <OButton
+                        v-if="!disabled"
+                        :class="nextButtonClasses"
+                        :disabled="!showNext"
+                        :icon-pack="iconPack"
+                        :icon-left="iconNext"
                         :size="size"
-                        :options="listOfYears"
-                        :aria-label="ariaSelectYearLabel"
-                        :use-html5-validation="false"
-                        @keydown.left.stop.prevent="prev"
-                        @keydown.right.stop.prevent="next"
-                        @keydown.up.stop.prevent="focusedDateData.year += 1"
-                        @keydown.down.stop.prevent="
-                            focusedDateData.year -= 1
-                        " />
-                </div>
+                        :aria-label="ariaNextLabel"
+                        @click.prevent="next"
+                        @keydown.enter.prevent="next"
+                        @keydown.space.prevent="next" />
+
+                    <div :class="listsClasses">
+                        <o-select
+                            v-if="!isTypeMonth"
+                            v-bind="selectClasses"
+                            v-model="focusedDateData.month"
+                            :disabled="disabled"
+                            :size="size"
+                            :options="listOfMonths"
+                            :aria-label="ariaSelectMonthLabel"
+                            :use-html5-validation="false"
+                            @keydown.left.stop.prevent="prev"
+                            @keydown.right.stop.prevent="next" />
+
+                        <o-select
+                            v-bind="selectClasses"
+                            v-model="focusedDateData.year"
+                            :disabled="disabled"
+                            :size="size"
+                            :options="listOfYears"
+                            :aria-label="ariaSelectYearLabel"
+                            :use-html5-validation="false"
+                            @keydown.left.stop.prevent="prev"
+                            @keydown.right.stop.prevent="next"
+                            @keydown.up.stop.prevent="focusedDateData.year += 1"
+                            @keydown.down.stop.prevent="
+                                focusedDateData.year -= 1
+                            " />
+                    </div>
+                </slot>
+            </header>
+
+            <slot name="body">
+                <o-datepicker-month
+                    v-if="isTypeMonth"
+                    v-model="vmodel"
+                    v-model:focused-date="focusedDateData"
+                    :month-names="computedMonthNames"
+                    :picker-props="props"
+                    @range-start="$emit('range-start', $event)"
+                    @range-end="$emit('range-end', $event)" />
+
+                <o-datepicker-table
+                    v-else
+                    v-model="vmodel"
+                    v-model:focused-date="focusedDateData"
+                    :day-names="computedDayNames"
+                    :month-names="computedMonthNames"
+                    :picker-props="props"
+                    @week-number-click="$emit('week-number-click', $event)"
+                    @range-start="$emit('range-start', $event)"
+                    @range-end="$emit('range-end', $event)" />
             </slot>
-        </header>
 
-        <slot name="body">
-            <o-datepicker-month
-                v-if="isTypeMonth"
-                v-model="vmodel"
-                v-model:focused-date="focusedDateData"
-                :month-names="computedMonthNames"
-                :picker-props="props"
-                @range-start="$emit('range-start', $event)"
-                @range-end="$emit('range-end', $event)" />
-
-            <o-datepicker-table
-                v-else
-                v-model="vmodel"
-                v-model:focused-date="focusedDateData"
-                :day-names="computedDayNames"
-                :month-names="computedMonthNames"
-                :picker-props="props"
-                @week-number-click="$emit('week-number-click', $event)"
-                @range-start="$emit('range-start', $event)"
-                @range-end="$emit('range-end', $event)" />
-        </slot>
-
-        <footer v-if="$slots.footer" :class="footerClasses">
-            <slot name="footer" />
-        </footer>
-    </OPickerWrapper>
+            <footer v-if="$slots.footer" :class="footerClasses">
+                <slot name="footer" />
+            </footer>
+            <!-- </div> -->
+        </OPickerWrapper>
+    </div>
 </template>

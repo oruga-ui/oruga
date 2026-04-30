@@ -9,24 +9,23 @@ import {
     type PropType,
 } from "vue";
 
-import ODropdown from "../dropdown/Dropdown.vue";
-import ODropdownItem from "../dropdown/DropdownItem.vue";
+import OPopover from "../popover/Popover.vue";
 import OInput from "../input/Input.vue";
 
-import { isDate, isDefined, isMobileAgent, isTrueish } from "@/utils/helpers";
-import { isClient } from "@/utils/ssr";
 import {
-    getActiveClasses,
-    useEventListener,
-    useInputHandler,
-} from "@/composables";
+    checkMinMaxDate,
+    isDefined,
+    isMobileAgent,
+    isTrueish,
+} from "@/utils/helpers";
+import { useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ClassBinding, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 /**
- * This is a internal used component.
+ * This is an internal used component.
  * Used by Datepicker and Timepicker.
  */
 defineOptions({
@@ -39,12 +38,8 @@ const props = defineProps({
         type: [Date, Array] as PropType<Date | Date[] | undefined>,
         default: undefined,
     },
-    /** the active state of the dropdown */
+    /** the active state of the content */
     active: { type: Boolean, default: false },
-    /** parent picker component props  */
-    pickerProps: { type: Object, required: true },
-    /** data-oruga attribute value */
-    dataOruga: { type: String, required: true },
     /** format props value to input value */
     formatter: {
         type: Function as PropType<
@@ -64,14 +59,17 @@ const props = defineProps({
     min: { type: Date, default: undefined },
     max: { type: Date, default: undefined },
     stayOpen: { type: Boolean, default: false },
+    /** Show content as modal */
+    modal: { type: Boolean, default: false },
+    /** Show content inline */
+    inline: { type: Boolean, default: false },
     /** the DateTimeFormat object to watch for to update the parsed input value */
     dtf: { type: Object, default: undefined },
-    rootClasses: { type: Array as PropType<ClassBinding[]>, required: true },
-    dropdownClasses: {
-        type: Array as PropType<ClassBinding[]>,
-        required: true,
-    },
-    boxClass: { type: Array as PropType<ComponentClass>, required: true },
+
+    /** parent picker component props  */
+    pickerProps: { type: Object, required: true },
+    triggerClass: { type: Array as PropType<ComponentClass>, required: true },
+    contentClass: { type: Array as PropType<ComponentClass>, required: true },
 });
 
 const emits = defineEmits<{
@@ -95,29 +93,15 @@ const emits = defineEmits<{
     "icon-click": [event: Event];
     /** on icon right click event */
     "icon-right-click": [event: Event];
-    /** on dropdown left button press event */
-    left: [event: Event];
-    /** on dropdown right button press event */
-    right: [event: Event];
 }>();
-
-const isMobileNative = computed(
-    () =>
-        !isTrueish(props.pickerProps.inline) &&
-        isTrueish(props.pickerProps.mobileNative) &&
-        isMobileAgent.any(),
-);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const dropdownRef = useTemplateRef("dropdownComponent");
 const inputRef = useTemplateRef("inputComponent");
 const nativeInputRef = useTemplateRef("nativeInputComponent");
 
-const elementRef = computed(() =>
-    isMobileNative.value ? nativeInputRef.value : inputRef.value,
-);
+const elementRef = computed(() => nativeInputRef.value ?? inputRef.value);
 
 // use form input functionality for native input
 const {
@@ -129,6 +113,13 @@ const {
     onInvalid,
     isValid,
 } = useInputHandler<HTMLInputElement>(elementRef, emits, props.pickerProps);
+
+const isMobileNative = computed(
+    () =>
+        !isTrueish(props.inline) &&
+        isTrueish(props.pickerProps.mobileNative) &&
+        isMobileAgent.any(),
+);
 
 /**
  * Show input as text for placeholder,
@@ -174,8 +165,10 @@ function setValue(value: string): void {
     let date = props.parser(value, isMobileNative.value);
 
     // check min/max dates
-    if (Array.isArray(date)) date = date.map(checkMinMaxDate);
-    else if (isDefined(date)) date = checkMinMaxDate(date);
+    if (Array.isArray(date))
+        date = date.map((date) => checkMinMaxDate(date, props.min, props.max));
+    else if (isDefined(date))
+        date = checkMinMaxDate(date, props.min, props.max);
 
     nextTick(
         () =>
@@ -187,46 +180,19 @@ function setValue(value: string): void {
     emits("update:value", date);
 }
 
-function checkMinMaxDate(date: Date): Date {
-    if (!isDate(date)) return date;
-    if (props.min && date < props.min) date = props.min;
-    else if (props.max && date > props.max) date = props.max;
-    return date;
-}
-
 const isActive = defineModel<boolean>("active", { default: false });
 
-watch(isActive, onActiveChange);
-
-if (isClient) useEventListener(document, "keyup", onKeyup);
-
-/** Keypress event that is bound to the document. */
-function onKeyup(event: KeyboardEvent): void {
-    if (!isActive.value) return;
-    if (event.key === "Escape" || event.key === "Esc") togglePicker(false);
-}
-
-// --- PICKER EVENT HANDLER ---
+watch(isActive, (value: boolean) => {
+    if (value) onFocus();
+    else if (!value) onBlur();
+});
 
 /** Toggle picker */
 function togglePicker(active: boolean): void {
-    if (!dropdownRef.value) return;
-    if (active || isTrueish(props.pickerProps.closeOnClick))
-        nextTick(() => (isActive.value = active));
+    if (active) nextTick(() => (isActive.value = active));
 }
 
-/** Avoid dropdown toggle when is already visible */
-function onInputClick(event): void {
-    if (isActive.value) event.stopPropagation();
-}
-
-/** Emit 'blur' event on dropdown is not active (closed) */
-function onActiveChange(value: boolean): void {
-    if (value) onFocus();
-    else if (!value) onBlur();
-}
-
-// --- NATIVE EVENT HANDLER ---
+// #region  --- NATIVE EVENT HANDLER ---
 
 function onChange(event: Event): void {
     setValue((event.target as HTMLInputElement).value);
@@ -298,7 +264,9 @@ function onNativeChange(event: Event): void {
     setValue(value);
 }
 
-// --- Computed Component Classes ---
+// #endregion  --- NATIVE EVENT HANDLER ---
+
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -309,103 +277,91 @@ const inputBind = computed(() => ({
     ...props.pickerProps.inputClasses,
 }));
 
-const dropdownBind = computed(() => ({
-    "root-class": getActiveClasses(props.dropdownClasses),
-    "teleport-class": getActiveClasses(props.rootClasses),
-    ...props.pickerProps.dropdownClasses,
-}));
+// #endregion --- Computed Component Classes ---
 
-// --- Expose Public Functionalities ---
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ checkHtml5Validity, focus: setFocus });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
-    <div :data-oruga="dataOruga" :class="rootClasses" @click="onNativeClick">
-        <o-dropdown
-            v-if="!isMobileNative"
-            ref="dropdownComponent"
-            v-bind="dropdownBind"
-            v-model:active="isActive"
-            :open-on-click="pickerProps.openOnFocus"
-            :position="pickerProps.position"
-            :disabled="pickerProps.disabled"
-            :inline="pickerProps.inline"
-            :mobile-modal="pickerProps.mobileModal"
-            :desktop-modal="pickerProps.desktopModal"
-            :mobile-breakpoint="pickerProps.mobileBreakpoint"
-            :teleport="pickerProps.teleport">
-            <template v-if="!pickerProps.inline" #trigger>
-                <slot name="trigger">
-                    <o-input
-                        ref="inputComponent"
-                        v-bind="inputBind"
-                        v-model="inputValue"
-                        :placeholder="pickerProps.placeholder"
-                        :size="pickerProps.size"
-                        :icon-pack="pickerProps.iconPack"
-                        :icon="pickerProps.icon"
-                        :icon-right="pickerProps.iconRight"
-                        :icon-right-clickable="pickerProps.iconRightClickable"
-                        :expanded="pickerProps.expanded"
-                        :rounded="pickerProps.rounded"
-                        :disabled="pickerProps.disabled"
-                        :readonly="pickerProps.readonly"
-                        autocomplete="off"
-                        :use-html5-validation="false"
-                        @invalid="onInvalid"
-                        @click="onInputClick"
-                        @keyup.enter="togglePicker(true)"
-                        @change="onChange"
-                        @focus="onFocus"
-                        @blur="onBlur"
-                        @icon-click="$emit('icon-click', $event)"
-                        @icon-right-click="$emit('icon-right-click', $event)" />
-                </slot>
-            </template>
-
-            <o-dropdown-item
-                override
-                tag="div"
-                :item-class="boxClass"
+    <o-popover
+        v-if="!isMobileNative && !inline"
+        v-model:active="isActive"
+        :position="pickerProps.position"
+        :disabled="pickerProps.disabled"
+        :modal="modal"
+        :teleport="pickerProps.teleport"
+        override
+        :trigger-class="triggerClass"
+        :content-class="contentClass">
+        <slot name="trigger">
+            <o-input
+                ref="inputComponent"
+                v-bind="inputBind"
+                v-model="inputValue"
+                :placeholder="pickerProps.placeholder"
+                :size="pickerProps.size"
+                :icon-pack="pickerProps.iconPack"
+                :icon="pickerProps.icon"
+                :icon-right="pickerProps.iconRight"
+                :icon-right-clickable="pickerProps.iconRightClickable"
+                :expanded="pickerProps.expanded"
+                :rounded="pickerProps.rounded"
                 :disabled="pickerProps.disabled"
-                :clickable="false"
-                @keydown.left="$emit('left', $event)"
-                @keydown.right="$emit('right', $event)">
-                <slot />
-            </o-dropdown-item>
-        </o-dropdown>
+                :readonly="pickerProps.readonly"
+                autocomplete="off"
+                :use-html5-validation="false"
+                @invalid="onInvalid"
+                @keyup.enter="togglePicker(true)"
+                @change="onChange"
+                @focus="onFocus"
+                @blur="onBlur"
+                @icon-click="$emit('icon-click', $event)"
+                @icon-right-click="$emit('icon-right-click', $event)" />
+        </slot>
 
-        <!-- Native Picker -->
-        <template v-else>
-            <slot name="trigger">
-                <o-input
-                    ref="nativeInputComponent"
-                    v-bind="inputBind"
-                    v-model="inputValue"
-                    :type="initialNativeType"
-                    :min="formatter(min, true)"
-                    :max="formatter(max, true)"
-                    :step="step"
-                    :placeholder="pickerProps.placeholder"
-                    :size="pickerProps.size"
-                    :icon-pack="pickerProps.iconPack"
-                    :icon="pickerProps.icon"
-                    :icon-right="pickerProps.iconRight"
-                    :icon-right-clickable="pickerProps.iconRightClickable"
-                    :rounded="pickerProps.rounded"
-                    :disabled="pickerProps.disabled"
-                    :readonly="initialNativeType == 'text'"
-                    autocomplete="off"
-                    :use-html5-validation="false"
-                    @change="onNativeChange"
-                    @focus="onNativeFocus"
-                    @blur="onNativeBlur"
-                    @invalid="onInvalid"
-                    @icon-click="$emit('icon-click', $event)"
-                    @icon-right-click="$emit('icon-right-click', $event)" />
-            </slot>
+        <template #content>
+            <slot />
         </template>
+    </o-popover>
+
+    <div v-else-if="inline" :class="contentClass">
+        <slot />
     </div>
+
+    <!-- Native Picker -->
+    <template v-else>
+        <slot name="trigger">
+            <o-input
+                ref="nativeInputComponent"
+                v-bind="inputBind"
+                v-model="inputValue"
+                :type="initialNativeType"
+                :min="formatter(min, true)"
+                :max="formatter(max, true)"
+                :step="step"
+                :placeholder="pickerProps.placeholder"
+                :size="pickerProps.size"
+                :icon-pack="pickerProps.iconPack"
+                :icon="pickerProps.icon"
+                :icon-right="pickerProps.iconRight"
+                :icon-right-clickable="pickerProps.iconRightClickable"
+                :rounded="pickerProps.rounded"
+                :disabled="pickerProps.disabled"
+                :readonly="initialNativeType == 'text'"
+                autocomplete="off"
+                :use-html5-validation="false"
+                @click="onNativeClick"
+                @change="onNativeChange"
+                @focus="onNativeFocus"
+                @blur="onNativeBlur"
+                @invalid="onInvalid"
+                @icon-click="$emit('icon-click', $event)"
+                @icon-right-click="$emit('icon-right-click', $event)" />
+        </slot>
+    </template>
 </template>
