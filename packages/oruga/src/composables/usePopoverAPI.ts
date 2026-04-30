@@ -1,4 +1,12 @@
-import { onMounted, ref, type Ref, type MaybeRefOrGetter } from "vue";
+import {
+    onMounted,
+    ref,
+    watch,
+    isRef,
+    type Ref,
+    type MaybeRefOrGetter,
+    readonly,
+} from "vue";
 import {
     unrefElement,
     useEventListener,
@@ -28,7 +36,8 @@ export type PopoverPosition = BasePosition | [BasePosition, BasePosition];
  * @param options.contentRef - Reference or getter resolving to the popover content element.
  * @param options.position - Positioning area used for the popover (mapped to `CSS position-area`).
  * @param options.behavior - Native popover behavior - defaults to `"auto"`.
- * @param options.delay - Optional delay (in ms) before opening the popover.
+ * @param options.delay - An Optional delay (in ms) before opening the popover.
+ * @param options.trigger - An optional ref which will be watched and to open or close the popover.
  * @param options.onToggle - Optional listener for the native `toggle` event.
  * @param options.onBeforeToggle - Optional listener for the native `beforetoggle` event.
  *
@@ -39,12 +48,13 @@ export function usePopoverAPI(options: {
     triggerRef: MaybeRefOrGetter<EventTarget>;
     contentRef: MaybeRefOrGetter<EventTarget>;
     /** see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value */
-    behavior?: "auto" | "hint" | "manuell";
+    behavior?: "auto" | "hint" | "manual";
     delay?: number;
+    trigger?: Readonly<Ref<boolean>>;
     onToggle?: (e: ToggleEvent) => void;
     onBeforeToggle?: (e: ToggleEvent) => void;
 }): {
-    active: Ref<boolean>;
+    active: Readonly<Ref<boolean>>;
     open: () => void;
     close: () => void;
     toggle: () => void;
@@ -53,6 +63,7 @@ export function usePopoverAPI(options: {
         position = "top",
         behavior = "auto",
         delay,
+        trigger,
         triggerRef,
         contentRef,
     } = options;
@@ -60,6 +71,15 @@ export function usePopoverAPI(options: {
     let timeout: ReturnType<typeof setTimeout> | undefined;
 
     const active = ref(false);
+
+    if (isRef(trigger)) {
+        // show/hide popover when active prop changes
+        watch(trigger, (value) => {
+            if (active.value === value) return;
+            if (value) open();
+            else close();
+        });
+    }
 
     function open(): void {
         const trigger = unrefElement(triggerRef);
@@ -165,7 +185,7 @@ export function usePopoverAPI(options: {
     });
 
     return {
-        active,
+        active: readonly(active),
         open,
         close,
         toggle,
