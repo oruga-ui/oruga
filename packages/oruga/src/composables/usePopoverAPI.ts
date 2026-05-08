@@ -84,10 +84,10 @@ export function usePopoverAPI(options: {
     function open(): void {
         const trigger = unrefElement(triggerRef);
         const content = unrefElement(contentRef);
-        if (!content || !trigger || active.value) return;
 
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
+            if (!content || !trigger || active.value) return;
             content.showPopover({ source: trigger }); // open popover with native api
             timeout = undefined;
             active.value = true;

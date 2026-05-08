@@ -1,6 +1,5 @@
 import type { ComponentClass } from "@/types";
 import type { DatepickerEvent } from "./types";
-import type { DropdownProps } from "../dropdown/props";
 import type { SelectProps } from "../select/props";
 import type { InputProps } from "../input/props";
 
@@ -22,8 +21,12 @@ export type DatepickerProps<
     range?: IsRange;
     /** Same as native, also push new item to v-model instead of replacing */
     multiple?: IsMultiple;
-    /** The active state of the dropdown, use v-model:active to make it two-way binding */
+    /** The active state of the picker, use v-model:active to make it two-way binding */
     active?: boolean;
+    /** The picker stays open after date got picked */
+    stayOpen?: boolean;
+    /** Open picker on focus */
+    openOnFocus?: boolean;
     /**
      * Define picker mode
      * @values date, month
@@ -60,10 +63,6 @@ export type DatepickerProps<
     readonly?: boolean;
     /** Same as native disabled */
     disabled?: boolean;
-    /** Open dropdown on focus */
-    openOnFocus?: boolean;
-    /** Close dropdown on click */
-    closeOnClick?: boolean;
     /** Date format locale */
     locale?: string;
     /** Custom function to format a date into a string */
@@ -100,16 +99,7 @@ export type DatepickerProps<
      * Position of the dropdown relative to the input
      * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
      */
-    position?:
-        | "auto"
-        | "top"
-        | "bottom"
-        | "left"
-        | "right"
-        | "top-right"
-        | "top-left"
-        | "bottom-left"
-        | "bottom-right";
+    position?: "top" | "bottom" | "left" | "right";
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -125,11 +115,11 @@ export type DatepickerProps<
     iconPrev?: string;
     /** Icon name for next icon */
     iconNext?: string;
-    /** Dropdown content is shown into a modal on mobile */
+    /** Picker content is shown into a modal on mobile */
     mobileModal?: boolean;
-    /** Dropdown content is shown into a modal on desktop */
+    /** Picker content is shown into a modal on desktop */
     desktopModal?: boolean;
-    /** Enable mobile native input if mobile agent */
+    /** Enable mobile native input if device is a mobile agent */
     mobileNative?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
@@ -267,8 +257,6 @@ export type DatepickerClasses = Partial<{
     monthEventVariantClass: ComponentClass;
     /** Class of the event element with indicator when type is `month` */
     monthEventIndicatorClass: ComponentClass;
-    /** Class for the underlaying dropdown component */
-    dropdownClass: ComponentClass;
     /** Class for the HTML input element */
     inputClass: ComponentClass;
     /**
@@ -276,11 +264,6 @@ export type DatepickerClasses = Partial<{
      * @ignore
      */
     inputClasses: InputProps<false>;
-    /**
-     * Class configuration for the internal dropdown component
-     * @ignore
-     */
-    dropdownClasses: DropdownProps<string, false>;
     /**
      * Class configuration for the internal select component
      * @ignore

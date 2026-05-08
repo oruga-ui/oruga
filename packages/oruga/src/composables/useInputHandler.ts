@@ -122,6 +122,13 @@ export function useInputHandler<T extends ValidatableFormElement>(
         });
     }
 
+    // /** Blur the underlaying input element. */
+    // function setBlur(): void {
+    //     nextTick(() => {
+    //         if (element.value) element.value.blur();
+    //     });
+    // }
+
     /** Click the underlaying input element. */
     function doClick(): void {
         nextTick(() => {
@@ -129,6 +136,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         });
     }
 
+    // TODO: refactor to use eventhandler on html element
     /** Unset focused and emit blur event. */
     function onBlur(event?: Event): void {
         isFocused.value = false;
@@ -142,6 +150,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         checkHtml5Validity();
     }
 
+    // TODO: refactor to use eventhandler on html element
     /** Set focused and emit focus event. */
     function onFocus(event?: Event): void {
         isFocused.value = true;

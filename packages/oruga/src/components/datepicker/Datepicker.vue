@@ -9,7 +9,7 @@ import { computed, ref, watch, useTemplateRef } from "vue";
 
 import OButton from "../button/Button.vue";
 import OSelect from "../select/Select.vue";
-import OPickerWrapper from "../utils/PickerWrapper.vue";
+import OPickerInput from "../utils/PickerInput.vue";
 import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
@@ -46,6 +46,8 @@ const props = withDefaults(
         // multiple: false,
         active: false,
         type: "date",
+        stayOpen: false,
+        openOnFocus: true,
         dayNames: () => getDefault("datepicker.dayNames"),
         monthNames: () => getDefault("datepicker.monthNames"),
         size: () => getDefault("datepicker.size"),
@@ -60,8 +62,6 @@ const props = withDefaults(
         placeholder: undefined,
         readonly: false,
         disabled: false,
-        openOnFocus: () => getDefault("datepicker.openOnFocus", true),
-        closeOnClick: () => getDefault("datepicker.closeOnClick", true),
         locale: () => getDefault("locale"),
         formatter: getDefaultFunction("datepicker.formatter"),
         parser: getDefaultFunction("datepicker.parser"),
@@ -102,7 +102,6 @@ const props = withDefaults(
         ariaSelectYearLabel: () =>
             getDefault("datepicker.ariaSelectYearLabel", "Select Year"),
         inputClasses: () => getDefault("datepicker.inputClasses"),
-        dropdownClasses: () => getDefault("datepicker.dropdownClasses"),
         selectClasses: () => getDefault("datepicker.selectClasses"),
     },
 );
@@ -549,6 +548,8 @@ const contentClasses = defineClasses(
     ["boxClass", "o-datepicker__box"],
 );
 
+const inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
+
 // TODO Unnötig?
 // const boxClasses = defineClasses(["boxClass", "o-datepicker__box"]);
 
@@ -583,22 +584,39 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
 <template>
     <div data-oruga="datepicker" :class="rootClasses">
-        <OPickerWrapper
+        <!-- Dont bing props in full -->
+        <OPickerInput
             ref="pickerComponent"
+            v-bind="$attrs"
             v-model:active="isActive"
             v-model:value="vmodel"
-            :picker-props="props"
             :formatter="format"
             :parser="parse"
+            :position="position"
+            :modal="isModal"
+            :inline="inline"
+            :open-on-focus="openOnFocus"
+            :stay-open="multiple || stayOpen"
+            :dtf="dtf"
+            :placeholder="placeholder"
             :type="!isTypeMonth ? 'date' : 'month'"
             :max="maxDate"
             :min="minDate"
-            :stay-open="props.multiple"
-            :modal="isModal"
-            :inline="inline"
-            :dtf="dtf"
+            :size="size"
+            :icon-pack="iconPack"
+            :icon="icon"
+            :icon-right="iconRight"
+            :icon-right-clickable="iconRightClickable"
+            :expanded="expanded"
+            :rounded="rounded"
+            :disabled="disabled"
+            :readonly="readonly"
+            :use-html5-validation="useHtml5Validation"
+            :custom-validity="customValidity"
+            :input-class="inputClasses"
             :trigger-class="triggerClasses"
             :content-class="contentClasses"
+            :input-classes="props.inputClasses"
             @focus="$emit('focus', $event)"
             @blur="$emit('blur', $event)"
             @invalid="$emit('invalid', $event)"
@@ -692,6 +710,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 <slot name="footer" />
             </footer>
             <!-- </div> -->
-        </OPickerWrapper>
+        </OPickerInput>
     </div>
 </template>

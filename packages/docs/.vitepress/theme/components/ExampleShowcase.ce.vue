@@ -82,4 +82,8 @@ shadowRoot.appendChild(link);
     position-area: none !important;
     position: fixed;
 }
+
+.trigger {
+    display: inline-block;
+}
 </style>

@@ -2,7 +2,7 @@
 import { computed, ref, useTemplateRef, watch } from "vue";
 
 import OSelect from "../select/Select.vue";
-import OPickerWrapper from "../utils/PickerWrapper.vue";
+import OPickerWrapper from "../utils/PickerInput.vue";
 
 import { getDefault, getDefaultFunction } from "@/utils/config";
 import { isDate, isDefined, pad } from "@/utils/helpers";
