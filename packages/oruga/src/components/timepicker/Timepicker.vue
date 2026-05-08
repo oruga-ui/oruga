@@ -66,15 +66,15 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     teleport: () => getDefault("timepicker.teleport", false),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
-    inputClasses: () => getDefault("timepicker.inputClasses"),
-    dropdownClasses: () => getDefault("timepicker.dropdownClasses"),
     ariaSelectSecondsLabel: () =>
         getDefault("timepicker.ariaSelectSecondLabel", "Select Second"),
     ariaSelectMinutesLabel: () =>
         getDefault("timepicker.ariaSelectMinuteLabel", "Select Minute"),
     ariaSelectHoursLabel: () =>
         getDefault("timepicker.ariaSelectHourLabel", "Select Hour"),
-    selectClasses: () => getDefault("timepicker.selectClasses"),
+    inputAttrs: () => getDefault("timepicker.inputAttrs"),
+    dropdownAttrs: () => getDefault("timepicker.dropdownAttrs"),
+    selectAttrs: () => getDefault("timepicker.selectAttrs"),
 });
 
 defineEmits<{
@@ -601,7 +601,7 @@ const selectPlaceholderClasses = defineClasses([
 const selectBind = computed(() => ({
     "select-class": getActiveClasses(selectSelectClasses),
     "placeholder-class": getActiveClasses(selectPlaceholderClasses),
-    ...props.selectClasses,
+    ...props.selectAttrs,
 }));
 
 // --- Expose Public Functionalities ---

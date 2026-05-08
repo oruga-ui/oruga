@@ -263,8 +263,8 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
             data.maxitems = 5;
         },
     },
-    autocompleteClasses: {
-        class: "autocompleteClasses",
+    autocompleteAttrs: {
+        class: "autocompleteAttrs",
         description: "Classes to apply on the internal autocomplete component.",
         relatedComponent: "Autocomplete",
     },

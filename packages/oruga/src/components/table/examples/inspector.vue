@@ -313,8 +313,8 @@ const inspectData: InspectData<
             data.tableClass = "inspector_table";
         },
     },
-    loadingClasses: {
-        class: "loadingClasses",
+    loadingAttrs: {
+        class: "loadingAttrs",
         description: "Classes to apply on the internal loading component.",
         relatedComponent: "Loading",
     },

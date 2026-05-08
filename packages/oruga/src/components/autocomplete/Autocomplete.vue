@@ -94,7 +94,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
     teleport: () => getDefault("autocomplete.teleport", false),
-    inputClasses: () => getDefault("autocomplete.inputClasses", {}),
+    inputAttrs: () => getDefault("autocomplete.inputAttrs", {}),
 });
 
 const emits = defineEmits<{
@@ -434,7 +434,7 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField?.value?.inputAttrs,
     ...attrs,
-    ...props.inputClasses,
+    ...props.inputAttrs,
 }));
 
 const rootClasses = defineClasses(["rootClass", "o-autocomplete"]);

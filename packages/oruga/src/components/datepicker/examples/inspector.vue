@@ -531,8 +531,8 @@ const inspectData: InspectData<
         relatedClass: "inputClasses.rootClass",
         relatedComponent: "Input",
     },
-    inputClasses: {
-        class: "inputClasses",
+    inputAttrs: {
+        class: "inputAttrs",
         description: "Classes to apply on the internal input component.",
         relatedComponent: "Input",
     },
@@ -545,16 +545,16 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
-    dropdownClasses: {
-        class: "dropdownClasses",
+    dropdownAttrs: {
+        class: "dropdownAttrs",
         description: "Classes to apply on the internal dropdown component.",
         relatedComponent: "Dropdown",
         action: (data): void => {
             data.active = true;
         },
     },
-    selectClasses: {
-        class: "selectClasses",
+    selectAttrs: {
+        class: "selectAttrs",
         description:
             "Classes to apply on the internal select component (month and year list).",
         relatedComponent: "Select",

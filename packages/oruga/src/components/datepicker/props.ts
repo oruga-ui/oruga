@@ -275,15 +275,15 @@ export type DatepickerClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: InputProps<false>;
+    inputAttrs: InputProps<false>;
     /**
      * Class configuration for the internal dropdown component
      * @ignore
      */
-    dropdownClasses: DropdownProps<string, false>;
+    dropdownAttrs: DropdownProps<string, false>;
     /**
      * Class configuration for the internal select component
      * @ignore
      */
-    selectClasses: SelectProps<number, false>;
+    selectAttrs: SelectProps<number, false>;
 }>;

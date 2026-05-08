@@ -103,7 +103,7 @@ export function renderer(
         // prop name
         let name = prop.name === "modelValue" ? "v-model" : mdclean(prop.name);
         // filter class props
-        if (name.endsWith("Class") || name.endsWith("Classes")) {
+        if (name.endsWith("Class") || name.endsWith("Attrs")) {
             if (!IGNORE_CLASSES[tag]?.includes(name)) return "";
         }
 
