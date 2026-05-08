@@ -101,9 +101,9 @@ const props = withDefaults(
             getDefault("datepicker.ariaSelectMonthLabel", "Select Month"),
         ariaSelectYearLabel: () =>
             getDefault("datepicker.ariaSelectYearLabel", "Select Year"),
-        inputClasses: () => getDefault("datepicker.inputClasses"),
-        dropdownClasses: () => getDefault("datepicker.dropdownClasses"),
-        selectClasses: () => getDefault("datepicker.selectClasses"),
+        inputAttrs: () => getDefault("datepicker.inputAttrs"),
+        dropdownAttrs: () => getDefault("datepicker.dropdownAttrs"),
+        selectAttrs: () => getDefault("datepicker.selectAttrs"),
     },
 );
 
@@ -630,7 +630,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 <div :class="listsClasses">
                     <o-select
                         v-if="!isTypeMonth"
-                        v-bind="selectClasses"
+                        v-bind="selectAttrs"
                         v-model="focusedDateData.month"
                         :disabled="disabled"
                         :size="size"
@@ -641,7 +641,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         @keydown.right.stop.prevent="next" />
 
                     <o-select
-                        v-bind="selectClasses"
+                        v-bind="selectAttrs"
                         v-model="focusedDateData.year"
                         :disabled="disabled"
                         :size="size"

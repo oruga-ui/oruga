@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
     teleport: () => getDefault("taginput.teleport", false),
-    autocompleteClasses: () => getDefault("taginput.autocompleteClasses", {}),
+    autocompleteAttrs: () => getDefault("taginput.autocompleteAttrs", {}),
 });
 
 const emits = defineEmits<{
@@ -357,7 +357,7 @@ const autocompleteBind = computed(() => ({
     "input-classes": {
         "input-class": getActiveClasses(autocompleteInputClasses),
     },
-    ...props.autocompleteClasses,
+    ...props.autocompleteAttrs,
 }));
 
 // #endregion --- Computed Component Classes ---

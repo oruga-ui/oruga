@@ -130,5 +130,5 @@ export type AutocompleteClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: InputProps<false>;
+    inputAttrs: InputProps<false>;
 }>;

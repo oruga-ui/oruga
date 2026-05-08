@@ -137,6 +137,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     ariaPreviousLabel: () => getDefault("table.ariaPreviousLabel"),
     ariaPageLabel: () => getDefault("table.ariaPageLabel"),
     ariaCurrentLabel: () => getDefault("table.ariaCurrentLabel"),
+    loadingAttrs: () => getDefault("table.loadingAttrs"),
 });
 
 const emits = defineEmits<{
@@ -1727,7 +1728,7 @@ defineExpose({
             </table>
             <slot name="loading" :loading="loading">
                 <o-loading
-                    v-bind="loadingClasses"
+                    v-bind="loadingAttrs"
                     :full-page="false"
                     :active="loading"
                     :icon="loadingIcon"
