@@ -7,6 +7,12 @@ import PositionCode from "./position.vue?raw";
 
 import Delay from "./delay.vue";
 import DelayCode from "./delay.vue?raw";
+
+import Backdrop from "./backdrop.vue";
+import BackdropCode from "./backdrop.vue?raw";
+
+import Modal from "./modal.vue";
+import ModalCode from "./modal.vue?raw";
 </script>
 
 ### Base
@@ -48,3 +54,18 @@ the referenced DOM location instead of the current one.
 The appearance of the content can be delayed using the `delay` property.
 
 <ExampleViewer :component="Delay" :code="DelayCode" />
+
+### Backdrop
+
+The the `backdrop` property allows a full-page overlay to be added to the top-layer of the page. By default, attempting to interact with the backdrop will close the popover.
+
+<ExampleViewer :component="Backdrop" :code="BackdropCode" />
+
+### Modal
+
+When the `modal` property is added, the popover appears in the middle of the screen as a modal-style overlay with a full-page backdrop. The `position` property is ignored when the `modal` property is used.
+
+::: info Accessibility Note:
+The popover modal style is mainly useful for improving the mobile experience. If you want to create a true modal, the [ODialog](/components/Dialog.html) element is the way to go.
+:::
+<ExampleViewer :component="Modal" :code="ModalCode" />

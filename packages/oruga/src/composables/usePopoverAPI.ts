@@ -1,4 +1,13 @@
-import { onMounted, ref, type Ref, type MaybeRefOrGetter } from "vue";
+import {
+    onMounted,
+    ref,
+    watch,
+    isRef,
+    type Ref,
+    type MaybeRefOrGetter,
+    readonly,
+    useId,
+} from "vue";
 import {
     unrefElement,
     useEventListener,
@@ -28,7 +37,8 @@ export type PopoverPosition = BasePosition | [BasePosition, BasePosition];
  * @param options.contentRef - Reference or getter resolving to the popover content element.
  * @param options.position - Positioning area used for the popover (mapped to `CSS position-area`).
  * @param options.behavior - Native popover behavior - defaults to `"auto"`.
- * @param options.delay - Optional delay (in ms) before opening the popover.
+ * @param options.delay - An Optional delay (in ms) before opening the popover.
+ * @param options.trigger - An optional ref which will be watched and to open or close the popover.
  * @param options.onToggle - Optional listener for the native `toggle` event.
  * @param options.onBeforeToggle - Optional listener for the native `beforetoggle` event.
  *
@@ -39,12 +49,13 @@ export function usePopoverAPI(options: {
     triggerRef: MaybeRefOrGetter<EventTarget>;
     contentRef: MaybeRefOrGetter<EventTarget>;
     /** see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value */
-    behavior?: "auto" | "hint" | "manuell";
+    behavior?: "auto" | "hint" | "manual";
     delay?: number;
+    trigger?: Readonly<Ref<boolean>>;
     onToggle?: (e: ToggleEvent) => void;
     onBeforeToggle?: (e: ToggleEvent) => void;
 }): {
-    active: Ref<boolean>;
+    active: Readonly<Ref<boolean>>;
     open: () => void;
     close: () => void;
     toggle: () => void;
@@ -53,6 +64,7 @@ export function usePopoverAPI(options: {
         position = "top",
         behavior = "auto",
         delay,
+        trigger,
         triggerRef,
         contentRef,
     } = options;
@@ -61,13 +73,26 @@ export function usePopoverAPI(options: {
 
     const active = ref(false);
 
+    if (isRef(trigger)) {
+        // show/hide popover when active prop changes
+        watch(
+            trigger,
+            (value) => {
+                if (active.value === value) return;
+                if (value) open();
+                else close();
+            },
+            { flush: "post" },
+        );
+    }
+
     function open(): void {
         const trigger = unrefElement(triggerRef);
         const content = unrefElement(contentRef);
-        if (!content || !trigger || active.value) return;
 
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
+            if (!content || !trigger || active.value) return;
             content.showPopover({ source: trigger }); // open popover with native api
             timeout = undefined;
             active.value = true;
@@ -115,10 +140,12 @@ export function usePopoverAPI(options: {
     useEventListener(triggerRef, "keydown", onTriggerKeydown);
 
     // add toggle event listener on content element
-    if (options.onToggle)
+    if (typeof options.onToggle === "function")
         useEventListener(contentRef, "toggle", options.onToggle);
-    if (options.onBeforeToggle)
+    if (typeof options.onBeforeToggle === "function")
         useEventListener(contentRef, "beforetoggle", options.onBeforeToggle);
+
+    let contentId = useId();
 
     onMounted(() => {
         const content = unrefElement(contentRef);
@@ -131,12 +158,9 @@ export function usePopoverAPI(options: {
         }
 
         // check content has id
-        if (!Object.hasOwn(content, "id") && !content.getAttribute("id")) {
-            console.warn("The content element does not have an id.");
-            return;
+        if (Object.hasOwn(content, "id") && content.getAttribute("id")) {
+            contentId = content.getAttribute("id")!;
         }
-
-        const id = content.getAttribute("id")!;
 
         // place popover attribute on content
         content.popover = behavior;
@@ -147,7 +171,7 @@ export function usePopoverAPI(options: {
             (trigger instanceof HTMLInputElement && trigger.type === "button")
         ) {
             // add related popover properties
-            trigger.setAttribute("popovertarget", id);
+            trigger.setAttribute("popovertarget", contentId);
         } else {
             // add interactive proptiers
             trigger.role = "button";
@@ -155,8 +179,8 @@ export function usePopoverAPI(options: {
         }
 
         // set a11y attributes
-        trigger.setAttribute("aria-details", id);
-        trigger.setAttribute("aria-controls", id);
+        trigger.setAttribute("aria-details", contentId);
+        trigger.setAttribute("aria-controls", contentId);
 
         // add content position styles
         content.style.positionArea = position.toString();
@@ -165,7 +189,7 @@ export function usePopoverAPI(options: {
     });
 
     return {
-        active,
+        active: readonly(active),
         open,
         close,
         toggle,
