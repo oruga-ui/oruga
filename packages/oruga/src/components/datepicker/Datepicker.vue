@@ -46,8 +46,8 @@ const props = withDefaults(
         // multiple: false,
         active: false,
         type: "date",
-        stayOpen: false,
         openOnFocus: true,
+        stayOpen: false,
         dayNames: () => getDefault("datepicker.dayNames"),
         monthNames: () => getDefault("datepicker.monthNames"),
         size: () => getDefault("datepicker.size"),
@@ -546,6 +546,8 @@ const triggerClasses = defineClasses(["triggerClass", "o-datepicker__trigger"]);
 const contentClasses = defineClasses(
     ["contentClass", "o-datepicker__content"],
     ["boxClass", "o-datepicker__box"],
+    // TODO add class
+    ["modalClass", "o-datepicker__content--modal", null, isMobile],
 );
 
 const inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
@@ -584,7 +586,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
 <template>
     <div data-oruga="datepicker" :class="rootClasses">
-        <!-- Dont bing props in full -->
         <OPickerInput
             ref="pickerComponent"
             v-bind="$attrs"
@@ -621,12 +622,13 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             @blur="$emit('blur', $event)"
             @invalid="$emit('invalid', $event)"
             @icon-click="$emit('icon-click', $event)"
-            @icon-right-click="$emit('icon-right-click', $event)">
+            @icon-right-click="$emit('icon-right-click', $event)"
+            @left="prevDate"
+            @right="nextDate">
             <template v-if="$slots.trigger" #trigger>
                 <slot name="trigger" />
             </template>
 
-            <!-- <div :class="boxClasses" @left="prevDate" @right="nextDate"> -->
             <header :class="headerClasses">
                 <slot name="header">
                     <OButton
@@ -709,7 +711,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             <footer v-if="$slots.footer" :class="footerClasses">
                 <slot name="footer" />
             </footer>
-            <!-- </div> -->
         </OPickerInput>
     </div>
 </template>

@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import {
     computed,
-    useAttrs,
     ref,
     watch,
     nextTick,
     useTemplateRef,
     type PropType,
-    useId,
-    getCurrentInstance,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -55,46 +52,33 @@ const props = defineProps({
         >,
         required: true,
     },
-    stayOpen: { type: Boolean, default: false },
-    openOnFocus: { type: Boolean, default: false },
-    /** Show content inline */
-    inline: { type: Boolean, default: false },
     /** the DateTimeFormat object to watch for to update the parsed input value */
     dtf: { type: Object, default: undefined },
 
-    /** Show content as modal */
-    modal: { type: Boolean, default: false },
+    /** Show content inline */
+    inline: { type: Boolean, default: false },
+    enableMobileNative: { type: Boolean, default: undefined },
+    stayOpen: { type: Boolean, default: false },
+    openOnFocus: { type: Boolean, default: false },
     position: { type: String as PropType<PopoverPosition>, required: true },
-    contentId: { type: String, default: useId },
-
     teleport: { type: [Boolean, String, Object], default: false },
-    /** Show and dismiss animation */
     animation: { type: String, default: undefined },
 
-    enableMobileNative: { type: Boolean, defualt: undefined },
-
     // input props
-    placeholder: { type: String, defualt: undefined },
+    placeholder: { type: String, default: undefined },
     type: { type: String, required: true },
     step: { type: String, default: undefined },
     min: { type: Date, default: undefined },
     max: { type: Date, default: undefined },
-    size: { type: String, defualt: undefined },
-    iconPack: { type: String, defualt: undefined },
-    icon: { type: String, defualt: undefined },
-    iconRight: { type: String, defualt: undefined },
-    iconRightClickable: { type: Boolean, defualt: undefined },
-    expanded: { type: Boolean, defualt: undefined },
-    rounded: { type: Boolean, defualt: undefined },
-    disabled: { type: Boolean, defualt: undefined },
-    readonly: { type: Boolean, defualt: undefined },
-
-    // class props
-    triggerClass: { type: Array as PropType<ComponentClass>, required: true },
-    contentClass: { type: Array as PropType<ComponentClass>, required: true },
-    inputClass: { type: Array as PropType<ComponentClass>, required: true },
-    inputClasses: { type: Object, default: undefined },
-
+    size: { type: String, default: undefined },
+    iconPack: { type: String, default: undefined },
+    icon: { type: String, default: undefined },
+    iconRight: { type: String, default: undefined },
+    iconRightClickable: { type: Boolean, default: undefined },
+    expanded: { type: Boolean, default: undefined },
+    rounded: { type: Boolean, default: undefined },
+    disabled: { type: Boolean, default: undefined },
+    readonly: { type: Boolean, default: undefined },
     /** Enable HTML 5 native validation */
     useHtml5Validation: { type: Boolean, required: true },
     /** Custom HTML 5 validation error to set on the form control */
@@ -104,6 +88,12 @@ const props = defineProps({
         >,
         default: undefined,
     },
+
+    // class props
+    triggerClass: { type: Array as PropType<ComponentClass>, required: true },
+    contentClass: { type: Array as PropType<ComponentClass>, required: true },
+    inputClass: { type: Array as PropType<ComponentClass>, required: true },
+    inputClasses: { type: Object, default: undefined },
 });
 
 const emits = defineEmits<{
@@ -146,7 +136,6 @@ const _teleport = useTeleport(props.teleport);
 // #region --- PICKER FEATURE ---
 
 if (!props.inline) {
-    watch(isActive, () => console.log(isActive.value));
     usePopoverAPI({
         position: props.position,
         behavior: "auto",
@@ -158,8 +147,10 @@ if (!props.inline) {
 
     /** on popover state change event handler */
     function onToggle(event: ToggleEvent): void {
-        if (event.newState === "open") isActive.value = true;
-        else isActive.value = false;
+        if (event.newState === "open" && isActive.value !== true)
+            isActive.value = true;
+        else if (event.newState === "closed" && isActive.value !== false)
+            isActive.value = false;
     }
 }
 
@@ -234,7 +225,13 @@ function setEventValue(event: Event): void {
 // #region  --- INPUT EVENT HANDLER ---
 
 function onFocus(event: Event): void {
-    if (props.openOnFocus && !isActive.value) isActive.value = true;
+    setTimeout(() => {
+        // check open state after click handler got processed
+        if (props.openOnFocus && !isActive.value) {
+            isActive.value = true;
+        }
+    }, 250);
+
     emits("focus", event);
 }
 
@@ -351,7 +348,7 @@ defineExpose({ focus: setFocus });
                 :readonly="readonly"
                 autocomplete="off"
                 :use-html5-validation="useHtml5Validation"
-                :customValidity="customValidity"
+                :custom-validity="customValidity"
                 :input-class="inputClass"
                 @keyup.enter="setEventValue"
                 @focus="onFocus"
@@ -380,7 +377,7 @@ defineExpose({ focus: setFocus });
                 :readonly="initialNativeType == 'text'"
                 autocomplete="off"
                 :use-html5-validation="useHtml5Validation"
-                :customValidity="customValidity"
+                :custom-validity="customValidity"
                 :input-class="inputClass"
                 @click="onNativeClick"
                 @change="onNativeChange"
@@ -396,7 +393,6 @@ defineExpose({ focus: setFocus });
         <transition :name="animation">
             <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
             <div
-                :id="contentId"
                 ref="contentElement"
                 :class="contentClass"
                 :popover="inline ? undefined : ''">

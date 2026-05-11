@@ -6,6 +6,7 @@ import {
     type Ref,
     type MaybeRefOrGetter,
     readonly,
+    useId,
 } from "vue";
 import {
     unrefElement,
@@ -74,11 +75,15 @@ export function usePopoverAPI(options: {
 
     if (isRef(trigger)) {
         // show/hide popover when active prop changes
-        watch(trigger, (value) => {
-            if (active.value === value) return;
-            if (value) open();
-            else close();
-        });
+        watch(
+            trigger,
+            (value) => {
+                if (active.value === value) return;
+                if (value) open();
+                else close();
+            },
+            { flush: "post" },
+        );
     }
 
     function open(): void {
@@ -135,10 +140,12 @@ export function usePopoverAPI(options: {
     useEventListener(triggerRef, "keydown", onTriggerKeydown);
 
     // add toggle event listener on content element
-    if (options.onToggle)
+    if (typeof options.onToggle === "function")
         useEventListener(contentRef, "toggle", options.onToggle);
-    if (options.onBeforeToggle)
+    if (typeof options.onBeforeToggle === "function")
         useEventListener(contentRef, "beforetoggle", options.onBeforeToggle);
+
+    let contentId = useId();
 
     onMounted(() => {
         const content = unrefElement(contentRef);
@@ -151,12 +158,9 @@ export function usePopoverAPI(options: {
         }
 
         // check content has id
-        if (!Object.hasOwn(content, "id") && !content.getAttribute("id")) {
-            console.warn("The content element does not have an id.");
-            return;
+        if (Object.hasOwn(content, "id") && content.getAttribute("id")) {
+            contentId = content.getAttribute("id")!;
         }
-
-        const id = content.getAttribute("id")!;
 
         // place popover attribute on content
         content.popover = behavior;
@@ -167,7 +171,7 @@ export function usePopoverAPI(options: {
             (trigger instanceof HTMLInputElement && trigger.type === "button")
         ) {
             // add related popover properties
-            trigger.setAttribute("popovertarget", id);
+            trigger.setAttribute("popovertarget", contentId);
         } else {
             // add interactive proptiers
             trigger.role = "button";
@@ -175,8 +179,8 @@ export function usePopoverAPI(options: {
         }
 
         // set a11y attributes
-        trigger.setAttribute("aria-details", id);
-        trigger.setAttribute("aria-controls", id);
+        trigger.setAttribute("aria-details", contentId);
+        trigger.setAttribute("aria-controls", contentId);
 
         // add content position styles
         content.style.positionArea = position.toString();

@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const selected = ref(new Date());
 const locale = ref(); // Browser locale
-const openOnFocus = ref(false);
+const openOnFocus = ref(true);
 const stayOpen = ref(false);
 const showWeekNumber = ref(false);
 </script>
