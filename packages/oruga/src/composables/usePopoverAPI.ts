@@ -183,9 +183,51 @@ export function usePopoverAPI(options: {
         trigger.setAttribute("aria-controls", contentId);
 
         // add content position styles
+        content.style.position = "fixed";
         content.style.positionArea = position.toString();
         content.style.positionTryFallbacks =
             "flip-block, flip-inline, flip-block flip-inline";
+
+        content.dataset.position = position.toString();
+
+        // content.style.top = "";
+        // content.style.bottom = "";
+        // content.style.left = "";
+        // content.style.right = "";
+        // content.style.translate = "";
+
+        // switch (position) {
+        //     case "bottom": {
+        //         content.style.top = "calc(anchor(bottom) + 10px)";
+        //         content.style.left = "anchor(center)";
+        //         content.style.translate = "-50% 0";
+        //         break;
+        //     }
+
+        //     case "left": {
+        //         content.style.top = "anchor(center)";
+        //         content.style.left = "calc(anchor(left) - 10px)";
+        //         content.style.translate = "-100% -50%";
+
+        //         break;
+        //     }
+
+        //     case "right": {
+        //         content.style.top = "anchor(center)";
+        //         content.style.left = "calc(anchor(right) + 10px)";
+        //         content.style.translate = "0 -50%";
+
+        //         break;
+        //     }
+
+        //     case "top": {
+        //         content.style.top = "calc(anchor(top) - 10px)";
+        //         content.style.left = "anchor(center)";
+        //         content.style.translate = "-50% -100%";
+
+        //         break;
+        //     }
+        // }
     });
 
     return {

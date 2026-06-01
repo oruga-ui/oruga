@@ -550,10 +550,7 @@ const contentClasses = defineClasses(
     ["modalClass", "o-datepicker__content--modal", null, isMobile],
 );
 
-const inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
-
-// TODO Unnötig?
-// const boxClasses = defineClasses(["boxClass", "o-datepicker__box"]);
+const _inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
 
 const headerClasses = defineClasses(["headerClass", "o-datepicker__header"]);
 
@@ -614,10 +611,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :readonly="readonly"
             :use-html5-validation="useHtml5Validation"
             :custom-validity="customValidity"
-            :input-class="inputClasses"
+            :input-class="_inputClasses"
             :trigger-class="triggerClasses"
             :content-class="contentClasses"
-            :input-classes="props.inputClasses"
+            :input-classes="inputClasses"
             @focus="$emit('focus', $event)"
             @blur="$emit('blur', $event)"
             @invalid="$emit('invalid', $event)"
