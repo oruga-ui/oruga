@@ -292,8 +292,7 @@ function onBackspace(): void {
 }
 
 function onEnter(event: Event): void {
-    // Add item if not select only and dropdown selection is closed
-    if (props.allowNew && !isDropdownActive.value) {
+    if (props.allowNew) {
         event.stopPropagation();
         addItem();
     }
