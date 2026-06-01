@@ -13,3 +13,4 @@ export * from "./useIndexer";
 export * from "./useConfig";
 export * from "./useTrapFocus";
 export * from "./usePopoverAPI";
+export * from "./useTeleport";
