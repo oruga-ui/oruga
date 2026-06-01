@@ -310,6 +310,7 @@ const anchors = (rect: DOMRect): Record<Position, Point> => ({
         <template v-if="_teleport.disabled">
             <slot :set-content="setContent" />
         </template>
+
         <template v-else>
             <div
                 v-bind="$attrs"
