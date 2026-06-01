@@ -43,12 +43,21 @@ const inspectData: InspectData<
             data.expanded = true;
         },
     },
-    boxClass: {
-        class: "boxClass",
+    contentClass: {
+        class: "contentClass",
         description:
             "Class of the box container element where you choose the date.",
         action: (data): void => {
             data.inline = true;
+            data.active = true;
+        },
+    },
+    modalClass: {
+        class: "modalClass",
+        description: "Class of the content element when shown as modal",
+        action: (data): void => {
+            data.desktopModal = true;
+            data.mobileModal = true;
             data.active = true;
         },
     },
@@ -535,23 +544,6 @@ const inspectData: InspectData<
         class: "inputClasses",
         description: "Classes to apply on the internal input component.",
         relatedComponent: "Input",
-    },
-    dropdownClass: {
-        class: "dropdownClass",
-        description: "Class to apply on the dropdown element.",
-        relatedClass: "dropdownClasses.rootClass",
-        relatedComponent: "Dropdown",
-        action: (data): void => {
-            data.active = true;
-        },
-    },
-    dropdownClasses: {
-        class: "dropdownClasses",
-        description: "Classes to apply on the internal dropdown component.",
-        relatedComponent: "Dropdown",
-        action: (data): void => {
-            data.active = true;
-        },
     },
     selectClasses: {
         class: "selectClasses",

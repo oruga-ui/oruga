@@ -28,6 +28,7 @@ import type { ClassBinding, ComponentClass } from "@/types";
 /**
  * This is a internal used component.
  * Used by Datepicker and Timepicker.
+ * @deprecated use PickerInput instead
  */
 defineOptions({
     name: "OPickerWrapper",
