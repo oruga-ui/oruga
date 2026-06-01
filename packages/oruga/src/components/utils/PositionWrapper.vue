@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
     watch,
-    computed,
     nextTick,
     onBeforeUnmount,
     ref,
@@ -10,9 +9,9 @@ import {
 } from "vue";
 import { isClient } from "@/utils/ssr";
 import {
-    getTeleportDefault,
     getScrollingParent,
     unrefElement,
+    useTeleport,
     type MaybeElement,
 } from "@/composables";
 
@@ -75,11 +74,7 @@ const emits = defineEmits<{
     "update:position": [value: string];
 }>();
 
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
+const _teleport = useTeleport(props.teleport);
 
 const contentRef = ref<HTMLElement | Component>();
 

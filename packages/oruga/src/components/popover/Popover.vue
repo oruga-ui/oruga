@@ -4,9 +4,9 @@ import { ref, watch, computed, useId, useTemplateRef, onMounted } from "vue";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
-    getTeleportDefault,
     usePopoverAPI,
     usePreventScrolling,
+    useTeleport,
 } from "@/composables";
 
 import type { PopoverProps } from "./props";
@@ -94,6 +94,8 @@ onMounted(() => {
     triggerRef.value = trigger;
 });
 
+const _teleport = useTeleport(props.teleport);
+
 const { open, close, toggle } = usePopoverAPI({
     position: props.modal ? "centered" : props.position,
     delay: props.delay,
@@ -104,12 +106,6 @@ const { open, close, toggle } = usePopoverAPI({
     onToggle,
     onBeforeToggle,
 });
-
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 
@@ -143,7 +139,7 @@ const rootClasses = defineClasses(
         "teleportClass",
         "o-popover--teleport",
         null,
-        computed(() => !_teleport.value.disabled),
+        computed(() => !_teleport.disabled),
     ],
 );
 
