@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref, computed, watch, useId, useTemplateRef, onMounted } from "vue";
+import { ref, watch, computed, useId, useTemplateRef, onMounted } from "vue";
 
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
     getTeleportDefault,
+    unrefElement,
     usePopoverAPI,
+    usePreventScrolling,
 } from "@/composables";
 
 import type { PopoverProps } from "./props";
@@ -31,8 +33,11 @@ const props = withDefaults(defineProps<PopoverProps>(), {
     position: () => getDefault("popover.position", "top"),
     delay: undefined,
     disabled: false,
+    backdrop: false,
+    modal: false,
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
+    clipScroll: () => getDefault("popover.clipScroll", false),
 });
 
 const emits = defineEmits<{
@@ -90,15 +95,11 @@ onMounted(() => {
     triggerRef.value = trigger;
 });
 
-const {
-    active: activePopover,
-    open,
-    close,
-    toggle,
-} = usePopoverAPI({
+const { open, close, toggle } = usePopoverAPI({
     position: props.position,
     delay: props.delay,
     behavior: props.behavior,
+    trigger: isActive,
     triggerRef,
     contentRef,
     onToggle,
@@ -111,12 +112,15 @@ const _teleport = computed(() =>
         : { to: props.teleport, disabled: false },
 );
 
-// show/hide popover when active prop changes
-watch(isActive, (value) => {
-    if (activePopover.value === value) return;
-    if (value) open();
-    else close();
-});
+const toggleScroll = usePreventScrolling(props.clipScroll);
+
+watch(
+    isActive,
+    (value) => {
+        if (props.backdrop || props.modal) toggleScroll(value);
+    },
+    { flush: "post" },
+);
 
 // #region --- Event Handler ---
 
@@ -144,7 +148,27 @@ const rootClasses = defineClasses(
     ],
 );
 
-const contentClasses = defineClasses(["contentClass", "o-popover__content"]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-popover__content"],
+    [
+        "backdropClass",
+        "o-popover__content--backdrop",
+        null,
+        computed(() => props.backdrop || props.modal),
+    ],
+    [
+        "modalClass",
+        "o-popover__content--modal",
+        null,
+        computed(() => props.modal),
+    ],
+);
+
+onMounted(() => {
+    const content = unrefElement(contentRef);
+    // override content style to center when modal
+    if (content) content.style.positionArea = "none";
+});
 
 // #endregion --- Computed Component Classes ---
 

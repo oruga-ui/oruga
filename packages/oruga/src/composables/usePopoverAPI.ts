@@ -1,4 +1,12 @@
-import { onMounted, ref, type Ref, type MaybeRefOrGetter } from "vue";
+import {
+    onMounted,
+    ref,
+    watch,
+    isRef,
+    useId,
+    type MaybeRefOrGetter,
+    type WatchSource,
+} from "vue";
 import {
     unrefElement,
     useEventListener,
@@ -7,6 +15,30 @@ import {
 
 type BasePosition = "top" | "bottom" | "left" | "right" | "center";
 export type PopoverPosition = BasePosition | [BasePosition, BasePosition];
+
+export type PopoverAPIOptions = {
+    /** Positioning area used for the popover (mapped to `CSS position-area`). */
+    position?: PopoverPosition;
+    /** Reference or getter resolving to the trigger element. */
+    triggerRef: MaybeRefOrGetter<EventTarget>;
+    /** Reference or getter resolving to the popover content element. */
+    contentRef: MaybeRefOrGetter<EventTarget>;
+    /**
+     * Native popover behavior - defaults to `"auto"`.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value
+     */
+    behavior?: "auto" | "hint" | "manual";
+    /**
+     * An Optional delay (in ms) before opening the popover.
+     */
+    delay?: number;
+    /** An optional watch source which will be watched and to open or close the popover. */
+    trigger?: WatchSource<boolean>;
+    /**  Optional listener for the native `toggle` event. */
+    onToggle?: (e: ToggleEvent) => void;
+    /** Optional listener for the native `beforetoggle` event. */
+    onBeforeToggle?: (e: ToggleEvent) => void;
+};
 
 /**
  * Composable providing an imperative API to control a native HTML Popover.
@@ -24,27 +56,9 @@ export type PopoverPosition = BasePosition | [BasePosition, BasePosition];
  * - Event listeners are registered on mount and cleaned up on unmount.
  *
  * @param options - Configuration options for the popover behavior.
- * @param options.triggerRef - Reference or getter resolving to the trigger element.
- * @param options.contentRef - Reference or getter resolving to the popover content element.
- * @param options.position - Positioning area used for the popover (mapped to `CSS position-area`).
- * @param options.behavior - Native popover behavior - defaults to `"auto"`.
- * @param options.delay - Optional delay (in ms) before opening the popover.
- * @param options.onToggle - Optional listener for the native `toggle` event.
- * @param options.onBeforeToggle - Optional listener for the native `beforetoggle` event.
- *
  * @returns Popover API handler.
  */
-export function usePopoverAPI(options: {
-    position?: PopoverPosition;
-    triggerRef: MaybeRefOrGetter<EventTarget>;
-    contentRef: MaybeRefOrGetter<EventTarget>;
-    /** see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value */
-    behavior?: "auto" | "hint" | "manuell";
-    delay?: number;
-    onToggle?: (e: ToggleEvent) => void;
-    onBeforeToggle?: (e: ToggleEvent) => void;
-}): {
-    active: Ref<boolean>;
+export function usePopoverAPI(options: PopoverAPIOptions): {
     open: () => void;
     close: () => void;
     toggle: () => void;
@@ -53,6 +67,7 @@ export function usePopoverAPI(options: {
         position = "top",
         behavior = "auto",
         delay,
+        trigger,
         triggerRef,
         contentRef,
     } = options;
@@ -61,13 +76,26 @@ export function usePopoverAPI(options: {
 
     const active = ref(false);
 
+    if (isRef(trigger)) {
+        // show/hide popover when trigger changes
+        watch(
+            trigger,
+            (value) => {
+                if (active.value === value) return;
+                if (value) open();
+                else close();
+            },
+            { flush: "post" },
+        );
+    }
+
     function open(): void {
         const trigger = unrefElement(triggerRef);
         const content = unrefElement(contentRef);
-        if (!content || !trigger || active.value) return;
 
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
+            if (!content || !trigger || active.value) return;
             content.showPopover({ source: trigger }); // open popover with native api
             timeout = undefined;
             active.value = true;
@@ -115,10 +143,12 @@ export function usePopoverAPI(options: {
     useEventListener(triggerRef, "keydown", onTriggerKeydown);
 
     // add toggle event listener on content element
-    if (options.onToggle)
+    if (typeof options.onToggle === "function")
         useEventListener(contentRef, "toggle", options.onToggle);
-    if (options.onBeforeToggle)
+    if (typeof options.onBeforeToggle === "function")
         useEventListener(contentRef, "beforetoggle", options.onBeforeToggle);
+
+    let contentId = useId();
 
     onMounted(() => {
         const content = unrefElement(contentRef);
@@ -131,15 +161,20 @@ export function usePopoverAPI(options: {
         }
 
         // check content has id
-        if (!Object.hasOwn(content, "id") && !content.getAttribute("id")) {
-            console.warn("The content element does not have an id.");
-            return;
+        if (Object.hasOwn(content, "id") && content.getAttribute("id")) {
+            contentId = content.getAttribute("id")!;
         }
-
-        const id = content.getAttribute("id")!;
 
         // place popover attribute on content
         content.popover = behavior;
+
+        // add content position styles
+        content.style.positionArea = position.toString();
+        content.style.positionTryFallbacks =
+            "flip-block, flip-inline, flip-block flip-inline";
+
+        // add position data attribute
+        content.dataset.position = position.toString();
 
         // check if the trigger has native popover target support
         if (
@@ -147,7 +182,7 @@ export function usePopoverAPI(options: {
             (trigger instanceof HTMLInputElement && trigger.type === "button")
         ) {
             // add related popover properties
-            trigger.setAttribute("popovertarget", id);
+            trigger.setAttribute("popovertarget", contentId);
         } else {
             // add interactive proptiers
             trigger.role = "button";
@@ -155,17 +190,11 @@ export function usePopoverAPI(options: {
         }
 
         // set a11y attributes
-        trigger.setAttribute("aria-details", id);
-        trigger.setAttribute("aria-controls", id);
-
-        // add content position styles
-        content.style.positionArea = position.toString();
-        content.style.positionTryFallbacks =
-            "flip-block, flip-inline, flip-block flip-inline";
+        trigger.setAttribute("aria-details", contentId);
+        trigger.setAttribute("aria-controls", contentId);
     });
 
     return {
-        active,
         open,
         close,
         toggle,
