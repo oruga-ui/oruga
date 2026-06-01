@@ -20,6 +20,9 @@ describe("OTaginput tests", () => {
 
     // TODO: add test to enter new item with allow new and keep first and not
 
+    // Also add this tests
+    // https://github.com/buefy/buefy/blob/dev/packages/buefy/src/components/taginput/Taginput.spec.ts
+
     describe("render options props correctly", () => {
         test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
