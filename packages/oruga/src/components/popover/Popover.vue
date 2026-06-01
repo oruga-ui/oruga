@@ -95,7 +95,7 @@ onMounted(() => {
 });
 
 const { open, close, toggle } = usePopoverAPI({
-    position: props.position,
+    position: props.modal ? "centered" : props.position,
     delay: props.delay,
     behavior: props.behavior,
     trigger: isActive,
@@ -154,12 +154,6 @@ const contentClasses = defineClasses(
         "o-popover__content--backdrop",
         null,
         computed(() => props.backdrop || props.modal),
-    ],
-    [
-        "centeredClass",
-        "o-popover__content--centered",
-        null,
-        computed(() => props.modal),
     ],
 );
 

@@ -2106,11 +2106,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentClass: ClassDefinition;
                 /**
-                 * Class of the content element when the element should be shown as centered modal
-                 */
-                modalClass: ClassDefinition;
-                /**
-                 * Class of the content elemetn when a backdrop should be shown
+                 * Class of the content element when a backdrop should be shown
                  */
                 backdropClass: ClassDefinition;
                 /**

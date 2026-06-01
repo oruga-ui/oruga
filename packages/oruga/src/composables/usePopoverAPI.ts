@@ -3,10 +3,9 @@ import {
     ref,
     watch,
     isRef,
-    type Ref,
-    type MaybeRefOrGetter,
-    readonly,
     useId,
+    type MaybeRefOrGetter,
+    type WatchSource,
 } from "vue";
 import {
     unrefElement,
@@ -15,7 +14,38 @@ import {
 } from "@/composables";
 
 type BasePosition = "top" | "bottom" | "left" | "right" | "center";
+/**
+ * The possible positions of the `position-area` attribute.
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/position-area_value
+ */
 export type PopoverPosition = BasePosition | [BasePosition, BasePosition];
+
+export type PopoverAPIOptions = {
+    /**
+     * Positioning area used for the popover (mapped to `CSS position-area`).
+     * In addition `centered` center the content in the middle of the screen.
+     */
+    position?: "centered" | PopoverPosition;
+    /** Reference or getter resolving to the trigger element. */
+    triggerRef: MaybeRefOrGetter<EventTarget>;
+    /** Reference or getter resolving to the popover content element. */
+    contentRef: MaybeRefOrGetter<EventTarget>;
+    /**
+     * Native popover behavior - defaults to `"auto"`.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value
+     */
+    behavior?: "auto" | "hint" | "manual";
+    /**
+     * An Optional delay (in ms) before opening the popover.
+     */
+    delay?: number;
+    /** An optional watch source which will be watched and to open or close the popover. */
+    trigger?: WatchSource<boolean>;
+    /**  Optional listener for the native `toggle` event. */
+    onToggle?: (e: ToggleEvent) => void;
+    /** Optional listener for the native `beforetoggle` event. */
+    onBeforeToggle?: (e: ToggleEvent) => void;
+};
 
 /**
  * Composable providing an imperative API to control a native HTML Popover.
@@ -33,29 +63,9 @@ export type PopoverPosition = BasePosition | [BasePosition, BasePosition];
  * - Event listeners are registered on mount and cleaned up on unmount.
  *
  * @param options - Configuration options for the popover behavior.
- * @param options.triggerRef - Reference or getter resolving to the trigger element.
- * @param options.contentRef - Reference or getter resolving to the popover content element.
- * @param options.position - Positioning area used for the popover (mapped to `CSS position-area`).
- * @param options.behavior - Native popover behavior - defaults to `"auto"`.
- * @param options.delay - An Optional delay (in ms) before opening the popover.
- * @param options.trigger - An optional ref which will be watched and to open or close the popover.
- * @param options.onToggle - Optional listener for the native `toggle` event.
- * @param options.onBeforeToggle - Optional listener for the native `beforetoggle` event.
- *
  * @returns Popover API handler.
  */
-export function usePopoverAPI(options: {
-    position?: PopoverPosition;
-    triggerRef: MaybeRefOrGetter<EventTarget>;
-    contentRef: MaybeRefOrGetter<EventTarget>;
-    /** see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value */
-    behavior?: "auto" | "hint" | "manual";
-    delay?: number;
-    trigger?: Readonly<Ref<boolean>>;
-    onToggle?: (e: ToggleEvent) => void;
-    onBeforeToggle?: (e: ToggleEvent) => void;
-}): {
-    active: Readonly<Ref<boolean>>;
+export function usePopoverAPI(options: PopoverAPIOptions): {
     open: () => void;
     close: () => void;
     toggle: () => void;
@@ -74,7 +84,7 @@ export function usePopoverAPI(options: {
     const active = ref(false);
 
     if (isRef(trigger)) {
-        // show/hide popover when active prop changes
+        // show/hide popover when trigger changes
         watch(
             trigger,
             (value) => {
@@ -165,6 +175,15 @@ export function usePopoverAPI(options: {
         // place popover attribute on content
         content.popover = behavior;
 
+        // add content position styles
+        content.style.positionArea =
+            position === "centered" ? "none" : position.toString();
+        content.style.positionTryFallbacks =
+            "flip-block, flip-inline, flip-block flip-inline";
+
+        // add position data attribute
+        content.dataset.position = position.toString();
+
         // check if the trigger has native popover target support
         if (
             trigger instanceof HTMLButtonElement ||
@@ -181,57 +200,9 @@ export function usePopoverAPI(options: {
         // set a11y attributes
         trigger.setAttribute("aria-details", contentId);
         trigger.setAttribute("aria-controls", contentId);
-
-        // add content position styles
-        content.style.position = "fixed";
-        content.style.positionArea = position.toString();
-        content.style.positionTryFallbacks =
-            "flip-block, flip-inline, flip-block flip-inline";
-
-        content.dataset.position = position.toString();
-
-        // content.style.top = "";
-        // content.style.bottom = "";
-        // content.style.left = "";
-        // content.style.right = "";
-        // content.style.translate = "";
-
-        // switch (position) {
-        //     case "bottom": {
-        //         content.style.top = "calc(anchor(bottom) + 10px)";
-        //         content.style.left = "anchor(center)";
-        //         content.style.translate = "-50% 0";
-        //         break;
-        //     }
-
-        //     case "left": {
-        //         content.style.top = "anchor(center)";
-        //         content.style.left = "calc(anchor(left) - 10px)";
-        //         content.style.translate = "-100% -50%";
-
-        //         break;
-        //     }
-
-        //     case "right": {
-        //         content.style.top = "anchor(center)";
-        //         content.style.left = "calc(anchor(right) + 10px)";
-        //         content.style.translate = "0 -50%";
-
-        //         break;
-        //     }
-
-        //     case "top": {
-        //         content.style.top = "calc(anchor(top) - 10px)";
-        //         content.style.left = "anchor(center)";
-        //         content.style.translate = "-50% -100%";
-
-        //         break;
-        //     }
-        // }
     });
 
     return {
-        active: readonly(active),
         open,
         close,
         toggle,
