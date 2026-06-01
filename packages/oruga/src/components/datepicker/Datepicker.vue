@@ -545,9 +545,7 @@ const rootClasses = defineClasses(
 const triggerClasses = defineClasses(["triggerClass", "o-datepicker__trigger"]);
 const contentClasses = defineClasses(
     ["contentClass", "o-datepicker__content"],
-    ["boxClass", "o-datepicker__box"],
-    // TODO add class
-    ["modalClass", "o-datepicker__content--modal", null, isMobile],
+    ["modalClass", "o-datepicker__content--modal", null, isModal],
 );
 
 const _inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);

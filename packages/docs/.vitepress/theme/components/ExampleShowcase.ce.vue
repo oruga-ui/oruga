@@ -78,11 +78,6 @@ shadowRoot.appendChild(link);
     background-color: var(--bs-backdrop-bg);
 }
 
-.o-popover__content--centered {
-    position-area: none !important;
-    position: fixed;
-}
-
 .trigger {
     display: inline-block;
 }

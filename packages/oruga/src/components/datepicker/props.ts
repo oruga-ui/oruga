@@ -161,8 +161,10 @@ export type DatepickerClasses = Partial<{
     sizeClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class of the box container element where you choose the date */
-    boxClass: ComponentClass;
+    /** Class of the content container element where you choose the date */
+    contentClass: ComponentClass;
+    /** Class of the content element when shown as modal */
+    modalClass: ComponentClass;
     /** Class of the header element inside the box */
     headerClass: ComponentClass;
     /** Class of the prev button element inside the box */
