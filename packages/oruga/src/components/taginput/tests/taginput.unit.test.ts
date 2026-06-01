@@ -18,6 +18,8 @@ describe("OTaginput tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    // TODO: add test to enter new item with allow new and keep first and not
+
     describe("render options props correctly", () => {
         test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
