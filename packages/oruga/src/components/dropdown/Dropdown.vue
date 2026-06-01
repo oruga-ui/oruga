@@ -5,11 +5,13 @@ import {
     ref,
     watch,
     useId,
+    toValue,
     useTemplateRef,
     type Component,
 } from "vue";
 
 import ODropdownItem from "../dropdown/DropdownItem.vue";
+import PositionWrapper from "../utils/PositionWrapper.vue";
 
 import { getDefault } from "@/utils/config";
 import { toCssDimension, isMobileAgent, isTrueish, mod } from "@/utils/helpers";
@@ -29,8 +31,6 @@ import {
     isGroupOption,
     type OptionGroupItem,
     type OptionItem,
-    getTeleportDefault,
-    usePopoverAPI,
 } from "@/composables";
 
 import type {
@@ -135,33 +135,33 @@ defineSlots<{
      * Override the trigger element, default is label prop
      * @param active {boolean} - dropdown active state
      * @param value {unknown | unknown[]} - the selected value
-     * @param toggle {(): void} - toggle dropdown active state
+     * @param toggle {(event: Event): void} - toggle dropdown active state
      */
     trigger?(props: {
         active: boolean;
         value: ModelValue;
-        toggle: () => void;
+        toggle: (event: Event) => void;
     }): void;
     /**
      * Define the dropdown items here
      * @param toggle {(): void} - toggle dropdown active state
      */
-    default?(props: { toggle: () => void }): void;
+    default?(props: { toggle: (event: Event) => void }): void;
     /**
      * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
      * @param toggle {(): void} - toggle dropdown active state
      * */
-    before?(props: { toggle: () => void }): void;
+    before?(props: { toggle: (event: Event) => void }): void;
     /**
      * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
      * @param toggle {(): void} - toggle dropdown active state
      */
-    after?(props: { toggle: () => void }): void;
+    after?(props: { toggle: (event: Event) => void }): void;
     /**
      * Define the content to show if the list is empty
      * @param toggle {(): void} - toggle dropdown active state
      */
-    empty?(props: { toggle: () => void }): void;
+    empty?(props: { toggle: (event: Event) => void }): void;
     /**
      * Override the option group
      * @param group {object} - options group item
@@ -174,8 +174,8 @@ defineSlots<{
     option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
 }>();
 
-const triggerRef = useTemplateRef<HTMLElement>("triggerElement");
-const menuRef = useTemplateRef<HTMLElement | Component>("menuElement");
+const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
+const menuRef = ref<HTMLElement | Component>();
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
@@ -197,25 +197,13 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
+const autoPosition = ref(props.position);
 
-const {
-    open: openPopover,
-    close: closePopover,
-    toggle: togglePopover,
-} = usePopoverAPI({
-    // position: props.position, // TODO
-    delay: props.delay,
-    behavior: "manual",
-    trigger: isActive,
-    triggerRef,
-    contentRef: menuRef,
-    onToggle: onPopoverToggle,
-});
+/** update autoPosition on prop change */
+watch(
+    () => props.position,
+    (v) => (autoPosition.value = v),
+);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
@@ -354,66 +342,94 @@ if (isClient) {
 }
 
 /** Close dropdown if clicked outside. */
-function onClickedOutside(): void {
+function onClickedOutside(event: Event): void {
     if (!props.closeOnOutside) return;
-    closePopover();
+    if (!isActive.value || props.inline) return;
+    close(event);
 }
 
 /** Close dropdown if page get scrolled. */
-function onPageScroll(): void {
+function onPageScroll(event: Event): void {
     if (!props.closeOnScroll) return;
-    closePopover();
+    if (!isActive.value || props.inline) return;
+    close(event);
 }
 
-function onTriggerClick(): void {
+function onTriggerClick(event: Event): void {
     // check if is mobile native and hoverable together
-    if (isMobileNative && hoverable.value) togglePopover();
+    if (isMobileNative && hoverable.value) toggle(event);
     // check normal click conditions
     if (!props.openOnClick) return;
-    togglePopover();
+    toggle(event);
 }
 
 function onTriggerContextMenu(event: Event): void {
     if (!props.openOnContextmenu) return;
     event.preventDefault();
-    openPopover();
+    open(event);
 }
 
-function onTriggerFocus(): void {
+function onTriggerFocus(event: Event): void {
     if (!props.openOnFocus) return;
-    openPopover();
+    open(event);
 }
 
-function onTriggerHover(): void {
+function onTriggerHover(event: Event): void {
     if (isMobileNative) return;
     if (!props.openOnHover) return;
-    openPopover();
+    open(event);
 }
 
-function onTriggerHoverLeave(): void {
+function onTriggerHoverLeave(event: Event): void {
     if (isMobileNative) return;
     if (!props.openOnHover) return;
-    closePopover();
+    close(event);
 }
 
-function onPopoverToggle(event: ToggleEvent): void {
-    if (event.newState === "open") {
-        isActive.value = true;
-        emits("open", event);
+/** Toggle dropdown if it's not disabled. */
+function toggle(event: Event): void {
+    if (props.disabled) return;
+    if (!isActive.value) open(event);
+    else close(event);
+}
+
+let timer: ReturnType<typeof setTimeout> | undefined;
+
+function open(event: Event): void {
+    if (props.disabled) return;
+    if (isActive.value) return;
+    if (props.delay) {
+        timer = setTimeout(() => {
+            isActive.value = true;
+            timer = undefined;
+            emits("open", event);
+        }, props.delay);
     } else {
-        // select item when dropdown closed
-        if (props.selectOnClose && focusedItem.value?.data.value)
-            selectItem(focusedItem.value);
-
-        // reset focused item
-        if (focusedItem.value) {
-            unrefElement(focusedItem.value.el)?.blur();
-            focusedItem.value = undefined;
-        }
-
-        isActive.value = false;
-        emits("close", event);
+        // if not active, toggle after clickOutside event
+        // this fixes toggling programmatic
+        nextTick(() => (isActive.value = true));
+        emits("open", event);
     }
+}
+
+function close(event: Event): void {
+    if (!isActive.value) return;
+
+    // clear remaining timer
+    if (timer) clearTimeout(timer);
+
+    // select item when dropdown closed
+    if (props.selectOnClose && focusedItem.value?.data.value)
+        selectItem(focusedItem.value);
+
+    // reset focused item
+    if (focusedItem.value) {
+        unrefElement(focusedItem.value.el)?.blur();
+        focusedItem.value = undefined;
+    }
+
+    isActive.value = false;
+    emits("close", event);
 }
 
 // #endregion --- Trigger Handler ---
@@ -426,7 +442,7 @@ function onPopoverToggle(event: ToggleEvent): void {
  *   2. Update v-model.
  *   3. Close the dropdown.
  */
-function selectItem(item: DropdownChildItem<T>): void {
+function selectItem(item: DropdownChildItem<T>, event?: Event): void {
     const value = item.data.value!;
     emits("select", value);
 
@@ -460,8 +476,8 @@ function selectItem(item: DropdownChildItem<T>): void {
     }
 
     triggerRef.value?.focus();
-    if (props.keepOpen) return;
-    closePopover();
+    if (props.keepOpen || !isActive.value || !event) return;
+    close(event);
 }
 
 // #endregion --- Select Feature ---
@@ -489,7 +505,11 @@ function moveFocus(delta: 1 | -1): void {
 
 /** Set focus on a dropdown item. */
 function setFocus(item: DropdownChildItem<T>): void {
-    if (props.selectOnFocus && item.data.value) selectItem(item);
+    if (props.selectOnFocus && item.data.value)
+        selectItem(
+            item,
+            new FocusEvent("focus", { relatedTarget: toValue(item.el) }),
+        );
 
     // set item as focused
     focusedItem.value = item;
@@ -498,13 +518,13 @@ function setFocus(item: DropdownChildItem<T>): void {
     scrollElementInView(menuRef, item.el);
 }
 
-function onUpPressed(): void {
-    if (!isActive.value) return openPopover();
+function onUpPressed(event: Event): void {
+    if (!isActive.value) return open(event);
     moveFocus(-1);
 }
 
-function onDownPressed(): void {
-    if (!isActive.value) return openPopover();
+function onDownPressed(event: Event): void {
+    if (!isActive.value) return open(event);
     moveFocus(1);
 }
 
@@ -522,7 +542,7 @@ function onHomePressed(event: Event): void {
     if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
         event.preventDefault();
 
-    openPopover();
+    open(event);
     if (!hasViableItems.value) return;
     const item = getFirstViableItem(0, 1);
     setFocus(item);
@@ -535,14 +555,14 @@ function onEndPressed(event: Event): void {
     if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
         event.preventDefault();
 
-    openPopover();
+    open(event);
     if (!hasViableItems.value) return;
     const item = getFirstViableItem(childItems.value.length - 1, -1);
     setFocus(item);
 }
 
-function onEscape(): void {
-    closePopover();
+function onEscape(event: Event): void {
+    close(event);
 }
 
 // #endregion --- Focus Feature ---
@@ -569,24 +589,38 @@ const rootClasses = defineClasses(
     ["modalClass", "o-dropdown--modal", null, isModal],
     ["hoverableClass", "o-dropdown--hoverable", null, hoverable],
     [
+        "positionClass",
+        "o-dropdown--position-",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
         "activeClass",
         "o-dropdown--active",
         null,
         computed(() => isActive.value || props.inline),
     ],
-    ["overlayClass", "o-dropdown__overlay", null, isModal],
-    [
-        "teleportClass",
-        "o-dropdown--teleport",
-        null,
-        computed(() => !!props.teleport),
-    ],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-dropdown__trigger"]);
 
+const teleportClasses = defineClasses([
+    "teleportClass",
+    "o-dropdown--teleport",
+    null,
+    computed(() => !!props.teleport),
+]);
+
+const overlayClasses = defineClasses(["overlayClass", "o-dropdown__overlay"]);
+
 const menuClasses = defineClasses(
     ["menuClass", "o-dropdown__menu"],
+    [
+        "menuPositionClass",
+        "o-dropdown__menu--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
     [
         "menuActiveClass",
         "o-dropdown__menu--active",
@@ -614,7 +648,7 @@ defineExpose({ value: vmodel, items: childItems });
         <component
             :is="triggerTag"
             v-if="!inline"
-            ref="triggerElement"
+            ref="triggerRef"
             :class="triggerClasses"
             :role="selectable ? 'combobox' : undefined"
             :tabindex="disabled ? -1 : null"
@@ -648,35 +682,53 @@ defineExpose({ value: vmodel, items: childItems });
             </slot>
         </component>
 
-        <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-            <transition :name="animation">
-                <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
+        <PositionWrapper
+            v-slot="{ setContent }"
+            v-model:position="autoPosition"
+            :teleport="teleport"
+            :class="[...rootClasses, ...teleportClasses]"
+            :trigger="triggerRef"
+            :disabled="!isActive"
+            default-position="bottom"
+            :disable-positioning="!isModal">
+            <transition v-if="isModal" :name="animation">
+                <div
+                    v-show="isActive"
+                    :class="overlayClasses"
+                    tabindex="-1"
+                    @click="onClickedOutside" />
+            </transition>
 
+            <transition :name="animation">
                 <component
                     :is="menuTag"
+                    v-show="(!disabled && isActive) || inline"
                     :id="menuId"
-                    ref="menuElement"
+                    :ref="(el) => (menuRef = setContent(el))"
                     :tabindex="inline ? 0 : -1"
                     :class="menuClasses"
                     :style="menuStyle"
                     :role="selectable ? 'listbox' : 'menu'"
                     :aria-labelledby="labelId"
                     :aria-label="ariaLabel"
-                    :aria-hidden="!selectable ? disabled : undefined"
+                    :aria-hidden="
+                        !selectable && !inline
+                            ? disabled || !isActive
+                            : undefined
+                    "
                     :aria-multiselectable="
                         selectable ? isTrueish(multiple) : undefined
                     "
-                    popover
                     @pointerleave="onMenuHoverLeave"
                     @keydown.enter.prevent="inline && onEnter($event)"
                     @keydown.space.prevent="inline && onEnter($event)"
-                    @keydown.up.prevent="inline && onUpPressed()"
-                    @keydown.down.prevent="inline && onDownPressed()"
+                    @keydown.up.prevent="inline && onUpPressed($event)"
+                    @keydown.down.prevent="inline && onDownPressed($event)"
                     @keydown.home="inline && onHomePressed($event)"
                     @keydown.end="inline && onEndPressed($event)">
-                    <slot name="before" :toggle="togglePopover" />
+                    <slot name="before" :toggle="toggle" />
 
-                    <slot :toggle="togglePopover">
+                    <slot :toggle="toggle">
                         <template
                             v-for="option in normalizedOptions"
                             :key="option.key">
@@ -686,9 +738,7 @@ defineExpose({ value: vmodel, items: childItems });
                                     role="presentation"
                                     :clickable="false">
                                     <slot name="group" :group="option">
-                                        <span>
-                                            {{ option.item.label }}
-                                        </span>
+                                        <span> {{ option.item.label }} </span>
                                     </slot>
                                 </o-dropdown-item>
 
@@ -697,9 +747,7 @@ defineExpose({ value: vmodel, items: childItems });
                                     v-bind="_option.item"
                                     :key="_option.key">
                                     <slot name="option" :option="_option">
-                                        <span>
-                                            {{ _option.item.label }}
-                                        </span>
+                                        <span> {{ _option.item.label }} </span>
                                     </slot>
                                 </o-dropdown-item>
                             </template>
@@ -715,11 +763,11 @@ defineExpose({ value: vmodel, items: childItems });
                     <slot
                         v-if="!hasViableItems"
                         name="empty"
-                        :toggle="togglePopover" />
+                        :toggle="toggle" />
 
-                    <slot name="after" :toggle="togglePopover" />
+                    <slot name="after" :toggle="toggle" />
                 </component>
             </transition>
-        </Teleport>
+        </PositionWrapper>
     </div>
 </template>
