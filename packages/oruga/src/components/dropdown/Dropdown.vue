@@ -27,10 +27,10 @@ import {
     unrefElement,
     useIndexer,
     isGroupOption,
-    type OptionGroupItem,
-    type OptionItem,
     getTeleportDefault,
     usePopoverAPI,
+    type OptionGroupItem,
+    type OptionItem,
 } from "@/composables";
 
 import type {
