@@ -2,7 +2,7 @@
 
 exports[`OTimepicker tests > render correctly 1`] = `
 "<div data-oruga="timepicker" class="o-timepicker">
-  <div data-oruga="dropdown" class="o-dropdown o-timepicker__dropdown o-dropdown--position-bottom-left">
+  <div data-oruga="dropdown" class="o-dropdown o-timepicker__dropdown o-dropdown--position-bottom-left" inline="false">
     <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <div data-oruga="input" class="o-input">
         <!--v-if--><input id="v-1" type="text" data-oruga-input="text" class="o-input__input" autocomplete="off" value="00:00">

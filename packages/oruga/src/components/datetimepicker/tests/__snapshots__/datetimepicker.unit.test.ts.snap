@@ -2,7 +2,7 @@
 
 exports[`ODatetimepicker tests > render correctly 1`] = `
 "<div data-oruga="datetimepicker" class="o-datepicker o-datetimepicker__date">
-  <div data-oruga="dropdown" class="o-dropdown o-datepicker__dropdown o-dropdown--position-bottom-left">
+  <div data-oruga="dropdown" class="o-dropdown o-datepicker__dropdown o-dropdown--position-bottom-left" inline="false">
     <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <div data-oruga="input" class="o-input">
         <!--v-if--><input class="o-datetimepicker__date o-input__input" id="v-1" type="text" data-oruga-input="text" autocomplete="off" value="01/01/2000, 00:00">
@@ -320,12 +320,12 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
           <footer class="o-datepicker__footer">
             <div class="o-datetimepicker__time">
               <div data-oruga="timepicker" class="o-timepicker">
-                <div data-oruga="dropdown" class="o-dropdown o-timepicker__dropdown o-dropdown--inline o-dropdown--position-bottom-left o-dropdown--active">
-                  <!--v-if-->
+                <div data-oruga="dropdown" class="o-dropdown o-timepicker__dropdown o-dropdown--position-bottom-left" inline="true">
+                  <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-5"></div>
                   <!--teleport start-->
                   <!--v-if-->
                   <transition-stub name="fade" appear="false" persisted="true" css="true">
-                    <div id="v-5" tabindex="0" class="o-dropdown__menu o-dropdown__menu--bottom-left o-dropdown__menu--active" role="menu">
+                    <div id="v-5" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
                       <div id="v-5-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-timepicker__box" role="menuitem" tabindex="-1" aria-hidden="false" aria-disabled="false">
                         <div data-oruga="select" class="">
                           <!--v-if--><select aria-label="Select Hour" id="v-7" data-oruga-input="select" class="o-timepicker__select" autocomplete="off">
