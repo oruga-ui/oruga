@@ -360,7 +360,6 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-// TODO: add blur
 defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 
 // #endregio  --- Expose Public Functionalities ---
