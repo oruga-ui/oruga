@@ -16,9 +16,10 @@ export function useTeleport(
         const value = toValue(teleport);
         return typeof value === "boolean" ? getTeleportDefault() : value;
     });
-    const disabled = computed(() =>
-        typeof toValue(teleport) === "boolean" ? !toValue(teleport) : false,
-    );
+    const disabled = computed(() => {
+        const value = toValue(teleport);
+        return typeof value === "boolean" ? !value : false;
+    });
 
     return reactive({ to, disabled });
 }
