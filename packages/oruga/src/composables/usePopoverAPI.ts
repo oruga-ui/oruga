@@ -24,7 +24,7 @@ export type PopoverAPIOptions = {
     /**
      * Positioning area used for the popover (mapped to `CSS position-area`).
      * In addition `centered` center the content in the middle of the screen.
-     * */
+     */
     position?: "centered" | PopoverPosition;
     /** Reference or getter resolving to the trigger element. */
     triggerRef: MaybeRefOrGetter<EventTarget>;
