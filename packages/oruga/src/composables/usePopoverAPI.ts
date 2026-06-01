@@ -14,11 +14,18 @@ import {
 } from "@/composables";
 
 type BasePosition = "top" | "bottom" | "left" | "right" | "center";
+/**
+ * The possible positions of the `position-area` attribute.
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/position-area_value
+ */
 export type PopoverPosition = BasePosition | [BasePosition, BasePosition];
 
 export type PopoverAPIOptions = {
-    /** Positioning area used for the popover (mapped to `CSS position-area`). */
-    position?: PopoverPosition;
+    /**
+     * Positioning area used for the popover (mapped to `CSS position-area`).
+     * In addition `centered` center the content in the middle of the screen.
+     * */
+    position?: "centered" | PopoverPosition;
     /** Reference or getter resolving to the trigger element. */
     triggerRef: MaybeRefOrGetter<EventTarget>;
     /** Reference or getter resolving to the popover content element. */
@@ -169,7 +176,8 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         content.popover = behavior;
 
         // add content position styles
-        content.style.positionArea = position.toString();
+        content.style.positionArea =
+            position === "centered" ? "none" : position.toString();
         content.style.positionTryFallbacks =
             "flip-block, flip-inline, flip-block flip-inline";
 

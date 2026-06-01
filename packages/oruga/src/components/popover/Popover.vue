@@ -5,7 +5,6 @@ import { getDefault } from "@/utils/config";
 import {
     defineClasses,
     getTeleportDefault,
-    unrefElement,
     usePopoverAPI,
     usePreventScrolling,
 } from "@/composables";
@@ -96,7 +95,7 @@ onMounted(() => {
 });
 
 const { open, close, toggle } = usePopoverAPI({
-    position: props.position,
+    position: props.modal ? "centered" : props.position,
     delay: props.delay,
     behavior: props.behavior,
     trigger: isActive,
@@ -156,19 +155,7 @@ const contentClasses = defineClasses(
         null,
         computed(() => props.backdrop || props.modal),
     ],
-    [
-        "modalClass",
-        "o-popover__content--modal",
-        null,
-        computed(() => props.modal),
-    ],
 );
-
-onMounted(() => {
-    const content = unrefElement(contentRef);
-    // override content style to center when modal
-    if (content) content.style.positionArea = "none";
-});
 
 // #endregion --- Computed Component Classes ---
 

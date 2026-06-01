@@ -57,9 +57,7 @@ export type PopoverClasses = Partial<{
     triggerClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
-    /** Class of the content element when the element should be shown as centered modal */
-    modalClass: ComponentClass;
-    /** Class of the content elemetn when a backdrop should be shown */
+    /** Class of the content element when a backdrop should be shown */
     backdropClass: ComponentClass;
     /** Class of the body when popover has backdrop and scroll is clipped */
     scrollClipClass: ComponentClass;

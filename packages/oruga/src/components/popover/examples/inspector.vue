@@ -23,6 +23,31 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
         class: "contentClass",
         description: "Class of the content element.",
     },
+    backdropClass: {
+        class: "backdropClass",
+        description:
+            "Class of the content element when a backdrop should be shown.",
+        properties: ["backdrop"],
+        action: (data): void => {
+            data.backdrop = true;
+        },
+    },
+    scrollClipClass: {
+        class: "scrollClipClass",
+        description: "Class of the body when is open and scroll is clipped.",
+        properties: ["clipScroll"],
+        action: (data): void => {
+            data.clipScroll = true;
+        },
+    },
+    scrollKeepClass: {
+        class: "scrollKeepClass",
+        description: "Class of the body when is open and scroll is keeped.",
+        properties: ["clipScroll"],
+        action: (data): void => {
+            data.clipScroll = false;
+        },
+    },
 };
 </script>
 
