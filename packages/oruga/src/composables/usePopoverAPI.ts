@@ -4,6 +4,7 @@ import {
     watch,
     isRef,
     useId,
+    toValue,
     type MaybeRefOrGetter,
     type WatchSource,
 } from "vue";
@@ -97,13 +98,13 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     }
 
     function open(): void {
-        const trigger = unrefElement(triggerRef);
-        const content = unrefElement(contentRef);
+        const triggerEl = unrefElement(triggerRef);
+        const contentEl = unrefElement(contentRef);
 
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
-            if (!content || !trigger || active.value) return;
-            content.showPopover({ source: trigger }); // open popover with native api
+            if (!contentEl || !triggerEl || active.value) return;
+            contentEl.showPopover({ source: triggerEl }); // open popover with native api
             timeout = undefined;
             active.value = true;
         }, delay);
@@ -111,9 +112,9 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
     function close(): void {
         if (timeout) clearTimeout(timeout);
-        const content = unrefElement(contentRef);
-        if (!content || !active.value) return;
-        content.hidePopover(); // hide popover with native api
+        const contentEl = unrefElement(contentRef);
+        if (!contentEl || !active.value) return;
+        contentEl.hidePopover(); // hide popover with native api
         active.value = false;
     }
 
@@ -158,9 +159,9 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     let contentId = useId();
 
     onMounted(() => {
-        const content = unrefElement(contentRef);
-        const trigger = unrefElement(triggerRef);
-        if (!content || !trigger) {
+        const contentEl = unrefElement(contentRef);
+        const triggerEl = unrefElement(triggerRef);
+        if (!contentEl || !triggerEl) {
             console.warn(
                 "Content or trigger element is missing for the popover api initialisation.",
             );
@@ -168,38 +169,47 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         }
 
         // check content has id
-        if (Object.hasOwn(content, "id") && content.getAttribute("id")) {
-            contentId = content.getAttribute("id")!;
+        if (contentEl.hasAttribute("id")) {
+            contentId = contentEl.getAttribute("id")!;
+        }
+
+        if (import.meta.env?.VITEST === "true") {
+            // polyfill for test environment - this is normally set in the browser
+            contentEl.style.display = "none";
         }
 
         // place popover attribute on content
-        content.popover = behavior;
+        contentEl.popover = behavior;
 
         // add content position styles
-        content.style.positionArea =
+        contentEl.style.positionArea =
             position === "centered" ? "none" : position.toString();
-        content.style.positionTryFallbacks =
+        contentEl.style.positionTryFallbacks =
             "flip-block, flip-inline, flip-block flip-inline";
 
         // add position data attribute
-        content.dataset.position = position.toString();
+        contentEl.dataset.position = position.toString();
 
         // check if the trigger has native popover target support
         if (
-            trigger instanceof HTMLButtonElement ||
-            (trigger instanceof HTMLInputElement && trigger.type === "button")
+            triggerEl instanceof HTMLButtonElement ||
+            (triggerEl instanceof HTMLInputElement &&
+                triggerEl.type === "button")
         ) {
             // add related popover properties
-            trigger.setAttribute("popovertarget", contentId);
+            triggerEl.setAttribute("popovertarget", contentId);
         } else {
             // add interactive proptiers
-            trigger.role = "button";
-            trigger.tabIndex = 0;
+            if (!triggerEl.role) triggerEl.role = "button";
+            triggerEl.tabIndex = 0;
         }
 
         // set a11y attributes
-        trigger.setAttribute("aria-details", contentId);
-        trigger.setAttribute("aria-controls", contentId);
+        triggerEl.setAttribute("aria-details", contentId);
+        triggerEl.setAttribute("aria-controls", contentId);
+
+        // open on mount
+        if (typeof trigger === "undefined" || toValue(trigger)) open();
     });
 
     return {
