@@ -161,7 +161,7 @@ watch(
 
 onMounted(() => handleChange(vmodel.value));
 
-if (props.autosize && props.type !== "textarea") {
+if (props.autosize && props.type === "textarea") {
     const resizeObserver = window.ResizeObserver
         ? new window.ResizeObserver(resize)
         : undefined;
