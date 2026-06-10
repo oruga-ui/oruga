@@ -14,6 +14,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
+import { isClient } from "@/utils/ssr";
 import { isDefined, isTrueish } from "@/utils/helpers";
 import {
     defineClasses,
@@ -112,6 +113,7 @@ const emits = defineEmits<{
 
 // --- Validation Feature ---
 
+const rootRef = useTemplateRef("rootElement");
 const inputRef = useTemplateRef<HTMLInputElement>("inputElement");
 
 // use form input functionalities
@@ -158,6 +160,19 @@ watch(
 );
 
 onMounted(() => handleChange(vmodel.value));
+
+if (props.autosize && props.type === "textarea") {
+    const resizeObserver = window.ResizeObserver
+        ? new window.ResizeObserver(resize)
+        : undefined;
+
+    onMounted(() => {
+        // start resize observing
+        if (isClient && resizeObserver && rootRef.value) {
+            resizeObserver.observe(rootRef.value);
+        }
+    });
+}
 
 /**
  * Called when v-model changes:
@@ -366,7 +381,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div data-oruga="input" :class="rootClasses">
+    <div ref="rootElement" data-oruga="input" :class="rootClasses">
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"

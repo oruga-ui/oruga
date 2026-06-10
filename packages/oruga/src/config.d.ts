@@ -547,14 +547,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expanded: boolean;
                 /**
-                 * Open dropdown on focus
-                 */
-                openOnFocus: boolean;
-                /**
-                 * Close dropdown on click
-                 */
-                closeOnClick: boolean;
-                /**
                  * Custom function to format a date into a string
                  */
                 formatter: ((date: [] | Date | Date[] | [Date, Date]) => string) | undefined;
@@ -615,15 +607,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconNext: string;
                 /**
-                 * Dropdown content is shown into a modal on mobile
+                 * Picker content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Dropdown content is shown into a modal on desktop
+                 * Picker content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
-                 * Enable mobile native input if mobile agent
+                 * Enable mobile native input if device is a mobile agent
                  */
                 mobileNative: boolean;
                 /**
@@ -665,9 +657,13 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expandedClass: ClassDefinition;
                 /**
-                 * Class of the box container element where you choose the date
+                 * Class of the content container element where you choose the date
                  */
-                boxClass: ClassDefinition;
+                contentClass: ClassDefinition;
+                /**
+                 * Class of the content element when shown as modal
+                 */
+                modalClass: ClassDefinition;
                 /**
                  * Class of the header element inside the box
                  */
@@ -857,10 +853,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 monthEventIndicatorClass: ClassDefinition;
                 /**
-                 * Class for the underlaying dropdown component
-                 */
-                dropdownClass: ClassDefinition;
-                /**
                  * Class for the HTML input element
                  */
                 inputClass: ClassDefinition;
@@ -868,10 +860,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class configuration for the internal input component
                  */
                 inputClasses: Record<string, any>;
-                /**
-                 * Class configuration for the internal dropdown component
-                 */
-                dropdownClasses: Record<string, any>;
                 /**
                  * Class configuration for the internal select component
                  */
