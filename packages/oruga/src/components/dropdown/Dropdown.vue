@@ -465,6 +465,7 @@ function selectItem(item: DropdownChildItem<T>, event?: Event): void {
         } else {
             if (vmodel.value !== value) {
                 // update a single value
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
                 vmodel.value = value as ModelValue;
                 // emit change after vmodel has changed
                 nextTick(() => emits("change", vmodel.value));
