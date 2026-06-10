@@ -107,12 +107,12 @@ Object.defineProperties(HTMLElement.prototype, {
             this.style.display = "none";
             this.removeAttribute("popover-open");
 
-            const hideEvent = new globalThis.ToggleEvent("toggle", {
+            const toggleEvent = new globalThis.ToggleEvent("toggle", {
                 bubbles: true,
                 newState: "close",
                 oldState: "open",
             });
-            this.dispatchEvent(hideEvent);
+            this.dispatchEvent(toggleEvent);
         },
         configurable: true,
         writable: true,

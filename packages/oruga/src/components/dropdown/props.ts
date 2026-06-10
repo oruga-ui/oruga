@@ -124,8 +124,8 @@ export type DropdownClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class for the root element with position */
-    positionClass: ComponentClass;
+    /** Class of the root element when has an overlay */
+    overlayClass: ComponentClass;
     /** Class for the root element when active or inline */
     activeClass: ComponentClass;
     /** Class for the root element when trigger is hoverable */
@@ -134,12 +134,8 @@ export type DropdownClasses = Partial<{
     triggerClass: ComponentClass;
     /** Class of the menu element */
     menuClass: ComponentClass;
-    /** Class of the menu element with position */
-    menuPositionClass: ComponentClass;
     /** Class of the menu element when active or inline */
     menuActiveClass: ComponentClass;
-    /** Class of the overlay when is shown as modal */
-    overlayClass: ComponentClass;
     /** Class of the body when dropdown is open and scroll is clipped */
     scrollClipClass: ComponentClass;
     /** Class of the body when dropdown is open and scroll is keeped */

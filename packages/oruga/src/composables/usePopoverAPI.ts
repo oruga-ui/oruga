@@ -42,6 +42,8 @@ export type PopoverAPIOptions = {
     delay?: number;
     /** An optional watch source which will be watched and to open or close the popover. */
     trigger?: WatchSource<boolean>;
+    /** Stop interactions. */
+    disabled?: MaybeRefOrGetter<boolean>;
     /**  Optional listener for the native `toggle` event. */
     onToggle?: (e: ToggleEvent) => void;
     /** Optional listener for the native `beforetoggle` event. */
@@ -76,6 +78,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         behavior = "auto",
         delay,
         trigger,
+        disabled,
         triggerRef,
         contentRef,
     } = options;
@@ -98,6 +101,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     }
 
     function open(): void {
+        if (toValue(disabled)) return;
         const triggerEl = unrefElement(triggerRef);
         const contentEl = unrefElement(contentRef);
 
@@ -111,6 +115,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     }
 
     function close(): void {
+        if (toValue(disabled)) return;
         if (timeout) clearTimeout(timeout);
         const contentEl = unrefElement(contentRef);
         if (!contentEl || !active.value) return;
@@ -119,6 +124,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     }
 
     function toggle(): void {
+        if (toValue(disabled)) return;
         const content = unrefElement(contentRef);
         if (!content) return;
         content.togglePopover(); // toggle popover state with native api

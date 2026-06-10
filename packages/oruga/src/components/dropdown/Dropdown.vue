@@ -27,8 +27,8 @@ import {
     unrefElement,
     useIndexer,
     isGroupOption,
-    getTeleportDefault,
     usePopoverAPI,
+    useTeleport,
     type OptionGroupItem,
     type OptionItem,
 } from "@/composables";
@@ -90,6 +90,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     animation: () => getDefault("dropdown.animation", "fade"),
     teleport: () => getDefault("dropdown.teleport", false),
     clipScroll: () => getDefault("dropdown.clipScroll", false),
+    ariaLabel: undefined,
 });
 
 const emits = defineEmits<{
@@ -197,11 +198,7 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
+const _teleport = useTeleport(props.teleport);
 
 const {
     open: openPopover,
@@ -212,6 +209,7 @@ const {
     delay: props.delay,
     behavior: "manual",
     trigger: isActive,
+    disabled: () => props.disabled,
     triggerRef,
     contentRef: menuRef,
     onToggle: onPopoverToggle,
@@ -231,6 +229,7 @@ const isModal = computed(
 );
 
 const menuStyle = computed(() => ({
+    display: props.inline ? "block" : undefined,
     maxHeight: props.scrollable ? toCssDimension(props.maxHeight) : null,
     overflow: props.scrollable ? "auto" : null,
 }));
@@ -426,8 +425,8 @@ function onPopoverToggle(event: ToggleEvent): void {
  *   2. Update v-model.
  *   3. Close the dropdown.
  */
-function selectItem(item: DropdownChildItem<T>, event?: Event): void {
-    const value = item.data!.value!;
+function selectItem(item: DropdownChildItem<T>): void {
+    const value = item.data.value!;
     emits("select", value);
 
     if (props.selectable) {
@@ -452,6 +451,7 @@ function selectItem(item: DropdownChildItem<T>, event?: Event): void {
         } else {
             if (vmodel.value !== value) {
                 // update a single value
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
                 vmodel.value = value as ModelValue;
                 // emit change after vmodel has changed
                 nextTick(() => emits("change", vmodel.value));
@@ -628,7 +628,7 @@ defineExpose({ value: vmodel, items: childItems });
             :aria-disabled="disabled"
             :aria-controls="menuId"
             :aria-labelledby="selectable ? labelId : undefined"
-            :aria-label="selectable ? ariaLabel : undefined"
+            :aria-label="ariaLabel"
             @click="onTriggerClick"
             @contextmenu="onTriggerContextMenu"
             @pointerenter="onTriggerHover"

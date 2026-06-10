@@ -81,4 +81,8 @@ shadowRoot.appendChild(link);
 .trigger {
     display: inline-block;
 }
+
+.o-dropdown [popover]:where(:not(:popover-open)) {
+    display: none;
+}
 </style>
