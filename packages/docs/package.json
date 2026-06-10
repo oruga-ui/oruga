@@ -24,19 +24,17 @@
     "@oruga-ui/theme-bulma": "0.9.0",
     "@oruga-ui/theme-oruga": "0.9.1",
     "highlight.js": "11.11.1",
-    "markdown-it": "^14.1.1",
+    "markdown-it": "^14.2.0",
     "markdown-it-highlightjs": "^4.3.0"
   },
   "devDependencies": {
     "@types/node": "^24.11.0",
-    "@vue/tsconfig": "^0.9.0",
-    "sass": "^1.97.3",
-    "tsx": "^4.21.0",
+    "@vue/tsconfig": "^0.9.1",
+    "sass": "^1.100.0",
+    "tsx": "^4.22.4",
     "typescript": "5.9.3",
     "vitepress": "^1.6.4",
-    "vue": "^3.5.32",
-    "vue-component-meta": "^3.2.6",
-    "vue-docgen-cli": "4.79.0",
-    "vue-tsc": "^3.2.6"
+    "vue": "^3.5.35",
+    "vue-docgen-cli": "4.79.0"
   }
 }
