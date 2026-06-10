@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.13.5",
+  "version": "0.13.6",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "license": "MIT",
@@ -59,24 +59,22 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "vue-component-type-helpers": "^3.2.6"
+    "vue-component-type-helpers": "^3.3.3"
   },
   "devDependencies": {
     "@types/jest-axe": "^3.5.9",
     "@types/jsdom": "^28.0.1",
-    "@vitejs/plugin-vue": "^6.0.5",
-    "@vitest/browser-playwright": "^4.1.4",
-    "@vitest/coverage-v8": "^4.1.4",
-    "@vue/test-utils": "^2.4.6",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vitest/browser-playwright": "^4.1.8",
+    "@vitest/coverage-v8": "^4.1.8",
+    "@vue/test-utils": "^2.4.11",
     "core-js": "^3.49.0",
     "jest-axe": "^10.0.0",
-    "jsdom": "^29.0.1",
+    "jsdom": "^29.1.1",
     "vite": "^8.0.8",
     "vite-plugin-dts": "^4.5.4",
-    "vitest": "^4.1.4",
+    "vitest": "^4.1.8",
     "vitest-browser-vue": "^2.1.0",
-    "vue": "^3.5.32",
-    "vue-component-meta": "^3.2.6",
-    "vue-tsc": "^3.2.6"
+    "vue": "^3.5.35"
   }
 }

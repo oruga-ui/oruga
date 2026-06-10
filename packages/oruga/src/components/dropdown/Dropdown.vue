@@ -529,7 +529,9 @@ function onEnter(event: Event): void {
     if (!isActive.value) return;
     if (!focusedItem.value) return;
     setFocus(focusedItem.value);
-    focusedItem.value.data.selectItem(event);
+    focusedItem.value.data.selectItem();
+    // prevent other event handler
+    event.stopPropagation();
 }
 
 /** Go to the first viable item */
@@ -656,8 +658,8 @@ defineExpose({ value: vmodel, items: childItems });
             @focus.capture="onTriggerFocus"
             @keydown.tab="onEscape"
             @keydown.escape="onEscape"
-            @keydown.enter="onEnter"
-            @keydown.space="onEnter"
+            @keydown.enter.capture="onEnter"
+            @keydown.space.capture="onEnter"
             @keydown.up.prevent="onUpPressed"
             @keydown.down.prevent="onDownPressed"
             @keydown.home="onHomePressed"

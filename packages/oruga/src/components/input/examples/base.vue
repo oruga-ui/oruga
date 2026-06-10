@@ -30,6 +30,7 @@
             <o-input
                 :maxlength="200"
                 type="textarea"
+                autosize
                 placeholder="Enter some text..." />
         </o-field>
 

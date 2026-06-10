@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, watch, useId, useTemplateRef, onMounted } from "vue";
+import { ref, watch, computed, useId, useTemplateRef, onMounted } from "vue";
 
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
-    getTeleportDefault,
     usePopoverAPI,
+    usePreventScrolling,
+    useTeleport,
 } from "@/composables";
 
 import type { PopoverProps } from "./props";
@@ -31,8 +32,11 @@ const props = withDefaults(defineProps<PopoverProps>(), {
     position: () => getDefault("popover.position", "top"),
     delay: undefined,
     disabled: false,
+    backdrop: false,
+    modal: false,
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
+    clipScroll: () => getDefault("popover.clipScroll", false),
 });
 
 const emits = defineEmits<{
@@ -90,33 +94,28 @@ onMounted(() => {
     triggerRef.value = trigger;
 });
 
-const {
-    active: activePopover,
-    open,
-    close,
-    toggle,
-} = usePopoverAPI({
-    position: props.position,
+const _teleport = useTeleport(props.teleport);
+
+const { open, close, toggle } = usePopoverAPI({
+    position: props.modal ? "centered" : props.position,
     delay: props.delay,
     behavior: props.behavior,
+    trigger: isActive,
     triggerRef,
     contentRef,
     onToggle,
     onBeforeToggle,
 });
 
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
-// show/hide popover when active prop changes
-watch(isActive, (value) => {
-    if (activePopover.value === value) return;
-    if (value) open();
-    else close();
-});
+watch(
+    isActive,
+    (value) => {
+        if (props.backdrop || props.modal) toggleScroll(value);
+    },
+    { flush: "post" },
+);
 
 // #region --- Event Handler ---
 
@@ -140,11 +139,19 @@ const rootClasses = defineClasses(
         "teleportClass",
         "o-popover--teleport",
         null,
-        computed(() => !_teleport.value.disabled),
+        computed(() => !_teleport.disabled),
     ],
 );
 
-const contentClasses = defineClasses(["contentClass", "o-popover__content"]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-popover__content"],
+    [
+        "backdropClass",
+        "o-popover__content--backdrop",
+        null,
+        computed(() => props.backdrop || props.modal),
+    ],
+);
 
 // #endregion --- Computed Component Classes ---
 
