@@ -8,7 +8,7 @@
 
     // vitest runs in a different environment than the application code
     // override types accordingly
-    "types": ["node", "jsdom"]
+    "types": ["node", "jsdom", "vite/client"]
   },
   "exclude": [
     // exclude examples code
