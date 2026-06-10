@@ -61,8 +61,7 @@ describe("OPopover tests", () => {
             expect(wrapper.emitted("update:active")).toBeUndefined();
         });
 
-        // currently not testable with vitest because popover api is not included
-        test.skip("react accordingly when has click trigger", async () => {
+        test("react accordingly when has click trigger", async () => {
             const wrapper = mount(OPopover, {
                 props: { content: "Some Content" },
                 slots: { default: '<button class="trigger">trigger</button>' },
@@ -81,7 +80,6 @@ describe("OPopover tests", () => {
             await trigger.trigger("click");
             await setTimeout(200); // await async event is processed
 
-            console.log(wrapper.html());
             expect(content.isVisible()).toBeTruthy();
             expect(wrapper.emitted("open")).toHaveLength(1);
             const activeEmits = wrapper.emitted("update:active");
