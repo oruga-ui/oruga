@@ -657,6 +657,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expandedClass: ClassDefinition;
                 /**
+                 * Class of the trigger element
+                 */
+                triggerClass: ClassDefinition;
+                /**
                  * Class of the content container element where you choose the date
                  */
                 contentClass: ClassDefinition;
@@ -3320,6 +3324,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
         timepicker?: ComponentConfigBase &
             Partial<{
                 /**
+                 * Open picker on focus
+                 */
+                openOnFocus: boolean;
+                /**
                  * Makes input full width when inside a grouped or addon field
                  */
                 expanded: boolean;
@@ -3327,14 +3335,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Size of the button
                  */
                 size: string;
-                /**
-                 * Open dropdown on focus
-                 */
-                openOnFocus: boolean;
-                /**
-                 * Close dropdown on click
-                 */
-                closeOnClick: boolean;
                 /**
                  * Custom function to format a date into a string
                  */
@@ -3348,6 +3348,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 creator: (() => Date);
                 /**
+                 * Position of the popover relative to the input
+                 */
+                position: "bottom" | "left" | "right" | "top";
+                /**
                  * Icon pack to use
                  */
                 iconPack: string;
@@ -3360,11 +3364,11 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
-                 * Dropdown content is shown into a modal on mobile
+                 * Picker content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Dropdown content is shown into a modal on desktop
+                 * Picker content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
@@ -3406,9 +3410,21 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 sizeClass: ClassDefinition;
                 /**
-                 * Class of the dropdown box element where you choose the date
+                 * Class of the root element when expanded
                  */
-                boxClass: ClassDefinition;
+                expandedClass: ClassDefinition;
+                /**
+                 * Class of the trigger element
+                 */
+                triggerClass: ClassDefinition;
+                /**
+                 * Class of the content container element where you choose the date
+                 */
+                contentClass: ClassDefinition;
+                /**
+                 * Class of the content element when shown as modal
+                 */
+                modalClass: ClassDefinition;
                 /**
                  * Class of the select separator element
                  */
@@ -3418,10 +3434,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 footerClass: ClassDefinition;
                 /**
-                 * Class for the underlaying dropdown component
-                 */
-                dropdownClass: ClassDefinition;
-                /**
                  * Class for the HTML input element
                  */
                 inputClass: ClassDefinition;
@@ -3429,10 +3441,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class configuration for the internal input component
                  */
                 inputClasses: Record<string, any>;
-                /**
-                 * Class configuration for the internal dropdown component
-                 */
-                dropdownClasses: Record<string, any>;
                 /**
                  * Class configuration for the internal select component
                  */

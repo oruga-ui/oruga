@@ -180,15 +180,15 @@ defineSlots<{
     footer?(): void;
 }>();
 
-const { dtf, dateCreator, dateFormatter, dateParser } =
-    useDatepickerMixins(props);
+const pickerRef = useTemplateRef("pickerComponent");
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const isModal = computed(() =>
-    isMobile ? props.mobileModal : props.desktopModal,
+    props.inline ? false : isMobile ? props.mobileModal : props.desktopModal,
 );
 
-const pickerRef = useTemplateRef("pickerComponent");
+const { dtf, dateCreator, dateFormatter, dateParser } =
+    useDatepickerMixins(props);
 
 // the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -551,6 +551,8 @@ const contentClasses = defineClasses(
 
 const _inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
 
+const _selectClasses = defineClasses(["selectClass", "o-datepicker__select"]);
+
 const headerClasses = defineClasses(["headerClass", "o-datepicker__header"]);
 
 const prevButtonClasses = defineClasses([
@@ -656,6 +658,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             v-if="!isTypeMonth"
                             v-bind="selectClasses"
                             v-model="focusedDateData.month"
+                            :class="_selectClasses"
                             :disabled="disabled"
                             :size="size"
                             :options="listOfMonths"
@@ -667,6 +670,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         <o-select
                             v-bind="selectClasses"
                             v-model="focusedDateData.year"
+                            :class="_selectClasses"
                             :disabled="disabled"
                             :size="size"
                             :options="listOfYears"

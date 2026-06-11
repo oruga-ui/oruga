@@ -96,7 +96,7 @@ export type DatepickerProps<
     /** Define the range of years to show */
     yearsRange?: number[];
     /**
-     * Position of the dropdown relative to the input
+     * Position of the popover relative to the input
      * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
      */
     position?: "top" | "bottom" | "left" | "right";
@@ -161,6 +161,8 @@ export type DatepickerClasses = Partial<{
     sizeClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
+    /** Class of the trigger element */
+    triggerClass: ComponentClass;
     /** Class of the content container element where you choose the date */
     contentClass: ComponentClass;
     /** Class of the content element when shown as modal */
@@ -266,6 +268,8 @@ export type DatepickerClasses = Partial<{
      * @ignore
      */
     inputClasses: InputProps<false>;
+    /** Class of the HTML select element */
+    selectClass: ComponentClass;
     /**
      * Class configuration for the internal select component
      * @ignore
