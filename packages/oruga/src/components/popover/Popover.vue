@@ -34,6 +34,7 @@ const props = withDefaults(defineProps<PopoverProps>(), {
     disabled: false,
     backdrop: false,
     modal: false,
+    role: undefined,
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
     clipScroll: () => getDefault("popover.clipScroll", false),
@@ -174,6 +175,7 @@ defineExpose({ close, open, toggle });
                     :id="id"
                     ref="contentElement"
                     :class="contentClasses"
+                    :role="role"
                     popover>
                     <slot name="content" :close="close">
                         {{ content }}
