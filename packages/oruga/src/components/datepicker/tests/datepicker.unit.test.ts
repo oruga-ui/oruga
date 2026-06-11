@@ -32,7 +32,9 @@ describe("ODatepicker", () => {
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
+
         await input.setValue("2024-04-10");
+        await input.trigger("keyup", { key: "Enter" });
 
         let date = new Date(Date.UTC(2024, 3, 10));
 
@@ -42,7 +44,9 @@ describe("ODatepicker", () => {
         expect(emits?.[0][0]).toBeInstanceOf(Date);
         expect((emits?.[0][0] as Date).toISOString()).toBe(date.toISOString());
         expect(input.element.value).toBe("10/04/2024");
+
         await input.setValue("2021-04-18");
+        await input.trigger("keyup", { key: "Enter" });
 
         date = new Date(Date.UTC(2021, 3, 18));
 
@@ -62,6 +66,7 @@ describe("ODatepicker", () => {
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
         await input.setValue("not-a-date");
+        await input.trigger("keyup", { key: "Enter" });
 
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
@@ -70,6 +75,7 @@ describe("ODatepicker", () => {
         expect(input.element.value).toBe("");
 
         await input.setValue("21/06/wrong");
+        await input.trigger("keyup", { key: "Enter" });
 
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
