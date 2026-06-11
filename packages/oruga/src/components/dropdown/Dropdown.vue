@@ -355,7 +355,7 @@ if (isClient) {
 
 /** Close dropdown if clicked outside. */
 function onClickedOutside(): void {
-    if (!props.closeOnOutside) return;
+    if (!props.closeOnOutside || props.inline) return;
     closePopover();
 }
 
@@ -637,7 +637,7 @@ defineExpose({
             "
             :aria-disabled="disabled"
             :aria-labelledby="selectable ? labelId : undefined"
-            :aria-label="ariaLabel"
+            :aria-label="selectable ? ariaLabel : undefined"
             @click="onTriggerClick"
             @contextmenu="onTriggerContextMenu"
             @pointerenter="onTriggerHover"
