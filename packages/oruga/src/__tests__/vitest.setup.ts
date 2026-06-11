@@ -50,7 +50,10 @@ class MockToggleEvent extends Event {
     oldState?: string;
     newState?: string;
 
-    constructor(type: string, init: any = {}) {
+    constructor(
+        type: string,
+        init: { oldState: string; newState: string } & EventInit,
+    ) {
         super(type, init);
         this.oldState = init.oldState;
         this.newState = init.newState;
