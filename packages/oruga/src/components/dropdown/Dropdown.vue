@@ -604,7 +604,13 @@ const menuClasses = defineClasses(
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ value: vmodel, items: childItems });
+defineExpose({
+    value: vmodel,
+    items: childItems,
+    open: openPopover,
+    close: closePopover,
+    toggle: togglePopover,
+});
 
 // #endregion --- Expose Public Functionalities ---
 </script>
@@ -622,7 +628,7 @@ defineExpose({ value: vmodel, items: childItems });
             v-bind="$attrs"
             :class="triggerClasses"
             :role="selectable ? 'combobox' : undefined"
-            :tabindex="disabled ? -1 : null"
+            :tabindex="disabled ? -1 : undefined"
             :disabled
             :aria-haspopup="selectable ? 'listbox' : 'menu'"
             :aria-expanded="selectable ? isActive : undefined"
@@ -630,7 +636,6 @@ defineExpose({ value: vmodel, items: childItems });
                 focusedItem ? `${menuId}-${focusedItem.identifier}` : undefined
             "
             :aria-disabled="disabled"
-            :aria-controls="menuId"
             :aria-labelledby="selectable ? labelId : undefined"
             :aria-label="ariaLabel"
             @click="onTriggerClick"

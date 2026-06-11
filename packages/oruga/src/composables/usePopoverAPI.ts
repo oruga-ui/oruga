@@ -87,6 +87,9 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
     const active = ref(false);
 
+    let triggerEl: HTMLElement | undefined | null;
+    let contentEl: HTMLElement | undefined | null;
+
     if (isRef(trigger)) {
         // show/hide popover when trigger changes
         watch(
@@ -102,8 +105,6 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
     function open(): void {
         if (toValue(disabled)) return;
-        const triggerEl = unrefElement(triggerRef);
-        const contentEl = unrefElement(contentRef);
 
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
@@ -117,17 +118,15 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     function close(): void {
         if (toValue(disabled)) return;
         if (timeout) clearTimeout(timeout);
-        const contentEl = unrefElement(contentRef);
-        if (!contentEl || !active.value) return;
+        if (!contentEl) return;
         contentEl.hidePopover(); // hide popover with native api
         active.value = false;
     }
 
     function toggle(): void {
         if (toValue(disabled)) return;
-        const content = unrefElement(contentRef);
-        if (!content) return;
-        content.togglePopover(); // toggle popover state with native api
+        if (!contentEl) return;
+        contentEl.togglePopover(); // toggle popover state with native api
         active.value = !active.value;
     }
 
@@ -152,8 +151,8 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         open();
     }
 
+    // add event listener on trigger element
     if (behavior !== "manual") {
-        // add event listener on trigger element
         useEventListener(triggerRef, "click", onTriggerClick);
         useEventListener(triggerRef, "keydown", onTriggerKeydown);
     }
@@ -167,14 +166,16 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     let contentId = useId();
 
     onMounted(() => {
-        const contentEl = unrefElement(contentRef);
-        const triggerEl = unrefElement(triggerRef);
+        contentEl = unrefElement(contentRef);
+        triggerEl = unrefElement(triggerRef);
         if (!contentEl || !triggerEl) {
             console.warn(
                 "Content or trigger element is missing for the popover api initialisation.",
             );
             return;
         }
+        if (triggerEl.firstElementChild instanceof HTMLButtonElement)
+            triggerEl = triggerEl.firstElementChild;
 
         // check content has id
         if (contentEl.hasAttribute("id")) {
@@ -202,18 +203,20 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         // add position data attribute
         contentEl.dataset.position = position.toString();
 
-        // check if the trigger has native popover target support
-        if (
-            triggerEl instanceof HTMLButtonElement ||
-            (triggerEl instanceof HTMLInputElement &&
-                triggerEl.type === "button")
-        ) {
-            // add related popover properties
-            triggerEl.setAttribute("popovertarget", contentId);
-        } else {
-            // add interactive proptiers
-            if (!triggerEl.role) triggerEl.role = "button";
-            triggerEl.tabIndex = 0;
+        if (behavior !== "manual") {
+            // check if the trigger has native popover target support
+            if (
+                triggerEl instanceof HTMLButtonElement ||
+                (triggerEl instanceof HTMLInputElement &&
+                    triggerEl.type === "button")
+            ) {
+                // add related popover properties
+                triggerEl.setAttribute("popovertarget", contentId);
+            } else {
+                // add interactive proptiers
+                if (!triggerEl.role) triggerEl.role = "button";
+                triggerEl.tabIndex = 0;
+            }
         }
 
         // set a11y attributes
