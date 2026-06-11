@@ -1,5 +1,5 @@
 import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
-import type { OptionsOrGroupsProp } from "@/composables";
+import type { OptionsOrGroupsProp, PopoverPosition } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -35,18 +35,9 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     // scrollHeight?: string;
     /**
      * Position of the dropdown relative to the trigger
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     * @values top, bottom, left, right, [top, right], [top, left], [bottom, left], [bottom, right]
      */
-    position?:
-        | "auto"
-        | "top"
-        | "bottom"
-        | "left"
-        | "right"
-        | "top-right"
-        | "top-left"
-        | "bottom-left"
-        | "bottom-right";
+    position?: PopoverPosition;
     /** Custom animation (transition name) */
     animation?: string;
     /** Dropdown will be expanded (full-width) */

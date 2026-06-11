@@ -72,7 +72,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     selectOnFocus: () => getDefault("dropdown.selectOnFocus", false),
     selectOnClose: () => getDefault("dropdown.selectOnClose", false),
     expanded: false,
-    position: () => getDefault("dropdown.position", "bottom-left"),
+    position: () => getDefault("dropdown.position", "bottom"),
     scrollable: false,
     maxHeight: () => getDefault("dropdown.maxHeight", 200),
     menuId: () => useId(),
@@ -205,7 +205,7 @@ const {
     close: closePopover,
     toggle: togglePopover,
 } = usePopoverAPI({
-    // position: props.position, // TODO
+    position: props.position,
     delay: props.delay,
     behavior: "manual",
     trigger: isActive,

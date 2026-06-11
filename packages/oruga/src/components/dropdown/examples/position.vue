@@ -11,21 +11,6 @@ const teleport = ref(false);
         </o-field>
 
         <p>
-            <o-dropdown position="auto" expanded :teleport="teleport">
-                <template #trigger>
-                    <o-button
-                        variant="primary"
-                        label="Position Auto"
-                        expanded />
-                </template>
-
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
-        </p>
-
-        <p>
             <o-dropdown position="right" :teleport="teleport">
                 <template #trigger>
                     <o-button label="Append to right" />
@@ -68,7 +53,7 @@ const teleport = ref(false);
         </p>
 
         <p>
-            <o-dropdown position="top-right" :teleport="teleport">
+            <o-dropdown :position="['top', 'right']" :teleport="teleport">
                 <template #trigger>
                     <o-button label="Append to top-right" />
                 </template>
@@ -78,7 +63,7 @@ const teleport = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown position="top-left" :teleport="teleport">
+            <o-dropdown :position="['top', 'left']" :teleport="teleport">
                 <template #trigger>
                     <o-button label="Append to top-left" />
                 </template>
@@ -88,7 +73,7 @@ const teleport = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown position="bottom-right" :teleport="teleport">
+            <o-dropdown :position="['bottom', 'right']" :teleport="teleport">
                 <template #trigger>
                     <o-button label="Append to bottom-right" />
                 </template>
@@ -98,7 +83,7 @@ const teleport = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown position="bottom-left" :teleport="teleport">
+            <o-dropdown :position="['bottom', 'left']" :teleport="teleport">
                 <template #trigger>
                     <o-button label="Append to bottom-left" />
                 </template>
