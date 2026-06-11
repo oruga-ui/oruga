@@ -19,7 +19,6 @@ const gitignorePath = path.resolve(__dirname, ".gitignore");
 
 configureVueProject({
   rootDir: import.meta.dirname, // monorepo root
-  // available after https://github.com/vuejs/eslint-config-typescript/pull/278 is released
   includeDotFolders: true,
 });
 
@@ -36,22 +35,6 @@ export default defineConfigWithVueTs([
 
   // include .gitignore ignore patterns
   includeIgnoreFile(gitignorePath),
-
-  // override ts config for .vitepress with explizit tsconfig
-  // can be removed when https://github.com/vuejs/eslint-config-typescript/pull/278 is released
-  {
-    name: "vitepress-overrides",
-    files: ["**/.*/**/*.{ts,vue}"],
-    languageOptions: {
-      parserOptions: {
-        tsconfigRootDir: __dirname,
-        projectService: {
-          defaultProject: "./packages/docs/tsconfig.json",
-          loadTypeScriptPlugins: true,
-        },
-      },
-    },
-  },
 
   // add js configs
   eslint.configs.recommended,
@@ -76,6 +59,10 @@ export default defineConfigWithVueTs([
       "@typescript-eslint/explicit-function-return-type": "warn",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-redundant-type-constituents": "warn",
+      "@typescript-eslint/no-unnecessary-type-assertion": [
+        "warn",
+        { typesToIgnore: ["ModelValue", "T"] },
+      ],
       "@typescript-eslint/restrict-template-expressions": "off",
 
       // Vue
