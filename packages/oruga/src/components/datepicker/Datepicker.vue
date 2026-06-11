@@ -420,7 +420,6 @@ function format(value: Date | Date[] | undefined, isNative: boolean): string {
     if (isNative) return formatNative(value);
 
     // define function prop
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const date = (Array.isArray(value) ? [...value] : value) as ModelValue;
 
     return dateFormatter(date);
