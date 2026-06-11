@@ -865,6 +865,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 inputClasses: Record<string, any>;
                 /**
+                 * Class of the HTML select element
+                 */
+                selectClass: ClassDefinition;
+                /**
                  * Class configuration for the internal select component
                  */
                 selectClasses: Record<string, any>;
@@ -3441,6 +3445,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class configuration for the internal input component
                  */
                 inputClasses: Record<string, any>;
+                /**
+                 * Class of the HTML select element
+                 */
+                selectClass: ClassDefinition;
                 /**
                  * Class configuration for the internal select component
                  */
