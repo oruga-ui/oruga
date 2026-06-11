@@ -51,6 +51,7 @@ defineOptions({
     isOruga: true,
     name: "ODropdown",
     configField: "dropdown",
+    inheritAttrs: false,
 });
 
 type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
@@ -369,7 +370,8 @@ function onTriggerClick(): void {
     if (isMobileNative && hoverable.value) togglePopover();
     // check normal click conditions
     if (!props.openOnClick) return;
-    togglePopover();
+    if (isActive.value) closePopover();
+    else openPopover();
 }
 
 function onTriggerContextMenu(event: Event): void {
@@ -617,9 +619,11 @@ defineExpose({ value: vmodel, items: childItems });
             :is="triggerTag"
             v-if="!inline"
             ref="triggerElement"
+            v-bind="$attrs"
             :class="triggerClasses"
             :role="selectable ? 'combobox' : undefined"
             :tabindex="disabled ? -1 : null"
+            :disabled
             :aria-haspopup="selectable ? 'listbox' : 'menu'"
             :aria-expanded="selectable ? isActive : undefined"
             :aria-activedescendant="

@@ -133,9 +133,9 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
     function onTriggerClick(event: Event): void {
         if (
-            event.target instanceof HTMLButtonElement ||
-            (event.target instanceof HTMLInputElement &&
-                event.target.type === "button")
+            event.currentTarget instanceof HTMLButtonElement ||
+            (event.currentTarget instanceof HTMLInputElement &&
+                event.currentTarget.type === "button")
         )
             // prevent default click event when is button
             event.preventDefault();
@@ -152,9 +152,11 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         open();
     }
 
-    // add event listener on trigger element
-    useEventListener(triggerRef, "click", onTriggerClick);
-    useEventListener(triggerRef, "keydown", onTriggerKeydown);
+    if (behavior !== "manual") {
+        // add event listener on trigger element
+        useEventListener(triggerRef, "click", onTriggerClick);
+        useEventListener(triggerRef, "keydown", onTriggerKeydown);
+    }
 
     // add toggle event listener on content element
     if (typeof options.onToggle === "function")
@@ -189,7 +191,11 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
         // add content position styles
         contentEl.style.positionArea =
-            position === "centered" ? "none" : position.toString();
+            position === "centered"
+                ? "none"
+                : Array.isArray(position)
+                  ? position.join(" ")
+                  : position;
         contentEl.style.positionTryFallbacks =
             "flip-block, flip-inline, flip-block flip-inline";
 
