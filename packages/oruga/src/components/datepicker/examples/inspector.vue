@@ -43,6 +43,10 @@ const inspectData: InspectData<
             data.expanded = true;
         },
     },
+    triggerClass: {
+        class: "triggerClass",
+        description: "Class of the trigger element.",
+    },
     contentClass: {
         class: "contentClass",
         description:
@@ -544,6 +548,12 @@ const inspectData: InspectData<
         class: "inputClasses",
         description: "Classes to apply on the internal input component.",
         relatedComponent: "Input",
+    },
+    selectClass: {
+        class: "selectClass",
+        description: "Class to apply on the select element.",
+        relatedClass: "selectClasses.rootClass",
+        relatedComponent: "Select",
     },
     selectClasses: {
         class: "selectClasses",
