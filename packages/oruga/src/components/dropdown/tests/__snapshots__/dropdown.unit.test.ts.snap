@@ -2,7 +2,7 @@
 
 exports[`ODropdown tests > render correctly with items 1`] = `
 "<div data-oruga="dropdown" class="o-dropdown">
-  <div class="o-dropdown__trigger" role="combobox" disabled="false" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false"><button class="">Component Trigger Label</button></div>
+  <div class="o-dropdown__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false"><button class="">Component Trigger Label</button></div>
   <!--teleport start-->
   <transition-stub name="fade" appear="false" persisted="false" css="true">
     <div id="v-0" tabindex="-1" class="o-dropdown__menu" role="listbox" aria-multiselectable="false" popover="" style="display: none; position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" data-position="bottom">
@@ -18,7 +18,7 @@ exports[`ODropdown tests > render correctly with items 1`] = `
 
 exports[`ODropdown tests > render correctly with options 1`] = `
 "<div data-oruga="dropdown" class="o-dropdown">
-  <div class="o-dropdown__trigger" disabled="false" aria-haspopup="menu" aria-disabled="false">Some Trigger Label</div>
+  <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false">Some Trigger Label</div>
   <!--teleport start-->
   <transition-stub name="fade" appear="false" persisted="false" css="true">
     <div id="v-0" tabindex="-1" class="o-dropdown__menu" role="menu" aria-hidden="false" popover="" style="display: none; position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" data-position="bottom">

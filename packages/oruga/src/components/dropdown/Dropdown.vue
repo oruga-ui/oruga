@@ -613,7 +613,7 @@ defineExpose({
             :class="triggerClasses"
             :role="selectable ? 'combobox' : undefined"
             :tabindex="disabled ? -1 : undefined"
-            :disabled="disabled ?? undefined"
+            :disabled="disabled || undefined"
             :aria-haspopup="selectable ? 'listbox' : 'menu'"
             :aria-expanded="selectable ? isActive : undefined"
             :aria-activedescendant="
