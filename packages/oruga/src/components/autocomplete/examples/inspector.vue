@@ -61,6 +61,12 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
+    inputClass: {
+        class: "inputClass",
+        description: "Class to apply on the input element.",
+        relatedClass: "inputClasses.rootClass",
+        relatedComponent: "Input",
+    },
     inputClasses: {
         class: "inputClasses",
         description: "Classes to apply on the internal input component.",

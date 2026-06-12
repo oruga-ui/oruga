@@ -8,7 +8,7 @@ import OTimepicker from "../Timepicker.vue";
 import type { TimepickerProps } from "../props.ts";
 import OField from "../../field/Field.vue";
 
-const BrowserPicker = defineComponent(
+const TestComponent = defineComponent(
     (props) => () =>
         h(
             OField,
@@ -41,7 +41,7 @@ describe("OTimepicker axe tests", () => {
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
-        const wrapper = mount(BrowserPicker, {
+        const wrapper = mount(TestComponent, {
             props: { ...props },
             attachTo: document.body,
         });

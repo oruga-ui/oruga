@@ -646,7 +646,6 @@ defineExpose({
         <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
             <transition :name="animation">
                 <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
-
                 <component
                     :is="menuTag"
                     :id="menuId"
@@ -663,7 +662,7 @@ defineExpose({
                     "
                     popover
                     @pointerleave="onMenuHoverLeave">
-                    <slot name="before" :toggle="toggle" />
+                    <slot name="before" :toggle="togglePopover" />
 
                     <slot :toggle="togglePopover">
                         <template

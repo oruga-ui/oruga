@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     menuTag: () => getDefault("autocomplete.menuTag", "div"),
     itemTag: () => getDefault("autocomplete.itemTag", "div"),
     size: () => getDefault("autocomplete.size"),
-    position: () => getDefault("autocomplete.position", "auto"),
+    position: () => getDefault("autocomplete.position", "bottom"),
     placeholder: undefined,
     expanded: () => getDefault("autocomplete.expanded", false),
     rounded: false,
@@ -439,6 +439,8 @@ const inputBind = computed(() => ({
 
 const rootClasses = defineClasses(["rootClass", "o-autocomplete"]);
 
+const _inputClasses = defineClasses(["inputClass", "o-autocomplete__input"]);
+
 const itemClasses = defineClasses(["itemClass", "o-autocomplete__item"]);
 
 const itemEmptyClasses = defineClasses([
@@ -477,130 +479,133 @@ defineExpose({
 </script>
 
 <template>
-    <o-dropdown
-        ref="dropdownElement"
-        v-model="dropdownValue"
-        v-model:active="isActive"
-        data-oruga="autocomplete"
-        :class="rootClasses"
-        :menu-id="menuId"
-        :menu-tag="menuTag"
-        :item-tag="itemTag"
-        scrollable
-        selectable
-        :open-on-click="false"
-        :open-on-contextmenu="false"
-        :open-on-focus="false"
-        :open-on-hover="false"
-        :keep-open="keepOpen"
-        :keep-first="keepFirst"
-        :select-on-close="selectOnClose"
-        :disabled="disabled"
-        :desktop-modal="desktopModal"
-        :mobile-modal="mobileModal"
-        :max-height="maxHeight"
-        :animation="animation"
-        :position="position"
-        :teleport="teleport"
-        :expanded="expanded"
-        @select="setSelected"
-        @scroll-start="emits('scroll-start')"
-        @scroll-end="emits('scroll-end')">
-        <template #trigger>
-            <o-input
-                ref="inputComponent"
-                v-bind="inputBind"
-                v-model="inputValue"
-                :type="type"
-                :size="size"
-                :rounded="rounded"
-                :icon="icon"
-                :icon-right="computedIconRight"
-                :icon-right-clickable="computedIconRightClickable"
-                :icon-pack="iconPack"
-                :placeholder="placeholder"
-                :maxlength="maxlength"
-                :autocomplete="autocomplete"
-                :expanded="expanded"
-                :disabled="disabled"
-                :status-icon="statusIcon"
-                :debounce="debounce"
-                :aria-autocomplete="keepFirst ? 'both' : 'list'"
-                :aria-controls="menuId"
-                enterkeyhint="enter"
-                :use-html5-validation="false"
-                @input="onInput"
-                @focus="handleFocus"
-                @blur="handleBlur"
-                @invalid="onInvalid"
-                @icon-click="emits('icon-click', $event)"
-                @icon-right-click="rightIconClick" />
-        </template>
+    <div data-oruga="autocomplete" :class="rootClasses">
+        <o-dropdown
+            ref="dropdownElement"
+            v-model="dropdownValue"
+            v-model:active="isActive"
+            :menu-id="menuId"
+            :menu-tag="menuTag"
+            :item-tag="itemTag"
+            scrollable
+            selectable
+            :open-on-click="false"
+            :open-on-contextmenu="false"
+            :open-on-focus="false"
+            :open-on-hover="false"
+            :keep-open="keepOpen"
+            :keep-first="keepFirst"
+            :select-on-close="selectOnClose"
+            :disabled="disabled"
+            :desktop-modal="desktopModal"
+            :mobile-modal="mobileModal"
+            :max-height="maxHeight"
+            :animation="animation"
+            :position="position"
+            :teleport="teleport"
+            :expanded="expanded"
+            @select="setSelected"
+            @scroll-start="emits('scroll-start')"
+            @scroll-end="emits('scroll-end')">
+            <template #trigger>
+                <o-input
+                    ref="inputComponent"
+                    v-bind="inputBind"
+                    v-model="inputValue"
+                    :class="_inputClasses"
+                    :type="type"
+                    :size="size"
+                    :rounded="rounded"
+                    :icon="icon"
+                    :icon-right="computedIconRight"
+                    :icon-right-clickable="computedIconRightClickable"
+                    :icon-pack="iconPack"
+                    :placeholder="placeholder"
+                    :maxlength="maxlength"
+                    :autocomplete="autocomplete"
+                    :expanded="expanded"
+                    :disabled="disabled"
+                    :status-icon="statusIcon"
+                    :debounce="debounce"
+                    :aria-autocomplete="keepFirst ? 'both' : 'list'"
+                    :aria-controls="menuId"
+                    enterkeyhint="enter"
+                    :use-html5-validation="false"
+                    @input="onInput"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    @invalid="onInvalid"
+                    @icon-click="emits('icon-click', $event)"
+                    @icon-right-click="rightIconClick" />
+            </template>
 
-        <template #before="{ toggle }">
-            <o-dropdown-item
-                v-if="$slots.header"
-                :value="SpecialOption.Header"
-                :clickable="selectableHeader"
-                :class="[...itemClasses, ...itemHeaderClasses]">
-                <slot name="header" :toggle />
-            </o-dropdown-item>
-        </template>
+            <template #before="{ toggle }">
+                <o-dropdown-item
+                    v-if="$slots.header"
+                    :value="SpecialOption.Header"
+                    :clickable="selectableHeader"
+                    :class="[...itemClasses, ...itemHeaderClasses]">
+                    <slot name="header" :toggle />
+                </o-dropdown-item>
+            </template>
 
-        <template #default="{ toggle }">
-            <slot :toggle>
-                <template v-for="option in normalizedOptions" :key="option.key">
-                    <template v-if="isGroupOption(option)">
+            <template #default="{ toggle }">
+                <slot :toggle>
+                    <template
+                        v-for="option in normalizedOptions"
+                        :key="option.key">
+                        <template v-if="isGroupOption(option)">
+                            <o-dropdown-item
+                                v-bind="option.item"
+                                role="presentation"
+                                :clickable="false"
+                                :class="[...itemClasses, ...itemGroupClasses]">
+                                <slot name="group" :group="option">
+                                    <span> {{ option.item.label }} </span>
+                                </slot>
+                            </o-dropdown-item>
+
+                            <o-dropdown-item
+                                v-for="_option in option.options"
+                                :key="_option.key"
+                                v-bind="_option.item"
+                                :class="itemClasses">
+                                <slot name="option" :option="_option">
+                                    <span> {{ _option.item.label }} </span>
+                                </slot>
+                            </o-dropdown-item>
+                        </template>
+
                         <o-dropdown-item
+                            v-else
                             v-bind="option.item"
-                            role="presentation"
-                            :clickable="false"
-                            :class="[...itemClasses, ...itemGroupClasses]">
-                            <slot name="group" :group="option">
+                            :class="itemClasses">
+                            <slot name="option" :option="option">
                                 <span> {{ option.item.label }} </span>
                             </slot>
                         </o-dropdown-item>
-
-                        <o-dropdown-item
-                            v-for="_option in option.options"
-                            :key="_option.key"
-                            v-bind="_option.item"
-                            :class="itemClasses">
-                            <slot name="option" :option="_option">
-                                <span> {{ _option.item.label }} </span>
-                            </slot>
-                        </o-dropdown-item>
                     </template>
+                </slot>
+            </template>
 
-                    <o-dropdown-item
-                        v-else
-                        v-bind="option.item"
-                        :class="itemClasses">
-                        <slot name="option" :option="option">
-                            <span> {{ option.item.label }} </span>
-                        </slot>
-                    </o-dropdown-item>
-                </template>
-            </slot>
-        </template>
+            <template v-if="$slots.empty" #empty="{ toggle }">
+                <o-dropdown-item
+                    :value="SpecialOption.EMPTY"
+                    :clickable="false"
+                    :class="[...itemClasses, ...itemEmptyClasses]">
+                    <slot name="empty" :toggle />
+                </o-dropdown-item>
+            </template>
 
-        <template v-if="$slots.empty" #empty="{ toggle }">
-            <o-dropdown-item
-                :value="SpecialOption.EMPTY"
-                :clickable="false"
-                :class="[...itemClasses, ...itemEmptyClasses]">
-                <slot name="empty" :toggle />
-            </o-dropdown-item>
-        </template>
-
-        <template #after="{ toggle }">
-            <o-dropdown-item
-                v-if="$slots.footer"
-                :value="SpecialOption.Footer"
-                :clickable="selectableFooter"
-                :class="[...itemClasses, ...itemFooterClasses]">
-                <slot name="footer" :toggle />
-            </o-dropdown-item>
-        </template>
-    </o-dropdown>
+            <template #after="{ toggle }">
+                <o-dropdown-item
+                    v-if="$slots.footer"
+                    :value="SpecialOption.Footer"
+                    :clickable="selectableFooter"
+                    :class="[...itemClasses, ...itemFooterClasses]">
+                    <slot name="footer" :toggle />
+                </o-dropdown-item>
+            </template>
+        </o-dropdown>
+    </div>
 </template>
