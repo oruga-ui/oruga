@@ -64,7 +64,6 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     active: false,
     label: undefined,
     disabled: false,
-    inline: false,
     selectable: false,
     keepOpen: () => getDefault("dropdown.keepOpen", false),
     keepFirst: () => getDefault("dropdown.keepFirst", false),
@@ -224,9 +223,8 @@ const isMobileNative = isClient && isMobileAgent.any();
 // check if should be shown as modal
 const isModal = computed(
     () =>
-        !props.inline &&
-        ((isMobile.value && props.mobileModal) ||
-            (!isMobile.value && props.desktopModal)),
+        (isMobile.value && props.mobileModal) ||
+        (!isMobile.value && props.desktopModal),
 );
 
 const menuStyle = computed(() => ({
@@ -245,8 +243,7 @@ watch(
         // on active set event handler if not open as modal
         if (value) {
             // keep first option always pre-focused
-            if (!props.inline && props.keepFirst && !focusedItem.value)
-                moveFocus(1);
+            if (props.keepFirst && !focusedItem.value) moveFocus(1);
         }
         if (isModal.value) toggleScroll(value);
     },
@@ -281,7 +278,7 @@ watch(
     childItems,
     () => {
         // change pre-focused element when items change and keepFirst
-        if (isActive.value && !props.inline && props.keepFirst) {
+        if (isActive.value && props.keepFirst) {
             focusedItem.value = undefined;
             moveFocus(1);
         }
@@ -355,7 +352,7 @@ if (isClient) {
 
 /** Close dropdown if clicked outside. */
 function onClickedOutside(): void {
-    if (!props.closeOnOutside || props.inline) return;
+    if (!props.closeOnOutside) return;
     closePopover();
 }
 
@@ -567,18 +564,11 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
-    /** @deprecated */
-    ["inlineClass", "o-dropdown--inline", null, computed(() => props.inline)],
     ["mobileClass", "o-dropdown--mobile", null, isMobile],
     ["modalClass", "o-dropdown--modal", null, isModal],
     ["hoverableClass", "o-dropdown--hoverable", null, hoverable],
-    [
-        "activeClass",
-        "o-dropdown--active",
-        null,
-        computed(() => isActive.value || props.inline),
-    ],
-    ["overlayClass", "o-dropdown__overlay", null, isModal],
+    ["activeClass", "o-dropdown--active", null, isActive],
+    ["overlayClass", "o-dropdown--overlay", null, isModal],
     [
         "teleportClass",
         "o-dropdown--teleport",
@@ -591,12 +581,7 @@ const triggerClasses = defineClasses(["triggerClass", "o-dropdown__trigger"]);
 
 const menuClasses = defineClasses(
     ["menuClass", "o-dropdown__menu"],
-    [
-        "menuActiveClass",
-        "o-dropdown__menu--active",
-        null,
-        computed(() => isActive.value || props.inline),
-    ],
+    ["menuActiveClass", "o-dropdown__menu--active", null, isActive],
 );
 
 // #endregion --- Computed Component Classes ---
@@ -623,7 +608,6 @@ defineExpose({
         @focusout="onTriggerHoverLeave">
         <component
             :is="triggerTag"
-            v-if="!inline"
             ref="triggerElement"
             v-bind="$attrs"
             :class="triggerClasses"
@@ -667,7 +651,7 @@ defineExpose({
                     :is="menuTag"
                     :id="menuId"
                     ref="menuElement"
-                    :tabindex="inline ? 0 : -1"
+                    :tabindex="-1"
                     :class="menuClasses"
                     :style="menuStyle"
                     :role="selectable ? 'listbox' : 'menu'"
@@ -678,14 +662,8 @@ defineExpose({
                         selectable ? isTrueish(multiple) : undefined
                     "
                     popover
-                    @pointerleave="onMenuHoverLeave"
-                    @keydown.enter.prevent="inline && onEnter($event)"
-                    @keydown.space.prevent="inline && onEnter($event)"
-                    @keydown.up.prevent="inline && onUpPressed()"
-                    @keydown.down.prevent="inline && onDownPressed()"
-                    @keydown.home="inline && onHomePressed($event)"
-                    @keydown.end="inline && onEndPressed($event)">
-                    <slot name="before" :toggle="togglePopover" />
+                    @pointerleave="onMenuHoverLeave">
+                    <slot name="before" :toggle="toggle" />
 
                     <slot :toggle="togglePopover">
                         <template

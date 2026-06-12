@@ -22,13 +22,15 @@ export type PopoverProps = {
      * The position of the popover relative to the trigger
      * @values top, bottom, left, right, center
      */
-    position?: "top" | "bottom" | "left" | "right" | "center";
+    position?: PopoverPosition;
     /** Defines a delay (in ms) before the content appears */
     delay?: number;
     /** The component will be disabled */
     disabled?: boolean;
     /** Adds a backdrop to the background */
     backdrop?: boolean;
+    /** A role for the content element. */
+    role?: "dialog" | "menu" | "tooltip";
     /** Defines if the popover should be shown as centered modal - the position is ignored when `true` */
     modal?: boolean;
     /** Show and dismiss animation */

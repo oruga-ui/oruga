@@ -212,16 +212,14 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
             ) {
                 // add related popover properties
                 triggerEl.setAttribute("popovertarget", contentId);
-            } else {
+            } else if (!(triggerEl instanceof HTMLInputElement)) {
                 // add interactive proptiers
                 if (!triggerEl.role) triggerEl.role = "button";
                 triggerEl.tabIndex = 0;
+                // set a11y attributes
+                triggerEl.setAttribute("aria-controls", contentId);
             }
         }
-
-        // set a11y attributes
-        triggerEl.setAttribute("aria-details", contentId);
-        triggerEl.setAttribute("aria-controls", contentId);
 
         // open on mount
         if (typeof trigger === "undefined" || toValue(trigger)) open();

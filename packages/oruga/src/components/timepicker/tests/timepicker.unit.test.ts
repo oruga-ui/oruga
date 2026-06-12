@@ -21,7 +21,9 @@ describe("OTimepicker tests", () => {
 
         let input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
+
         await input.setValue("02:45");
+        await input.trigger("keyup", { key: "Enter" });
 
         const date = new Date();
         date.setHours(2);
@@ -38,6 +40,7 @@ describe("OTimepicker tests", () => {
 
         input = wrapper.find("input");
         await input.setValue("12:3");
+        await input.trigger("keyup", { key: "Enter" });
 
         date.setHours(12);
         date.setMinutes(3);
@@ -57,7 +60,9 @@ describe("OTimepicker tests", () => {
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
+
         await input.setValue("not-a-date");
+        await input.trigger("keyup", { key: "Enter" });
 
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
@@ -66,6 +71,7 @@ describe("OTimepicker tests", () => {
         expect(input.element.value).toBe("00:00");
 
         await input.setValue("21:wrong");
+        await input.trigger("keyup", { key: "Enter" });
 
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);

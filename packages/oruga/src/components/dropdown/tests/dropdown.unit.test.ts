@@ -196,30 +196,6 @@ describe("ODropdown tests", () => {
             expect(menu.isVisible()).toBeFalsy();
         });
 
-        test("react accordingly when clicking outside with inline", async () => {
-            const wrapper = mount(ODropdown, {
-                props: { active: true, inline: true },
-                attachTo: document.body,
-            });
-            await setTimeout(); // await popover open
-
-            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
-
-            const menu = wrapper.find(".o-dropdown__menu");
-            expect(menu.exists()).toBeTruthy();
-            expect(menu.isVisible()).toBeTruthy();
-
-            // click outside
-            window.dispatchEvent(new Event("click"));
-            await nextTick(); // await dom update
-
-            // check dropdown closed
-            expect(wrapper.emitted("update:active")).toBeUndefined();
-            expect(wrapper.emitted("close")).toBeUndefined();
-            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
-            expect(menu.isVisible()).toBeTruthy();
-        });
-
         test("react accordingly when clicking outside with closeable false", async () => {
             const wrapper = mount(ODropdown, {
                 props: { active: true, closeOnOutside: false },

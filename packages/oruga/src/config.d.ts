@@ -3,6 +3,7 @@ import type {
     ComponentConfigBase,
     DynamicComponent,
     Numberish,
+    PopoverPosition,
 } from "@/types";
 
 // Auto generated component theme config declarations
@@ -657,6 +658,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expandedClass: ClassDefinition;
                 /**
+                 * Class of the trigger element
+                 */
+                triggerClass: ClassDefinition;
+                /**
                  * Class of the content container element where you choose the date
                  */
                 contentClass: ClassDefinition;
@@ -860,6 +865,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class configuration for the internal input component
                  */
                 inputClasses: Record<string, any>;
+                /**
+                 * Class of the HTML select element
+                 */
+                selectClass: ClassDefinition;
                 /**
                  * Class configuration for the internal select component
                  */
@@ -1092,7 +1101,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Position of the dropdown relative to the trigger
                  */
-                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
+                position: PopoverPosition;
                 /**
                  * Custom animation (transition name)
                  */
@@ -1190,11 +1199,6 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 teleportClass: ClassDefinition;
                 /**
-                 * Class of the root element when inlined
-                 * @deprecated since 0.13.0, use the `OListbox` component instead
-                 */
-                inlineClass: ClassDefinition;
-                /**
                  * Class of the root element when disabled
                  */
                 disabledClass: ClassDefinition;
@@ -1203,9 +1207,9 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 expandedClass: ClassDefinition;
                 /**
-                 * Class for the root element with position
+                 * Class of the root element when has an overlay
                  */
-                positionClass: ClassDefinition;
+                overlayClass: ClassDefinition;
                 /**
                  * Class for the root element when active or inline
                  */
@@ -1223,17 +1227,9 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 menuClass: ClassDefinition;
                 /**
-                 * Class of the menu element with position
-                 */
-                menuPositionClass: ClassDefinition;
-                /**
                  * Class of the menu element when active or inline
                  */
                 menuActiveClass: ClassDefinition;
-                /**
-                 * Class of the overlay when is shown as modal
-                 */
-                overlayClass: ClassDefinition;
                 /**
                  * Class of the body when dropdown is open and scroll is clipped
                  */
@@ -2060,7 +2056,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * The position of the popover relative to the trigger
                  */
-                position: "bottom" | "center" | "left" | "right" | "top";
+                position: PopoverPosition;
                 /**
                  * Show and dismiss animation
                  */
@@ -3320,6 +3316,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
         timepicker?: ComponentConfigBase &
             Partial<{
                 /**
+                 * Open picker on focus
+                 */
+                openOnFocus: boolean;
+                /**
                  * Makes input full width when inside a grouped or addon field
                  */
                 expanded: boolean;
@@ -3327,14 +3327,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Size of the button
                  */
                 size: string;
-                /**
-                 * Open dropdown on focus
-                 */
-                openOnFocus: boolean;
-                /**
-                 * Close dropdown on click
-                 */
-                closeOnClick: boolean;
                 /**
                  * Custom function to format a date into a string
                  */
@@ -3348,6 +3340,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 creator: (() => Date);
                 /**
+                 * Position of the popover relative to the input
+                 */
+                position: "bottom" | "left" | "right" | "top";
+                /**
                  * Icon pack to use
                  */
                 iconPack: string;
@@ -3360,11 +3356,11 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
-                 * Dropdown content is shown into a modal on mobile
+                 * Picker content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Dropdown content is shown into a modal on desktop
+                 * Picker content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
@@ -3406,9 +3402,21 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 sizeClass: ClassDefinition;
                 /**
-                 * Class of the dropdown box element where you choose the date
+                 * Class of the root element when expanded
                  */
-                boxClass: ClassDefinition;
+                expandedClass: ClassDefinition;
+                /**
+                 * Class of the trigger element
+                 */
+                triggerClass: ClassDefinition;
+                /**
+                 * Class of the content container element where you choose the date
+                 */
+                contentClass: ClassDefinition;
+                /**
+                 * Class of the content element when shown as modal
+                 */
+                modalClass: ClassDefinition;
                 /**
                  * Class of the select separator element
                  */
@@ -3418,10 +3426,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 footerClass: ClassDefinition;
                 /**
-                 * Class for the underlaying dropdown component
-                 */
-                dropdownClass: ClassDefinition;
-                /**
                  * Class for the HTML input element
                  */
                 inputClass: ClassDefinition;
@@ -3430,9 +3434,9 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 inputClasses: Record<string, any>;
                 /**
-                 * Class configuration for the internal dropdown component
+                 * Class of the HTML select element
                  */
-                dropdownClasses: Record<string, any>;
+                selectClass: ClassDefinition;
                 /**
                  * Class configuration for the internal select component
                  */
