@@ -622,6 +622,7 @@ defineExpose({
             :aria-disabled="disabled"
             :aria-labelledby="selectable ? labelId : undefined"
             :aria-label="selectable ? ariaLabel : undefined"
+            :aria-controls="selectable ? menuId : undefined"
             @click="onTriggerClick"
             @contextmenu="onTriggerContextMenu"
             @pointerenter="onTriggerHover"
