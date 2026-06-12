@@ -3,20 +3,21 @@
 exports[`OTaginput tests > render correctly 1`] = `
 "<div data-oruga="taginput" class="o-taginput">
   <div class="o-taginput__container">
-    <div data-oruga="autocomplete" class="o-dropdown o-dropdown--expanded o-dropdown--position-auto o-autocomplete o-taginput__autocomplete">
-      <div class="o-dropdown__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false" aria-controls="v-0">
-        <div data-oruga="input" class="o-input o-input--expanded">
-          <!--v-if--><input has-counter="false" aria-autocomplete="list" aria-controls="v-0" enterkeyhint="enter" id="v-1" type="text" data-oruga-input="text" class="o-input__input o-taginput__input o-input__input--placeholder" autocomplete="off" value="">
-          <!--v-if-->
-          <!--v-if-->
+    <div data-oruga="autocomplete" class="o-autocomplete o-taginput__autocomplete">
+      <div data-oruga="dropdown" class="o-dropdown o-dropdown--expanded">
+        <div class="o-dropdown__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false" aria-controls="v-0">
+          <div data-oruga="input" class="o-input o-input--expanded">
+            <!--v-if--><input has-counter="false" class="o-autocomplete__input o-input__input o-taginput__input o-input__input--placeholder" aria-autocomplete="list" aria-controls="v-0" enterkeyhint="enter" id="v-2" type="text" data-oruga-input="text" autocomplete="off" value="">
+            <!--v-if-->
+            <!--v-if-->
+          </div>
         </div>
+        <!--teleport start-->
+        <transition-stub name="fade" appear="false" persisted="false" css="true">
+          <div id="v-0" tabindex="-1" class="o-dropdown__menu" style="max-height: 200px; overflow: auto; display: none; position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" role="listbox" aria-multiselectable="false" popover="" data-position="bottom"></div>
+        </transition-stub>
+        <!--teleport end-->
       </div>
-      <!--teleport start-->
-      <!--v-if-->
-      <transition-stub name="fade" appear="false" persisted="true" css="true">
-        <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-multiselectable="false"></div>
-      </transition-stub>
-      <!--teleport end-->
     </div>
   </div>
   <!--v-if-->
