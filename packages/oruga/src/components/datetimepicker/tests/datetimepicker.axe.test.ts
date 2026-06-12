@@ -4,8 +4,8 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
 import { setTimeout } from "timers/promises";
 
-import ODatepicker from "../Datepicker.vue";
-import type { DatepickerProps } from "../props";
+import ODatetimepicker from "../Datetimepicker.vue";
+import type { DatetimepickerProps } from "../props.ts";
 import OField from "../../field/Field.vue";
 
 const BrowserPicker = defineComponent(
@@ -14,28 +14,28 @@ const BrowserPicker = defineComponent(
             OField,
             { label: "My Input" },
             {
-                default: () => h(ODatepicker, props),
+                default: () => h(ODatetimepicker, props),
             },
         ),
 );
 
-describe("ODatepicker axe tests", () => {
+describe("ODatetimepicker axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
         title: string;
-        props?: DatepickerProps<true | false, true | false>;
+        props?: DatetimepickerProps;
     }[] = [
         {
-            title: "axe datepicker - base case",
+            title: "axe datetimepicker - base case",
             props: {},
         },
         {
-            title: "axe datepicker - open popover",
+            title: "axe datetimepicker - open popover",
             props: { active: true },
         },
         {
-            title: "axe datepicker - inline",
+            title: "axe datetimepicker - inline",
             props: { inline: true },
         },
     ];

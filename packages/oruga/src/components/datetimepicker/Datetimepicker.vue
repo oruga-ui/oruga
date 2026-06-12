@@ -364,7 +364,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
         :inline="inline"
         :readonly="readonly"
         :expanded="expanded"
-        :close-on-click="false"
         :formatter="format"
         :parser="parse"
         :min-date="minDate"
