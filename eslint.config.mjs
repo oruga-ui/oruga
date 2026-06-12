@@ -8,7 +8,7 @@ import {
   vueTsConfigs,
 } from "@vue/eslint-config-typescript";
 // import vueA11yPlugin from "eslint-plugin-vuejs-accessibility";
-import prettierConfig from "@vue/eslint-config-prettier";
+import skipFormattingConfig from "@vue/eslint-config-prettier/skip-formatting";
 
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -46,8 +46,10 @@ export default defineConfigWithVueTs([
   // add vue a11y configs
   // ...vueA11yPlugin.configs["flat/recommended"],
 
-  // add prettier configs
-  prettierConfig,
+  // add vue prettier lint configs
+  // deactivate prettier lint checks as recommended at https://github.com/vuejs/eslint-config-prettier?tab=readme-ov-file#use-separate-commands-for-linting-and-formatting
+  // instead, we do formatting as a separate prettier task
+  skipFormattingConfig,
 
   // project modifications
   {
