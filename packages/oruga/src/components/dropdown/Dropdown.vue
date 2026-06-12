@@ -465,7 +465,6 @@ function selectItem(item: DropdownChildItem<T>, event?: Event): void {
         } else {
             if (vmodel.value !== value) {
                 // update a single value
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
                 vmodel.value = value as ModelValue;
                 // emit change after vmodel has changed
                 nextTick(() => emits("change", vmodel.value));
@@ -592,7 +591,7 @@ const rootClasses = defineClasses(
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
-    ["activeClass", "o-dropdown--active", null, computed(() => isActive.value)],
+    ["activeClass", "o-dropdown--active", null, isActive],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-dropdown__trigger"]);
@@ -614,12 +613,7 @@ const menuClasses = defineClasses(
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
-    [
-        "menuActiveClass",
-        "o-dropdown__menu--active",
-        null,
-        computed(() => isActive.value),
-    ],
+    ["menuActiveClass", "o-dropdown__menu--active", null, isActive],
 );
 
 // #endregion --- Computed Component Classes ---

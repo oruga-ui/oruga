@@ -197,14 +197,13 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
                 triggerEl.type === "button")
         ) {
             // add related popover properties
-            triggerElEl.setAttribute("popovertarget", contentId);
+            triggerEl.setAttribute("popovertarget", contentId);
         } else if (!(triggerEl instanceof HTMLInputElement)) {
             // add interactive proptiers
-            if (!triggerEl.role)
-                if (!triggerElEl.role) triggerEl.role = "button";
-            triggerElEl.tabIndex = 0;
+            if (!triggerEl.role) triggerEl.role = "button";
+            triggerEl.tabIndex = 0;
             // set a11y attributes
-            triggerElEl.setAttribute("aria-controls", contentId);
+            triggerEl.setAttribute("aria-controls", contentId);
         }
 
         // open on mount
