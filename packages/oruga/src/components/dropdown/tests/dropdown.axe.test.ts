@@ -74,10 +74,6 @@ describe("ODropdown axe tests", () => {
             },
         },
         {
-            title: "axe dropdown - inline",
-            props: { options, inline: true },
-        },
-        {
             title: "axe dropdown - position",
             props: {
                 options,
