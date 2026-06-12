@@ -450,7 +450,7 @@ function selectItem(item: DropdownChildItem<T>): void {
         } else {
             if (vmodel.value !== value) {
                 // update a single value
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+
                 vmodel.value = value as ModelValue;
                 // emit change after vmodel has changed
                 nextTick(() => emits("change", vmodel.value));
@@ -613,7 +613,7 @@ defineExpose({
             :class="triggerClasses"
             :role="selectable ? 'combobox' : undefined"
             :tabindex="disabled ? -1 : undefined"
-            :disabled
+            :disabled="disabled ?? undefined"
             :aria-haspopup="selectable ? 'listbox' : 'menu'"
             :aria-expanded="selectable ? isActive : undefined"
             :aria-activedescendant="
