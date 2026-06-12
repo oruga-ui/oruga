@@ -207,7 +207,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         }
 
         // open on mount
-        if (typeof triggerEl === "undefined" || toValue(trigger)) open();
+        if (typeof trigger === "undefined" || toValue(trigger)) open();
     });
 
     return {
