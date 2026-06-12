@@ -57,6 +57,7 @@ const props = defineProps({
 
     /** Show content inline */
     inline: { type: Boolean, default: false },
+    modal: { type: Boolean, default: false },
     enableMobileNative: { type: Boolean, default: undefined },
     stayOpen: { type: Boolean, default: false },
     openOnFocus: { type: Boolean, default: false },
@@ -137,7 +138,7 @@ const _teleport = useTeleport(props.teleport);
 
 if (!props.inline) {
     usePopoverAPI({
-        position: props.position,
+        position: props.modal ? "centered" : props.position,
         behavior: "auto",
         trigger: isActive,
         triggerRef,

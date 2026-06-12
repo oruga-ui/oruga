@@ -197,19 +197,18 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
                 triggerEl.type === "button")
         ) {
             // add related popover properties
-            triggerEl.setAttribute("popovertarget", contentId);
-        } else {
+            triggerElEl.setAttribute("popovertarget", contentId);
+        } else if (!(triggerEl instanceof HTMLInputElement)) {
             // add interactive proptiers
-            if (!triggerEl.role) triggerEl.role = "button";
-            triggerEl.tabIndex = 0;
+            if (!triggerEl.role)
+                if (!triggerElEl.role) triggerEl.role = "button";
+            triggerElEl.tabIndex = 0;
+            // set a11y attributes
+            triggerElEl.setAttribute("aria-controls", contentId);
         }
 
-        // set a11y attributes
-        triggerEl.setAttribute("aria-details", contentId);
-        triggerEl.setAttribute("aria-controls", contentId);
-
         // open on mount
-        if (typeof trigger === "undefined" || toValue(trigger)) open();
+        if (typeof triggerEl === "undefined" || toValue(trigger)) open();
     });
 
     return {

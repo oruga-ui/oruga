@@ -118,7 +118,7 @@ describe("OTaginput tests", () => {
         expect(wrapper.findAll(".o-tag")).toHaveLength(1);
     });
 
-    test("should forward class, style, and id to the autocomplete input", async () => {
+    test("should forward class, style, and id to the autocomplete input", () => {
         const attrs = {
             class: "fallthrough-class",
             style: "font-size: 2rem;",
