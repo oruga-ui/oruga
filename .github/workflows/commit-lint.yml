@@ -26,7 +26,7 @@ jobs:
 
       - name: Run PR title check 💬
         if: ${{ github.event_name == 'pull_request' }}
-        run: echo "${{ github.event.pull_request.title }}" | npx commitlint
+        run: echo "${{ github.event.pull_request.title }}" | npx commitlint --extends @commitlint/config-conventional
 
       - name: Run commit message check 💬
         if: ${{ github.event_name != 'pull_request' }}
