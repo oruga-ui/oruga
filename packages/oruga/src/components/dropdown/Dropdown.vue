@@ -228,7 +228,6 @@ const isModal = computed(
 );
 
 const menuStyle = computed(() => ({
-    display: props.inline ? "block" : undefined,
     maxHeight: props.scrollable ? toCssDimension(props.maxHeight) : null,
     overflow: props.scrollable ? "auto" : null,
 }));

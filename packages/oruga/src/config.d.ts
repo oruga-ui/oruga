@@ -28,9 +28,9 @@ declare module "./index" {
                  */
                 size: string;
                 /**
-                 * Position of the dropdown
+                 * Position of the dropdown relative to the input
                  */
-                position: "auto" | "bottom" | "top";
+                position: "bottom" | "top";
                 /**
                  * Makes input full width when inside a grouped or addon field
                  */
@@ -125,6 +125,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the menu footer item
                  */
                 itemFooterClass: ClassDefinition;
+                /**
+                 * Class for the HTML input element
+                 */
+                inputClass: ClassDefinition;
                 /**
                  * Class configuration for the internal input component
                  */
