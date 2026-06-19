@@ -50,7 +50,10 @@ class MockToggleEvent extends Event {
     oldState?: string;
     newState?: string;
 
-    constructor(type: string, init: any = {}) {
+    constructor(
+        type: string,
+        init: { oldState: string; newState: string } & EventInit,
+    ) {
         super(type, init);
         this.oldState = init.oldState;
         this.newState = init.newState;
@@ -107,12 +110,12 @@ Object.defineProperties(HTMLElement.prototype, {
             this.style.display = "none";
             this.removeAttribute("popover-open");
 
-            const hideEvent = new globalThis.ToggleEvent("toggle", {
+            const toggleEvent = new globalThis.ToggleEvent("toggle", {
                 bubbles: true,
                 newState: "close",
                 oldState: "open",
             });
-            this.dispatchEvent(hideEvent);
+            this.dispatchEvent(toggleEvent);
         },
         configurable: true,
         writable: true,

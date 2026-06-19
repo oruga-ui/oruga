@@ -3,6 +3,7 @@ import type {
     ComponentConfigBase,
     DynamicComponent,
     Numberish,
+    PopoverPosition,
 } from "@/types";
 
 // Auto generated component theme config declarations
@@ -27,9 +28,9 @@ declare module "./index" {
                  */
                 size: string;
                 /**
-                 * Position of the dropdown
+                 * Position of the dropdown relative to the input
                  */
-                position: "auto" | "bottom" | "top";
+                position: "bottom" | "top";
                 /**
                  * Makes input full width when inside a grouped or addon field
                  */
@@ -124,6 +125,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the menu footer item
                  */
                 itemFooterClass: ClassDefinition;
+                /**
+                 * Class for the HTML input element
+                 */
+                inputClass: ClassDefinition;
                 /**
                  * Class configuration for the internal input component
                  */
@@ -1100,7 +1105,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Position of the dropdown relative to the trigger
                  */
-                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
+                position: PopoverPosition;
                 /**
                  * Custom animation (transition name)
                  */
@@ -1206,9 +1211,9 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 expandedClass: ClassDefinition;
                 /**
-                 * Class for the root element with position
+                 * Class of the root element when has an overlay
                  */
-                positionClass: ClassDefinition;
+                overlayClass: ClassDefinition;
                 /**
                  * Class for the root element when active or inline
                  */
@@ -1226,17 +1231,9 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 menuClass: ClassDefinition;
                 /**
-                 * Class of the menu element with position
-                 */
-                menuPositionClass: ClassDefinition;
-                /**
                  * Class of the menu element when active or inline
                  */
                 menuActiveClass: ClassDefinition;
-                /**
-                 * Class of the overlay when is shown as modal
-                 */
-                overlayClass: ClassDefinition;
                 /**
                  * Class of the body when dropdown is open and scroll is clipped
                  */
@@ -2063,7 +2060,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * The position of the popover relative to the trigger
                  */
-                position: "bottom" | "center" | "left" | "right" | "top";
+                position: PopoverPosition;
                 /**
                  * Show and dismiss animation
                  */

@@ -22,7 +22,7 @@ export type PopoverProps = {
      * The position of the popover relative to the trigger
      * @values top, bottom, left, right, center
      */
-    position?: "top" | "bottom" | "left" | "right" | "center";
+    position?: PopoverPosition;
     /** Defines a delay (in ms) before the content appears */
     delay?: number;
     /** The component will be disabled */

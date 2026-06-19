@@ -42,6 +42,8 @@ export type PopoverAPIOptions = {
     delay?: number;
     /** An optional watch source which will be watched and to open or close the popover. */
     trigger?: WatchSource<boolean>;
+    /** Stop interactions. */
+    disabled?: MaybeRefOrGetter<boolean>;
     /**  Optional listener for the native `toggle` event. */
     onToggle?: (e: ToggleEvent) => void;
     /** Optional listener for the native `beforetoggle` event. */
@@ -76,6 +78,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         behavior = "auto",
         delay,
         trigger,
+        disabled,
         triggerRef,
         contentRef,
     } = options;
@@ -83,6 +86,9 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     let timeout: ReturnType<typeof setTimeout> | undefined;
 
     const active = ref(false);
+
+    let triggerEl: HTMLElement | undefined | null;
+    let contentEl: HTMLElement | undefined | null;
 
     if (isRef(trigger)) {
         // show/hide popover when trigger changes
@@ -98,8 +104,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     }
 
     function open(): void {
-        const triggerEl = unrefElement(triggerRef);
-        const contentEl = unrefElement(contentRef);
+        if (toValue(disabled)) return;
 
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
@@ -111,25 +116,25 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     }
 
     function close(): void {
+        if (toValue(disabled)) return;
         if (timeout) clearTimeout(timeout);
-        const contentEl = unrefElement(contentRef);
-        if (!contentEl || !active.value) return;
+        if (!contentEl) return;
         contentEl.hidePopover(); // hide popover with native api
         active.value = false;
     }
 
     function toggle(): void {
-        const content = unrefElement(contentRef);
-        if (!content) return;
-        content.togglePopover(); // toggle popover state with native api
+        if (toValue(disabled)) return;
+        if (!contentEl) return;
+        contentEl.togglePopover(); // toggle popover state with native api
         active.value = !active.value;
     }
 
     function onTriggerClick(event: Event): void {
         if (
-            event.target instanceof HTMLButtonElement ||
-            (event.target instanceof HTMLInputElement &&
-                event.target.type === "button")
+            event.currentTarget instanceof HTMLButtonElement ||
+            (event.currentTarget instanceof HTMLInputElement &&
+                event.currentTarget.type === "button")
         )
             // prevent default click event when is button
             event.preventDefault();
@@ -147,8 +152,10 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     }
 
     // add event listener on trigger element
-    useEventListener(triggerRef, "click", onTriggerClick);
-    useEventListener(triggerRef, "keydown", onTriggerKeydown);
+    if (behavior !== "manual") {
+        useEventListener(triggerRef, "click", onTriggerClick);
+        useEventListener(triggerRef, "keydown", onTriggerKeydown);
+    }
 
     // add toggle event listener on content element
     if (typeof options.onToggle === "function")
@@ -159,14 +166,16 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     let contentId = useId();
 
     onMounted(() => {
-        const contentEl = unrefElement(contentRef);
-        const triggerEl = unrefElement(triggerRef);
+        contentEl = unrefElement(contentRef);
+        triggerEl = unrefElement(triggerRef);
         if (!contentEl || !triggerEl) {
             console.warn(
                 "Content or trigger element is missing for the popover api initialisation.",
             );
             return;
         }
+        if (triggerEl.firstElementChild instanceof HTMLButtonElement)
+            triggerEl = triggerEl.firstElementChild;
 
         // check content has id
         if (contentEl.hasAttribute("id")) {
@@ -183,27 +192,33 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
         // add content position styles
         contentEl.style.positionArea =
-            position === "centered" ? "none" : position.toString();
+            position === "centered"
+                ? "none"
+                : Array.isArray(position)
+                  ? position.join(" ")
+                  : position;
         contentEl.style.positionTryFallbacks =
             "flip-block, flip-inline, flip-block flip-inline";
 
         // add position data attribute
         contentEl.dataset.position = position.toString();
 
-        // check if the trigger has native popover target support
-        if (
-            triggerEl instanceof HTMLButtonElement ||
-            (triggerEl instanceof HTMLInputElement &&
-                triggerEl.type === "button")
-        ) {
-            // add related popover properties
-            triggerEl.setAttribute("popovertarget", contentId);
-        } else if (!(triggerEl instanceof HTMLInputElement)) {
-            // add interactive proptiers
-            if (!triggerEl.role) triggerEl.role = "button";
-            triggerEl.tabIndex = 0;
-            // set a11y attributes
-            triggerEl.setAttribute("aria-controls", contentId);
+        if (behavior !== "manual") {
+            // check if the trigger has native popover target support
+            if (
+                triggerEl instanceof HTMLButtonElement ||
+                (triggerEl instanceof HTMLInputElement &&
+                    triggerEl.type === "button")
+            ) {
+                // add related popover properties
+                triggerEl.setAttribute("popovertarget", contentId);
+            } else if (!(triggerEl instanceof HTMLInputElement)) {
+                // add interactive proptiers
+                if (!triggerEl.role) triggerEl.role = "button";
+                triggerEl.tabIndex = 0;
+                // set a11y attributes
+                triggerEl.setAttribute("aria-controls", contentId);
+            }
         }
 
         // open on mount

@@ -8,7 +8,7 @@ import ODatepicker from "../Datepicker.vue";
 import type { DatepickerProps } from "../props";
 import OField from "../../field/Field.vue";
 
-const BrowserPicker = defineComponent(
+const TestComponent = defineComponent(
     (props) => () =>
         h(
             OField,
@@ -41,7 +41,7 @@ describe("ODatepicker axe tests", () => {
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
-        const wrapper = mount(BrowserPicker, {
+        const wrapper = mount(TestComponent, {
             props: { ...props },
             attachTo: document.body,
         });
