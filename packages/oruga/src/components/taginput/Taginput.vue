@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T = string">
-import { computed, useAttrs, useTemplateRef, watchEffect, ref } from "vue";
+import { computed, useAttrs, useTemplateRef, ref, watch } from "vue";
 
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 import OTag from "../tag/Tag.vue";
@@ -175,8 +175,11 @@ const autocompleteRef = useTemplateRef<
 >("autocompleteComponent");
 
 // use form input functionalities
-const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } =
-    useInputHandler(autocompleteRef, emits, props);
+const { checkHtml5Validity, setFocus, setBlur, input } = useInputHandler(
+    autocompleteRef,
+    props,
+    emits,
+);
 
 const isDropdownActive = ref(false);
 
@@ -223,9 +226,9 @@ const hasInput = computed(
     () => props.maxitems == null || itemsLength.value < Number(props.maxitems),
 );
 
-watchEffect(() => {
+watch(hasInput, () => {
     // blur if input is empty
-    if (!hasInput.value) onBlur();
+    if (!hasInput.value) input.value?.blur();
 });
 
 function addItem(item?: T | string): void {
@@ -364,7 +367,12 @@ const autocompleteBind = computed(() => ({
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: selectedItems,
+});
 
 // #endregion --- Expose Public Functionalities ---
 </script>
@@ -414,9 +422,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 :use-html5-validation="false"
                 expanded
                 @input="onInput"
-                @focus="onFocus"
-                @blur="onBlur"
-                @invalid="onInvalid"
                 @keydown.enter="onEnter"
                 @keydown.tab="onEnter"
                 @keydown.backspace="onBackspace"

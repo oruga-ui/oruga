@@ -1,19 +1,12 @@
-import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, test, vi } from "vitest";
 import { shallowMount, mount, enableAutoUnmount } from "@vue/test-utils";
 import { nextTick } from "vue";
+import { setTimeout } from "timers/promises";
 
 import OInput from "@/components/input/Input.vue";
 
 describe("OInput tests", () => {
     enableAutoUnmount(afterEach);
-
-    beforeEach(() => {
-        vi.useFakeTimers();
-    });
-
-    afterEach(() => {
-        vi.useRealTimers();
-    });
 
     test("render correctly", () => {
         const wrapper = mount(OInput);
@@ -36,7 +29,7 @@ describe("OInput tests", () => {
 
         const value = "some value";
         await input.setValue(value);
-        vi.runAllTimers(); // await debounce timer
+        await setTimeout();
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
@@ -170,31 +163,6 @@ describe("OInput tests", () => {
         expect(input.attributes("disabled")).not.toBeUndefined();
     });
 
-    test("keep its value on blur", async () => {
-        const wrapper = mount(OInput, {
-            props: {
-                modelValue: "foo",
-                "onUpdate:modelValue": (modelValue) =>
-                    wrapper.setProps({ modelValue }),
-            },
-        });
-
-        const input = wrapper.find("input");
-        expect(input.element.value).toBe("foo");
-
-        await input.setValue("bar");
-        await input.trigger("blur");
-        vi.runAllTimers(); // await debounce timer
-
-        const emits = wrapper.emitted("input");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0][0]).toBe("bar");
-        expect(wrapper.emitted("blur")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe("bar");
-        expect(wrapper.props("modelValue")).toBe("bar");
-    });
-
     test("manage the click on icon", async () => {
         const wrapper = mount(OInput, {
             props: { icon: "magnify", iconClickable: true },
@@ -209,37 +177,6 @@ describe("OInput tests", () => {
         expect(wrapper.emitted("icon-click")).toHaveLength(1);
     });
 
-    test("check type number ", async () => {
-        const wrapper = shallowMount(OInput, {
-            props: {
-                type: "number",
-                min: 0,
-                max: 1000,
-                modelValue: 10,
-                number: true,
-            },
-        });
-
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-        expect(input.element.value).toBe("10");
-
-        await input.setValue(11);
-        expect(input.element.value).toBe("11");
-        await input.setValue(12);
-        expect(input.element.value).toBe("12");
-        await input.setValue(13);
-        expect(input.element.value).toBe("13");
-        await input.setValue(12);
-        expect(input.element.value).toBe("12");
-        await input.setValue(11);
-        expect(input.element.value).toBe("11");
-
-        const emitted = wrapper.emitted("update:modelValue");
-
-        expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
-    });
-
     test("check is empty when null", () => {
         const wrapper = mount(OInput, {
             // @ts-expect-error special check for null instead of undefined
@@ -251,16 +188,90 @@ describe("OInput tests", () => {
         expect(input.element.value).toEqual("");
     });
 
-    test("react accordingly when method focus() is called", async () => {
-        const wrapper = mount(OInput);
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(OInput);
+            await setTimeout(); // await eventhandler set
 
-        const input = wrapper.find("input");
-        const dummyFocus = vi.fn();
-        input.element.focus = dummyFocus;
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+            console.log(input.html());
 
-        wrapper.vm.focus();
-        await nextTick(() => {
-            expect(dummyFocus).toHaveBeenCalled();
+            await input.trigger("focus");
+            await input.trigger("blur");
+            console.log(wrapper.emitted());
+
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
+        });
+
+        test("react accordingly when method focus() is called", async () => {
+            const wrapper = mount(OInput);
+
+            const input = wrapper.find("input");
+            const dummyFocus = vi.fn();
+            input.element.focus = dummyFocus;
+
+            wrapper.vm.focus();
+            await nextTick(() => {
+                expect(dummyFocus).toHaveBeenCalled();
+            });
+        });
+
+        test("keep its value on blur", async () => {
+            const wrapper = mount(OInput, {
+                props: {
+                    modelValue: "foo",
+                    "onUpdate:modelValue": (modelValue) =>
+                        wrapper.setProps({ modelValue }),
+                },
+            });
+            await setTimeout(); // await eventhandler set
+
+            const input = wrapper.find("input");
+            expect(input.element.value).toBe("foo");
+
+            await input.setValue("bar");
+            await input.trigger("blur");
+
+            const emits = wrapper.emitted("input");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0][0]).toBe("bar");
+            expect(wrapper.emitted("blur")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe("bar");
+            expect(wrapper.props("modelValue")).toBe("bar");
+        });
+
+        test("check type number ", async () => {
+            const wrapper = shallowMount(OInput, {
+                props: {
+                    type: "number",
+                    min: 0,
+                    max: 1000,
+                    modelValue: 10,
+                    number: true,
+                },
+            });
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+            expect(input.element.value).toBe("10");
+
+            await input.setValue(11);
+            expect(input.element.value).toBe("11");
+            await input.setValue(12);
+            expect(input.element.value).toBe("12");
+            await input.setValue(13);
+            expect(input.element.value).toBe("13");
+            await input.setValue(12);
+            expect(input.element.value).toBe("12");
+            await input.setValue(11);
+            expect(input.element.value).toBe("11");
+
+            const emitted = wrapper.emitted("update:modelValue");
+
+            expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
         });
     });
 });

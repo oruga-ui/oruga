@@ -1,6 +1,7 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
+import { setTimeout } from "timers/promises";
 
 import ORadio from "@/components/radio/Radio.vue";
 
@@ -59,158 +60,174 @@ describe("ORadio tests", () => {
         expect(input.attributes("disabled")).not.toBeUndefined();
     });
 
-    test("react accordingly when value change ", async () => {
-        const value1 = true;
-        const value2 = false;
-        const model = value2;
-        const wrapper1 = mount(ORadio, {
-            props: {
-                modelValue: model,
-                nativeValue: value1,
-                "onUpdate:modelValue": (modelValue) => {
-                    void wrapper1.setProps({ modelValue });
-                    void wrapper2.setProps({ modelValue });
-                },
-            },
-        });
-        const wrapper2 = mount(ORadio, {
-            props: {
-                modelValue: model,
-                nativeValue: value2,
-                "onUpdate:modelValue": (modelValue) => {
-                    void wrapper1.setProps({ modelValue });
-                    void wrapper2.setProps({ modelValue });
-                },
-            },
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(ORadio);
+            await setTimeout(); // await eventhandler set
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.trigger("focus");
+            await input.trigger("blur");
+
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
         });
 
-        const input1 = wrapper1.find("input");
-        expect(input1.exists()).toBeTruthy();
-        const input2 = wrapper2.find("input");
-        expect(input2.exists()).toBeTruthy();
-        expect(wrapper1.vm.value).toEqual(model);
-        expect(wrapper2.vm.value).toEqual(model);
+        test("react accordingly when method focus() is called", async () => {
+            const wrapper = mount(ORadio);
 
-        await input1.setValue(true);
+            const input = wrapper.find("input");
+            const dummyFocus = vi.fn();
+            input.element.focus = dummyFocus;
 
-        let emits = wrapper1.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(value1);
-        expect(wrapper1.vm.value).toEqual(value1);
-        expect(wrapper2.vm.value).toEqual(value1);
-
-        await input2.setValue();
-        emits = wrapper2.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(value2);
-        expect(wrapper1.vm.value).toEqual(value2);
-        expect(wrapper2.vm.value).toEqual(value2);
-    });
-
-    test("react accordingly when custom string values are given", async () => {
-        const value1 = "Yes";
-        const value2 = "No";
-        const model = value2;
-        const wrapper1 = mount(ORadio, {
-            props: {
-                modelValue: model,
-                nativeValue: value1,
-                "onUpdate:modelValue": (modelValue) => {
-                    void wrapper1.setProps({ modelValue });
-                    void wrapper2.setProps({ modelValue });
-                },
-            },
+            wrapper.vm.focus();
+            await nextTick(() => {
+                expect(dummyFocus).toHaveBeenCalled();
+            });
         });
-        const wrapper2 = mount(ORadio, {
-            props: {
-                modelValue: model,
-                nativeValue: value2,
-                "onUpdate:modelValue": (modelValue) => {
-                    void wrapper1.setProps({ modelValue });
-                    void wrapper2.setProps({ modelValue });
+
+        test("react accordingly when value change ", async () => {
+            const value1 = true;
+            const value2 = false;
+            const model = value2;
+            const wrapper1 = mount(ORadio, {
+                props: {
+                    modelValue: model,
+                    nativeValue: value1,
+                    "onUpdate:modelValue": (modelValue) => {
+                        void wrapper1.setProps({ modelValue });
+                        void wrapper2.setProps({ modelValue });
+                    },
                 },
-            },
-        });
-        const input1 = wrapper1.find("input");
-        expect(input1.exists()).toBeTruthy();
-        const input2 = wrapper2.find("input");
-        expect(input2.exists()).toBeTruthy();
-        expect(wrapper1.vm.value).toEqual(model);
-        expect(wrapper2.vm.value).toEqual(model);
-
-        await input1.setValue(true);
-
-        let emits = wrapper1.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(value1);
-        expect(wrapper1.vm.value).toEqual(value1);
-        expect(wrapper2.vm.value).toEqual(value1);
-
-        await input2.setValue();
-        emits = wrapper2.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(value2);
-        expect(wrapper1.vm.value).toEqual(value2);
-        expect(wrapper2.vm.value).toEqual(value2);
-    });
-
-    test("react accordingly when custom object values are given", async () => {
-        const value1 = { a: "a", b: "b" };
-        const value2 = { y: "y", x: "X" };
-        const model = value2;
-        const wrapper1 = mount(ORadio, {
-            props: {
-                modelValue: model,
-                nativeValue: value1,
-                "onUpdate:modelValue": (modelValue) => {
-                    void wrapper1.setProps({ modelValue });
-                    void wrapper2.setProps({ modelValue });
+            });
+            const wrapper2 = mount(ORadio, {
+                props: {
+                    modelValue: model,
+                    nativeValue: value2,
+                    "onUpdate:modelValue": (modelValue) => {
+                        void wrapper1.setProps({ modelValue });
+                        void wrapper2.setProps({ modelValue });
+                    },
                 },
-            },
+            });
+
+            const input1 = wrapper1.find("input");
+            expect(input1.exists()).toBeTruthy();
+            const input2 = wrapper2.find("input");
+            expect(input2.exists()).toBeTruthy();
+            expect(wrapper1.vm.value).toEqual(model);
+            expect(wrapper2.vm.value).toEqual(model);
+
+            await input1.setValue(true);
+
+            let emits = wrapper1.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(value1);
+            expect(wrapper1.vm.value).toEqual(value1);
+            expect(wrapper2.vm.value).toEqual(value1);
+
+            await input2.setValue();
+            emits = wrapper2.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(value2);
+            expect(wrapper1.vm.value).toEqual(value2);
+            expect(wrapper2.vm.value).toEqual(value2);
         });
-        const wrapper2 = mount(ORadio, {
-            props: {
-                modelValue: model,
-                nativeValue: value2,
-                "onUpdate:modelValue": (modelValue) => {
-                    void wrapper1.setProps({ modelValue });
-                    void wrapper2.setProps({ modelValue });
+
+        test("react accordingly when custom string values are given", async () => {
+            const value1 = "Yes";
+            const value2 = "No";
+            const model = value2;
+            const wrapper1 = mount(ORadio, {
+                props: {
+                    modelValue: model,
+                    nativeValue: value1,
+                    "onUpdate:modelValue": (modelValue) => {
+                        void wrapper1.setProps({ modelValue });
+                        void wrapper2.setProps({ modelValue });
+                    },
                 },
-            },
+            });
+            const wrapper2 = mount(ORadio, {
+                props: {
+                    modelValue: model,
+                    nativeValue: value2,
+                    "onUpdate:modelValue": (modelValue) => {
+                        void wrapper1.setProps({ modelValue });
+                        void wrapper2.setProps({ modelValue });
+                    },
+                },
+            });
+            const input1 = wrapper1.find("input");
+            expect(input1.exists()).toBeTruthy();
+            const input2 = wrapper2.find("input");
+            expect(input2.exists()).toBeTruthy();
+            expect(wrapper1.vm.value).toEqual(model);
+            expect(wrapper2.vm.value).toEqual(model);
+
+            await input1.setValue(true);
+
+            let emits = wrapper1.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(value1);
+            expect(wrapper1.vm.value).toEqual(value1);
+            expect(wrapper2.vm.value).toEqual(value1);
+
+            await input2.setValue();
+            emits = wrapper2.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(value2);
+            expect(wrapper1.vm.value).toEqual(value2);
+            expect(wrapper2.vm.value).toEqual(value2);
         });
-        const input1 = wrapper1.find("input");
-        expect(input1.exists()).toBeTruthy();
-        const input2 = wrapper2.find("input");
-        expect(input2.exists()).toBeTruthy();
-        expect(wrapper1.vm.value).toEqual(model);
-        expect(wrapper2.vm.value).toEqual(model);
 
-        await input1.setValue(true);
+        test("react accordingly when custom object values are given", async () => {
+            const value1 = { a: "a", b: "b" };
+            const value2 = { y: "y", x: "X" };
+            const model = value2;
+            const wrapper1 = mount(ORadio, {
+                props: {
+                    modelValue: model,
+                    nativeValue: value1,
+                    "onUpdate:modelValue": (modelValue) => {
+                        void wrapper1.setProps({ modelValue });
+                        void wrapper2.setProps({ modelValue });
+                    },
+                },
+            });
+            const wrapper2 = mount(ORadio, {
+                props: {
+                    modelValue: model,
+                    nativeValue: value2,
+                    "onUpdate:modelValue": (modelValue) => {
+                        void wrapper1.setProps({ modelValue });
+                        void wrapper2.setProps({ modelValue });
+                    },
+                },
+            });
+            const input1 = wrapper1.find("input");
+            expect(input1.exists()).toBeTruthy();
+            const input2 = wrapper2.find("input");
+            expect(input2.exists()).toBeTruthy();
+            expect(wrapper1.vm.value).toEqual(model);
+            expect(wrapper2.vm.value).toEqual(model);
 
-        let emits = wrapper1.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(value1);
-        expect(wrapper1.vm.value).toEqual(value1);
-        expect(wrapper2.vm.value).toEqual(value1);
+            await input1.setValue(true);
 
-        await input2.setValue();
-        emits = wrapper2.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(value2);
-        expect(wrapper1.vm.value).toEqual(value2);
-        expect(wrapper2.vm.value).toEqual(value2);
-    });
+            let emits = wrapper1.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(value1);
+            expect(wrapper1.vm.value).toEqual(value1);
+            expect(wrapper2.vm.value).toEqual(value1);
 
-    test("react accordingly when method focus() is called", async () => {
-        const wrapper = mount(ORadio);
-
-        const input = wrapper.find("input");
-        const dummyFocus = vi.fn();
-        input.element.focus = dummyFocus;
-
-        wrapper.vm.focus();
-        await nextTick(() => {
-            expect(dummyFocus).toHaveBeenCalled();
+            await input2.setValue();
+            emits = wrapper2.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(value2);
+            expect(wrapper1.vm.value).toEqual(value2);
+            expect(wrapper2.vm.value).toEqual(value2);
         });
     });
 });

@@ -1,6 +1,7 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
+import { setTimeout } from "timers/promises";
 
 import OSwitch from "@/components/switch/Switch.vue";
 
@@ -75,87 +76,103 @@ describe("OSwitch tests", () => {
         expect(input.attributes("disabled")).toBeDefined();
     });
 
-    test("react accordingly when value change ", async () => {
-        const wrapper = mount(OSwitch);
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(OSwitch);
+            await setTimeout(); // await eventhandler set
 
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
 
-        await input.setValue(true);
-        let emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(true);
-        expect(wrapper.vm.value).toEqual(true);
+            await input.trigger("focus");
+            await input.trigger("blur");
 
-        await input.setValue(false);
-        emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(2);
-        expect(emits?.[1]).toContainEqual(false);
-        expect(wrapper.vm.value).toEqual(false);
-    });
-
-    test("react accordingly when custom string values are given", async () => {
-        const trueValue = "Yes";
-        const falseValue = "No";
-        const wrapper = mount(OSwitch, {
-            props: { trueValue, falseValue },
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
         });
 
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
+        test("react accordingly when method focus() is called", async () => {
+            const wrapper = mount(OSwitch);
 
-        await input.setValue(true);
-        let emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(trueValue);
-        expect(wrapper.vm.value).toEqual(trueValue);
+            const input = wrapper.find("input");
+            const dummyFocus = vi.fn();
+            input.element.focus = dummyFocus;
 
-        await input.setValue(false);
-        emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(2);
-        expect(emits?.[1]).toContainEqual(falseValue);
-        expect(wrapper.vm.value).toEqual(falseValue);
-    });
-
-    test("react accordingly when custom object values are given", async () => {
-        const trueValue = { a: "a", b: "b" };
-        const falseValue = { y: "y", x: "X" };
-        const wrapper = mount(OSwitch, {
-            props: {
-                modelValue: falseValue,
-                trueValue,
-                falseValue,
-                "onUpdate:modelValue": (modelValue) =>
-                    wrapper.setProps({ modelValue }),
-            },
+            wrapper.vm.focus();
+            await nextTick(() => {
+                expect(dummyFocus).toHaveBeenCalled();
+            });
         });
 
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
+        test("react accordingly when value change ", async () => {
+            const wrapper = mount(OSwitch);
 
-        await input.setValue(true);
-        let emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(trueValue);
-        expect(wrapper.vm.value).toEqual(trueValue);
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
 
-        await input.setValue(false);
-        emits = wrapper.emitted("update:modelValue");
-        expect(emits?.[0]).toContainEqual(trueValue);
-        expect(emits?.[1]).toContainEqual(falseValue);
-        expect(wrapper.vm.value).toEqual(falseValue);
-    });
+            await input.setValue(true);
+            let emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(true);
+            expect(wrapper.vm.value).toEqual(true);
 
-    test("react accordingly when method focus() is called", async () => {
-        const wrapper = mount(OSwitch);
+            await input.setValue(false);
+            emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(2);
+            expect(emits?.[1]).toContainEqual(false);
+            expect(wrapper.vm.value).toEqual(false);
+        });
 
-        const input = wrapper.find("input");
-        const dummyFocus = vi.fn();
-        input.element.focus = dummyFocus;
+        test("react accordingly when custom string values are given", async () => {
+            const trueValue = "Yes";
+            const falseValue = "No";
+            const wrapper = mount(OSwitch, {
+                props: { trueValue, falseValue },
+            });
 
-        wrapper.vm.focus();
-        await nextTick(() => {
-            expect(dummyFocus).toHaveBeenCalled();
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue(true);
+            let emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(trueValue);
+            expect(wrapper.vm.value).toEqual(trueValue);
+
+            await input.setValue(false);
+            emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(2);
+            expect(emits?.[1]).toContainEqual(falseValue);
+            expect(wrapper.vm.value).toEqual(falseValue);
+        });
+
+        test("react accordingly when custom object values are given", async () => {
+            const trueValue = { a: "a", b: "b" };
+            const falseValue = { y: "y", x: "X" };
+            const wrapper = mount(OSwitch, {
+                props: {
+                    modelValue: falseValue,
+                    trueValue,
+                    falseValue,
+                    "onUpdate:modelValue": (modelValue) =>
+                        wrapper.setProps({ modelValue }),
+                },
+            });
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue(true);
+            let emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(trueValue);
+            expect(wrapper.vm.value).toEqual(trueValue);
+
+            await input.setValue(false);
+            emits = wrapper.emitted("update:modelValue");
+            expect(emits?.[0]).toContainEqual(trueValue);
+            expect(emits?.[1]).toContainEqual(falseValue);
+            expect(wrapper.vm.value).toEqual(falseValue);
         });
     });
 });

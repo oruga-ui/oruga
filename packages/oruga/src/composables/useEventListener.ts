@@ -76,6 +76,8 @@ export function useEventListener(
     if (options?.immediate) register();
     else if (getCurrentScope()) {
         // register listener on mount
+        // TODO: UPDATE TO WATCH ELEMENT
+        //github.com/vueuse/vueuse/blob/main/packages/core/useEventListener/index.ts
         onMounted(() => {
             if (
                 typeof options?.trigger === "undefined" ||

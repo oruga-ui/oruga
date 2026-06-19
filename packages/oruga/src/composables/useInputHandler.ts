@@ -14,6 +14,7 @@ import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import { isDefined } from "@/utils/helpers";
 import { unrefElement } from "./unrefElement";
+import { useEventListener } from "./useEventListener";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.
@@ -57,15 +58,6 @@ const constraintValidationAttributes = [
 export function useInputHandler<T extends ValidatableFormElement>(
     /** input ref element - can be a html element or a vue component*/
     inputRef: Readonly<MaybeRefOrGetter<T | Component>>,
-    /** emitted input events */
-    emits: {
-        /** on input focus event */
-        (e: "focus", value: Event): void;
-        /** on input blur event */
-        (e: "blur", value: Event): void;
-        /** on input invalid event */
-        (e: "invalid", value: Event): void;
-    },
     /** validation configuration props */
     props: Readonly<
         ExtractPropTypes<{
@@ -76,6 +68,15 @@ export function useInputHandler<T extends ValidatableFormElement>(
                 | ((currentValue: any, v: ValidityState) => string);
         }>
     >,
+    /** emitted input events */
+    emits: {
+        /** on input focus event */
+        (e: "focus", value: Event): void;
+        /** on input blur event */
+        (e: "blur", value: Event): void;
+        /** on input invalid event */
+        (e: "invalid", value: Event): void;
+    },
 ) {
     // inject parent field component if used inside one
     const { parentField } = injectField();
@@ -84,7 +85,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
     /// e.g. because the component hasn't been mounted yet or has been suspended
     /// by a <KeepAlive>
     const maybeElement = computed<T | undefined>(() => {
-        const el = unrefElement<Component | HTMLElement>(inputRef);
+        const el = unrefElement(inputRef);
         if (!el) return undefined;
 
         if (el.getAttribute("data-oruga-input"))
@@ -105,81 +106,54 @@ export function useInputHandler<T extends ValidatableFormElement>(
 
     /// Should be used for most accesses to the native element; we generally
     /// expect it to be present, especially in event handlers.
-    const element = computed(() => {
+    const element = computed<T | undefined>(() => {
         const el = maybeElement.value;
         if (!el) console.warn("useInputHandler: inputRef contains no element");
         return el;
     });
 
+    /// Add native event listener on the input element.
+    useEventListener(maybeElement, "focus", onFocus);
+    useEventListener(maybeElement, "blur", onBlur);
+    useEventListener(maybeElement, "invalid", onInvalid);
+
     // --- Input Focus Feature ---
 
     const isFocused = ref(false);
 
-    /** Focus the underlaying input element. */
+    /** Call `focus` on the underlaying input element. */
     function setFocus(): void {
         nextTick(() => {
             if (element.value) element.value.focus();
         });
     }
 
-    // /** Blur the underlaying input element. */
-    // function setBlur(): void {
-    //     nextTick(() => {
-    //         if (element.value) element.value.blur();
-    //     });
-    // }
+    /** Set focused and emit focus event. */
+    function onFocus(event: Event): void {
+        isFocused.value = true;
+        if (parentField.value) parentField.value.setFocus(true);
+        emits("focus", event);
+    }
 
-    /** Click the underlaying input element. */
-    function doClick(): void {
+    /** Call `blur` on the underlaying input element. */
+    function setBlur(): void {
         nextTick(() => {
-            if (element.value) element.value.click();
+            if (element.value) element.value.blur();
         });
     }
 
-    // TODO: refactor to use eventhandler on html element
     /** Unset focused and emit blur event. */
-    function onBlur(event?: Event): void {
+    function onBlur(event: Event): void {
         isFocused.value = false;
-        if (parentField?.value) parentField.value.setFocus(false);
-        emits(
-            "blur",
-            event
-                ? event
-                : new FocusEvent("blur", { relatedTarget: element.value }),
-        );
+        if (parentField.value) parentField.value.setFocus(false);
+        emits("blur", event);
+        // check validity on focus enter
         checkHtml5Validity();
-    }
-
-    // TODO: refactor to use eventhandler on html element
-    /** Set focused and emit focus event. */
-    function onFocus(event?: Event): void {
-        isFocused.value = true;
-        if (parentField?.value) parentField.value.setFocus(true);
-        emits(
-            "focus",
-            event
-                ? event
-                : new FocusEvent("focus", { relatedTarget: element.value }),
-        );
     }
 
     // --- Validation Feature ---
 
     const isValid = ref(true);
-
-    function setFieldValidity(variant, message): void {
-        nextTick(() => {
-            if (parentField?.value) {
-                // Set type only if not defined
-                if (!parentField.value.props.variant)
-                    parentField.value.setVariant(variant);
-
-                // Set message only if not defined
-                if (!parentField.value.props.message)
-                    parentField.value.setMessage(message);
-            }
-        });
-    }
 
     /**
      * Check HTML5 validation, set isValid property.
@@ -191,12 +165,26 @@ export function useInputHandler<T extends ValidatableFormElement>(
         if (!element.value) return;
 
         if (element.value.validity.valid) {
-            setFieldValidity(null, null);
+            setFieldValidity(undefined, undefined);
             isValid.value = true;
         } else {
             setInvalid();
             isValid.value = false;
         }
+    }
+
+    function setFieldValidity(variant?: string, message?: string): void {
+        nextTick(() => {
+            if (!parentField.value) return;
+
+            // Set type only if not defined
+            if (!parentField.value.props.variant)
+                parentField.value.setVariant(variant);
+
+            // Set message only if not defined
+            if (!parentField.value.props.message)
+                parentField.value.setMessage(message);
+        });
     }
 
     function setInvalid(): void {
@@ -209,7 +197,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         checkHtml5Validity();
         const validatable = asValidatableFormElement(event.target);
 
-        if (validatable && parentField?.value && props.useHtml5Validation) {
+        if (validatable && parentField.value && props.useHtml5Validation) {
             // We provide our own error message on the field, so we should suppress the browser's default tooltip.
             // We still want to focus the form's first invalid input, though.
             event.preventDefault();
@@ -249,6 +237,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
                 }
             }
         }
+
         emits("invalid", event);
     }
 
@@ -413,10 +402,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         isFocused,
         isValid,
         setFocus,
-        doClick,
-        onFocus,
-        onBlur,
-        onInvalid,
+        setBlur,
         checkHtml5Validity,
     };
 }

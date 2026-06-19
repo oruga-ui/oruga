@@ -52,35 +52,6 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeFalsy();
     });
 
-    test("can emit input, focus and blur events", async () => {
-        const VALUE_TYPED = "test";
-
-        vi.useFakeTimers(); // use fake timers for input debounce
-
-        const wrapper = mount(OAutocomplete, {
-            props: { options: OPTIONS },
-        });
-
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-
-        // open menu
-        await input.trigger("focus");
-        expect(wrapper.emitted("focus")).toHaveLength(1);
-
-        await input.setValue(VALUE_TYPED);
-        await input.trigger("input");
-        vi.runAllTimers(); // run debounce timers
-
-        expect(wrapper.emitted("update:input")).toHaveLength(1);
-        expect(wrapper.emitted("update:input")?.[0]).toContain(VALUE_TYPED);
-
-        await input.trigger("blur");
-        expect(wrapper.emitted("blur")).toBeDefined();
-
-        vi.useRealTimers(); // restore real timers
-    });
-
     test("can autocomplete with keydown", async () => {
         const VALUE_TYPED = "Ang";
 
@@ -317,6 +288,48 @@ describe("OAutocomplete tests", () => {
         await input.trigger("focus");
 
         expect(dropdown.isVisible()).toBeFalsy();
+    });
+
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(OAutocomplete);
+            await setTimeout(); // await eventhandler set
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.trigger("focus");
+            await input.trigger("blur");
+
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
+        });
+
+        test("can emit input, focus and blur events", async () => {
+            const VALUE_TYPED = "test";
+
+            const wrapper = mount(OAutocomplete, {
+                props: { options: OPTIONS },
+            });
+            await setTimeout(); // await eventhandler set
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            // open menu
+            await input.trigger("focus");
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+
+            await input.setValue(VALUE_TYPED);
+            await input.trigger("input");
+            await setTimeout(); // await eventhandler set
+
+            expect(wrapper.emitted("update:input")).toHaveLength(1);
+            expect(wrapper.emitted("update:input")?.[0]).toContain(VALUE_TYPED);
+
+            await input.trigger("blur");
+            expect(wrapper.emitted("blur")).toBeDefined();
+        });
     });
 
     describe("filtering", () => {

@@ -1,6 +1,7 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
+import { setTimeout } from "timers/promises";
 
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
 
@@ -59,81 +60,97 @@ describe("OCheckbox tests", () => {
         expect(input.attributes("disabled")).not.toBeUndefined();
     });
 
-    test("react accordingly when value change ", async () => {
-        const wrapper = mount(OCheckbox);
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(OCheckbox);
+            await setTimeout(); // await eventhandler set
 
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
 
-        await input.setValue(true);
-        let emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(true);
-        expect(wrapper.vm.value).toEqual(true);
+            await input.trigger("focus");
+            await input.trigger("blur");
 
-        await input.setValue(false);
-        emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(2);
-        expect(emits?.[1]).toContainEqual(false);
-        expect(wrapper.vm.value).toEqual(false);
-    });
-
-    test("react accordingly when custom string values are given", async () => {
-        const trueValue = "Yes";
-        const falseValue = "No";
-        const wrapper = mount(OCheckbox, {
-            props: { trueValue, falseValue },
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
         });
 
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
+        test("react accordingly when method focus() is called", async () => {
+            const wrapper = mount(OCheckbox);
 
-        await input.setValue(true);
-        let emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(trueValue);
-        expect(wrapper.vm.value).toEqual(trueValue);
+            const input = wrapper.find("input");
+            const dummyFocus = vi.fn();
+            input.element.focus = dummyFocus;
 
-        await input.setValue(false);
-        emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(2);
-        expect(emits?.[1]).toContainEqual(falseValue);
-        expect(wrapper.vm.value).toEqual(falseValue);
-    });
-
-    test("react accordingly when custom object values are given", async () => {
-        const trueValue = { a: "a", b: "b" };
-        const falseValue = { y: "y", x: "X" };
-        const wrapper = mount(OCheckbox, {
-            props: { modelValue: falseValue, trueValue, falseValue },
+            wrapper.vm.focus();
+            await nextTick(() => {
+                expect(dummyFocus).toHaveBeenCalled();
+            });
         });
 
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
+        test("react accordingly when value change ", async () => {
+            const wrapper = mount(OCheckbox);
 
-        await input.setValue(true);
-        let emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContainEqual(trueValue);
-        expect(wrapper.vm.value).toEqual(trueValue);
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
 
-        await input.setValue(false);
-        emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(2);
-        expect(emits?.[1]).toContainEqual(falseValue);
-        expect(wrapper.vm.value).toEqual(falseValue);
-    });
+            await input.setValue(true);
+            let emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(true);
+            expect(wrapper.vm.value).toEqual(true);
 
-    test("react accordingly when method focus() is called", async () => {
-        const wrapper = mount(OCheckbox);
+            await input.setValue(false);
+            emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(2);
+            expect(emits?.[1]).toContainEqual(false);
+            expect(wrapper.vm.value).toEqual(false);
+        });
 
-        const input = wrapper.find("input");
-        const dummyFocus = vi.fn();
-        input.element.focus = dummyFocus;
+        test("react accordingly when custom string values are given", async () => {
+            const trueValue = "Yes";
+            const falseValue = "No";
+            const wrapper = mount(OCheckbox, {
+                props: { trueValue, falseValue },
+            });
 
-        wrapper.vm.focus();
-        await nextTick(() => {
-            expect(dummyFocus).toHaveBeenCalled();
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue(true);
+            let emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(trueValue);
+            expect(wrapper.vm.value).toEqual(trueValue);
+
+            await input.setValue(false);
+            emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(2);
+            expect(emits?.[1]).toContainEqual(falseValue);
+            expect(wrapper.vm.value).toEqual(falseValue);
+        });
+
+        test("react accordingly when custom object values are given", async () => {
+            const trueValue = { a: "a", b: "b" };
+            const falseValue = { y: "y", x: "X" };
+            const wrapper = mount(OCheckbox, {
+                props: { modelValue: falseValue, trueValue, falseValue },
+            });
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue(true);
+            let emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContainEqual(trueValue);
+            expect(wrapper.vm.value).toEqual(trueValue);
+
+            await input.setValue(false);
+            emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(2);
+            expect(emits?.[1]).toContainEqual(falseValue);
+            expect(wrapper.vm.value).toEqual(falseValue);
         });
     });
 });
