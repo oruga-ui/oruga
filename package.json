@@ -64,5 +64,9 @@
     "typescript": "^6.0.2",
     "vue-component-meta": "^3.3.3",
     "vue-tsc": "^3.3.3"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not op_mini all"
+  ]
 }
