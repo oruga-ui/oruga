@@ -8,7 +8,7 @@ sidebarDepth: 2
 
 <section class="odocs-head">
 
-The **Notification** component is a lightweight and easily customizable alert message.
+The **Notification** component is a lightweight and easily customizable alert message container.
 It is designed to mimic the push notifications that have been popularized by mobile and desktop operating systems.
 
 </section>

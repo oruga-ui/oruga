@@ -17,23 +17,20 @@ import ModalCode from "./modal.vue?raw";
 
 ### Base
 
-Usually the trigger element for a popover is a `<button>` element.
-However, you can also use any other HTML element. By default, opening a
+Usually the trigger for a popover is a `<button>` element.
+However, you can also use any other HTML element you like. By default, opening a
 popover will close any other open popovers and it can be closed by
 clicking outside the content. The behavior can be changed with the
 `behavior` property.
 
 ::: info Accessibility Note:
-If your trigger does not have a visible label, provide an accessible or
-visually hidden label and communicates the popover's state to assistive
-technologies.
+If your trigger does not have a visible label, make sure to provide an accessible or
+visually hidden label for assistive technologies.
 :::
 
 ::: info Accessibility Note:
-Use the `aria-haspopup` attribute on the trigger to indicate
-the type of interactive popup that this element triggers, usually
-`dialog` or `menu´; this should match the role of
-the popover content. You can see all possible values [here](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-haspopup).
+You can use the `aria-haspopup` attribute on the trigger to indicate the type of the interactive popup that this element triggers, usually `dialog` or `menu`;
+this should match the role of the popover content. You can see all possible values [here](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-haspopup).
 :::
 
 <ExampleViewer :component="Base" :code="BaseCode" />
