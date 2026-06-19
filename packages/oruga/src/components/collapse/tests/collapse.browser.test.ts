@@ -1,54 +1,46 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-vue";
 
-import { defineComponent, h, ref } from "vue";
+import { defineComponent, h, type VNode } from "vue";
 
 import OCollapse from "../Collapse.vue";
 
-const SimpleCollapse = defineComponent({
-    name: "SimpleCollapse",
-    setup() {
-        const isOpen = ref(0);
-        const collapses = [
-            {
-                title: "Title 1",
-                text: "Text 1",
-                index: 0,
-            },
-            {
-                title: "Title 2",
-                text: "Text 2",
-                index: 1,
-            },
-            {
-                title: "Title 3",
-                text: "Text 3",
-                index: 2,
-            },
-        ];
-        return { isOpen, collapses };
+const collapses = [
+    {
+        title: "Title 1",
+        text: "Text 1",
+        index: 0,
     },
-    render() {
-        return h(
+    {
+        title: "Title 2",
+        text: "Text 2",
+        index: 1,
+    },
+    {
+        title: "Title 3",
+        text: "Text 3",
+        index: 2,
+    },
+];
+
+const SimpleCollapse = defineComponent(() => {
+    return (): VNode =>
+        h(
             "section",
             {},
-            this.collapses.map(({ title, text, index }) =>
+            collapses.map(({ title, text, index }) =>
                 h(
                     OCollapse,
                     {
                         key: index,
                         "data-testid": `collapse-${index}`,
-                        open: this.isOpen == index,
-                        onOpen: () => {
-                            this.isOpen = index;
-                        },
+                        name: "browser-test-collapsables",
+                        open: index === 0,
                     },
                     {
                         trigger: ({ open }) =>
-                            h("div", {}, [
-                                h("p", {}, [
-                                    `${title} (${open ? "Open" : "Closed"})`,
-                                ]),
+                            h("p", { "data-testid": `trigger-${index}` }, [
+                                `${title} (${open ? "Open" : "Closed"})`,
                             ]),
                         default: () =>
                             h("div", { "data-testid": `content-${index}` }, [
@@ -58,7 +50,6 @@ const SimpleCollapse = defineComponent({
                 ),
             ),
         );
-    },
 });
 
 describe("<Collapse>", () => {
@@ -69,7 +60,7 @@ describe("<Collapse>", () => {
         const secondContent = screen.getByTestId("content-1");
         await expect.element(secondContent).not.toBeVisible();
         const second = screen.getByTestId("collapse-1");
-        const trigger = second.getByRole("button");
+        const trigger = second.getByTestId("trigger-1");
         await trigger.click();
         await expect.element(firstContent).not.toBeVisible();
         await expect.element(secondContent).toBeVisible();

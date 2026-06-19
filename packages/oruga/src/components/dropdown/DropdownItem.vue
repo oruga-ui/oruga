@@ -93,7 +93,7 @@ const isFocused = computed(
 function onClick(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, event);
-    emits("click", props.value as T, event);
+    emits("click", providedData.value.value, event);
 }
 
 /** Hover listener, focus the item. */
@@ -134,7 +134,7 @@ const rootClasses = defineClasses(
         :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"
-        @mouseenter="focusItem"
+        @pointerenter="focusItem"
         @keydown.enter="onClick"
         @keydown.space="onClick">
         <slot>{{ label }}</slot>

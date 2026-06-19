@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.13.5",
+  "version": "0.13.6",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "license": "MIT",
@@ -29,10 +29,13 @@
     "test:prettier": "prettier --check .",
     "test": "npm run test --workspace @oruga-ui/oruga-next",
     "test:coverage": "npm run test:coverage --workspace @oruga-ui/oruga-next",
-    "test:ts": "npm run test:ts --workspace @oruga-ui/oruga-next",
+    "test:ts": "run-s test:ts:*",
+    "test:ts:lib": "npm run test:ts --workspace @oruga-ui/oruga-next",
+    "test:ts:docs": "npm run test:ts --workspace @oruga-ui/docs-next",
+    "test:ts:examples": "npm run test:ts --workspace @oruga-ui/examples",
     "gen": "run-s gen:*",
-    "gen:volar": "tsx .scripts/gen-volar-dts.ts",
-    "gen:types": "tsx .scripts/gen-comp-types.ts",
+    "gen:volar": "tsx .scripts/gen-globals-dts.ts",
+    "gen:types": "tsx .scripts/gen-config-dts.ts",
     "gen:docs": "npm run docs:gen --workspace @oruga-ui/docs-next",
     "version": "tsx .scripts/sync-version.ts && npm i",
     "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",
@@ -41,18 +44,30 @@
     "update": "ncu -u --workspaces --root"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.4.0",
+    "@eslint/compat": "^2.0.5",
+    "@eslint/js": "^10.0.1",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.12.2",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.7.0",
+    "@vue/eslint-config-typescript": "^14.8.0",
+    "@vue/tsconfig": "^0.9.1",
     "conventional-changelog": "^7.2.0",
     "conventional-changelog-conventionalcommits": "9.3.1",
-    "eslint": "^9.36.0",
-    "eslint-plugin-vue": "^10.5.0",
-    "eslint-plugin-vuejs-accessibility": "^2.4.1",
-    "npm-check-updates": "^21.0.3",
-    "npm-run-all2": "^8.0.4",
-    "prettier": "^3.8.3",
+    "eslint": "^10.2.0",
+    "eslint-plugin-compat": "^7.0.1",
+    "eslint-plugin-vue": "^10.8.0",
+    "eslint-plugin-vuejs-accessibility": "^2.5.0",
+    "npm-check-updates": "^22.2.3",
+    "npm-run-all2": "^9.0.1",
+    "prettier": "^3.8.4",
     "replace-in-file": "^8.4.0",
-    "tsx": "^4.21.0"
-  }
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.2",
+    "vue-component-meta": "^3.3.3",
+    "vue-tsc": "^3.3.3"
+  },
+  "browserslist": [
+    "defaults",
+    "not op_mini all"
+  ]
 }

@@ -523,7 +523,7 @@ if (!props.backendFiltering) {
             const isVisible =
                 typeof props.filter === "function"
                     ? // call filter function if available
-                      props.filter(item.data.value!, toValue(filterValue))
+                      props.filter(item.data.value, toValue(filterValue))
                     : // else check filter value matches item value
                       item.data.matches(toValue(filterValue));
 
@@ -713,7 +713,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         data-oruga="listbox"
         :class="rootClasses"
         @focusout="onFocusout"
-        @mouseleave="isFocused && onFocusout($event)">
+        @pointerleave="isFocused && onFocusout($event)">
         <div v-if="$slots.header" :class="headerClasses">
             <slot name="header" />
         </div>
@@ -770,7 +770,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
             :aria-disabled="disabled"
             @focusin="onFocusin"
             @blur="onBlur"
-            @mouseleave="focusItem(undefined)"
+            @pointerleave="focusItem(undefined)"
             @keydown="onListKeyDown">
             <transition-group :name="animation">
                 <slot>

@@ -46,14 +46,6 @@ const inspectData: InspectData<
             data.disabled = true;
         },
     },
-    inlineClass: {
-        class: "inlineClass",
-        description: "Class of the root element when inlined.",
-        properties: ["inline"],
-        action: (data): void => {
-            data.inline = true;
-        },
-    },
     expandedClass: {
         class: "expandedClass",
         description: "Class of the root element when expanded.",
@@ -62,10 +54,20 @@ const inspectData: InspectData<
             data.expanded = true;
         },
     },
+    overlayClass: {
+        class: "overlayClass",
+        description: "Class of the root element when has an overlay.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+            data.active = true;
+        },
+    },
     activeClass: {
         class: "activeClass",
         description: "Class of the root element when active or inline.",
-        properties: ["active", "inline"],
+        properties: ["active"],
         action: (data): void => {
             data.active = true;
         },
@@ -78,90 +80,22 @@ const inspectData: InspectData<
             data.openOnHover = true;
         },
     },
-    positionClass: {
-        class: "positionClass",
-        description: "Class of the root element with postion.",
-        properties: ["position"],
-        suffixes: [
-            "auto",
-            "top",
-            "bottom",
-            "left",
-            "right",
-            "top-right",
-            "top-left",
-            "bottom-left",
-            "bottom-right",
-            "auto",
-            "top",
-            "bottom",
-            "left",
-            "right",
-            "top-right",
-            "top-left",
-            "bottom-left",
-            "bottom-right",
-        ],
-        action: (data): void => {
-            data.position = "bottom";
-        },
-    },
     triggerClass: {
         class: "triggerClass",
         description: "Class of the trigger element.",
-    },
-    overlayClass: {
-        class: "overlayClass",
-        description: "Class of the overlay element when shown as modal.",
-        properties: ["mobileModal", "desktopModal"],
-        action: (data): void => {
-            data.mobileModal = true;
-            data.desktopModal = true;
-            data.active = true;
-        },
     },
     menuClass: {
         class: "menuClass",
         description: "Class of the menu element.",
         action: (data): void => {
-            data.inline = true;
+            data.active = true;
         },
     },
     menuActiveClass: {
         class: "menuActiveClass",
         description: "Class of the menu element when active or inline.",
-        properties: ["inline", "active"],
+        properties: ["active"],
         action: (data): void => {
-            data.active = true;
-            data.inline = true;
-        },
-    },
-    menuPositionClass: {
-        class: "menuPositionClass",
-        description: "Class of the menu element with position.",
-        properties: ["position"],
-        suffixes: [
-            "auto",
-            "top",
-            "bottom",
-            "left",
-            "right",
-            "top-right",
-            "top-left",
-            "bottom-left",
-            "bottom-right",
-            "auto",
-            "top",
-            "bottom",
-            "left",
-            "right",
-            "top-right",
-            "top-left",
-            "bottom-left",
-            "bottom-right",
-        ],
-        action: (data): void => {
-            data.position = "top-right";
             data.active = true;
         },
     },
@@ -170,7 +104,7 @@ const inspectData: InspectData<
         subitem: "dropdownitem",
         description: "Class of the item element.",
         action: (data): void => {
-            data.inline = true;
+            data.active = true;
         },
     },
     itemSelectedClass: {
@@ -178,7 +112,7 @@ const inspectData: InspectData<
         subitem: "dropdownitem",
         description: "Class of the item element when selected.",
         action: (data): void => {
-            data.inline = true;
+            data.active = true;
         },
     },
     itemDisabledClass: {
@@ -187,7 +121,7 @@ const inspectData: InspectData<
         description: "Class of the item element when disabled.",
         properties: ["disabled"],
         action: (data): void => {
-            data.inline = true;
+            data.active = true;
         },
     },
     itemClickableClass: {
@@ -196,7 +130,7 @@ const inspectData: InspectData<
         description: "Class of the item element when clickable.",
         properties: ["clickable"],
         action: (data): void => {
-            data.inline = true;
+            data.active = true;
         },
     },
     itemFocusedClass: {
@@ -204,7 +138,7 @@ const inspectData: InspectData<
         subitem: "dropdownitem",
         description: "Class of the item element when focused.",
         action: (data): void => {
-            data.inline = true;
+            data.active = true;
         },
     },
     scrollClipClass: {

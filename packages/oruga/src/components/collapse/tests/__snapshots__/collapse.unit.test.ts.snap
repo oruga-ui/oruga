@@ -1,10 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OCollapse tests > render correctly 1`] = `
-"<div data-oruga="collapse" class="o-collapse o-collapse--top">
-  <div id="v-1" class="o-collapse__trigger" role="button" tabindex="0" aria-controls="v-0" aria-expanded="true"></div>
-  <transition-stub name="fade" appear="false" persisted="true" css="true">
-    <div id="v-0" class="o-collapse__content" aria-labelledby="v-1"></div>
-  </transition-stub>
-</div>"
+"<details data-oruga="collapse" class="o-collapse o-collapse--bottom">
+  <summary id="v-1" role="button" tabindex="0" class="o-collapse__trigger" aria-controls="v-0" aria-expanded="false">Trigger Button</summary>
+  <div id="v-0" class="o-collapse__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+</details>"
 `;

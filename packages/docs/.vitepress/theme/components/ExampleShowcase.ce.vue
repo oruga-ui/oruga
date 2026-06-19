@@ -46,7 +46,7 @@ link.href =
 shadowRoot.appendChild(link);
 </script>
 
-<!-- eslint-disable-next-line vue/valid-template-root -->
+<!-- eslint-disable-next-line vue/valid-template-root vue/no-empty-component-block -->
 <template></template>
 
 <style lang="scss">
@@ -68,5 +68,21 @@ shadowRoot.appendChild(link);
 // bulma web component color fix
 [data-theme="light"] {
     --bulma-label-color: var(--bulma-text-strong);
+}
+
+.o-popover__content--backdrop::backdrop {
+    opacity: var(--bs-backdrop-opacity);
+    --bs-backdrop-zindex: 1050;
+    --bs-backdrop-bg: #000;
+    --bs-backdrop-opacity: 0.5;
+    background-color: var(--bs-backdrop-bg);
+}
+
+.trigger {
+    display: inline-block;
+}
+
+.o-dropdown [popover]:where(:not(:popover-open)) {
+    display: none;
 }
 </style>

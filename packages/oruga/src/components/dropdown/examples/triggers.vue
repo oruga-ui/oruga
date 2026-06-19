@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { OButton } from "@/components/button";
 import { ref } from "vue";
 
 const isActive = ref(false);
@@ -7,14 +8,10 @@ const isActive = ref(false);
 <template>
     <section class="odocs-spaced">
         <p>
-            <o-dropdown>
-                <template #trigger="{ active }">
-                    <o-button
-                        variant="primary"
-                        label="Default"
-                        :icon-right="active ? 'caret-up' : 'caret-down'" />
-                </template>
-
+            <o-dropdown
+                :trigger-tag="OButton"
+                variant="primary"
+                label="Default">
                 <o-dropdown-item label="Action" />
                 <o-dropdown-item label="Another action" />
                 <o-dropdown-item label="Something else" />
@@ -33,11 +30,10 @@ const isActive = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown open-on-contextmenu>
-                <template #trigger>
-                    <o-button label="Right click" />
-                </template>
-
+            <o-dropdown
+                open-on-contextmenu
+                trigger-tag="OButton"
+                label="Right click">
                 <o-dropdown-item label="Action" />
                 <o-dropdown-item label="Another action" />
                 <o-dropdown-item label="Something else" />
@@ -56,12 +52,10 @@ const isActive = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown>
+            <o-dropdown trigger-tag="button">
                 <template #trigger>
-                    <button role="button" tabindex="0">
-                        Custom
-                        <o-icon variant="success" icon="caret-down" />
-                    </button>
+                    Custom
+                    <o-icon variant="success" icon="caret-down" />
                 </template>
 
                 <o-dropdown-item label="Action" />
@@ -69,11 +63,7 @@ const isActive = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown teleport>
-                <template #trigger>
-                    <o-button label="Append to body" />
-                </template>
-
+            <o-dropdown teleport label="Append to body" :trigger-tag="OButton">
                 <o-dropdown-item label="Action" />
                 <o-dropdown-item label="Another action" />
                 <o-dropdown-item label="Something else" />
@@ -83,7 +73,9 @@ const isActive = ref(false);
         <p>
             <o-field grouped>
                 <o-dropdown v-model:active="isActive" :open-on-click="false">
-                    <template #trigger> Click the button beside! </template>
+                    <template #trigger>
+                        <i>Click the button beside! </i>
+                    </template>
 
                     <o-dropdown-item label="Action" />
                     <o-dropdown-item label="Another action" />

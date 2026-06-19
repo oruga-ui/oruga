@@ -238,14 +238,14 @@ const emits = defineEmits<{
      * @param index {number} - index of clicked row
      * @param event {Event} - native mouseenter event
      */
-    mouseenter: [row: T, index: number, event: Event];
+    mouseenter: [row: T, index: number, event: PointerEvent];
     /**
      * on row mouseleave event
      * @param row {unknown} - row data
      * @param index {number} - index of clicked row
      * @param event {Event} - native mouseleave event
      */
-    mouseleave: [row: T, index: number, event: Event];
+    mouseleave: [row: T, index: number, event: PointerEvent];
     /**
      * on cell click event
      * @param row {unknown} - row data
@@ -412,7 +412,7 @@ const { childItems } = useProviderParent<TableColumnComponent<T>>({
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
     if (!childItems.value.length) return [];
     return childItems.value.map((columnItem) => {
-        const column = toValue(columnItem.data!);
+        const column = toValue(columnItem.data);
 
         // create additional th attrs data
         let thAttrsData =
@@ -670,15 +670,15 @@ function isColumnSorted(column: TableColumnItem<T>): boolean {
 }
 
 // calculate default sort on columns change and on initial load
-watch(tableColumns, defaultSort, { immediate: true });
+watch(tableColumns, setDefaultSort, { immediate: true });
 
 /** sort column based on the default-sort prop if not already sorted */
-function defaultSort(): void {
+function setDefaultSort(): void {
     // prevent sort when not columns or already sorted (for example async data)
     if (!tableColumns.value.length || currentSortColumn.value) return;
     if (!props.defaultSort) return;
 
-    let sortField = props.defaultSort;
+    let sortField;
     let sortDirection = props.defaultSortDirection;
     if (Array.isArray(props.defaultSort)) {
         sortField = props.defaultSort[0];
@@ -1554,7 +1554,7 @@ defineExpose({
                             @dblclick="
                                 $emit('dblclick', row.value, row.index, $event)
                             "
-                            @mouseenter="
+                            @pointerenter="
                                 $emit(
                                     'mouseenter',
                                     row.value,
@@ -1562,7 +1562,7 @@ defineExpose({
                                     $event,
                                 )
                             "
-                            @mouseleave="
+                            @pointerleave="
                                 $emit(
                                     'mouseleave',
                                     row.value,

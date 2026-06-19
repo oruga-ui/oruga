@@ -18,6 +18,131 @@ describe("OTaginput tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    test("no display counter when counter property set for false", async () => {
+        const wrapper = mount(OTaginput, {
+            props: { maxlength: 100, counter: true },
+        });
+
+        expect(wrapper.find(".o-taginput__counter").exists()).toBeTruthy();
+        await wrapper.setProps({ counter: false });
+        expect(wrapper.find(".o-taginput__counter").exists()).toBeFalsy();
+    });
+
+    test("should send variant prop to Tag component properly", () => {
+        const value = ["Test Value"];
+        const wrapper = mount(OTaginput, {
+            props: { modelValue: value, variant: "danger" },
+        });
+        const Tag = wrapper.find(".o-tag");
+        expect(Tag.classes("o-tag--danger")).toBeTruthy();
+    });
+
+    test("should listen Autocomplete events", async () => {
+        let firedHeader = false;
+        let firedFooter = false;
+        const wrapper = mount(OTaginput, {
+            props: {
+                iconRight: "close-circle",
+                iconRightClickable: true,
+                selectableHeader: true,
+                selectableFooter: true,
+                keepOpen: true,
+                options: ["Frank", "Eddy", "Howard"],
+                onIconRightClick: async () => {
+                    await wrapper.setProps({ modelValue: [] });
+                },
+                onSelectHeader: () => {
+                    firedHeader = true;
+                },
+                onSelectFooter: () => {
+                    firedFooter = true;
+                },
+            },
+            slots: {
+                header: "<h1>SLOT HEADER</h1>",
+                footer: "<h1>SLOT FOOTER</h1>",
+            },
+        });
+
+        const input = wrapper.find("input");
+        const iconRight = wrapper.find(".o-input__icon-right");
+
+        await input.trigger("focus");
+        await input.setValue("Frank");
+        await wrapper.vm.$nextTick();
+
+        await input.trigger("keydown", { key: "Down" });
+        await input.trigger("keydown", { key: "Down" });
+        await input.trigger("keydown", { key: "Enter" });
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findAll(".o-tag")).toHaveLength(1);
+
+        await iconRight.trigger("click");
+        await wrapper.vm.$nextTick();
+
+        const dropdownItemHeader = wrapper.find(".o-autocomplete__item-header");
+        const dropdownItemFooter = wrapper.find(".o-autocomplete__item-footer");
+
+        await dropdownItemHeader.trigger("click");
+        await dropdownItemFooter.trigger("click");
+
+        expect(wrapper.findAll(".o-tag")).toHaveLength(0);
+        expect(firedHeader).toBeTruthy();
+        expect(firedFooter).toBeTruthy();
+    });
+
+    test("should add new items only when allowNew is true", async () => {
+        const wrapper = mount(OTaginput, {
+            props: {
+                options: ["Frank"],
+                allowNew: true,
+                debounce: 0,
+            },
+        });
+
+        const input = wrapper.find("input");
+        await input.trigger("focus");
+        await input.setValue("New Item");
+        await input.trigger("keydown", { key: "Enter" });
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findAll(".o-tag")).toHaveLength(1);
+        expect(wrapper.find(".o-tag").text()).toContain("New Item");
+
+        await wrapper.setProps({ allowNew: false });
+        await input.setValue("Another Item");
+        await input.trigger("keydown", { key: "Enter" });
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findAll(".o-tag")).toHaveLength(1);
+    });
+
+    test("should forward class, style, and id to the autocomplete input", () => {
+        const attrs = {
+            class: "fallthrough-class",
+            style: "font-size: 2rem;",
+            id: "fallthrough-id",
+        };
+        const wrapper = mount(OTaginput, {
+            attrs,
+            props: {
+                options: [],
+            },
+        });
+
+        const root = wrapper.find("div[data-oruga='taginput']");
+        expect(root.classes(attrs.class)).toBe(false);
+        expect(root.attributes("style")).toBeUndefined();
+        expect(root.attributes("id")).toBeUndefined();
+
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        expect(input.classes(attrs.class)).toBe(true);
+        expect(input.attributes("style")).toBe(attrs.style);
+        expect(input.attributes("id")).toBe(attrs.id);
+    });
+
     describe("render options props correctly", () => {
         test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];

@@ -1,7 +1,9 @@
 name: "Check generated files"
 on:
+  push:
+    branches: [develop, major]
   pull_request:
-    branches: [develop]
+    branches: [develop, major]
 
 jobs:
   check:
@@ -28,7 +30,7 @@ jobs:
           # Check for changes in regenerated files
           if ! test -z "$changes"
           then
-            echo "Generated files are not up to date. Perhaps you forgot to run `npm run gen`?"
+            echo "Generated files are not up to date. Perhaps you forgot to update generated files?"
             echo "$changes"
             exit 1
           fi

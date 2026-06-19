@@ -57,7 +57,6 @@ function onThemeChange(theme: ThemeConfig): void {
     position: absolute;
     left: 25px;
     top: 100%;
-    display: block;
     min-width: 12rem;
     z-index: 20;
     background-color: var(--vp-input-bg-color);

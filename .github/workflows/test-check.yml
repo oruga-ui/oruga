@@ -1,9 +1,9 @@
 name: Unit Tests
 on:
   push:
-    branches: [develop]
+    branches: [develop, major]
   pull_request:
-    branches: [develop]
+    branches: [develop, major]
 
 jobs:
   tests:
@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 24.15
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
 
@@ -37,6 +37,7 @@ jobs:
 
       - name: Install Playwright browser
         if: ${{ steps.cache-playwright.outputs.cache-hit != 'true' }}
+        timeout-minutes: 5
         run: npx playwright install chromium
 
       - name: Run unit tests 🧪

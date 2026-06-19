@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     allowNew: () => getDefault("taginput.allowNew", false),
     allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
     validateItem: () => true,
-    createItem: (item: T | string) => item as T,
+    createItem: (item) => item,
     closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
@@ -292,8 +292,7 @@ function onBackspace(): void {
 }
 
 function onEnter(event: Event): void {
-    // Add item if not select only and dropdown selection is closed
-    if (props.allowNew && !isDropdownActive.value) {
+    if (props.allowNew) {
         event.stopPropagation();
         addItem();
     }

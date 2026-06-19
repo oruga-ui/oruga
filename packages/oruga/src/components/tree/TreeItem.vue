@@ -180,7 +180,7 @@ function clickItem(event: Event): void {
         parent.value.selectItem(item.value, !isSelected.value);
     }
 
-    emits("click", props.value as T, event);
+    emits("click", providedData.value.value, event);
 }
 
 /** Set the item as focused element. */
@@ -254,7 +254,7 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
         :aria-label="ariaLabel ?? label"
         :aria-labelledby="ariaLabelledby"
         :aria-owns="hasChildren ? subtreeId : undefined">
-        <div :class="labelClasses" @mouseenter="focusItem" @click="clickItem">
+        <div :class="labelClasses" @pointerenter="focusItem" @click="clickItem">
             <o-icon
                 v-if="hasToggleIcon"
                 data-toggle
