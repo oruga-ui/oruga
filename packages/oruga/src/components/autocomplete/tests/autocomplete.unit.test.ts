@@ -59,6 +59,7 @@ describe("OAutocomplete tests", () => {
             props: { options: OPTIONS, openOnFocus: true, keepOpen: false },
             attachTo: document.body,
         });
+        await setTimeout(); // await event listener set
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -127,6 +128,7 @@ describe("OAutocomplete tests", () => {
             props: { options: OPTIONS, openOnFocus: true },
             attachTo: document.body,
         });
+        await setTimeout(); // await event listener set
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -149,6 +151,7 @@ describe("OAutocomplete tests", () => {
             props: { options: OPTIONS, openOnFocus: true },
             attachTo: document.body,
         });
+        await setTimeout(); // await event listener set
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -219,6 +222,7 @@ describe("OAutocomplete tests", () => {
             },
             attachTo: document.body,
         });
+        await setTimeout(); // await event listener set
 
         const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
@@ -246,6 +250,7 @@ describe("OAutocomplete tests", () => {
             },
             attachTo: document.body,
         });
+        await setTimeout(); // await event listener set
 
         const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
@@ -309,7 +314,7 @@ describe("OAutocomplete tests", () => {
             const VALUE_TYPED = "test";
 
             const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS },
+                props: { options: OPTIONS, debounce: 0 },
             });
             await setTimeout(); // await eventhandler set
 
@@ -322,7 +327,10 @@ describe("OAutocomplete tests", () => {
 
             await input.setValue(VALUE_TYPED);
             await input.trigger("input");
-            await setTimeout(); // await eventhandler set
+            await setTimeout(); // await input debounce
+
+            expect(wrapper.emitted("input")).toHaveLength(1);
+            expect(wrapper.emitted("input")?.[0]).toContain(VALUE_TYPED);
 
             expect(wrapper.emitted("update:input")).toHaveLength(1);
             expect(wrapper.emitted("update:input")?.[0]).toContain(VALUE_TYPED);
@@ -473,6 +481,7 @@ describe("OAutocomplete tests", () => {
                     footer: "<h1>SLOT FOOTER</h1>",
                 },
             });
+            await setTimeout(); // await event listener set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
@@ -506,7 +515,10 @@ describe("OAutocomplete tests", () => {
                     footer: "<h1>SLOT FOOTER</h1>",
                 },
             });
+            await setTimeout(); // await event listener set
+
             const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
 
             // open menu
             await input.trigger("focus");

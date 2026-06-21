@@ -179,7 +179,6 @@ describe("OInput tests", () => {
 
     test("check is empty when null", () => {
         const wrapper = mount(OInput, {
-            // @ts-expect-error special check for null instead of undefined
             props: { modelValue: null },
         });
 
@@ -195,11 +194,9 @@ describe("OInput tests", () => {
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
-            console.log(input.html());
 
             await input.trigger("focus");
             await input.trigger("blur");
-            console.log(wrapper.emitted());
 
             expect(wrapper.emitted("focus")).toHaveLength(1);
             expect(wrapper.emitted("blur")).toHaveLength(1);
