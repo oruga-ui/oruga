@@ -293,7 +293,6 @@ describe("OAutocomplete tests", () => {
     describe("test events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OAutocomplete);
-            await setTimeout(); // await eventhandler set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
@@ -311,7 +310,6 @@ describe("OAutocomplete tests", () => {
             const wrapper = mount(OAutocomplete, {
                 props: { options: OPTIONS, debounce: 0 },
             });
-            await setTimeout(); // await eventhandler set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();

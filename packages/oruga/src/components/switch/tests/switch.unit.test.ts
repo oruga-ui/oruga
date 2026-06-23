@@ -1,7 +1,6 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { setTimeout } from "timers/promises";
 
 import OSwitch from "@/components/switch/Switch.vue";
 
@@ -79,7 +78,6 @@ describe("OSwitch tests", () => {
     describe("test events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OSwitch);
-            await setTimeout(); // await eventhandler set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();

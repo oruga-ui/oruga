@@ -1,6 +1,5 @@
 import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-import { setTimeout } from "timers/promises";
 
 import OUpload from "@/components/upload/Upload.vue";
 
@@ -18,7 +17,6 @@ describe("OUpload tests", () => {
     describe("test events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OUpload);
-            await setTimeout(); // await eventhandler set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();

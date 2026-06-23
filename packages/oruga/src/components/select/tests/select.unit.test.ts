@@ -1,7 +1,6 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { setTimeout } from "timers/promises";
 
 import type { OptionsProp } from "@/composables";
 import type { SelectOption, SelectOptions } from "../props";
@@ -85,7 +84,6 @@ describe("OSelect tests", () => {
 
     test("check emit focus and blur event correctly", async () => {
         const wrapper = mount(OSelect);
-        await setTimeout(); // await eventhandler set
 
         const input = wrapper.find("select");
         expect(input.exists()).toBeTruthy();
@@ -183,7 +181,6 @@ describe("OSelect tests", () => {
     describe("test events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OSelect);
-            await setTimeout(); // await eventhandler set
 
             const input = wrapper.find("select");
             expect(input.exists()).toBeTruthy();

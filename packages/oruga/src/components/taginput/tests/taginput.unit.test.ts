@@ -6,7 +6,6 @@ import type { DropdownItemProps } from "@/components/dropdown/props";
 import type { TaginputOptions } from "../props";
 
 import OTaginput from "@/components/taginput/Taginput.vue";
-import { setTimeout } from "timers/promises";
 
 describe("OTaginput tests", () => {
     enableAutoUnmount(afterEach);
@@ -64,7 +63,6 @@ describe("OTaginput tests", () => {
                 footer: "<h1>SLOT FOOTER</h1>",
             },
         });
-        await setTimeout(); // await eventhandler set
 
         const input = wrapper.find("input");
         const iconRight = wrapper.find(".o-input__icon-right");
@@ -148,7 +146,6 @@ describe("OTaginput tests", () => {
     describe("test events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OTaginput);
-            await setTimeout(); // await eventhandler set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();

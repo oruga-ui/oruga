@@ -177,9 +177,9 @@ describe("OInput tests", () => {
         expect(wrapper.emitted("icon-click")).toHaveLength(1);
     });
 
-    test("check is empty when null", () => {
+    test("check is empty when undefined", () => {
         const wrapper = mount(OInput, {
-            props: { modelValue: null },
+            props: { modelValue: undefined },
         });
 
         const input = wrapper.find("input");
@@ -190,7 +190,6 @@ describe("OInput tests", () => {
     describe("test events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OInput);
-            await setTimeout(); // await eventhandler set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
@@ -223,7 +222,6 @@ describe("OInput tests", () => {
                         wrapper.setProps({ modelValue }),
                 },
             });
-            await setTimeout(); // await eventhandler set
 
             const input = wrapper.find("input");
             expect(input.element.value).toBe("foo");
