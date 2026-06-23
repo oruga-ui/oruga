@@ -20,7 +20,7 @@ export type PopoverProps = {
     behavior?: "auto" | "hint" | "manual";
     /**
      * The position of the popover relative to the trigger
-     * @values top, bottom, left, right, center
+     * @values top, bottom, left, right, center, [top, right], [top, left], [bottom, left], [bottom, right]
      */
     position?: PopoverPosition;
     /** Defines a delay (in ms) before the content appears */

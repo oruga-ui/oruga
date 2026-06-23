@@ -45,19 +45,10 @@ export type DatetimepickerProps = {
     /** Date creator function, default is `new Date()` */
     creator?: () => Date;
     /**
-     * Position of the dropdown relative to the input
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     * Position of the popover relative to the input
+     * @values auto, top, bottom, left, right, center
      */
-    position?:
-        | "auto"
-        | "top"
-        | "bottom"
-        | "left"
-        | "right"
-        | "top-right"
-        | "top-left"
-        | "bottom-left"
-        | "bottom-right";
+    position?: "top" | "bottom" | "left" | "right" | "center";
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack

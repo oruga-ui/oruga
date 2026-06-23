@@ -1103,7 +1103,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 maxHeight: Numberish;
                 /**
-                 * Position of the dropdown relative to the trigger
+                 * Position of the popover relative to the trigger
                  */
                 position: PopoverPosition;
                 /**
@@ -3346,7 +3346,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Position of the popover relative to the input
                  */
-                position: "bottom" | "left" | "right" | "top";
+                position: "bottom" | "center" | "left" | "right" | "top";
                 /**
                  * Icon pack to use
                  */
