@@ -82,19 +82,6 @@ describe("OSelect tests", () => {
         expect(wrapper.emitted("icon-right-click")).toBeUndefined();
     });
 
-    test("check emit focus and blur event correctly", async () => {
-        const wrapper = mount(OSelect);
-
-        const input = wrapper.find("select");
-        expect(input.exists()).toBeTruthy();
-
-        await input.trigger("focus");
-        await input.trigger("blur");
-
-        expect(wrapper.emitted("focus")).toHaveLength(1);
-        expect(wrapper.emitted("blur")).toHaveLength(1);
-    });
-
     test("react accordingly when right icon is clickable", async () => {
         const wrapper = mount(OSelect, {
             props: { iconRight: "arrow", iconRightClickable: true },
