@@ -57,8 +57,7 @@ export function useEventListener(
         };
     };
 
-    let stopWatchTrigger: () => void;
-    let stopWatchElement: () => void;
+    let stopWatch: () => void;
 
     function toggleListener(value: unknown): void {
         if (value) register();
@@ -67,7 +66,7 @@ export function useEventListener(
 
     if (typeof options?.trigger !== "undefined") {
         /// when we have a trigger we watch the trigger
-        stopWatchTrigger = watch(options.trigger, toggleListener, {
+        stopWatch = watch(options.trigger, toggleListener, {
             flush: "post",
         });
         /// and we check if the trigger is initial true
@@ -79,7 +78,7 @@ export function useEventListener(
         /// if we don't have a trigger, we check if the element is a ref (templateRef)
         /// then we watch the ref get initialised
         if (isRef(element)) {
-            stopWatchElement = watch(element, toggleListener, {
+            stopWatch = watch(element, toggleListener, {
                 flush: "post",
             });
         }
@@ -95,8 +94,7 @@ export function useEventListener(
 
     const stop = (): void => {
         // remove listener before unmounting
-        if (typeof stopWatchTrigger === "function") stopWatchTrigger();
-        if (typeof stopWatchElement === "function") stopWatchElement();
+        if (typeof stopWatch === "function") stopWatch();
         if (typeof cleanup === "function") cleanup();
     };
 
