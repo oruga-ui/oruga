@@ -27,7 +27,6 @@ describe("useEventListener test", () => {
     afterEach(() => {
         vi.restoreAllMocks();
     });
-
     test("should be defined", () => {
         expect(useEventListener).toBeDefined();
     });
@@ -39,6 +38,7 @@ describe("useEventListener test", () => {
             useEventListener(target, event, listener, {
                 immediate: true,
             });
+
             expect(addSpy).toHaveBeenCalledTimes(1);
         });
 
@@ -93,6 +93,7 @@ describe("useEventListener test", () => {
 
         test(`should listen event`, async () => {
             useEventListener(target, event, listener, { immediate: true });
+
             target.value?.dispatchEvent(new PointerEvent(event));
 
             await nextTick();
@@ -101,12 +102,11 @@ describe("useEventListener test", () => {
         });
 
         test(`should manually stop listening event`, async () => {
-            scope.run(() => {
-                const stop = useEventListener(target, event, listener, {
-                    immediate: true,
-                });
-                stop();
+            const stop = useEventListener(target, event, listener, {
+                immediate: true,
             });
+            stop();
+
             target.value?.dispatchEvent(new PointerEvent(event));
 
             await nextTick();

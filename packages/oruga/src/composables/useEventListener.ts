@@ -23,7 +23,7 @@ export type EventTarget =
 export type EventListenerOptions = AddEventListenerOptions & {
     /** Register event listener immediate. Otherwise it will be registered on mounted hook. */
     immediate?: boolean;
-    /** Define a custom trigger when the listener get registered and removed. */
+    /** Use a custom trigger to define when the listener get registered and removed. */
     trigger?: WatchSource<boolean>;
 };
 
@@ -40,7 +40,7 @@ export type EventListenerOptions = AddEventListenerOptions & {
 export function useEventListener(
     element: MaybeRefOrGetter<EventTarget>,
     event: string,
-    handler: (evt?: Event) => void,
+    handler: (evt: any) => void,
     options?: EventListenerOptions,
 ): () => void {
     let cleanup: () => void;
