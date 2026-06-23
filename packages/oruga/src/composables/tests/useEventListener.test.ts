@@ -7,20 +7,17 @@ import {
     vi,
     type MockInstance,
 } from "vitest";
-import { effectScope, nextTick, ref } from "vue";
+import { EffectScope, effectScope, nextTick, ref } from "vue";
 
-import { useEventListener, type EventListenerOptions } from "../";
+import { useEventListener } from "../";
 
 describe("useEventListener test", () => {
-    const options: EventListenerOptions = { immediate: true };
-    let stop: () => void;
     let target: HTMLDivElement;
     let removeSpy: MockInstance;
     let addSpy: MockInstance;
     let listener: () => void;
 
     beforeEach(() => {
-        vi.useFakeTimers();
         target = document.createElement("div");
         removeSpy = vi.spyOn(target, "removeEventListener");
         addSpy = vi.spyOn(target, "addEventListener");
@@ -30,7 +27,6 @@ describe("useEventListener test", () => {
     afterEach(() => {
         vi.restoreAllMocks();
     });
-
     test("should be defined", () => {
         expect(useEventListener).toBeDefined();
     });
@@ -39,49 +35,53 @@ describe("useEventListener test", () => {
         const event = "click";
 
         test("should add listener", () => {
-            stop = useEventListener(target, event, listener, {
+            useEventListener(target, event, listener, {
                 immediate: true,
             });
-            vi.runAllTimers();
-            expect(addSpy).toBeCalledTimes(1);
+
+            expect(addSpy).toHaveBeenCalledTimes(1);
         });
 
         test("should trigger listener", () => {
-            stop = useEventListener(target, event, listener, {
+            useEventListener(target, event, listener, {
                 immediate: true,
             });
-            vi.runAllTimers();
-            expect(listener).not.toBeCalled();
+
+            expect(listener).not.toHaveBeenCalled();
             target.dispatchEvent(new PointerEvent(event));
-            expect(listener).toBeCalledTimes(1);
+            expect(listener).toHaveBeenCalledTimes(1);
         });
 
         test("should remove listener", () => {
-            stop = useEventListener(target, event, listener, {
+            const stop = useEventListener(target, event, listener, {
                 immediate: true,
             });
-            vi.runAllTimers();
-            expect(removeSpy).not.toBeCalled();
 
+            expect(removeSpy).not.toHaveBeenCalled();
             stop();
 
-            expect(removeSpy).toBeCalledTimes(1);
-            expect(removeSpy).toBeCalledWith(event, listener, options);
+            expect(removeSpy).toHaveBeenCalledTimes(1);
+            expect(removeSpy).toHaveBeenCalledWith(event, listener, {
+                immediate: true,
+            });
         });
     });
 
     describe("reactive target", () => {
+        let scope: EffectScope;
         const event = "click";
         const target = ref<HTMLDivElement | null>(
             document.createElement("div"),
         );
 
         beforeEach(() => {
+            scope = effectScope();
             target.value = document.createElement("div");
         });
 
         test("should not listen when target is invalid", async () => {
             useEventListener(target, event, listener);
+
             const el = target.value;
             target.value = null;
             await nextTick();
@@ -93,7 +93,7 @@ describe("useEventListener test", () => {
 
         test(`should listen event`, async () => {
             useEventListener(target, event, listener, { immediate: true });
-            vi.runAllTimers();
+
             target.value?.dispatchEvent(new PointerEvent(event));
 
             await nextTick();
@@ -105,7 +105,6 @@ describe("useEventListener test", () => {
             const stop = useEventListener(target, event, listener, {
                 immediate: true,
             });
-
             stop();
 
             target.value?.dispatchEvent(new PointerEvent(event));
@@ -116,7 +115,6 @@ describe("useEventListener test", () => {
         });
 
         test(`should auto stop listening event`, async () => {
-            const scope = effectScope();
             scope.run(() => {
                 useEventListener(target, event, listener, {
                     immediate: true,
@@ -138,12 +136,10 @@ describe("useEventListener test", () => {
 
         useEventListener(target, "click", listener, { trigger });
 
-        vi.runAllTimers();
         expect(addSpy).toHaveBeenCalledTimes(0);
 
         trigger.value = true;
         await nextTick();
-        vi.runAllTimers();
 
         expect(addSpy).toHaveBeenCalledTimes(1);
         expect(addSpy).toHaveBeenLastCalledWith("click", listener, { trigger });
@@ -151,7 +147,6 @@ describe("useEventListener test", () => {
 
         trigger.value = false;
         await nextTick();
-        vi.runAllTimers();
 
         await nextTick();
         expect(addSpy).toHaveBeenCalledTimes(1);

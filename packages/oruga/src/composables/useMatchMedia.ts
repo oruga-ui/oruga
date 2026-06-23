@@ -44,7 +44,9 @@ export function useMatchMedia(mobileBreakpoint?: string): {
 
     if (mediaQuery.value) {
         isMobile.value = mediaQuery.value.matches;
-        useEventListener(mediaQuery.value, "change", onMatchMedia);
+        useEventListener(mediaQuery.value, "change", onMatchMedia, {
+            passive: true,
+        });
     } else {
         isMobile.value = false;
     }

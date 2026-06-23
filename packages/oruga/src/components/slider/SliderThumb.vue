@@ -220,7 +220,7 @@ defineExpose({ setPosition });
                 :aria-valuemax="max"
                 :aria-disabled="disabled"
                 aria-orientation="horizontal"
-                @pointerdown.passive="onButtonDown"
+                @pointerdown="onButtonDown"
                 @focus="onFocus"
                 @blur="onBlur"
                 @keydown.left.prevent="onLeftKeyDown"
