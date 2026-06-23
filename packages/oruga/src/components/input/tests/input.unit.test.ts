@@ -29,7 +29,7 @@ describe("OInput tests", () => {
 
         const value = "some value";
         await input.setValue(value);
-        await setTimeout();
+        await setTimeout(); // await debounce timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
