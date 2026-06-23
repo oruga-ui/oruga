@@ -128,7 +128,10 @@ const showX = computed(() => props.closeable);
 
 if (isClient) {
     // register onKeyup event listener when is active
-    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyup, {
+        trigger: isActive,
+        passive: true,
+    });
 
     if (!props.overlay)
         // register outside click event listener when is active
