@@ -80,7 +80,7 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
         return new Date();
     }
 
-    function datetimeFormatter(date: Date): string {
+    function datetimeFormatter(date: Date | undefined): string {
         if (typeof props.formatter === "function") {
             const r = props.formatter(date);
             if (typeof r === "string") return r;

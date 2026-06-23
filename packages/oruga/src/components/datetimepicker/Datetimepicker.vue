@@ -269,7 +269,7 @@ const timepickerDisabled = computed(
 // #region --- Formatter / Parser ---
 
 /** Format date into string */
-function format(value: Date): string {
+function format(value: Date | undefined): string {
     return datetimeFormatter(value);
 }
 

@@ -29,8 +29,8 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
     // scrollHeight?: string;
     /**
-     * Position of the dropdown relative to the trigger
-     * @values top, bottom, left, right, [top, right], [top, left], [bottom, left], [bottom, right]
+     * Position of the popover relative to the trigger
+     * @values top, bottom, left, right, center, [top, right], [top, left], [bottom, left], [bottom, right]
      */
     position?: PopoverPosition;
     /** Custom animation (transition name) */
