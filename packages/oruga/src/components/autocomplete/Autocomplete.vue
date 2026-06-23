@@ -203,8 +203,11 @@ const dropdownRef =
 const inputRef = useTemplateRef<Component>("inputComponent");
 
 // use form input functionalities
-const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
-    useInputHandler(inputRef, emits, props);
+const { checkHtml5Validity, setFocus, setBlur, isFocused } = useInputHandler(
+    inputRef,
+    props,
+    emits,
+);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
@@ -380,11 +383,8 @@ function onInput(value: string, event: Event): void {
     checkHtml5Validity();
 }
 
-/**
- * Focus listener.
- * If value is the same as selected, select all text.
- */
-function handleFocus(event: Event): void {
+/** Focus listener. */
+function onFocus(): void {
     // open dropdown if `openOnFocus` and has options
     if (
         props.openOnFocus &&
@@ -394,15 +394,6 @@ function handleFocus(event: Event): void {
             !!slots.footer)
     )
         isActive.value = true;
-    onFocus(event);
-}
-
-/**
- * Blur listener.
- * Close on blur.
- */
-function handleBlur(event: Event): void {
-    onBlur(event);
 }
 
 // #endregion --- Input Event Handler ---
@@ -473,6 +464,7 @@ defineExpose({
     items: childItems,
     checkHtml5Validity,
     focus: setFocus,
+    blur: setBlur,
 });
 
 // #endregion --- Expose Public Functionalities ---
@@ -532,9 +524,7 @@ defineExpose({
                     enterkeyhint="enter"
                     :use-html5-validation="false"
                     @input="onInput"
-                    @focus="handleFocus"
-                    @blur="handleBlur"
-                    @invalid="onInvalid"
+                    @focus="onFocus"
                     @icon-click="emits('icon-click', $event)"
                     @icon-right-click="rightIconClick" />
             </template>

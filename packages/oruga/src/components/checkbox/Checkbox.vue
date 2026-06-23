@@ -80,8 +80,11 @@ defineSlots<{
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
-    useInputHandler(inputRef, emits, props);
+const { checkHtml5Validity, setFocus, setBlur } = useInputHandler(
+    inputRef,
+    props,
+    emits,
+);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
@@ -156,7 +159,12 @@ const labelClasses = defineClasses(["labelClass", "o-checkbox__label"]);
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: vmodel,
+});
 
 // #endregion --- Expose Public Functionalities ---
 </script>
@@ -181,9 +189,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             :autocomplete="autocomplete"
             :aria-checked="indeterminate ? 'mixed' : isChecked"
             :aria-labelledby="labelId"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid"
             @change="onInput" />
 
         <label

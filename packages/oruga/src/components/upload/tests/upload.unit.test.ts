@@ -13,4 +13,19 @@ describe("OUpload tests", () => {
         expect(wrapper.attributes("data-oruga")).toBe("upload");
         expect(wrapper.html()).toMatchSnapshot();
     });
+
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(OUpload);
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.trigger("focus");
+            await input.trigger("blur");
+
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
+        });
+    });
 });

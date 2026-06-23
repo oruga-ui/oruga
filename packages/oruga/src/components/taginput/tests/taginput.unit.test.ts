@@ -143,6 +143,21 @@ describe("OTaginput tests", () => {
         expect(input.attributes("id")).toBe(attrs.id);
     });
 
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(OTaginput);
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.trigger("focus");
+            await input.trigger("blur");
+
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
+        });
+    });
+
     describe("render options props correctly", () => {
         test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];

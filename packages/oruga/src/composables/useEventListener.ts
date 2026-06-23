@@ -79,7 +79,7 @@ export function useEventListener(
         /// then we watch the ref get initialised
         if (isRef(element)) {
             stopWatch = watch(element, toggleListener, {
-                flush: "post",
+                flush: "sync",
             });
         }
         /// otherwise we register on component mount
