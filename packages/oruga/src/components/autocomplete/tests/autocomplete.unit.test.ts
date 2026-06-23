@@ -59,7 +59,6 @@ describe("OAutocomplete tests", () => {
             props: { options: OPTIONS, openOnFocus: true, keepOpen: false },
             attachTo: document.body,
         });
-        await setTimeout(); // await event listener set
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -128,7 +127,6 @@ describe("OAutocomplete tests", () => {
             props: { options: OPTIONS, openOnFocus: true },
             attachTo: document.body,
         });
-        await setTimeout(); // await event listener set
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -151,7 +149,6 @@ describe("OAutocomplete tests", () => {
             props: { options: OPTIONS, openOnFocus: true },
             attachTo: document.body,
         });
-        await setTimeout(); // await event listener set
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -222,7 +219,6 @@ describe("OAutocomplete tests", () => {
             },
             attachTo: document.body,
         });
-        await setTimeout(); // await event listener set
 
         const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
@@ -250,7 +246,6 @@ describe("OAutocomplete tests", () => {
             },
             attachTo: document.body,
         });
-        await setTimeout(); // await event listener set
 
         const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
@@ -481,7 +476,6 @@ describe("OAutocomplete tests", () => {
                     footer: "<h1>SLOT FOOTER</h1>",
                 },
             });
-            await setTimeout(); // await event listener set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
@@ -515,7 +509,6 @@ describe("OAutocomplete tests", () => {
                     footer: "<h1>SLOT FOOTER</h1>",
                 },
             });
-            await setTimeout(); // await event listener set
 
             const input = wrapper.find("input");
             expect(input.exists()).toBeTruthy();
