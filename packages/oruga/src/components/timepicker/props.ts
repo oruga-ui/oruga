@@ -55,9 +55,9 @@ export type TimepickerProps = {
     resetOnMeridianChange?: boolean;
     /**
      * Position of the popover relative to the input
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     * @values auto, top, bottom, left, right, center
      */
-    position?: "top" | "bottom" | "left" | "right";
+    position?: "top" | "bottom" | "left" | "right" | "center";
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
