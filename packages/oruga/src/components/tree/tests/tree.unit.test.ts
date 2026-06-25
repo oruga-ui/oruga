@@ -360,7 +360,7 @@ describe("OTree tests", () => {
 
                     expect(el.text()).toBe(optionLabel);
                     expect(el.attributes("aria-disabled")).toBe("false");
-                    expect(el.attributes("aria-hidden")).toBe("false");
+                    expect(el.attributes("aria-hidden")).toBe("true");
                     expect(el.attributes("aria-selected")).toBe("false");
                 }
             });
