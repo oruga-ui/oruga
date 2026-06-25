@@ -9,7 +9,7 @@ export type UploadProps<
     /** Override existing theme classes completely */
     override?: boolean;
     /**
-     * The input value state
+     * The input value state, use v-model to make it two-way binding
      * @type object | File
      */
     modelValue?: UploadType<T, IsMultiple>;

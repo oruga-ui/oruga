@@ -5,7 +5,7 @@ export type CarouselOptions<T> = OptionsProp<CarouselItemProps<T>>;
 export type CarouselProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The index of the current active element */
+    /** The index of the current active element, use v-model to make it two-way binding */
     modelValue?: T;
     /** Menu items, unnecessary when default slot is used */
     options?: CarouselOptions<T>;
