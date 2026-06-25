@@ -360,7 +360,7 @@ describe("OTree tests", () => {
 
                     expect(el.text()).toBe(optionLabel);
                     expect(el.attributes("aria-disabled")).toBe("false");
-                    expect(el.attributes("aria-hidden")).toBe("false");
+                    expect(el.attributes("aria-hidden")).toBe("true");
                     expect(el.attributes("aria-selected")).toBe("false");
                 }
             });
@@ -521,6 +521,65 @@ describe("OTree tests", () => {
             await itemThreeToggle.trigger("click");
             expect(itemThree.emitted("open")).toBeDefined();
             expect(itemThree.emitted("close")).toBeDefined();
+        });
+
+        test("react accordingly with keyboard navigation", async () => {
+            const wrapper = mount(OTree, {
+                props: {
+                    options,
+                    collapsable: true,
+                    toggleIcon: "chevron-left",
+                },
+            });
+
+            const list = wrapper.find("ul");
+            expect(list.exists()).toBeTruthy();
+
+            const items =
+                wrapper.findAllComponents<ComponentPublicInstance>(OTreeItem);
+            expect(items.length).toBe(17);
+
+            // first item (Documents) should be focusable
+            expect(items[0].attributes("tabindex")).toBe("0");
+
+            // focus first item
+            await items[0].trigger("focusin");
+            // first item is focused
+            expect(items[0].classes("o-tree__item--focused")).toBeTruthy();
+
+            // press ArrowDown -> next root element (Events at index 6)
+            await list.trigger("keydown", { code: "ArrowDown", key: "Down" });
+            // Events element is focused
+            expect(items[6].attributes("tabindex")).toBe("0");
+            expect(items[6].classes("o-tree__item--focused")).toBeTruthy();
+
+            // press ArrowRight -> Events opens
+            await list.trigger("keydown", {
+                code: "ArrowRight",
+                key: "Right",
+            });
+            expect(items[6].emitted("open")).toBeDefined();
+            // Events element is still focused
+            expect(items[6].attributes("tabindex")).toBe("0");
+            expect(items[6].classes("o-tree__item--focused")).toBeTruthy();
+
+            // press ArrowDown -> first child of Events (Meeting at index 7)
+            await list.trigger("keydown", { code: "ArrowDown", key: "Down" });
+            // first child of Events is focused
+            expect(items[7].attributes("tabindex")).toBe("0");
+            expect(items[7].classes("o-tree__item--focused")).toBeTruthy();
+
+            // press ArrowUp -> back to Events (index 6)
+            await list.trigger("keydown", { code: "ArrowUp", key: "Up" });
+            // Events element is focused again
+            expect(items[6].attributes("tabindex")).toBe("0");
+            expect(items[6].classes("o-tree__item--focused")).toBeTruthy();
+
+            // Press ArrowUp -> back to Documents (index 0)
+            await list.trigger("keydown", { code: "ArrowUp", key: "Up" });
+            // first item is focused again
+            expect(items[0].attributes("tabindex")).toBe("0");
+            expect(items[0].classes("o-tree__item--focused")).toBeTruthy();
         });
     });
 
