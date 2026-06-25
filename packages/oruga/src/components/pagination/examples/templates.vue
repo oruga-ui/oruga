@@ -38,7 +38,7 @@ const basicRomanNumeral = ref([
     "MMM",
 ]);
 
-const current = ref(10);
+const page = ref(10);
 
 function convertToRoman(num: number): string {
     const numArray = num.toString().split("");
@@ -55,7 +55,7 @@ function convertToRoman(num: number): string {
 
 <template>
     <section>
-        <o-pagination v-model:current="current" :total="200" :per-page="10">
+        <o-pagination v-model="page" :total="200" :per-page="10">
             <template #default="props">
                 <o-button
                     :label="convertToRoman(props.number)"
