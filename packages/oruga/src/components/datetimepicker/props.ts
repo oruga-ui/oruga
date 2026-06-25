@@ -5,7 +5,7 @@ import type { TimepickerProps } from "../timepicker/props";
 export type DatetimepickerProps = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state */
+    /** The input value state, use v-model to make it two-way binding */
     modelValue?: Date;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
