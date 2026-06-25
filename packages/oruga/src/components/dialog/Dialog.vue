@@ -17,10 +17,10 @@ import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import {
     defineClasses,
-    getTeleportDefault,
     unrefElement,
     useMatchMedia,
     usePreventScrolling,
+    useTeleport,
 } from "@/composables";
 
 import type { DialogProps } from "./props";
@@ -164,11 +164,7 @@ const titleId = useId();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
+const _teleport = useTeleport(props.teleport);
 
 const wrapperStyle = computed(() => ({
     maxWidth: !props.fullscreen ? toCssDimension(props.maxWidth) : undefined,

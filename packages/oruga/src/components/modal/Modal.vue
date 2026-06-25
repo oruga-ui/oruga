@@ -19,9 +19,9 @@ import {
     useClickOutside,
     useMatchMedia,
     usePreventScrolling,
-    getTeleportDefault,
     useTrapFocus,
     useEventListener,
+    useTeleport,
 } from "@/composables";
 
 import type { ModalProps } from "./props";
@@ -101,11 +101,7 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
+const _teleport = useTeleport(props.teleport);
 
 const customStyle = computed(() =>
     !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
@@ -132,7 +128,10 @@ const showX = computed(() => props.closeable);
 
 if (isClient) {
     // register onKeyup event listener when is active
-    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyup, {
+        trigger: isActive,
+        passive: true,
+    });
 
     if (!props.overlay)
         // register outside click event listener when is active

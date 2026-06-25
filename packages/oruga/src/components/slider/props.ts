@@ -3,7 +3,7 @@ import type { ComponentClass } from "@/types";
 export type SliderProps<IsRange extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state */
+    /** The input value state, use v-model to make it two-way binding */
     modelValue?: IsRange extends true ? [number, number] : number;
     /** Enable range slider */
     range?: IsRange;

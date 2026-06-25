@@ -1,5 +1,5 @@
 import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
-import type { OptionsOrGroupsProp } from "@/composables";
+import type { OptionsOrGroupsProp, PopoverPosition } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -20,11 +20,6 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     label?: string;
     /** Interaction is disabled */
     disabled?: boolean;
-    /**
-     * Menu content (items) are shown inline, trigger is removed
-     * @deprecated since 0.13.0, use the `OListbox` component instead
-     */
-    inline?: boolean;
     /** Enables item selection */
     selectable?: boolean;
     /** Menu content will be scrollable */
@@ -34,19 +29,10 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
     // scrollHeight?: string;
     /**
-     * Position of the dropdown relative to the trigger
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     * Position of the popover relative to the trigger
+     * @values top, bottom, left, right, center, [top, right], [top, left], [bottom, left], [bottom, right]
      */
-    position?:
-        | "auto"
-        | "top"
-        | "bottom"
-        | "left"
-        | "right"
-        | "top-right"
-        | "top-left"
-        | "bottom-left"
-        | "bottom-right";
+    position?: PopoverPosition;
     /** Custom animation (transition name) */
     animation?: string;
     /** Dropdown will be expanded (full-width) */
@@ -115,17 +101,12 @@ export type DropdownClasses = Partial<{
     modalClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
-    /**
-     * Class of the root element when inlined
-     * @deprecated since 0.13.0, use the `OListbox` component instead
-     */
-    inlineClass: ComponentClass;
     /** Class of the root element when disabled */
     disabledClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class for the root element with position */
-    positionClass: ComponentClass;
+    /** Class of the root element when has an overlay */
+    overlayClass: ComponentClass;
     /** Class for the root element when active or inline */
     activeClass: ComponentClass;
     /** Class for the root element when trigger is hoverable */
@@ -134,12 +115,8 @@ export type DropdownClasses = Partial<{
     triggerClass: ComponentClass;
     /** Class of the menu element */
     menuClass: ComponentClass;
-    /** Class of the menu element with position */
-    menuPositionClass: ComponentClass;
     /** Class of the menu element when active or inline */
     menuActiveClass: ComponentClass;
-    /** Class of the overlay when is shown as modal */
-    overlayClass: ComponentClass;
     /** Class of the body when dropdown is open and scroll is clipped */
     scrollClipClass: ComponentClass;
     /** Class of the body when dropdown is open and scroll is keeped */

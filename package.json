@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.13.5",
+  "version": "0.13.6",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "license": "MIT",
@@ -49,18 +49,25 @@
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.12.2",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.7.0",
+    "@vue/eslint-config-typescript": "^14.8.0",
     "@vue/tsconfig": "^0.9.1",
     "conventional-changelog": "^7.2.0",
     "conventional-changelog-conventionalcommits": "9.3.1",
     "eslint": "^10.2.0",
+    "eslint-plugin-compat": "^7.0.1",
     "eslint-plugin-vue": "^10.8.0",
     "eslint-plugin-vuejs-accessibility": "^2.5.0",
-    "npm-check-updates": "^21.0.3",
-    "npm-run-all2": "^8.0.4",
-    "prettier": "^3.8.3",
+    "npm-check-updates": "^22.2.3",
+    "npm-run-all2": "^9.0.1",
+    "prettier": "^3.8.4",
     "replace-in-file": "^8.4.0",
-    "tsx": "^4.21.0",
-    "typescript": "^6.0.2"
-  }
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.2",
+    "vue-component-meta": "^3.3.3",
+    "vue-tsc": "^3.3.3"
+  },
+  "browserslist": [
+    "defaults",
+    "not op_mini all"
+  ]
 }

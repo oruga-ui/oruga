@@ -69,4 +69,20 @@ shadowRoot.appendChild(link);
 [data-theme="light"] {
     --bulma-label-color: var(--bulma-text-strong);
 }
+
+.o-popover__content--backdrop::backdrop {
+    opacity: var(--bs-backdrop-opacity);
+    --bs-backdrop-zindex: 1050;
+    --bs-backdrop-bg: #000;
+    --bs-backdrop-opacity: 0.5;
+    background-color: var(--bs-backdrop-bg);
+}
+
+.trigger {
+    display: inline-block;
+}
+
+.o-dropdown [popover]:where(:not(:popover-open)) {
+    display: none;
+}
 </style>

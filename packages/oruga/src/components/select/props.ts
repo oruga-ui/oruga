@@ -13,7 +13,7 @@ export type SelectOptions<T> = OptionsOrGroupsProp<SelectOption<T>>;
 export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state */
+    /** The input value state, use v-model to make it two-way binding */
     modelValue?: ValueType<T, IsMultiple>;
     /** Allow multiple selection - converts the `modelValue` into an array */
     multiple?: IsMultiple;

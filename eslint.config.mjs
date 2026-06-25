@@ -1,6 +1,7 @@
 import eslint from "@eslint/js";
 import { globalIgnores } from "eslint/config";
 import { includeIgnoreFile } from "@eslint/compat";
+import compat from "eslint-plugin-compat";
 import vuePlugin from "eslint-plugin-vue";
 import {
   configureVueProject,
@@ -8,7 +9,7 @@ import {
   vueTsConfigs,
 } from "@vue/eslint-config-typescript";
 // import vueA11yPlugin from "eslint-plugin-vuejs-accessibility";
-import prettierConfig from "@vue/eslint-config-prettier";
+import skipFormattingConfig from "@vue/eslint-config-prettier/skip-formatting";
 
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -19,7 +20,6 @@ const gitignorePath = path.resolve(__dirname, ".gitignore");
 
 configureVueProject({
   rootDir: import.meta.dirname, // monorepo root
-  // available after https://github.com/vuejs/eslint-config-typescript/pull/278 is released
   includeDotFolders: true,
 });
 
@@ -37,21 +37,8 @@ export default defineConfigWithVueTs([
   // include .gitignore ignore patterns
   includeIgnoreFile(gitignorePath),
 
-  // override ts config for .vitepress with explizit tsconfig
-  // can be removed when https://github.com/vuejs/eslint-config-typescript/pull/278 is released
-  {
-    name: "vitepress-overrides",
-    files: ["**/.*/**/*.{ts,vue}"],
-    languageOptions: {
-      parserOptions: {
-        tsconfigRootDir: __dirname,
-        projectService: {
-          defaultProject: "./packages/docs/tsconfig.json",
-          loadTypeScriptPlugins: true,
-        },
-      },
-    },
-  },
+  // add browser compatibility configs
+  compat.configs["flat/recommended"],
 
   // add js configs
   eslint.configs.recommended,
@@ -63,8 +50,10 @@ export default defineConfigWithVueTs([
   // add vue a11y configs
   // ...vueA11yPlugin.configs["flat/recommended"],
 
-  // add prettier configs
-  prettierConfig,
+  // add vue prettier lint configs
+  // deactivate prettier lint checks as recommended at https://github.com/vuejs/eslint-config-prettier?tab=readme-ov-file#use-separate-commands-for-linting-and-formatting
+  // instead, we do formatting as a separate prettier task
+  skipFormattingConfig,
 
   // project modifications
   {
@@ -76,6 +65,10 @@ export default defineConfigWithVueTs([
       "@typescript-eslint/explicit-function-return-type": "warn",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-redundant-type-constituents": "warn",
+      "@typescript-eslint/no-unnecessary-type-assertion": [
+        "warn",
+        { typesToIgnore: ["ModelValue", "T"] },
+      ],
       "@typescript-eslint/restrict-template-expressions": "off",
 
       // Vue

@@ -10,6 +10,7 @@ export type {
     OptionsProp,
     OptionsGroupsProp,
     OptionsOrGroupsProp,
+    PopoverPosition,
 } from "@/composables";
 
 /** The class definition for a component class property. */

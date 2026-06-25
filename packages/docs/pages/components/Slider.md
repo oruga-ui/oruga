@@ -9,7 +9,9 @@ sidebarDepth: 2
 <section class="odocs-head">
 
 The **Slider** input component let user select a value or range from a given range with a graphic slider.
+
 The component implements the W3C ARIA APG [Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/).
+
 Use it with the [Field](/components/Field) component to access all the functionalities.
 
 </section>
@@ -46,7 +48,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | locale            | Date format locale                                                    | string \| string[]                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;locale: undefined<br>}</code>                 |
 | max               | Maximum value                                                         | number                                             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>100</code>                                                                                                  |
 | min               | Minimum value                                                         | number                                             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                    |
-| v-model           | The input value state                                                 | (IsRange extends true ? [number, number] : number) | -                                                                               |                                                                                                                                                            |
+| v-model           | The input value state, use v-model to make it two-way binding         | (IsRange extends true ? [number, number] : number) | -                                                                               |                                                                                                                                                            |
 | override          | Override existing theme classes completely                            | boolean                                            | -                                                                               |                                                                                                                                                            |
 | range             | Enable range slider                                                   | IsRange                                            | -                                                                               |                                                                                                                                                            |
 | rounded           | Rounded thumb                                                         | boolean                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;rounded: false<br>}</code>            |

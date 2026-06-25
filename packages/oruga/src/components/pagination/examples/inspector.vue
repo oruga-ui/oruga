@@ -86,7 +86,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
         class: "buttonDisabledClass",
         description: "Class of the prev or next button when disabled.",
         action: (data): void => {
-            data.current = 20;
+            data.modelValue = 20;
         },
     },
     buttonAttrs: {
@@ -100,9 +100,9 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-pagination
+            :model-value="10"
             :total="200"
             :per-page="10"
-            :current="10"
             :range-before="3"
             :range-after="1"
             v-bind="props" />

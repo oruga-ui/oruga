@@ -107,8 +107,11 @@ defineSlots<{
 const selectRef = useTemplateRef("selectElement");
 
 // use form input functionality
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
-    useInputHandler(selectRef, emits, props);
+const { checkHtml5Validity, setFocus, setBlur, isValid } = useInputHandler(
+    selectRef,
+    props,
+    emits,
+);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
@@ -156,7 +159,7 @@ const placeholderVisible = computed(
         (!isDefined(vmodel.value) || vmodel.value === ""),
 );
 
-// --- Icon Feature ---
+// #region --- Icon Feature ---
 
 const hasIconRight = computed(
     () =>
@@ -187,7 +190,9 @@ function rightIconClick(event: Event): void {
     if (props.iconRightClickable) iconClick("icon-right-click", event);
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Icon Feature ---
+
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -272,10 +277,19 @@ const iconRightClasses = defineClasses([
     "o-select__icon-right",
 ]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: vmodel,
+});
+
+// #endregion  --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -300,10 +314,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             :multiple="props.multiple"
             :size="nativeSize"
             :disabled="disabled"
-            :required="required"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid">
+            :required="required">
             <template v-if="placeholder || $slots.placeholder">
                 <option v-if="placeholderVisible" value="" disabled hidden>
                     <slot name="placeholder">

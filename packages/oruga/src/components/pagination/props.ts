@@ -4,11 +4,8 @@ import type { ButtonProps } from "../button/props";
 export type PaginationProps = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /**
-     * Current page number, use v-model:current to make it two-way binding
-     * @deprecated will be renamed to `modelValue`
-     */
-    current?: number;
+    /** Current page number, use v-model to make it two-way binding */
+    modelValue?: number;
     /** Total count of items */
     total?: number;
     /** Items count for each page */

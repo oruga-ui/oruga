@@ -17,7 +17,7 @@ import {
     useMatchMedia,
     usePreventScrolling,
     useTrapFocus,
-    getTeleportDefault,
+    useTeleport,
 } from "@/composables";
 
 import type { SidebarProps } from "./props";
@@ -88,11 +88,7 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
+const _teleport = useTeleport(props.teleport);
 
 const transitionName = computed(() => {
     if (props.animation) return props.animation;
@@ -132,7 +128,10 @@ onMounted(() => {
 
 if (isClient) {
     // register onKeyup event listener when is active
-    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyup, {
+        trigger: isActive,
+        passive: true,
+    });
 
     if (!props.overlay && !props.inline)
         // register outside click event listener when is active

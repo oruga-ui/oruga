@@ -10,6 +10,6 @@ export * from "./useOptions";
 export * from "./usePreventScrolling";
 export * from "./useScrollHelper";
 export * from "./useIndexer";
-export * from "./useConfig";
 export * from "./useTrapFocus";
 export * from "./usePopoverAPI";
+export * from "./useTeleport";

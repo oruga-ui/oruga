@@ -131,7 +131,8 @@ const hasToggleIcon = computed(
 
 const isHidden = computed(
     () =>
-        props.hidden ?? (parentSubtree.value && !parentSubtree.value.expanded),
+        props.hidden ||
+        (!!parentSubtree.value && !parentSubtree.value.expanded),
 );
 
 /** Shows if the item is viable or not (not disabled or hidden). */

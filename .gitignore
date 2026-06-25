@@ -2,6 +2,7 @@
 node_modules
 **/dist
 **/coverage
+.npmrc
 
 # local env files
 .env.local

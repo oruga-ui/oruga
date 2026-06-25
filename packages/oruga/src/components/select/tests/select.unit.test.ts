@@ -164,37 +164,53 @@ describe("OSelect tests", () => {
 
         expect(wrapper.classes()).toContain("o-select--expanded");
     });
-    test("react accordingly when value change ", async () => {
-        const wrapper = mount(OSelect, {
-            props: { options },
+
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(OSelect);
+
+            const input = wrapper.find("select");
+            expect(input.exists()).toBeTruthy();
+
+            await input.trigger("focus");
+            await input.trigger("blur");
+
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
         });
 
-        const select = wrapper.find("select");
-        expect(select.exists()).toBeTruthy();
+        test("react accordingly when method focus() is called", async () => {
+            const wrapper = mount(OSelect);
 
-        await select.setValue(options[1].value);
-        let emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(1);
-        expect(emits?.[0]).toContain(options[1].value);
-        expect(wrapper.vm.value).toEqual(options[1].value);
+            const select = wrapper.find("select");
+            const dummyFocus = vi.fn();
+            select.element.focus = dummyFocus;
 
-        await select.setValue(options[2].value);
-        emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(2);
-        expect(emits?.[1]).toContain(options[2].value);
-        expect(wrapper.vm.value).toEqual(options[2].value);
-    });
+            wrapper.vm.focus();
+            await nextTick(() => {
+                expect(dummyFocus).toHaveBeenCalled();
+            });
+        });
 
-    test("react accordingly when method focus() is called", async () => {
-        const wrapper = mount(OSelect);
+        test("react accordingly when value change ", async () => {
+            const wrapper = mount(OSelect, {
+                props: { options },
+            });
 
-        const select = wrapper.find("select");
-        const dummyFocus = vi.fn();
-        select.element.focus = dummyFocus;
+            const select = wrapper.find("select");
+            expect(select.exists()).toBeTruthy();
 
-        wrapper.vm.focus();
-        await nextTick(() => {
-            expect(dummyFocus).toHaveBeenCalled();
+            await select.setValue(options[1].value);
+            let emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            expect(emits?.[0]).toContain(options[1].value);
+            expect(wrapper.vm.value).toEqual(options[1].value);
+
+            await select.setValue(options[2].value);
+            emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(2);
+            expect(emits?.[1]).toContain(options[2].value);
+            expect(wrapper.vm.value).toEqual(options[2].value);
         });
     });
 

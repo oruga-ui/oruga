@@ -22,11 +22,33 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
             data.active = true;
         },
     },
-    boxClass: {
-        class: "boxClass",
-        description:
-            "Class of the dropdown box element where you choose the date.",
+    expandedClass: {
+        class: "expandedClass",
+        description: "Class of the root element when expanded.",
+        properties: ["expanded"],
         action: (data): void => {
+            data.expanded = true;
+        },
+    },
+    triggerClass: {
+        class: "triggerClass",
+        description: "Class of the trigger element.",
+    },
+    contentClass: {
+        class: "contentClass",
+        description:
+            "Class of the box container element where you choose the date.",
+        action: (data): void => {
+            data.inline = true;
+            data.active = true;
+        },
+    },
+    modalClass: {
+        class: "modalClass",
+        description: "Class of the content element when shown as modal",
+        action: (data): void => {
+            data.desktopModal = true;
+            data.mobileModal = true;
             data.active = true;
         },
     },
@@ -55,22 +77,11 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         description: "Classes to apply on the internal input component.",
         relatedComponent: "Input",
     },
-    dropdownClass: {
-        class: "dropdownClass",
-        description: "Class to apply on the dropdown element.",
-        relatedClass: "dropdownClasses.rootClass",
-        relatedComponent: "Dropdown",
-        action: (data): void => {
-            data.active = true;
-        },
-    },
-    dropdownAttrs: {
-        class: "dropdownAttrs",
-        description: "Classes to apply on the internal dropdown component.",
-        relatedComponent: "Dropdown",
-        action: (data): void => {
-            data.active = true;
-        },
+    selectClass: {
+        class: "selectClass",
+        description: "Class to apply on the select element.",
+        relatedClass: "selectClasses.rootClass",
+        relatedComponent: "Select",
     },
     selectAttrs: {
         class: "selectAttrs",

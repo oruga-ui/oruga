@@ -40,11 +40,13 @@ When a user clicks an option in a menu that has been opened, the menu usually cl
 
 ### Triggers
 
-The trigger can be defined by placing any element in the `trigger` template slot. To open the dropdown, the component can detect several different interaction variants, such as `openOnHover` or `openOnContextmenu` to only open on right click instead of left click. By default, only `openOnClick` is set.
+The trigger can be defined by placing any element in the `trigger` template slot or using the `triggerTag` property.
 
-The action that close the component can also be customised using the `closeOnOutside` and `closeOnScroll` properties.
+To open the dropdown, the component can detect several different interaction variants, such as `openOnHover`, `openOnFocus` or `openOnContextmenu` to only open on right click instead of left click. By default, only `openOnClick` is set.
 
-Adding the `teleport` prop will move the dropdown menu to the referenced DOM location instead.
+The action that closes the component can also be customised using the `closeOnOutside` and `closeOnScroll` properties.
+
+Adding the `teleport` prop will move the dropdown menu to the referenced DOM location or the `document.body` instead.
 
 <ExampleViewer :component="Triggers" :code="TriggersCode" />
 

@@ -53,10 +53,7 @@ export type TableProps<T> = {
     checkedRows?: T[];
     /** Show check/uncheck all checkbox in table header (if checkable) */
     checkableHeader?: boolean;
-    /**
-     * Make the checkbox column sticky (if checkable)
-     * @deprecated will be renamed to `checkboxSticky`
-     */
+    /** Make the checkbox column sticky (if checkable) */
     stickyCheckbox?: boolean;
     /**
      * Position of the checkbox (if checkable)

@@ -21,61 +21,63 @@ describe("OPagination tests", () => {
         expect(currentItem.exists()).toBeTruthy();
         expect(currentItem.text()).toEqual("1");
 
-        wrapper = mount(OPagination, { props: { current: 0, total: 100 } });
+        wrapper = mount(OPagination, { props: { modelValue: 0, total: 100 } });
         currentItem = wrapper.find(".o-pagination__button--current");
         expect(currentItem.exists()).toBeFalsy();
 
-        wrapper = mount(OPagination, { props: { current: 5, total: 100 } });
+        wrapper = mount(OPagination, { props: { modelValue: 5, total: 100 } });
         currentItem = wrapper.find(".o-pagination__button--current");
         expect(currentItem.exists()).toBeTruthy();
         expect(currentItem.text()).toEqual("5");
     });
 
     test("should emit change with value of 1 when calling first", () => {
-        let wrapper = mount(OPagination, { props: { current: 1, total: 100 } });
+        let wrapper = mount(OPagination, {
+            props: { modelValue: 1, total: 100 },
+        });
         wrapper.vm.first();
         expect(wrapper.emitted()["change"]).toBeUndefined();
-        expect(wrapper.emitted()["update:current"]).toBeUndefined();
+        expect(wrapper.emitted()["update:modelValue"]).toBeUndefined();
 
-        wrapper = mount(OPagination, { props: { current: 5, total: 100 } });
+        wrapper = mount(OPagination, { props: { modelValue: 5, total: 100 } });
         wrapper.vm.first();
         expect(wrapper.emitted()["change"][0]).toContainEqual(1);
-        expect(wrapper.emitted()["update:current"][0]).toContainEqual(1);
+        expect(wrapper.emitted()["update:modelValue"][0]).toContainEqual(1);
     });
 
     test("should emit change with value of pageCount when calling last", () => {
         let wrapper = mount(OPagination, {
-            props: { current: 5, total: 100 },
+            props: { modelValue: 5, total: 100 },
         });
 
         wrapper.vm.last();
         expect(wrapper.emitted()["change"]).toBeUndefined();
-        expect(wrapper.emitted()["update:current"]).toBeUndefined();
+        expect(wrapper.emitted()["update:modelValue"]).toBeUndefined();
 
-        wrapper = mount(OPagination, { props: { current: 3, total: 100 } });
+        wrapper = mount(OPagination, { props: { modelValue: 3, total: 100 } });
         wrapper.vm.last();
         expect(wrapper.emitted()["change"][0]).toContainEqual(5);
-        expect(wrapper.emitted()["update:current"][0]).toContainEqual(5);
+        expect(wrapper.emitted()["update:modelValue"][0]).toContainEqual(5);
     });
 
     test("should emit change when calling prev", () => {
         const wrapper = mount(OPagination, {
-            props: { current: 5, total: 100 },
+            props: { modelValue: 5, total: 100 },
         });
 
         wrapper.vm.prev();
         expect(wrapper.emitted()["change"][0]).toContainEqual(4);
-        expect(wrapper.emitted()["update:current"][0]).toContainEqual(4);
+        expect(wrapper.emitted()["update:modelValue"][0]).toContainEqual(4);
     });
 
     test("should emit change when calling next", () => {
         const wrapper = mount(OPagination, {
-            props: { current: 2, total: 100 },
+            props: { modelValue: 2, total: 100 },
         });
 
         wrapper.vm.next();
         expect(wrapper.emitted()["change"][0]).toContainEqual(3);
-        expect(wrapper.emitted()["update:current"][0]).toContainEqual(3);
+        expect(wrapper.emitted()["update:modelValue"][0]).toContainEqual(3);
     });
 
     test("return no pages in range when simple", () => {

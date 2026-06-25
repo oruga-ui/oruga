@@ -23,7 +23,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<PaginationProps>(), {
     override: undefined,
-    current: 1,
+    modelValue: 1,
     total: undefined,
     perPage: () => getDefault("pagination.perPage", 20),
     rangeBefore: 1,
@@ -49,10 +49,10 @@ const props = withDefaults(defineProps<PaginationProps>(), {
 
 const emits = defineEmits<{
     /**
-     * current prop two-way binding
+     * modelValue prop two-way binding
      * @param value {number} - updated current prop
      */
-    "update:current": [value: number];
+    "update:modelValue": [value: number];
     /**
      * on current change event
      * @param value {number} - current value
@@ -116,7 +116,7 @@ defineSlots<{
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const currentPage = defineModel<number>("current", { default: 1 });
+const currentPage = defineModel<number>({ default: 1 });
 
 /** Total page size (count). */
 const pageCount = computed(() =>

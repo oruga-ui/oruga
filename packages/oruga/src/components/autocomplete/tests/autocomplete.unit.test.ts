@@ -52,35 +52,6 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeFalsy();
     });
 
-    test("can emit input, focus and blur events", async () => {
-        const VALUE_TYPED = "test";
-
-        vi.useFakeTimers(); // use fake timers for input debounce
-
-        const wrapper = mount(OAutocomplete, {
-            props: { options: OPTIONS },
-        });
-
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-
-        // open menu
-        await input.trigger("focus");
-        expect(wrapper.emitted("focus")).toHaveLength(1);
-
-        await input.setValue(VALUE_TYPED);
-        await input.trigger("input");
-        vi.runAllTimers(); // run debounce timers
-
-        expect(wrapper.emitted("update:input")).toHaveLength(1);
-        expect(wrapper.emitted("update:input")?.[0]).toContain(VALUE_TYPED);
-
-        await input.trigger("blur");
-        expect(wrapper.emitted("blur")).toBeDefined();
-
-        vi.useRealTimers(); // restore real timers
-    });
-
     test("can autocomplete with keydown", async () => {
         const VALUE_TYPED = "Ang";
 
@@ -95,6 +66,7 @@ describe("OAutocomplete tests", () => {
         // open menu
         await input.trigger("focus");
         await input.setValue(VALUE_TYPED);
+        await setTimeout(); // await popover open
 
         const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
@@ -161,6 +133,7 @@ describe("OAutocomplete tests", () => {
 
         // open menu
         await input.trigger("focus");
+        await setTimeout(); // await open popover
 
         const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
@@ -210,6 +183,7 @@ describe("OAutocomplete tests", () => {
 
         await input.trigger("focus");
         await input.trigger("keydown", { key: "Down" });
+        await setTimeout(); // await open popover
 
         expect(dropdown.isVisible()).toBeTruthy();
     });
@@ -238,26 +212,6 @@ describe("OAutocomplete tests", () => {
 
     test("can openOnFocus and keepFirst", async () => {
         const wrapper = mount(OAutocomplete, {
-            props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
-            attachTo: document.body,
-        });
-
-        const dropdown = wrapper.find(".o-dropdown__menu");
-        expect(dropdown.exists()).toBeTruthy();
-        expect(dropdown.isVisible()).toBeFalsy();
-
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-
-        await input.trigger("focus");
-
-        expect(dropdown.isVisible()).toBeTruthy();
-    });
-
-    test("keepFirst works as input changes", async () => {
-        vi.useFakeTimers(); // use fake timers for input debounce
-
-        const wrapper = mount(OAutocomplete, {
             props: {
                 options: OPTIONS,
                 openOnFocus: true,
@@ -274,6 +228,34 @@ describe("OAutocomplete tests", () => {
         expect(input.exists()).toBeTruthy();
 
         await input.trigger("focus");
+        await setTimeout(); // await open popover
+
+        expect(dropdown.isVisible()).toBeTruthy();
+        const firstItem = dropdown.find('[data-oruga="dropdown-item"]');
+        expect(firstItem.exists()).toBeTruthy();
+        expect(firstItem.classes("o-dropdown__item--focused"));
+    });
+
+    test("keepFirst works as input changes", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: {
+                options: OPTIONS,
+                openOnFocus: true,
+                keepFirst: true,
+                debounce: 0,
+            },
+            attachTo: document.body,
+        });
+
+        const dropdown = wrapper.find(".o-dropdown__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
+
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+
+        await input.trigger("focus");
+        await setTimeout(); // await popover open
 
         expect(dropdown.isVisible()).toBeTruthy();
 
@@ -282,14 +264,12 @@ describe("OAutocomplete tests", () => {
         expect(focusedItem.text()).toContain(OPTIONS[0]);
 
         await input.setValue("v");
-        vi.runAllTimers(); // run debounce timers
+        await setTimeout(); // await debounce timer
         await nextTick();
 
         const updatedFocusedItem = wrapper.find(".o-dropdown__item--focused");
         expect(updatedFocusedItem.exists()).toBeTruthy();
         expect(updatedFocusedItem.text()).toContain("Vue.js");
-
-        vi.useRealTimers(); // restore real timers
     });
 
     test("do not open when openOnFocus and empty options", async () => {
@@ -310,32 +290,47 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeFalsy();
     });
 
-    test("reset events before destroy", async () => {
-        const documentDummyListener = vi.fn();
-        const windowDummyListener = vi.fn();
-        document.removeEventListener = documentDummyListener;
-        window.removeEventListener = windowDummyListener;
+    describe("test events", () => {
+        test("check emit focus and blur event correctly", async () => {
+            const wrapper = mount(OAutocomplete);
 
-        const wrapper = mount(OAutocomplete, {
-            props: { options: OPTIONS },
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.trigger("focus");
+            await input.trigger("blur");
+
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+            expect(wrapper.emitted("blur")).toHaveLength(1);
         });
-        await nextTick(); // await event handler get set
 
-        wrapper.unmount();
+        test("can emit input, focus and blur events", async () => {
+            const VALUE_TYPED = "test";
 
-        expect(documentDummyListener).toHaveBeenCalledTimes(2);
-        // remove scroll listener
-        expect(documentDummyListener).toHaveBeenCalledWith(
-            "scroll",
-            expect.any(Function),
-        );
+            const wrapper = mount(OAutocomplete, {
+                props: { options: OPTIONS, debounce: 0 },
+            });
 
-        expect(windowDummyListener).toHaveBeenCalledTimes(2);
-        // remove position listener
-        expect(windowDummyListener).toHaveBeenCalledWith(
-            "resize",
-            expect.any(Function),
-        );
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            // open menu
+            await input.trigger("focus");
+            expect(wrapper.emitted("focus")).toHaveLength(1);
+
+            await input.setValue(VALUE_TYPED);
+            await input.trigger("input");
+            await setTimeout(); // await input debounce
+
+            expect(wrapper.emitted("input")).toHaveLength(1);
+            expect(wrapper.emitted("input")?.[0]).toContain(VALUE_TYPED);
+
+            expect(wrapper.emitted("update:input")).toHaveLength(1);
+            expect(wrapper.emitted("update:input")?.[0]).toContain(VALUE_TYPED);
+
+            await input.trigger("blur");
+            expect(wrapper.emitted("blur")).toBeDefined();
+        });
     });
 
     describe("filtering", () => {
@@ -512,7 +507,9 @@ describe("OAutocomplete tests", () => {
                     footer: "<h1>SLOT FOOTER</h1>",
                 },
             });
+
             const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
 
             // open menu
             await input.trigger("focus");

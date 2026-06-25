@@ -9,7 +9,7 @@ const isDisabled = ref(false);
 const prevIcon = ref("chevron-left");
 const nextIcon = ref("chevron-right");
 const total = ref(200);
-const current = ref(10);
+const page = ref(10);
 const perPage = ref(10);
 const position = ref<"left" | "centered" | "right">("left");
 const size = ref("");
@@ -71,7 +71,7 @@ const size = ref("");
         <hr />
 
         <o-pagination
-            v-model:current="current"
+            v-model="page"
             :total="total"
             :per-page="perPage"
             :range-before="rangeBefore || 0"
@@ -84,6 +84,6 @@ const size = ref("");
             :icon-prev="prevIcon"
             :icon-next="nextIcon" />
 
-        <p><b>Current:</b> {{ current }}</p>
+        <p><b>Current:</b> {{ page }}</p>
     </section>
 </template>

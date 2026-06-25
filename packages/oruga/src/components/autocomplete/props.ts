@@ -34,10 +34,10 @@ export type AutocompleteProps<T> = {
      */
     size?: string;
     /**
-     * Position of the dropdown
-     * @values auto, top, bottom
+     * Position of the dropdown relative to the input
+     * @values top, bottom
      */
-    position?: "auto" | "top" | "bottom";
+    position?: "top" | "bottom";
     /** Input placeholder */
     placeholder?: string;
     /** Makes input full width when inside a grouped or addon field */
@@ -126,6 +126,8 @@ export type AutocompleteClasses = Partial<{
     itemHeaderClass: ComponentClass;
     /** Class of the menu footer item */
     itemFooterClass: ComponentClass;
+    /** Class for the HTML input element */
+    inputClass: ComponentClass;
     /**
      * Class configuration for the internal input component
      * @ignore

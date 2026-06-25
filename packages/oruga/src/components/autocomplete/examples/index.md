@@ -20,6 +20,8 @@ import ScrollCode from "./scroll.vue?raw";
 
 ### Base
 
+By default, the labels of the list options are compared with the text entered using lowercased comparison. A custom behaviour can be achieved using the `filter` property.
+
 <ExampleViewer :component="Base" :code="BaseCode" />
 
 ### Selection
@@ -72,9 +74,5 @@ Due to the way the Vue reactivity system works, it is not possible to define a J
 ### Infinite Scroll & Async Data
 
 When `check-scroll` prop is set, the component will emits the `scroll-start` and `scroll-end` events. These events can be used to load more options as needed. Consider adding `backend-filtering` when manually updating options on input values changes.
-
-::: info Note
-The autocomplete component does not have a default slot for defining options. The default slot is used to override the option element template.
-:::
 
 <ExampleViewer :component="Scroll" :code="ScrollCode" />

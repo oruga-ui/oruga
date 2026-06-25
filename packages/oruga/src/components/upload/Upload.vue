@@ -78,8 +78,11 @@ defineSlots<{
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionality
-const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
-    useInputHandler(inputRef, emits, props);
+const { checkHtml5Validity, isValid, setBlur, setFocus } = useInputHandler(
+    inputRef,
+    props,
+    emits,
+);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
@@ -195,7 +198,7 @@ function onClick(event: Event): void {
     }
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -236,10 +239,19 @@ const draggableClasses = defineClasses(
     ],
 );
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: vmodel,
+});
+
+// #endregion  --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -270,9 +282,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             :multiple="props.multiple"
             :accept="accept"
             :disabled="disabled"
-            @change="onFileChange"
-            @focus="onFocus"
-            @blur="onBlur"
-            @invalid="onInvalid" />
+            @change="onFileChange" />
     </label>
 </template>

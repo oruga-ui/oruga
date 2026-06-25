@@ -2,8 +2,10 @@
 import { ref } from "vue";
 
 const selected = ref(new Date());
-const showWeekNumber = ref(false);
 const locale = ref(); // Browser locale
+const openOnFocus = ref(true);
+const stayOpen = ref(false);
+const showWeekNumber = ref(false);
 </script>
 
 <template>
@@ -26,6 +28,12 @@ const locale = ref(); // Browser locale
                     <option value="ru-RU">ru-RU</option>
                 </o-select>
             </o-field>
+            <o-field label="Open on focus">
+                <o-switch v-model="openOnFocus" />
+            </o-field>
+            <o-field label="Stay open">
+                <o-switch v-model="stayOpen" />
+            </o-field>
             <o-field label="Show week number">
                 <o-switch v-model="showWeekNumber" />
             </o-field>
@@ -34,11 +42,12 @@ const locale = ref(); // Browser locale
         <o-field label="Select a date">
             <o-datepicker
                 v-model="selected"
-                :show-week-number="showWeekNumber"
-                :locale="locale"
                 placeholder="Click to select..."
                 icon="calendar"
-                trap-focus />
+                :locale="locale"
+                :stay-open="stayOpen"
+                :open-on-focus="openOnFocus"
+                :show-week-number="showWeekNumber" />
         </o-field>
 
         <p><b>Selected:</b> {{ selected }}</p>

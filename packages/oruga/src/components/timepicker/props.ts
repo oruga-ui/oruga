@@ -1,15 +1,18 @@
 import type { ComponentClass } from "@/types";
-import type { DropdownProps } from "../dropdown/props";
 import type { SelectProps } from "../select/props";
 import type { InputProps } from "../input/props";
 
 export type TimepickerProps = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state */
+    /** The input value state, use v-model to make it two-way binding */
     modelValue?: Date;
     /** The active state of the dropdown */
     active?: boolean;
+    /** The picker stays open after date got picked */
+    stayOpen?: boolean;
+    /** Open picker on focus */
+    openOnFocus?: boolean;
     /** Min time to select */
     minTime?: Date;
     /** Max time to select */
@@ -35,10 +38,6 @@ export type TimepickerProps = {
     incrementHours?: number;
     incrementMinutes?: number;
     incrementSeconds?: number;
-    /** Open dropdown on focus */
-    openOnFocus?: boolean;
-    /** Close dropdown on click */
-    closeOnClick?: boolean;
     enableSeconds?: boolean;
     defaultMinutes?: number;
     defaultSeconds?: number;
@@ -54,8 +53,11 @@ export type TimepickerProps = {
     unselectableTimes?: Date[] | ((date: Date) => boolean);
     /** Reset the time inputs when meridian changes */
     resetOnMeridianChange?: boolean;
-    /** Dropdown position */
-    position?: string;
+    /**
+     * Position of the popover relative to the input
+     * @values auto, top, bottom, left, right, center
+     */
+    position?: "top" | "bottom" | "left" | "right" | "center";
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -67,9 +69,9 @@ export type TimepickerProps = {
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
-    /** Dropdown content is shown into a modal on mobile */
+    /** Picker content is shown into a modal on mobile */
     mobileModal?: boolean;
-    /** Dropdown content is shown into a modal on desktop */
+    /** Picker content is shown into a modal on desktop */
     desktopModal?: boolean;
     /** Enable mobile native input if mobile agent */
     mobileNative?: boolean;
@@ -106,14 +108,18 @@ export type TimepickerClasses = Partial<{
     mobileClass: ComponentClass;
     /** Class of the root element component size */
     sizeClass: ComponentClass;
-    /** Class of the dropdown box element where you choose the date */
-    boxClass: ComponentClass;
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class of the trigger element */
+    triggerClass: ComponentClass;
+    /** Class of the content container element where you choose the date */
+    contentClass: ComponentClass;
+    /** Class of the content element when shown as modal */
+    modalClass: ComponentClass;
     /** Class of the select separator element */
     separatorClass: ComponentClass;
     /** Class of the footer element */
     footerClass: ComponentClass;
-    /** Class for the underlaying dropdown component */
-    dropdownClass: ComponentClass;
     /** Class for the HTML input element */
     inputClass: ComponentClass;
     /**
@@ -122,10 +128,10 @@ export type TimepickerClasses = Partial<{
      */
     inputAttrs: InputProps<false>;
     /**
-     * Class configuration for the internal dropdown component
+     * Class of the HTML select element
      * @ignore
      */
-    dropdownAttrs: DropdownProps<string, false>;
+    selectClass: ComponentClass;
     /**
      * Class configuration for the internal select component
      * @ignore
