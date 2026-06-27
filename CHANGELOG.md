@@ -1,8 +1,41 @@
+## [0.14.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.13.6...v0.14.0-pre.1) (2026-06-27)
+
+### ⚠ BREAKING CHANGES
+
+* Dropped cjs support. The lib now only get exported as esm build.
+* **pagination:** The `current` property of the OPagination component got renamed to `modelValue`.
+* **drodpown:** The `inline` property of the ODropdown component got removed.
+* **dropdown:** The values for the `position` property of the ODropdown component have changed.
+* **datepicker:** The ODatepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the ODatepicker component has changed.
+* **timepicker:** The OTimepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the OTimepicker component has changed.
+* **collapse:** The OCollapse component now uses the native [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details) element instead of a custom implementation.
+* The ODropdown, ODatepicker, OTimepicker and ODatetimepicker components now using the native [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) instead of a custom implementation.
+
+### Features
+
+* **collapse:** rewrite with HTML `details` tag ([#1586](https://github.com/oruga-ui/oruga/issues/1586)) ([76f9c8d](https://github.com/oruga-ui/oruga/commit/76f9c8dc9ab23c60b68390b953391cba5aba4e4b))
+* **datepicker:** use popover api instead of ODropdown component ([#1633](https://github.com/oruga-ui/oruga/issues/1633)) ([90e343a](https://github.com/oruga-ui/oruga/commit/90e343a82537349d1aff0dab48eb20a9dc4fe47f))
+* **drodpown:** remove `inline` property ([#1627](https://github.com/oruga-ui/oruga/issues/1627)) ([49b8d8f](https://github.com/oruga-ui/oruga/commit/49b8d8f380114d9a9999edcbf5ffc0c765473c9f))
+* drop cjs support and build esm only ([#1597](https://github.com/oruga-ui/oruga/issues/1597)) ([39193cd](https://github.com/oruga-ui/oruga/commit/39193cd55bc7b9b6a0939d167070c0d9b399ff13)), closes [#1412](https://github.com/oruga-ui/oruga/issues/1412)
+* **dropdown:** use Popover API instead of custom implementation ([#1636](https://github.com/oruga-ui/oruga/issues/1636)) ([19aa022](https://github.com/oruga-ui/oruga/commit/19aa022b0a53d55705dfa175e7504bb3ef90b379))
+* expose blur function in input based components ([#1656](https://github.com/oruga-ui/oruga/issues/1656)) ([92aa06f](https://github.com/oruga-ui/oruga/commit/92aa06fc3cea10fb7cc038328723788887edff15))
+* **pagination:** rename `current` to `modelValue` ([#1661](https://github.com/oruga-ui/oruga/issues/1661)) ([7629db0](https://github.com/oruga-ui/oruga/commit/7629db09184c84c44d5f92d17f4e050f358114f7))
+* **popover:** add a `role` property for the content element ([0a97f43](https://github.com/oruga-ui/oruga/commit/0a97f43eeea07d1a7452a0cd7b718b71372bc20b))
+* **Popover:** add backdrop property ([#1637](https://github.com/oruga-ui/oruga/issues/1637)) ([faf2121](https://github.com/oruga-ui/oruga/commit/faf21219b3551272de7357c61d579754e37ecae4))
+* **popover:** add OPopover component based on native Popover API ([#1618](https://github.com/oruga-ui/oruga/issues/1618)) ([200dde9](https://github.com/oruga-ui/oruga/commit/200dde974f318124e6689fbeebcb68e8bced2669)), closes [#1520](https://github.com/oruga-ui/oruga/issues/1520)
+* **timepicker:** use popover api instead of ODropdown component ([#1648](https://github.com/oruga-ui/oruga/issues/1648)) ([c6da6c5](https://github.com/oruga-ui/oruga/commit/c6da6c5c6ed33bdab953990f065da55032b31dea))
+* **tooltip:** deprecate trigger properties ([#1624](https://github.com/oruga-ui/oruga/issues/1624)) ([fdb2365](https://github.com/oruga-ui/oruga/commit/fdb2365a22fafff72a7b27d5fef11899aca54f2e)), references [#1520](https://github.com/oruga-ui/oruga/issues/1520)
+
+### Bug Fixes
+
+* **picker:** correct popover related `position` prop types ([#1658](https://github.com/oruga-ui/oruga/issues/1658)) ([3c3acaa](https://github.com/oruga-ui/oruga/commit/3c3acaab512d43c2ded833d2dc5a2a255dda28a8))
+* **tree:** correct hidden state calculation for keyboard navigation ([#1659](https://github.com/oruga-ui/oruga/issues/1659)) ([f08aff1](https://github.com/oruga-ui/oruga/commit/f08aff160de6fce76e51afe4992c0da5fbc69328))
+
 ## [0.13.6](https://github.com/oruga-ui/oruga/compare/v0.13.5...v0.13.6) (2026-06-10)
 
 ### Bug Fixes
 
-* **Input:** add ResizeObserver to calc input size when type `textarea` and `autosize` ([#1645](https://github.com/oruga-ui/oruga/issues/1645)) ([9a6f3c6](https://github.com/oruga-ui/oruga/commit/9a6f3c6f14dd2da88cb03ed96169d5cfb657a6d4)), closes [#1628](https://github.com/oruga-ui/oruga/issues/1628)
+* **input:** add ResizeObserver to calc input size when type `textarea` and `autosize` ([#1645](https://github.com/oruga-ui/oruga/issues/1645)) ([9a6f3c6](https://github.com/oruga-ui/oruga/commit/9a6f3c6f14dd2da88cb03ed96169d5cfb657a6d4)), closes [#1628](https://github.com/oruga-ui/oruga/issues/1628)
 * **taginput:** allow new items even the dropdown is open ([#1642](https://github.com/oruga-ui/oruga/issues/1642)) ([cf169f9](https://github.com/oruga-ui/oruga/commit/cf169f9b250133a96696b97bf7e65ce918e2971e)), closes [#1629](https://github.com/oruga-ui/oruga/issues/1629)
 
 ## [0.13.5](https://github.com/oruga-ui/oruga/compare/v0.13.4...v0.13.5) (2026-04-23)
