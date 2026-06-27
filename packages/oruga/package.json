@@ -59,7 +59,7 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "vue-component-type-helpers": "^3.3.3"
+    "vue-component-type-helpers": "^3.3.5"
   },
   "devDependencies": {
     "@types/jest-axe": "^3.5.9",
