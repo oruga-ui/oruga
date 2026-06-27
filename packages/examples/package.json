@@ -55,9 +55,9 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "7.2.0",
-    "@fortawesome/fontawesome-svg-core": "^7.2.0",
-    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/fontawesome-free": "7.3.0",
+    "@fortawesome/fontawesome-svg-core": "^7.3.0",
+    "@fortawesome/free-solid-svg-icons": "^7.3.0",
     "@fortawesome/vue-fontawesome": "^3.2.0",
     "@highlightjs/vue-plugin": "2.1.2",
     "highlight.js": "11.11.1",
@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.7",
-    "sass": "^1.100.0",
+    "sass": "^1.101.0",
     "vite": "^8.0.16",
     "vite-plugin-dts": "^4.5.4",
     "vitepress": "^2.0.0-alpha.17"
