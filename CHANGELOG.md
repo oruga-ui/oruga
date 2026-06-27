@@ -34,7 +34,7 @@
 
 ### Bug Fixes
 
-* **Input:** add ResizeObserver to calc input size when type `textarea` and `autosize` ([#1645](https://github.com/oruga-ui/oruga/issues/1645)) ([9a6f3c6](https://github.com/oruga-ui/oruga/commit/9a6f3c6f14dd2da88cb03ed96169d5cfb657a6d4)), closes [#1628](https://github.com/oruga-ui/oruga/issues/1628)
+* **input:** add ResizeObserver to calc input size when type `textarea` and `autosize` ([#1645](https://github.com/oruga-ui/oruga/issues/1645)) ([9a6f3c6](https://github.com/oruga-ui/oruga/commit/9a6f3c6f14dd2da88cb03ed96169d5cfb657a6d4)), closes [#1628](https://github.com/oruga-ui/oruga/issues/1628)
 * **taginput:** allow new items even the dropdown is open ([#1642](https://github.com/oruga-ui/oruga/issues/1642)) ([cf169f9](https://github.com/oruga-ui/oruga/commit/cf169f9b250133a96696b97bf7e65ce918e2971e)), closes [#1629](https://github.com/oruga-ui/oruga/issues/1629)
 
 ## [0.13.5](https://github.com/oruga-ui/oruga/compare/v0.13.4...v0.13.5) (2026-04-23)
