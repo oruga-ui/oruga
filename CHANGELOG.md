@@ -9,6 +9,7 @@
 * **datepicker:** The ODatepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the ODatepicker component has changed.
 * **timepicker:** The OTimepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the OTimepicker component has changed.
 * **collapse:** The OCollapse component now uses the native [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details) element instead of a custom implementation.
+* The ODropdown, ODatepicker, OTimepicker and ODatetimepicker components now using the native [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) instead of a custom implementation.
 
 ### Features
 
