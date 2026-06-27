@@ -11,6 +11,7 @@ import {
     triggerRef,
     type MaybeRefOrGetter,
     type VNode,
+    shallowReadonly,
 } from "vue";
 
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
@@ -1217,8 +1218,10 @@ function rowClasses(row: TableRow<T>): ClassBinding[] {
 
 /** expose functionalities for programmatic usage */
 defineExpose({
-    columns: tableColumns,
-    rows: tableRows,
+    columns: shallowReadonly(tableColumns),
+    rows: shallowReadonly(tableRows),
+    filteredRows: shallowReadonly(filteredRows),
+    pageRows: shallowReadonly(availableRows),
     filters,
     sort: sortByField,
 });

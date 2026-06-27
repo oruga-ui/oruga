@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, useTemplateRef, watch } from "vue";
 import type { TableColumn } from "@oruga-ui/oruga-next";
 
 const data = [
@@ -212,6 +212,13 @@ const columns: TableColumn<(typeof data)[number]>[] = [
 ];
 
 const isPaginated = ref(true);
+
+const table = useTemplateRef("table");
+
+watch(
+    () => table.value?.filteredRows,
+    () => console.log(table.value?.filteredRows),
+);
 </script>
 
 <template>
@@ -229,7 +236,7 @@ const isPaginated = ref(true);
 
         <p>You can also customize the search input using a scoped slot.</p>
 
-        <o-table :data="data" :paginated="isPaginated" per-page="5">
+        <o-table ref="table" :data="data" :paginated="isPaginated" per-page="5">
             <o-table-column
                 v-for="(column, idx) in columns"
                 :key="idx"
