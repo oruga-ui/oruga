@@ -5,7 +5,7 @@
 * Dropped cjs support. The lib now only get exported as esm build.
 * **pagination:** The `current` property of the OPagination component got renamed to `modelValue`.
 * **drodpown:** The `inline` property of the ODropdown component got removed.
-* **dropdown:** The values for the `position` property of the Dropdown component have changed.
+* **dropdown:** The values for the `position` property of the ODropdown component have changed.
 * **datepicker:** The ODatepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the ODatepicker component has changed.
 * **timepicker:** The OTimepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the OTimepicker component has changed.
 * **collapse:** The OCollapse component now uses the native [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details) element instead of a custom implementation.
