@@ -89,6 +89,7 @@ function generateConfigType(filePath: string): void {
                             // override specific types
                             else prop.type = anonymiseTypes(prop.type);
 
+                            // change type for sub dependend components
                             if (prop.name.includes("Attrs")) {
                                 prop.type = "Record<string, any>";
                                 return prop;
@@ -146,6 +147,7 @@ function generateConfigType(filePath: string): void {
     ComponentConfigBase,
     DynamicComponent,
     Numberish,
+    PopoverPosition,
 } from "@/types";
 
 // Auto generated component theme config declarations

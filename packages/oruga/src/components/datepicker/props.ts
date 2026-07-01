@@ -267,7 +267,7 @@ export type DatepickerClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: InputProps<false>;
+    inputAttrs: InputProps<false>;
     /** Class of the HTML select element */
     selectClass: ComponentClass;
     /**
