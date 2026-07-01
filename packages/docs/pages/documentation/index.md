@@ -144,7 +144,7 @@ If you are using Visual Studio Code (VSC), you can specify global component type
 {
   "compilerOptions": {
     // ...
-    "types": ["@oruga-ui/oruga-next/volar"]
+    "types": ["@oruga-ui/oruga-next/globals"]
   }
 }
 ```
