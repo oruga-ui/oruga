@@ -548,7 +548,7 @@ const contentClasses = defineClasses(
     ["modalClass", "o-datepicker__content--modal", null, isModal],
 );
 
-const _inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
+const inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
 
 const _selectClasses = defineClasses(["selectClass", "o-datepicker__select"]);
 
@@ -611,7 +611,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :readonly="readonly"
             :use-html5-validation="useHtml5Validation"
             :custom-validity="customValidity"
-            :input-class="_inputClasses"
+            :input-class="inputClasses"
             :trigger-class="triggerClasses"
             :content-class="contentClasses"
             :input-attrs="inputAttrs"

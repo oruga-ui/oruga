@@ -587,9 +587,9 @@ const contentClasses = defineClasses(
     ["modalClass", "o-timepicker__content--modal", null, isModal],
 );
 
-const _inputClasses = defineClasses(["inputClass", "o-timepicker__input"]);
+const inputClasses = defineClasses(["inputClass", "o-timepicker__input"]);
 
-const _selectClasses = defineClasses(["selectClass", "o-timepicker__select"]);
+const selectClasses = defineClasses(["selectClass", "o-timepicker__select"]);
 
 const separatorClasses = defineClasses([
     "separatorClass",
@@ -639,7 +639,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :readonly="readonly"
             :use-html5-validation="useHtml5Validation"
             :custom-validity="customValidity"
-            :input-class="_inputClasses"
+            :input-class="inputClasses"
             :trigger-class="triggerClasses"
             :content-class="contentClasses"
             :input-attrs="inputAttrs"
@@ -655,7 +655,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             <o-select
                 v-bind="selectAttrs"
                 v-model="hoursSelected"
-                :class="_selectClasses"
+                :class="selectClasses"
                 :options="hours"
                 override
                 :disabled="disabled"
@@ -669,7 +669,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             <o-select
                 v-bind="selectAttrs"
                 v-model="minutesSelected"
-                :class="_selectClasses"
+                :class="selectClasses"
                 override
                 :disabled="disabled"
                 placeholder="00"
@@ -691,7 +691,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 <o-select
                     v-bind="selectAttrs"
                     v-model="secondsSelected"
-                    :class="_selectClasses"
+                    :class="selectClasses"
                     override
                     :disabled="disabled"
                     placeholder="00"
@@ -714,7 +714,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 v-if="!isHourFormat24"
                 v-bind="selectAttrs"
                 v-model="meridienSelected"
-                :class="_selectClasses"
+                :class="selectClasses"
                 override
                 :disabled="disabled"
                 :use-html5-validation="false"
