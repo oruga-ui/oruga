@@ -342,12 +342,12 @@ const itemClasses = defineClasses(["itemClass", "o-taginput__item"]);
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
 const autocompleteRootClasses = defineClasses([
-    "autocompleteClasses.rootClass",
+    "autocompleteAttrs.rootClass",
     "o-taginput__autocomplete",
 ]);
 
 const autocompleteInputClasses = defineClasses([
-    "autocompleteClasses.inputAttrs.inputClass",
+    "autocompleteAttrs.inputAttrs.inputClass",
     "o-taginput__input",
 ]);
 

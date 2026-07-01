@@ -541,7 +541,7 @@ const inspectData: InspectData<
     inputClass: {
         class: "inputClass",
         description: "Class to apply on the input element.",
-        relatedClass: "inputClasses.rootClass",
+        relatedClass: "inputAttrs.rootClass",
         relatedComponent: "Input",
     },
     inputAttrs: {
@@ -553,7 +553,7 @@ const inspectData: InspectData<
     selectClass: {
         class: "selectClass",
         description: "Class to apply on the select element.",
-        relatedClass: "selectClasses.rootClass",
+        relatedClass: "selectAttrs.rootClass",
         relatedComponent: "Select",
     },
     selectAttrs: {
