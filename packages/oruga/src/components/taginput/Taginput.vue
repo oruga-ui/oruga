@@ -347,7 +347,7 @@ const autocompleteRootClasses = defineClasses([
 ]);
 
 const autocompleteInputClasses = defineClasses([
-    "autocompleteClasses.inputClasses.inputClass",
+    "autocompleteClasses.inputAttrs.inputClass",
     "o-taginput__input",
 ]);
 
@@ -356,7 +356,7 @@ const attrs = useAttrs();
 const autocompleteBind = computed(() => ({
     ...attrs,
     "root-class": getActiveClasses(autocompleteRootClasses),
-    "input-classes": {
+    "input-attrs": {
         "input-class": getActiveClasses(autocompleteInputClasses),
     },
     ...props.autocompleteAttrs,
