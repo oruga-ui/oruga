@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<PaginationProps>(), {
     ariaPageLabel: () => getDefault("pagination.ariaPageLabel", "Page"),
     ariaCurrentLabel: () =>
         getDefault("pagination.ariaCurrentLabel", "Current page"),
-    buttonClasses: () => getDefault("pagination.buttonClasses", {}),
+    buttonAttrs: () => getDefault("pagination.buttonAttrs", {}),
 });
 
 const emits = defineEmits<{
@@ -213,7 +213,7 @@ function getPage(
 } {
     const isCurrent = currentPage.value === num;
     return {
-        ...props.buttonClasses,
+        ...props.buttonAttrs,
         isCurrent: isCurrent,
         number: num,
         label: String(num),
@@ -340,7 +340,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
         <slot name="previous" v-bind="prevButton">
             <o-button
                 :tag="buttonTag"
-                v-bind="{ ...prevButton, ...buttonClasses }"
+                v-bind="{ ...prevButton, ...buttonAttrs }"
                 :label="undefined"
                 :disabled="isFirst || disabled"
                 :icon-left="iconPrev"
@@ -353,7 +353,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
         <slot name="next" v-bind="nextButton">
             <o-button
                 :tag="buttonTag"
-                v-bind="{ ...nextButton, ...buttonClasses }"
+                v-bind="{ ...nextButton, ...buttonAttrs }"
                 :label="undefined"
                 :disabled="isLast || disabled"
                 :icon-left="iconNext"
@@ -381,7 +381,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="firstButton">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="{ ...firstButton, ...buttonClasses }"
+                        v-bind="{ ...firstButton, ...buttonAttrs }"
                         :variant="firstButton.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
@@ -407,7 +407,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="page">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="{ ...page, ...buttonClasses }"
+                        v-bind="{ ...page, ...buttonAttrs }"
                         :variant="page.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
@@ -428,7 +428,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="lastButton">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="{ ...lastButton, ...buttonClasses }"
+                        v-bind="{ ...lastButton, ...buttonAttrs }"
                         :variant="lastButton.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"

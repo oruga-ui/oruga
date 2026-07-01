@@ -89,7 +89,8 @@ function generateConfigType(filePath: string): void {
                             // override specific types
                             else prop.type = anonymiseTypes(prop.type);
 
-                            if (prop.name.includes("Classes")) {
+                            // change type for sub dependend components
+                            if (prop.name.includes("Attrs")) {
                                 prop.type = "Record<string, any>";
                                 return prop;
                             }

@@ -126,12 +126,15 @@ export type TimepickerClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: InputProps<false>;
-    /** Class of the HTML select element */
+    inputAttrs: InputProps<false>;
+    /**
+     * Class of the HTML select element
+     * @ignore
+     */
     selectClass: ComponentClass;
     /**
      * Class configuration for the internal select component
      * @ignore
      */
-    selectClasses: SelectProps<number | string, false>;
+    selectAttrs: SelectProps<number | string, false>;
 }>;

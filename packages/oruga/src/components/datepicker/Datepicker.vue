@@ -101,8 +101,8 @@ const props = withDefaults(
             getDefault("datepicker.ariaSelectMonthLabel", "Select Month"),
         ariaSelectYearLabel: () =>
             getDefault("datepicker.ariaSelectYearLabel", "Select Year"),
-        inputClasses: () => getDefault("datepicker.inputClasses"),
-        selectClasses: () => getDefault("datepicker.selectClasses"),
+        inputAttrs: () => getDefault("datepicker.inputAttrs"),
+        selectAttrs: () => getDefault("datepicker.selectAttrs"),
     },
 );
 
@@ -614,7 +614,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :input-class="_inputClasses"
             :trigger-class="triggerClasses"
             :content-class="contentClasses"
-            :input-classes="inputClasses"
+            :input-attrs="inputAttrs"
             @focus="$emit('focus', $event)"
             @blur="$emit('blur', $event)"
             @invalid="$emit('invalid', $event)"
@@ -655,7 +655,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                     <div :class="listsClasses">
                         <o-select
                             v-if="!isTypeMonth"
-                            v-bind="selectClasses"
+                            v-bind="selectAttrs"
                             v-model="focusedDateData.month"
                             :class="_selectClasses"
                             :disabled="disabled"
@@ -667,7 +667,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             @keydown.right.stop.prevent="next" />
 
                         <o-select
-                            v-bind="selectClasses"
+                            v-bind="selectAttrs"
                             v-model="focusedDateData.year"
                             :class="_selectClasses"
                             :disabled="disabled"

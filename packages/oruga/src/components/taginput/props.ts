@@ -104,5 +104,5 @@ export type TaginputClasses = Partial<{
      * Class configuration for the underlying autocomplete component
      * @ignore
      */
-    autocompleteClasses: object;
+    autocompleteAttrs: object;
 }>;

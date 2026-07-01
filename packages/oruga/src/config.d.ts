@@ -132,7 +132,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class configuration for the internal input component
                  */
-                inputClasses: Record<string, any>;
+                inputAttrs: Record<string, any>;
             }>;
         breadcrumb?: ComponentConfigBase &
             Partial<{
@@ -868,7 +868,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class configuration for the internal input component
                  */
-                inputClasses: Record<string, any>;
+                inputAttrs: Record<string, any>;
                 /**
                  * Class of the HTML select element
                  */
@@ -876,7 +876,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class configuration for the internal select component
                  */
-                selectClasses: Record<string, any>;
+                selectAttrs: Record<string, any>;
             }>;
         datetimepicker?: ComponentConfigBase &
             Partial<{
@@ -1570,7 +1570,7 @@ See icon library documentation for custom classes.
                 /**
                  * Class configuration for the internal input component
                  */
-                inputClasses: Record<string, any>;
+                inputAttrs: Record<string, any>;
                 /**
                  * Icon size
                  */
@@ -2053,7 +2053,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class configuration for the internal button components
                  */
-                buttonClasses: Record<string, any>;
+                buttonAttrs: Record<string, any>;
             }>;
         popover?: ComponentConfigBase &
             Partial<{
@@ -3020,7 +3020,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class configuration for the internal loading component
                  */
-                loadingClasses: Record<string, any>;
+                loadingAttrs: Record<string, any>;
             }>;
         tabs?: ComponentConfigBase &
             Partial<{
@@ -3315,7 +3315,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class configuration for the underlying autocomplete component
                  */
-                autocompleteClasses: Record<string, any>;
+                autocompleteAttrs: Record<string, any>;
             }>;
         timepicker?: ComponentConfigBase &
             Partial<{
@@ -3436,7 +3436,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class configuration for the internal input component
                  */
-                inputClasses: Record<string, any>;
+                inputAttrs: Record<string, any>;
                 /**
                  * Class of the HTML select element
                  */
@@ -3444,7 +3444,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class configuration for the internal select component
                  */
-                selectClasses: Record<string, any>;
+                selectAttrs: Record<string, any>;
             }>;
         tooltip?: ComponentConfigBase &
             Partial<{
