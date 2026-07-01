@@ -315,7 +315,8 @@ const inspectData: InspectData<
     },
     loadingAttrs: {
         class: "loadingAttrs",
-        description: "Classes to apply on the internal loading component.",
+        description:
+            "Loading properties to apply on the internal loading component.",
         relatedComponent: "Loading",
     },
 };

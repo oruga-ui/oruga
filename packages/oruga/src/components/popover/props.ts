@@ -15,20 +15,32 @@ export type PopoverProps = {
     /**
      * The behavior of the popover.
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value
-     * @values auto, hint, manuell
+     * @values auto, hint, manual
      */
-    behavior?: "auto" | "hint" | "manuell";
+    behavior?: "auto" | "hint" | "manual";
     /**
      * The position of the popover relative to the trigger
-     * @values top, bottom, left, right, center
+     * @values top, bottom, left, right, center, [top, right], [top, left], [bottom, left], [bottom, right]
      */
-    position?: "top" | "bottom" | "left" | "right" | "center";
+    position?: PopoverPosition;
     /** Defines a delay (in ms) before the content appears */
     delay?: number;
     /** The component will be disabled */
     disabled?: boolean;
+    /** Adds a backdrop to the background */
+    backdrop?: boolean;
+    /** A role for the content element. */
+    role?: "dialog" | "menu" | "tooltip";
+    /** Defines if the popover should be shown as centered modal - the position is ignored when `true` */
+    modal?: boolean;
     /** Show and dismiss animation */
     animation?: string;
+    /**
+     * Set `true` to remove the body scrollbar.
+     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+     * but will set the body to a fixed position, which may break some layouts.
+     */
+    clipScroll?: boolean;
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -47,4 +59,10 @@ export type PopoverClasses = Partial<{
     triggerClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
+    /** Class of the content element when a backdrop should be shown */
+    backdropClass: ComponentClass;
+    /** Class of the body when popover has backdrop and scroll is clipped */
+    scrollClipClass: ComponentClass;
+    /** Class of the body when popover has backdrop and scroll is keeped */
+    scrollKeepClass: ComponentClass;
 }>;

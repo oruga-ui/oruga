@@ -81,6 +81,7 @@ describe("useEventListener test", () => {
 
         test("should not listen when target is invalid", async () => {
             useEventListener(target, event, listener);
+
             const el = target.value;
             target.value = null;
             await nextTick();
@@ -92,6 +93,7 @@ describe("useEventListener test", () => {
 
         test(`should listen event`, async () => {
             useEventListener(target, event, listener, { immediate: true });
+
             target.value?.dispatchEvent(new PointerEvent(event));
 
             await nextTick();

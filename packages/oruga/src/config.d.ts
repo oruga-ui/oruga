@@ -2060,11 +2060,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * The position of the popover relative to the trigger
                  */
-                position: "bottom" | "center" | "left" | "right" | "top";
+                position: PopoverPosition;
                 /**
                  * Show and dismiss animation
                  */
                 animation: string;
+                /**
+                 * Set `true` to remove the body scrollbar.
+When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+but will set the body to a fixed position, which may break some layouts.
+                 */
+                clipScroll: boolean;
                 /**
                  * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
@@ -2087,6 +2093,18 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element
                  */
                 contentClass: ClassDefinition;
+                /**
+                 * Class of the content element when a backdrop should be shown
+                 */
+                backdropClass: ClassDefinition;
+                /**
+                 * Class of the body when popover has backdrop and scroll is clipped
+                 */
+                scrollClipClass: ClassDefinition;
+                /**
+                 * Class of the body when popover has backdrop and scroll is keeped
+                 */
+                scrollKeepClass: ClassDefinition;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
