@@ -79,7 +79,7 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     id: () => useId(),
     ariaLabel: undefined,
     ariaLabelledby: undefined,
-    inputClasses: () => getDefault("listbox.inputClasses"),
+    inputAttrs: () => getDefault("listbox.inputAttrs"),
 });
 
 const emits = defineEmits<{
@@ -726,7 +726,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                 :on-keydown="onFilterKeyDown">
                 <o-input
                     v-model="filterValue"
-                    v-bind="inputClasses"
+                    v-bind="inputAttrs"
                     name="filter"
                     type="search"
                     role="searchbox"

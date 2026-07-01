@@ -541,24 +541,25 @@ const inspectData: InspectData<
     inputClass: {
         class: "inputClass",
         description: "Class to apply on the input element.",
-        relatedClass: "inputClasses.rootClass",
+        relatedClass: "inputAttrs.rootClass",
         relatedComponent: "Input",
     },
-    inputClasses: {
-        class: "inputClasses",
-        description: "Classes to apply on the internal input component.",
+    inputAttrs: {
+        class: "inputAttrs",
+        description:
+            "Input properties to apply on the internal input component.",
         relatedComponent: "Input",
     },
     selectClass: {
         class: "selectClass",
         description: "Class to apply on the select element.",
-        relatedClass: "selectClasses.rootClass",
+        relatedClass: "selectAttrs.rootClass",
         relatedComponent: "Select",
     },
-    selectClasses: {
-        class: "selectClasses",
+    selectAttrs: {
+        class: "selectAttrs",
         description:
-            "Classes to apply on the internal select component (month and year list).",
+            "Select properties to apply on the internal select component (month and year list).",
         relatedComponent: "Select",
         action: (data): void => {
             data.active = true;

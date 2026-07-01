@@ -69,23 +69,25 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
     inputClass: {
         class: "inputClass",
         description: "Class to apply on the input element.",
-        relatedClass: "inputClasses.rootClass",
+        relatedClass: "inputAttrs.rootClass",
         relatedComponent: "Input",
     },
-    inputClasses: {
-        class: "inputClasses",
-        description: "Classes to apply on the internal input component.",
+    inputAttrs: {
+        class: "inputAttrs",
+        description:
+            "Input properties to apply on the internal input component.",
         relatedComponent: "Input",
     },
     selectClass: {
         class: "selectClass",
         description: "Class to apply on the select element.",
-        relatedClass: "selectClasses.rootClass",
+        relatedClass: "selectAttrs.rootClass",
         relatedComponent: "Select",
     },
-    selectClasses: {
-        class: "selectClasses",
-        description: "Classes to apply on the internal select component.",
+    selectAttrs: {
+        class: "selectAttrs",
+        description:
+            "Select properties to apply on the internal select component.",
         relatedComponent: "Select",
         action: (data): void => {
             data.active = true;

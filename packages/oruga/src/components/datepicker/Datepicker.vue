@@ -101,8 +101,8 @@ const props = withDefaults(
             getDefault("datepicker.ariaSelectMonthLabel", "Select Month"),
         ariaSelectYearLabel: () =>
             getDefault("datepicker.ariaSelectYearLabel", "Select Year"),
-        inputClasses: () => getDefault("datepicker.inputClasses"),
-        selectClasses: () => getDefault("datepicker.selectClasses"),
+        inputAttrs: () => getDefault("datepicker.inputAttrs"),
+        selectAttrs: () => getDefault("datepicker.selectAttrs"),
     },
 );
 
@@ -548,7 +548,7 @@ const contentClasses = defineClasses(
     ["modalClass", "o-datepicker__content--modal", null, isModal],
 );
 
-const _inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
+const inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);
 
 const _selectClasses = defineClasses(["selectClass", "o-datepicker__select"]);
 
@@ -611,10 +611,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :readonly="readonly"
             :use-html5-validation="useHtml5Validation"
             :custom-validity="customValidity"
-            :input-class="_inputClasses"
+            :input-class="inputClasses"
             :trigger-class="triggerClasses"
             :content-class="contentClasses"
-            :input-classes="inputClasses"
+            :input-attrs="inputAttrs"
             @focus="$emit('focus', $event)"
             @blur="$emit('blur', $event)"
             @invalid="$emit('invalid', $event)"
@@ -655,7 +655,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                     <div :class="listsClasses">
                         <o-select
                             v-if="!isTypeMonth"
-                            v-bind="selectClasses"
+                            v-bind="selectAttrs"
                             v-model="focusedDateData.month"
                             :class="_selectClasses"
                             :disabled="disabled"
@@ -667,7 +667,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             @keydown.right.stop.prevent="next" />
 
                         <o-select
-                            v-bind="selectClasses"
+                            v-bind="selectAttrs"
                             v-model="focusedDateData.year"
                             :class="_selectClasses"
                             :disabled="disabled"

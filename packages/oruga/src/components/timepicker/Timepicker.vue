@@ -65,14 +65,14 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     teleport: () => getDefault("timepicker.teleport", false),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
-    inputClasses: () => getDefault("timepicker.inputClasses"),
     ariaSelectSecondsLabel: () =>
         getDefault("timepicker.ariaSelectSecondLabel", "Select Second"),
     ariaSelectMinutesLabel: () =>
         getDefault("timepicker.ariaSelectMinuteLabel", "Select Minute"),
     ariaSelectHoursLabel: () =>
         getDefault("timepicker.ariaSelectHourLabel", "Select Hour"),
-    selectClasses: () => getDefault("timepicker.selectClasses"),
+    inputAttrs: () => getDefault("timepicker.inputAttrs"),
+    selectAttrs: () => getDefault("timepicker.selectAttrs"),
 });
 
 defineEmits<{
@@ -587,9 +587,9 @@ const contentClasses = defineClasses(
     ["modalClass", "o-timepicker__content--modal", null, isModal],
 );
 
-const _inputClasses = defineClasses(["inputClass", "o-timepicker__input"]);
+const inputClasses = defineClasses(["inputClass", "o-timepicker__input"]);
 
-const _selectClasses = defineClasses(["selectClass", "o-timepicker__select"]);
+const selectClasses = defineClasses(["selectClass", "o-timepicker__select"]);
 
 const separatorClasses = defineClasses([
     "separatorClass",
@@ -639,10 +639,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :readonly="readonly"
             :use-html5-validation="useHtml5Validation"
             :custom-validity="customValidity"
-            :input-class="_inputClasses"
+            :input-class="inputClasses"
             :trigger-class="triggerClasses"
             :content-class="contentClasses"
-            :input-classes="inputClasses"
+            :input-attrs="inputAttrs"
             @focus="$emit('focus', $event)"
             @blur="$emit('blur', $event)"
             @invalid="$emit('invalid', $event)"
@@ -653,9 +653,9 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             </template>
 
             <o-select
-                v-bind="selectClasses"
+                v-bind="selectAttrs"
                 v-model="hoursSelected"
-                :class="_selectClasses"
+                :class="selectClasses"
                 :options="hours"
                 override
                 :disabled="disabled"
@@ -667,9 +667,9 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             <span :class="separatorClasses">{{ hourLiteral }}</span>
 
             <o-select
-                v-bind="selectClasses"
+                v-bind="selectAttrs"
                 v-model="minutesSelected"
-                :class="_selectClasses"
+                :class="selectClasses"
                 override
                 :disabled="disabled"
                 placeholder="00"
@@ -689,9 +689,9 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 <span :class="separatorClasses">{{ minuteLiteral }}</span>
 
                 <o-select
-                    v-bind="selectClasses"
+                    v-bind="selectAttrs"
                     v-model="secondsSelected"
-                    :class="_selectClasses"
+                    :class="selectClasses"
                     override
                     :disabled="disabled"
                     placeholder="00"
@@ -712,9 +712,9 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
             <o-select
                 v-if="!isHourFormat24"
-                v-bind="selectClasses"
+                v-bind="selectAttrs"
                 v-model="meridienSelected"
-                :class="_selectClasses"
+                :class="selectClasses"
                 override
                 :disabled="disabled"
                 :use-html5-validation="false"

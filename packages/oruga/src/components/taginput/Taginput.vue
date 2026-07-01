@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
     teleport: () => getDefault("taginput.teleport", false),
-    autocompleteClasses: () => getDefault("taginput.autocompleteClasses", {}),
+    autocompleteAttrs: () => getDefault("taginput.autocompleteAttrs", {}),
 });
 
 const emits = defineEmits<{
@@ -342,12 +342,12 @@ const itemClasses = defineClasses(["itemClass", "o-taginput__item"]);
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
 const autocompleteRootClasses = defineClasses([
-    "autocompleteClasses.rootClass",
+    "autocompleteAttrs.rootClass",
     "o-taginput__autocomplete",
 ]);
 
 const autocompleteInputClasses = defineClasses([
-    "autocompleteClasses.inputClasses.inputClass",
+    "autocompleteAttrs.inputAttrs.inputClass",
     "o-taginput__input",
 ]);
 
@@ -356,10 +356,10 @@ const attrs = useAttrs();
 const autocompleteBind = computed(() => ({
     ...attrs,
     "root-class": getActiveClasses(autocompleteRootClasses),
-    "input-classes": {
+    "input-attrs": {
         "input-class": getActiveClasses(autocompleteInputClasses),
     },
-    ...props.autocompleteClasses,
+    ...props.autocompleteAttrs,
 }));
 
 // #endregion --- Computed Component Classes ---

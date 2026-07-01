@@ -94,7 +94,7 @@ const props = defineProps({
     triggerClass: { type: Array as PropType<ComponentClass>, required: true },
     contentClass: { type: Array as PropType<ComponentClass>, required: true },
     inputClass: { type: Array as PropType<ComponentClass>, required: true },
-    inputClasses: { type: Object, default: undefined },
+    inputAttrs: { type: Object, default: undefined },
 });
 
 const emits = defineEmits<{
@@ -335,7 +335,7 @@ defineExpose({ focus: setFocus });
             <!-- Web Picker -->
             <o-input
                 v-if="!isMobileNative"
-                v-bind="{ ...$attrs, ...inputClasses }"
+                v-bind="{ ...$attrs, ...inputAttrs }"
                 v-model="inputValue"
                 :placeholder="placeholder"
                 :size="size"
@@ -361,7 +361,7 @@ defineExpose({ focus: setFocus });
             <!-- Native Picker -->
             <o-input
                 v-else
-                v-bind="{ ...$attrs, ...inputClasses }"
+                v-bind="{ ...$attrs, ...inputAttrs }"
                 v-model="inputValue"
                 :type="initialNativeType"
                 :min="formatter(min, true)"

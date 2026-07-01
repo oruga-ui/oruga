@@ -89,5 +89,5 @@ export type PaginationClasses = Partial<{
      * Class configuration for the internal button components
      * @ignore
      */
-    buttonClasses: ButtonProps;
+    buttonAttrs: ButtonProps;
 }>;

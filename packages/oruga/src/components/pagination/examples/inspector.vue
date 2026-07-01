@@ -89,9 +89,10 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
             data.modelValue = 20;
         },
     },
-    buttonClasses: {
-        class: "buttonClasses",
-        description: "Classes to apply on the internal button component.",
+    buttonAttrs: {
+        class: "buttonAttrs",
+        description:
+            "Button properties to apply on the internal button component.",
         relatedComponent: "Button",
     },
 };

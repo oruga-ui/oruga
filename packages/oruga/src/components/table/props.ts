@@ -259,7 +259,7 @@ export type TableClasses = Partial<{
      * Class configuration for the internal loading component
      * @ignore
      */
-    loadingClasses: object;
+    loadingAttrs: object;
 }>;
 
 export type FieldKey<T> = T extends never
