@@ -107,6 +107,10 @@ When having to many options, consider adding the `scrollable` property, which al
 
 The content can be opened in a _modal_ mode either for mobile or desktop only, or for both, by adding the `mobile-modal` and `desktop-modal` properties.
 
+::: info Accessibility Note:
+The dropdown modal style is mainly useful for improving the mobile experience. If you want to create a true modal, the [ODialog](/components/Dialog.html) element is the way to go.
+:::
+
 <ExampleViewer :component="Modal" :code="ModalCode" />
 
 ### Position
