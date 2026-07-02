@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T = string">
-import { computed, useAttrs, useTemplateRef, ref, watch } from "vue";
+import { computed, useTemplateRef, ref, watch } from "vue";
 
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 import OTag from "../tag/Tag.vue";
@@ -8,7 +8,6 @@ import { getDefault } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
 import {
     defineClasses,
-    getActiveClasses,
     useInputHandler,
     useIndexer,
     type OptionItem,
@@ -341,27 +340,6 @@ const itemClasses = defineClasses(["itemClass", "o-taginput__item"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
-const autocompleteRootClasses = defineClasses([
-    "autocompleteAttrs.rootClass",
-    "o-taginput__autocomplete",
-]);
-
-const autocompleteInputClasses = defineClasses([
-    "autocompleteAttrs.inputAttrs.inputClass",
-    "o-taginput__input",
-]);
-
-const attrs = useAttrs();
-
-const autocompleteBind = computed(() => ({
-    ...attrs,
-    "root-class": getActiveClasses(autocompleteRootClasses),
-    "input-attrs": {
-        "input-class": getActiveClasses(autocompleteInputClasses),
-    },
-    ...props.autocompleteAttrs,
-}));
-
 // #endregion --- Computed Component Classes ---
 
 // #region --- Expose Public Functionalities ---
@@ -404,7 +382,7 @@ defineExpose({
                 ref="autocompleteComponent"
                 v-model:active="isDropdownActive"
                 v-model:input="inputValue"
-                v-bind="autocompleteBind"
+                v-bind="{ ...$attrs, ...autocompleteAttrs }"
                 :options="options"
                 :filter="filter"
                 :placeholder="placeholder"
