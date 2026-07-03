@@ -30,7 +30,6 @@ async function component(): Promise<void> {
         <o-button
             label="Launch component notification (form)"
             variant="primary"
-            size="medium"
             @click="component" />
     </section>
 </template>

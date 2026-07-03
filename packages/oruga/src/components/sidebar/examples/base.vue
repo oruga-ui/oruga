@@ -13,7 +13,7 @@ const mobile = ref<
 
 <template>
     <section>
-        <o-field grouped>
+        <o-field grouped multiline>
             <o-switch v-model="overlay" label="Overlay" />
             <o-switch v-model="fullheight" label="Fullheight" />
             <o-switch v-model="fullwidth" label="Fullwidth" />

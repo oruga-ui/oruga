@@ -44,7 +44,7 @@ const slides = [
 
 <template>
     <section>
-        <o-field grouped>
+        <o-field grouped multiline>
             <o-field>
                 <o-switch v-model="arrows" label="Arrow" />
             </o-field>

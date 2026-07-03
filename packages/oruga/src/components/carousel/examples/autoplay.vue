@@ -20,7 +20,7 @@ const slides = [
 
 <template>
     <section>
-        <o-field grouped>
+        <o-field grouped multiline>
             <o-field>
                 <o-switch v-model="autoplay" label="Autoplay" />
             </o-field>

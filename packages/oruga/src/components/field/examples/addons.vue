@@ -16,7 +16,10 @@
                 <option>£</option>
                 <option>€</option>
             </o-select>
-            <o-input type="number" placeholder="0,00" />
+            <o-input
+                type="number"
+                placeholder="0,00"
+                :style="{ 'max-width': '100px' }" />
             <o-button variant="success" label="Transfer" />
         </o-field>
 
@@ -28,7 +31,11 @@
             <o-button icon-left="align-center" aria-label="text align center" />
             <o-button icon-left="align-right" aria-label="text align right" />
 
-            <o-input placeholder="Search..." type="search" icon="search" />
+            <o-input
+                placeholder="Search..."
+                type="search"
+                icon="search"
+                :style="{ 'max-width': '150px' }" />
         </o-field>
 
         <o-field addons>
