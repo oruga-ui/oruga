@@ -200,21 +200,6 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 const _teleport = useTeleport(props.teleport);
 
-const {
-    open: openPopover,
-    close: closePopover,
-    toggle: togglePopover,
-} = usePopoverAPI({
-    position: props.position,
-    delay: props.delay,
-    behavior: "manual",
-    trigger: isActive,
-    disabled: () => props.disabled,
-    triggerRef,
-    contentRef: menuRef,
-    onToggle: onPopoverToggle,
-});
-
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 // check if client is mobile native
@@ -226,6 +211,21 @@ const isModal = computed(
         (isMobile.value && props.mobileModal) ||
         (!isMobile.value && props.desktopModal),
 );
+
+const {
+    open: openPopover,
+    close: closePopover,
+    toggle: togglePopover,
+} = usePopoverAPI({
+    position: isModal.value ? "centered" : props.position,
+    delay: props.delay,
+    behavior: "manual",
+    trigger: isActive,
+    disabled: () => props.disabled,
+    triggerRef,
+    contentRef: menuRef,
+    onToggle: onPopoverToggle,
+});
 
 const menuStyle = computed(() => ({
     maxHeight: props.scrollable ? toCssDimension(props.maxHeight) : null,
