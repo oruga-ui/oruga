@@ -4,22 +4,15 @@ import { ref } from "vue";
 const selected = ref(new Date());
 const showWeekNumber = ref(false);
 const enableSeconds = ref(false);
-const hourFormat = ref(); // Browser locale
-const locale = ref(); // Browser locale
+const hourFormat = ref<"12" | "24" | undefined>("24"); // Browser locale
+const locale = ref("en-US"); // Browser locale
 </script>
 
 <template>
     <section>
-        <o-field grouped>
-            <o-field>
-                <o-switch v-model="showWeekNumber">Show week number</o-switch>
-            </o-field>
-            <o-field>
-                <o-switch v-model="enableSeconds">Enable seconds</o-switch>
-            </o-field>
+        <o-field grouped multiline>
             <o-field label="Locale">
                 <o-select v-model="locale">
-                    <option :value="undefined"></option>
                     <option value="de-DE">de-DE</option>
                     <option value="en-CA">en-CA</option>
                     <option value="en-GB">en-GB</option>
@@ -37,10 +30,17 @@ const locale = ref(); // Browser locale
             </o-field>
             <o-field label="Hour format">
                 <o-select v-model="hourFormat">
-                    <option :value="undefined"></option>
                     <option value="12">12</option>
                     <option value="24">24</option>
                 </o-select>
+            </o-field>
+        </o-field>
+        <o-field grouped multiline>
+            <o-field>
+                <o-switch v-model="showWeekNumber">Show week number</o-switch>
+            </o-field>
+            <o-field>
+                <o-switch v-model="enableSeconds">Enable seconds</o-switch>
             </o-field>
         </o-field>
 

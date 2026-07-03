@@ -47,26 +47,24 @@ function pause(): void {
 <template>
     <section class="odocs-spaced">
         <p>
-            <o-button
-                label="Launch notification (default)"
-                size="medium"
-                @click="simple" />
+            <o-button label="Launch notification (default)" @click="simple" />
+        </p>
+        <p>
             <o-button
                 label="Launch notification (success)"
                 variant="success"
-                size="medium"
                 @click="success" />
         </p>
         <p>
             <o-button
                 label="Launch notification (danger)"
                 variant="danger"
-                size="medium"
                 @click="danger" />
+        </p>
+        <p>
             <o-button
                 label="Launch notification (pause on hover)"
                 variant="warning"
-                size="medium"
                 @click="pause" />
         </p>
     </section>

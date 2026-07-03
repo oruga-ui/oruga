@@ -90,19 +90,14 @@ function closeIndefinite(): void {
 <template>
     <section class="odocs-spaced">
         <p>
-            <o-button
-                label="Launch toast (default)"
-                size="medium"
-                @click="toast" />
+            <o-button label="Launch toast (default)" @click="toast" />
             <o-button
                 label="Launch toast (success)"
                 variant="success"
-                size="medium"
                 @click="success" />
             <o-button
                 label="Launch toast (danger)"
                 variant="danger"
-                size="medium"
                 @click="danger" />
         </p>
 
@@ -110,23 +105,19 @@ function closeIndefinite(): void {
             <o-button
                 label="Launch toast (queued)"
                 variant="primary"
-                size="medium"
                 @click="queueToast" />
             <o-button
                 label="Launch toast (pause on hover)"
                 variant="secondary"
-                size="medium"
                 @click="pause" />
             <o-button
                 label="Launch toast (infinite)"
                 variant="warning"
-                size="medium"
                 @click="infinite" />
             <o-button
                 v-if="infiniteToast"
                 label="close toast (infinite)"
                 variant="danger"
-                size="medium"
                 @click="closeIndefinite" />
         </p>
     </section>

@@ -10,7 +10,7 @@ const showWeekNumber = ref(false);
 
 <template>
     <section>
-        <o-field grouped>
+        <o-field grouped multiline>
             <o-field label="Locale">
                 <o-select v-model="locale" placeholder="Locale">
                     <option :value="undefined"></option>

@@ -9,7 +9,7 @@ const variant = ref<string>();
 
 <template>
     <section>
-        <o-field grouped>
+        <o-field grouped multiline>
             <o-field label="Position">
                 <o-select v-model="position" placeholder="Position">
                     <option :value="undefined">Default</option>

@@ -18,7 +18,7 @@ const settings = reactive({
 
 <template>
     <section>
-        <o-field grouped>
+        <o-field grouped multiline>
             <o-field label="Size">
                 <o-select v-model="settings.size">
                     <option value="small">small</option>

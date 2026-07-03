@@ -18,6 +18,10 @@
     color: var(--vp-c-brand) !important;
 }
 
+.VPSidebar {
+    max-height: 100vh;
+}
+
 .VPContent .VPDoc.has-aside .container .content-container {
     max-width: none;
 }
