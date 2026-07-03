@@ -12,7 +12,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
   </div>
   <!--teleport start-->
   <transition-stub appear="false" persisted="false" css="true">
-    <div class="o-datepicker__content o-datepicker__content--modal" popover="" style="display: none; position-area: none; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" data-position="centered">
+    <div class="o-datepicker__content" popover="" style="display: none; position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" data-position="bottom">
       <header class="o-datepicker__header"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__previous" aria-label="Previous Page"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
           <!--v-if-->
           <!--v-if--></span>
