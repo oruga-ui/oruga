@@ -9,9 +9,9 @@ import {
     useTemplateRef,
     toRaw,
     triggerRef,
+    shallowReadonly,
     type MaybeRefOrGetter,
     type VNode,
-    shallowReadonly,
 } from "vue";
 
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
