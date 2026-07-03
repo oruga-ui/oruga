@@ -184,7 +184,11 @@ const pickerRef = useTemplateRef("pickerComponent");
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const isModal = computed(() =>
-    props.inline ? false : isMobile ? props.mobileModal : props.desktopModal,
+    props.inline
+        ? false
+        : isMobile.value
+          ? props.mobileModal
+          : props.desktopModal,
 );
 
 const { dtf, dateCreator, dateFormatter, dateParser } =
