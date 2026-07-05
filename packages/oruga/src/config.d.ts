@@ -1243,6 +1243,10 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 triggerClass: ClassDefinition;
                 /**
+                 * Class of the menu element
+                 */
+                menuClass: ClassDefinition;
+                /**
                  * Class of the content element
                  */
                 contentClass: ClassDefinition;
