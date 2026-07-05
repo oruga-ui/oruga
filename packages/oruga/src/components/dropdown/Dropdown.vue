@@ -206,10 +206,8 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const isMobileNative = isClient && isMobileAgent.any();
 
 // check if should be shown as modal
-const isModal = computed(
-    () =>
-        (isMobile.value && props.mobileModal) ||
-        (!isMobile.value && props.desktopModal),
+const isModal = computed(() =>
+    isMobile.value ? props.mobileModal : props.desktopModal,
 );
 
 const {
