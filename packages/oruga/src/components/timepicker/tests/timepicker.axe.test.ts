@@ -1,4 +1,4 @@
-import { defineComponent, h } from "vue";
+﻿import { defineComponent, h } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
@@ -19,7 +19,7 @@ const TestComponent = defineComponent(
         ),
 );
 
-describe("OTimepicker axe tests", () => {
+describe("OTimepicker a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {

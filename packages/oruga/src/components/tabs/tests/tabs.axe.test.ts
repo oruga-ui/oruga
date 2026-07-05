@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "vitest";
+﻿import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import { axe } from "jest-axe";
@@ -9,7 +9,7 @@ import type { TabsProps } from "../props";
 
 type ExampleProps = ComponentProps<typeof TabsExample>;
 
-describe("OTabs axe tests", () => {
+describe("OTabs a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {

@@ -13,13 +13,11 @@ const TestComponent = defineComponent(
         h(
             OField,
             { label: "My Input" },
-            {
-                default: () => h(ODatepicker, props),
-            },
+            { default: () => h(ODatepicker, props) },
         ),
 );
 
-describe("ODatepicker axe tests", () => {
+describe("ODatepicker a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {

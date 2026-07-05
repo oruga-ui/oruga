@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "vitest";
+﻿import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
 import { nextTick } from "vue";
@@ -8,7 +8,7 @@ import type { MenuItemProps, MenuProps } from "../props";
 
 import OMenu from "../Menu.vue";
 
-describe("Menu axe tests", () => {
+describe("Menu a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: OptionsProp<MenuItemProps<string>> = [
@@ -29,31 +29,31 @@ describe("Menu axe tests", () => {
 
     const a11yCases: { title: string; props: MenuProps<string> }[] = [
         {
-            title: "axe tabs - base case",
+            title: "axe menu - base case",
             props: { options },
         },
         {
-            title: "axe tabs - label case",
+            title: "axe menu - label case",
             props: { options, label: "My Label" },
         },
         {
-            title: "axe tabs - no accordion case",
+            title: "axe menu - no accordion case",
             props: { options, accordion: false },
         },
         {
-            title: "axe tabs - disabled case",
+            title: "axe menu - disabled case",
             props: { options, disabled: true },
         },
         {
-            title: "axe tabs - icon case",
+            title: "axe menu - icon case",
             props: { options, icon: "info-circle" },
         },
         {
-            title: "axe tabs - role tree case",
+            title: "axe menu - role tree case",
             props: { options, role: "tree" },
         },
         {
-            title: "axe tabs - role menu case",
+            title: "axe menu - role menu case",
             props: { options, role: "menu" },
         },
     ];

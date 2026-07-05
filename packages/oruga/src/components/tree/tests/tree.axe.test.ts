@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "vitest";
+﻿import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
 import { nextTick } from "vue";
@@ -7,7 +7,7 @@ import type { TreeProps, TreeOptions } from "../props";
 
 import OTree from "../Tree.vue";
 
-describe("Menu axe tests", () => {
+describe("Tree a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: TreeOptions<string> = [

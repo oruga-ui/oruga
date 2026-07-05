@@ -13,13 +13,11 @@ const BrowserPicker = defineComponent(
         h(
             OField,
             { label: "My Input" },
-            {
-                default: () => h(ODatetimepicker, props),
-            },
+            { default: () => h(ODatetimepicker, props) },
         ),
 );
 
-describe("ODatetimepicker axe tests", () => {
+describe("ODatetimepicker a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {

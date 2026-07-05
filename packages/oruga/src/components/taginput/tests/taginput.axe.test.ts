@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "vitest";
+﻿import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { defineComponent, h } from "vue";
 import { axe } from "jest-axe";
@@ -21,7 +21,7 @@ const TestComponent = defineComponent(
         ),
 );
 
-describe("OTaginput axe tests", () => {
+describe("OTaginput a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: OptionsProp = [

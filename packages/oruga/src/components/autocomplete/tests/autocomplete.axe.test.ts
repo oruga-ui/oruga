@@ -21,7 +21,7 @@ const TestComponent = defineComponent(
         ),
 );
 
-describe("OAutocomplete axe tests", () => {
+describe("OAutocomplete a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: OptionsProp = [

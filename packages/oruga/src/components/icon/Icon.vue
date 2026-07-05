@@ -30,6 +30,7 @@ const props = withDefaults(defineProps<IconProps>(), {
     clickable: false,
     spin: false,
     rotation: undefined,
+    ariaLabel: undefined,
 });
 
 const emits = defineEmits<{
@@ -130,6 +131,7 @@ const rootClasses = defineClasses(
         :style="rootStyle"
         :tabindex="clickable ? 0 : undefined"
         :role="clickable ? 'button' : undefined"
+        :aria-label="ariaLabel"
         @click="onClick"
         @keydown.enter="onClick"
         @keydown.space="onClick">

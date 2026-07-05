@@ -6,7 +6,7 @@ import { setTimeout } from "timers/promises";
 import OPopover from "../Popover.vue";
 import type { PopoverProps } from "../props.ts";
 
-describe("OPopover axe tests", () => {
+describe("OPopover a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
@@ -20,6 +20,14 @@ describe("OPopover axe tests", () => {
         {
             title: "axe popover - open popover",
             props: { active: true },
+        },
+        {
+            title: "axe popover - modal & backdrop",
+            props: { disabled: true, modal: true, backdrop: true },
+        },
+        {
+            title: "axe popover - disabled",
+            props: { disabled: true },
         },
     ];
 
