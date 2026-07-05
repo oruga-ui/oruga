@@ -75,6 +75,13 @@ const inspectData: InspectData<
         class: "triggerClass",
         description: "Class of the trigger element.",
     },
+    menuClass: {
+        class: "menuClass",
+        description: "Class of the menu element.",
+        action: (data): void => {
+            data.active = true;
+        },
+    },
     contentClass: {
         class: "contentClass",
         description: "Class of the content element.",

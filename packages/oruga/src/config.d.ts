@@ -1243,13 +1243,17 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 triggerClass: ClassDefinition;
                 /**
-                 * Class of the menu element
+                 * Class of the content element
                  */
-                menuClass: ClassDefinition;
+                contentClass: ClassDefinition;
                 /**
-                 * Class of the menu element when active
+                 * Class of the content element when active
                  */
-                menuActiveClass: ClassDefinition;
+                contentActiveClass: ClassDefinition;
+                /**
+                 * Class of the content element when should has a backdrop
+                 */
+                contentBackdropClass: ClassDefinition;
                 /**
                  * Class of the body when dropdown is open and scroll is clipped
                  */

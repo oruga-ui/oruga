@@ -111,6 +111,8 @@ export type DropdownClasses = Partial<{
     hoverableClass: ComponentClass;
     /** Class of the trigger element */
     triggerClass: ComponentClass;
+    /** Class of the menu element */
+    menuClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
     /** Class of the content element when active */

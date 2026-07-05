@@ -152,7 +152,6 @@ describe("ODropdown tests", () => {
 
             const menu = wrapper.find(".o-dropdown__menu");
             expect(menu.exists()).toBeTruthy();
-            expect(menu.classes("o-dropdown__menu--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
 
             const items = wrapper.findAll(".o-dropdown__item");

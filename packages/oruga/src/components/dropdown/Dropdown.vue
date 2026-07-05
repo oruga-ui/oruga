@@ -576,6 +576,7 @@ const rootClasses = defineClasses(
 const triggerClasses = defineClasses(["triggerClass", "o-dropdown__trigger"]);
 
 const contentClasses = defineClasses(
+    ["menuClass", "o-dropdown__menu"],
     ["contentClass", "o-dropdown__content"],
     ["contentActiveClass", "o-dropdown__content--active", null, isActive],
     ["contentBackdropClass", "o-dropdown__content--backdrop", null, isModal],
