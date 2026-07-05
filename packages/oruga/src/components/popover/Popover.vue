@@ -137,6 +137,14 @@ function onToggle(event: ToggleEvent): void {
 const rootClasses = defineClasses(
     ["rootClass", "o-popover"],
     [
+        "disabledClass",
+        "o-popover--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    ["modalClass", "o-popover--modal", null, computed(() => props.modal)],
+    ["activeClass", "o-popover--active", null, isActive],
+    [
         "teleportClass",
         "o-popover--teleport",
         null,
@@ -146,8 +154,9 @@ const rootClasses = defineClasses(
 
 const contentClasses = defineClasses(
     ["contentClass", "o-popover__content"],
+    ["contentActiveClass", "o-popover__content--active", null, isActive],
     [
-        "backdropClass",
+        "contentBackdropClass",
         "o-popover__content--backdrop",
         null,
         computed(() => props.backdrop || props.modal),

@@ -27,6 +27,7 @@ const inspectData: InspectData<
         action: (data): void => {
             data.mobileModal = true;
             data.desktopModal = true;
+            data.active = true;
         },
     },
     teleportClass: {
@@ -54,19 +55,9 @@ const inspectData: InspectData<
             data.expanded = true;
         },
     },
-    overlayClass: {
-        class: "overlayClass",
-        description: "Class of the root element when has an overlay.",
-        properties: ["mobileModal", "desktopModal"],
-        action: (data): void => {
-            data.mobileModal = true;
-            data.desktopModal = true;
-            data.active = true;
-        },
-    },
     activeClass: {
         class: "activeClass",
-        description: "Class of the root element when active or inline.",
+        description: "Class of the root element when active.",
         properties: ["active"],
         action: (data): void => {
             data.active = true;
@@ -84,18 +75,28 @@ const inspectData: InspectData<
         class: "triggerClass",
         description: "Class of the trigger element.",
     },
-    menuClass: {
-        class: "menuClass",
-        description: "Class of the menu element.",
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the content element.",
         action: (data): void => {
             data.active = true;
         },
     },
-    menuActiveClass: {
-        class: "menuActiveClass",
-        description: "Class of the menu element when active or inline.",
+    contentActiveClass: {
+        class: "contentActiveClass",
+        description: "Class of the content element when active.",
         properties: ["active"],
         action: (data): void => {
+            data.active = true;
+        },
+    },
+    contentBackdropClass: {
+        class: "contentBackdropClass",
+        description: "Class of the content when should has a backdrop.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
             data.active = true;
         },
     },

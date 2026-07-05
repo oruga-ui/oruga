@@ -26,6 +26,24 @@ const inspectData: InspectData<
         description: "Class of the root element when on mobile.",
         info: "Switch to mobile view to see it in action!",
     },
+    modalClass: {
+        class: "modalClass",
+        description: "Class of the root element when shown as modal.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+            data.active = true;
+        },
+    },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (data): void => {
+            data.disabled = true;
+        },
+    },
     sizeClass: {
         class: "sizeClass",
         description: "Class of the root element with size.",
@@ -43,6 +61,23 @@ const inspectData: InspectData<
             data.expanded = true;
         },
     },
+    teleportClass: {
+        class: "teleportClass",
+        description: "Class of the root element when teleported.",
+        properties: ["teleport"],
+        action: (data): void => {
+            data.teleport = true;
+            data.active = true;
+        },
+    },
+    activeClass: {
+        class: "activeClass",
+        description: "Class of the root element when active.",
+        properties: ["active"],
+        action: (data): void => {
+            data.active = true;
+        },
+    },
     triggerClass: {
         class: "triggerClass",
         description: "Class of the trigger element.",
@@ -56,12 +91,21 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
-    modalClass: {
-        class: "modalClass",
-        description: "Class of the content element when shown as modal",
+    contentActiveClass: {
+        class: "contentActiveClass",
+        description: "Class of the content element when active.",
+        properties: ["active"],
         action: (data): void => {
-            data.desktopModal = true;
+            data.active = true;
+        },
+    },
+    contentBackdropClass: {
+        class: "contentBackdropClass",
+        description: "Class of the content when should has a backdrop.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
             data.mobileModal = true;
+            data.desktopModal = true;
             data.active = true;
         },
     },

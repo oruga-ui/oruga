@@ -654,13 +654,29 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileClass: ClassDefinition;
                 /**
-                 * Class of the root element with size
+                 * Class of the root element when shown as modal
                  */
-                sizeClass: ClassDefinition;
+                modalClass: ClassDefinition;
+                /**
+                 * Class of the root element when teleported
+                 */
+                teleportClass: ClassDefinition;
+                /**
+                 * Class of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
                 /**
                  * Class of the root element when expanded
                  */
                 expandedClass: ClassDefinition;
+                /**
+                 * Class for the root element when active or inline
+                 */
+                activeClass: ClassDefinition;
+                /**
+                 * Class of the root element with size
+                 */
+                sizeClass: ClassDefinition;
                 /**
                  * Class of the trigger element
                  */
@@ -670,9 +686,13 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentClass: ClassDefinition;
                 /**
-                 * Class of the content element when shown as modal
+                 * Class of the content element when active or inline
                  */
-                modalClass: ClassDefinition;
+                contentActiveClass: ClassDefinition;
+                /**
+                 * Class of the content element when should has a backdrop
+                 */
+                contentBackdropClass: ClassDefinition;
                 /**
                  * Class of the header element inside the box
                  */
@@ -1211,11 +1231,7 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 expandedClass: ClassDefinition;
                 /**
-                 * Class of the root element when has an overlay
-                 */
-                overlayClass: ClassDefinition;
-                /**
-                 * Class for the root element when active or inline
+                 * Class for the root element when active
                  */
                 activeClass: ClassDefinition;
                 /**
@@ -1231,7 +1247,7 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 menuClass: ClassDefinition;
                 /**
-                 * Class of the menu element when active or inline
+                 * Class of the menu element when active
                  */
                 menuActiveClass: ClassDefinition;
                 /**
@@ -2082,6 +2098,18 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 rootClass: ClassDefinition;
                 /**
+                 * Class of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
+                /**
+                 * Class of the root element when shown as modal
+                 */
+                modalClass: ClassDefinition;
+                /**
+                 * Class for the root element when active
+                 */
+                activeClass: ClassDefinition;
+                /**
                  * Class of the root element when teleported
                  */
                 teleportClass: ClassDefinition;
@@ -2093,6 +2121,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element
                  */
                 contentClass: ClassDefinition;
+                /**
+                 * Class of the content element when active
+                 */
+                contentActiveClass: ClassDefinition;
+                /**
+                 * Class of the content element when should has a backdrop
+                 */
+                contentBackdropClass: ClassDefinition;
                 /**
                  * Class of the content element when a backdrop should be shown
                  */
@@ -3402,13 +3438,29 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileClass: ClassDefinition;
                 /**
-                 * Class of the root element component size
+                 * Class of the root element when shown as modal
                  */
-                sizeClass: ClassDefinition;
+                modalClass: ClassDefinition;
+                /**
+                 * Class of the root element when teleported
+                 */
+                teleportClass: ClassDefinition;
+                /**
+                 * Class of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
                 /**
                  * Class of the root element when expanded
                  */
                 expandedClass: ClassDefinition;
+                /**
+                 * Class for the root element when active or inline
+                 */
+                activeClass: ClassDefinition;
+                /**
+                 * Class of the root element component size
+                 */
+                sizeClass: ClassDefinition;
                 /**
                  * Class of the trigger element
                  */
@@ -3418,9 +3470,13 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentClass: ClassDefinition;
                 /**
-                 * Class of the content element when shown as modal
+                 * Class of the content element when active or inline
                  */
-                modalClass: ClassDefinition;
+                contentActiveClass: ClassDefinition;
+                /**
+                 * Class of the content element when should has a backdrop
+                 */
+                contentBackdropClass: ClassDefinition;
                 /**
                  * Class of the select separator element
                  */

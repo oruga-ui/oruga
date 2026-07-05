@@ -7,6 +7,31 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
+    modalClass: {
+        class: "modalClass",
+        description: "Class of the root element when shown as modal.",
+        properties: ["modal"],
+        action: (data): void => {
+            data.modal = true;
+            data.active = true;
+        },
+    },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (data): void => {
+            data.disabled = true;
+        },
+    },
+    activeClass: {
+        class: "activeClass",
+        description: "Class of the root element when active.",
+        properties: ["active"],
+        action: (data): void => {
+            data.active = true;
+        },
+    },
     teleportClass: {
         class: "teleportClass",
         description: "Class of the root element when teleported.",
@@ -22,6 +47,23 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
     contentClass: {
         class: "contentClass",
         description: "Class of the content element.",
+    },
+    contentActiveClass: {
+        class: "contentActiveClass",
+        description: "Class of the content element when active.",
+        properties: ["active"],
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    contentBackdropClass: {
+        class: "contentBackdropClass",
+        description: "Class of the content when should has a backdrop.",
+        properties: ["modal"],
+        action: (data): void => {
+            data.modal = true;
+            data.active = true;
+        },
     },
     backdropClass: {
         class: "backdropClass",

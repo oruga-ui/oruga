@@ -430,7 +430,7 @@ const inputBind = computed(() => ({
 
 const rootClasses = defineClasses(["rootClass", "o-autocomplete"]);
 
-const _inputClasses = defineClasses(["inputClass", "o-autocomplete__input"]);
+const inputClasses = defineClasses(["inputClass", "o-autocomplete__input"]);
 
 const itemClasses = defineClasses(["itemClass", "o-autocomplete__item"]);
 
@@ -504,7 +504,7 @@ defineExpose({
                     ref="inputComponent"
                     v-bind="inputBind"
                     v-model="inputValue"
-                    :class="_inputClasses"
+                    :class="inputClasses"
                     :type="type"
                     :size="size"
                     :rounded="rounded"
