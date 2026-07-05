@@ -1,3 +1,23 @@
+## [0.14.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.1...v0.14.0-pre.2) (2026-07-05)
+
+### ⚠ BREAKING CHANGES
+
+* The property name suffix of the forwarded properties for the sub-components fot renamed from `Classes` to `Attrs`.
+
+### Features
+
+* **table:** expose `filteredRows` and `pageRows` readonly refs ([#1665](https://github.com/oruga-ui/oruga/issues/1665)) ([cf4217d](https://github.com/oruga-ui/oruga/commit/cf4217d377f17bc66e33386e8c953578dffa409c))
+
+### Bug Fixes
+
+* correct volar/globals type exports ([#1666](https://github.com/oruga-ui/oruga/issues/1666)) ([de3057f](https://github.com/oruga-ui/oruga/commit/de3057f19abffdfea1a064e10598768daa927592))
+* **datepicker:** correct modal calculation  ([#1670](https://github.com/oruga-ui/oruga/issues/1670)) ([626964e](https://github.com/oruga-ui/oruga/commit/626964e3e26b7b020d175092257f5befd98ea1c5))
+* **dropdown:** correct popover modal behavior ([#1671](https://github.com/oruga-ui/oruga/issues/1671)) ([eedf0b8](https://github.com/oruga-ui/oruga/commit/eedf0b8f30babdbaed4d0ed927a7285988076e1c))
+
+### Code Refactoring
+
+* rename prop suffix `classes` to `attrs` for forwarded properties  ([#1631](https://github.com/oruga-ui/oruga/issues/1631)) ([c94a6c1](https://github.com/oruga-ui/oruga/commit/c94a6c1e88663bcd7230ca0a58d9017bf760096c))
+
 ## [0.14.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.13.6...v0.14.0-pre.1) (2026-06-27)
 
 ### ⚠ BREAKING CHANGES
