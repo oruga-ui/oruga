@@ -10,7 +10,7 @@ And **all components come with predefined classes** by default, which you can us
 
 All components behaves the same:
 
-- You can set predefined CSS classes globally for each component in the global config;
+- You can set a predefined CSS class configuration globally for each component in the global config;
 - These classes can be static or dynamic, based on the component props;
 - Classes defined globally can be extended or overridden locally, by appending one or more classes, either inline or programmatically, to individual components;
 
@@ -66,7 +66,7 @@ const config: OrugaConfig = {
 
 ### Static classes
 
-Let’s say you want all your buttons to have a `btn` class. You can use a global configuration object and it as second argument to the default `Oruga` plugin, where you can define a `string` for each `class` property of each component (the `class` properties can be found in the `Class Inspector` section of each component):
+Let’s say you want all your buttons to have a `btn` class. You can use a global configuration object and pass it as second argument to the default `Oruga` plugin, where you can define a `string` for each `class` property of each component (the `class` properties can be found in the `Class Inspector` section of each component):
 
 ```typescript
 import { createApp } from 'vue';
@@ -99,8 +99,7 @@ const myConfig = {
 If you need to create some more complex class definitions based on several conditions, you can also define a `function` as a class option.
 The function must return a `string`.
 
-In addition, the component read-only `props` are provided as the first argument of the function.
-
+Some classes provide a possible suffix as the first argument of the function.
 For example, `positionClass` of the Dropdown component provides a suffix to specify the menu position (_top_, _bottom_), in this case you may define a function and append the suffix to the base class name.
 
 ```typescript
