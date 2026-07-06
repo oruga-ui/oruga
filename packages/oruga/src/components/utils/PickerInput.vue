@@ -94,7 +94,7 @@ const props = defineProps({
     triggerClass: { type: Array as PropType<ComponentClass>, required: true },
     contentClass: { type: Array as PropType<ComponentClass>, required: true },
     inputClass: { type: Array as PropType<ComponentClass>, required: true },
-    inputAttrs: { type: Object, default: undefined },
+    inputAttrs: { type: Object, default: () => ({}) },
 });
 
 const emits = defineEmits<{

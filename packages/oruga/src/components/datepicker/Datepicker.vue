@@ -537,19 +537,34 @@ const rootClasses = defineClasses(
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    ["mobileClass", "o-datepicker--mobile", null, isMobile],
+    [
+        "disabledClass",
+        "o-datepicker--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
     [
         "expandedClass",
         "o-datepicker--expanded",
         null,
         computed(() => props.expanded),
     ],
+    ["mobileClass", "o-datepicker--mobile", null, isMobile],
+    ["modalClass", "o-datepicker--modal", null, isModal],
+    ["activeClass", "o-datepicker--active", null, isActive],
+    [
+        "teleportClass",
+        "o-datepicker--teleport",
+        null,
+        computed(() => !!props.teleport),
+    ],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-datepicker__trigger"]);
 const contentClasses = defineClasses(
     ["contentClass", "o-datepicker__content"],
-    ["modalClass", "o-datepicker__content--modal", null, isModal],
+    ["contentActiveClass", "o-datepicker__content--active", null, isActive],
+    ["contentBackdropClass", "o-datepicker__content--backdrop", null, isModal],
 );
 
 const inputClasses = defineClasses(["inputClass", "o-datepicker__input"]);

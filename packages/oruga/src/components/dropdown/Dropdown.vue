@@ -206,10 +206,8 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const isMobileNative = isClient && isMobileAgent.any();
 
 // check if should be shown as modal
-const isModal = computed(
-    () =>
-        (isMobile.value && props.mobileModal) ||
-        (!isMobile.value && props.desktopModal),
+const isModal = computed(() =>
+    isMobile.value ? props.mobileModal : props.desktopModal,
 );
 
 const {
@@ -227,7 +225,7 @@ const {
     onToggle: onPopoverToggle,
 });
 
-const menuStyle = computed(() => ({
+const contentStyle = computed(() => ({
     maxHeight: props.scrollable ? toCssDimension(props.maxHeight) : null,
     overflow: props.scrollable ? "auto" : null,
 }));
@@ -567,7 +565,6 @@ const rootClasses = defineClasses(
     ["modalClass", "o-dropdown--modal", null, isModal],
     ["hoverableClass", "o-dropdown--hoverable", null, hoverable],
     ["activeClass", "o-dropdown--active", null, isActive],
-    ["overlayClass", "o-dropdown--overlay", null, isModal],
     [
         "teleportClass",
         "o-dropdown--teleport",
@@ -578,9 +575,11 @@ const rootClasses = defineClasses(
 
 const triggerClasses = defineClasses(["triggerClass", "o-dropdown__trigger"]);
 
-const menuClasses = defineClasses(
+const contentClasses = defineClasses(
     ["menuClass", "o-dropdown__menu"],
-    ["menuActiveClass", "o-dropdown__menu--active", null, isActive],
+    ["contentClass", "o-dropdown__content"],
+    ["contentActiveClass", "o-dropdown__content--active", null, isActive],
+    ["contentBackdropClass", "o-dropdown__content--backdrop", null, isModal],
 );
 
 // #endregion --- Computed Component Classes ---
@@ -651,8 +650,8 @@ defineExpose({
                     :id="menuId"
                     ref="menuElement"
                     :tabindex="-1"
-                    :class="menuClasses"
-                    :style="menuStyle"
+                    :class="contentClasses"
+                    :style="contentStyle"
                     :role="selectable ? 'listbox' : 'menu'"
                     :aria-labelledby="labelId"
                     :aria-label="ariaLabel"

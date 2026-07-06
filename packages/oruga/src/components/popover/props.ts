@@ -53,12 +53,22 @@ export type PopoverProps = {
 export type PopoverClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the root element when shown as modal */
+    modalClass: ComponentClass;
+    /** Class for the root element when active  */
+    activeClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
     /** Class of the trigger element */
     triggerClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
+    /** Class of the content element when active */
+    contentActiveClass: ComponentClass;
+    /** Class of the content element when should has a backdrop */
+    contentBackdropClass: ComponentClass;
     /** Class of the content element when a backdrop should be shown */
     backdropClass: ComponentClass;
     /** Class of the body when popover has backdrop and scroll is clipped */
