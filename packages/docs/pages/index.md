@@ -9,7 +9,7 @@ head:
       - name: keywords
         content: oruga vue vuejs components ux ui css agnostic framework javascript typescript
 hero:
-    name: Oruga
+    name: Oruga UI
     image:
         src: logo.png
     text: CSS agnostic UI components for Vue.js
