@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 const selected = ref(new Date());
-const locale = ref(); // Browser locale
+const locale = ref("en-US"); // Browser locale
 const openOnFocus = ref(true);
 const stayOpen = ref(false);
 const showWeekNumber = ref(false);
@@ -13,7 +13,6 @@ const showWeekNumber = ref(false);
         <o-field grouped multiline>
             <o-field label="Locale">
                 <o-select v-model="locale" placeholder="Locale">
-                    <option :value="undefined"></option>
                     <option value="de-DE">de-DE</option>
                     <option value="en-CA">en-CA</option>
                     <option value="en-GB">en-GB</option>

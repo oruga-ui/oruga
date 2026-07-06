@@ -138,7 +138,7 @@ const _teleport = useTeleport(props.teleport);
 
 if (!props.inline) {
     usePopoverAPI({
-        position: props.modal ? "centered" : props.position,
+        position: () => (props.modal ? "centered" : props.position),
         behavior: "auto",
         trigger: isActive,
         triggerRef,

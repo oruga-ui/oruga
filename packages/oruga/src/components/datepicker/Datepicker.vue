@@ -33,9 +33,8 @@ defineOptions({
     isOruga: true,
     name: "ODatepicker",
     configField: "datepicker",
+    inheritAttrs: false,
 });
-
-type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<DatepickerProps<IsRange, IsMultiple>>(),
@@ -179,6 +178,8 @@ defineSlots<{
     /** Define an additional footer */
     footer?(): void;
 }>();
+
+type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 const pickerRef = useTemplateRef("pickerComponent");
 
@@ -587,7 +588,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
 <template>
     <div data-oruga="datepicker" :class="rootClasses">
-        <OPickerInput
+        <o-picker-input
             ref="pickerComponent"
             v-bind="$attrs"
             v-model:active="isActive"
@@ -632,7 +633,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
             <header :class="headerClasses">
                 <slot name="header">
-                    <OButton
+                    <o-button
                         v-if="!disabled"
                         :class="prevButtonClasses"
                         :disabled="!showPrev"
@@ -644,7 +645,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         @keydown.enter.prevent="prev"
                         @keydown.space.prevent="prev" />
 
-                    <OButton
+                    <o-button
                         v-if="!disabled"
                         :class="nextButtonClasses"
                         :disabled="!showNext"
@@ -714,6 +715,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             <footer v-if="$slots.footer" :class="footerClasses">
                 <slot name="footer" />
             </footer>
-        </OPickerInput>
+        </o-picker-input>
     </div>
 </template>

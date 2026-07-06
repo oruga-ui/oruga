@@ -26,7 +26,7 @@ export type PopoverAPIOptions = {
      * Positioning area used for the popover (mapped to `CSS position-area`).
      * In addition `centered` center the content in the middle of the screen.
      */
-    position?: "centered" | PopoverPosition;
+    position?: MaybeRefOrGetter<"centered" | PopoverPosition>;
     /** Reference or getter resolving to the trigger element. */
     triggerRef: MaybeRefOrGetter<EventTarget>;
     /** Reference or getter resolving to the popover content element. */
@@ -190,18 +190,20 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         // place popover attribute on content
         contentEl.popover = behavior;
 
+        const _position = toValue(position);
+
         // add content position styles
         contentEl.style.positionArea =
-            position === "centered"
+            _position === "centered"
                 ? "none"
-                : Array.isArray(position)
-                  ? position.join(" ")
-                  : position;
+                : Array.isArray(_position)
+                  ? _position.join(" ")
+                  : _position;
         contentEl.style.positionTryFallbacks =
             "flip-block, flip-inline, flip-block flip-inline";
 
         // add position data attribute
-        contentEl.dataset.position = position.toString();
+        contentEl.dataset.position = _position.toString();
 
         if (behavior !== "manual") {
             // check if the trigger has native popover target support

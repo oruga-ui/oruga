@@ -54,8 +54,6 @@ defineOptions({
     inheritAttrs: false,
 });
 
-type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
-
 const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
@@ -175,6 +173,8 @@ defineSlots<{
     option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
 }>();
 
+type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
+
 const triggerRef = useTemplateRef<HTMLElement>("triggerElement");
 const menuRef = useTemplateRef<HTMLElement | Component>("menuElement");
 
@@ -217,7 +217,7 @@ const {
     close: closePopover,
     toggle: togglePopover,
 } = usePopoverAPI({
-    position: isModal.value ? "centered" : props.position,
+    position: () => (isModal.value ? "centered" : props.position),
     delay: props.delay,
     behavior: "manual",
     trigger: isActive,

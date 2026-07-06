@@ -98,7 +98,7 @@ onMounted(() => {
 const _teleport = useTeleport(props.teleport);
 
 const { open, close, toggle } = usePopoverAPI({
-    position: props.modal ? "centered" : props.position,
+    position: () => (props.modal ? "centered" : props.position),
     delay: props.delay,
     behavior: props.behavior,
     trigger: isActive,

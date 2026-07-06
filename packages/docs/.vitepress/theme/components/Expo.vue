@@ -18,8 +18,7 @@ import VueTelescopeExpo from "./expo/VueTelescopeExpo.vue";
                     root-class="loadingicon"
                     pack="fas"
                     icon="sync-alt"
-                    spin>
-                </o-icon>
+                    spin/>
                 <span v-else>Load more</span>
             </o-button>
         </template>

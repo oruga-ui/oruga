@@ -22,9 +22,8 @@ defineOptions({
     isOruga: true,
     name: "OTimepicker",
     configField: "timepicker",
+    inheritAttrs: false,
 });
-
-type ModelValue = TimepickerProps["modelValue"];
 
 const props = withDefaults(defineProps<TimepickerProps>(), {
     override: undefined,
@@ -119,6 +118,8 @@ defineSlots<{
     /** Define an additional content in the footer */
     footer?(): void;
 }>();
+
+type ModelValue = TimepickerProps["modelValue"];
 
 const pickerRef = useTemplateRef("pickerComponent");
 
@@ -614,7 +615,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
 <template>
     <div data-oruga="timepicker" :class="rootClasses">
-        <OPickerInput
+        <o-picker-input
             ref="pickerComponent"
             v-bind="$attrs"
             v-model:active="isActive"
@@ -735,6 +736,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             <footer v-if="$slots.footer" :class="footerClasses">
                 <slot name="footer" />
             </footer>
-        </OPickerInput>
+        </o-picker-input>
     </div>
 </template>
