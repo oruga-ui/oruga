@@ -45,6 +45,12 @@ header .VPNavBar button {
     }
 }
 
+.VPHome .heading .text {
+    font-size: 0.75em;
+    line-height: 1.5;
+    color: var(--vp-c-brand-3);
+}
+
 .VPContent {
     .main {
         h1,

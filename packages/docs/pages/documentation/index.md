@@ -50,9 +50,7 @@ This instance manages the global components and configurations, as well as the c
 
 A new instance can be created by the `createOruga` composable.
 However, for a convenient usage, the package also comes with a main `Oruga` instance as the default package export.
-The instance then has to be passed to the `app.use()` function of your current Vue app.
-
-<!-- The created instance is also a Vue plugin, so you have to use the `app.use()` function to pass it to your current Vue app. -->
+The instance then has to be passed to the `app.use()` function of your Vue app.
 
 To extend the default global configuration, either pass a custom configuration object when creating a new Oruga instance, or as the second argument when installing the instance to the Vue app.  
 See [configuration](/documentation/configuration) for further details and available configuration options.
@@ -70,8 +68,8 @@ app.use(oruga, {
 });
 ```
 
-To take advantage of bundler’s [tree-shaking](https://en.wikipedia.org/wiki/Tree_shaking) optimisations, no components are registered globally by default.
-If you want to register a component globally, extend the your Oruga instance with the relevant component plugin.
+To take advantage of bundler’s [tree-shaking](https://en.wikipedia.org/wiki/Tree_shaking) optimisations, components will not be registered globally by default.
+If you want to register a component globally, extend your Oruga instance with the relevant component plugin.
 This makes the respective component and its subcomponents, as well as any related programmatic components, globally available.
 
 > Note: Before v0.13 the main Oruga Vue plugin had registered all components globally by default.
@@ -135,9 +133,10 @@ yarn add @oruga-ui/theme-oruga
 @import "@oruga-ui/theme-oruga/dist/scss/oruga.scss";
 ```
 
-### VSC support
+### IDE support
 
-If you are using Visual Studio Code (VSC), you can specify global component types by configuring `compilerOptions.types` in your `tsconfig.json`:
+When you're using globally registered components, your IDE can't detect the type of the component by default.
+To add global types for components, we provide an global type export `@oruga-ui/oruga-next/globals` which you use to configure the `compilerOptions.types` option in your `tsconfig.json`:
 
 ```js
 // tsconfig.json
@@ -174,11 +173,25 @@ To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plug
 ## Accessibility
 
 Our goal is to provide components that are as accessible as possible and implement accessibility standards by default.
+
+The [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/) refers to Web Content Accessibility Guideline, is a standard managed by the WAI ("Web Accessibility Initiative") of W3C ("World Wide Web Consortium"), which consists of recommendations for making the web content more accessible. Our goal is to make sure we meet the WCAG 2.2 standards wherever possible.
+
+HTML offers various [semantic elements](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantic_elements) to aid assistive technologies, which are a core ingredient for accessible web content.
+Using semantic HTML is an accessible foundation to provides out-of-the-box support for screen readers, which is not possible when regular div elements with classes are used.
+
+[ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) ("Accessible Rich Internet Applications") is a suite designed to address the limitations of semantic HTML.
+These cases mainly relates to rich UI components/widgets.
+Although browser support for rich UI components, such as a datepicker or colorpicker, has been improved in recent years, complex UI components are still derived from standard HTML elements.
+These types of components must provide keyboard and screen reader support, the latter case is where the WAI-ARIA is utilized.
+The ARIA specification consists of roles, properties, and attributes. Roles define the main function of an element, e.g. checkbox, dialog or tablist, whereas states and properties define the element's metadata, e.g. aria-checked or aria-disabled.
+
 The [ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/) provides a set of accessibility patterns, which describes how to apply accessibility semantics to common design patterns and widget.
 Where possible, our components implement or support these W3C ARIA APG patterns.
 The patterns supported by each component can be seen at the top of its documentation page.
 
-If you notice any accessibility issues regarding Oruga components, we encourage you to raise awareness and open an issue!
+We promise to ensure that every component can be navigated using the keyboard; Semantic HTML and live regions ensure that assistive technologies can interpret all components; ARIA roles, states and properties are applied automatically in compliance with the WAI-ARIA pattern.
+
+**If you notice any accessibility issues regarding Oruga components, we encourage you to raise awareness and open an issue!**
 
 ## Community
 

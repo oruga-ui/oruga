@@ -32,7 +32,7 @@ To use _SASS/SCSS variables_, you must use the .scss version of a theme from the
 For example, the Oruga theme:
 
 ```js
-import "@oruga-ui/theme-oruga/dist/scss/oruga.scss";
+import "@oruga-ui/theme-oruga/scss/oruga.scss";
 ```
 
 ::: warning
