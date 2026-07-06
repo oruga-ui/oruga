@@ -25,12 +25,12 @@ features:
     - title: CSS framework agnostic
       icon: ⛓️‍💥
       details:
-          Oruga ships with no CSS or CSS framework/library dependencies by default.
+          Oruga ships with no built-in CSS or CSS framework/library dependencies by default.
           However, you can easily integrate one using predefined themes, or you create your own theme.
 
     - title: Customisable
       icon: 🦋
-      details: Oruga components are fully customisable using a CSS class-mapping approach. This allows you to configure classes for HTML elements either globally or to individual instances.
+      details: Oruga components are fully customisable using a CSS class-mapping approach. This allows you to configure classes for HTML elements and more either globally or to individual instances.
 
     - title: Components with steroids
       icon: 🚀
