@@ -30,11 +30,11 @@ features:
 
     - title: Customisable
       icon: 🦋
-      details: Oruga components are fully customisable using a CSS class mapping approach. This allows you to define which class will be applied to which element, either globally or for individual components.
+      details: Oruga components are fully customisable using a CSS class-mapping approach. This allows you to configure classes for HTML elements either globally or to individual instances.
 
     - title: Components with steroids
       icon: 🚀
-      details: Oruga components provide additional functionality for native elements, and are implemented in accordance with WCAG recommendations and WAI-ARIA patterns.
+      details: Oruga components provide additional functionality for native elements. In addition, each component is implemented in accordance with WCAG recommendations and WAI-ARIA patterns.
 
     - title: Lightweight
       icon: 🪶
