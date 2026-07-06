@@ -1,10 +1,10 @@
 ﻿import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
 
 import ONotification from "../Notification.vue";
 import type { NotificationProps } from "../props.ts";
+import { nextTick } from "vue";
 
 describe("ONotification a11y tests", () => {
     enableAutoUnmount(afterEach);
@@ -22,7 +22,7 @@ describe("ONotification a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout();
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

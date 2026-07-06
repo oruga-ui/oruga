@@ -8,16 +8,10 @@ import OListbox from "../Listbox.vue";
 import OField from "../../field/Field.vue";
 import type { ListboxProps } from "../props.ts";
 
-const TestComponent = defineComponent({
-    setup(props: ListboxProps<unknown, true | false>): () => VNode {
-        return () =>
-            h(
-                OField,
-                { label: "Listbox" },
-                { default: () => h(OListbox, props) },
-            );
-    },
-});
+const TestComponent = defineComponent(
+    (props) => (): VNode =>
+        h(OField, { label: "Listbox" }, { default: () => h(OListbox, props) }),
+);
 
 describe("OListbox a11y tests", () => {
     enableAutoUnmount(afterEach);

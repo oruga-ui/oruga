@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
+import { nextTick } from "vue";
 
 import OLoading from "../Loading.vue";
 import type { LoadingProps } from "../props.ts";
@@ -23,7 +23,7 @@ describe("OLoading a11y tests", () => {
             slots: { default: "<span>Content</span>" },
             attachTo: document.body,
         });
-        await setTimeout();
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

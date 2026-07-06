@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
+import { nextTick } from "vue";
 
 import type { OptionsProp } from "@/composables";
 
@@ -92,7 +92,7 @@ describe("ODropdown a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout(); // await child items got rendered
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

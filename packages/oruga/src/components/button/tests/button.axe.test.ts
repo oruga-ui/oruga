@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
+import { nextTick } from "vue";
 
 import OButton from "../Button.vue";
 import type { ButtonProps } from "../props.ts";
@@ -34,7 +34,7 @@ describe("OButton a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout();
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

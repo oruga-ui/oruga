@@ -1,18 +1,17 @@
-import { defineComponent, h } from "vue";
+import { defineComponent, h, nextTick, type VNode } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
 
 import ODatepicker from "../Datepicker.vue";
 import type { DatepickerProps } from "../props";
 import OField from "../../field/Field.vue";
 
 const TestComponent = defineComponent(
-    (props) => () =>
+    (props) => (): VNode =>
         h(
             OField,
-            { label: "My Input" },
+            { label: "Datepicker" },
             { default: () => h(ODatepicker, props) },
         ),
 );
@@ -43,7 +42,7 @@ describe("ODatepicker a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout(); // await child items got rendered
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

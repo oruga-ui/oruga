@@ -7,16 +7,10 @@ import OSlider from "../Slider.vue";
 import OField from "../../field/Field.vue";
 import type { SliderProps } from "../props.ts";
 
-const TestComponent = defineComponent({
-    setup(props: SliderProps<true | false>): () => VNode {
-        return () =>
-            h(
-                OField,
-                { label: "Slider" },
-                { default: () => h(OSlider, props) },
-            );
-    },
-});
+const TestComponent = defineComponent(
+    (props) => (): VNode =>
+        h(OField, { label: "Slider" }, { default: () => h(OSlider, props) }),
+);
 
 describe("OSlider a11y tests", () => {
     enableAutoUnmount(afterEach);

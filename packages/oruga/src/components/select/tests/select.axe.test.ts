@@ -1,23 +1,16 @@
-import { defineComponent, h, type VNode } from "vue";
+import { defineComponent, h, nextTick, type VNode } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
 
 import OSelect from "../Select.vue";
 import OField from "../../field/Field.vue";
 import type { SelectProps } from "../props.ts";
 
-const TestComponent = defineComponent({
-    setup(props: SelectProps<unknown, true | false>): () => VNode {
-        return () =>
-            h(
-                OField,
-                { label: "Select" },
-                { default: () => h(OSelect, props) },
-            );
-    },
-});
+const TestComponent = defineComponent(
+    (props) => (): VNode =>
+        h(OField, { label: "Select" }, { default: () => h(OSelect, props) }),
+);
 
 describe("OSelect a11y tests", () => {
     enableAutoUnmount(afterEach);
@@ -96,7 +89,7 @@ describe("OSelect a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout();
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

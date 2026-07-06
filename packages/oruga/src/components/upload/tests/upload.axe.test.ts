@@ -1,23 +1,16 @@
-import { defineComponent, h, type VNode } from "vue";
+import { defineComponent, h, nextTick, type VNode } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
 
 import OUpload from "../Upload.vue";
 import OField from "../../field/Field.vue";
 import type { UploadProps } from "../props.ts";
 
-const TestComponent = defineComponent({
-    setup(props: UploadProps<object, true | false>): () => VNode {
-        return () =>
-            h(
-                OField,
-                { label: "Upload" },
-                { default: () => h(OUpload, props) },
-            );
-    },
-});
+const TestComponent = defineComponent(
+    (props) => (): VNode =>
+        h(OField, { label: "Upload" }, { default: () => h(OUpload, props) }),
+);
 
 describe("OUpload a11y tests", () => {
     enableAutoUnmount(afterEach);
@@ -35,7 +28,7 @@ describe("OUpload a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout();
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

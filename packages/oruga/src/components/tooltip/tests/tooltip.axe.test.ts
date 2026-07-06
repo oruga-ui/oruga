@@ -1,7 +1,7 @@
 ﻿import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
+import { nextTick } from "vue";
 
 import OTooltip from "../Tooltip.vue";
 import type { TooltipProps } from "../props.ts";
@@ -23,7 +23,7 @@ describe("OTooltip a11y tests", () => {
             slots: { default: "<button>Trigger</button>" },
             attachTo: document.body,
         });
-        await setTimeout();
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

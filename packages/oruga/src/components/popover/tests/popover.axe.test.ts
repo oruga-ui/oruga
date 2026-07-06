@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
+import { nextTick } from "vue";
 
 import OPopover from "../Popover.vue";
 import type { PopoverProps } from "../props.ts";
@@ -41,7 +41,7 @@ describe("OPopover a11y tests", () => {
             slots: { default: "<p> Open Popover! </p>" },
             attachTo: document.body,
         });
-        await setTimeout(); // await child items got rendered
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

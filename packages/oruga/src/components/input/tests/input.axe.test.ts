@@ -1,19 +1,16 @@
-import { defineComponent, h, type VNode } from "vue";
+import { defineComponent, h, nextTick, type VNode } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
 
 import OInput from "../Input.vue";
 import OField from "../../field/Field.vue";
 import type { InputProps } from "../props.ts";
 
-const TestComponent = defineComponent({
-    setup(props: InputProps<true | false>): () => VNode {
-        return () =>
-            h(OField, { label: "Upload" }, { default: () => h(OInput, props) });
-    },
-});
+const TestComponent = defineComponent(
+    (props) => (): VNode =>
+        h(OField, { label: "Input" }, { default: () => h(OInput, props) }),
+);
 
 describe("OInput a11y tests", () => {
     enableAutoUnmount(afterEach);
@@ -70,7 +67,7 @@ describe("OInput a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout();
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

@@ -1,7 +1,7 @@
 ﻿import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
+import { nextTick } from "vue";
 
 import OPagination from "../Pagination.vue";
 import type { PaginationProps } from "../props.ts";
@@ -47,7 +47,7 @@ describe("OPagination a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout();
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });
