@@ -177,7 +177,7 @@ Our goal is to provide components that are as accessible as possible and impleme
 The [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/) refers to Web Content Accessibility Guideline, is a standard managed by the WAI ("Web Accessibility Initiative") of W3C ("World Wide Web Consortium"), which consists of recommendations for making the web content more accessible. Our goal is to make sure we meet the WCAG 2.2 standards wherever possible.
 
 HTML offers various [semantic elements](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantic_elements) to aid assistive technologies, which are a core ingredient for accessible web content.
-Using semantic HTML is an accessible foundation to provides out-of-the-box support for readers, which is not possible when regular div elements with classes are used.
+Using semantic HTML is an accessible foundation to provides out-of-the-box support for screen readers, which is not possible when regular div elements with classes are used.
 
 [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) ("Accessible Rich Internet Applications") is a suite designed to address the limitations of semantic HTML.
 These cases mainly relates to rich UI components/widgets.
@@ -189,7 +189,7 @@ The [ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/) pro
 Where possible, our components implement or support these W3C ARIA APG patterns.
 The patterns supported by each component can be seen at the top of its documentation page.
 
-We promise to ensure that every component can be navigated using the keyboard alone; Semantic HTML and live regions ensure that assistive technologies can interpret all components; ARIA roles, states and properties are applied automatically in compliance with the WAI-ARIA pattern.
+We promise to ensure that every component can be navigated using the keyboard; Semantic HTML and live regions ensure that assistive technologies can interpret all components; ARIA roles, states and properties are applied automatically in compliance with the WAI-ARIA pattern.
 
 **If you notice any accessibility issues regarding Oruga components, we encourage you to raise awareness and open an issue!**
 
