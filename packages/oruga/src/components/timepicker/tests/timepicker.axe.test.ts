@@ -1,25 +1,22 @@
-import { defineComponent, h } from "vue";
+﻿import { defineComponent, h, nextTick, type VNode } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
 
 import OTimepicker from "../Timepicker.vue";
 import type { TimepickerProps } from "../props.ts";
 import OField from "../../field/Field.vue";
 
 const TestComponent = defineComponent(
-    (props) => () =>
+    (props) => (): VNode =>
         h(
             OField,
-            { label: "My Input" },
-            {
-                default: () => h(OTimepicker, props),
-            },
+            { label: "Timepicker" },
+            { default: () => h(OTimepicker, props) },
         ),
 );
 
-describe("OTimepicker axe tests", () => {
+describe("OTimepicker a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
@@ -45,7 +42,7 @@ describe("OTimepicker axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout(); // await child items got rendered
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

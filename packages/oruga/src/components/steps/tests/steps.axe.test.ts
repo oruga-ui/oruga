@@ -9,7 +9,7 @@ import type { StepsProps } from "../props";
 
 type ExampleProps = ComponentProps<typeof StepsExample>;
 
-describe("OSteps axe tests", () => {
+describe("OSteps a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {

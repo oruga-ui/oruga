@@ -1,8 +1,7 @@
+﻿import { defineComponent, nextTick, h, type VNode } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-import { defineComponent, h } from "vue";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
 
 import type { OptionsProp } from "@/composables";
 
@@ -11,17 +10,15 @@ import type { TaginputProps } from "../props.ts";
 import { OField } from "@/components/field/index.ts";
 
 const TestComponent = defineComponent(
-    (props) => () =>
+    (props) => (): VNode =>
         h(
             OField,
-            { label: "My Input" },
-            {
-                default: () => h(OTaginput, props),
-            },
+            { label: "Taginput" },
+            { default: () => h(OTaginput, props) },
         ),
 );
 
-describe("OTaginput axe tests", () => {
+describe("OTaginput a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: OptionsProp = [
@@ -63,7 +60,7 @@ describe("OTaginput axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout(); // await child items got rendered
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

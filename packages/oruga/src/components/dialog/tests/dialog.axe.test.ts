@@ -6,7 +6,7 @@ import { nextTick } from "vue";
 import ODialog from "@/components/dialog/Dialog.vue";
 import type { DialogProps } from "../props";
 
-describe("ODialog axe test", () => {
+describe("ODialog a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: { title: string; props?: DialogProps }[] = [

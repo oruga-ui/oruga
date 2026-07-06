@@ -3,38 +3,24 @@ import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
 
-import ODatepicker from "../Datepicker.vue";
-import type { DatepickerProps } from "../props";
+import OUpload from "../Upload.vue";
 import OField from "../../field/Field.vue";
+import type { UploadProps } from "../props.ts";
 
 const TestComponent = defineComponent(
     (props) => (): VNode =>
-        h(
-            OField,
-            { label: "Datepicker" },
-            { default: () => h(ODatepicker, props) },
-        ),
+        h(OField, { label: "Upload" }, { default: () => h(OUpload, props) }),
 );
 
-describe("ODatepicker a11y tests", () => {
+describe("OUpload a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
         title: string;
-        props?: DatepickerProps<true | false, true | false>;
+        props?: UploadProps<object, true | false>;
     }[] = [
-        {
-            title: "axe datepicker - base case",
-            props: {},
-        },
-        {
-            title: "axe datepicker - open popover",
-            props: { active: true },
-        },
-        {
-            title: "axe datepicker - inline",
-            props: { inline: true },
-        },
+        { title: "axe upload - base case" },
+        { title: "axe upload - disabled", props: { disabled: true } },
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
@@ -42,7 +28,7 @@ describe("ODatepicker a11y tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await nextTick(); // await child items got rendered
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

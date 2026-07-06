@@ -6,7 +6,7 @@ import { nextTick } from "vue";
 import OCollapse from "../Collapse.vue";
 import type { CollapseProps } from "../props";
 
-describe("OCollapse axe test", () => {
+describe("OCollapse a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: { title: string; props?: CollapseProps }[] = [

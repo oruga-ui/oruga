@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
+import { nextTick } from "vue";
 
 import OPopover from "../Popover.vue";
 import type { PopoverProps } from "../props.ts";
 
-describe("OPopover axe tests", () => {
+describe("OPopover a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
@@ -21,6 +21,14 @@ describe("OPopover axe tests", () => {
             title: "axe popover - open popover",
             props: { active: true },
         },
+        {
+            title: "axe popover - modal & backdrop",
+            props: { disabled: true, modal: true, backdrop: true },
+        },
+        {
+            title: "axe popover - disabled",
+            props: { disabled: true },
+        },
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
@@ -33,7 +41,7 @@ describe("OPopover axe tests", () => {
             slots: { default: "<p> Open Popover! </p>" },
             attachTo: document.body,
         });
-        await setTimeout(); // await child items got rendered
+        await nextTick();
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

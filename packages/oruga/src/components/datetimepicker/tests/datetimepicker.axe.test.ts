@@ -1,25 +1,22 @@
-import { defineComponent, h } from "vue";
+import { defineComponent, h, nextTick, type VNode } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { setTimeout } from "timers/promises";
 
 import ODatetimepicker from "../Datetimepicker.vue";
 import type { DatetimepickerProps } from "../props.ts";
 import OField from "../../field/Field.vue";
 
 const BrowserPicker = defineComponent(
-    (props) => () =>
+    (props) => (): VNode =>
         h(
             OField,
-            { label: "My Input" },
-            {
-                default: () => h(ODatetimepicker, props),
-            },
+            { label: "Datetimepicker" },
+            { default: () => h(ODatetimepicker, props) },
         ),
 );
 
-describe("ODatetimepicker axe tests", () => {
+describe("ODatetimepicker a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
@@ -45,7 +42,7 @@ describe("ODatetimepicker axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await setTimeout(); // await child items got rendered
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });
