@@ -20,6 +20,9 @@ import MultipleCode from "./multiple.vue?raw";
 import Scrollable from "./scrollable.vue";
 import ScrollableCode from "./scrollable.vue?raw";
 
+import Empty from "./empty.vue";
+import EmptyCode from "./empty.vue?raw";
+
 import Templates from "./templates.vue";
 import TemplatesCode from "./templates.vue?raw";
 </script>
@@ -89,6 +92,12 @@ You can enable multi-select with the `multiple` property. In multi-select trees,
 When having to many options, consider adding a max height using the `scrollHeight` property, which allows to cap the tree at a fixed `max-height`. This will render a long tree of options with a scrollbar. The component will emit a `scroll-start` or `scroll-end` event, when the top or bottom of the tree is reached.
 
 <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
+
+### Empty
+
+The `emptyLabel` property can be used to display a label when no option is visible. Alternatively, the `empty` template slot can be used to define custom HTML.
+
+<ExampleViewer :component="Empty" :code="EmptyCode" />
 
 ### Templates
 
