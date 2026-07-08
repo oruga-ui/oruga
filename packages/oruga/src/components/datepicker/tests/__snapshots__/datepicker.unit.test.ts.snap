@@ -5,7 +5,7 @@ exports[`ODatepicker > render correctly 1`] = `
   <div class="o-datepicker__trigger">
     <!-- Web Picker -->
     <div data-oruga="input" class="o-input">
-      <!--v-if--><input id="v-1" type="text" data-oruga-input="text" class="o-input__input o-datepicker__input" autocomplete="off" value="01/01/2000">
+      <!--v-if--><input id="v-0" type="text" data-oruga-input="text" class="o-input__input o-datepicker__input" autocomplete="off" value="01/01/2000">
       <!--v-if-->
       <!--v-if-->
     </div>
@@ -22,7 +22,7 @@ exports[`ODatepicker > render correctly 1`] = `
         </button>
         <div class="o-datepicker__header__list">
           <div data-oruga="select" class="o-select">
-            <!--v-if--><select class="o-datepicker__select o-select__input o-select__input--arrowed" aria-label="Select Month" id="v-2" data-oruga-input="select" autocomplete="off">
+            <!--v-if--><select class="o-datepicker__select o-select__input o-select__input--arrowed" aria-label="Select Month" id="v-1" data-oruga-input="select" autocomplete="off">
               <!--v-if-->
               <option selected="" value="0">January</option>
               <option value="1">February</option>
@@ -40,7 +40,7 @@ exports[`ODatepicker > render correctly 1`] = `
             <!--v-if-->
           </div>
           <div data-oruga="select" class="o-select">
-            <!--v-if--><select class="o-datepicker__select o-select__input o-select__input--arrowed" aria-label="Select Year" id="v-3" data-oruga-input="select" autocomplete="off">
+            <!--v-if--><select class="o-datepicker__select o-select__input o-select__input--arrowed" aria-label="Select Year" id="v-2" data-oruga-input="select" autocomplete="off">
               <!--v-if-->
               <option value="2010">2010</option>
               <option value="2009">2009</option>

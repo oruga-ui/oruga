@@ -5,7 +5,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
   <div class="o-timepicker__trigger">
     <!-- Web Picker -->
     <div data-oruga="input" class="o-input">
-      <!--v-if--><input id="v-1" type="text" data-oruga-input="text" class="o-input__input o-timepicker__input" autocomplete="off" value="00:00">
+      <!--v-if--><input id="v-0" type="text" data-oruga-input="text" class="o-input__input o-timepicker__input" autocomplete="off" value="00:00">
       <!--v-if-->
       <!--v-if-->
     </div>
@@ -14,7 +14,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
   <transition-stub appear="false" persisted="false" css="true">
     <div class="o-timepicker__content" popover="" style="display: none; position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" data-position="bottom">
       <div data-oruga="select" class="">
-        <!--v-if--><select class="o-timepicker__select" aria-label="Select Hour" id="v-2" data-oruga-input="select" autocomplete="off">
+        <!--v-if--><select class="o-timepicker__select" aria-label="Select Hour" id="v-1" data-oruga-input="select" autocomplete="off">
           <!--v-if-->
           <option selected="" value="0">00</option>
           <option value="1">01</option>
@@ -44,7 +44,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
         <!--v-if-->
       </div><span class="o-timepicker__separtor">:</span>
       <div data-oruga="select" class="">
-        <!--v-if--><select class="o-timepicker__select" aria-label="Select Minute" id="v-3" data-oruga-input="select" autocomplete="off">
+        <!--v-if--><select class="o-timepicker__select" aria-label="Select Minute" id="v-2" data-oruga-input="select" autocomplete="off">
           <!--v-if-->
           <option value="0">00</option>
           <option value="1">01</option>

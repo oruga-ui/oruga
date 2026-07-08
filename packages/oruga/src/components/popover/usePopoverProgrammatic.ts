@@ -1,4 +1,4 @@
-import { toValue, type Component } from "vue";
+import { type Component } from "vue";
 import {
     ProgrammaticFactory,
     type ProgrammaticComponentOptions,
@@ -9,8 +9,6 @@ import {
 import Popover from "./Popover.vue";
 
 import type { PopoverProps } from "./props.ts";
-import { resolveElement } from "@/composables/unrefElement.ts";
-import type { ComponentProps } from "vue-component-type-helpers";
 
 // extend the OrugaProgrammatic type with the `popover` programmatic interface
 declare module "../../index" {
