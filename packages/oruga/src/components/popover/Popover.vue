@@ -215,17 +215,6 @@ defineExpose({ close, open, toggle });
                     <slot v-else name="content" :close="close">
                         {{ content }}
                     </slot>
-
-                    <!-- <CloseButton
-                        v-if="closeable"
-                        :pack="iconPack"
-                        :icon="closeIcon"
-                        :size="closeIconSize"
-                        :label="ariaCloseLabel"
-                        :classes="closeClasses"
-                        @click="close">
-                        <slot v-if="$slots['close']" name="close" />
-                    </CloseButton> -->
                 </div>
             </transition>
         </Teleport>
