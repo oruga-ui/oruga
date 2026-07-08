@@ -77,6 +77,8 @@ defineSlots<{
      * @param close {(): void} - function to close the popover
      */
     content?(props: { close: () => void }): void;
+    /** Define a custom close icon */
+    close?(): void;
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });

@@ -5,7 +5,9 @@ exports[`OPopover tests > render correctly 1`] = `
   <p role="button" tabindex="0" aria-controls="v-0"> Open Popover! </p>
   <!--teleport start-->
   <transition-stub name="fade" appear="false" persisted="false" css="true">
-    <div id="v-0" class="o-popover__content" popover="" style="display: none; position-area: top; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" data-position="top">Lorem ipsum dolor sit amet, consectetur warning elit.</div>
+    <div id="v-0" class="o-popover__content" popover="" style="display: none; position-area: top; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" data-position="top">Lorem ipsum dolor sit amet, consectetur warning elit.
+      <!--v-if-->
+    </div>
   </transition-stub>
   <!--teleport end-->
 </div>"
