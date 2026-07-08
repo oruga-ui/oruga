@@ -193,7 +193,7 @@ defineExpose({ close, open, toggle });
 
 <template>
     <div ref="rootElement" data-oruga="popover" :class="rootClasses">
-        <slot :active="isActive" :open="open" />
+        <slot v-if="!trigger" :active="isActive" :open="open" />
 
         <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
             <transition :name="animation">

@@ -38,7 +38,7 @@ export type PopoverAPIOptions = {
      */
     behavior?: "auto" | "hint" | "manual";
     /**
-     * Defines if the target element is also a trigger.
+     * Defines if the target element can also trigger the popover.
      * @default true
      */
     targetTrigger?: boolean;
@@ -169,9 +169,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         useEventListener(contentRef, "beforetoggle", options.onBeforeToggle);
 
     onMounted(() => {
-        targetEl = unrefElement(targetRef);
         contentEl = unrefElement(contentRef);
-
         if (!contentEl) {
             console.warn(
                 "Content element is missing for the popover api initialisation.",
@@ -179,6 +177,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
             return;
         }
 
+        targetEl = unrefElement(targetRef);
         if (!targetEl) {
             console.warn(
                 "Trigger element is missing for the popover api initialisation.",
@@ -211,7 +210,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         contentEl.dataset.position = position.toString();
 
         if (targetTrigger && behavior !== "manual") {
-            // get content  id
+            // get content id
             const contentId = contentEl.getAttribute("id");
 
             // check if the trigger has native popover target support
@@ -224,7 +223,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
                 if (contentId)
                     targetEl.setAttribute("popovertarget", contentId);
             } else if (!(targetEl instanceof HTMLInputElement)) {
-                // add interactive proptiers
+                // add interactive properties
                 if (!targetEl.role) targetEl.role = "button";
                 targetEl.tabIndex = 0;
 

@@ -36,7 +36,7 @@ export class PopoverProgrammaticFactory extends ProgrammaticFactory {
     ): ProgrammaticExpose<typeof Popover<C>> {
         const componentProps: PopoverProgrammaticOptions<C> = {
             active: true, // set the active default state to true
-            ...options, // pass all props to the internal notification component
+            ...options,
         };
 
         // create programmatic component
