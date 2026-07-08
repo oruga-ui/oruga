@@ -35,6 +35,19 @@ export type PopoverProps = {
     modal?: boolean;
     /** Show and dismiss animation */
     animation?: string;
+    /** Adds close button to the content */
+    closeable?: boolean;
+    /**
+     * Icon pack to use for the close icon
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack?: string;
+    /** Close icon name */
+    closeIcon?: string;
+    /** Close icon size */
+    closeIconSize?: string;
+    /** Accessibility label for the close button */
+    ariaCloseLabel?: string;
     /**
      * Set `true` to remove the body scrollbar.
      * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
@@ -69,6 +82,8 @@ export type PopoverClasses = Partial<{
     contentActiveClass: ComponentClass;
     /** Class of the content element when should has a backdrop */
     contentBackdropClass: ComponentClass;
+    /** Class of the close element */
+    closeClass: ComponentClass;
     /** Class of the content element when a backdrop should be shown */
     backdropClass: ComponentClass;
     /** Class of the body when popover has backdrop and scroll is clipped */
