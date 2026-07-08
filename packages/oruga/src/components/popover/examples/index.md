@@ -13,6 +13,9 @@ import BackdropCode from "./backdrop.vue?raw";
 
 import Modal from "./modal.vue";
 import ModalCode from "./modal.vue?raw";
+
+import Programmatically from "./programmatically.vue";
+import ProgrammaticallyCode from "./programmatically.vue?raw";
 </script>
 
 ### Base
@@ -66,3 +69,7 @@ When the `modal` property is added, the popover appears in the middle of the scr
 The popover modal style is mainly useful for improving the mobile experience. If you want to create a true modal, the [ODialog](/components/Dialog.html) element is the way to go.
 :::
 <ExampleViewer :component="Modal" :code="ModalCode" />
+
+### Programmatically
+
+<ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />

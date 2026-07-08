@@ -1,9 +1,11 @@
+import type { Component } from "vue";
 import type { PopoverPosition } from "@/composables";
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, ComponentEmits } from "@/types";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 export type { PopoverPosition };
 
-export type PopoverProps = {
+export type PopoverProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** Whether popover is active or not, use v-model:active to make it two-way binding */
@@ -47,6 +49,21 @@ export type PopoverProps = {
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
+    trigger?: HTMLElement;
+    /**
+     * DOM container element for programmatic usage.
+     * @ignore internal property
+     */
+    container?: HTMLElement;
+    /**
+     * Component to be injected.
+     * Close the component by emitting a 'close' event — `$emit('close')`
+     */
+    component?: C;
+    /** Props to be binded to the injected component */
+    props?: ComponentProps<C>;
+    /** Events to be binded to the injected component */
+    events?: ComponentEmits<C>;
 } & PopoverClasses;
 
 // class props (will not be displayed in the docs)
