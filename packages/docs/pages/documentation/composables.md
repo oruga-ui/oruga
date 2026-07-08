@@ -100,6 +100,7 @@ List of components with an programmatic interface:
 - [`Loading`](/components/Loading.html#programmatically)
 - [`Modal`](/components/Modal.html#programmatically)
 - [`Notification`](/components/Notification.html#programmatically)
+- [`Popover`](/components/Popover.html#programmatically)
 - [`Sidebar`](/components/Sidebar.html#programmatically)
 
 You can access each component's programmatic interface using the main `useOruga()` composable.
