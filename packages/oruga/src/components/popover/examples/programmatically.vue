@@ -4,14 +4,17 @@ import { useOruga } from "@oruga-ui/oruga-next";
 
 const oruga = useOruga();
 
-const container = useTemplateRef("container");
+const target = useTemplateRef("target");
 
 function openTextPopover(): void {
     oruga.popover.open(
         {
+            // the target element the popover will be attached to
+            trigger: target,
             content: "This overlay can have some usefull information.",
         },
-        container,
+        // placing target here again to mount the popover inside the target instead of body
+        target,
     );
 }
 
@@ -20,17 +23,14 @@ function openImagePopover(): void {
     const vnode = h("img", {
         alt: "This is the Oruga Logo!",
         src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
-        style: { "text-align": "center" },
     });
 
-    oruga.popover.open(
-        {
-            position: "bottom",
-            backdrop: true,
-            component: vnode,
-        },
-        container,
-    );
+    oruga.popover.open({
+        trigger: target,
+        position: "bottom",
+        backdrop: true,
+        component: vnode,
+    });
 }
 </script>
 
@@ -50,7 +50,7 @@ function openImagePopover(): void {
                 @click="openImagePopover()" />
         </p>
 
-        <div ref="container" style="background-color: var(--vp-c-brand-3)">
+        <div ref="target" style="background-color: var(--vp-c-brand-3)">
             Container with programmatic popover
         </div>
     </section>

@@ -1,5 +1,5 @@
 import type { Component } from "vue";
-import type { PopoverPosition } from "@/composables";
+import type { MaybeElement, PopoverPosition } from "@/composables";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
@@ -49,7 +49,8 @@ export type PopoverProps<C extends Component = Component> = {
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
-    trigger?: HTMLElement;
+    /** Define a trigger element as default slot alternative. */
+    trigger?: MaybeElement;
     /**
      * DOM container element for programmatic usage.
      * @ignore internal property

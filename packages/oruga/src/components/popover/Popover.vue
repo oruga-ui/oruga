@@ -12,9 +12,11 @@ import {
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
+    unrefElement,
     usePopoverAPI,
     usePreventScrolling,
     useTeleport,
+    type MaybeElement,
 } from "@/composables";
 
 import type { PopoverProps } from "./props";
@@ -94,7 +96,10 @@ onMounted(() => {
     if (!rootRef.value) return;
 
     // get the trigger element which should be the first element in the default slot
-    const trigger = props.trigger ?? rootRef.value.firstElementChild;
+    const trigger =
+        unrefElement<MaybeElement>(props.trigger) ??
+        props.container ??
+        rootRef.value.firstElementChild;
 
     if (!props.trigger && (!trigger || trigger === contentRef.value))
         throw new Error("The popover require an element in the default slot.");
@@ -114,7 +119,8 @@ const { open, close, toggle } = usePopoverAPI({
     delay: props.delay,
     behavior: props.behavior,
     trigger: isActive,
-    triggerRef: props.trigger ?? triggerRef,
+    targetTrigger: !props.trigger,
+    targetRef: triggerRef,
     contentRef,
     onToggle,
     onBeforeToggle,
@@ -209,6 +215,17 @@ defineExpose({ close, open, toggle });
                     <slot v-else name="content" :close="close">
                         {{ content }}
                     </slot>
+
+                    <!-- <CloseButton
+                        v-if="closeable"
+                        :pack="iconPack"
+                        :icon="closeIcon"
+                        :size="closeIconSize"
+                        :label="ariaCloseLabel"
+                        :classes="closeClasses"
+                        @click="close">
+                        <slot v-if="$slots['close']" name="close" />
+                    </CloseButton> -->
                 </div>
             </transition>
         </Teleport>

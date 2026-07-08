@@ -10,6 +10,7 @@ import Popover from "./Popover.vue";
 
 import type { PopoverProps } from "./props.ts";
 import { resolveElement } from "@/composables/unrefElement.ts";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 // extend the OrugaProgrammatic type with the `popover` programmatic interface
 declare module "../../index" {
@@ -21,6 +22,7 @@ declare module "../../index" {
 export type PopoverProgrammaticOptions<C extends Component> = Readonly<
     Omit<PopoverProps<C>, "container">
 > &
+    Required<Pick<PopoverProps<C>, "trigger">> &
     ProgrammaticComponentOptions<typeof Popover<C>>;
 
 export class PopoverProgrammaticFactory extends ProgrammaticFactory {
@@ -31,18 +33,12 @@ export class PopoverProgrammaticFactory extends ProgrammaticFactory {
      * @returns ProgrammaticExpose - programmatic component expose interface
      */
     public open<C extends Component>(
-        options: string | PopoverProgrammaticOptions<C>,
-        target: ProgrammaticTarget,
+        options: PopoverProgrammaticOptions<C>,
+        target?: ProgrammaticTarget,
     ): ProgrammaticExpose<typeof Popover<C>> {
-        const _options: PopoverProgrammaticOptions<C> =
-            typeof options === "string" ? { content: options } : options;
-
-        const _target = toValue(target);
-        const trigger = (_target && resolveElement(_target)) ?? undefined;
         const componentProps: PopoverProgrammaticOptions<C> = {
             active: true, // set the active default state to true
-            trigger,
-            ..._options, // pass all props to the internal notification component
+            ...options, // pass all props to the internal notification component
         };
 
         // create programmatic component
@@ -50,7 +46,7 @@ export class PopoverProgrammaticFactory extends ProgrammaticFactory {
             Popover,
             {
                 props: componentProps as PopoverProps<C>, // component specific props
-                onClose: _options.onClose, // on close event handler
+                onClose: options.onClose, // on close event handler
             },
             target, // target the component get rendered into
         );
