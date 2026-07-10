@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<PopoverProps<C>>(), {
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
     clipScroll: () => getDefault("popover.clipScroll", false),
-    trigger: undefined,
+    target: undefined,
     component: undefined,
     props: undefined,
     events: undefined,
@@ -104,13 +104,15 @@ const triggerRef = ref<Element>();
 onMounted(() => {
     if (!rootRef.value) return;
 
-    // get the trigger element which should be the first element in the default slot
+    // get the trigger element
+    // which can eather be a custom target
+    // or should be the first element in the default slot
     const trigger =
-        unrefElement<MaybeElement>(props.trigger) ??
+        unrefElement<MaybeElement>(props.target) ??
         props.container ??
         rootRef.value.firstElementChild;
 
-    if (!props.trigger && (!trigger || trigger === contentRef.value))
+    if (!props.target && (!trigger || trigger === contentRef.value))
         throw new Error("The popover require an element in the default slot.");
 
     if (!(trigger instanceof Element))
@@ -128,7 +130,7 @@ const { open, close, toggle } = usePopoverAPI({
     delay: props.delay,
     behavior: props.behavior,
     trigger: isActive,
-    targetTrigger: !props.trigger,
+    targetTrigger: !props.target,
     targetRef: triggerRef,
     contentRef,
     onToggle,
@@ -203,7 +205,7 @@ defineExpose({ close, open, toggle });
 
 <template>
     <div ref="rootElement" data-oruga="popover" :class="rootClasses">
-        <slot v-if="!trigger" :active="isActive" :open="open" />
+        <slot :active="isActive" :open="open" />
 
         <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
             <transition :name="animation">

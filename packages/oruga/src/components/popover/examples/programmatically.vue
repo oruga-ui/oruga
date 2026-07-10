@@ -10,7 +10,7 @@ function openTextPopover(): void {
     oruga.popover.open(
         {
             // the target element the popover will be attached to
-            trigger: target,
+            target: target,
             content: "This overlay can have some usefull information.",
         },
         // placing target here again to mount the popover inside the target instead of body
@@ -26,7 +26,7 @@ function openImagePopover(): void {
     });
 
     oruga.popover.open({
-        trigger: target,
+        target: target,
         position: "bottom",
         backdrop: true,
         component: vnode,

@@ -20,7 +20,7 @@ declare module "../../index" {
 export type PopoverProgrammaticOptions<C extends Component> = Readonly<
     Omit<PopoverProps<C>, "container">
 > &
-    Required<Pick<PopoverProps<C>, "trigger">> &
+    Required<Pick<PopoverProps<C>, "target">> &
     ProgrammaticComponentOptions<typeof Popover<C>>;
 
 export class PopoverProgrammaticFactory extends ProgrammaticFactory {

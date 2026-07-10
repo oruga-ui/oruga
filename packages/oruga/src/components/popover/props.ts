@@ -62,8 +62,8 @@ export type PopoverProps<C extends Component = Component> = {
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
-    /** Define a trigger element as default slot alternative. */
-    trigger?: MaybeElement;
+    /** Define the target element to which the popover gets connected programmatically.  */
+    target?: MaybeElement;
     /**
      * DOM container element for programmatic usage.
      * @ignore internal property

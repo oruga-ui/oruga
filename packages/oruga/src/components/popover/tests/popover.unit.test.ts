@@ -1,4 +1,4 @@
-import { describe, test, expect, afterEach } from "vitest";
+import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { setTimeout } from "timers/promises";
 
@@ -19,6 +19,36 @@ describe("OPopover tests", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("popover");
         expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    test("test closeable ", async () => {
+        const onClose = vi.fn();
+
+        const wrapper = mount(OPopover, {
+            props: {
+                active: true,
+                closeable: true,
+                onClose,
+                content:
+                    "Lorem ipsum dolor sit amet, consectetur warning elit.",
+            },
+            slots: { default: "<p> Open Popover! </p>" },
+        });
+
+        expect(wrapper.classes("o-popover--active")).toBeTruthy();
+
+        const content = wrapper.find("[popover]");
+        expect(content.exists()).toBeTruthy();
+
+        const closeButton = content.find("button");
+        expect(closeButton.exists()).toBeTruthy();
+        expect(closeButton.classes("o-popover__close")).toBeTruthy();
+
+        await closeButton.trigger("click");
+
+        expect(wrapper.emitted("close")).toHaveLength(1);
+        expect(wrapper.classes("o-popover--active")).toBeFalsy();
+        expect(onClose).toHaveBeenCalledTimes(1);
     });
 
     describe("test trigger", () => {
