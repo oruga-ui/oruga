@@ -220,7 +220,7 @@ const {
     behavior: "manual",
     trigger: isActive,
     disabled: () => props.disabled,
-    triggerRef,
+    targetRef: triggerRef,
     contentRef: menuRef,
     onToggle: onPopoverToggle,
 });

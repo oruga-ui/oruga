@@ -3,7 +3,6 @@ import {
     ref,
     watch,
     isRef,
-    useId,
     toValue,
     type MaybeRefOrGetter,
     type WatchSource,
@@ -25,26 +24,31 @@ export type PopoverAPIOptions = {
     /**
      * Positioning area used for the popover (mapped to `CSS position-area`).
      * In addition `centered` center the content in the middle of the screen.
+     * @default 'top'
      */
     position?: "centered" | PopoverPosition;
-    /** Reference or getter resolving to the trigger element. */
-    triggerRef: MaybeRefOrGetter<EventTarget>;
+    /** Reference or getter resolving to the target element. */
+    targetRef: MaybeRefOrGetter<EventTarget>;
     /** Reference or getter resolving to the popover content element. */
     contentRef: MaybeRefOrGetter<EventTarget>;
     /**
      * Native popover behavior - defaults to `"auto"`.
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover#value
+     * @default 'auto'
      */
     behavior?: "auto" | "hint" | "manual";
     /**
-     * An Optional delay (in ms) before opening the popover.
+     * Defines if the target element can also trigger the popover.
+     * @default true
      */
+    targetTrigger?: boolean;
+    /** An Optional delay (in ms) before opening the popover. */
     delay?: number;
     /** An optional watch source which will be watched and to open or close the popover. */
     trigger?: WatchSource<boolean>;
     /** Stop interactions. */
     disabled?: MaybeRefOrGetter<boolean>;
-    /**  Optional listener for the native `toggle` event. */
+    /** Optional listener for the native `toggle` event. */
     onToggle?: (e: ToggleEvent) => void;
     /** Optional listener for the native `beforetoggle` event. */
     onBeforeToggle?: (e: ToggleEvent) => void;
@@ -79,7 +83,8 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         delay,
         trigger,
         disabled,
-        triggerRef,
+        targetTrigger = true,
+        targetRef,
         contentRef,
     } = options;
 
@@ -87,7 +92,7 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
     const active = ref(false);
 
-    let triggerEl: HTMLElement | undefined | null;
+    let targetEl: HTMLElement | undefined | null;
     let contentEl: HTMLElement | undefined | null;
 
     if (isRef(trigger)) {
@@ -108,8 +113,8 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
-            if (!contentEl || !triggerEl || active.value) return;
-            contentEl.showPopover({ source: triggerEl }); // open popover with native api
+            if (!contentEl || !targetEl || active.value) return;
+            contentEl.showPopover({ source: targetEl }); // open popover with native api
             timeout = undefined;
             active.value = true;
         }, delay);
@@ -153,8 +158,8 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
     // add event listener on trigger element
     if (behavior !== "manual") {
-        useEventListener(triggerRef, "click", onTriggerClick);
-        useEventListener(triggerRef, "keydown", onTriggerKeydown);
+        useEventListener(targetRef, "click", onTriggerClick);
+        useEventListener(targetRef, "keydown", onTriggerKeydown);
     }
 
     // add toggle event listener on content element
@@ -163,24 +168,25 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     if (typeof options.onBeforeToggle === "function")
         useEventListener(contentRef, "beforetoggle", options.onBeforeToggle);
 
-    let contentId = useId();
-
     onMounted(() => {
         contentEl = unrefElement(contentRef);
-        triggerEl = unrefElement(triggerRef);
-        if (!contentEl || !triggerEl) {
+        if (!contentEl) {
             console.warn(
-                "Content or trigger element is missing for the popover api initialisation.",
+                "Content element is missing for the popover api initialisation.",
             );
             return;
         }
-        if (triggerEl.firstElementChild instanceof HTMLButtonElement)
-            triggerEl = triggerEl.firstElementChild;
 
-        // check content has id
-        if (contentEl.hasAttribute("id")) {
-            contentId = contentEl.getAttribute("id")!;
+        targetEl = unrefElement(targetRef);
+        if (!targetEl) {
+            console.warn(
+                "Trigger element is missing for the popover api initialisation.",
+            );
+            return;
         }
+
+        if (targetEl.firstElementChild instanceof HTMLButtonElement)
+            targetEl = targetEl.firstElementChild;
 
         if (import.meta.env?.VITEST === "true") {
             // polyfill for test environment - this is normally set in the browser
@@ -203,21 +209,27 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         // add position data attribute
         contentEl.dataset.position = position.toString();
 
-        if (behavior !== "manual") {
+        if (targetTrigger && behavior !== "manual") {
+            // get content id
+            const contentId = contentEl.getAttribute("id");
+
             // check if the trigger has native popover target support
             if (
-                triggerEl instanceof HTMLButtonElement ||
-                (triggerEl instanceof HTMLInputElement &&
-                    triggerEl.type === "button")
+                targetEl instanceof HTMLButtonElement ||
+                (targetEl instanceof HTMLInputElement &&
+                    targetEl.type === "button")
             ) {
                 // add related popover properties
-                triggerEl.setAttribute("popovertarget", contentId);
-            } else if (!(triggerEl instanceof HTMLInputElement)) {
-                // add interactive proptiers
-                if (!triggerEl.role) triggerEl.role = "button";
-                triggerEl.tabIndex = 0;
+                if (contentId)
+                    targetEl.setAttribute("popovertarget", contentId);
+            } else if (!(targetEl instanceof HTMLInputElement)) {
+                // add interactive properties
+                if (!targetEl.role) targetEl.role = "button";
+                targetEl.tabIndex = 0;
+
                 // set a11y attributes
-                triggerEl.setAttribute("aria-controls", contentId);
+                if (contentId)
+                    targetEl.setAttribute("aria-controls", contentId);
             }
         }
 

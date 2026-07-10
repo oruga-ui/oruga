@@ -16,6 +16,9 @@ import BackdropCode from "./backdrop.vue?raw";
 
 import Modal from "./modal.vue";
 import ModalCode from "./modal.vue?raw";
+
+import Programmatically from "./programmatically.vue";
+import ProgrammaticallyCode from "./programmatically.vue?raw";
 </script>
 
 ### Base
@@ -75,3 +78,19 @@ When the `modal` property is added, the popover appears in the middle of the scr
 The popover modal style is mainly useful for improving the mobile experience. If you want to create a true modal, the [ODialog](/components/Dialog.html) element is the way to go.
 :::
 <ExampleViewer :component="Modal" :code="ModalCode" />
+
+### Programmatically
+
+This component provides a programmatic interface that can be accessed by the [`useOruga()`](/documentation/composables.html) composable. The composable can be used from outside of the Vue instance. For example, it can be used in Pinia or Vue Router with this syntax:
+
+```js
+import { useOruga } from "@oruga-ui/oruga-next";
+const oruga = useOruga();
+oruga.popover.open({...});
+```
+
+The programmatic popover composable requires a `trigger` property in order to define the target element to which the popover will be attached to.
+
+A programmatic instance returns a promise to await for. The promise gets resolved when the popover gets closed.
+
+<ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />

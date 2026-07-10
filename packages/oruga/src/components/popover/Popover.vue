@@ -1,14 +1,24 @@
-<script setup lang="ts">
-import { ref, watch, computed, useId, useTemplateRef, onMounted } from "vue";
+<script setup lang="ts" generic="C extends Component">
+import {
+    ref,
+    watch,
+    computed,
+    useId,
+    useTemplateRef,
+    onMounted,
+    type Component,
+} from "vue";
 
 import CloseButton from "@/components/utils/CloseButton.vue";
 
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
+    unrefElement,
     usePopoverAPI,
     usePreventScrolling,
     useTeleport,
+    type MaybeElement,
 } from "@/composables";
 
 import type { PopoverProps } from "./props";
@@ -25,7 +35,7 @@ defineOptions({
     configField: "popover",
 });
 
-const props = withDefaults(defineProps<PopoverProps>(), {
+const props = withDefaults(defineProps<PopoverProps<C>>(), {
     override: undefined,
     active: false,
     id: () => useId(),
@@ -45,6 +55,10 @@ const props = withDefaults(defineProps<PopoverProps>(), {
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
     clipScroll: () => getDefault("popover.clipScroll", false),
+    target: undefined,
+    component: undefined,
+    props: undefined,
+    events: undefined,
 });
 
 const emits = defineEmits<{
@@ -90,10 +104,15 @@ const triggerRef = ref<Element>();
 onMounted(() => {
     if (!rootRef.value) return;
 
-    // get the trigger element which should be the first element in the default slot
-    const trigger = rootRef.value.firstElementChild;
+    // get the trigger element
+    // which can eather be a custom target
+    // or should be the first element in the default slot
+    const trigger =
+        unrefElement<MaybeElement>(props.target) ??
+        props.container ??
+        rootRef.value.firstElementChild;
 
-    if (!trigger || trigger === contentRef.value)
+    if (!props.target && (!trigger || trigger === contentRef.value))
         throw new Error("The popover require an element in the default slot.");
 
     if (!(trigger instanceof Element))
@@ -111,7 +130,8 @@ const { open, close, toggle } = usePopoverAPI({
     delay: props.delay,
     behavior: props.behavior,
     trigger: isActive,
-    triggerRef,
+    targetTrigger: !props.target,
+    targetRef: triggerRef,
     contentRef,
     onToggle,
     onBeforeToggle,
@@ -196,7 +216,15 @@ defineExpose({ close, open, toggle });
                     :class="contentClasses"
                     :role="role"
                     popover>
-                    <slot name="content" :close="close">
+                    <!-- injected component for programmatic usage -->
+                    <component
+                        :is="$props.component"
+                        v-if="$props.component"
+                        v-bind="$props.props"
+                        v-on="$props.events || {}"
+                        @close="close" />
+
+                    <slot v-else name="content" :close="close">
                         {{ content }}
                     </slot>
 

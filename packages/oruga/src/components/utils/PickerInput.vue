@@ -141,8 +141,8 @@ if (!props.inline) {
         position: props.modal ? "centered" : props.position,
         behavior: "auto",
         trigger: isActive,
-        triggerRef,
-        contentRef,
+        targetRef: triggerRef,
+        contentRef: contentRef,
         onToggle,
     });
 
