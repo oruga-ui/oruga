@@ -74,6 +74,10 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
             data.backdrop = true;
         },
     },
+    closeClass: {
+        class: "closeClass",
+        description: "Class of the close element.",
+    },
     scrollClipClass: {
         class: "scrollClipClass",
         description: "Class of the body when is open and scroll is clipped.",
