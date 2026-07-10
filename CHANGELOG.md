@@ -1,3 +1,11 @@
+## [0.14.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.2...v0.14.0-pre.3) (2026-07-10)
+
+### Features
+
+* **popover:** add close button ([#1677](https://github.com/oruga-ui/oruga/issues/1677)) ([4db39a6](https://github.com/oruga-ui/oruga/commit/4db39a67fd57adb5ee214a68ef9129b368a985f7))
+* **popover:** add programmatic interface ([#1676](https://github.com/oruga-ui/oruga/issues/1676)) ([5df504d](https://github.com/oruga-ui/oruga/commit/5df504de0a7f96d0c8f674f1c3269674b2101a86))
+* unify popover-api based component classes ([#1672](https://github.com/oruga-ui/oruga/issues/1672)) ([0522c6e](https://github.com/oruga-ui/oruga/commit/0522c6e881772f2df58c2226b38dc5e102ec36cb))
+
 ## [0.14.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.1...v0.14.0-pre.2) (2026-07-05)
 
 ### ⚠ BREAKING CHANGES
