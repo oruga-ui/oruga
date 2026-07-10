@@ -66,6 +66,7 @@ The component is implemented using the native [Popover API](https://developer.mo
 | ------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | default | Define a trigger here                                 | **active** `boolean` - popover active state<br/>**open** `(): void` - function to open the popover |
 | content | Override the popover content, default is content prop | **close** `(): void` - function to close the popover                                               |
+| close   | Define a custom close icon                            |                                                                                                    |
 
 </section>
 

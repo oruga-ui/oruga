@@ -2090,6 +2090,26 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 animation: string;
                 /**
+                 * Adds close button to the content
+                 */
+                closeable: boolean;
+                /**
+                 * Icon pack to use for the close icon
+                 */
+                iconPack: string;
+                /**
+                 * Close icon name
+                 */
+                closeIcon: string;
+                /**
+                 * Close icon size
+                 */
+                closeIconSize: string;
+                /**
+                 * Accessibility label for the close button
+                 */
+                ariaCloseLabel: string;
+                /**
                  * Set `true` to remove the body scrollbar.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts.
@@ -2137,6 +2157,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element when should has a backdrop
                  */
                 contentBackdropClass: ClassDefinition;
+                /**
+                 * Class of the close element
+                 */
+                closeClass: ClassDefinition;
                 /**
                  * Class of the content element when a backdrop should be shown
                  */

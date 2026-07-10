@@ -8,6 +8,9 @@ import PositionCode from "./position.vue?raw";
 import Delay from "./delay.vue";
 import DelayCode from "./delay.vue?raw";
 
+import Closeable from "./closeable.vue";
+import CloseableCode from "./closeable.vue?raw";
+
 import Backdrop from "./backdrop.vue";
 import BackdropCode from "./backdrop.vue?raw";
 
@@ -54,6 +57,12 @@ the referenced DOM location instead of the current one.
 The appearance of the content can be delayed using the `delay` property.
 
 <ExampleViewer :component="Delay" :code="DelayCode" />
+
+### Closeable
+
+Using `closeable` a close button can be added to the content.
+
+<ExampleViewer :component="Closeable" :code="CloseableCode" />
 
 ### Backdrop
 

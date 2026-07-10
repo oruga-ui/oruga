@@ -9,6 +9,8 @@ import {
     type Component,
 } from "vue";
 
+import CloseButton from "@/components/utils/CloseButton.vue";
+
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,
@@ -45,6 +47,11 @@ const props = withDefaults(defineProps<PopoverProps<C>>(), {
     backdrop: false,
     modal: false,
     role: undefined,
+    closeable: () => getDefault("popover.closeable", false),
+    iconPack: () => getDefault("popover.iconPack"),
+    closeIcon: () => getDefault("popover.closeIcon", "close"),
+    closeIconSize: () => getDefault("popover.closeIconSize"),
+    ariaCloseLabel: () => getDefault("popover.ariaCloseLabel", "Close"),
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
     clipScroll: () => getDefault("popover.clipScroll", false),
@@ -84,6 +91,8 @@ defineSlots<{
      * @param close {(): void} - function to close the popover
      */
     content?(props: { close: () => void }): void;
+    /** Define a custom close icon */
+    close?(): void;
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });
@@ -180,6 +189,7 @@ const contentClasses = defineClasses(
         computed(() => props.backdrop || props.modal),
     ],
 );
+const closeClasses = defineClasses(["closeClass", "o-popover__close"]);
 
 // #endregion --- Computed Component Classes ---
 
@@ -215,6 +225,17 @@ defineExpose({ close, open, toggle });
                     <slot v-else name="content" :close="close">
                         {{ content }}
                     </slot>
+
+                    <CloseButton
+                        v-if="closeable"
+                        :pack="iconPack"
+                        :icon="closeIcon"
+                        :size="closeIconSize"
+                        :label="ariaCloseLabel"
+                        :classes="closeClasses"
+                        @click="close">
+                        <slot v-if="$slots['close']" name="close" />
+                    </CloseButton>
                 </div>
             </transition>
         </Teleport>
