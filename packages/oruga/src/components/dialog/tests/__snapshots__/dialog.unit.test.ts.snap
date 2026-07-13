@@ -23,10 +23,12 @@ exports[`ODialog test > render correctly 1`] = `
         <transition-stub name="fade" appear="false" persisted="false" css="true">
           <!--v-if-->
         </transition-stub><!-- Footer -->
-        <footer class="o-dialog__footer"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__cancel-button" autofocus=""><span class="o-button__wrapper"><!--v-if--><span class="o-button__label">CANCEL</span>
-            <!--v-if--></span>
-          </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__confirm-button" autofocus=""><span class="o-button__wrapper"><!--v-if--><span class="o-button__label">OK</span>
-            <!--v-if--></span>
+        <footer class="o-dialog__footer"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__cancel-button" autofocus="">
+            <!--v-if--><span class="o-button__label">CANCEL</span>
+            <!--v-if-->
+          </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__confirm-button" autofocus="">
+            <!--v-if--><span class="o-button__label">OK</span>
+            <!--v-if-->
           </button></footer>
       </div>
     </dialog>

@@ -77,10 +77,6 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
             data.disabled = true;
         },
     },
-    wrapperClass: {
-        class: "wrapperClass",
-        description: "Class of the inner wrapper element.",
-    },
     iconClass: {
         class: "iconClass",
         description: "Class of the icon element.",

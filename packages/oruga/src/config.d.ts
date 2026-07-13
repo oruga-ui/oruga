@@ -280,10 +280,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 disabledClass: ClassDefinition;
                 /**
-                 * Class of the inner wrapper element
-                 */
-                wrapperClass: ClassDefinition;
-                /**
                  * Class of the icon element
                  */
                 iconClass: ClassDefinition;

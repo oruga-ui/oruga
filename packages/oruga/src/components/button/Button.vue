@@ -98,8 +98,6 @@ const rootClasses = defineClasses(
     ],
 );
 
-const wrapperClasses = defineClasses(["wrapperClass", "o-button__wrapper"]);
-
 const labelClasses = defineClasses(["labelClass", "o-button__label"]);
 
 const iconClasses = defineClasses(["iconClass", "o-button__icon"]);
@@ -127,24 +125,22 @@ const iconRightClasses = defineClasses([
         @click="$emit('click', $event)"
         @keydown.enter.prevent="$emit('click', $event)"
         @keydown.space.prevent="$emit('click', $event)">
-        <span :class="wrapperClasses">
-            <o-icon
-                v-if="iconLeft"
-                :pack="iconPack"
-                :icon="iconLeft"
-                :size="size"
-                :class="[...iconClasses, ...iconLeftClasses]" />
+        <o-icon
+            v-if="iconLeft"
+            :pack="iconPack"
+            :icon="iconLeft"
+            :size="size"
+            :class="[...iconClasses, ...iconLeftClasses]" />
 
-            <span v-if="label || $slots.default" :class="labelClasses">
-                <slot>{{ label }}</slot>
-            </span>
-
-            <o-icon
-                v-if="iconRight"
-                :pack="iconPack"
-                :icon="iconRight"
-                :size="size"
-                :class="[...iconClasses, ...iconRightClasses]" />
+        <span v-if="label || $slots.default" :class="labelClasses">
+            <slot>{{ label }}</slot>
         </span>
+
+        <o-icon
+            v-if="iconRight"
+            :pack="iconPack"
+            :icon="iconRight"
+            :size="size"
+            :class="[...iconClasses, ...iconRightClasses]" />
     </component>
 </template>
