@@ -20,16 +20,6 @@ const inspectData: InspectData<
         description: "Class of the root element when on mobile.",
         info: "Switch to mobile view to see it in action!",
     },
-    modalClass: {
-        class: "modalClass",
-        description: "Class of the root element when shown as modal.",
-        properties: ["mobileModal", "desktopModal"],
-        action: (data): void => {
-            data.mobileModal = true;
-            data.desktopModal = true;
-            data.active = true;
-        },
-    },
     teleportClass: {
         class: "teleportClass",
         description: "Class of the root element when teleported.",
@@ -94,6 +84,16 @@ const inspectData: InspectData<
         description: "Class of the content element when active.",
         properties: ["active"],
         action: (data): void => {
+            data.active = true;
+        },
+    },
+    contentModalClass: {
+        class: "contentModalClass",
+        description: "Class of the content element when shown as modal.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
             data.active = true;
         },
     },

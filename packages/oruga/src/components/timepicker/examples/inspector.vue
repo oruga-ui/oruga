@@ -12,16 +12,6 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         description: "Class of the root element when on mobile.",
         info: "Switch to mobile view to see it in action!",
     },
-    modalClass: {
-        class: "modalClass",
-        description: "Class of the root element when shown as modal.",
-        properties: ["mobileModal", "desktopModal"],
-        action: (data): void => {
-            data.mobileModal = true;
-            data.desktopModal = true;
-            data.active = true;
-        },
-    },
     teleportClass: {
         class: "teleportClass",
         description: "Class of the root element when teleported.",
@@ -75,6 +65,16 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
             "Class of the box container element where you choose the date.",
         action: (data): void => {
             data.inline = true;
+            data.active = true;
+        },
+    },
+    contentModalClass: {
+        class: "contentModalClass",
+        description: "Class of the content element when shown as modal.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
             data.active = true;
         },
     },
