@@ -48,6 +48,18 @@ defineEmits<{
 defineSlots<{
     /** Override the label, default is label prop */
     default?(): void;
+    /**
+     * Override the left icon.
+     * @param icon {string} - The icon name.
+     * @param icon {string} - The icon size.     *
+     */
+    iconLeft?(props: { icon: string; size: string }): void;
+    /**
+     * Override the left icon.
+     * @param icon {string} - The icon name.
+     * @param icon {string} - The icon size.     *
+     */
+    iconRight?(props: { icon: string; size: string }): void;
 }>();
 
 const computedNativeType = computed(() =>
@@ -128,23 +140,29 @@ const iconRightClasses = defineClasses([
         @keydown.enter.prevent="$emit('click', $event)"
         @keydown.space.prevent="$emit('click', $event)">
         <span :class="wrapperClasses">
-            <o-icon
-                v-if="iconLeft"
-                :pack="iconPack"
-                :icon="iconLeft"
-                :size="size"
-                :class="[...iconClasses, ...iconLeftClasses]" />
+            <slot v-if="iconLeft" name="iconLeft" :icon="iconLeft" :size="size">
+                <o-icon
+                    :pack="iconPack"
+                    :icon="iconLeft"
+                    :size="size"
+                    :class="[...iconClasses, ...iconLeftClasses]" />
+            </slot>
 
             <span v-if="label || $slots.default" :class="labelClasses">
                 <slot>{{ label }}</slot>
             </span>
 
-            <o-icon
+            <slot
                 v-if="iconRight"
-                :pack="iconPack"
+                name="iconRight"
                 :icon="iconRight"
-                :size="size"
-                :class="[...iconClasses, ...iconRightClasses]" />
+                :size="size">
+                <o-icon
+                    :pack="iconPack"
+                    :icon="iconRight"
+                    :size="size"
+                    :class="[...iconClasses, ...iconRightClasses]" />
+            </slot>
         </span>
     </component>
 </template>
