@@ -12,7 +12,9 @@ export type PopoverProps<C extends Component = Component> = {
     active?: boolean;
     /** A unique HTML id for the popover element */
     id?: string;
-    /** Content text, unnecessary when content slot is used */
+    /** Content header title, unnecessary when title slot is used */
+    title?: string;
+    /** Content body text, unnecessary when content slot is used */
     content?: string;
     /**
      * The behavior of the popover.
@@ -100,10 +102,12 @@ export type PopoverClasses = Partial<{
     contentActiveClass: ComponentClass;
     /** Class of the content element when should has a backdrop */
     contentBackdropClass: ComponentClass;
+    /** Class of the content header element */
+    headerClass: ComponentClass;
+    /** Class of the content body element */
+    bodyClass: ComponentClass;
     /** Class of the close element */
     closeClass: ComponentClass;
-    /** Class of the content element when a backdrop should be shown */
-    backdropClass: ComponentClass;
     /** Class of the body when popover has backdrop and scroll is clipped */
     scrollClipClass: ComponentClass;
     /** Class of the body when popover has backdrop and scroll is keeped */

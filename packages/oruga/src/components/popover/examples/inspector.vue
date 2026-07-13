@@ -65,13 +65,19 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
             data.active = true;
         },
     },
-    backdropClass: {
-        class: "backdropClass",
-        description:
-            "Class of the content element when a backdrop should be shown.",
-        properties: ["backdrop"],
+    headerClass: {
+        class: "headerClass",
+        description: "Class of the content header element.",
+        properties: ["title"],
         action: (data): void => {
-            data.backdrop = true;
+            data.active = true;
+        },
+    },
+    bodyClass: {
+        class: "bodyClass",
+        description: "Class of the content body element.",
+        action: (data): void => {
+            data.active = true;
         },
     },
     closeClass: {

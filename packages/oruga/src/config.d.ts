@@ -2158,13 +2158,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentBackdropClass: ClassDefinition;
                 /**
+                 * Class of the content header element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the content body element
+                 */
+                bodyClass: ClassDefinition;
+                /**
                  * Class of the close element
                  */
                 closeClass: ClassDefinition;
-                /**
-                 * Class of the content element when a backdrop should be shown
-                 */
-                backdropClass: ClassDefinition;
                 /**
                  * Class of the body when popover has backdrop and scroll is clipped
                  */
