@@ -57,9 +57,11 @@ The component implements the W3C ARIA APG [Button Pattern](https://www.w3.org/WA
 
 ### Slots
 
-| Name    | Description                               | Bindings |
-| ------- | ----------------------------------------- | -------- |
-| default | Override the label, default is label prop |          |
+| Name      | Description                               | Bindings                                                                     |
+| --------- | ----------------------------------------- | ---------------------------------------------------------------------------- |
+| iconLeft  | Override the left icon.                   | **icon** `string` - The icon name.<br/>**icon** `string` - The icon size. \* |
+| default   | Override the label, default is label prop |                                                                              |
+| iconRight | Override the left icon.                   | **icon** `string` - The icon name.<br/>**icon** `string` - The icon size. \* |
 
 </section>
 
