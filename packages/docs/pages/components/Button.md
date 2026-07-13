@@ -61,7 +61,7 @@ The component implements the W3C ARIA APG [Button Pattern](https://www.w3.org/WA
 | ------- | ----------------------------------------- | -------- |
 | left    | Override the left icon.                   |          |
 | default | Override the label, default is label prop |          |
-| right   | Override the left icon.                   |          |
+| right   | Override the right icon.                  |          |
 
 </section>
 

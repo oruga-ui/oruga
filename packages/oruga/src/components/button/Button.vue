@@ -50,7 +50,7 @@ defineSlots<{
     default?(): void;
     /** Override the left icon. */
     left?(): void;
-    /** Override the left icon. */
+    /** Override the right icon. */
     right?(): void;
 }>();
 
