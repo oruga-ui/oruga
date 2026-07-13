@@ -48,18 +48,10 @@ defineEmits<{
 defineSlots<{
     /** Override the label, default is label prop */
     default?(): void;
-    /**
-     * Override the left icon.
-     * @param icon {string} - The icon name.
-     * @param icon {string} - The icon size.     *
-     */
-    iconLeft?(props: { icon: string; size: string }): void;
-    /**
-     * Override the left icon.
-     * @param icon {string} - The icon name.
-     * @param icon {string} - The icon size.     *
-     */
-    iconRight?(props: { icon: string; size: string }): void;
+    /** Override the left icon. */
+    left?(): void;
+    /** Override the left icon. */
+    right?(): void;
 }>();
 
 const computedNativeType = computed(() =>
@@ -140,8 +132,9 @@ const iconRightClasses = defineClasses([
         @keydown.enter.prevent="$emit('click', $event)"
         @keydown.space.prevent="$emit('click', $event)">
         <span :class="wrapperClasses">
-            <slot v-if="iconLeft" name="iconLeft" :icon="iconLeft" :size="size">
+            <slot name="left">
                 <o-icon
+                    v-if="iconLeft"
                     :pack="iconPack"
                     :icon="iconLeft"
                     :size="size"
@@ -152,12 +145,9 @@ const iconRightClasses = defineClasses([
                 <slot>{{ label }}</slot>
             </span>
 
-            <slot
-                v-if="iconRight"
-                name="iconRight"
-                :icon="iconRight"
-                :size="size">
+            <slot name="right">
                 <o-icon
+                    v-if="iconRight"
                     :pack="iconPack"
                     :icon="iconRight"
                     :size="size"
