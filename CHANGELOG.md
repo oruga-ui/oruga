@@ -1,3 +1,17 @@
+## [0.14.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.3...v0.14.0-pre.4) (2026-07-14)
+
+### ⚠ BREAKING CHANGES
+
+* **button:** The inner wrapper span of the OButton component got removed.
+* **field:** The property `multiline` of the OField component got removed to better support small screens by default.
+
+### Features
+
+* **button:** add icon override template slots ([#1680](https://github.com/oruga-ui/oruga/issues/1680)) ([86d358c](https://github.com/oruga-ui/oruga/commit/86d358c648d63586302bb7d00a72e99ab5be3a0b))
+* **button:** remove inner wrapper span ([#1682](https://github.com/oruga-ui/oruga/issues/1682)) ([2e5e609](https://github.com/oruga-ui/oruga/commit/2e5e60916af4a10c14a6656e69f9eb4aca48bc24))
+* **field:** remove `multiline` property and add inverted `block` property ([#1683](https://github.com/oruga-ui/oruga/issues/1683)) ([71f45b4](https://github.com/oruga-ui/oruga/commit/71f45b49a79abffe38b79c6068d7ad1d12a4e6f8))
+* **popover:** add header and body elements ([#1679](https://github.com/oruga-ui/oruga/issues/1679)) ([06f53ad](https://github.com/oruga-ui/oruga/commit/06f53ad800ee6de7193b681ad7804299dee9df88))
+
 ## [0.14.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.2...v0.14.0-pre.3) (2026-07-10)
 
 ### Features
