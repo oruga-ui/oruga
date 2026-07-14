@@ -1330,7 +1330,7 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 bodyClass: ClassDefinition;
                 /**
-                 * Class for inner wrapper element when grouped
+                 * Class for the inner wrapper element when grouped
                  */
                 groupedClass: ClassDefinition;
                 /**
@@ -1339,8 +1339,13 @@ but will set the body to a fixed position, which may break some layouts.
                 addonsClass: ClassDefinition;
                 /**
                  * Class for inner body wrapper element to fill up multiple lines
+                 * @deprecated will be the new default
                  */
                 multilineClass: ClassDefinition;
+                /**
+                 * Class of the inner body wrapper element when force as block without linebreak
+                 */
+                blockClass: ClassDefinition;
                 /**
                  * Class to align label and control in horizontal forms
                  */

@@ -31,15 +31,17 @@ export type FieldProps = {
     messageTag?: DynamicComponent;
     /** A unique HTML id for the field message to associate an input with */
     messageId?: string;
-    /**
-     * Direct child components/elements of Field will be grouped horizontally
-     * (see which ones at the top of the page).
-     */
+    /** Direct child components/elements of Field will be grouped horizontally. */
     grouped?: boolean;
     /** Field automatically attach controls together */
     addons?: boolean;
-    /** Allow controls to fill up multiple lines, making it responsive */
+    /**
+     * Allow controls to fill up multiple lines, making it responsive
+     * @deprecated will be the new default
+     */
     multiline?: boolean;
+    /** Show content in block style. */
+    block?: boolean;
     /** Group label and control on the same line for horizontal forms */
     horizontal?: boolean;
     /** Mobile breakpoint as `max-width` value */
@@ -60,12 +62,17 @@ export type FieldClasses = Partial<{
     variantClass: ComponentClass;
     /** Class for the body wrapper element*/
     bodyClass: ComponentClass;
-    /** Class for inner wrapper element when grouped */
+    /** Class for the inner wrapper element when grouped */
     groupedClass: ComponentClass;
     /** Class of the inner wrapper element when element get automatically attached together inside a field */
     addonsClass: ComponentClass;
-    /** Class for inner body wrapper element to fill up multiple lines */
+    /**
+     * Class for inner body wrapper element to fill up multiple lines
+     * @deprecated will be the new default
+     */
     multilineClass: ComponentClass;
+    /** Class of the inner body wrapper element when force as block without linebreak */
+    blockClass: ComponentClass;
     /** Class to align label and control in horizontal forms */
     horizontalClass: ComponentClass;
     /** Class for the label element when horizontal */
