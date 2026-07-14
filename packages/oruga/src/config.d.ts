@@ -1343,7 +1343,7 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 multilineClass: ClassDefinition;
                 /**
-                 * Class of the inner body wrapper element when force as block without linebreak
+                 * Class of the inner body wrapper element when force as block style without linebreak
                  */
                 blockClass: ClassDefinition;
                 /**

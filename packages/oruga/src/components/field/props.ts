@@ -40,7 +40,7 @@ export type FieldProps = {
      * @deprecated will be the new default
      */
     multiline?: boolean;
-    /** Show content in block style. */
+    /** Show content in block style instead of multilines. */
     block?: boolean;
     /** Group label and control on the same line for horizontal forms */
     horizontal?: boolean;
@@ -71,7 +71,7 @@ export type FieldClasses = Partial<{
      * @deprecated will be the new default
      */
     multilineClass: ComponentClass;
-    /** Class of the inner body wrapper element when force as block without linebreak */
+    /** Class of the inner body wrapper element when force as block style without linebreak */
     blockClass: ComponentClass;
     /** Class to align label and control in horizontal forms */
     horizontalClass: ComponentClass;
