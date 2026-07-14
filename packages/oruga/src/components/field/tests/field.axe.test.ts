@@ -22,8 +22,8 @@ describe("OField a11y tests", () => {
             slots: { default: [h(OInput), "<button>Action</button>"] },
         },
         {
-            title: "axe field - multiline",
-            props: { label: "Name", grouped: true, multiline: true },
+            title: "axe field - block",
+            props: { label: "Name", grouped: true, block: true },
             slots: { default: [h(OInput), "<button>Action</button>"] },
         },
         {

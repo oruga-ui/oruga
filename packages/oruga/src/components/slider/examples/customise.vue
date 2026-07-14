@@ -9,7 +9,7 @@ const size = ref("medium");
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field>
                 <o-switch v-model="rounded" label="Rounded" />
             </o-field>

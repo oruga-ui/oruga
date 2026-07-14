@@ -215,7 +215,7 @@ const keepOpen = ref(true);
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field>
                 <o-switch v-model="allowNew" label="Allow new items" />
             </o-field>

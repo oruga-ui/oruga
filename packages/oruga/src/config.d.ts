@@ -1338,11 +1338,6 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 addonsClass: ClassDefinition;
                 /**
-                 * Class for inner body wrapper element to fill up multiple lines
-                 * @deprecated will be the new default
-                 */
-                multilineClass: ClassDefinition;
-                /**
                  * Class of the inner body wrapper element when force as block style without linebreak
                  */
                 blockClass: ClassDefinition;

@@ -10,7 +10,7 @@
             <o-button variant="primary" label="Search" />
         </o-field>
 
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-input aria-label="some input" />
             <o-button>First</o-button>
             <o-button>Second</o-button>

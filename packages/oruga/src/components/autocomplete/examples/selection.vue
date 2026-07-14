@@ -31,7 +31,7 @@ function changeselection(): void {
 
 <template>
     <section class="odocs-spaced">
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-switch v-model="keepFirst">Keep first</o-switch>
             <o-switch v-model="keepOpen">Keep open</o-switch>
             <o-switch v-model="openOnFocus">Open on focus</o-switch>

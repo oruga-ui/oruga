@@ -87,7 +87,7 @@ const keepChecked = ref(false);
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-button
                 variant="danger"
                 :disabled="!checkedRows.length"

@@ -10,7 +10,7 @@ const locale = ref("en-US"); // Browser locale
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field label="Locale">
                 <o-select v-model="locale">
                     <option value="de-DE">de-DE</option>
@@ -35,7 +35,7 @@ const locale = ref("en-US"); // Browser locale
                 </o-select>
             </o-field>
         </o-field>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field>
                 <o-switch v-model="showWeekNumber">Show week number</o-switch>
             </o-field>
