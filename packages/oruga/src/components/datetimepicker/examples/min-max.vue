@@ -7,7 +7,7 @@ const maxDatetime = ref<Date>();
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field label="Min Datetime">
                 <o-datetimepicker
                     v-model="minDatetime"

@@ -49,7 +49,7 @@ const slides = [
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field>
                 <o-switch v-model="indicators" label="Show indicators" />
             </o-field>
