@@ -237,7 +237,6 @@ const innerBodyClasses = defineClasses(
         null,
         computed(() => !props.grouped && hasAddons.value),
     ],
-    // @deprecated
     ["blockClass", "o-field--block", null, computed(() => props.block)],
 );
 
