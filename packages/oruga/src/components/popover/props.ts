@@ -88,8 +88,6 @@ export type PopoverClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when disabled */
     disabledClass: ComponentClass;
-    /** Class of the root element when shown as modal */
-    modalClass: ComponentClass;
     /** Class for the root element when active  */
     activeClass: ComponentClass;
     /** Class of the root element when teleported */
@@ -100,6 +98,8 @@ export type PopoverClasses = Partial<{
     contentClass: ComponentClass;
     /** Class of the content element when active */
     contentActiveClass: ComponentClass;
+    /** Class of the content element when shown as modal */
+    contentModalClass: ComponentClass;
     /** Class of the content element when should has a backdrop */
     contentBackdropClass: ComponentClass;
     /** Class of the content header element */

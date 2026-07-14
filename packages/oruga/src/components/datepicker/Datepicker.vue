@@ -550,7 +550,6 @@ const rootClasses = defineClasses(
         computed(() => props.expanded),
     ],
     ["mobileClass", "o-datepicker--mobile", null, isMobile],
-    ["modalClass", "o-datepicker--modal", null, isModal],
     ["activeClass", "o-datepicker--active", null, isActive],
     [
         "teleportClass",
@@ -564,6 +563,7 @@ const triggerClasses = defineClasses(["triggerClass", "o-datepicker__trigger"]);
 const contentClasses = defineClasses(
     ["contentClass", "o-datepicker__content"],
     ["contentActiveClass", "o-datepicker__content--active", null, isActive],
+    ["contentModalClass", "o-datepicker__content--modal", null, isModal],
     ["contentBackdropClass", "o-datepicker__content--backdrop", null, isModal],
 );
 

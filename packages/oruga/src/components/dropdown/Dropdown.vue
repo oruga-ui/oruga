@@ -562,7 +562,6 @@ const rootClasses = defineClasses(
         computed(() => props.expanded),
     ],
     ["mobileClass", "o-dropdown--mobile", null, isMobile],
-    ["modalClass", "o-dropdown--modal", null, isModal],
     ["hoverableClass", "o-dropdown--hoverable", null, hoverable],
     ["activeClass", "o-dropdown--active", null, isActive],
     [
@@ -579,6 +578,7 @@ const contentClasses = defineClasses(
     ["menuClass", "o-dropdown__menu"],
     ["contentClass", "o-dropdown__content"],
     ["contentActiveClass", "o-dropdown__content--active", null, isActive],
+    ["contentModalClass", "o-dropdown__content--modal", null, isModal],
     ["contentBackdropClass", "o-dropdown__content--backdrop", null, isModal],
 );
 

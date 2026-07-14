@@ -177,7 +177,6 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.disabled),
     ],
-    ["modalClass", "o-popover--modal", null, computed(() => props.modal)],
     ["activeClass", "o-popover--active", null, isActive],
     [
         "teleportClass",
@@ -190,6 +189,12 @@ const rootClasses = defineClasses(
 const contentClasses = defineClasses(
     ["contentClass", "o-popover__content"],
     ["contentActiveClass", "o-popover__content--active", null, isActive],
+    [
+        "contentModalClass",
+        "o-popover__content--modal",
+        null,
+        computed(() => props.modal),
+    ],
     [
         "contentBackdropClass",
         "o-popover__content--backdrop",

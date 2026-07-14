@@ -106,8 +106,6 @@ export type TimepickerClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Class of the root element when shown as modal */
-    modalClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
     /** Class of the root element when disabled */
@@ -124,6 +122,8 @@ export type TimepickerClasses = Partial<{
     contentClass: ComponentClass;
     /** Class of the content element when active or inline */
     contentActiveClass: ComponentClass;
+    /** Class of the content element when shown as modal */
+    contentModalClass: ComponentClass;
     /** Class of the content element when should has a backdrop */
     contentBackdropClass: ComponentClass;
     /** Class of the select separator element */

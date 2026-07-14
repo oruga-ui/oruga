@@ -7,15 +7,6 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
-    modalClass: {
-        class: "modalClass",
-        description: "Class of the root element when shown as modal.",
-        properties: ["modal"],
-        action: (data): void => {
-            data.modal = true;
-            data.active = true;
-        },
-    },
     disabledClass: {
         class: "disabledClass",
         description: "Class of the root element when disabled.",
@@ -53,6 +44,15 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
         description: "Class of the content element when active.",
         properties: ["active"],
         action: (data): void => {
+            data.active = true;
+        },
+    },
+    contentModalClass: {
+        class: "contentModalClass",
+        description: "Class of the content element when shown as modal.",
+        properties: ["modal"],
+        action: (data): void => {
+            data.modal = true;
             data.active = true;
         },
     },
