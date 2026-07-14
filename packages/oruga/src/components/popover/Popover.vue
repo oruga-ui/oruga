@@ -39,6 +39,7 @@ const props = withDefaults(defineProps<PopoverProps<C>>(), {
     override: undefined,
     active: false,
     id: () => useId(),
+    title: undefined,
     content: undefined,
     behavior: "auto",
     position: () => getDefault("popover.position", "top"),
@@ -86,6 +87,11 @@ defineSlots<{
      * @param open {(): void} - function to open the popover
      */
     default?(props: { active: boolean; open: () => void }): void;
+    /**
+     * Override the popover title, default is title prop
+     * @param close {(): void} - function to close the popover
+     */
+    title?(props: { close: () => void }): void;
     /**
      * Override the popover content, default is content prop
      * @param close {(): void} - function to close the popover
@@ -171,7 +177,6 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.disabled),
     ],
-    ["modalClass", "o-popover--modal", null, computed(() => props.modal)],
     ["activeClass", "o-popover--active", null, isActive],
     [
         "teleportClass",
@@ -185,12 +190,23 @@ const contentClasses = defineClasses(
     ["contentClass", "o-popover__content"],
     ["contentActiveClass", "o-popover__content--active", null, isActive],
     [
+        "contentModalClass",
+        "o-popover__content--modal",
+        null,
+        computed(() => props.modal),
+    ],
+    [
         "contentBackdropClass",
         "o-popover__content--backdrop",
         null,
         computed(() => props.backdrop || props.modal),
     ],
 );
+
+const headerClasses = defineClasses(["headerClass", "o-popover__header"]);
+
+const bodyClasses = defineClasses(["bodyClass", "o-popover__body"]);
+
 const closeClasses = defineClasses(["closeClass", "o-popover__close"]);
 
 // #endregion --- Computed Component Classes ---
@@ -216,17 +232,11 @@ defineExpose({ close, open, toggle });
                     :class="contentClasses"
                     :role="role"
                     popover>
-                    <!-- injected component for programmatic usage -->
-                    <component
-                        :is="$props.component"
-                        v-if="$props.component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}"
-                        @close="close" />
-
-                    <slot v-else name="content" :close="close">
-                        {{ content }}
-                    </slot>
+                    <div v-if="title || $slots['title']" :class="headerClasses">
+                        <slot name="title" :close="close">
+                            {{ title }}
+                        </slot>
+                    </div>
 
                     <CloseButton
                         v-if="closeable"
@@ -238,6 +248,20 @@ defineExpose({ close, open, toggle });
                         @click="close">
                         <slot v-if="$slots['close']" name="close" />
                     </CloseButton>
+
+                    <div :class="bodyClasses">
+                        <!-- injected component for programmatic usage -->
+                        <component
+                            :is="$props.component"
+                            v-if="$props.component"
+                            v-bind="$props.props"
+                            v-on="$props.events || {}"
+                            @close="close" />
+
+                        <slot v-else name="content" :close="close">
+                            {{ content }}
+                        </slot>
+                    </div>
                 </div>
             </transition>
         </Teleport>

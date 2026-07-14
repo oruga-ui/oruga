@@ -589,7 +589,6 @@ const rootClasses = defineClasses(
         computed(() => props.expanded),
     ],
     ["mobileClass", "o-timepicker--mobile", null, isMobile],
-    ["modalClass", "o-timepicker--modal", null, isModal],
     ["activeClass", "o-timepicker--active", null, isActive],
     [
         "teleportClass",
@@ -603,6 +602,7 @@ const triggerClasses = defineClasses(["triggerClass", "o-timepicker__trigger"]);
 const contentClasses = defineClasses(
     ["contentClass", "o-timepicker__content"],
     ["contentActiveClass", "o-timepicker__content--active", null, isActive],
+    ["contentModalClass", "o-timepicker__content--modal", null, isModal],
     ["contentBackdropClass", "o-timepicker__content--backdrop", null, isModal],
 );
 

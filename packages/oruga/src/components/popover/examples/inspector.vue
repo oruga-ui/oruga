@@ -7,15 +7,6 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
-    modalClass: {
-        class: "modalClass",
-        description: "Class of the root element when shown as modal.",
-        properties: ["modal"],
-        action: (data): void => {
-            data.modal = true;
-            data.active = true;
-        },
-    },
     disabledClass: {
         class: "disabledClass",
         description: "Class of the root element when disabled.",
@@ -56,6 +47,15 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
             data.active = true;
         },
     },
+    contentModalClass: {
+        class: "contentModalClass",
+        description: "Class of the content element when shown as modal.",
+        properties: ["modal"],
+        action: (data): void => {
+            data.modal = true;
+            data.active = true;
+        },
+    },
     contentBackdropClass: {
         class: "contentBackdropClass",
         description: "Class of the content when should has a backdrop.",
@@ -65,13 +65,19 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
             data.active = true;
         },
     },
-    backdropClass: {
-        class: "backdropClass",
-        description:
-            "Class of the content element when a backdrop should be shown.",
-        properties: ["backdrop"],
+    headerClass: {
+        class: "headerClass",
+        description: "Class of the content header element.",
+        properties: ["title"],
         action: (data): void => {
-            data.backdrop = true;
+            data.active = true;
+        },
+    },
+    bodyClass: {
+        class: "bodyClass",
+        description: "Class of the content body element.",
+        action: (data): void => {
+            data.active = true;
         },
     },
     closeClass: {

@@ -650,10 +650,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileClass: ClassDefinition;
                 /**
-                 * Class of the root element when shown as modal
-                 */
-                modalClass: ClassDefinition;
-                /**
                  * Class of the root element when teleported
                  */
                 teleportClass: ClassDefinition;
@@ -685,6 +681,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element when active or inline
                  */
                 contentActiveClass: ClassDefinition;
+                /**
+                 * Class of the content element when shown as modal
+                 */
+                contentModalClass: ClassDefinition;
                 /**
                  * Class of the content element when should has a backdrop
                  */
@@ -1211,10 +1211,6 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 mobileClass: ClassDefinition;
                 /**
-                 * Class of the root element when shown as modal
-                 */
-                modalClass: ClassDefinition;
-                /**
                  * Class of the root element when teleported
                  */
                 teleportClass: ClassDefinition;
@@ -1250,6 +1246,10 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class of the content element when active
                  */
                 contentActiveClass: ClassDefinition;
+                /**
+                 * Class of the content element when shown as modal
+                 */
+                contentModalClass: ClassDefinition;
                 /**
                  * Class of the content element when should has a backdrop
                  */
@@ -2126,10 +2126,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 disabledClass: ClassDefinition;
                 /**
-                 * Class of the root element when shown as modal
-                 */
-                modalClass: ClassDefinition;
-                /**
                  * Class for the root element when active
                  */
                 activeClass: ClassDefinition;
@@ -2150,17 +2146,25 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentActiveClass: ClassDefinition;
                 /**
+                 * Class of the content element when shown as modal
+                 */
+                contentModalClass: ClassDefinition;
+                /**
                  * Class of the content element when should has a backdrop
                  */
                 contentBackdropClass: ClassDefinition;
                 /**
+                 * Class of the content header element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the content body element
+                 */
+                bodyClass: ClassDefinition;
+                /**
                  * Class of the close element
                  */
                 closeClass: ClassDefinition;
-                /**
-                 * Class of the content element when a backdrop should be shown
-                 */
-                backdropClass: ClassDefinition;
                 /**
                  * Class of the body when popover has backdrop and scroll is clipped
                  */
@@ -3466,10 +3470,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileClass: ClassDefinition;
                 /**
-                 * Class of the root element when shown as modal
-                 */
-                modalClass: ClassDefinition;
-                /**
                  * Class of the root element when teleported
                  */
                 teleportClass: ClassDefinition;
@@ -3501,6 +3501,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element when active or inline
                  */
                 contentActiveClass: ClassDefinition;
+                /**
+                 * Class of the content element when shown as modal
+                 */
+                contentModalClass: ClassDefinition;
                 /**
                  * Class of the content element when should has a backdrop
                  */
