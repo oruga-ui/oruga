@@ -35,7 +35,7 @@ export type FieldProps = {
     grouped?: boolean;
     /** Field automatically attach controls together */
     addons?: boolean;
-    /** Show content in block style instead of multilines. */
+    /** Show content in block style instead of without linebreak */
     block?: boolean;
     /** Group label and control on the same line for horizontal forms */
     horizontal?: boolean;
