@@ -102,7 +102,7 @@ describe("OField tests", () => {
 
         test('react accordingly when "block" prop is set', () => {
             const wrapper = mount(OField, {
-                props: { block: true },
+                props: { block: true, addons: true },
                 slots: {
                     default: [
                         h(OInput),

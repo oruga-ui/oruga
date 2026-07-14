@@ -3,9 +3,6 @@
 exports[`OField tests > render correctly 1`] = `
 "<div data-oruga="field" class="o-field">
   <!--v-if-->
-  <div class="o-field__body">
-    <div class="o-field o-field--multiline"></div>
-  </div>
   <!--v-if-->
 </div>"
 `;
