@@ -5,7 +5,7 @@ type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type ListboxOptions<T> = OptionsOrGroupsProp<ListItemProps<T>>;
 
-export type ListboxProps<T, IsMultiple extends boolean = false> = {
+export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

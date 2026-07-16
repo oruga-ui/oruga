@@ -4,7 +4,7 @@ export type InputType<IsNumber extends boolean> = IsNumber extends true
     ? number
     : string;
 
-export type InputProps<IsNumber extends boolean = false> = {
+export type InputProps<IsNumber extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

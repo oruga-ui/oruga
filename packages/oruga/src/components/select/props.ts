@@ -10,7 +10,7 @@ export type SelectOption<T = string | number> = {
 
 export type SelectOptions<T> = OptionsOrGroupsProp<SelectOption<T>>;
 
-export type SelectProps<T, IsMultiple extends boolean = false> = {
+export type SelectProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
