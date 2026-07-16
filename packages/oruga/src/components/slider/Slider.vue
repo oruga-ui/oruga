@@ -155,12 +155,10 @@ function setValues(newValue: number | number[] | undefined): void {
         valueStart.value = isThumbReversed.value ? largeValue : smallValue;
         valueEnd.value = isThumbReversed.value ? smallValue : largeValue;
     } else if (newValue !== undefined) {
-        const value = isNaN(newValue)
+        valueStart.value = isNaN(newValue)
             ? props.min
             : Math.min(props.max, Math.max(props.min, newValue));
-
-        valueStart.value = value;
-        valueEnd.value = value;
+        valueEnd.value = 0;
     } else {
         valueStart.value = props.min;
         valueEnd.value = props.min;
