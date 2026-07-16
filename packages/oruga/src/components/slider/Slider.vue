@@ -99,11 +99,17 @@ const isThumbReversed = ref();
 const isTrackClickDisabled = ref();
 
 const minValue = computed(() =>
-    Math.min(valueStart.value || props.min, valueEnd.value || props.max),
+    Math.min(
+        Math.max(valueStart.value, props.min),
+        Math.min(valueEnd.value, props.max),
+    ),
 );
 
 const maxValue = computed(() =>
-    Math.max(valueStart.value || props.min, valueEnd.value || props.max),
+    Math.max(
+        Math.max(valueStart.value, props.min),
+        Math.min(valueEnd.value, props.max),
+    ),
 );
 
 const isRange = computed(() => isTrueish(props.range));
@@ -170,22 +176,24 @@ const tickValues = computed(() => {
     return result;
 });
 
-const barSize = computed(() =>
-    isRange.value
+const barSize = computed(() => {
+    if (props.max === props.min) return "100%";
+    return isRange.value
         ? `${
               (100 * (maxValue.value - minValue.value)) /
               (props.max - props.min)
           }%`
         : `${
               (100 * (valueStart.value - props.min)) / (props.max - props.min)
-          }%`,
-);
+          }%`;
+});
 
-const barStart = computed(() =>
-    isRange.value
+const barStart = computed(() => {
+    if (props.max === props.min) return "0%";
+    return isRange.value
         ? `${(100 * (minValue.value - props.min)) / (props.max - props.min)}%`
-        : "0%",
-);
+        : "0%";
+});
 
 const barStyle = computed(() => ({
     width: barSize.value,
