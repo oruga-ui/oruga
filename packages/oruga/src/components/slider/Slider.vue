@@ -85,7 +85,7 @@ const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,
     valueStart: valueStart.value,
-    valueEnd: valueEnd.value,
+    valueEnd: Math.max(valueEnd.value, valueStart.value),
 }));
 
 /** provide functionalities and data to child item components */
