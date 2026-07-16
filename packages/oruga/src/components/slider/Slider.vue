@@ -84,6 +84,8 @@ const thumbEndRef = useTemplateRef("thumbEndComponent");
 const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,
+    valueStart: valueStart.value,
+    valueEnd: Math.max(valueEnd.value, valueStart.value),
 }));
 
 /** provide functionalities and data to child item components */
@@ -166,7 +168,7 @@ function setValues(newValue: number | number[] | undefined): void {
 const tickValues = computed(() => {
     if (!props.ticks || props.min > props.max || props.step === 0) return [];
     const result: number[] = [];
-    for (let i = props.min + props.step; i < props.max; i = i + props.step) {
+    for (let i = props.min; i <= props.max; i = i + props.step) {
         result.push(i);
     }
     return result;
@@ -268,7 +270,7 @@ const trackClasses = defineClasses(["trackClass", "o-slider__track"]);
 const fillClasses = defineClasses(
     ["fillClass", "o-slider__fill"],
     [
-        "variantClass",
+        "fillVariantClass",
         "o-slider__fill--",
         computed(() => props.variant),
         computed(() => !!props.variant),

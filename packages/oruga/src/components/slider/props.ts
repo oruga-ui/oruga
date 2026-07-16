@@ -70,7 +70,7 @@ export type SliderClasses = Partial<{
     /** Class of the filled part of the slider */
     fillClass: ComponentClass;
     /** Class of the filled part of the slider with variant */
-    variantClass: ComponentClass;
+    fillVariantClass: ComponentClass;
     /** Class of the thumb wrapper element */
     thumbWrapperClass: ComponentClass;
     /** Class to the thumb wrapper element when the slider is dragged */
@@ -85,6 +85,10 @@ export type SliderClasses = Partial<{
     tickClass: ComponentClass;
     /** Class of the slider tick element when is hidden */
     tickHiddenClass: ComponentClass;
+    /** Class of the slider tick element when is before the value */
+    tickBeforeClass: ComponentClass;
+    /** Class of the slider tick element when is after the value */
+    tickAfterClass: ComponentClass;
     /** Class of the slider tick label element */
     tickLabelClass: ComponentClass;
 }>;

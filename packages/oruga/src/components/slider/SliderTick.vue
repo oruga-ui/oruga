@@ -58,11 +58,16 @@ const hidden = computed(
 
 const tickStyle = computed(() => ({ left: position.value + "%" }));
 
+const isBefore = computed(() => parent.value.valueStart > props.value);
+const isAfter = computed(() => parent.value.valueEnd < props.value);
+
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["tickClass", "o-slider__tick"],
     ["tickHiddenClass", "o-slider__tick--hidden", null, hidden],
+    ["tickBeforeClass", "o-slider__tick--before", null, isBefore],
+    ["tickAfterClass", "o-slider__tick--after", null, isAfter],
 );
 
 const tickLabelClasses = defineClasses([
@@ -78,9 +83,11 @@ const tickLabelClasses = defineClasses([
         ref="rootElement"
         data-oruga="slider-tick"
         :class="rootClasses"
-        :style="tickStyle">
+        :style="tickStyle"
+        :data-value="value"
+        aria-hidden="true">
         <span v-if="$slots.default || label" :class="tickLabelClasses">
-            <!-- 
+            <!--
                 @slot Override tick content, default is label prop
              -->
             <slot> {{ label }} </slot>

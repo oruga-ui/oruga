@@ -2511,7 +2511,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class of the filled part of the slider with variant
                  */
-                variantClass: ClassDefinition;
+                fillVariantClass: ClassDefinition;
                 /**
                  * Class of the thumb wrapper element
                  */
@@ -2540,6 +2540,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the slider tick element when is hidden
                  */
                 tickHiddenClass: ClassDefinition;
+                /**
+                 * Class of the slider tick element when is before the value
+                 */
+                tickBeforeClass: ClassDefinition;
+                /**
+                 * Class of the slider tick element when is after the value
+                 */
+                tickAfterClass: ClassDefinition;
                 /**
                  * Class of the slider tick label element
                  */
