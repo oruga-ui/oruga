@@ -84,6 +84,8 @@ const thumbEndRef = useTemplateRef("thumbEndComponent");
 const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,
+    valueStart: valueStart.value,
+    valueEnd: valueEnd.value,
 }));
 
 /** provide functionalities and data to child item components */
@@ -260,7 +262,7 @@ const trackClasses = defineClasses(["trackClass", "o-slider__track"]);
 const fillClasses = defineClasses(
     ["fillClass", "o-slider__fill"],
     [
-        "variantClass",
+        "fillVariantClass",
         "o-slider__fill--",
         computed(() => props.variant),
         computed(() => !!props.variant),
