@@ -10,8 +10,8 @@ type DatepickerType<IsRange, IsMultiple> = IsRange extends true
       : Date;
 
 export type DatepickerProps<
-    IsRange extends boolean = false,
-    IsMultiple extends boolean = false,
+    IsRange extends boolean = boolean,
+    IsMultiple extends boolean = boolean,
 > = {
     /** Override existing theme classes completely */
     override?: boolean;

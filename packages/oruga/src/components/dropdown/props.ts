@@ -5,7 +5,7 @@ type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type DropdownOptions<T> = OptionsOrGroupsProp<DropdownItemProps<T>>;
 
-export type DropdownProps<T, IsMultiple extends boolean = false> = {
+export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The selected option value, use v-model to make it two-way binding */

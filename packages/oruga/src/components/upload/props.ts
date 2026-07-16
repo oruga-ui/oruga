@@ -4,7 +4,7 @@ type UploadType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type UploadProps<
     T extends object | typeof File,
-    IsMultiple extends boolean = false,
+    IsMultiple extends boolean = boolean,
 > = {
     /** Override existing theme classes completely */
     override?: boolean;
