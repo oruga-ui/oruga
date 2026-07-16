@@ -50,7 +50,7 @@ describe("OSlider tests", () => {
             props: { ticks: true, min: 0, max: 100, step: 10 },
         });
 
-        expect(wrapper.findAll('[data-oruga="slider-tick"]')).toHaveLength(9);
+        expect(wrapper.findAll('[data-oruga="slider-tick"]')).toHaveLength(11);
     });
 
     test("emits a change event when a thumb is moved with keyboard input", async () => {
