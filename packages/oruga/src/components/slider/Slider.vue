@@ -85,7 +85,7 @@ const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,
     valueStart: valueStart.value,
-    valueEnd: valueEnd.value ?? valueStart.value,
+    valueEnd: valueEnd.value,
 }));
 
 /** provide functionalities and data to child item components */
@@ -149,10 +149,12 @@ function setValues(newValue: number | number[] | undefined): void {
         valueStart.value = isThumbReversed.value ? largeValue : smallValue;
         valueEnd.value = isThumbReversed.value ? smallValue : largeValue;
     } else if (newValue !== undefined) {
-        valueStart.value = isNaN(newValue)
+        const value = isNaN(newValue)
             ? props.min
             : Math.min(props.max, Math.max(props.min, newValue));
-        valueEnd.value = 0;
+
+        valueStart.value = value;
+        valueEnd.value = value;
     } else {
         valueStart.value = props.min;
         valueEnd.value = props.min;
@@ -162,7 +164,7 @@ function setValues(newValue: number | number[] | undefined): void {
 const tickValues = computed(() => {
     if (!props.ticks || props.min > props.max || props.step === 0) return [];
     const result: number[] = [];
-    for (let i = props.min + props.step; i < props.max; i = i + props.step) {
+    for (let i = props.min; i <= props.max; i = i + props.step) {
         result.push(i);
     }
     return result;

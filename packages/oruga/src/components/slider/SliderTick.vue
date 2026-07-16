@@ -82,9 +82,12 @@ const tickLabelClasses = defineClasses([
     <div
         ref="rootElement"
         data-oruga="slider-tick"
+        :data-value="value"
+        aria-hidden="true"
         :class="rootClasses"
         :style="tickStyle">
         <span v-if="$slots.default || label" :class="tickLabelClasses">
+            {{ parent.valueStart }} {{ parent.valueEnd }}
             <!--
                 @slot Override tick content, default is label prop
              -->
