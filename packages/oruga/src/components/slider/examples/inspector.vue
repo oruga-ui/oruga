@@ -2,7 +2,7 @@
 import type { InspectData } from "@docs";
 import type { SliderClasses, SliderProps } from "../props";
 
-const inspectData: InspectData<SliderClasses, SliderProps<true | false>> = {
+const inspectData: InspectData<SliderClasses, SliderProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
