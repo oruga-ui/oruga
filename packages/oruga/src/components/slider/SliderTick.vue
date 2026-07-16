@@ -60,7 +60,7 @@ const tickStyle = computed(() => ({ left: position.value + "%" }));
 
 const isBefore = computed(() => parent.value.valueStart > props.value);
 const isAfter = computed(
-    () => (parent.value.valueEnd ?? parent.value.valueStart) > props.value,
+    () => (parent.value.valueEnd ?? parent.value.valueStart) < props.value,
 );
 
 // #region --- Computed Component Classes ---
