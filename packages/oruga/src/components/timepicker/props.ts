@@ -126,9 +126,11 @@ export type TimepickerClasses = Partial<{
     contentModalClass: ComponentClass;
     /** Class of the content element when should has a backdrop */
     contentBackdropClass: ComponentClass;
+    /** Class of the content body element */
+    bodyClass: ComponentClass;
     /** Class of the select separator element */
     separatorClass: ComponentClass;
-    /** Class of the footer element */
+    /** Class of the content footer element */
     footerClass: ComponentClass;
     /** Class for the HTML input element */
     inputClass: ComponentClass;

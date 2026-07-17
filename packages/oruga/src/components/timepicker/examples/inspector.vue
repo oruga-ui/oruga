@@ -96,6 +96,13 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
             data.active = true;
         },
     },
+    bodyClass: {
+        class: "bodyClass",
+        description: "Class of the content body element.",
+        action: (data): void => {
+            data.active = true;
+        },
+    },
     separatorClass: {
         class: "separatorClass",
         description: "Class of the select separator element.",

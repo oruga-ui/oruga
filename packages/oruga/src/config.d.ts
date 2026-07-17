@@ -3518,11 +3518,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentBackdropClass: ClassDefinition;
                 /**
+                 * Class of the content body element
+                 */
+                bodyClass: ClassDefinition;
+                /**
                  * Class of the select separator element
                  */
                 separatorClass: ClassDefinition;
                 /**
-                 * Class of the footer element
+                 * Class of the content footer element
                  */
                 footerClass: ClassDefinition;
                 /**

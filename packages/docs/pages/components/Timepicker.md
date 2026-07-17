@@ -95,6 +95,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | Name    | Description                                | Bindings |
 | ------- | ------------------------------------------ | -------- |
 | trigger | Override the trigger input element         |          |
+| body    | Override the body                          |          |
 | footer  | Define an additional content in the footer |          |
 
 </section>
