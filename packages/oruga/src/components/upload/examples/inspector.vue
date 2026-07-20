@@ -34,17 +34,18 @@ const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
             data.dragDrop = true;
         },
     },
-    draggableClass: {
-        class: "draggableClass",
-        description: "Class of the dragable container element.",
+    dragzoneClass: {
+        class: "dragzoneClass",
+        description: "Class of the drag/drop container element.",
         properties: ["dragDrop"],
         action: (data): void => {
             data.dragDrop = true;
         },
     },
-    draggableHoveredClass: {
-        class: "draggableHoveredClass",
-        description: "Class of the dragable container element when hovered.",
+    dragzoneHoveredClass: {
+        class: "dragzoneHoveredClass",
+        description:
+            "Class of the dragable container element when hovered with a file.",
         info: "Drag & drop a file to see it in action!",
         properties: ["dragDrop"],
         action: (data): void => {

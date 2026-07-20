@@ -229,15 +229,17 @@ const rootClasses = defineClasses(
     ],
 );
 
-const draggableClasses = defineClasses(
-    ["draggableClass", "o-upload__draggable"],
+const dragzoneClasses = defineClasses(
+    ["dragzoneClass", "o-upload__dragzone"],
     [
-        "draggableHoveredClass",
-        "o-upload__draggable--hovered",
+        "dragzoneHoveredClass",
+        "o-upload__dragzone--hovered",
         null,
         computed(() => dragDropFocus.value),
     ],
 );
+
+const inputClasses = defineClasses(["inputClass", "o-upload__input"]);
 
 // #endregion --- Computed Component Classes ---
 
@@ -262,7 +264,7 @@ defineExpose({
 
         <div
             v-else
-            :class="draggableClasses"
+            :class="dragzoneClasses"
             role="button"
             tabindex="0"
             @pointerenter="updateDragDropFocus(true)"
@@ -277,6 +279,7 @@ defineExpose({
         <input
             v-bind="inputBind"
             ref="inputElement"
+            :class="inputClasses"
             type="file"
             data-oruga-input="file"
             :multiple="props.multiple"
