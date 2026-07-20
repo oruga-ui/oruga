@@ -662,6 +662,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expandedClass: ClassDefinition;
                 /**
+                 * Class of the root element when inlined
+                 */
+                inlineClass: ClassDefinition;
+                /**
                  * Class for the root element when active or inline
                  */
                 activeClass: ClassDefinition;
@@ -3489,6 +3493,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element when expanded
                  */
                 expandedClass: ClassDefinition;
+                /**
+                 * Class of the root element when inlined
+                 */
+                inlineClass: ClassDefinition;
                 /**
                  * Class for the root element when active or inline
                  */
