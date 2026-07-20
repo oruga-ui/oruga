@@ -51,6 +51,14 @@ const inspectData: InspectData<
             data.expanded = true;
         },
     },
+    inlineClass: {
+        class: "inlineClass",
+        description: "Class of the root element when inlined.",
+        properties: ["inline"],
+        action: (data): void => {
+            data.inline = true;
+        },
+    },
     teleportClass: {
         class: "teleportClass",
         description: "Class of the root element when teleported.",

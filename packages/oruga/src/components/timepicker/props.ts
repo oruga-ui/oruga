@@ -112,6 +112,8 @@ export type TimepickerClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
+    /** Class of the root element when inlined */
+    inlineClass: ComponentClass;
     /** Class for the root element when active or inline */
     activeClass: ComponentClass;
     /** Class of the root element component size */

@@ -588,6 +588,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    ["inlineClass", "o-timepicker--inline", null, computed(() => props.inline)],
     ["mobileClass", "o-timepicker--mobile", null, isMobile],
     ["activeClass", "o-timepicker--active", null, isActive],
     [
