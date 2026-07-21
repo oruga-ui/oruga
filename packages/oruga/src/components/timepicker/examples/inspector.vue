@@ -47,6 +47,14 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
             data.expanded = true;
         },
     },
+    inlineClass: {
+        class: "inlineClass",
+        description: "Class of the root element when inlined.",
+        properties: ["inline"],
+        action: (data): void => {
+            data.inline = true;
+        },
+    },
     activeClass: {
         class: "activeClass",
         description: "Class of the root element when active.",

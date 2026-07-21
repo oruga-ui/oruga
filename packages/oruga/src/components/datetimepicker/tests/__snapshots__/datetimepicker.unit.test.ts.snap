@@ -317,7 +317,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
       </section>
       <footer class="o-datepicker__footer">
         <div class="o-datetimepicker__time">
-          <div data-oruga="timepicker" class="o-timepicker">
+          <div data-oruga="timepicker" class="o-timepicker o-timepicker--inline">
             <!--v-if-->
             <!--teleport start-->
             <transition-stub appear="false" persisted="false" css="true">
