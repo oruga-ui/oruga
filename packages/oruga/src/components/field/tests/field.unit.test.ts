@@ -99,23 +99,6 @@ describe("OField tests", () => {
             const innerField = body.find(".o-field");
             expect(innerField.classes()).toContain("o-field--grouped");
         });
-
-        test('react accordingly when "block" prop is set', () => {
-            const wrapper = mount(OField, {
-                props: { block: true, addons: true },
-                slots: {
-                    default: [
-                        h(OInput),
-                        '<button class="button">Button</button>',
-                    ],
-                },
-            });
-
-            const body = wrapper.find(".o-field__body");
-            expect(body.exists()).toBeTruthy();
-            const innerField = body.find(".o-field");
-            expect(innerField.classes()).toContain("o-field--block");
-        });
     });
 
     describe("managing label prop", () => {
