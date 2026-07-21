@@ -177,23 +177,23 @@ export type DatepickerClasses = Partial<{
     contentModalClass: ComponentClass;
     /** Class of the content element when should has a backdrop */
     contentBackdropClass: ComponentClass;
-    /** Class of the header element inside the box */
+    /** Class of the content header element */
     headerClass: ComponentClass;
-    /** Class of the prev button element inside the box */
+    /** Class of the prev button element inside the header */
     prevButtonClass: ComponentClass;
-    /** Class of the next button element inside the box */
+    /** Class of the next button element inside the header */
     nextButtonClass: ComponentClass;
-    /** Class of the month and year selects container inside the box */
+    /** Class of the month and year selects container inside the header */
     listsClass: ComponentClass;
-    /** Class of the footer element */
+    /** Class of the content footer element */
     footerClass: ComponentClass;
-    /** Class of the dates table element inside the box */
+    /** Class of the dates table element */
     tableClass: ComponentClass;
     /** Class of dates table header element with days of the week */
     tableHeadClass: ComponentClass;
     /** Class of the cell element inside the table header */
     tableHeadCellClass: ComponentClass;
-    /** Class of the table body element inside the box */
+    /** Class of the table body element  */
     tableBodyClass: ComponentClass;
     /** Class of the table row element */
     tableRowClass: ComponentClass;
@@ -233,7 +233,7 @@ export type DatepickerClasses = Partial<{
     tableEventVariantClass: ComponentClass;
     /** Class of the event element with indicator */
     tableEventIndicatorClass: ComponentClass;
-    /** Class of the month table element inside the box when type is `month` */
+    /** Class of the month table element when type is `month` */
     monthClass: ComponentClass;
     /** Class of the table container when type is `month` */
     monthTableClass: ComponentClass;

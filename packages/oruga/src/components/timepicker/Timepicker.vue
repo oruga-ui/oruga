@@ -116,9 +116,11 @@ defineEmits<{
 defineSlots<{
     /** Override the trigger input element */
     trigger?(): void;
-    /** Override the body */
+    /** Define an additional content before the body */
+    header?(): void;
+    /** Override the content body */
     body?(): void;
-    /** Define an additional content in the footer */
+    /** Define an additional content after the body */
     footer?(): void;
 }>();
 
@@ -619,6 +621,8 @@ const separatorClasses = defineClasses([
     "o-timepicker__separtor",
 ]);
 
+const headerClasses = defineClasses(["headerClass", "o-timepicker__header"]);
+
 const footerClasses = defineClasses(["footerClass", "o-timepicker__footer"]);
 
 // #endregion --- Computed Component Classes ---
@@ -674,6 +678,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             <template v-if="$slots.trigger" #trigger>
                 <slot name="trigger" />
             </template>
+
+            <header v-if="$slots.header" :class="headerClasses">
+                <slot name="header" />
+            </header>
 
             <div :class="bodyClasses">
                 <slot name="body">
