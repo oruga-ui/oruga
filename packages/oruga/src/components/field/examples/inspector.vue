@@ -59,15 +59,6 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
             data.addons = true;
         },
     },
-    blockClass: {
-        class: "blockClass",
-        description:
-            "Class of the inner body wrapper element to force as block without linebreak.",
-        properties: ["block"],
-        action: (data): void => {
-            data.block = true;
-        },
-    },
     horizontalClass: {
         class: "horizontalClass",
         description: "Class to align label and control in horizontal forms.",

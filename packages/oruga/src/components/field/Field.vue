@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<FieldProps>(), {
     messageId: () => useId(),
     grouped: false,
     addons: false,
-    block: false,
+    nowrap: false,
     horizontal: false,
     mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
@@ -237,8 +237,13 @@ const innerBodyClasses = defineClasses(
         null,
         computed(() => !props.grouped && hasAddons.value),
     ],
-    ["blockClass", "o-field--block", null, computed(() => props.block)],
 );
+
+const innerBodyStyle = computed(() => {
+    const style = {};
+    if (props.nowrap) style["flex-wrap"] = "nowrap";
+    return style;
+});
 
 const messageClasses = defineClasses(
     ["messageClass", "o-field__message"],
@@ -304,7 +309,7 @@ const messageClasses = defineClasses(
         </div>
 
         <div v-else-if="hasBody" :class="bodyClasses">
-            <div :class="innerBodyClasses">
+            <div :class="innerBodyClasses" :style="innerBodyStyle">
                 <slot />
             </div>
         </div>
@@ -320,8 +325,8 @@ const messageClasses = defineClasses(
             :class="messageClasses">
             <slot name="message" :message="fieldMessage">
                 <template v-if="Array.isArray(fieldMessage)">
-                    <div v-for="message in fieldMessage" :key="message">
-                        {{ message }}
+                    <div v-for="_message in fieldMessage" :key="_message">
+                        {{ _message }}
                     </div>
                 </template>
 
