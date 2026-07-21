@@ -83,7 +83,7 @@ const inspectData: InspectData<
     contentClass: {
         class: "contentClass",
         description:
-            "Class of the box container element where you choose the date.",
+            "Class of the content container element where you choose the date.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -119,7 +119,7 @@ const inspectData: InspectData<
     },
     headerClass: {
         class: "headerClass",
-        description: "Class of the header element inside the box.",
+        description: "Class of the content header element.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -127,7 +127,7 @@ const inspectData: InspectData<
     },
     prevButtonClass: {
         class: "prevButtonClass",
-        description: "Class of the prev button element inside the box.",
+        description: "Class of the prev button element inside the header.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -135,7 +135,7 @@ const inspectData: InspectData<
     },
     nextButtonClass: {
         class: "nextButtonClass",
-        description: "Class of the next button element inside the box.",
+        description: "Class of the next button element inside the header.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -144,7 +144,7 @@ const inspectData: InspectData<
     listsClass: {
         class: "listsClass",
         description:
-            "Class of the month and year selects container inside the box.",
+            "Class of the month and year selects container inside the header.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -152,7 +152,7 @@ const inspectData: InspectData<
     },
     footerClass: {
         class: "footerClass",
-        description: "Class of the footer element.",
+        description: "Class of the content footer element.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -160,7 +160,7 @@ const inspectData: InspectData<
     },
     tableClass: {
         class: "tableClass",
-        description: "Class of the dates table element inside the box",
+        description: "Class of the dates table element.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -185,7 +185,7 @@ const inspectData: InspectData<
     },
     tableBodyClass: {
         class: "tableBodyClass",
-        description: "Class of the table body element inside the box.",
+        description: "Class of the table body element.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -383,8 +383,7 @@ const inspectData: InspectData<
     },
     monthClass: {
         class: "monthClass",
-        description:
-            "Class of the month table element inside the box when type is `month`.",
+        description: "Class of the month table element inside type is `month`.",
         properties: ["type"],
         action: (data): void => {
             data.inline = true;

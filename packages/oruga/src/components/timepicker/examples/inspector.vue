@@ -104,6 +104,20 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
             data.active = true;
         },
     },
+    headerClass: {
+        class: "headerClass",
+        description: "Class of the content header element.",
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    bodyClass: {
+        class: "bodyClass",
+        description: "Class of the content body element.",
+        action: (data): void => {
+            data.active = true;
+        },
+    },
     separatorClass: {
         class: "separatorClass",
         description: "Class of the select separator element.",
@@ -113,7 +127,7 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
     },
     footerClass: {
         class: "footerClass",
-        description: "Class of the footer element.",
+        description: "Class of the content footer element.",
         action: (data): void => {
             data.active = true;
         },

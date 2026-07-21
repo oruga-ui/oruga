@@ -116,7 +116,11 @@ defineEmits<{
 defineSlots<{
     /** Override the trigger input element */
     trigger?(): void;
-    /** Define an additional content in the footer */
+    /** Define an additional content before the body */
+    header?(): void;
+    /** Override the content body */
+    body?(): void;
+    /** Define an additional content after the body */
     footer?(): void;
 }>();
 
@@ -607,6 +611,8 @@ const contentClasses = defineClasses(
     ["contentBackdropClass", "o-timepicker__content--backdrop", null, isModal],
 );
 
+const bodyClasses = defineClasses(["bodyClass", "o-timepicker__body"]);
+
 const inputClasses = defineClasses(["inputClass", "o-timepicker__input"]);
 
 const selectClasses = defineClasses(["selectClass", "o-timepicker__select"]);
@@ -615,6 +621,8 @@ const separatorClasses = defineClasses([
     "separatorClass",
     "o-timepicker__separtor",
 ]);
+
+const headerClasses = defineClasses(["headerClass", "o-timepicker__header"]);
 
 const footerClasses = defineClasses(["footerClass", "o-timepicker__footer"]);
 
@@ -672,81 +680,93 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 <slot name="trigger" />
             </template>
 
-            <o-select
-                v-bind="selectAttrs"
-                v-model="hoursSelected"
-                :class="selectClasses"
-                :options="hours"
-                override
-                :disabled="disabled"
-                placeholder="00"
-                :aria-label="ariaSelectHoursLabel"
-                :use-html5-validation="false"
-                @change="onHoursChange($event.target.value)" />
+            <header v-if="$slots.header" :class="headerClasses">
+                <slot name="header" />
+            </header>
 
-            <span :class="separatorClasses">{{ hourLiteral }}</span>
+            <div :class="bodyClasses">
+                <slot name="body">
+                    <o-select
+                        v-bind="selectAttrs"
+                        v-model="hoursSelected"
+                        :class="selectClasses"
+                        :options="hours"
+                        override
+                        :disabled="disabled"
+                        placeholder="00"
+                        :aria-label="ariaSelectHoursLabel"
+                        :use-html5-validation="false"
+                        @change="onHoursChange($event.target.value)" />
 
-            <o-select
-                v-bind="selectAttrs"
-                v-model="minutesSelected"
-                :class="selectClasses"
-                override
-                :disabled="disabled"
-                placeholder="00"
-                :aria-label="ariaSelectMinutesLabel"
-                :use-html5-validation="false"
-                @change="onMinutesChange($event.target.value)">
-                <option
-                    v-for="minute in minutes"
-                    :key="minute.value"
-                    :value="minute.value"
-                    :disabled="isMinuteDisabled(minute.value)">
-                    {{ minute.label }}
-                </option>
-            </o-select>
+                    <span :class="separatorClasses">{{ hourLiteral }}</span>
 
-            <template v-if="enableSeconds">
-                <span :class="separatorClasses">{{ minuteLiteral }}</span>
+                    <o-select
+                        v-bind="selectAttrs"
+                        v-model="minutesSelected"
+                        :class="selectClasses"
+                        override
+                        :disabled="disabled"
+                        placeholder="00"
+                        :aria-label="ariaSelectMinutesLabel"
+                        :use-html5-validation="false"
+                        @change="onMinutesChange($event.target.value)">
+                        <option
+                            v-for="minute in minutes"
+                            :key="minute.value"
+                            :value="minute.value"
+                            :disabled="isMinuteDisabled(minute.value)">
+                            {{ minute.label }}
+                        </option>
+                    </o-select>
 
-                <o-select
-                    v-bind="selectAttrs"
-                    v-model="secondsSelected"
-                    :class="selectClasses"
-                    override
-                    :disabled="disabled"
-                    placeholder="00"
-                    :aria-label="ariaSelectSecondsLabel"
-                    :use-html5-validation="false"
-                    @change="onSecondsChange($event.target.value)">
-                    <option
-                        v-for="second in seconds"
-                        :key="second.value"
-                        :value="second.value"
-                        :disabled="isSecondDisabled(second.value)">
-                        {{ second.label }}
-                    </option>
-                </o-select>
+                    <template v-if="enableSeconds">
+                        <span :class="separatorClasses">{{
+                            minuteLiteral
+                        }}</span>
 
-                <span :class="separatorClasses">{{ secondLiteral }}</span>
-            </template>
+                        <o-select
+                            v-bind="selectAttrs"
+                            v-model="secondsSelected"
+                            :class="selectClasses"
+                            override
+                            :disabled="disabled"
+                            placeholder="00"
+                            :aria-label="ariaSelectSecondsLabel"
+                            :use-html5-validation="false"
+                            @change="onSecondsChange($event.target.value)">
+                            <option
+                                v-for="second in seconds"
+                                :key="second.value"
+                                :value="second.value"
+                                :disabled="isSecondDisabled(second.value)">
+                                {{ second.label }}
+                            </option>
+                        </o-select>
 
-            <o-select
-                v-if="!isHourFormat24"
-                v-bind="selectAttrs"
-                v-model="meridienSelected"
-                :class="selectClasses"
-                override
-                :disabled="disabled"
-                :use-html5-validation="false"
-                @change="onMeridienChange($event.target.value)">
-                <option
-                    v-for="meridien in meridiens"
-                    :key="meridien"
-                    :value="meridien"
-                    :disabled="isMeridienDisabled(meridien)">
-                    {{ meridien }}
-                </option>
-            </o-select>
+                        <span :class="separatorClasses">{{
+                            secondLiteral
+                        }}</span>
+                    </template>
+
+                    <o-select
+                        v-if="!isHourFormat24"
+                        v-bind="selectAttrs"
+                        v-model="meridienSelected"
+                        :class="selectClasses"
+                        override
+                        :disabled="disabled"
+                        :use-html5-validation="false"
+                        @change="onMeridienChange($event.target.value)">
+                        <option
+                            v-for="meridien in meridiens"
+                            :key="meridien"
+                            :value="meridien"
+                            :disabled="isMeridienDisabled(meridien)">
+                            {{ meridien }}
+                        </option>
+                    </o-select>
+                </slot>
+            </div>
 
             <footer v-if="$slots.footer" :class="footerClasses">
                 <slot name="footer" />
