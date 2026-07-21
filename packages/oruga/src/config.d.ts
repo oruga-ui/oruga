@@ -3789,13 +3789,13 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 variantClass: ClassDefinition;
                 /**
-                 * Class of the dragable container element
+                 * Class of the drag/drop container element
                  */
-                draggableClass: ClassDefinition;
+                dragzoneClass: ClassDefinition;
                 /**
-                 * Class of the dragable container element when hovered
+                 * Class of the drag/drop container element when hovered with a file
                  */
-                draggableHoveredClass: ClassDefinition;
+                dragzoneHoveredClass: ClassDefinition;
             }>;
     }
 }

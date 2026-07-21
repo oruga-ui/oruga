@@ -51,8 +51,8 @@ export type UploadClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the root element with variant */
     variantClass: ComponentClass;
-    /** Class of the dragable container element */
-    draggableClass: ComponentClass;
-    /** Class of the dragable container element when hovered */
-    draggableHoveredClass: ComponentClass;
+    /** Class of the drag/drop container element */
+    dragzoneClass: ComponentClass;
+    /** Class of the drag/drop container element when hovered with a file*/
+    dragzoneHoveredClass: ComponentClass;
 }>;
