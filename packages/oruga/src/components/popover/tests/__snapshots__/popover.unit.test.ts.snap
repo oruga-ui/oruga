@@ -9,7 +9,8 @@ exports[`OPopover tests > render correctly 1`] = `
       <!--v-if-->
       <!--v-if-->
       <div class="o-popover__body">
-        <!-- injected component for programmatic usage -->Lorem ipsum dolor sit amet, consectetur warning elit.
+        <!-- injected component for programmatic usage -->
+        <!--v-if-->Lorem ipsum dolor sit amet, consectetur warning elit.
       </div>
     </div>
   </transition-stub>
