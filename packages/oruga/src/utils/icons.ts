@@ -2,11 +2,11 @@ import { getOption } from "./config";
 import { merge } from "./helpers";
 
 export type IconConfig = {
-    /** An object with size values. */
+    /** Deifne an object with icon size values. */
     sizes?: { default: string; [key: string]: string };
-    /** Add a prefix to the icon name. */
+    /** Define a global icon name prefix. */
     iconPrefix?: string;
-    /** An object to map icon names for internal used icons. */
+    /** Define an icon names map to map internal used icons. */
     internalIcons?: Record<string, string>;
 };
 
