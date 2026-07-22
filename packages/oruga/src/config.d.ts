@@ -1876,10 +1876,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 rounded: boolean;
                 /**
-                 * Which position the notification will appear when programmatically
-                 */
-                position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
-                /**
                  * Custom animation (transition name)
                  */
                 animation: string;
@@ -1908,10 +1904,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 rootClass: ClassDefinition;
                 /**
-                 * Class of the root element when positioned
-                 */
-                positionClass: ClassDefinition;
-                /**
                  * Class of the root element with variant
                  */
                 variantClass: ClassDefinition;
@@ -1920,21 +1912,29 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 roundedClass: ClassDefinition;
                 /**
-                 * Class of the close button element
-                 */
-                closeClass: ClassDefinition;
-                /**
                  * Class of the content element
                  */
                 contentClass: ClassDefinition;
                 /**
-                 * Class of the icon element on the left
+                 * Class of the content header element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the content body element
+                 */
+                bodyClass: ClassDefinition;
+                /**
+                 * Class of the content body icon element
                  */
                 iconClass: ClassDefinition;
                 /**
-                 * Class of the wrapper element
+                 * Class of the close button element
                  */
-                wrapperClass: ClassDefinition;
+                closeClass: ClassDefinition;
+                /**
+                 * Which position the notification will appear when programmatically
+                 */
+                position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
                 /**
                  * Hide notification after duration (in miliseconds)
                  */
@@ -1955,6 +1955,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the notice container element
                  */
                 noticeContainerClass: ClassDefinition;
+                /**
+                 * Class of the root element when positioned
+                 */
+                positionClass: ClassDefinition;
             }>;
         pagination?: ComponentConfigBase &
             Partial<{

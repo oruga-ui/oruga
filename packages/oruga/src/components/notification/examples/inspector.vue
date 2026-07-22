@@ -50,17 +50,13 @@ const inspectData: InspectData<
             data.rounded = true;
         },
     },
-    wrapperClass: {
-        class: "wrapperClass",
-        description: "Class of the wrapper element.",
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the content element.",
     },
     headerClass: {
         class: "headerClass",
         description: "Class of the content header element.",
-    },
-    contentClass: {
-        class: "contentClass",
-        description: "Class of the content element.",
     },
     bodyClass: {
         class: "bodyClass",
@@ -68,7 +64,7 @@ const inspectData: InspectData<
     },
     iconClass: {
         class: "iconClass",
-        description: "Class of the icon element on the left.",
+        description: "Class of the content body icon element on the left.",
         properties: ["type"],
         action: (data): void => {
             data.type = "info";

@@ -78,11 +78,6 @@ export type NotificationClasses = Partial<{
     headerClass: ComponentClass;
     /** Class of the content body element */
     bodyClass: ComponentClass;
-    /**
-     * Class of the wrapper element
-     * @deprecated use `bodyClass` instead
-     */
-    wrapperClass: ComponentClass;
     /** Class of the content body icon element */
     iconClass: ComponentClass;
     /** Class of the close button element */

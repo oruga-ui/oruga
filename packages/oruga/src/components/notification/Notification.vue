@@ -128,11 +128,7 @@ const contentClasses = defineClasses([
 
 const headerClasses = defineClasses(["headerClass", "o-notification__header"]);
 
-const bodyClasses = defineClasses(
-    ["bodyClass", "o-notification__body"],
-    // @deprecated
-    ["wrapperClass", "o-notification__wrapper"],
-);
+const bodyClasses = defineClasses(["bodyClass", "o-notification__body"]);
 
 const iconClasses = defineClasses(["iconClass", "o-notification__icon"]);
 
