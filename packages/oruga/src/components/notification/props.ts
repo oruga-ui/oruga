@@ -2,10 +2,17 @@ import type { Component } from "vue";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
-export type NotificationProps = {
+export type NotificationProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Message text, unnecessary when default slot is used */
+    /** Content header title, unnecessary when title slot is used */
+    title?: string;
+    /** Content body text, unnecessary when default slot is used */
+    content?: string;
+    /**
+     * Message text, unnecessary when default slot is used
+     * @deprecated use `content` prop instead
+     */
     message?: string;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
@@ -21,17 +28,6 @@ export type NotificationProps = {
     variant?: string;
     /** Enable rounded style */
     rounded?: boolean;
-    /**
-     * Which position the notification will appear when programmatically
-     * @values top-right, top, top-left, bottom-right, bottom, bottom-left
-     */
-    position?:
-        | "top-right"
-        | "top"
-        | "top-left"
-        | "bottom-right"
-        | "bottom"
-        | "bottom-left";
     /** Custom animation (transition name) */
     animation?: string;
     /** Icon name to use */
@@ -57,29 +53,43 @@ export type NotificationProps = {
     closeIconSize?: string;
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
+    /**
+     * Component to be injected.
+     * Close the component by emitting a 'close' event — `$emit('close')`
+     */
+    component?: C;
+    /** Props to be binded to the injected component */
+    props?: ComponentProps<C>;
+    /** Events to be binded to the injected component */
+    events?: ComponentEmits<C>;
 } & NotificationClasses;
 
 // class props (will not be displayed in the docs)
 export type NotificationClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the root element when positioned */
-    positionClass: ComponentClass;
     /** Class of the root element with variant */
     variantClass: ComponentClass;
     /** Class of the root element when rounded */
     roundedClass: ComponentClass;
+    /** Class of the header element */
+    headerClass: ComponentClass;
+    /** Class of the body element */
+    bodyClass: ComponentClass;
+    /**
+     * Class of the wrapper element
+     * @deprecated use `bodyClass` instead
+     */
+    wrapperClass: ComponentClass;
+    /** Class of the body icon element */
+    iconClass: ComponentClass;
+    /** Class of the body content element */
+    contentClass: ComponentClass;
     /** Class of the close button element */
     closeClass: ComponentClass;
-    /** Class of the content element */
-    contentClass: ComponentClass;
-    /** Class of the icon element on the left */
-    iconClass: ComponentClass;
-    /** Class of the wrapper element */
-    wrapperClass: ComponentClass;
 }>;
 
-export type NotificationNoticeProps<C extends Component> = {
+export type NotificationNoticeProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -90,7 +100,7 @@ export type NotificationNoticeProps<C extends Component> = {
      */
     container: HTMLElement;
     /**
-     * Which position the notification will appear.
+     * Which position the notification will appear when programmatically
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
      */
     position?:
@@ -105,6 +115,8 @@ export type NotificationNoticeProps<C extends Component> = {
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
+    /** Enable rounded style */
+    rounded?: boolean;
     /** Hide notification after duration (in miliseconds) */
     duration?: number;
     /** Pause and show on hover until hover off, if infinite is false. */
@@ -132,4 +144,6 @@ export type NotificationNoticeClasses = Partial<{
     noticePositionClass: ComponentClass;
     /** Class of the notice container element */
     noticeContainerClass: ComponentClass;
+    /** Class of the root element when positioned */
+    positionClass: ComponentClass;
 }>;

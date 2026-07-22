@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 import CloseButton from "../utils/CloseButton.vue";
@@ -24,12 +24,13 @@ defineOptions({
 
 const props = withDefaults(defineProps<NotificationProps>(), {
     override: undefined,
+    title: undefined,
     message: undefined,
+    content: undefined,
     active: true,
     type: undefined,
     variant: () => getDefault("notification.variant"),
     rounded: () => getDefault("notification.rounded"),
-    position: () => getDefault("notification.position", "top"),
     animation: () => getDefault("notification.animation", "fade"),
     icon: undefined,
     iconPack: () => getDefault("notification.iconPack"),
@@ -38,6 +39,9 @@ const props = withDefaults(defineProps<NotificationProps>(), {
     closeIcon: () => getDefault("notification.closeIcon", "close"),
     closeIconSize: () => getDefault("notification.closeIconSize"),
     ariaCloseLabel: () => getDefault("notification.ariaCloseLabel", "Close"),
+    component: undefined,
+    props: undefined,
+    events: undefined,
 });
 
 const emits = defineEmits<{
@@ -54,19 +58,25 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /** Define a custom close icon */
-    close?(): void;
     /**
-     * Notification inner content, outside of the message container
-     * @param close {(...args: [] | [Event]): void} - function to close the notification
+     * Override the notification title, default is title prop
+     * @param close {(...args: [] | [Event]): void} -  function to emit a `confirm` event
      */
-    inner?(props: { close: (...args: [] | [Event]) => void }): void;
+    title?(props: { close: () => void }): void;
     /**
-     * Notification default content, default is message prop
-     * @param close {(...args: [] | [Event]): void} - function to close the notification
+     * Override the default notification body
+     * @param close {(...args: [] | [Event]): void} -  function to emit a `confirm` event
      */
     default?(props: { close: (...args: [] | [Event]) => void }): void;
+    /**
+     * Override the body content, default is content prop
+     * @param close {(...args: [] | [Event]): void} -  function to emit a `confirm` event
+     */
+    content?(props: { close: () => void }): void;
+    /** Define a custom close icon */
+    close?(): void;
 }>();
+
 const isActive = defineModel<boolean>("active", { default: true });
 
 /** Icon name (MDI) based on type. */
@@ -93,22 +103,6 @@ function close(...args: [] | [Event]): void {
     emits("close", ...args);
 }
 
-// #region --- Animation Feature ---
-
-const isAnimated = ref(props.active);
-
-/** Transition after-enter hook */
-function afterEnter(): void {
-    isAnimated.value = true;
-}
-
-/** Transition before-leave hook */
-function beforeLeave(): void {
-    isAnimated.value = false;
-}
-
-// #endregion --- Animation Feature ---
-
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -125,25 +119,22 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.rounded),
     ],
-    [
-        "positionClass",
-        "o-notification--",
-        computed(() => props.position),
-        computed(() => !!props.position),
-    ],
 );
 
-const wrapperClasses = defineClasses([
-    "wrapperClass",
-    "o-notification__wrapper",
-]);
+const headerClasses = defineClasses(["headerClass", "o-notification__header"]);
 
-const iconClasses = defineClasses(["iconClass", "o-notification__icon"]);
+const bodyClasses = defineClasses(
+    ["bodyClass", "o-notification__body"],
+    // @deprecated
+    ["wrapperClass", "o-notification__wrapper"],
+);
 
 const contentClasses = defineClasses([
     "contentClass",
     "o-notification__content",
 ]);
+
+const iconClasses = defineClasses(["iconClass", "o-notification__icon"]);
 
 const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
 
@@ -151,18 +142,20 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
 </script>
 
 <template>
-    <transition
-        :name="animation"
-        @after-enter="afterEnter"
-        @before-leave="beforeLeave">
+    <transition :name="animation">
         <article
             v-show="isActive"
             v-bind="$attrs"
             data-oruga="notification"
             :class="rootClasses">
+            <div v-if="title || $slots['title']" :class="headerClasses">
+                <slot name="title" :close="close">
+                    {{ title }}
+                </slot>
+            </div>
+
             <CloseButton
                 v-if="closeable"
-                v-show="isAnimated"
                 :pack="iconPack"
                 :icon="closeIcon"
                 :size="closeIconSize"
@@ -172,9 +165,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 <slot v-if="$slots['close']" name="close" />
             </CloseButton>
 
-            <slot name="inner" :close="close" />
-
-            <div v-if="$slots.default || message" :class="wrapperClasses">
+            <div :class="bodyClasses">
                 <o-icon
                     v-if="computedIcon"
                     :icon="computedIcon"
@@ -182,11 +173,30 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                     :class="iconClasses"
                     :size="iconSize"
                     aria-hidden="true" />
-                <div :class="contentClasses">
-                    <slot :close="close">
-                        <span v-if="message">{{ message }} </span>
-                    </slot>
-                </div>
+
+                <slot :close="close">
+                    <!-- injected component for programmatic usage -->
+                    <component
+                        :is="$props.component"
+                        v-if="$props.component"
+                        v-bind="$props.props"
+                        v-on="$props.events || {}"
+                        @close="close" />
+
+                    <div
+                        v-id="
+                            $slots.content ||
+                            $slots.message ||
+                            content ||
+                            message
+                        "
+                        :class="contentClasses">
+                        <slot name="content" :close="close">
+                            {{ content }}
+                            <span v-if="message">{{ message }} </span>
+                        </slot>
+                    </div>
+                </slot>
             </div>
         </article>
     </transition>
