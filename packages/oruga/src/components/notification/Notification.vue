@@ -169,15 +169,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                             v-on="$props.events || {}"
                             @close="close" />
 
-                        <slot
-                            v-if="
-                                $slots.content ||
-                                $slots.message ||
-                                content ||
-                                message
-                            "
-                            name="content"
-                            :close="close">
+                        <slot name="content" :close="close">
                             {{ content }}
                             <span v-if="message">{{ message }} </span>
                         </slot>
