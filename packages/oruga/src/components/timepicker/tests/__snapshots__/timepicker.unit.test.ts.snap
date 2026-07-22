@@ -12,7 +12,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
   </div>
   <!--teleport start-->
   <transition-stub appear="false" persisted="false" css="true">
-    <div class="o-timepicker__content" popover="" style="display: none; position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;" data-position="bottom">
+    <div class="o-timepicker__content" popover="" style="position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline; display: none;" data-position="bottom">
       <!--v-if-->
       <div class="o-timepicker__body">
         <div data-oruga="select" class="">
