@@ -2,7 +2,7 @@
 import { computed } from "vue";
 
 import { getDefault } from "@/utils/config";
-import getIcons from "@/utils/icons";
+import getIcons, { type IconConfig } from "@/utils/icons";
 import { defineClasses } from "@/composables";
 
 import type { IconProps } from "./props";
@@ -51,10 +51,7 @@ const rootStyle = computed(() => {
 const icons = getIcons();
 
 /** icon configuration defined by the corresponding icon pack */
-const iconConfig = computed(() => icons[props.pack]);
-
-/** icon prefix defined by the icon configuration */
-const iconPrefix = computed(() => iconConfig.value?.iconPrefix ?? "");
+const iconConfig = computed<IconConfig | undefined>(() => icons[props.pack]);
 
 /** icon size defined by the icon configuration or custom */
 const iconSize = computed(() => {
@@ -74,9 +71,18 @@ const iconSize = computed(() => {
  * If pack is 'fa', gets the equivalent FA icon name of the MDI,
  * internal icons are always MDI.
  */
-const computedIcon = computed(
-    () => `${iconPrefix.value}${getEquivalentIconOf(props.icon ?? "")}`,
-);
+const computedIcon = computed(() => {
+    // the icon prefix defined by the icon configuration
+    const _iconPrefix = iconConfig.value?.iconPrefix ?? "";
+
+    // the icon name or its equivalent for fantawesome pack
+    const _iconName = getEquivalentIconOf(props.icon ?? "");
+
+    const _icon = _iconPrefix + _iconName;
+    // replace placeholder in the icon name
+    if (_icon.includes("{pack}")) _icon.replace("{pack}", props.pack);
+    return _icon;
+});
 
 /** Equivalent icon name of the MDI. */
 function getEquivalentIconOf(value: string): string {
@@ -98,7 +104,7 @@ function onClick(event: Event): void {
     emits("click", event);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-icon"],
@@ -122,6 +128,8 @@ const rootClasses = defineClasses(
         computed(() => !!props.variant),
     ],
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -139,7 +147,8 @@ const rootClasses = defineClasses(
         <component
             :is="component"
             v-if="component"
-            :icon="[pack, computedIcon]"
+            :pack="pack"
+            :icon="computedIcon"
             :size="iconSize"
             :class="customClass" />
 
