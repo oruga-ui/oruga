@@ -120,35 +120,33 @@ export type DialogClasses = Partial<{
     fullscreenClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
-    /** Class of the root element with text-position */
-    textPositionClass: ComponentClass;
     /** Class of the backdrop overlay element */
     backdropClass: ComponentClass;
-    /** Class of the wrapper element */
-    wrapperClass: ComponentClass;
-    /** Class of the header element */
-    headerClass: ComponentClass;
-    /** Class of the header title element */
-    titleClass: ComponentClass;
-    /** Class of the header subtitle element */
-    subtitleClass: ComponentClass;
-    /** Class of the header close element */
-    closeClass: ComponentClass;
-    /** Class of the image figure element */
-    figureClass: ComponentClass;
-    /** Class of the image element */
-    imageClass: ComponentClass;
-    /** Class of the body element */
-    bodyClass: ComponentClass;
-    /** Class of the body content element */
+    /** Class of the content element */
     contentClass: ComponentClass;
-    /** Class of the footer element */
+    /** Class of the content element with text-position */
+    contentPositionClass: ComponentClass;
+    /** Class of the content header element */
+    headerClass: ComponentClass;
+    /** Class of the content  header title element */
+    titleClass: ComponentClass;
+    /** Class of the content header subtitle element */
+    subtitleClass: ComponentClass;
+    /** Class of the content header close element */
+    closeClass: ComponentClass;
+    /** Class of the content body image figure element */
+    figureClass: ComponentClass;
+    /** Class of the content body image element */
+    imageClass: ComponentClass;
+    /** Class of the content body element */
+    bodyClass: ComponentClass;
+    /** Class of the content footer element */
     footerClass: ComponentClass;
-    /** Class of the footer element with position */
+    /** Class of the content footer element with position */
     footerPositionClass: ComponentClass;
-    /** Class of the confirm button element */
+    /** Class of the footer confirm button element */
     confirmButtunClass: ComponentClass;
-    /** Class of the cancel button element */
+    /** Class of the footer cancel button element */
     cancelButtonClass: ComponentClass;
     /** Class of the body when modal is open and scroll is clipped */
     scrollClipClass: ComponentClass;

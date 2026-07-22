@@ -166,11 +166,6 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = useTeleport(props.teleport);
 
-const wrapperStyle = computed(() => ({
-    maxWidth: !props.fullscreen ? toCssDimension(props.maxWidth) : undefined,
-    maxHeight: !props.fullscreen ? toCssDimension(props.maxHeight) : undefined,
-}));
-
 const hasBackdrop = computed(
     () => props.backdrop || props.alert || rootRef.value?.ariaModal,
 );
@@ -301,15 +296,20 @@ const rootClasses = defineClasses(
 
 const backdropClasses = defineClasses(["backdropClass", "o-dialog__backdrop"]);
 
-const wrapperClasses = defineClasses(
-    ["wrapperClass", "o-dialog__wrapper"],
+const contentClasses = defineClasses(
+    ["contentClass", "o-dialog__content"],
     [
-        "textPositionClass",
-        "o-dialog__wrapper--",
+        "contentPositionClass",
+        "o-dialog__content--",
         computed(() => props.textPosition),
         computed(() => !!props.textPosition),
     ],
 );
+
+const contentStyle = computed(() => ({
+    maxWidth: !props.fullscreen ? toCssDimension(props.maxWidth) : undefined,
+    maxHeight: !props.fullscreen ? toCssDimension(props.maxHeight) : undefined,
+}));
 
 const headerClasses = defineClasses(["headerClass", "o-dialog__header"]);
 
@@ -327,11 +327,6 @@ const imageClasses = defineClasses(["imageClass", "o-dialog__image"]);
 const figureClasses = defineClasses(["figureClass", "o-dialog__image-figure"]);
 
 const bodyClasses = defineClasses(["bodyClass", "o-dialog__body"]);
-
-const contentClasses = defineClasses([
-    "contentClass",
-    "o-dialog__body-content",
-]);
 
 const footerClasses = defineClasses(
     ["footerClass", "o-dialog__footer"],
@@ -383,7 +378,7 @@ defineExpose({ close, confirm });
                     v-if="backdrop && backdropClasses.length"
                     :class="backdropClasses" />
 
-                <div :class="wrapperClasses" :style="wrapperStyle">
+                <div :class="contentClasses" :style="contentStyle">
                     <!-- Header -->
                     <header
                         v-if="
@@ -451,14 +446,13 @@ defineExpose({ close, confirm });
                                 v-on="$props.events || {}"
                                 @close="close" />
 
-                            <p v-else :class="contentClasses">
-                                <slot
-                                    name="content"
-                                    :close="close"
-                                    :confirm="confirm">
-                                    {{ content }}
-                                </slot>
-                            </p>
+                            <slot
+                                v-if="$slots.content || content"
+                                name="content"
+                                :close="close"
+                                :confirm="confirm">
+                                {{ content }}
+                            </slot>
                         </slot>
                     </div>
 

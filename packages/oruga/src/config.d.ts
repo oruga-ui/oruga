@@ -1048,63 +1048,59 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 teleportClass: ClassDefinition;
                 /**
-                 * Class of the root element with text-position
-                 */
-                textPositionClass: ClassDefinition;
-                /**
                  * Class of the backdrop overlay element
                  */
                 backdropClass: ClassDefinition;
                 /**
-                 * Class of the wrapper element
-                 */
-                wrapperClass: ClassDefinition;
-                /**
-                 * Class of the header element
-                 */
-                headerClass: ClassDefinition;
-                /**
-                 * Class of the header title element
-                 */
-                titleClass: ClassDefinition;
-                /**
-                 * Class of the header subtitle element
-                 */
-                subtitleClass: ClassDefinition;
-                /**
-                 * Class of the header close element
-                 */
-                closeClass: ClassDefinition;
-                /**
-                 * Class of the image figure element
-                 */
-                figureClass: ClassDefinition;
-                /**
-                 * Class of the image element
-                 */
-                imageClass: ClassDefinition;
-                /**
-                 * Class of the body element
-                 */
-                bodyClass: ClassDefinition;
-                /**
-                 * Class of the body content element
+                 * Class of the content element
                  */
                 contentClass: ClassDefinition;
                 /**
-                 * Class of the footer element
+                 * Class of the content element with text-position
+                 */
+                contentPositionClass: ClassDefinition;
+                /**
+                 * Class of the content header element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the content  header title element
+                 */
+                titleClass: ClassDefinition;
+                /**
+                 * Class of the content header subtitle element
+                 */
+                subtitleClass: ClassDefinition;
+                /**
+                 * Class of the content header close element
+                 */
+                closeClass: ClassDefinition;
+                /**
+                 * Class of the content body image figure element
+                 */
+                figureClass: ClassDefinition;
+                /**
+                 * Class of the content body image element
+                 */
+                imageClass: ClassDefinition;
+                /**
+                 * Class of the content body element
+                 */
+                bodyClass: ClassDefinition;
+                /**
+                 * Class of the content footer element
                  */
                 footerClass: ClassDefinition;
                 /**
-                 * Class of the footer element with position
+                 * Class of the content footer element with position
                  */
                 footerPositionClass: ClassDefinition;
                 /**
-                 * Class of the confirm button element
+                 * Class of the footer confirm button element
                  */
                 confirmButtunClass: ClassDefinition;
                 /**
-                 * Class of the cancel button element
+                 * Class of the footer cancel button element
                  */
                 cancelButtonClass: ClassDefinition;
                 /**

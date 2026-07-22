@@ -40,15 +40,6 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.active = true;
         },
     },
-    textPositionClass: {
-        class: "textPositionClass",
-        description: "Class of the root element with text position.",
-        properties: ["textPosition"],
-        suffixes: ["left", "center", "right"],
-        action: (data) => {
-            data.textPosition = "center";
-        },
-    },
     backdropClass: {
         class: "backdropClass",
         description: "Class of the backdrop overlay element.",
@@ -58,45 +49,50 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.backdrop = true;
         },
     },
-    wrapperClass: {
-        class: "wrapperClass",
-        description: "Class of the wrapper element.",
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the content element.",
+    },
+    contentPositionClass: {
+        class: "contentPositionClass",
+        description: "Class of the content element with text position.",
+        properties: ["textPosition"],
+        suffixes: ["left", "center", "right"],
+        action: (data) => {
+            data.textPosition = "center";
+        },
     },
     headerClass: {
         class: "headerClass",
-        description: "Class of the header element.",
+        description: "Class of the content header element.",
     },
     titleClass: {
         class: "titleClass",
-        description: "Class of the header title element.",
+        description: "Class of the content header title element.",
     },
     subtitleClass: {
         class: "subtitleClass",
-        description: "Class of the header subtitle element.",
+        description: "Class of the content header subtitle element.",
     },
     closeClass: {
         class: "closeClass",
-        description: "Class of the header close element.",
-    },
-    figureClass: {
-        class: "figureClass",
-        description: "Class of the image figure element.",
-    },
-    imageClass: {
-        class: "imageClass",
-        description: " Class of the image element.",
+        description: "Class of the content header close element.",
     },
     bodyClass: {
         class: "bodyClass",
-        description: " Class of the body element.",
+        description: " Class of the content body element.",
     },
-    contentClass: {
-        class: "contentClass",
-        description: "Class of the body content element.",
+    figureClass: {
+        class: "figureClass",
+        description: "Class of the content body image figure element.",
+    },
+    imageClass: {
+        class: "imageClass",
+        description: " Class of the content body image element.",
     },
     footerClass: {
         class: "footerClass",
-        description: "Class of the footer element.",
+        description: "Class of the content footer element.",
     },
     footerPositionClass: {
         class: "footerPositionClass",
