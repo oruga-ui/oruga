@@ -2,12 +2,15 @@ import { getOption } from "./config";
 import { merge } from "./helpers";
 
 export type IconConfig = {
+    /** An object with size values. */
     sizes?: { default: string; [key: string]: string };
+    /** Add a prefix to the icon name. */
     iconPrefix?: string;
+    /** An object to map icon names for internal used icons. */
     internalIcons?: Record<string, string>;
 };
 
-const mdiIcons = {
+const mdiIcons: IconConfig = {
     iconPrefix: "mdi-",
     sizes: {
         default: "mdi-24px",
@@ -19,7 +22,7 @@ const mdiIcons = {
 
 function getFaIcons(): IconConfig {
     const iconComponent = getOption("iconComponent");
-    const faIconPrefix = iconComponent ? "" : "fa-";
+    const faIconPrefix = iconComponent ? "" : "{pack} fa-";
     return {
         iconPrefix: faIconPrefix,
         sizes: {
