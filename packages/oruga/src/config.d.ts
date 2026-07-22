@@ -1338,6 +1338,10 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 addonsClass: ClassDefinition;
                 /**
+                 * Class of the inner wrapper element with nowrap
+                 */
+                nowrapClass: ClassDefinition;
+                /**
                  * Class to align label and control in horizontal forms
                  */
                 horizontalClass: ClassDefinition;

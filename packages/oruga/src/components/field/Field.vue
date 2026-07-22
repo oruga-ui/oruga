@@ -237,13 +237,8 @@ const innerBodyClasses = defineClasses(
         null,
         computed(() => !props.grouped && hasAddons.value),
     ],
+    ["nowrapClass", "o-field--nowrap", null, computed(() => props.nowrap)],
 );
-
-const innerBodyStyle = computed(() => {
-    const style = {};
-    if (props.nowrap) style["flex-wrap"] = "nowrap";
-    return style;
-});
 
 const messageClasses = defineClasses(
     ["messageClass", "o-field__message"],
@@ -309,7 +304,7 @@ const messageClasses = defineClasses(
         </div>
 
         <div v-else-if="hasBody" :class="bodyClasses">
-            <div :class="innerBodyClasses" :style="innerBodyStyle">
+            <div :class="innerBodyClasses">
                 <slot />
             </div>
         </div>

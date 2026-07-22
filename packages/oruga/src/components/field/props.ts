@@ -35,7 +35,7 @@ export type FieldProps = {
     grouped?: boolean;
     /** Field automatically attach controls together */
     addons?: boolean;
-    /** Show content in without linebreak */
+    /** Show content in one block without a linebreak */
     nowrap?: boolean;
     /** Group label and control on the same line for horizontal forms */
     horizontal?: boolean;
@@ -61,6 +61,8 @@ export type FieldClasses = Partial<{
     groupedClass: ComponentClass;
     /** Class of the inner wrapper element when element get automatically attached together inside a field */
     addonsClass: ComponentClass;
+    /** Class of the inner wrapper element with nowrap */
+    nowrapClass: ComponentClass;
     /** Class to align label and control in horizontal forms */
     horizontalClass: ComponentClass;
     /** Class for the label element when horizontal */

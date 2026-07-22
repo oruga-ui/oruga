@@ -59,6 +59,15 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
             data.addons = true;
         },
     },
+    nowrapClass: {
+        class: "nowrapClass",
+        description:
+            "Class of the inner body wrapper element when shown as block without linebreak.",
+        properties: ["nowrap"],
+        action: (data): void => {
+            data.nowrap = true;
+        },
+    },
     horizontalClass: {
         class: "horizontalClass",
         description: "Class to align label and control in horizontal forms.",
