@@ -7,7 +7,12 @@ describe("ONotification tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
-        const wrapper = mount(ONotification);
+        const wrapper = mount(ONotification, {
+            props: {
+                content:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            },
+        });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.html()).toMatchSnapshot();
