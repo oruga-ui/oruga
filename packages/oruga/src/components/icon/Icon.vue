@@ -53,9 +53,6 @@ const icons = getIcons();
 /** icon configuration defined by the corresponding icon pack */
 const iconConfig = computed<IconConfig | undefined>(() => icons[props.pack]);
 
-/** icon prefix defined by the icon configuration */
-const iconPrefix = computed(() => iconConfig.value?.iconPrefix ?? "");
-
 /** icon size defined by the icon configuration or custom */
 const iconSize = computed(() => {
     if (props.customSize) return props.customSize;
@@ -75,10 +72,13 @@ const iconSize = computed(() => {
  * internal icons are always MDI.
  */
 const computedIcon = computed(() => {
-    // the icon or its equivalent for another pack
+    // the icon prefix defined by the icon configuration
+    const _iconPrefix = iconConfig.value?.iconPrefix ?? "";
+
+    // the icon name or its equivalent for fantawesome pack
     const _iconName = getEquivalentIconOf(props.icon ?? "");
 
-    const _icon = iconPrefix.value + _iconName;
+    const _icon = _iconPrefix + _iconName;
     // replace placeholder in the icon name
     if (_icon.includes("{pack}")) _icon.replace("{pack}", props.pack);
     return _icon;
@@ -144,7 +144,6 @@ const rootClasses = defineClasses(
         @keydown.enter="onClick"
         @keydown.space="onClick">
         <!-- custom icon component -->
-        {{ computedIcon }}
         <component
             :is="component"
             v-if="component && computedIcon"
