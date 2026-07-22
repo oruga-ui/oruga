@@ -447,7 +447,6 @@ defineExpose({ close, confirm });
                                 @close="close" />
 
                             <slot
-                                v-if="$slots.content || content"
                                 name="content"
                                 :close="close"
                                 :confirm="confirm">
