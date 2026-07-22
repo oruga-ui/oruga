@@ -210,12 +210,16 @@ const isModal = computed(() =>
     isMobile.value ? props.mobileModal : props.desktopModal,
 );
 
+const popoverPosition = computed(() =>
+    isModal.value ? "centered" : props.position,
+);
+
 const {
     open: openPopover,
     close: closePopover,
     toggle: togglePopover,
 } = usePopoverAPI({
-    position: isModal.value ? "centered" : props.position,
+    position: popoverPosition,
     delay: props.delay,
     behavior: "manual",
     trigger: isActive,

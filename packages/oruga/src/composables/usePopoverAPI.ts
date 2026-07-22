@@ -4,6 +4,7 @@ import {
     watch,
     isRef,
     toValue,
+    watchEffect,
     type MaybeRefOrGetter,
     type WatchSource,
 } from "vue";
@@ -26,7 +27,7 @@ export type PopoverAPIOptions = {
      * In addition `centered` center the content in the middle of the screen.
      * @default 'top'
      */
-    position?: "centered" | PopoverPosition;
+    position?: MaybeRefOrGetter<"centered" | PopoverPosition>;
     /** Reference or getter resolving to the target element. */
     targetRef: MaybeRefOrGetter<EventTarget>;
     /** Reference or getter resolving to the popover content element. */
@@ -144,16 +145,14 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
             // prevent default click event when is button
             event.preventDefault();
 
-        // open popover
-        open();
+        open(); // open popover
     }
 
     function onTriggerKeydown(event: KeyboardEvent): void {
         if (event.code !== "Enter" && event.code !== "Space") return;
         event.preventDefault();
 
-        // open popover
-        open();
+        open(); // open popover
     }
 
     // add event listener on trigger element
@@ -167,6 +166,31 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         useEventListener(contentRef, "toggle", options.onToggle);
     if (typeof options.onBeforeToggle === "function")
         useEventListener(contentRef, "beforetoggle", options.onBeforeToggle);
+
+    // apply position
+    watchEffect(
+        () => {
+            contentEl = unrefElement(contentRef);
+            if (!contentEl) return;
+
+            const _position = toValue(position);
+
+            // add content position styles
+            contentEl.style.positionArea =
+                _position === "centered"
+                    ? "none"
+                    : Array.isArray(_position)
+                      ? _position.join(" ")
+                      : _position;
+
+            contentEl.style.positionTryFallbacks =
+                "flip-block, flip-inline, flip-block flip-inline";
+
+            // add position data attribute
+            contentEl.dataset.position = _position.toString();
+        },
+        { flush: "sync" },
+    );
 
     onMounted(() => {
         contentEl = unrefElement(contentRef);
@@ -195,19 +219,6 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
 
         // place popover attribute on content
         contentEl.popover = behavior;
-
-        // add content position styles
-        contentEl.style.positionArea =
-            position === "centered"
-                ? "none"
-                : Array.isArray(position)
-                  ? position.join(" ")
-                  : position;
-        contentEl.style.positionTryFallbacks =
-            "flip-block, flip-inline, flip-block flip-inline";
-
-        // add position data attribute
-        contentEl.dataset.position = position.toString();
 
         if (targetTrigger && behavior !== "manual") {
             // get content id
