@@ -102,7 +102,7 @@ describe("OField tests", () => {
 
         test('react accordingly when "nowrap" prop is set', () => {
             const wrapper = mount(OField, {
-                props: { block: true, addons: true },
+                props: { addons: true, nowrap: true },
                 slots: {
                     default: [
                         h(OInput),
