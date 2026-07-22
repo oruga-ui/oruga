@@ -168,26 +168,29 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         useEventListener(contentRef, "beforetoggle", options.onBeforeToggle);
 
     // apply position
-    watchEffect(() => {
-        contentEl = unrefElement(contentRef);
-        if (!contentEl) return;
+    watchEffect(
+        () => {
+            contentEl = unrefElement(contentRef);
+            if (!contentEl) return;
 
-        const _position = toValue(position);
+            const _position = toValue(position);
 
-        // add content position styles
-        contentEl.style.positionArea =
-            _position === "centered"
-                ? "none"
-                : Array.isArray(_position)
-                  ? _position.join(" ")
-                  : _position;
+            // add content position styles
+            contentEl.style.positionArea =
+                _position === "centered"
+                    ? "none"
+                    : Array.isArray(_position)
+                      ? _position.join(" ")
+                      : _position;
 
-        contentEl.style.positionTryFallbacks =
-            "flip-block, flip-inline, flip-block flip-inline";
+            contentEl.style.positionTryFallbacks =
+                "flip-block, flip-inline, flip-block flip-inline";
 
-        // add position data attribute
-        contentEl.dataset.position = _position.toString();
-    });
+            // add position data attribute
+            contentEl.dataset.position = _position.toString();
+        },
+        { flush: "sync" },
+    );
 
     onMounted(() => {
         contentEl = unrefElement(contentRef);
