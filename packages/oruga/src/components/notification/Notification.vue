@@ -121,6 +121,11 @@ const rootClasses = defineClasses(
     ],
 );
 
+const contentClasses = defineClasses([
+    "contentClass",
+    "o-notification__content",
+]);
+
 const headerClasses = defineClasses(["headerClass", "o-notification__header"]);
 
 const bodyClasses = defineClasses(
@@ -128,11 +133,6 @@ const bodyClasses = defineClasses(
     // @deprecated
     ["wrapperClass", "o-notification__wrapper"],
 );
-
-const contentClasses = defineClasses([
-    "contentClass",
-    "o-notification__content",
-]);
 
 const iconClasses = defineClasses(["iconClass", "o-notification__icon"]);
 
@@ -148,10 +148,45 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
             v-bind="$attrs"
             data-oruga="notification"
             :class="rootClasses">
-            <div v-if="title || $slots['title']" :class="headerClasses">
-                <slot name="title" :close="close">
-                    {{ title }}
-                </slot>
+            <o-icon
+                v-if="computedIcon"
+                :icon="computedIcon"
+                :pack="iconPack"
+                :class="iconClasses"
+                :size="iconSize"
+                aria-hidden="true" />
+
+            <div :class="contentClasses">
+                <header v-if="title || $slots['title']" :class="headerClasses">
+                    <slot name="title" :close="close">
+                        {{ title }}
+                    </slot>
+                </header>
+
+                <div :class="bodyClasses">
+                    <slot :close="close">
+                        <!-- injected component for programmatic usage -->
+                        <component
+                            :is="$props.component"
+                            v-if="$props.component"
+                            v-bind="$props.props"
+                            v-on="$props.events || {}"
+                            @close="close" />
+
+                        <slot
+                            v-if="
+                                $slots.content ||
+                                $slots.message ||
+                                content ||
+                                message
+                            "
+                            name="content"
+                            :close="close">
+                            {{ content }}
+                            <span v-if="message">{{ message }} </span>
+                        </slot>
+                    </slot>
+                </div>
             </div>
 
             <CloseButton
@@ -164,40 +199,6 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 @click="close($event)">
                 <slot v-if="$slots['close']" name="close" />
             </CloseButton>
-
-            <div :class="bodyClasses">
-                <o-icon
-                    v-if="computedIcon"
-                    :icon="computedIcon"
-                    :pack="iconPack"
-                    :class="iconClasses"
-                    :size="iconSize"
-                    aria-hidden="true" />
-
-                <slot :close="close">
-                    <!-- injected component for programmatic usage -->
-                    <component
-                        :is="$props.component"
-                        v-if="$props.component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}"
-                        @close="close" />
-
-                    <div
-                        v-id="
-                            $slots.content ||
-                            $slots.message ||
-                            content ||
-                            message
-                        "
-                        :class="contentClasses">
-                        <slot name="content" :close="close">
-                            {{ content }}
-                            <span v-if="message">{{ message }} </span>
-                        </slot>
-                    </div>
-                </slot>
-            </div>
         </article>
     </transition>
 </template>
