@@ -146,7 +146,7 @@ const rootClasses = defineClasses(
         <!-- custom icon component -->
         <component
             :is="component"
-            v-if="component && computedIcon"
+            v-if="component"
             :pack="pack"
             :icon="[pack, computedIcon]"
             :size="iconSize"
