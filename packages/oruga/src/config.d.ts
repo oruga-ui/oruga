@@ -694,27 +694,27 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentBackdropClass: ClassDefinition;
                 /**
-                 * Class of the header element inside the box
+                 * Class of the content header element
                  */
                 headerClass: ClassDefinition;
                 /**
-                 * Class of the prev button element inside the box
+                 * Class of the prev button element inside the header
                  */
                 prevButtonClass: ClassDefinition;
                 /**
-                 * Class of the next button element inside the box
+                 * Class of the next button element inside the header
                  */
                 nextButtonClass: ClassDefinition;
                 /**
-                 * Class of the month and year selects container inside the box
+                 * Class of the month and year selects container inside the header
                  */
                 listsClass: ClassDefinition;
                 /**
-                 * Class of the footer element
+                 * Class of the content footer element
                  */
                 footerClass: ClassDefinition;
                 /**
-                 * Class of the dates table element inside the box
+                 * Class of the dates table element
                  */
                 tableClass: ClassDefinition;
                 /**
@@ -726,7 +726,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 tableHeadCellClass: ClassDefinition;
                 /**
-                 * Class of the table body element inside the box
+                 * Class of the table body element
                  */
                 tableBodyClass: ClassDefinition;
                 /**
@@ -806,7 +806,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 tableEventIndicatorClass: ClassDefinition;
                 /**
-                 * Class of the month table element inside the box when type is `month`
+                 * Class of the month table element when type is `month`
                  */
                 monthClass: ClassDefinition;
                 /**
@@ -3526,11 +3526,19 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentBackdropClass: ClassDefinition;
                 /**
+                 * Class of the content header element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the content body element
+                 */
+                bodyClass: ClassDefinition;
+                /**
                  * Class of the select separator element
                  */
                 separatorClass: ClassDefinition;
                 /**
-                 * Class of the footer element
+                 * Class of the content footer element
                  */
                 footerClass: ClassDefinition;
                 /**
@@ -3781,13 +3789,13 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 variantClass: ClassDefinition;
                 /**
-                 * Class of the dragable container element
+                 * Class of the drag/drop container element
                  */
-                draggableClass: ClassDefinition;
+                dragzoneClass: ClassDefinition;
                 /**
-                 * Class of the dragable container element when hovered
+                 * Class of the drag/drop container element when hovered with a file
                  */
-                draggableHoveredClass: ClassDefinition;
+                dragzoneHoveredClass: ClassDefinition;
             }>;
     }
 }

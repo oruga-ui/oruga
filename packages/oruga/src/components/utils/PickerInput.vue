@@ -137,8 +137,12 @@ const _teleport = useTeleport(props.teleport);
 // #region --- PICKER FEATURE ---
 
 if (!props.inline) {
+    const popoverPosition = computed(() =>
+        props.modal ? "centered" : props.position,
+    );
+
     usePopoverAPI({
-        position: props.modal ? "centered" : props.position,
+        position: popoverPosition,
         behavior: "auto",
         trigger: isActive,
         targetRef: triggerRef,

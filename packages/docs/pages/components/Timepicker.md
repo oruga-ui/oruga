@@ -92,10 +92,12 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Slots
 
-| Name    | Description                                | Bindings |
-| ------- | ------------------------------------------ | -------- |
-| trigger | Override the trigger input element         |          |
-| footer  | Define an additional content in the footer |          |
+| Name    | Description                                  | Bindings |
+| ------- | -------------------------------------------- | -------- |
+| trigger | Override the trigger input element           |          |
+| header  | Define an additional content before the body |          |
+| body    | Override the content body                    |          |
+| footer  | Define an additional content after the body  |          |
 
 </section>
 
