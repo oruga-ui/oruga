@@ -19,7 +19,7 @@ const promptDialog = async (): Promise<void> => {
 
     oruga.notification.open({
         duration: 5000,
-        message: "Dialog closed",
+        content: "Dialog closed",
         variant: "info",
         position: "top",
         closeable: true,
@@ -43,7 +43,7 @@ const promptTimeoutDialog = async (): Promise<void> => {
 
     oruga.notification.open({
         duration: 5000,
-        message: "Dialog closed",
+        content: "Dialog closed",
         variant: "info",
         position: "top",
         closeable: true,

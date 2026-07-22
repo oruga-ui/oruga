@@ -10,7 +10,7 @@ function simple(): void {
 
 function success(): void {
     oruga.notification.open({
-        message: "Something happened correctly!",
+        content: "Something happened correctly!",
         variant: "success",
         closeable: true,
     });
@@ -36,7 +36,7 @@ function danger(): void {
 
 function pause(): void {
     oruga.notification.open({
-        message: `I can be paused if you hover over me`,
+        content: `I can be paused if you hover over me`,
         variant: "warning",
         type: "warning",
         pauseOnHover: true,

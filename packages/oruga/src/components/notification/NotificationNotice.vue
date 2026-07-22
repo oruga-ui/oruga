@@ -160,7 +160,7 @@ function showNotice(): void {
 
 let timeout: ReturnType<typeof setTimeout> | undefined;
 
-/** Set timer to auto close message */
+/** Set timer to auto close */
 function setAutoClose(): void {
     if (!props.infinite) {
         // clear old timer
