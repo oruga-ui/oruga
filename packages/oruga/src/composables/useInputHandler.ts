@@ -92,7 +92,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
             // if element is the input element
             return el as T;
 
-        const inputs = el.querySelector("[data-oruga-input]");
+        const inputs = el.querySelector("input,select,textare");
 
         if (!inputs) {
             console.warn(

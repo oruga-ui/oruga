@@ -128,7 +128,7 @@ const contentRef = useTemplateRef("contentElement");
 // use the html input element as trigger element
 const triggerRef = computed(() => {
     const el = unrefElement(triggerContainerRef);
-    const input = el?.querySelector("[data-oruga-input]");
+    const input = el?.querySelector("input");
     return input ?? el?.firstElementChild ?? el;
 });
 
