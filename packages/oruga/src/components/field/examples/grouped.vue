@@ -5,7 +5,7 @@
             <o-button variant="primary" label="Search" />
         </o-field>
 
-        <o-field grouped message="What do you want to search?">
+        <o-field grouped message="What do you want to search?" nowrap>
             <o-input placeholder="Search..." expanded />
             <o-button variant="primary" label="Search" />
         </o-field>

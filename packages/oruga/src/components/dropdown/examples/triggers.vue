@@ -31,6 +31,7 @@ const isActive = ref(false);
             </o-dropdown>
 
             <o-dropdown
+                :open-on-click="false"
                 open-on-contextmenu
                 trigger-tag="OButton"
                 label="Right click">

@@ -15,7 +15,7 @@ const teleport = ref(false);
                 <o-button label="Right Popover" />
 
                 <template #content>
-                    <h4>Heading</h4>
+                    <h4 style="margin-top: 0">Heading</h4>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur warning elit.
                         Fusce id fermentum quam
@@ -28,7 +28,7 @@ const teleport = ref(false);
                 <o-button label="Top Popover" />
 
                 <template #content>
-                    <h4>Heading</h4>
+                    <h4 style="margin-top: 0">Heading</h4>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur warning elit.
                         Fusce id fermentum quam
@@ -41,7 +41,7 @@ const teleport = ref(false);
                 <o-button label="Bottom Popover" />
 
                 <template #content>
-                    <h4>Heading</h4>
+                    <h4 style="margin-top: 0">Heading</h4>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur warning elit.
                         Fusce id fermentum quam
@@ -54,7 +54,7 @@ const teleport = ref(false);
                 <o-button label="Left Popover" />
 
                 <template #content>
-                    <h4>Heading</h4>
+                    <h4 style="margin-top: 0">Heading</h4>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur warning elit.
                         Fusce id fermentum quam
