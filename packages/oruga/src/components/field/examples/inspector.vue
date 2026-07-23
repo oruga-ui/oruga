@@ -59,13 +59,13 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
             data.addons = true;
         },
     },
-    blockClass: {
-        class: "blockClass",
+    nowrapClass: {
+        class: "nowrapClass",
         description:
-            "Class of the inner body wrapper element to force as block without linebreak.",
-        properties: ["block"],
+            "Class of the inner body wrapper element when shown as block without linebreak.",
+        properties: ["nowrap"],
         action: (data): void => {
-            data.block = true;
+            data.nowrap = true;
         },
     },
     horizontalClass: {

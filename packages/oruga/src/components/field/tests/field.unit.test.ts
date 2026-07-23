@@ -100,9 +100,9 @@ describe("OField tests", () => {
             expect(innerField.classes()).toContain("o-field--grouped");
         });
 
-        test('react accordingly when "block" prop is set', () => {
+        test('react accordingly when "nowrap" prop is set', () => {
             const wrapper = mount(OField, {
-                props: { block: true, addons: true },
+                props: { addons: true, nowrap: true },
                 slots: {
                     default: [
                         h(OInput),
@@ -114,7 +114,7 @@ describe("OField tests", () => {
             const body = wrapper.find(".o-field__body");
             expect(body.exists()).toBeTruthy();
             const innerField = body.find(".o-field");
-            expect(innerField.classes()).toContain("o-field--block");
+            expect(innerField.classes()).toContain("o-field--nowrap");
         });
     });
 

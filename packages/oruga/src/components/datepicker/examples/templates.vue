@@ -31,7 +31,7 @@ function selectMonth(month: number | undefined): void {
 
 <template>
     <section>
-        <o-field label="Select a date" grouped>
+        <o-field label="Select a date" grouped nowrap>
             <o-datepicker
                 v-model="selected"
                 :first-day-of-week="1"
@@ -44,12 +44,10 @@ function selectMonth(month: number | undefined): void {
                 </template>
 
                 <template #header>
-                    <o-field grouped>
+                    <o-field grouped root-class="grow">
                         <o-select
                             :model-value="selected?.getMonth()"
                             :options="months"
-                            root-class="grow"
-                            expanded
                             @update:model-value="selectMonth" />
 
                         <o-button
@@ -92,6 +90,14 @@ function selectMonth(month: number | undefined): void {
 }
 
 .grow {
-    flex-grow: 1;
+    width: 100%;
+
+    [data-oruga="select"] {
+        flex-grow: 1;
+
+        select {
+            width: 100%;
+        }
+    }
 }
 </style>
