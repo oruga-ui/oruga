@@ -69,4 +69,8 @@ shadowRoot.appendChild(link);
 [data-theme="light"] {
     --bulma-label-color: var(--bulma-text-strong);
 }
+
+[popover]:where(:not(:popover-open)) {
+    display: none !important;
+}
 </style>

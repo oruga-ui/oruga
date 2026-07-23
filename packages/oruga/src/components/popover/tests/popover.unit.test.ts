@@ -35,6 +35,8 @@ describe("OPopover tests", () => {
             slots: { default: "<p> Open Popover! </p>" },
         });
 
+        await setTimeout(); // await popover open
+
         expect(wrapper.classes("o-popover--active")).toBeTruthy();
 
         const content = wrapper.find("[popover]");

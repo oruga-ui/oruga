@@ -112,6 +112,8 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
     function open(): void {
         if (toValue(disabled)) return;
 
+        clearTimeout(timeout);
+
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
             if (!contentEl || !targetEl || active.value) return;
