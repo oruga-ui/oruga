@@ -263,10 +263,7 @@ defineExpose({ close, open, toggle });
                             v-on="$props.events || {}"
                             @close="close" />
 
-                        <slot
-                            v-if="$slots.content || content"
-                            name="content"
-                            :close="close">
+                        <slot name="content" :close="close">
                             {{ content }}
                         </slot>
                     </div>

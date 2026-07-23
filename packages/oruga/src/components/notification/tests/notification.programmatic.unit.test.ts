@@ -24,10 +24,10 @@ describe("useNotificationProgrammatic tests", () => {
     enableAutoUnmount(afterEach);
 
     test("test mounting component correctly", async () => {
-        const message = "My Fany Message";
+        const content = "My Fany Message";
 
         // open element
-        const { close, promise } = factory.open(message);
+        const { close, promise } = factory.open(content);
 
         // check promise get called
         const handler = vi.fn();
@@ -40,7 +40,7 @@ describe("useNotificationProgrammatic tests", () => {
         );
         expect(notification).not.toBeNull();
 
-        expect(notification?.innerHTML).toContain(message);
+        expect(notification?.innerHTML).toContain(content);
 
         // close element through handler
         close();

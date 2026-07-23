@@ -30,7 +30,7 @@ defineOptions({
 const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
     override: undefined,
     container: undefined,
-    variant: () => getDefault("notification.variant"),
+    variant: undefined,
     position: () => getDefault("notification.position", "top"),
     duration: () => getDefault("notification.duration", 2000),
     infinite: false,
@@ -156,11 +156,11 @@ function showNotice(): void {
     );
 }
 
-// --- Auto Close Feature  ---
+// #region --- Auto Close Feature ---
 
 let timeout: ReturnType<typeof setTimeout> | undefined;
 
-/** Set timer to auto close message */
+/** Set timer to auto close */
 function setAutoClose(): void {
     if (!props.infinite) {
         // clear old timer
@@ -194,7 +194,9 @@ function close(...args: [] | [Event] | CloseEventArgs<C>): void {
     emits("close", ...args);
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Auto Close Feature ---
+
+// #region --- Computed Component Classes ---
 
 const noticeClasses = defineClasses(["noticeClass", "o-notices"]);
 
@@ -214,10 +216,21 @@ const noticeContainerClasses = defineClasses([
     "o-notices__container",
 ]);
 
-// --- Expose Public Functionalities ---
+const notificationClasses = defineClasses([
+    "positionClass",
+    "o-notification--",
+    computed(() => props.position),
+    computed(() => !!props.position),
+]);
+
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -230,18 +243,13 @@ defineExpose({ close });
         :variant="variant"
         :role="isAlert ? 'alert' : 'status'"
         :aria-atomic="true"
+        :component="$props.component"
+        :props="$props.props"
+        :events="$props.events"
+        :class="notificationClasses"
         @close="close"
         @pointerenter="onHoverEnter"
         @pointerleave="onHoverLeave">
-        <template #inner="{ close }">
-            <!-- injected component for programmatic usage -->
-            <component
-                v-bind="$props.props"
-                :is="component"
-                v-if="component"
-                v-on="$props.events || {}"
-                @close="close" />
-        </template>
         <slot />
     </o-notification>
 </template>
