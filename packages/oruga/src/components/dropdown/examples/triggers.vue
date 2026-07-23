@@ -73,7 +73,10 @@ const isActive = ref(false);
         <br />
         <p>
             <o-field grouped>
-                <o-dropdown v-model:active="isActive" :open-on-click="false">
+                <o-dropdown
+                    v-model:active="isActive"
+                    :open-on-click="false"
+                    :close-on-outside="false">
                     <template #trigger>
                         <i>Click the button beside! </i>
                     </template>
