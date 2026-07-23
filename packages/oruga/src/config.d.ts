@@ -1932,7 +1932,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 closeClass: ClassDefinition;
                 /**
-                 * Which position the notification will appear when programmatically
+                 * Which position the notification will appear
                  */
                 position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
                 /**

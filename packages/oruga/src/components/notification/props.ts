@@ -95,7 +95,7 @@ export type NotificationNoticeProps<C extends Component = Component> = {
      */
     container: HTMLElement;
     /**
-     * Which position the notification will appear when programmatically
+     * Which position the notification will appear
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
      */
     position?:
