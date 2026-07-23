@@ -1,3 +1,28 @@
+## [0.14.0-pre.5](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.4...v0.14.0-pre.5) (2026-07-23)
+
+### ⚠ BREAKING CHANGES
+
+* **slider:** The `variantClass` property got renamed to `fillVariantClass` to match its relation.
+* **dialog:** The `textPositionClass` property got renamed to `contentPositionClass` to match its relation.
+* **dialog:** The `wrapperClass` property changed to `contentClass`.
+* **notification:** The `wrapperClass` property changed to `contentClass`.
+* **upload:** The `draggableClass` property got renamed to `dragzoneClass`.
+
+### Features
+
+* **datepicker|timepicker:** add inline class ([#1690](https://github.com/oruga-ui/oruga/issues/1690)) ([7b339e3](https://github.com/oruga-ui/oruga/commit/7b339e34d9f5938e4ff941c13affa929242a25ad))
+* **dialog:** convert "wrapperClass" into "contentClass" ([#1695](https://github.com/oruga-ui/oruga/issues/1695)) ([8f683bc](https://github.com/oruga-ui/oruga/commit/8f683bc2759ad7cf00cf19373b632efb3dc5ae76))
+* **notification:** restructure the content template ([#1694](https://github.com/oruga-ui/oruga/issues/1694)) ([4ff34b5](https://github.com/oruga-ui/oruga/commit/4ff34b56de1203f05ea8e77cc324e9ea40a98953))
+* **slider:** add a `tickBeforeClass` and `tickAfterClass` class ([#1686](https://github.com/oruga-ui/oruga/issues/1686)) ([01df165](https://github.com/oruga-ui/oruga/commit/01df165f329eaa3a735b94352d22094036e3bd05))
+* **timepicker:** add body wrapper element ([#1688](https://github.com/oruga-ui/oruga/issues/1688)) ([bbc329a](https://github.com/oruga-ui/oruga/commit/bbc329a1d68430f66a1d52f1c6d5167669c8dc12))
+* **upload:** redefine drag/drop class name ([#1691](https://github.com/oruga-ui/oruga/issues/1691)) ([d5aa719](https://github.com/oruga-ui/oruga/commit/d5aa7192216b9c0ffb078fa42ccdc78df00caffc))
+
+### Bug Fixes
+
+* **popover:** correctly apply position change ([#1693](https://github.com/oruga-ui/oruga/issues/1693)) ([ad69204](https://github.com/oruga-ui/oruga/commit/ad69204c4356aa9191b70d4989dfed2aaf654b9b))
+* **slider:** correct wrong calculation when having negative range ([#1685](https://github.com/oruga-ui/oruga/issues/1685)) ([6218260](https://github.com/oruga-ui/oruga/commit/621826009188309772c2e0b85e24034d15793b05))
+* **tabs:** correctly export TabsProps and TabItemProps types ([#1689](https://github.com/oruga-ui/oruga/issues/1689)) ([70cc23e](https://github.com/oruga-ui/oruga/commit/70cc23ebe46a5426e25a2150aa2c7b47db7a64ae))
+
 ## [0.14.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.3...v0.14.0-pre.4) (2026-07-14)
 
 ### ⚠ BREAKING CHANGES
