@@ -53,7 +53,7 @@ function queueToast(): void {
 function pause(): void {
     oruga.notification.open({
         rootClass: "toast toast-notification",
-        messacontentge: `I can be paused if you hover over me`,
+        content: `I can be paused if you hover over me`,
         variant: "warning",
         pauseOnHover: true,
         duration: 5000,

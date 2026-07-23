@@ -29,7 +29,7 @@ export type NotificationProgrammaticOptions<C extends Component> = Readonly<
 export class NotificationProgrammaticFactory extends ProgrammaticFactory {
     /**
      * Create a new programmatic notification component instance.
-     * @param options - Notification message string or notification component props object.
+     * @param options - Notification content string or notification component props object.
      * @param target - A target container the component get rendered into - default is `document.body`.
      * @returns ProgrammaticExpose - programmatic component expose interface
      */
@@ -38,7 +38,7 @@ export class NotificationProgrammaticFactory extends ProgrammaticFactory {
         target?: ProgrammaticTarget,
     ): ProgrammaticExpose<typeof NotificationNotice<C>> {
         const _options: NotificationProgrammaticOptions<C> =
-            typeof options === "string" ? { message: options } : options;
+            typeof options === "string" ? { content: options } : options;
 
         const componentProps: NotificationProgrammaticOptions<C> = {
             position: getOption("notification.position", "top-right"),

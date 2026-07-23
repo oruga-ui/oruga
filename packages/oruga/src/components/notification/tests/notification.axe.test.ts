@@ -10,10 +10,10 @@ describe("ONotification a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: { title: string; props?: NotificationProps }[] = [
-        { title: "axe notification - base case", props: { message: "Hello" } },
+        { title: "axe notification - base case", props: { content: "Hello" } },
         {
             title: "axe notification - variant",
-            props: { message: "Hello", variant: "danger" },
+            props: { content: "Hello", variant: "danger" },
         },
     ];
 
