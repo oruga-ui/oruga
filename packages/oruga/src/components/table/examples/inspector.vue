@@ -222,6 +222,14 @@ const inspectData: InspectData<
     thSortIconClass: {
         class: "thSortIconClass",
         description: "Class of the table header sort icon element.",
+        properties: ["sortable"],
+        info: "Click on 'First Name' header to sort elements and see it in action!",
+    },
+    thSortIconDirectionClass: {
+        class: "thSortIconDirectionClass",
+        description:
+            "Class of the table header sort icon element with direction",
+        properties: ["sortable"],
         info: "Click on 'First Name' header to sort elements and see it in action!",
     },
     trClass: {
