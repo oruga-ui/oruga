@@ -63,7 +63,7 @@ const iconSize = computed(() => {
         else if (iconConfig.value.sizes.default)
             return iconConfig.value.sizes.default;
     }
-    return null;
+    return undefined;
 });
 
 /**
