@@ -2,35 +2,39 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
-import Customise from "./customise.vue";
-import CustomiseCode from "./customise.vue?raw";
-
 import Columns from "./columns.vue";
 import ColumnsCode from "./columns.vue?raw";
+
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
+
+import Sortable from "./sortable.vue";
+import SortableCode from "./sortable.vue?raw";
 
 import Selection from "./selection.vue";
 import SelectionCode from "./selection.vue?raw";
 
-import Pagination from "./pagination.vue";
-import PaginationCode from "./pagination.vue?raw";
-
-import AsyncData from "./async-data.vue";
-import AsyncDataCode from "./async-data.vue?raw";
-
 import Checkable from "./checkable.vue";
 import CheckableCode from "./checkable.vue?raw";
-
-import Sticky from "./sticky.vue";
-import StickyCode from "./sticky.vue?raw";
 
 import Detailed from "./detailed.vue";
 import DetailedCode from "./detailed.vue?raw";
 
+import Pagination from "./pagination.vue";
+import PaginationCode from "./pagination.vue?raw";
+
 import Filterable from "./filterable.vue";
 import FilterableCode from "./filterable.vue?raw";
 
+import AsyncData from "./async-data.vue";
+import AsyncDataCode from "./async-data.vue?raw";
+
+import Sticky from "./sticky.vue";
+import StickyCode from "./sticky.vue?raw";
+
 import Draggable from "./draggable.vue";
 import DraggableCode from "./draggable.vue?raw";
+
 </script>
 
 ### Base
@@ -39,21 +43,18 @@ Each row is represented as an object in an array passed to the `data` prop.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
-### Customise
-
-Define the table in the way that you need it to be.
-
-::: info Limitations
-Due to the way the Vue reactivity system works, it is not possible to define a JavaScript object for the `thAttrs` and `tdAttrs` properties of the `o-table-column` component directly in the template block. This will result in a recursive rendering error. In order to use an object as value, the object must be defined as variable in the script block. (See [Issue #1531](https://github.com/oruga-ui/oruga/issues/1531))
-:::
-
-<ExampleViewer :component="Customise" :code="CustomiseCode" />
-
 ### Columns
 
-Columns can either be defined by adding `<o-table-column>` components to the `default` slot, or by adding an array to the `columns` prop, where each object defines a column. It is possible to mix both approaches by adding a `columns` prop as well as passing `<o-table-column>` components in the `before` or `after` slots.
+Columns can either be defined by adding `<o-table-column>` components to the `default` template slot, or by adding an array to the `columns` prop, where each object defines a column. It is possible to mix both approaches by adding a `columns` prop as well as passing `<o-table-column>` components in the `before` or `after` template slots.
 
 <ExampleViewer :component="Columns" :code="ColumnsCode" />
+
+### Sortable
+
+The table allows users to sort the data by a single column in ascending or descending order by clicking on the column header.
+To make a column sortable, add the `sortable` property to the column definition or component.
+
+<ExampleViewer :component="Sortable" :code="SortableCode" />
 
 ### Selection
 
@@ -67,9 +68,21 @@ When the `checkable` prop is set, each row will have a checkbox. The checkbox po
 
 <ExampleViewer :component="Checkable" :code="CheckableCode" />
 
+### Templates
+
+Define the table the way you need it. To customise the appearance of the column data, use the default template slot of the `<o-table-column>` component.
+The row object can be accessed by the `row` slot property.
+Additionally, a `header` or `subheader` template slot can be used to customise the appearance of the column header label. See the full template slot definition below.
+
+::: info Limitations
+Due to the way the Vue reactivity system works, it is not possible to define a JavaScript object for the `thAttrs` and `tdAttrs` properties of the `o-table-column` component directly in the template block. This will result in a recursive rendering error. In order to use an object as value, the object must be defined as variable in the script block. (See [Issue #1531](https://github.com/oruga-ui/oruga/issues/1531))
+:::
+
+<ExampleViewer :component="Templates" :code="TemplatesCode" />
+
 ### Detailed
 
-Each row can have a collapse section by adding the `detailed` prop. The rows with an open detail section are combined in the `detailed-rows` prop, which is two-way bindable. By default, the detail is displayed as another tr, but adding `custom-detail-row` removes the tr wrapper from the provided `detail` slot. Consider defining whether a row can have a detail section with a function given by the `is-detailed-visibile` prop.
+Each row can have a collapse section by adding the `detailed` prop. The rows with an open detail section are combined in the `detailed-rows` prop, which is two-way bindable. By default, the detail is displayed as another tr, but adding `custom-detail-row` removes the tr wrapper from the provided `detail` template slot. Consider defining whether a row can have a detail section with a function given by the `is-detailed-visibile` prop.
 
 <ExampleViewer :component="Detailed" :code="DetailedCode" />
 
