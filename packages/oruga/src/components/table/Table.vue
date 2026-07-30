@@ -1132,10 +1132,15 @@ const thDetailedClasses = defineClasses([
 
 const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
 
-const thSortIconClasses = defineClasses([
-    "thSortIconClass",
-    "o-table__th__sort-icon",
-]);
+const thSortIconClasses = defineClasses(
+    ["thSortIconClass", "o-table__th__sort-icon"],
+    [
+        "thSortIconDirectionClass",
+        "o-table__th__sort-icon--",
+        computed(() => (isAsc.value ? "asc" : "desc")),
+        computed(() => !!currentSortColumn.value),
+    ],
+);
 
 const trBaseClasses = defineClasses(["trClass", "o-table__tr"]);
 

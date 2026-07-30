@@ -231,6 +231,8 @@ export type TableClasses = Partial<{
     thLabelClass: ComponentClass;
     /** Class of the table header sort icon element */
     thSortIconClass: ComponentClass;
+    /** Class of the table header sort icon element with direction */
+    thSortIconDirectionClass: ComponentClass;
     /** Class of the table `tr` element */
     trClass: ComponentClass;
     /** Class of the table `tr` element when selected */
