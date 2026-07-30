@@ -31,10 +31,6 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
             data.teleport = true;
         },
     },
-    triggerClass: {
-        class: "triggerClass",
-        description: "Class of the trigger element.",
-    },
     contentClass: {
         class: "contentClass",
         description: "Class of the content element.",

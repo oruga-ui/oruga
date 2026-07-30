@@ -92,8 +92,6 @@ export type PopoverClasses = Partial<{
     activeClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
-    /** Class of the trigger element */
-    triggerClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
     /** Class of the content element when active */

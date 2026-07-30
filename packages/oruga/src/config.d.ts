@@ -2138,10 +2138,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 teleportClass: ClassDefinition;
                 /**
-                 * Class of the trigger element
-                 */
-                triggerClass: ClassDefinition;
-                /**
                  * Class of the content element
                  */
                 contentClass: ClassDefinition;
