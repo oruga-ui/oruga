@@ -73,6 +73,10 @@ defineSlots<{
      * @param onclick {(event: Event): void} - click handler, only needed if a button is used
      */
     default?(props: { onclick: (event: Event) => void }): void;
+    /** Additional slot before the dragzone */
+    before?(): void;
+    /** Additional slot after the dragzone */
+    after?(): void;
 }>();
 
 const inputRef = useTemplateRef("inputElement");
@@ -258,6 +262,8 @@ defineExpose({
 
 <template>
     <label data-oruga="upload" :class="rootClasses">
+        <slot name="before" />
+
         <template v-if="!dragDrop">
             <slot :onclick="onClick" />
         </template>
@@ -275,6 +281,8 @@ defineExpose({
             @drop.prevent="onFileChange">
             <slot :onclick="onClick" />
         </div>
+
+        <slot name="after" />
 
         <input
             v-bind="inputBind"
