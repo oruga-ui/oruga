@@ -3050,6 +3050,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 thSortIconClass: ClassDefinition;
                 /**
+                 * Class of the table header sort icon element with direction
+                 */
+                thSortIconDirectionClass: ClassDefinition;
+                /**
                  * Class of the table `tr` element
                  */
                 trClass: ClassDefinition;
