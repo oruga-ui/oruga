@@ -50,7 +50,6 @@
 * **upload:** add `before` and `after` slots ([#1705](https://github.com/oruga-ui/oruga/issues/1705)) ([716dca8](https://github.com/oruga-ui/oruga/commit/716dca81ae4a7cf518192c8caf85d714d519ccde))
 * **upload:** redefine drag/drop class name ([#1691](https://github.com/oruga-ui/oruga/issues/1691)) ([d5aa719](https://github.com/oruga-ui/oruga/commit/d5aa7192216b9c0ffb078fa42ccdc78df00caffc))
 
-
 ### Bug Fixes
 
 * correct volar/globals type exports ([#1666](https://github.com/oruga-ui/oruga/issues/1666)) ([de3057f](https://github.com/oruga-ui/oruga/commit/de3057f19abffdfea1a064e10598768daa927592))
