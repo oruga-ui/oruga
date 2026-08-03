@@ -40,7 +40,7 @@
 * **popover:** add header and body elements ([#1679](https://github.com/oruga-ui/oruga/issues/1679)) ([06f53ad](https://github.com/oruga-ui/oruga/commit/06f53ad800ee6de7193b681ad7804299dee9df88))
 * **popover:** add programmatic interface ([#1676](https://github.com/oruga-ui/oruga/issues/1676)) ([5df504d](https://github.com/oruga-ui/oruga/commit/5df504de0a7f96d0c8f674f1c3269674b2101a86))
 * **popover:** add a `role` property for the content element ([0a97f43](https://github.com/oruga-ui/oruga/commit/0a97f43eeea07d1a7452a0cd7b718b71372bc20b))
-* **Popover:** add backdrop property ([#1637](https://github.com/oruga-ui/oruga/issues/1637)) ([faf2121](https://github.com/oruga-ui/oruga/commit/faf21219b3551272de7357c61d579754e37ecae4))
+* **popover:** add backdrop property ([#1637](https://github.com/oruga-ui/oruga/issues/1637)) ([faf2121](https://github.com/oruga-ui/oruga/commit/faf21219b3551272de7357c61d579754e37ecae4))
 * **slider:** add a `tickBeforeClass` and `tickAfterClass` class ([#1686](https://github.com/oruga-ui/oruga/issues/1686)) ([01df165](https://github.com/oruga-ui/oruga/commit/01df165f329eaa3a735b94352d22094036e3bd05))
 * **table:** expose `filteredRows` and `pageRows` readonly refs ([#1665](https://github.com/oruga-ui/oruga/issues/1665)) ([cf4217d](https://github.com/oruga-ui/oruga/commit/cf4217d377f17bc66e33386e8c953578dffa409c))
 * **timepicker:** use popover api instead of ODropdown component ([#1648](https://github.com/oruga-ui/oruga/issues/1648)) ([c6da6c5](https://github.com/oruga-ui/oruga/commit/c6da6c5c6ed33bdab953990f065da55032b31dea))
