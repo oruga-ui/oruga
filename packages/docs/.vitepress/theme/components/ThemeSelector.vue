@@ -19,6 +19,7 @@ function onThemeChange(theme: ThemeConfig): void {
         root-class="theme-selector"
         menu-class="theme-drop__menu"
         selectable
+        :mobile-modal="false"
         aria-label="theme selection"
         @change="onThemeChange">
         <template #trigger="{ active }">
@@ -54,17 +55,12 @@ function onThemeChange(theme: ThemeConfig): void {
 
 // style theme selector custom dropdown
 :deep(.theme-drop__menu) {
-    position: absolute;
-    left: 25px;
-    top: 100%;
     min-width: 12rem;
-    z-index: 20;
     background-color: var(--vp-input-bg-color);
     border-color: var(--vp-input-border-color);
     border-radius: 4px;
     box-shadow: var(--vp-shadow-3);
     padding: 0.5rem 0;
-    margin: 0;
 }
 :deep(.theme-drop__item) {
     display: block;
