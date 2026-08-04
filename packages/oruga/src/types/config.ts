@@ -1,7 +1,12 @@
 import type { MaybeRefOrGetter } from "vue";
 import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
-import type { ClassBinding, ClassFunction, DynamicComponent } from "./utils";
+import type {
+    ClassBinding,
+    ClassBindingList,
+    ClassFunction,
+    DynamicComponent,
+} from "./utils";
 
 /** export option types */
 export type {
@@ -14,7 +19,11 @@ export type {
 } from "@/composables";
 
 /** The class definition for a component class property. */
-export type ComponentClass = ClassBinding | ClassBinding[] | ClassFunction;
+export type ComponentClass =
+    | undefined
+    | ClassBinding
+    | ClassBindingList
+    | ClassFunction;
 
 /** The class object definiton a class in the global config object. */
 export type ClassObject = {
