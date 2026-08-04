@@ -57,6 +57,7 @@ function onThemeChange(theme: ThemeConfig): void {
 :deep(.theme-drop__menu) {
     min-width: 12rem;
     background-color: var(--vp-input-bg-color);
+    border-width: 1px;
     border-color: var(--vp-input-border-color);
     border-radius: 4px;
     box-shadow: var(--vp-shadow-3);
