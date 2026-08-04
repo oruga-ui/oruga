@@ -123,6 +123,7 @@ The overlay is implemented using the native [Popover API](https://developer.mozi
 | hidden    | Define whether the item is visible or not                                                 | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
 | label     | Item label, unnecessary when default slot is used                                         | string                 | -      |                                                               |
 | override  | Override existing theme classes completely                                                | boolean                | -      |                                                               |
+| seprator  | Defines the item as a separator                                                           | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
 | tag       | Dropdown item tag name                                                                    | DynamicComponent       | -      |                                                               |
 | value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -      | <code style='white-space: nowrap; padding: 0;'>useId()</code> |
 

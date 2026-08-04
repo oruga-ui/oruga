@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     label: undefined,
     disabled: false,
     clickable: true,
+    seprator: false,
     hidden: false,
     tag: undefined,
 });
@@ -68,12 +69,20 @@ function setHidden(hidden: boolean): void {
 
 /** Shows if the item is viable or not (not disabled or hidden). */
 const isViable = computed(
-    () => !isHidden.value && !props.disabled && props.clickable,
+    () =>
+        !isHidden.value &&
+        !props.disabled &&
+        props.clickable &&
+        !props.seprator,
 );
 
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
-    () => !parent.value.disabled && !props.disabled && props.clickable,
+    () =>
+        !parent.value.disabled &&
+        !props.disabled &&
+        props.clickable &&
+        !props.seprator,
 );
 
 const isSelected = computed(() => {
@@ -87,6 +96,14 @@ const isSelected = computed(() => {
 
 const isFocused = computed(
     () => item.value.identifier === parent.value.focsuedIdentifier,
+);
+
+const itemRole = computed(() =>
+    props.seprator
+        ? "presentation"
+        : parent.value.selectable
+          ? "option"
+          : "menuitem",
 );
 
 /** Click listener, select the item. */
@@ -113,6 +130,12 @@ const rootClasses = defineClasses(
     ],
     ["itemSelectedClass", "o-dropdown__item--active", null, isSelected],
     ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
+    [
+        "itemSeperatorClass",
+        "o-dropdown__item--seperator",
+        null,
+        computed(() => props.seprator),
+    ],
     ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
 
@@ -128,9 +151,9 @@ const rootClasses = defineClasses(
         data-oruga="dropdown-item"
         :data-id="`dropdown-${item.identifier}`"
         :class="rootClasses"
-        :role="parent.selectable ? 'option' : 'menuitem'"
+        :role="itemRole"
         tabindex="-1"
-        :aria-selected="parent.selectable ? isSelected : undefined"
+        :aria-selected="!seprator && parent.selectable ? isSelected : undefined"
         :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"

@@ -1279,6 +1279,10 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 itemClickableClass: ClassDefinition;
                 /**
+                 * Class of the item element when is a sperator
+                 */
+                itemSeperatorClass: ClassDefinition;
+                /**
                  * Class of the item element when disabled
                  */
                 itemDisabledClass: ClassDefinition;
