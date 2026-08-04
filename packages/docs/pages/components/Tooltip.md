@@ -109,17 +109,17 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-| SASS Variable                    | Default                          |
-| -------------------------------- | -------------------------------- |
-| $tooltip-arrow-size              | 5px                              |
-| $tooltip-arrow-margin            | 2px                              |
-| $tooltip-content-multiline-width | 300px                            |
-| $tooltip-shadow                  | 0 1px 2px 1px rgba(0, 1, 0, 0.2) |
-| $tooltip-z                       | 38                               |
-| $tooltip-colors                  | dv.$colors                       |
-| $tooltip-border-radius           | css.getVar("radius")             |
-| $tooltip-bg                      | css.getVar("scheme-main-bis")    |
-| $tooltip-color                   | css.getVar("text-body")          |
+| SASS Variable                    | Default                                                                   |
+| -------------------------------- | ------------------------------------------------------------------------- |
+| $tooltip-arrow-size              | 5px                                                                       |
+| $tooltip-arrow-margin            | 2px                                                                       |
+| $tooltip-content-multiline-width | 300px                                                                     |
+| $tooltip-shadow                  | 0 1px 2px 1px rgba(0, 1, 0, 0.2)                                          |
+| $tooltip-z                       | 38                                                                        |
+| $tooltip-colors                  | dv.$colors                                                                |
+| $tooltip-border-radius           | css.getVar("radius")                                                      |
+| $tooltip-bg                      | css.getVar("scheme-main-bis")                                             |
+| $tooltip-color                   | hsl( css.getVar("black-h"), css.getVar("black-s"), css.getVar("black-l")) |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tooltip.scss)
 
@@ -137,6 +137,12 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tooltip.scss)
 
+</div>
+<div class="theme-tailwind">
+
+> Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
+
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 
 </section>

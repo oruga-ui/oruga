@@ -98,12 +98,12 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-| SASS Variable             | Default                  |
-| ------------------------- | ------------------------ |
-| $upload-bg                | transparent              |
-| $upload-draggable-padding | 2em                      |
-| $upload-colors            | file.$file-colors        |
-| $upload-border-color      | css.getVar("grey-light") |
+| SASS Variable            | Default                  |
+| ------------------------ | ------------------------ |
+| $upload-bg               | transparent              |
+| $upload-dragzone-padding | 2em                      |
+| $upload-colors           | file.$file-colors        |
+| $upload-border-color     | css.getVar("grey-light") |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_upload.scss)
 
@@ -112,19 +112,25 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable                        | Default                         |
-| ------------------------------------ | ------------------------------- |
-| $upload-draggable-bg                 | transparent                     |
-| $upload-draggable-bg-hover           | transparent                     |
-| $upload-draggable-border-color       | var(--#{$prefix}border-color)   |
-| $upload-draggable-border-color-hover | var(--#{$prefix}dark-bg-subtle) |
-| $upload-draggable-border-width       | var(--#{$prefix}border-width)   |
-| $upload-draggable-border-radius      | var(--#{$prefix}border-radius)  |
-| $upload-draggable-padding            | 2em                             |
-| $upload-disabled-opacity             | 0.5                             |
+| SASS Variable                       | Default                         |
+| ----------------------------------- | ------------------------------- |
+| $upload-dragzone-bg                 | transparent                     |
+| $upload-dragzone-bg-hover           | transparent                     |
+| $upload-dragzone-border-color       | var(--#{$prefix}border-color)   |
+| $upload-dragzone-border-color-hover | var(--#{$prefix}dark-bg-subtle) |
+| $upload-dragzone-border-width       | var(--#{$prefix}border-width)   |
+| $upload-dragzone-border-radius      | var(--#{$prefix}border-radius)  |
+| $upload-dragzone-padding            | 2em                             |
+| $upload-disabled-opacity            | 0.5                             |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_upload.scss)
 
+</div>
+<div class="theme-tailwind">
+
+> Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
+
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 
 </section>

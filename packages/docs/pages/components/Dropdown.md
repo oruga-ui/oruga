@@ -158,8 +158,6 @@ The overlay is implemented using the native [Popover API](https://developer.mozi
 
 | SASS Variable                          | Default                                                                      |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
-| $dropdown-disabled-opacity             | h.useVar("control-disabled-opacity")                                         |
-| $dropdown-menu-zindex                  | map.get(vars.$zindex, "dropdown")                                            |
 | $dropdown-menu-spacer                  | 0px                                                                          |
 | $dropdown-menu-padding                 | h.useVar("control-spacer") 0                                                 |
 | $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
@@ -178,12 +176,11 @@ The overlay is implemented using the native [Popover API](https://developer.mozi
 | $dropdown-item-active-background-color | h.useVar("primary")                                                          |
 | $dropdown-item-hover-background-color  | h.useVar("grey-lighter")                                                     |
 | $dropdown-item-hover-color             | h.useVar("font-color")                                                       |
-| $dropdown-modal-zindex                 | map.get(vars.$zindex, "modal")                                               |
 | $dropdown-modal-max-height             | min(50vh, calc(100vh - 160px))                                               |
 | $dropdown-modal-max-width              | min(50vw, calc(100vw - 160px))                                               |
 | $dropdown-modal-min-width              | min(80vw, 400px)                                                             |
 | $dropdown-overlay-background-color     | h.useVar( "overlay-background-color")                                        |
-| $dropdown-overlay-zindex               | map.get(vars.$zindex, "overlay")                                             |
+| $dropdown-disabled-opacity             | h.useVar("control-disabled-opacity")                                         |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 
@@ -197,8 +194,6 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 | $dropdown-content-max-height          | 200px                                                                                               |
 | $dropdown-disabled-opacity            | 0.5                                                                                                 |
 | $dropdown-gap                         | 0px                                                                                                 |
-| $dropdown-z                           | 40                                                                                                  |
-| $dropdown-mobile-breakpoint           | iv.$desktop                                                                                         |
 | $dropdown-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
 | $dropdown-modal-width                 | 75%                                                                                                 |
 | $dropdown-modal-min-width             | 25%                                                                                                 |
@@ -211,16 +206,20 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable                   | Default                |
-| ------------------------------- | ---------------------- |
-| $dropdown-modal-menu-zindex     | $zindex-modal          |
-| $dropdown-modal-backdrop-zindex | $zindex-modal-backdrop |
-| $dropdown-modal-width           | 75%                    |
-| $dropdown-modal-min-width       | 25%                    |
-| $dropdown-modal-max-width       | calc(100vw - 40px)     |
+| SASS Variable             | Default            |
+| ------------------------- | ------------------ |
+| $dropdown-modal-width     | 75%                |
+| $dropdown-modal-min-width | 25%                |
+| $dropdown-modal-max-width | calc(100vw - 40px) |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
 
+</div>
+<div class="theme-tailwind">
+
+> Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
+
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 
 </section>

@@ -134,37 +134,44 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                                           | Default                                                                 |
-| ------------------------------------------------------- | ----------------------------------------------------------------------- |
-| $datepicker-font-size                                   | h.useVar("font-size")                                                   |
-| $datepicker-box-padding                                 | 0 calc(2 \* h.useVar("control-spacer"))                                 |
-| $datepicker-border-width                                | h.useVar("control-border-width")                                        |
-| $datepicker-border-style                                | solid                                                                   |
-| $datepicker-border-color                                | h.useVar("control-border-color")                                        |
-| $datepicker-header-padding                              | h.useVar("control-spacer") 0                                            |
-| $datepicker-header-spacer                               | h.useVar("control-spacer")                                              |
-| $datepicker-footer-padding                              | h.useVar("control-spacer")                                              |
-| $datepicker-footer-spacer                               | h.useVar("control-spacer")                                              |
-| $datepicker-button-height                               | 2.25em                                                                  |
-| $datepicker-button-min-width                            | 2.25em                                                                  |
-| $datepicker-table-header-font-weight                    | 600                                                                     |
-| $datepicker-table-cell-padding                          | 0.5rem 0.75rem                                                          |
-| $datepicker-table-cell-border-radius                    | h.useVar("border-radius")                                               |
-| $datepicker-table-cell-selectable-color                 | h.useVar("font-color")                                                  |
-| $datepicker-table-cell-unselectable-color               | h.useVar("grey-light")                                                  |
-| $datepicker-table-cell-nearby-color                     | h.useVar("grey-light")                                                  |
-| $datepicker-table-cell-today-border                     | solid 1px rgba(h.useVar("primary"), 0.5)                                |
-| $datepicker-table-cell-selected-color                   | h.useVar("primary-invert")                                              |
-| $datepicker-table-cell-selected-background-color        | h.useVar("primary")                                                     |
-| $datepicker-table-cell-selected-within-background-color | rgb( from $datepicker-table-cell-selected-background-color r g b / 50%) |
-| $datepicker-table-cell-hovered-color                    | h.useVar("white")                                                       |
-| $datepicker-table-cell-hovered-background-color         | h.useVar("grey")                                                        |
-| $datepicker-table-cell-hovered-within-background-color  | rgb( from $datepicker-table-cell-hovered-background-color r g b / 50%)  |
-| $datepicker-table-cell-events-padding                   | 0.3rem 0.75rem 0.75rem                                                  |
-| $datepicker-event-background-color                      | h.useVar("grey-light")                                                  |
-| $datepicker-event-dots-size                             | 0.35em                                                                  |
-| $datepicker-event-dots-margin                           | 0 0.1em                                                                 |
-| $datepicker-event-bars-height                           | 0.25em                                                                  |
+| SASS Variable                                           | Default                                                                      |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| $datepicker-font-size                                   | h.useVar("font-size")                                                        |
+| $datepicker-border-width                                | h.useVar("control-border-width")                                             |
+| $datepicker-border-style                                | solid                                                                        |
+| $datepicker-border-color                                | h.useVar("control-border-color")                                             |
+| $datepicker-content-padding                             | h.useVar("control-spacer") calc(2 \* h.useVar("control-spacer"))             |
+| $datepicker-content-box-shadow                          | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $datepicker-content-background-color                    | h.useVar( "control-background-color")                                        |
+| $datepicker-content-border-color                        | h.useVar("control-border-color")                                             |
+| $datepicker-content-border-style                        | solid                                                                        |
+| $datepicker-content-border-width                        | h.useVar("control-border-width")                                             |
+| $datepicker-content-border-radius                       | h.useVar("border-radius")                                                    |
+| $datepicker-overlay-background-color                    | h.useVar( "overlay-background-color")                                        |
+| $datepicker-header-padding                              | h.useVar("control-spacer") 0                                                 |
+| $datepicker-header-spacer                               | h.useVar("control-spacer")                                                   |
+| $datepicker-footer-padding                              | h.useVar("control-spacer")                                                   |
+| $datepicker-footer-spacer                               | h.useVar("control-spacer")                                                   |
+| $datepicker-button-height                               | 2.25em                                                                       |
+| $datepicker-button-min-width                            | 2.25em                                                                       |
+| $datepicker-table-header-font-weight                    | 600                                                                          |
+| $datepicker-table-cell-padding                          | 0.5rem 0.75rem                                                               |
+| $datepicker-table-cell-border-radius                    | h.useVar("border-radius")                                                    |
+| $datepicker-table-cell-selectable-color                 | h.useVar("font-color")                                                       |
+| $datepicker-table-cell-unselectable-color               | h.useVar("grey-light")                                                       |
+| $datepicker-table-cell-nearby-color                     | h.useVar("grey-light")                                                       |
+| $datepicker-table-cell-today-border                     | 1px solid h.useVar("primary")                                                |
+| $datepicker-table-cell-selected-color                   | h.useVar("primary-invert")                                                   |
+| $datepicker-table-cell-selected-background-color        | h.useVar("primary")                                                          |
+| $datepicker-table-cell-selected-within-background-color | rgb( from $datepicker-table-cell-selected-background-color r g b / 50%)      |
+| $datepicker-table-cell-hovered-color                    | h.useVar("white")                                                            |
+| $datepicker-table-cell-hovered-background-color         | h.useVar("grey")                                                             |
+| $datepicker-table-cell-hovered-within-background-color  | rgb( from $datepicker-table-cell-hovered-background-color r g b / 50%)       |
+| $datepicker-table-cell-events-padding                   | 0.3rem 0.75rem 0.75rem                                                       |
+| $datepicker-event-background-color                      | h.useVar("grey-light")                                                       |
+| $datepicker-event-dots-size                             | 0.35em                                                                       |
+| $datepicker-event-dots-margin                           | 0 0.1em                                                                      |
+| $datepicker-event-bars-height                           | 0.25em                                                                       |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datepicker.scss)
 
@@ -173,19 +180,24 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-| SASS Variable                              | Default                                    |
-| ------------------------------------------ | ------------------------------------------ |
-| $datepicker-colors                         | dv.$colors                                 |
-| $datepicker-header-color                   | css.getVar("grey")                         |
-| $datepicker-header-spacer                  | 0.5em                                      |
-| $datepicker-today-border                   | solid 1px rgba(css.getVar("primary"), 0.5) |
-| $datepicker-item-color                     | css.getVar("grey-dark")                    |
-| $datepicker-item-disabled-color            | css.getVar("grey-light")                   |
-| $datepicker-item-hover-color               | css.getVar("scheme-invert")                |
-| $datepicker-item-hover-background-color    | css.getVar("background")                   |
-| $datepicker-item-selected-color            | css.getVar("primary-invert")               |
-| $datepicker-item-selected-background-color | css.getVar("primary")                      |
-| $datepicker-event-background-color         | css.getVar("grey-light")                   |
+| SASS Variable                                     | Default                                                                                             |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| $datepicker-colors                                | dv.$colors                                                                                          |
+| $datepicker-overlay-box-shadow                    | css.getVar("shadow")                                                                                |
+| $datepicker-overlay-radius                        | css.getVar("radius")                                                                                |
+| $datepicker-overlay-background-color              | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
+| $datepicker-header-color                          | css.getVar("grey")                                                                                  |
+| $datepicker-header-spacer                         | 0.5em                                                                                               |
+| $datepicker-item-color                            | css.getVar("grey-dark")                                                                             |
+| $datepicker-item-disabled-color                   | css.getVar("grey-light")                                                                            |
+| $datepicker-item-hover-color                      | css.getVar("scheme-invert")                                                                         |
+| $datepicker-item-hover-background-color           | css.getVar("background")                                                                            |
+| $datepicker-item-hover-within-background-color    | css.getVar( "grey-lighter")                                                                         |
+| $datepicker-item-selected-color                   | css.getVar("primary-invert")                                                                        |
+| $datepicker-item-selected-background-color        | css.getVar("primary")                                                                               |
+| $datepicker-item-selected-within-background-color | css.getVar( "primary-85")                                                                           |
+| $datepicker-event-background-color                | css.getVar("grey-light")                                                                            |
+| $datepicker-today-border                          | solid 1px rgba(css.getVar("primary"), 0.5)                                                          |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_datepicker.scss)
 
@@ -196,7 +208,9 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 | SASS Variable                   | Default                                 |
 | ------------------------------- | --------------------------------------- |
-| $datepicker-background-color    | var(--#{$prefix}body-bg)                |
+| $datepicker-overlay-bg          | var(--#{$prefix}body-bg)                |
+| $datepicker-overlay-radius      | var(--#{$prefix}border-radius)          |
+| $datepicker-overlay-box-shadow  | $box-shadow                             |
 | $datepicker-pagination-spacer   | calc($spacer \* 0.5)                    |
 | $datepicker-section-spacer      | calc($spacer \* 0.75)                   |
 | $datepicker-section-border      | 1px solid var(--#{$prefix}border-color) |
@@ -218,6 +232,12 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_datepicker.scss)
 
+</div>
+<div class="theme-tailwind">
+
+> Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
+
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 
 </section>

@@ -117,16 +117,23 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                          | Default                                                                     |
-| -------------------------------------- | --------------------------------------------------------------------------- |
-| $timepicker-font-size                  | h.useVar("font-size")                                                       |
-| $timepicker-color                      | h.useVar("font-color")                                                      |
-| $timepicker-line-height                | h.useVar("line-height")                                                     |
-| $timepicker-font-weight                | 600                                                                         |
-| $timepicker-box-padding                | 0 calc(2 \* h.useVar("control-spacer"))                                     |
-| $timepicker-footer-padding             | 0 0.5rem                                                                    |
-| $timepicker-select-padding             | h.useVar("control-padding-vertical") h.useVar("control-padding-horizontal") |
-| $timepicker-select-placeholder-opacity | h.useVar("disabled-opacity")                                                |
+| SASS Variable                          | Default                                                                      |
+| -------------------------------------- | ---------------------------------------------------------------------------- |
+| $timepicker-font-size                  | h.useVar("font-size")                                                        |
+| $timepicker-color                      | h.useVar("font-color")                                                       |
+| $timepicker-line-height                | h.useVar("line-height")                                                      |
+| $timepicker-font-weight                | 600                                                                          |
+| $timepicker-content-padding            | h.useVar("control-spacer") calc(2 \* h.useVar("control-spacer"))             |
+| $timepicker-content-box-shadow         | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $timepicker-content-background-color   | h.useVar( "control-background-color")                                        |
+| $timepicker-content-border-color       | h.useVar("control-border-color")                                             |
+| $timepicker-content-border-style       | solid                                                                        |
+| $timepicker-content-border-width       | h.useVar("control-border-width")                                             |
+| $timepicker-content-border-radius      | h.useVar("border-radius")                                                    |
+| $timepicker-footer-padding             | 0 0.5rem                                                                     |
+| $timepicker-select-padding             | h.useVar("control-padding-vertical") h.useVar("control-padding-horizontal")  |
+| $timepicker-overlay-background-color   | h.useVar( "overlay-background-color")                                        |
+| $timepicker-select-placeholder-opacity | h.useVar( "control-disabled-opacity")                                        |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_timepicker.scss)
 
@@ -141,12 +148,21 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable            | Default |
-| ------------------------ | ------- |
-| $timepicker-select-width | 4em     |
+| SASS Variable                  | Default                        |
+| ------------------------------ | ------------------------------ |
+| $timepicker-select-width       | 4em                            |
+| $timepicker-overlay-bg         | var(--#{$prefix}body-bg)       |
+| $timepicker-overlay-radius     | var(--#{$prefix}border-radius) |
+| $timepicker-overlay-box-shadow | $box-shadow                    |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_timepicker.scss)
 
+</div>
+<div class="theme-tailwind">
+
+> Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
+
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 
 </section>

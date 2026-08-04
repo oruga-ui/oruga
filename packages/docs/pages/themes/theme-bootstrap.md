@@ -6,8 +6,9 @@
 // adds :root variables also as :host
 $enable-host: true !default;
 
-$speed-slow: 150ms !default;
-$speed-slower: 250ms !default;
+$animation-speed-fast: 150ms !default;
+$animation-speed: 300ms !default;
+$animation-speed-slow: 600ms !default;
 $easing: ease !default;
 
 // sizes variants

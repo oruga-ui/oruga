@@ -21,9 +21,10 @@
     "@fortawesome/free-solid-svg-icons": "^7.3.0",
     "@fortawesome/vue-fontawesome": "^3.2.0",
     "@highlightjs/vue-plugin": "2.1.2",
-    "@oruga-ui/theme-bootstrap": "0.11.0",
-    "@oruga-ui/theme-bulma": "0.9.0",
-    "@oruga-ui/theme-oruga": "0.9.1",
+    "@oruga-ui/theme-bootstrap": "0.12.0",
+    "@oruga-ui/theme-bulma": "0.10.0",
+    "@oruga-ui/theme-oruga": "0.10.0",
+    "@oruga-ui/theme-tailwind": "0.0.1",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.2.0",
     "markdown-it-highlightjs": "^4.3.0"
