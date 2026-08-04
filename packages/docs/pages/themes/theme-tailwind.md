@@ -1,0 +1,1 @@
+<p>The theme does not have any custom variables for this component.</p>

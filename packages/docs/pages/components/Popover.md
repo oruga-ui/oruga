@@ -93,17 +93,60 @@ The component is implemented using the native [Popover API](https://developer.mo
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                     | Default                               |
+| --------------------------------- | ------------------------------------- |
+| $popover-content-font-size        | 0.85rem                               |
+| $popover-content-color            | h.useVar("black")                     |
+| $popover-content-font-weight      | h.useVar("font-weight")               |
+| $popover-content-line-height      | h.useVar("line-height")               |
+| $popover-content-margin           | 0.25em                                |
+| $popover-content-padding          | 0.35em 0.75em                         |
+| $popover-content-box-shadow       | h.useVar("overlay-box-shadow")        |
+| $popover-content-background-color | h.useVar("grey-lightest")             |
+| $popover-content-border-color     | h.useVar("grey-lighter")              |
+| $popover-content-border-radius    | h.useVar("border-radius")             |
+| $popover-close-top                | 0em                                   |
+| $popover-close-right              | 0.5em                                 |
+| $popover-close-color              | h.useVar("black")                     |
+| $popover-close-size               | 2em                                   |
+| $popover-close-border-radius      | h.useVar("border-radius-rounded")     |
+| $popover-close-background-color   | inherit                               |
+| $popover-overlay-background-color | h.useVar( "overlay-background-color") |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_popover.scss)
+
 </div>
 <div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                     | Default                                                                                             |
+| --------------------------------- | --------------------------------------------------------------------------------------------------- |
+| $popover-margin                   | 0.25rem                                                                                             |
+| $popover-padding                  | 0.35rem 0.75rem                                                                                     |
+| $popover-shadow                   | 0 1px 2px 1px rgba(0, 1, 0, 0.2)                                                                    |
+| $popover-border-radius            | css.getVar("radius")                                                                                |
+| $popover-background-color         | css.getVar("scheme-main-bis")                                                                       |
+| $popover-color                    | hsl( css.getVar("black-h"), css.getVar("black-s"), css.getVar("black-l"))                           |
+| $popover-overlay-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_popover.scss)
+
 </div>
 <div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable   | Default |
+| --------------- | ------- |
+| $popover-margin | 0.25rem |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_popover.scss)
+
+</div>
+<div class="theme-tailwind">
+
+> Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
 
 <p>The theme does not have any custom variables for this component.</p>
 </div>

@@ -156,11 +156,12 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-| SASS Variable                 | Default |
-| ----------------------------- | ------- |
-| $notification-margin-bottom   | 1.5rem  |
-| $notification-notices-padding | 2em     |
-| $notification-notices-z       | 1000    |
+| SASS Variable                   | Default |
+| ------------------------------- | ------- |
+| $notification-margin-bottom     | 1.5rem  |
+| $notification-notices-padding   | 2em     |
+| $notification-notices-z         | 1000    |
+| $notification-icon-margin-right | 0.5rem  |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_notification.scss)
 
@@ -180,6 +181,12 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_notification.scss)
 
+</div>
+<div class="theme-tailwind">
+
+> Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
+
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 
 </section>

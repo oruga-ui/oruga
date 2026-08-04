@@ -10,6 +10,7 @@ These themes are currently available:
 - [Oruga Theme](https://github.com/oruga-ui/theme-oruga) (default Oruga style - without any dependecy)
 - [Bulma Theme](https://github.com/oruga-ui/theme-bulma) (based on [Bulma](https://bulma.io/) CSS framework)
 - [Bootstrap Theme](https://github.com/oruga-ui/theme-bootstrap) (based on [Bootstrap](https://getbootstrap.com/) styling)
+- [Tailwind Theme](https://github.com/oruga-ui/theme-tailwind) (based on [Tailwind](https://tailwindcss.com/) styling)
 
 ::: tip Theme Preview
 You can change the active theme for this documentation site using the dropdown menu in the navigation bar.
@@ -184,6 +185,46 @@ createApp(...)
 ```
 
 See the [theme repository](https://github.com/oruga-ui/theme-bootstrap) and the [Bootstrap documentation](https://getbootstrap.com/docs/) for a detailed documentation.
+
+## Tailwind Theme
+
+The [Tailwind Theme](https://github.com/oruga-ui/theme-tailwind) provides a customisation of the Oruga components with [Tailwind](https://tailwindcss.com/).
+
+::: code-group
+
+```bash [Npm]
+npm install @oruga-ui/theme-tailwind
+```
+
+```bash [Yarn]
+yarn add @oruga-ui/theme-tailwind
+```
+
+```html [Cdn]
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/@oruga-ui/theme-tailwind/dist/theme.css" />
+```
+
+:::
+
+The theme comes with its own Tailwind-based class mapping configuration and some additional component styling that you have to import:
+
+```js
+import { createApp } from 'vue'
+
+import Oruga from '@oruga-ui/oruga-next';
+
+import { tailwindConfig } from '@oruga-ui/theme-tailwind';
+
+import '@oruga-ui/theme-tailwind/style.css';
+
+createApp(...)
+    .use(Oruga, tailwindConfig)
+    .mount('#app')
+```
+
+See the [theme repository](https://github.com/oruga-ui/theme-tailwind) and the [Tailwind documentation](https://tailwindcss.com/docs/) for a detailed documentation.
 
 ## Global Theme Variables
 
