@@ -2,6 +2,7 @@
 import { useId, computed, useTemplateRef, ref } from "vue";
 
 import OIcon from "../icon/Icon.vue";
+import OCheckbox from "../checkbox/Checkbox.vue";
 
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
@@ -32,7 +33,7 @@ const props = withDefaults(defineProps<ListItemProps<T>>(), {
     iconSize: () => getDefault("listbox.iconSize"),
     ariaLabel: undefined,
     ariaLabelledby: undefined,
-    parentKey: undefined,
+    checkboxAttrs: () => getDefault("listbox.checkboxAttrs"),
 });
 
 const emits = defineEmits<{
@@ -53,8 +54,6 @@ defineSlots<{
     default?(props: { selected: boolean; disabled: boolean }): void;
 }>();
 
-const key = props.parentKey ?? "listbox";
-
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
@@ -71,7 +70,7 @@ const providedData = computed<ListItemComponent<T>>(() => ({
 const { parent, item } = useProviderChild<
     ListboxComponent<T>,
     ListItemComponent<T>
->(rootRef, { key, data: providedData });
+>(rootRef, { data: providedData });
 
 const localHidden = ref(false);
 const isHidden = computed(() => props.hidden || localHidden.value);
@@ -124,12 +123,19 @@ function matches(value: string): boolean {
 // #region --- Computed Component Classes ---
 
 const itmeClasses = defineClasses(
-    ["itemClass", `o-${key}__item`],
-    ["itemSelectableClass", `o-${key}__item--selectable`, null, isSelectable],
-    ["itemSelectedClass", `o-${key}__item--selected`, null, isSelected],
-    ["itemFocusedClass", `o-${key}__item--focused`, null, isFocused],
-    ["itemDisabledClass", `o-${key}__item--disabled`, null, isDisabled],
+    ["itemClass", "o-listbox__item"],
+    ["itemSelectableClass", "o-listbox__item--selectable", null, isSelectable],
+    ["itemSelectedClass", "o-listbox__item--selected", null, isSelected],
+    ["itemFocusedClass", "o-listbox__item--focused", null, isFocused],
+    ["itemDisabledClass", "o-listbox__item--disabled", null, isDisabled],
 );
+
+const iconClasses = defineClasses(["itemIconClass", "o-listbox__item-icon"]);
+
+const checkboxClasses = defineClasses([
+    "checkboxClass",
+    "o-listbox__item-checkbox",
+]);
 
 // #endregion --- Computed Component Classes ---
 </script>
@@ -139,8 +145,8 @@ const itmeClasses = defineClasses(
         v-show="!isHidden"
         :id="`${parent.id}-${item.identifier}`"
         ref="rootElement"
-        :data-oruga="`${key}-item`"
-        :data-id="`${key}-${item.identifier}`"
+        data-oruga="listbox-item"
+        :data-id="`listbox-${item.identifier}`"
         :class="itmeClasses"
         role="option"
         tabindex="-1"
@@ -156,13 +162,26 @@ const itmeClasses = defineClasses(
         :aria-labelledby="ariaLabelledby"
         @click.prevent="clickItem"
         @pointerenter="focusItem">
-        <!-- TODO: add checkbox for checkable -->
+        <o-icon
+            v-if="icon"
+            :icon="icon"
+            :pack="iconPack"
+            :size="iconSize"
+            :class="iconClasses" />
+
+        <o-checkbox
+            v-if="parent.checkable"
+            v-bind="checkboxAttrs"
+            :id="`${parent.id}-${item.identifier}-checkbox`"
+            :class="checkboxClasses"
+            :model-value="isSelected"
+            tabindex="-1"
+            :disabled="isDisabled"
+            autocomplete="off"
+            :use-html5-validation="false"
+            @click.stop="clickItem" />
+
         <slot :selected="isSelected" :disabled="isDisabled">
-            <o-icon
-                v-if="icon"
-                :icon="icon"
-                :pack="iconPack"
-                :size="iconSize" />
             <span>{{ label }}</span>
         </slot>
     </li>

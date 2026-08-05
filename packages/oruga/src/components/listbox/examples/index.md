@@ -17,6 +17,9 @@ import OptionsArrayCode from "./options-array.vue?raw";
 import OptionsGrouped from "./options-grouped.vue";
 import OptionsGroupedCode from "./options-grouped.vue?raw";
 
+import Checkable from "./checkable.vue";
+import CheckableCode from "./checkable.vue?raw";
+
 import Filterable from "./filterable.vue";
 import FilterableCode from "./filterable.vue?raw";
 
@@ -81,6 +84,12 @@ The most flexible way to define options is to provide an array of objects. The o
 You can also use the array of objects syntax to create grouped options, wrapping each group of options in an object with a `label` and an `options` property. The object has the same properties as the `<o-list-item>` component.
 
 <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
+
+### Checkable
+
+You can use the `checkable` property to show a checkbox on the item. The checkbox represents the selected state.
+
+<ExampleViewer :component="Checkable" :code="CheckableCode" />
 
 ### Filterable
 

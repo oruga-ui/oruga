@@ -1,5 +1,6 @@
 import type { ComponentClass, OptionsOrGroupsProp } from "@/types";
 import type { InputProps } from "../input/props";
+import type { CheckboxProps } from "../checkbox";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -22,7 +23,7 @@ export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
     /** Interaction is disabled */
     disabled?: boolean;
     /** Enable a checkbox on the item element */
-    // checkable?: boolean;
+    checkable?: boolean;
     /** Enables item selection */
     selectable?: boolean;
     /** Select current focused item when focused */
@@ -82,7 +83,7 @@ export type ListboxClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputAttrs: InputProps<false>;
+    inputAttrs: InputProps<boolean>;
 }>;
 
 export type ListItemProps<T> = {
@@ -115,11 +116,6 @@ export type ListItemProps<T> = {
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
-    /**
-     * Internal parent provider key override
-     * @ignore
-     */
-    parentKey?: string;
 } & ListItemClasses;
 
 // class props (will not be displayed in the docs)
@@ -134,4 +130,13 @@ export type ListItemClasses = Partial<{
     itemFocusedClass: ComponentClass;
     /** Class of the item element when is disabled */
     itemDisabledClass: ComponentClass;
+    /** Class of the item icon element */
+    itemIconClass: ComponentClass;
+    /** Class for the HTML checkbox element when checkable */
+    checkboxClass: ComponentClass;
+    /**
+     * Class configuration for the internal checkbox component
+     * @ignore
+     */
+    checkboxAttrs: CheckboxProps<boolean>;
 }>;

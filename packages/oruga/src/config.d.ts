@@ -1524,6 +1524,10 @@ See icon library documentation for custom classes.
         listbox?: ComponentConfigBase &
             Partial<{
                 /**
+                 * Enable a checkbox on the item element
+                 */
+                checkable: boolean;
+                /**
                  * Height of the listbox, a scrollbar is defined if height of list exceeds this value
                  */
                 scrollHeight: number | string;
@@ -1619,6 +1623,18 @@ See icon library documentation for custom classes.
                  * Class of the item element when is disabled
                  */
                 itemDisabledClass: ClassDefinition;
+                /**
+                 * Class of the item icon element
+                 */
+                itemIconClass: ClassDefinition;
+                /**
+                 * Class for the HTML checkbox element when checkable
+                 */
+                checkboxClass: ClassDefinition;
+                /**
+                 * Class configuration for the internal checkbox component
+                 */
+                checkboxAttrs: Record<string, any>;
             }>;
         loading?: ComponentConfigBase &
             Partial<{
