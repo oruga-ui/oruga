@@ -163,6 +163,15 @@ export type DropdownItemProps<T> = {
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target
      */
     target?: string;
+    /**
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack?: string;
+    /** Icon to be shown before the label */
+    icon?: string;
+    /** Icon to be shown after the label */
+    iconRight?: string;
 } & DropdownItemClasses;
 
 // class props (will not be displayed in the docs)
@@ -177,4 +186,6 @@ export type DropdownItemClasses = Partial<{
     itemClickableClass: ComponentClass;
     /** Class of the item element when disabled */
     itemDisabledClass: ComponentClass;
+    /** Class of the icon element */
+    iconIconClass: ComponentClass;
 }>;
