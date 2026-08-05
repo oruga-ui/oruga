@@ -42,7 +42,7 @@ export type TreeProps<T, IsMultiple extends boolean = boolean> = {
     iconSize?: string;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Defines a string value that labels an interactive element. */
+    /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
@@ -101,7 +101,7 @@ export type TreeItemProps<T> = {
     iconSize?: string;
     /** Transition name to apply on tree list */
     animation?: string;
-    /** Defines a string value that labels an interactive element. */
+    /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;

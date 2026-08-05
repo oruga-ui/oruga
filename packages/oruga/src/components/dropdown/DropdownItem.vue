@@ -158,8 +158,7 @@ const iconClasses = defineClasses(["itemIconClass", "o-dropdown__item-icon"]);
             :class="iconClasses"
             :icon="icon"
             :size="iconSize"
-            :pack="iconPack"
-            aria-hidden="true" />
+            :pack="iconPack" />
 
         <slot>
             <slot>{{ label }}</slot>
@@ -170,7 +169,6 @@ const iconClasses = defineClasses(["itemIconClass", "o-dropdown__item-icon"]);
             :class="iconClasses"
             :icon="iconRight"
             :size="iconSize"
-            :pack="iconPack"
-            aria-hidden="true" />
+            :pack="iconPack" />
     </component>
 </template>

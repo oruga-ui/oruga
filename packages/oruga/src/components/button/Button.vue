@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     iconPack: () => getDefault("button.iconPack"),
     iconLeft: undefined,
     iconRight: undefined,
+    ariaLabel: undefined,
 });
 
 defineEmits<{
@@ -126,6 +127,7 @@ const iconRightClasses = defineClasses([
         :class="rootClasses"
         :disabled="disabled ? true : null"
         :aria-disabled="disabled ? true : null"
+        :aria-label="ariaLabel"
         @click="$emit('click', $event)"
         @keydown.enter.prevent="$emit('click', $event)"
         @keydown.space.prevent="$emit('click', $event)">

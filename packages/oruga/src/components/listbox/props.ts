@@ -50,7 +50,7 @@ export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
     iconPack?: string;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Defines a string value that labels an interactive element. */
+    /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
@@ -111,7 +111,7 @@ export type ListItemProps<T> = {
      * @values small, medium, large
      */
     iconSize?: string;
-    /** Defines a string value that labels an interactive element. */
+    /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
