@@ -116,20 +116,24 @@ The overlay is implemented using the native [Popover API](https://developer.mozi
 
 ### Props
 
-| Prop name  | Description                                                                               | Type                   | Values | Default                                                       |
-| ---------- | ----------------------------------------------------------------------------------------- | ---------------------- | ------ | ------------------------------------------------------------- |
-| clickable  | Item is clickable and emit an event                                                       | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>    |
-| decorative | Defines the item as an decorative element with a `presentation` role                      | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
-| disabled   | Item is disabled                                                                          | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
-| hidden     | Define whether the item is visible or not                                                 | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
-| href       | Make the item a HTML anchor element with the URL that the hyperlink points to             | string                 | -      |                                                               |
-| label      | Item label, unnecessary when default slot is used                                         | string                 | -      |                                                               |
-| override   | Override existing theme classes completely                                                | boolean                | -      |                                                               |
-| rel        | The relationship of the linked URL as space-separated link types                          | string                 | -      |                                                               |
-| tag        | Dropdown item tag name                                                                    | DynamicComponent       | -      |                                                               |
-| target     | Where to display the linked URL, as the name for a browsing context                       | string                 | -      |                                                               |
-| title      | The native title property represents the title of the element                             | string                 | -      |                                                               |
-| value      | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -      | <code style='white-space: nowrap; padding: 0;'>useId()</code> |
+| Prop name  | Description                                                                               | Type                   | Values                                            | Default                                                       |
+| ---------- | ----------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------- | ------------------------------------------------------------- |
+| clickable  | Item is clickable and emit an event                                                       | boolean                | -                                                 | <code style='white-space: nowrap; padding: 0;'>true</code>    |
+| decorative | Defines the item as an decorative element with a `presentation` role                      | boolean                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>   |
+| disabled   | Item is disabled                                                                          | boolean                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>   |
+| hidden     | Define whether the item is visible or not                                                 | boolean                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>   |
+| href       | Make the item a HTML anchor element with the URL that the hyperlink points to             | string                 | -                                                 |                                                               |
+| icon       | Icon to be shown before the label                                                         | string                 | -                                                 |                                                               |
+| iconPack   | Icon pack to use                                                                          | string                 | `mdi`, `fa`, `fas and any other custom icon pack` |                                                               |
+| iconRight  | Icon to be shown after the label                                                          | string                 | -                                                 |                                                               |
+| iconSize   | Icon size                                                                                 | string                 | `small`, `medium`, `large`                        |                                                               |
+| label      | Item label, unnecessary when default slot is used                                         | string                 | -                                                 |                                                               |
+| override   | Override existing theme classes completely                                                | boolean                | -                                                 |                                                               |
+| rel        | The relationship of the linked URL as space-separated link types                          | string                 | -                                                 |                                                               |
+| tag        | Dropdown item tag name                                                                    | DynamicComponent       | -                                                 |                                                               |
+| target     | Where to display the linked URL, as the name for a browsing context                       | string                 | -                                                 |                                                               |
+| title      | The native title property represents the title of the element                             | string                 | -                                                 |                                                               |
+| value      | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code> |
 
 ### Events
 

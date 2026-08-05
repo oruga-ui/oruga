@@ -12,7 +12,7 @@ import ODropdownItem from "@/components/dropdown/DropdownItem.vue";
 describe("ODropdown tests", () => {
     const options: DropdownOptions<number> = [
         { label: "Item 1", value: 1 },
-        { label: "Item 2", value: 2 },
+        { label: "Item 2", value: 2, icon: "home" },
         { label: "Item 3", value: 3 },
     ];
     const simpleOptions: OptionsProp = ["A", "B", "C"];

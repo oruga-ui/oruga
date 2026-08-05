@@ -7,24 +7,28 @@ const options: DropdownOptions<string> = [
         value: "google",
         href: "https://google.com",
         target: "_blank",
+        icon: "information",
     },
     {
         label: "Yahoo",
         value: "yahoo",
         href: "https://yahoo.com",
         target: "_blank",
+        icon: "information",
     },
     {
         label: "DuckDuckGo ",
         value: "duckduckgo",
         href: "https://duckduckgo.com",
         target: "_blank",
+        icon: "information",
     },
     {
         label: "Bind",
         value: "bing",
         href: "https://bing.com",
         target: "_blank",
+        icon: "information",
     },
 ];
 </script>

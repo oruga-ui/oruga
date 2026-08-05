@@ -158,6 +158,14 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
+    itemIconClass: {
+        class: "itemIconClass",
+        subitem: "dropdownitem",
+        description: "Class of the item icon element.",
+        action: (data): void => {
+            data.icon = "home";
+        },
+    },
     scrollClipClass: {
         class: "scrollClipClass",
         description: "Class of the body when is open and scroll is clipped.",
