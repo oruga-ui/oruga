@@ -17,14 +17,17 @@ import OptionsArrayCode from "./options-array.vue?raw";
 import OptionsGrouped from "./options-grouped.vue";
 import OptionsGroupedCode from "./options-grouped.vue?raw";
 
-import Modal from "./modal.vue";
-import ModalCode from "./modal.vue?raw";
-
 import Selectable from "./selectable.vue";
 import SelectableCode from "./selectable.vue?raw";
 
 import Scrollable from "./scrollable.vue";
 import ScrollableCode from "./scrollable.vue?raw";
+
+import Links from "./links.vue";
+import LinksCode from "./links.vue?raw";
+
+import Modal from "./modal.vue";
+import ModalCode from "./modal.vue?raw";
 
 import Position from "./position.vue";
 import PositionCode from "./position.vue?raw";
@@ -102,6 +105,12 @@ By default only one option can be selected and the selected option will be refer
 When having to many options, consider adding the `scrollable` property, which allows the options container to remain at a fixed height. The `max-height` property can be used to define the max container height.
 
 <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
+
+### Links
+
+The menu can also consists of a list of links by using the `href` attribute for an option item.
+
+<ExampleViewer :component="Links" :code="LinksCode" />
 
 ### Modal
 

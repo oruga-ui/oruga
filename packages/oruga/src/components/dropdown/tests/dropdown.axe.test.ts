@@ -85,6 +85,20 @@ describe("ODropdown a11y tests", () => {
             title: "axe dropdown - teleport",
             props: { options, teleport: true, label: "Trigger" },
         },
+        {
+            title: "axe dropdown - href",
+            props: {
+                options: [
+                    ...options,
+                    {
+                        label: "Item 10",
+                        value: 10,
+                        href: "google.com",
+                        target: "_blank",
+                    },
+                ],
+            },
+        },
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {

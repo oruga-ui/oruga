@@ -25,7 +25,11 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     disabled: false,
     clickable: true,
     hidden: false,
+    title: undefined,
     tag: undefined,
+    href: undefined,
+    rel: undefined,
+    target: undefined,
 });
 
 const emits = defineEmits<{
@@ -121,7 +125,7 @@ const rootClasses = defineClasses(
 
 <template>
     <component
-        :is="tag ?? parent.itemTag"
+        :is="href ? 'a' : (tag ?? parent.itemTag)"
         v-show="!isHidden"
         :id="`${parent.menuId}-${item.identifier}`"
         ref="rootElement"
@@ -130,6 +134,10 @@ const rootClasses = defineClasses(
         :class="rootClasses"
         :role="parent.selectable ? 'option' : 'menuitem'"
         tabindex="-1"
+        :title="title"
+        :href="href"
+        :rel="rel"
+        :target="target"
         :aria-selected="parent.selectable ? isSelected : undefined"
         :aria-hidden="isHidden"
         :aria-disabled="disabled"
