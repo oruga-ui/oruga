@@ -672,7 +672,9 @@ defineExpose({
                             v-for="option in normalizedOptions"
                             :key="option.key">
                             <template v-if="isGroupOption(option)">
-                                <o-dropdown-item v-bind="option.item" seprator>
+                                <o-dropdown-item
+                                    v-bind="option.item"
+                                    decorative>
                                     <slot name="group" :group="option">
                                         <span>
                                             {{ option.item.label }}
