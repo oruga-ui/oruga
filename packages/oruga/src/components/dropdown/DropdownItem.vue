@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     label: undefined,
     disabled: false,
     clickable: true,
-    seprator: false,
+    decorative: false,
     hidden: false,
     tag: undefined,
 });
@@ -72,8 +72,8 @@ const isViable = computed(
     () =>
         !isHidden.value &&
         !props.disabled &&
-        props.clickable &&
-        !props.seprator,
+        !props.decorative &&
+        props.clickable,
 );
 
 /** Shows if the item is clickable or not. */
@@ -81,8 +81,8 @@ const isClickable = computed(
     () =>
         !parent.value.disabled &&
         !props.disabled &&
-        props.clickable &&
-        !props.seprator,
+        !props.decorative &&
+        props.clickable,
 );
 
 const isSelected = computed(() => {
@@ -99,7 +99,7 @@ const isFocused = computed(
 );
 
 const itemRole = computed(() =>
-    props.seprator
+    props.decorative
         ? "presentation"
         : parent.value.selectable
           ? "option"
@@ -132,9 +132,9 @@ const rootClasses = defineClasses(
     ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
     [
         "itemSeperatorClass",
-        "o-dropdown__item--seperator",
+        "o-dropdown__item--decorative",
         null,
-        computed(() => props.seprator),
+        computed(() => props.decorative),
     ],
     ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
@@ -153,7 +153,9 @@ const rootClasses = defineClasses(
         :class="rootClasses"
         :role="itemRole"
         tabindex="-1"
-        :aria-selected="!seprator && parent.selectable ? isSelected : undefined"
+        :aria-selected="
+            !decorative && parent.selectable ? isSelected : undefined
+        "
         :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"

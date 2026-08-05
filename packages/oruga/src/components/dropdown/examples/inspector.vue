@@ -141,13 +141,13 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
-    itemSeperatorClass: {
-        class: "itemSeperatorClass",
+    itemDecorativeClass: {
+        class: "itemDecorativeClass",
         subitem: "dropdownitem",
-        description: "Class of the item element when is a sperator.",
-        properties: ["seprator"],
+        description: "Class of the item element when is decorative.",
+        properties: ["decorative"],
         action: (data): void => {
-            data.seprator = true;
+            data.decorative = true;
         },
     },
     itemFocusedClass: {

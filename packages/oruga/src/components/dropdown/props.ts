@@ -139,8 +139,8 @@ export type DropdownItemProps<T> = {
     disabled?: boolean;
     /** Item is clickable and emit an event */
     clickable?: boolean;
-    /** Defines the item as a separator */
-    seprator?: boolean;
+    /** Defines the item as an decorative element with a `presentation` role */
+    decorative?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
     /** Dropdown item tag name */
@@ -157,8 +157,8 @@ export type DropdownItemClasses = Partial<{
     itemFocusedClass: ComponentClass;
     /** Class of the item element when clickable */
     itemClickableClass: ComponentClass;
-    /** Class of the item element when is a sperator */
-    itemSeperatorClass: ComponentClass;
+    /** Class of the item element when is decorative */
+    itemDecorativeClass: ComponentClass;
     /** Class of the item element when disabled */
     itemDisabledClass: ComponentClass;
 }>;

@@ -1279,9 +1279,9 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 itemClickableClass: ClassDefinition;
                 /**
-                 * Class of the item element when is a sperator
+                 * Class of the item element when is decorative
                  */
-                itemSeperatorClass: ClassDefinition;
+                itemDecorativeClass: ClassDefinition;
                 /**
                  * Class of the item element when disabled
                  */
