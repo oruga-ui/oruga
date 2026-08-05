@@ -86,7 +86,7 @@ describe("ODropdown a11y tests", () => {
             props: { options, teleport: true, label: "Trigger" },
         },
         {
-            title: "axe dropdown - href lunkjt",
+            title: "axe dropdown - href",
             props: {
                 options: [
                     ...options,
