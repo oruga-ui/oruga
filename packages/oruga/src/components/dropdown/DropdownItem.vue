@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="T">
 import { useId, computed, useTemplateRef, ref } from "vue";
 
+import OIcon from "../icon/Icon.vue";
+
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
@@ -30,6 +32,10 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     href: undefined,
     rel: undefined,
     target: undefined,
+    iconPack: undefined,
+    iconSize: undefined,
+    icon: undefined,
+    iconRight: undefined,
 });
 
 const emits = defineEmits<{
@@ -120,6 +126,8 @@ const rootClasses = defineClasses(
     ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
 
+const iconClasses = defineClasses(["itemIconClass", "o-dropdown__item-icon"]);
+
 // #endregion --- Computed Component Classes ---
 </script>
 
@@ -145,6 +153,24 @@ const rootClasses = defineClasses(
         @pointerenter="focusItem"
         @keydown.enter="onClick"
         @keydown.space="onClick">
-        <slot>{{ label }}</slot>
+        <o-icon
+            v-if="icon"
+            :class="iconClasses"
+            :icon="icon"
+            :size="iconSize"
+            :pack="iconPack"
+            aria-hidden="true" />
+
+        <slot>
+            <slot>{{ label }}</slot>
+        </slot>
+
+        <o-icon
+            v-if="iconRight"
+            :class="iconClasses"
+            :icon="iconRight"
+            :size="iconSize"
+            :pack="iconPack"
+            aria-hidden="true" />
     </component>
 </template>

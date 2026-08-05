@@ -13,18 +13,54 @@ exports[`OAutocomplete tests > render correctly 1`] = `
     <!--teleport start-->
     <transition-stub name="fade" appear="false" persisted="false" css="true">
       <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__content" style="max-height: 200px; overflow: auto; position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline; display: none;" role="listbox" aria-multiselectable="false" popover="" data-position="bottom">
-        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Angular</span></div>
-        <div id="v-0-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Angular 2</span></div>
-        <div id="v-0-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Aurelia</span></div>
-        <div id="v-0-4" data-oruga="dropdown-item" data-id="dropdown-4" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Backbone</span></div>
-        <div id="v-0-5" data-oruga="dropdown-item" data-id="dropdown-5" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Ember</span></div>
-        <div id="v-0-6" data-oruga="dropdown-item" data-id="dropdown-6" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>jQuery</span></div>
-        <div id="v-0-7" data-oruga="dropdown-item" data-id="dropdown-7" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Meteor</span></div>
-        <div id="v-0-8" data-oruga="dropdown-item" data-id="dropdown-8" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Node.js</span></div>
-        <div id="v-0-9" data-oruga="dropdown-item" data-id="dropdown-9" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Polymer</span></div>
-        <div id="v-0-10" data-oruga="dropdown-item" data-id="dropdown-10" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>React</span></div>
-        <div id="v-0-11" data-oruga="dropdown-item" data-id="dropdown-11" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>RxJS</span></div>
-        <div id="v-0-12" data-oruga="dropdown-item" data-id="dropdown-12" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false"><span>Vue.js</span></div>
+        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Angular</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Angular 2</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Aurelia</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-4" data-oruga="dropdown-item" data-id="dropdown-4" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Backbone</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-5" data-oruga="dropdown-item" data-id="dropdown-5" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Ember</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-6" data-oruga="dropdown-item" data-id="dropdown-6" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>jQuery</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-7" data-oruga="dropdown-item" data-id="dropdown-7" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Meteor</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-8" data-oruga="dropdown-item" data-id="dropdown-8" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Node.js</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-9" data-oruga="dropdown-item" data-id="dropdown-9" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Polymer</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-10" data-oruga="dropdown-item" data-id="dropdown-10" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>React</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-11" data-oruga="dropdown-item" data-id="dropdown-11" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>RxJS</span>
+          <!--v-if-->
+        </div>
+        <div id="v-0-12" data-oruga="dropdown-item" data-id="dropdown-12" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--v-if--><span>Vue.js</span>
+          <!--v-if-->
+        </div>
       </div>
     </transition-stub>
     <!--teleport end-->
