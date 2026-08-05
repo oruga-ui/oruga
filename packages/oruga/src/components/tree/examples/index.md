@@ -91,6 +91,8 @@ You can enable multi-select with the `multiple` property. In multi-select trees,
 
 When having to many options, consider adding a max height using the `scrollHeight` property, which allows to cap the tree at a fixed `max-height`. This will render a long tree of options with a scrollbar. The component will emit a `scroll-start` or `scroll-end` event, when the top or bottom of the tree is reached.
 
+A group can be forced to stay open by setting `collapsable="false"`.
+
 <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
 ### Empty
