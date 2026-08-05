@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="T">
 import { useId, computed, useTemplateRef, ref } from "vue";
 
+import OIcon from "../icon/Icon.vue";
+
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
