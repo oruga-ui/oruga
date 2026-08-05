@@ -31,6 +31,7 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     rel: undefined,
     target: undefined,
     iconPack: undefined,
+    iconSize: undefined,
     icon: undefined,
     iconRight: undefined,
 });
@@ -154,6 +155,7 @@ const iconClasses = defineClasses(["itemIconClass", "o-dropdown__item-icon"]);
             v-if="icon"
             :class="iconClasses"
             :icon="icon"
+            :size="iconSize"
             :pack="iconPack"
             aria-hidden="true" />
 
@@ -165,6 +167,7 @@ const iconClasses = defineClasses(["itemIconClass", "o-dropdown__item-icon"]);
             v-if="iconRight"
             :class="iconClasses"
             :icon="iconRight"
+            :size="iconSize"
             :pack="iconPack"
             aria-hidden="true" />
     </component>

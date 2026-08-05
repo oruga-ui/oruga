@@ -1283,9 +1283,9 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 itemDisabledClass: ClassDefinition;
                 /**
-                 * Class of the icon element
+                 * Class of the item icon element
                  */
-                iconIconClass: ClassDefinition;
+                itemIconClass: ClassDefinition;
             }>;
         field?: ComponentConfigBase &
             Partial<{
