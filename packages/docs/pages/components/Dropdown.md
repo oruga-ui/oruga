@@ -116,16 +116,20 @@ The overlay is implemented using the native [Popover API](https://developer.mozi
 
 ### Props
 
-| Prop name | Description                                                                               | Type                   | Values | Default                                                       |
-| --------- | ----------------------------------------------------------------------------------------- | ---------------------- | ------ | ------------------------------------------------------------- |
-| clickable | Item is clickable and emit an event                                                       | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>    |
-| disabled  | Item is disabled                                                                          | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
-| hidden    | Define whether the item is visible or not                                                 | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
-| label     | Item label, unnecessary when default slot is used                                         | string                 | -      |                                                               |
-| override  | Override existing theme classes completely                                                | boolean                | -      |                                                               |
-| seprator  | Defines the item as a separator                                                           | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
-| tag       | Dropdown item tag name                                                                    | DynamicComponent       | -      |                                                               |
-| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -      | <code style='white-space: nowrap; padding: 0;'>useId()</code> |
+| Prop name  | Description                                                                               | Type                   | Values | Default                                                       |
+| ---------- | ----------------------------------------------------------------------------------------- | ---------------------- | ------ | ------------------------------------------------------------- |
+| clickable  | Item is clickable and emit an event                                                       | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>    |
+| decorative | Defines the item as an decorative element with a `presentation` role                      | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
+| disabled   | Item is disabled                                                                          | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
+| hidden     | Define whether the item is visible or not                                                 | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>   |
+| href       | Make the item a HTML anchor element with the URL that the hyperlink points to             | string                 | -      |                                                               |
+| label      | Item label, unnecessary when default slot is used                                         | string                 | -      |                                                               |
+| override   | Override existing theme classes completely                                                | boolean                | -      |                                                               |
+| rel        | The relationship of the linked URL as space-separated link types                          | string                 | -      |                                                               |
+| tag        | Dropdown item tag name                                                                    | DynamicComponent       | -      |                                                               |
+| target     | Where to display the linked URL, as the name for a browsing context                       | string                 | -      |                                                               |
+| title      | The native title property represents the title of the element                             | string                 | -      |                                                               |
+| value      | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | string\|number\|object | -      | <code style='white-space: nowrap; padding: 0;'>useId()</code> |
 
 ### Events
 
@@ -159,8 +163,6 @@ The overlay is implemented using the native [Popover API](https://developer.mozi
 
 | SASS Variable                          | Default                                                                      |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
-| $dropdown-disabled-opacity             | h.useVar("control-disabled-opacity")                                         |
-| $dropdown-menu-zindex                  | map.get(vars.$zindex, "dropdown")                                            |
 | $dropdown-menu-spacer                  | 0px                                                                          |
 | $dropdown-menu-padding                 | h.useVar("control-spacer") 0                                                 |
 | $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
@@ -179,12 +181,11 @@ The overlay is implemented using the native [Popover API](https://developer.mozi
 | $dropdown-item-active-background-color | h.useVar("primary")                                                          |
 | $dropdown-item-hover-background-color  | h.useVar("grey-lighter")                                                     |
 | $dropdown-item-hover-color             | h.useVar("font-color")                                                       |
-| $dropdown-modal-zindex                 | map.get(vars.$zindex, "modal")                                               |
 | $dropdown-modal-max-height             | min(50vh, calc(100vh - 160px))                                               |
 | $dropdown-modal-max-width              | min(50vw, calc(100vw - 160px))                                               |
 | $dropdown-modal-min-width              | min(80vw, 400px)                                                             |
 | $dropdown-overlay-background-color     | h.useVar( "overlay-background-color")                                        |
-| $dropdown-overlay-zindex               | map.get(vars.$zindex, "overlay")                                             |
+| $dropdown-disabled-opacity             | h.useVar("control-disabled-opacity")                                         |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 
@@ -198,8 +199,6 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 | $dropdown-content-max-height          | 200px                                                                                               |
 | $dropdown-disabled-opacity            | 0.5                                                                                                 |
 | $dropdown-gap                         | 0px                                                                                                 |
-| $dropdown-z                           | 40                                                                                                  |
-| $dropdown-mobile-breakpoint           | iv.$desktop                                                                                         |
 | $dropdown-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
 | $dropdown-modal-width                 | 75%                                                                                                 |
 | $dropdown-modal-min-width             | 25%                                                                                                 |
@@ -212,16 +211,20 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable                   | Default                |
-| ------------------------------- | ---------------------- |
-| $dropdown-modal-menu-zindex     | $zindex-modal          |
-| $dropdown-modal-backdrop-zindex | $zindex-modal-backdrop |
-| $dropdown-modal-width           | 75%                    |
-| $dropdown-modal-min-width       | 25%                    |
-| $dropdown-modal-max-width       | calc(100vw - 40px)     |
+| SASS Variable             | Default            |
+| ------------------------- | ------------------ |
+| $dropdown-modal-width     | 75%                |
+| $dropdown-modal-min-width | 25%                |
+| $dropdown-modal-max-width | calc(100vw - 40px) |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
 
+</div>
+<div class="theme-tailwind">
+
+> Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
+
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 
 </section>

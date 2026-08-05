@@ -752,7 +752,12 @@ describe("ODropdown tests", () => {
                 { label: "Silver", value: "silver", disabled: true },
                 { label: "Vane", value: "vane" },
                 { label: "Zero", value: 0 },
-                { label: "One", value: 1 },
+                {
+                    label: "One",
+                    value: 1,
+                    href: "google.com",
+                    target: "_blank",
+                },
                 { label: "Two", value: 2, disabled: true },
             ];
 

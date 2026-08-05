@@ -12,10 +12,12 @@ export type Numberish = number | string;
 export type ClassFunction = (
     suffix: string,
     props: Record<string, any>,
-) => ClassBinding | ClassBinding[] | undefined;
+) => ClassBinding | ClassBindingList | undefined;
 
 /** Vue native type for a class attribute */
 export type ClassBinding = string | { [x: string]: boolean };
+
+export type ClassBindingList = (ClassBinding | undefined)[];
 
 /** Vue native dynamic component 'is' property value type */
 export type DynamicComponent = string | object | CallableFunction | Component;

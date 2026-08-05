@@ -135,6 +135,11 @@ export type DropdownItemProps<T> = {
     value?: T;
     /** Item label, unnecessary when default slot is used */
     label?: string;
+    /**
+     * The native title property represents the title of the element
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/title
+     */
+    title?: string;
     /** Item is disabled */
     disabled?: boolean;
     /** Item is clickable and emit an event */
@@ -145,6 +150,21 @@ export type DropdownItemProps<T> = {
     hidden?: boolean;
     /** Dropdown item tag name */
     tag?: DynamicComponent;
+    /**
+     * Make the item a HTML anchor element with the URL that the hyperlink points to
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#href
+     */
+    href?: string;
+    /**
+     * The relationship of the linked URL as space-separated link types
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel
+     */
+    rel?: string;
+    /**
+     * Where to display the linked URL, as the name for a browsing context
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target
+     */
+    target?: string;
 } & DropdownItemClasses;
 
 // class props (will not be displayed in the docs)
