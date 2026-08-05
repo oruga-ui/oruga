@@ -829,8 +829,11 @@ describe("ODropdown tests", () => {
                         option.disabled ? "true" : "false",
                     );
                     expect(
-                        el.classes("o-dropdown__item--seperator"),
+                        el.classes("o-dropdown__item--decorative"),
                     ).toBeTruthy();
+                    expect(
+                        el.classes("o-dropdown__item--clickable"),
+                    ).toBeFalsy();
                 } else {
                     const g_options = options[g_idx].options;
 
