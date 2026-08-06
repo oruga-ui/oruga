@@ -163,7 +163,7 @@ const itemIconSize = computed(() => props.iconSize ?? parent.value.iconSize);
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
-    if (hasToggleIcon.value) {
+    if (hasToggleIcon.value && isSelectable.value) {
         const toggleIcon = (event.target as HTMLElement).closest(
             "[data-toggle]",
         );
