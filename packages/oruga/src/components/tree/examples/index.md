@@ -17,6 +17,9 @@ import SelectionCode from "./selection.vue?raw";
 import Multiple from "./multiple.vue";
 import MultipleCode from "./multiple.vue?raw";
 
+import Checkable from "./checkable.vue";
+import CheckableCode from "./checkable.vue?raw";
+
 import Scrollable from "./scrollable.vue";
 import ScrollableCode from "./scrollable.vue?raw";
 
@@ -85,7 +88,11 @@ You can enable multi-select with the `multiple` property. In multi-select trees,
 
 <ExampleViewer :component="Multiple" :code="MultipleCode" />
 
-<!-- #### Checkbox -->
+### Checkable
+
+You can use the `checkable` property to show a checkbox on the item. The checkbox represents the selected state.
+
+<ExampleViewer :component="Checkable" :code="CheckableCode" />
 
 ### Scrollable
 

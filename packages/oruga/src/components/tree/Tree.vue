@@ -152,6 +152,11 @@ const { childItems } = useProviderParent<
     TreeComponent<T>
 >({ rootRef: listRef, data: provideData });
 
+/** Shows if the items are selectable or not. */
+const isSelectable = computed(
+    () => !props.disabled && (props.selectable || props.checkable),
+);
+
 const hasViableItems = computed(() =>
     childItems.value.some((item) => item.data.isViable),
 );
@@ -161,7 +166,7 @@ const hasViableItems = computed(() =>
  * Returns empty list when no items are viable or component is disabled.
  */
 const viableItems = computed(() => {
-    if (!props.selectable || props.disabled) return [];
+    if (!isSelectable.value || props.disabled) return [];
     return childItems.value.filter((item) => item.data.isViable);
 });
 
@@ -230,48 +235,75 @@ function isItemSelected(item: TreeItem<T>): boolean {
     } else return isEqual(item.data.value, vmodel.value);
 }
 
-/** Replaces the modelValue when selectable and multiple. */
-function updateSelectedItems(items: TreeItem<T>[]): void {
-    if (!props.selectable || !isTrueish(props.multiple)) return;
-    const values = items.map((item) => item.data.value).filter(isDefined);
-    vmodel.value = values as ModelValue;
-}
+const flatChilds = (item: TreeItem<T>): TreeItem<T>[] => {
+    // find correct object of the item
+    // children might not have a data attribute, the correct object does
+    const current = childItems.value.find(
+        (child) => child.identifier === item.identifier,
+    );
+    if (!current) return [];
+    const descendants = current.data.children?.flatMap(flatChilds) ?? [];
+    return [...descendants, current];
+};
 
 /** Updates the modelValue for one item when selectable. */
-function selectItem(item: TreeItem<T>, selection: boolean = true): void {
-    if (!props.selectable) return;
+function selectItem(item: TreeItem<T>, selection: boolean): void {
+    if (!isSelectable.value) return;
 
-    const value = item.data.value!;
+    const value = item.data.value;
     if (selection) emits("select", value);
 
     // set selected option
-    if (isTrueish(props.multiple)) {
-        if (vmodel.value && Array.isArray(vmodel.value)) {
-            if (selection && !vmodel.value.includes(value)) {
-                // add a value
-                vmodel.value = [...vmodel.value, value] as ModelValue;
-            } else if (!selection) {
-                // remove a value
-                vmodel.value = vmodel.value.filter(
-                    (val) => val !== value,
-                ) as ModelValue;
-            }
-        } else {
-            // init new value array
-            vmodel.value = (selection ? [value] : []) as ModelValue;
-        }
-    } else {
+    if (!isTrueish(props.multiple)) {
         if (!selection) vmodel.value = undefined;
         else if (vmodel.value !== value) {
             // update a single value
             vmodel.value = value as ModelValue;
         }
+    } else {
+        // set selected option when multiple
+        const items = [item];
+        if (props.checkable) {
+            // add child items to selection checkable
+            const childs = flatChilds(item);
+            items.push(...childs);
+        }
+        selectItems(Array.from(items), selection);
+    }
+}
+
+/**
+ * Update the modelValue then selectable and multiple is set.
+ * Use selection to define whether the given items should be included or excluded from modelValue.
+ * If no selection is given, the modelValue will be replaced by the given items.
+ */
+function selectItems(items: TreeItem<T>[], selection?: boolean): void {
+    if (!isSelectable.value || !isTrueish(props.multiple)) return;
+
+    const values = items.map((item) => item.data.value).filter(isDefined);
+
+    if (vmodel.value && Array.isArray(vmodel.value)) {
+        if (selection === true) {
+            const set = new Set([...vmodel.value, ...values]);
+            // add a value
+            vmodel.value = Array.from(set) as ModelValue;
+        } else if (selection === false) {
+            // remove a value
+            vmodel.value = vmodel.value.filter(
+                (val) => !values.includes(val),
+            ) as ModelValue;
+        } else {
+            vmodel.value = values as ModelValue;
+        }
+    } else {
+        // init new value array
+        vmodel.value = (selection ? values : []) as ModelValue;
     }
 }
 
 /** Select a range of items from a staring index to an end index. */
 function selectItemRange(start: number, end: number): void {
-    if (!props.selectable || !isTrueish(props.multiple)) return;
+    if (!isSelectable.value || !isTrueish(props.multiple)) return;
     if (start < 0 || end < 0) return;
 
     const rangeStart = Math.min(start, end);
@@ -283,7 +315,8 @@ function selectItemRange(start: number, end: number): void {
         .filter((item) => item.data.isViable);
 
     // select all items in the range
-    updateSelectedItems(items);
+    // replaced the existing items
+    selectItems(items);
 }
 
 /**
@@ -465,7 +498,7 @@ function focusLastItem(event?: KeyboardEvent): void {
 
 /** Select the current focused item. */
 function selectFocusedItem(event: KeyboardEvent): void {
-    if (!props.selectable || !focusedItem.value) return;
+    if (!isSelectable.value || !focusedItem.value) return;
 
     // ensure item is in view
     setFocus(focusedItem.value);
@@ -603,7 +636,7 @@ function onListKeyDown(event: KeyboardEvent): void {
         default:
             if (isTrueish(props.multiple) && event.code === "KeyA" && metaKey) {
                 // select all avaibale items
-                updateSelectedItems(viableItems.value);
+                selectItems(viableItems.value);
                 event.preventDefault();
                 break;
             }

@@ -21,6 +21,7 @@ export type TreeComponent<T> = {
 export type TreeItemComponent<T> = Required<
     Pick<TreeItemProps<T>, "value" | "expanded">
 > & {
+    children: TreeItem<T>[];
     hasChildren: boolean;
     isViable: boolean;
     setExpand: (state: boolean) => void;
