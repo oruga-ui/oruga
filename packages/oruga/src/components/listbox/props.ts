@@ -82,7 +82,7 @@ export type ListboxClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputAttrs: InputProps<false>;
+    inputAttrs: InputProps<boolean>;
 }>;
 
 export type ListItemProps<T> = {
