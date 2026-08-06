@@ -1,6 +1,6 @@
 import type { ComponentClass, OptionsOrGroupsProp } from "@/types";
 import type { InputProps } from "../input/props";
-import type { CheckboxProps } from "../checkbox";
+import type { CheckboxProps } from "../checkbox/props";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
