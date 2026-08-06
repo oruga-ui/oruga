@@ -2648,7 +2648,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileBreakpoint: string;
                 /**
-                 * Accessibility aria-label to be passed to the tablist wrapper element
+                 * Accessibility aria-label to be passed to the steplist wrapper element
                  */
                 ariaLabel: string;
                 /**
