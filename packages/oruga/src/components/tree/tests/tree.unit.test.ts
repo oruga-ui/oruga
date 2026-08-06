@@ -559,6 +559,8 @@ describe("OTree tests", () => {
                 key: "Right",
             });
             expect(items[6].emitted("open")).toBeDefined();
+            // first child of Events should become visible after expand
+            expect(items[7].attributes("aria-hidden")).toBe("false");
             // Events element is still focused
             expect(items[6].attributes("tabindex")).toBe("0");
             expect(items[6].classes("o-tree__item--focused")).toBeTruthy();
@@ -627,24 +629,38 @@ describe("OTree tests", () => {
         });
 
         test("react accordingly when item is clicked without selectable", async () => {
+            const optionsWithChildren: TreeOptions<string> = [
+                {
+                    label: "Documents",
+                    options: [
+                        { label: "Work", value: "work" },
+                        { label: "Home", value: "home" },
+                    ],
+                },
+                { label: "Events", value: "events" },
+            ];
+
             const wrapper = mount(OTree, {
                 props: {
-                    options,
+                    options: optionsWithChildren,
+                    toggleIcon: "chevron",
                     selectable: false,
                 },
             });
 
-            const itemComps =
-                wrapper.findAllComponents<ComponentPublicInstance>(
-                    '[data-oruga="tree-item"]',
-                );
-            expect(itemComps.length).toBe(options.length);
+            const items = wrapper.findAll('[role="treeitem"]');
+            expect(items.length).toBe(4);
+            expect(items[0].attributes("aria-hidden")).toBe("false");
+            expect(items[1].attributes("aria-hidden")).toBe("true");
+            expect(items[2].attributes("aria-hidden")).toBe("true");
 
-            const treeItems = wrapper.findAll('[role="treeitem"]');
-            expect(treeItems.length).toBe(options.length);
+            const itemLabel = items[0].find(".o-tree__item-label");
+            expect(itemLabel.exists()).toBeTruthy();
+            await itemLabel.trigger("click");
 
-            await treeItems[0].trigger("click");
-            await treeItems[1].trigger("click");
+            expect(items[1].attributes("aria-hidden")).toBe("false");
+            expect(items[2].attributes("aria-hidden")).toBe("false");
+            expect(items[3].attributes("aria-hidden")).toBe("false");
             expect(wrapper.emitted("update:modelValue")).toBeUndefined();
         });
 
