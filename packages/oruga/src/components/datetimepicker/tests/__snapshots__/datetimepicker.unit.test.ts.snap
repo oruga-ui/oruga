@@ -13,10 +13,10 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
   <!--teleport start-->
   <transition-stub appear="false" persisted="false" css="true">
     <div class="o-datepicker__content" popover="" style="position-area: bottom; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline; display: none;" data-position="bottom">
-      <header class="o-datepicker__header"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__previous" aria-label="Previous Page"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+      <header class="o-datepicker__header"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__previous" aria-label="Previous Page"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
           <!--v-if-->
           <!--v-if-->
-        </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__next" aria-label="Next Page"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+        </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__next" aria-label="Next Page"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
           <!--v-if-->
           <!--v-if-->
         </button>

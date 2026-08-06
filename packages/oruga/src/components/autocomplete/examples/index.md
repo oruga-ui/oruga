@@ -16,6 +16,9 @@ import SelectionCode from "./selection.vue?raw";
 
 import Scroll from "./scroll.vue";
 import ScrollCode from "./scroll.vue?raw";
+
+import Disabled from "./disabled.vue";
+import DisabledCode from "./disabled.vue?raw";
 </script>
 
 ### Base
@@ -60,6 +63,12 @@ wrapping each group of options in an object with a `label` and an `options` prop
 The object has the same properties as the `<o-dropdown-item>` component.
 
 <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
+
+### Disabled
+
+Prevent inputs with the disabled prop.
+
+<ExampleViewer :component="Disabled" :code="DisabledCode" />
 
 ### Templates
 

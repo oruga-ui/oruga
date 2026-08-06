@@ -140,6 +140,7 @@ const rootClasses = defineClasses(
         :tabindex="clickable ? 0 : undefined"
         :role="clickable ? 'button' : undefined"
         :aria-label="ariaLabel"
+        :aria-hidden="!clickable && !ariaLabel ? true : undefined"
         @click="onClick"
         @keydown.enter="onClick"
         @keydown.space="onClick">

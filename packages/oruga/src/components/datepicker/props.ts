@@ -279,12 +279,12 @@ export type DatepickerClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputAttrs: InputProps<false>;
+    inputAttrs: InputProps<boolean>;
     /** Class of the HTML select element */
     selectClass: ComponentClass;
     /**
      * Class configuration for the internal select component
      * @ignore
      */
-    selectAttrs: SelectProps<number, false>;
+    selectAttrs: SelectProps<number | string, boolean>;
 }>;

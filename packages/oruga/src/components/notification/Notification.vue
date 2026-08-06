@@ -149,8 +149,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 :icon="computedIcon"
                 :pack="iconPack"
                 :class="iconClasses"
-                :size="iconSize"
-                aria-hidden="true" />
+                :size="iconSize" />
 
             <div :class="contentClasses">
                 <header v-if="title || $slots['title']" :class="headerClasses">

@@ -67,7 +67,7 @@ export type StepsProps<T> = {
     rounded?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
-    /** Accessibility aria-label to be passed to the tablist wrapper element */
+    /** Accessibility aria-label to be passed to the steplist wrapper element */
     ariaLabel?: string;
     /** Accessibility next button aria label */
     ariaNextLabel?: string;

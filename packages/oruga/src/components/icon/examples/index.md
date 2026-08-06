@@ -80,6 +80,13 @@ app.use(Oruga, {
 
 ### Base
 
+Icons can be made interactive by adding the `clickable` property.
+Without this property and when no explicit `aria-label` is provided, the icon is given the `aria-hidden` attribute by default.
+
+::: info Accessibility Note:
+Always provide an `aria-label` property when the icon has the `clickable` property.
+:::
+
 <ExampleViewer :component="Base" :code="BaseCode" />
 
 ### Custom icon pack
