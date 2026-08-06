@@ -3,11 +3,11 @@ import { ref } from "vue";
 import type { ListboxOptions } from "@oruga-ui/oruga-next";
 
 const options: ListboxOptions<string> = [
-    { label: "New York", value: "NY" },
-    { label: "Rome", value: "RM" },
-    { label: "London", value: "LDN" },
-    { label: "Istanbul", value: "IST" },
-    { label: "Paris", value: "PRS" },
+    { label: "New York", value: "NY", icon: "check" },
+    { label: "Rome", value: "RM", icon: "check" },
+    { label: "London", value: "LDN", icon: "check" },
+    { label: "Istanbul", value: "IST", icon: "check" },
+    { label: "Paris", value: "PRS", icon: "check" },
 ];
 
 const selected = ref<string>();

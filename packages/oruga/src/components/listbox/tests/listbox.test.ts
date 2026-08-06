@@ -287,6 +287,134 @@ describe("OListbox tests", () => {
         });
     });
 
+    describe("test checkable", () => {
+        test("renders checkboxes and updates selection when checked", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    checkable: true,
+                    selectable: true,
+                    modelValue: options[0].value,
+                },
+            });
+
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            expect(items).toHaveLength(options.length);
+
+            const checkboxes = wrapper.findAll('[data-oruga="checkbox"]');
+            expect(checkboxes).toHaveLength(options.length);
+
+            const firstCheckbox = items[0].find('[data-oruga="checkbox"]');
+            expect(firstCheckbox.exists()).toBeTruthy();
+            expect(
+                firstCheckbox.find<HTMLInputElement>('input[type="checkbox"]')
+                    .element.checked,
+            ).toBe(true);
+
+            await items[2].find('[data-oruga="checkbox"]').trigger("click");
+
+            expect(items[2].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe(
+                options[2].value,
+            );
+            expect(wrapper.emitted("select")).toHaveLength(1);
+            expect(wrapper.emitted("select")?.[0][0]).toBe(options[2].value);
+        });
+
+        test("keeps checkboxes in sync with multiple selection", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    checkable: true,
+                    selectable: true,
+                    multiple: true,
+                },
+            });
+
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            const firstCheckbox = items[0].find('[data-oruga="checkbox"]');
+            const thirdCheckbox = items[2].find('[data-oruga="checkbox"]');
+
+            await firstCheckbox.trigger("click");
+            expect(
+                firstCheckbox.find<HTMLInputElement>('input[type="checkbox"]')
+                    .element.checked,
+            ).toBe(true);
+
+            await thirdCheckbox.trigger("click");
+            expect(
+                thirdCheckbox.find<HTMLInputElement>('input[type="checkbox"]')
+                    .element.checked,
+            ).toBe(true);
+
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(2);
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toEqual([
+                options[0].value,
+                options[2].value,
+            ]);
+        });
+
+        test("supports keyboard selection and keeps the checkbox state in sync", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    checkable: true,
+                    selectable: true,
+                },
+            });
+
+            const list = wrapper.find("ul");
+            await list.trigger("keydown", { code: "ArrowDown", key: "Down" });
+            await list.trigger("keydown", { code: "Enter", key: "Enter" });
+
+            const firstItem = wrapper.find('[data-oruga="listbox-item"]');
+            const firstCheckboxInput = firstItem.find<HTMLInputElement>(
+                'input[type="checkbox"]',
+            );
+
+            expect(firstItem.classes("o-listbox__item--selected")).toBeTruthy();
+            expect(firstCheckboxInput.element.checked).toBe(true);
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe(
+                options[0].value,
+            );
+        });
+
+        test("supports keyboard multi-selection with checkable items", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    checkable: true,
+                    selectable: true,
+                    multiple: true,
+                },
+            });
+
+            const list = wrapper.find("ul");
+            await list.trigger("keydown", { code: "ArrowDown", key: "Down" });
+            await list.trigger("keydown", { code: "Enter", key: "Enter" });
+            await list.trigger("keydown", { code: "ArrowDown", key: "Down" });
+            await list.trigger("keydown", { code: "Enter", key: "Enter" });
+
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            const firstCheckboxInput = items[0].find<HTMLInputElement>(
+                'input[type="checkbox"]',
+            );
+            const secondCheckboxInput = items[1].find<HTMLInputElement>(
+                'input[type="checkbox"]',
+            );
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(firstCheckboxInput.element.checked).toBe(true);
+            expect(secondCheckboxInput.element.checked).toBe(true);
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toEqual([
+                options[0].value,
+                options[1].value,
+            ]);
+        });
+    });
+
     describe("test selectable", () => {
         test("react accordingly when new item is selected", async () => {
             const wrapper = mount(OListbox, {

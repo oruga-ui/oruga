@@ -65,8 +65,8 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     scrollHeight: () => getDefault("listbox.scrollHeight", "225"),
     disabled: false,
     selectable: true,
-    // checkable: false,
     selectOnFocus: false,
+    checkable: () => getDefault("listbox.checkable", false),
     emptyLabel: () => getDefault("listbox.emptyLabel"),
     filterable: false,
     backendFiltering: false,
@@ -163,7 +163,7 @@ const provideData = computed<ListboxComponent<T>>(() => ({
     id: props.id,
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
-    // checkable: props.checkable,
+    checkable: props.checkable,
     selectable: props.selectable,
     selected: vmodel.value,
     focsuedItem: focusedItem.value,
@@ -177,6 +177,11 @@ const { childItems } = useProviderParent<
     ListboxComponent<T>
 >({ rootRef: listRef, data: provideData });
 
+/** Shows if the items are selectable or not. */
+const isSelectable = computed(
+    () => !props.disabled && (props.selectable || props.checkable),
+);
+
 const hasViableItems = computed(() =>
     childItems.value.some((item) => item.data.isViable),
 );
@@ -186,7 +191,7 @@ const hasViableItems = computed(() =>
  * Returns empty list when no items are viable or component is disabled.
  */
 const viableItems = computed(() => {
-    if (!props.selectable || props.disabled) return [];
+    if (!isSelectable.value || props.disabled) return [];
     return childItems.value.filter((item) => item.data.isViable);
 });
 
@@ -256,14 +261,14 @@ function isItemSelected(item: ListItem<T>): boolean {
 
 /** Replaces the modelValue when selectable and multiple. */
 function updateSelectedItems(items: ListItem<T>[]): void {
-    if (!props.selectable || !isTrueish(props.multiple)) return;
+    if (!isSelectable.value || !isTrueish(props.multiple)) return;
     const values = items.map((item) => item.data.value).filter(isDefined);
     vmodel.value = values as ModelValue;
 }
 
 /** Updates the modelValue for one item when selectable. */
 function selectItem(item: ListItem<T>, selection: boolean = true): void {
-    if (!props.selectable) return;
+    if (!isSelectable.value) return;
 
     const value = item.data.value!;
     if (selection) emits("select", value);
@@ -295,7 +300,7 @@ function selectItem(item: ListItem<T>, selection: boolean = true): void {
 
 /** Select a range of items from a staring index to an end index. */
 function selectItemRange(start: number, end: number): void {
-    if (!props.selectable || !isTrueish(props.multiple)) return;
+    if (!isSelectable.value || !isTrueish(props.multiple)) return;
     if (start < 0 || end < 0) return;
 
     const rangeStart = Math.min(start, end);
@@ -366,7 +371,7 @@ function setFocus(item: ListItem<T>): void {
 
 /** Select the current focused item. */
 function selectFocusedItem(event: KeyboardEvent): void {
-    if (!props.selectable || !focusedItem.value) return;
+    if (!isSelectable.value || !focusedItem.value) return;
 
     // ensure item is in view
     setFocus(focusedItem.value);
