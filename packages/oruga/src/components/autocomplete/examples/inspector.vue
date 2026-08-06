@@ -69,8 +69,7 @@ const inspectData: InspectData<
     },
     inputAttrs: {
         class: "inputAttrs",
-        description:
-            "Input properties to apply on the internal input component.",
+        description: "Properties to apply on the internal input component.",
         relatedComponent: "Input",
     },
 };

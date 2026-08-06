@@ -153,6 +153,7 @@ const inspectData: InspectData<
         class: "itemIconClass",
         subitem: "dropdownitem",
         description: "Class of the item icon element.",
+        properties: ["icon"],
         action: (data): void => {
             data.icon = "home";
         },

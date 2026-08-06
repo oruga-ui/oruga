@@ -597,8 +597,7 @@ const inspectData: InspectData<
     },
     inputAttrs: {
         class: "inputAttrs",
-        description:
-            "Input properties to apply on the internal input component.",
+        description: "Properties to apply on the internal input component.",
         relatedComponent: "Input",
     },
     selectClass: {
@@ -610,7 +609,7 @@ const inspectData: InspectData<
     selectAttrs: {
         class: "selectAttrs",
         description:
-            "Select properties to apply on the internal select component (month and year list).",
+            "Properties to apply on the internal select component (month and year list).",
         relatedComponent: "Select",
         action: (data): void => {
             data.active = true;

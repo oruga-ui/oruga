@@ -115,10 +115,32 @@ const inspectData: InspectData<
             ];
         },
     },
+    itemIconClass: {
+        class: "itemIconClass",
+        subitem: "listitem",
+        description: "Class of the item icon element.",
+        properties: ["icon"],
+        action: (data): void => {
+            data.icon = "home";
+        },
+    },
+    checkboxClass: {
+        class: "checkboxClass",
+        subitem: "listitem",
+        description: "Class for the HTML checkbox element when checkable.",
+        properties: ["checkable"],
+        action: (data): void => {
+            data.checkable = true;
+        },
+    },
+    checkboxAttrs: {
+        class: "checkboxAttrs",
+        description: "Properties to apply on the internal checkbox component.",
+        relatedComponent: "Checkbox",
+    },
     inputAttrs: {
         class: "inputAttrs",
-        description:
-            "Input properties to apply on the internal input component.",
+        description: "Properties to apply on the internal input component.",
         relatedComponent: "Input",
     },
 };
