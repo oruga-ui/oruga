@@ -17,6 +17,9 @@ import SelectionCode from "./selection.vue?raw";
 import Multiple from "./multiple.vue";
 import MultipleCode from "./multiple.vue?raw";
 
+import Checkable from "./checkable.vue";
+import CheckableCode from "./checkable.vue?raw";
+
 import Scrollable from "./scrollable.vue";
 import ScrollableCode from "./scrollable.vue?raw";
 
@@ -89,7 +92,11 @@ The most flexible way to define options is to provide an array of objects. The o
 
 <ExampleViewer :component="OptionsArray" :code="OptionsArrayCode" />
 
-<!-- #### Checkbox -->
+### Checkable
+
+You can use the `checkable` property to show a checkbox on the item. The checkbox represents the selected state.
+
+<ExampleViewer :component="Checkable" :code="CheckableCode" />
 
 ### Scrollable
 

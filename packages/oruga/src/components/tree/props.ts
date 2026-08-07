@@ -1,5 +1,6 @@
 import type { ComponentClass } from "@/types";
 import type { OptionsProp } from "@/composables";
+import type { CheckboxProps } from "../checkbox/props";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -125,6 +126,13 @@ export type TreeItemClasses = Partial<{
     itemIconClass: ComponentClass;
     /** Class of the tree item label element element */
     itemLabelClass: ComponentClass;
+    /** Class for the HTML checkbox element when checkable */
+    checkboxClass: ComponentClass;
     /** Class of a subtree element of a tree item */
     subtreeClass: ComponentClass;
+    /**
+     * Class configuration for the internal checkbox component
+     * @ignore
+     */
+    checkboxAttrs: CheckboxProps<boolean>;
 }>;

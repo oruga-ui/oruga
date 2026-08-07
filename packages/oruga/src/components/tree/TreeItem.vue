@@ -2,6 +2,7 @@
 import { computed, ref, useId, useTemplateRef, watch } from "vue";
 
 import OIcon from "../icon/Icon.vue";
+import OCheckbox from "../checkbox/Checkbox.vue";
 
 import { getDefault } from "@/utils/config";
 import {
@@ -47,6 +48,7 @@ const props = withDefaults(defineProps<TreeItemProps<T>>(), {
     animation: () => getDefault("tree.animation", "slide"),
     ariaLabel: undefined,
     ariaLabelledby: undefined,
+    checkboxAttrs: () => getDefault("listbox.checkboxAttrs"),
 });
 
 const emits = defineEmits<{
@@ -88,22 +90,24 @@ const subtreeProvidedData = computed<SubtreeComponent>(() => ({
 }));
 
 /** provide functionalities and data to subtree child item components */
-const { childItems } = useProviderParent({
+const { childItems } = useProviderParent<TreeItemComponent<T>>({
     key: subtreeKey,
     data: subtreeProvidedData,
 });
 
 /** inject functionalities and data from the subtree parent item component */
-const { parent: parentSubtree } = useProviderChild<SubtreeComponent>(rootRef, {
-    key: subtreeKey,
-    needParent: false,
-});
+const { parent: parentSubtree, item: childItem } =
+    useProviderChild<SubtreeComponent>(rootRef, {
+        key: subtreeKey,
+        needParent: false,
+    });
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TreeItemComponent<T>>(() => ({
     value: props.value as T,
     expanded: isExpanded.value,
     isViable: isViable.value,
+    children: childItems.value,
     hasChildren: hasChildren.value,
     setExpand,
     matches,
@@ -114,6 +118,10 @@ const { parent, item } = useProviderChild<
     TreeComponent<T>,
     TreeItemComponent<T>
 >(rootRef, { data: providedData });
+
+// here we override the identifier of the created sub item
+// with the identifier of main tree registered item to make them connected
+if (childItem.value) childItem.value.identifier = item.value.identifier;
 
 const indexer = parent.value.indexer;
 
@@ -161,7 +169,7 @@ const itemIconPack = computed(() => props.iconPack ?? parent.value.iconPack);
 
 const itemIconSize = computed(() => props.iconSize ?? parent.value.iconSize);
 
-/** Click listener, toggle the selection of the item. */
+/** Item click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
     if (hasToggleIcon.value && isSelectable.value) {
         const toggleIcon = (event.target as HTMLElement).closest(
@@ -180,6 +188,14 @@ function clickItem(event: Event): void {
         // toggle selection state
         parent.value.selectItem(item.value, !isSelected.value);
     }
+
+    emits("click", providedData.value.value, event);
+}
+
+/** Checkbox click listener, toggle selection without expand toggle */
+function checkItem(event: Event): void {
+    // set item checked
+    parent.value.selectItem(item.value, !isSelected.value);
 
     emits("click", providedData.value.value, event);
 }
@@ -218,7 +234,7 @@ function matches(value: string): boolean {
 
 const itemClasses = defineClasses(
     ["itemClass", "o-tree__item"],
-    ["itemSelectableClass", `o-tree__item--selectable`, null, isSelectable],
+    ["itemSelectableClass", "o-tree__item--selectable", null, isSelectable],
     ["itemSelectedClass", "o-tree__item--selected", null, isSelected],
     ["itemFocusedClass", "o-tree__item--focused", null, isFocused],
     ["itemDisabledClass", "o-tree__item--disabled", null, isDisabled],
@@ -231,6 +247,11 @@ const iconClasses = defineClasses(["itemIconClass", "o-tree__item-icon"]);
 const toggleClasses = defineClasses([
     "itemToggleIconClass",
     "o-tree__item-toggle-icon",
+]);
+
+const checkboxClasses = defineClasses([
+    "checkboxClass",
+    "o-tree__item-checkbox",
 ]);
 
 const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
@@ -264,6 +285,18 @@ const subtreeClasses = defineClasses(["subtreeClass", "o-tree__subtree"]);
                 :size="itemIconSize"
                 :class="toggleClasses"
                 :rotation="isExpanded ? 90 : 0" />
+
+            <o-checkbox
+                v-if="parent.checkable"
+                v-bind="checkboxAttrs"
+                :id="`${parent.id}-${item.identifier}-checkbox`"
+                :class="checkboxClasses"
+                :model-value="isSelected"
+                tabindex="-1"
+                :disabled="isDisabled"
+                autocomplete="off"
+                :use-html5-validation="false"
+                @click.stop="checkItem" />
 
             <o-icon
                 v-if="icon"

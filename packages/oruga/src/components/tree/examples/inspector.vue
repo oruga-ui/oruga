@@ -110,6 +110,20 @@ const inspectData: InspectData<
         subitem: "treeitem",
         description: "Class of a subtree element of a tree item.",
     },
+    checkboxClass: {
+        class: "checkboxClass",
+        subitem: "listitem",
+        description: "Class for the HTML checkbox element when checkable.",
+        properties: ["checkable"],
+        action: (data): void => {
+            data.checkable = true;
+        },
+    },
+    checkboxAttrs: {
+        class: "checkboxAttrs",
+        description: "Properties to apply on the internal checkbox component.",
+        relatedComponent: "Checkbox",
+    },
 };
 </script>
 
