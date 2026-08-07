@@ -1,11 +1,17 @@
-﻿import { afterEach, describe, expect, test } from "vitest";
+﻿import { defineComponent, h, nextTick, type VNode } from "vue";
+import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { nextTick } from "vue";
 
 import type { TreeProps, TreeOptions } from "../props";
 
+import OField from "../../field/Field.vue";
 import OTree from "../Tree.vue";
+
+const TestComponent = defineComponent(
+    (props) => (): VNode =>
+        h(OField, { label: "Listbox" }, { default: () => h(OTree, props) }),
+);
 
 describe("Tree a11y tests", () => {
     enableAutoUnmount(afterEach);
@@ -135,7 +141,7 @@ describe("Tree a11y tests", () => {
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
-        const wrapper = mount(OTree, {
+        const wrapper = mount(TestComponent, {
             props: { ...props },
             attachTo: document.body,
         });

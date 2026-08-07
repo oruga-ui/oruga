@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick, type ComponentPublicInstance, type PropType } from "vue";
+import { setTimeout } from "timers/promises";
 
 import OTree from "@/components/tree/Tree.vue";
 import OTreeItem from "@/components/tree/TreeItem.vue";
@@ -773,6 +774,147 @@ describe("OTree tests", () => {
             );
             expect(wrapper.emitted("select")).toHaveLength(1);
             expect(wrapper.emitted("select")?.[0][0]).toBe("expenses");
+        });
+    });
+
+    describe("test filterable", () => {
+        test("should have correct custom icon", () => {
+            const wrapper = mount(OTree, {
+                props: {
+                    options,
+                    filterable: true,
+                    filterIcon: "pi pi-discord",
+                },
+            });
+
+            const input = wrapper.find('[data-oruga="input"]');
+            expect(input.exists()).toBeTruthy();
+            const icon = input.find('[data-oruga="icon"] i');
+            expect(icon.exists()).toBeTruthy();
+
+            expect(icon.classes()).toContain("pi-discord");
+        });
+
+        test("should correctly filter tree items", async () => {
+            const wrapper = mount(OTree, {
+                props: { options, filterable: true },
+            });
+
+            const filterInput = wrapper.find('[data-oruga="input"] input');
+            expect(filterInput.exists()).toBeTruthy();
+
+            await filterInput.setValue("res");
+            await filterInput.trigger("input");
+            await setTimeout(500); // await input debounce
+
+            const items = wrapper.findAll('[ role="treeitem"]');
+            const visibleItems = items
+                .filter((item) => item.attributes("aria-hidden") === "false")
+                .map((item) => item.find(".o-tree__item-label").text());
+
+            expect(visibleItems).toHaveLength(3);
+            expect(visibleItems).toEqual(["Documents", "Work", "Resume.doc"]);
+
+            expect(wrapper.emitted("filter")).toBeDefined();
+            expect(wrapper.emitted("filter")?.[0][0]).toContain("res");
+        });
+
+        test("should apply a custom filter function", async () => {
+            const wrapper = mount(OTree, {
+                props: {
+                    options,
+                    filterable: true,
+                    filter: (value: unknown, filterValue: string) =>
+                        !filterValue ||
+                        String((value as string) ?? "")
+                            .toLowerCase()
+                            .includes(filterValue.toLowerCase()) ||
+                        value === undefined,
+                },
+            });
+
+            const filterInput = wrapper.find('[data-oruga="input"] input');
+            await filterInput.setValue("res");
+            await filterInput.trigger("input");
+            await setTimeout(500); // await input debounce
+
+            const visibleItems = wrapper
+                .findAll('[role="treeitem"]')
+                .filter((item) => item.attributes("aria-hidden") === "false")
+                .map((item) => item.find(".o-tree__item-label").text());
+
+            expect(visibleItems).toContain("Documents");
+            expect(visibleItems).toContain("Resume.doc");
+        });
+
+        test("should correctly filter grouped items", async () => {
+            const wrapper = mount(OTree, {
+                props: {
+                    filterable: true,
+                    options: [
+                        {
+                            label: "Germany",
+                            value: "DE",
+                            options: [
+                                { label: "Berlin", value: "Berlin" },
+                                { label: "Frankfurt", value: "Frankfurt" },
+                                { label: "Hamburg", value: "Hamburg" },
+                                { label: "Munich", value: "Munich" },
+                            ],
+                        },
+                        {
+                            label: "USA",
+                            value: "US",
+                            options: [
+                                { label: "Chicago", value: "Chicago" },
+                                { label: "Los Angeles", value: "Los Angeles" },
+                                { label: "New York", value: "New York" },
+                                {
+                                    label: "San Francisco",
+                                    value: "San Francisco",
+                                },
+                            ],
+                        },
+                    ],
+                },
+            });
+
+            const filterInput = wrapper.find('[data-oruga="input"] input');
+            expect(filterInput.exists()).toBeTruthy();
+
+            await filterInput.setValue("ch");
+            await filterInput.trigger("input");
+            await setTimeout(500); // await input debounce
+
+            const visibleItems = wrapper
+                .findAll('[role="treeitem"]')
+                .filter((item) => item.attributes("aria-hidden") === "false")
+                .map((item) => item.find(".o-tree__item-label").text());
+
+            expect(visibleItems).toEqual(["USA", "Chicago"]);
+            expect(wrapper.emitted("filter")?.[0][0]).toContain("ch");
+        });
+
+        test("should keep items visible when backend filtering is enabled", async () => {
+            const wrapper = mount(OTree, {
+                props: { options, filterable: true, backendFiltering: true },
+            });
+
+            const items = wrapper.findAll('[role="treeitem"]');
+            expect(items.length).toBeGreaterThan(0);
+
+            const filterInput = wrapper.find('[data-oruga="input"] input');
+            expect(filterInput.exists()).toBeTruthy();
+
+            await filterInput.setValue(options[2].value);
+            await filterInput.trigger("input");
+            await setTimeout(500); // await input debounce
+
+            const updatedItems = wrapper.findAll('[role="treeitem"]');
+            expect(updatedItems).toHaveLength(items.length);
+            expect(wrapper.emitted("filter")?.[0][0]).toContain(
+                options[2].value,
+            );
         });
     });
 

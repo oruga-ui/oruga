@@ -9,8 +9,8 @@ import {
     watchEffect,
 } from "vue";
 
+import OInput from "../input/Input.vue";
 import OListboxItem from "./ListItem.vue";
-import OInput from "@/components/input/Input.vue";
 
 import {
     alternateArray,
@@ -513,31 +513,40 @@ if (!props.backendFiltering) {
     watchEffect(() => {
         if (!props.filterable) return;
 
-        childItems.value.forEach((item) => {
-            if (!item.data) return;
+        const currentFilter = toValue(filterValue).trim();
 
+        const updateItemVisibility = (item: ListItem<T>): void => {
             // prevent filtering for presentation items
-            if ((item.data as any).role === "presentation") return;
+            if (!item.data || (item.data as any).role === "presentation")
+                return;
 
             // no filter means not hidden
-            if (!filterValue.value) {
+            if (!currentFilter) {
                 item.data.setHidden(false);
                 return;
             }
 
-            const isVisible =
+            const itemMatches =
                 typeof props.filter === "function"
                     ? // call filter function if available
-                      props.filter(item.data.value, toValue(filterValue))
+                      props.filter(item.data.value, currentFilter)
                     : // else check filter value matches item value
-                      item.data.matches(toValue(filterValue));
+                      matches(item, currentFilter);
+
+            const shouldHide = !itemMatches;
 
             // update hidden state
-            item.data.setHidden(!isVisible);
-        });
+            item.data.setHidden(shouldHide);
+        };
+
+        childItems.value.forEach((item) => updateItemVisibility(item));
     });
 }
 
+/** Check if a value matches the label (startsWith). */
+function matches(item: ListItem<T>, value: string): boolean {
+    return !!item.data?.label?.toLowerCase().startsWith(value.toLowerCase());
+}
 // #endregion --- Filter Handler ---
 
 // #region --- Type-Ahead Feature ---
@@ -554,7 +563,7 @@ watch(typeAheadValue, (value) => {
     if (!isEmpty(value)) {
         // find first item that starts with the search value
         const matchedItem = viableItems.value.find((item) =>
-            item.data.matches(value),
+            matches(item, value),
         );
 
         if (matchedItem)

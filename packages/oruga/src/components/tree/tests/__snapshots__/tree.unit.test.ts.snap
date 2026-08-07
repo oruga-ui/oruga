@@ -3,7 +3,7 @@
 exports[`OTree tests > render correctly 1`] = `
 "<div data-oruga="tree" class="o-tree">
   <!--v-if-->
-  <!-- Todo: maybe add filter?! -->
+  <!--v-if-->
   <ul id="v-0_list" role="tree" class="o-tree__list" aria-disabled="false">
     <transition-group-stub name="slide" appear="false" persisted="false" css="true"></transition-group-stub>
   </ul>
@@ -17,7 +17,7 @@ exports[`OTree tests > render correctly 1`] = `
 exports[`OTree tests > render correctly with deep options 1`] = `
 "<div data-oruga="tree" class="o-tree">
   <!--v-if-->
-  <!-- Todo: maybe add filter?! -->
+  <!--v-if-->
   <ul id="v-0_list" role="tree" class="o-tree__list" aria-disabled="false">
     <transition-group-stub name="slide" appear="false" persisted="false" css="true">
       <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item" role="treeitem" tabindex="0" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Documents">
@@ -172,7 +172,7 @@ exports[`OTree tests > render correctly with deep options 1`] = `
 exports[`OTree tests > render correctly with options 1`] = `
 "<div data-oruga="tree" class="o-tree">
   <!--v-if-->
-  <!-- Todo: maybe add filter?! -->
+  <!--v-if-->
   <ul id="v-0_list" role="tree" class="o-tree__list" aria-disabled="false">
     <transition-group-stub name="slide" appear="false" persisted="false" css="true">
       <li id="v-0-1" data-oruga="tree-item" data-id="tree-1" class="o-tree__item" role="treeitem" tabindex="0" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="label1">
@@ -201,7 +201,7 @@ exports[`OTree tests > render correctly with options 1`] = `
 exports[`OTree tests > render empty list correctly 1`] = `
 "<div data-oruga="tree" class="o-tree">
   <!--v-if-->
-  <!-- Todo: maybe add filter?! -->
+  <!--v-if-->
   <ul id="v-0_list" role="tree" class="o-tree__list" aria-disabled="false">
     <transition-group-stub name="slide" appear="false" persisted="false" css="true"></transition-group-stub>
   </ul>

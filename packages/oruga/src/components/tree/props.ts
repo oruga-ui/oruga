@@ -1,5 +1,6 @@
 import type { ComponentClass } from "@/types";
 import type { OptionsProp } from "@/composables";
+import type { InputProps } from "../input/props";
 import type { CheckboxProps } from "../checkbox/props";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
@@ -29,6 +30,18 @@ export type TreeProps<T, IsMultiple extends boolean = boolean> = {
     scrollHeight?: string | number;
     /** A label which is displayed when no options are visible */
     emptyLabel?: string;
+    /** Enables client-side filtering of tree items */
+    filterable?: boolean;
+    /** Disable client-side filtering and rely on parent logic */
+    backendFiltering?: boolean;
+    /** Custom filter function to determine visibility */
+    filter?: (value: T, filterValue: string) => boolean;
+    /** The icon to display in the filter input */
+    filterIcon?: string;
+    /** Debounce delay for the filter input */
+    filterDebounce?: number;
+    /** Placeholder for the filter input */
+    filterPlaceholder?: string;
     /** The chevron icon to for the toggle element before each item */
     toggleIcon?: string;
     /**
@@ -65,8 +78,17 @@ export type TreeClasses = Partial<{
     footerClass: ComponentClass;
     /** Class of the empty slot wrapper element */
     emptyClass: ComponentClass;
+    /** Class of the filter wrapper element */
+    filterClass: ComponentClass;
+    /** Class of the root element when filterable */
+    filterableClass: ComponentClass;
     /** Class of the tree list element */
     listClass: ComponentClass;
+    /**
+     * Class configuration for the internal input component
+     * @ignore
+     */
+    inputAttrs: InputProps<boolean>;
 }>;
 
 export type TreeItemProps<T> = {

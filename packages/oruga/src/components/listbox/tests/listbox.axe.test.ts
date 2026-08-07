@@ -1,12 +1,12 @@
-import { defineComponent, h, type VNode } from "vue";
+import { defineComponent, h, nextTick, type VNode } from "vue";
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { nextTick } from "vue";
+
+import type { ListboxProps } from "../props.ts";
 
 import OListbox from "../Listbox.vue";
 import OField from "../../field/Field.vue";
-import type { ListboxProps } from "../props.ts";
 
 const TestComponent = defineComponent(
     (props) => (): VNode =>
@@ -18,7 +18,7 @@ describe("OListbox a11y tests", () => {
 
     const a11yCases: {
         title: string;
-        props?: ListboxProps<unknown, true | false>;
+        props?: ListboxProps<string>;
     }[] = [
         {
             title: "axe listbox - base case",
