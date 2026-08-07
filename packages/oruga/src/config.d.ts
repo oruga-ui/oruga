@@ -3778,9 +3778,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 itemLabelClass: ClassDefinition;
                 /**
+                 * Class for the HTML checkbox element when checkable
+                 */
+                checkboxClass: ClassDefinition;
+                /**
                  * Class of a subtree element of a tree item
                  */
                 subtreeClass: ClassDefinition;
+                /**
+                 * Class configuration for the internal checkbox component
+                 */
+                checkboxAttrs: Record<string, any>;
             }>;
         upload?: ComponentConfigBase &
             Partial<{
