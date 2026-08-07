@@ -1417,6 +1417,11 @@ See icon library documentation for custom classes.
         input?: ComponentConfigBase &
             Partial<{
                 /**
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
+                 */
+                autocomplete: AutoFillBase;
+                /**
                  * Size of the control
                  */
                 size: string;
@@ -1424,6 +1429,10 @@ See icon library documentation for custom classes.
                  * Color variant of the control
                  */
                 variant: string;
+                /**
+                 * Number of milliseconds to delay before the value get emitted
+                 */
+                debounce: number;
                 /**
                  * Makes input full width when inside a grouped or addon field
                  */
@@ -1452,14 +1461,6 @@ See icon library documentation for custom classes.
                  * Icon name to be added on the clear button
                  */
                 clearIcon: string;
-                /**
-                 * Number of milliseconds to delay before the value get emitted
-                 */
-                debounce: number;
-                /**
-                 * Native options to use in HTML5 validation
-                 */
-                autocomplete: string;
                 /**
                  * Class of the root element
                  */

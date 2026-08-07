@@ -48,12 +48,12 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     type: "text",
     size: () => getDefault("input.size"),
     variant: () => getDefault("input.variant"),
-    placeholder: undefined,
     expanded: () => getDefault("input.expanded", false),
     rounded: false,
     disabled: false,
+    readonly: undefined,
+    required: undefined,
     passwordReveal: false,
-    maxlength: undefined,
     counter: () => getDefault("input.counter", false),
     autosize: false,
     iconPack: () => getDefault("input.iconPack"),
@@ -397,9 +397,7 @@ defineExpose({
             :value="vmodel"
             data-oruga-input="textarea"
             :class="inputClasses"
-            :maxlength="maxlength"
             :style="computedStyles"
-            :placeholder="placeholder"
             :disabled="disabled"
             @input="debouncedInput" />
 
@@ -412,9 +410,6 @@ defineExpose({
             :type="inputType"
             :data-oruga-input="inputType"
             :class="inputClasses"
-            :maxlength="maxlength"
-            :autocomplete="autocomplete"
-            :placeholder="placeholder"
             :disabled="disabled"
             @input="debouncedInput" />
 
