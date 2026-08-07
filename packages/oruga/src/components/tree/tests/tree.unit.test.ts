@@ -189,184 +189,6 @@ describe("OTree tests", () => {
         });
     });
 
-    describe("handle options props correctly", () => {
-        const options: TreeOptions<string> = [
-            { label: "New York", value: "NY" },
-            { label: "Rome", value: "RM" },
-            { label: "London", value: "LDN" },
-            { label: "Istanbul", value: "IST" },
-            { label: "Paris", value: "PRS" },
-        ];
-
-        test("react accordingly when is using objects values", async () => {
-            const wrapper = mount(OTree, {
-                props: { options, selectable: true },
-            });
-
-            const items = wrapper.findAll('[data-oruga="tree-item"]');
-            expect(items.length).toBe(options.length);
-
-            items.forEach((item, index) => {
-                expect(item.text()).toEqual(options[index].label);
-            });
-
-            const itemLabel = items[1].find(".o-tree__item-label");
-            expect(itemLabel.exists()).toBeTruthy();
-            await itemLabel.trigger("click");
-            expect(items[0].classes("o-tree__item--selected")).toBeFalsy();
-            expect(items[1].classes("o-tree__item--selected")).toBeTruthy();
-            expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
-
-            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-            expect(wrapper.emitted("update:modelValue")?.[0][0]).toStrictEqual(
-                options[1].value,
-            );
-            expect(wrapper.emitted("select")).toHaveLength(1);
-            expect(wrapper.emitted("select")?.[0][0]).toStrictEqual(
-                options[1].value,
-            );
-        });
-
-        test("handle options as primitves correctly", () => {
-            const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
-
-            const wrapper = mount(OTree, { props: { options } });
-
-            const items = wrapper.findAll('[data-oruga="tree-item"]');
-            expect(items).toHaveLength(options.length);
-
-            items.forEach((el, idx) => {
-                expect(el.text()).toBe(String(options[idx]));
-                expect(el.attributes("aria-disabled")).toBe("false");
-                expect(el.attributes("aria-hidden")).toBe("false");
-                expect(el.attributes("aria-selected")).toBe("false");
-            });
-        });
-
-        test("handle options as object correctly", () => {
-            const options: OptionsProp = {
-                flint: "Flint",
-                silver: "Silver",
-                vane: "Vane",
-                0: "Zero",
-                1: "One",
-                2: "Two",
-            };
-
-            const wrapper = mount(OTree, { props: { options } });
-
-            const items = wrapper.findAll('[data-oruga="tree-item"]');
-            expect(items).toHaveLength(Object.keys(options).length);
-
-            items.forEach((el, idx) => {
-                expect(el.text()).toBe(Object.entries(options)[idx][1]);
-                expect(el.attributes("aria-disabled")).toBe("false");
-                expect(el.attributes("aria-hidden")).toBe("false");
-                expect(el.attributes("aria-selected")).toBe("false");
-            });
-        });
-
-        test("handle options as options array correctly", () => {
-            const options: TreeOptions<string | number> = [
-                { label: "Flint", value: "flint" },
-                { label: "Silver", value: "silver", disabled: true },
-                { label: "Vane", value: "vane" },
-                { label: "Zero", value: 0 },
-                { label: "One", value: 1 },
-                { label: "Two", value: 2, disabled: true },
-            ];
-
-            const wrapper = mount(OTree, { props: { options } });
-
-            const items = wrapper.findAll('[data-oruga="tree-item"]');
-            expect(items).toHaveLength(options.length);
-
-            items.forEach((el, idx) => {
-                expect(el.text()).toBe(options[idx].label);
-                expect(el.attributes("aria-disabled")).toBe(
-                    options[idx].disabled ? "true" : "false",
-                );
-                expect(el.attributes("aria-hidden")).toBe("false");
-                expect(el.attributes("aria-selected")).toBe("false");
-            });
-        });
-
-        test("handle grouped options correctly", () => {
-            const options: TreeOptions<string | number | object> = [
-                {
-                    label: "Black Sails",
-                    options: [
-                        { label: "Flint", value: "flint" },
-                        { label: "Silver", value: "silver" },
-                        { label: "Vane", value: "vane" },
-                        { label: "Billy", value: "billy" },
-                    ],
-                },
-                {
-                    label: "Breaking Bad",
-                    options: {
-                        heisenberg: "Heisenberg",
-                        jesse: "Jesse",
-                        saul: "Saul",
-                        mike: "Mike",
-                    },
-                },
-                {
-                    label: "Game of Thrones",
-                    disabled: true,
-                    options: [
-                        "Tyrion Lannister",
-                        "Jamie Lannister",
-                        "Daenerys Targaryen",
-                        "Jon Snow",
-                    ],
-                },
-            ];
-
-            const wrapper = mount(OTree, { props: { options } });
-
-            const items = wrapper.findAll('[data-oruga="tree-item"]');
-            expect(items).toHaveLength(15);
-
-            items.forEach((el, idx) => {
-                const isGroup = idx % 5 == 0;
-                const g_idx = Math.floor(idx / 5);
-                const o_idx = (idx % 5) - 1;
-
-                const option = options[g_idx];
-
-                if (isGroup) {
-                    const label = el.find(".o-tree__item-label");
-                    expect(label.exists()).toBeTruthy();
-                    expect(label.text()).toBe(option.label);
-                    expect(el.attributes("aria-disabled")).toBe(
-                        option.disabled ? "true" : "false",
-                    );
-                    expect(el.attributes("aria-hidden")).toBe("false");
-                    expect(el.attributes("aria-selected")).toBe("false");
-                } else {
-                    const g_options = option.options ?? [];
-
-                    let optionLabel;
-                    if (idx < 5) {
-                        optionLabel =
-                            (g_options[o_idx] as TreeItemProps<string>).label ||
-                            g_options[o_idx];
-                    } else if (idx < 10) {
-                        optionLabel = Object.entries(g_options)[o_idx][1];
-                    } else {
-                        optionLabel = g_options[o_idx];
-                    }
-
-                    expect(el.text()).toBe(optionLabel);
-                    expect(el.attributes("aria-disabled")).toBe("false");
-                    expect(el.attributes("aria-hidden")).toBe("true");
-                    expect(el.attributes("aria-selected")).toBe("false");
-                }
-            });
-        });
-    });
-
     describe("test collapsable", () => {
         test("react accordingly when tree is not collapsable", async () => {
             const wrapper = mount(OTree, {
@@ -838,6 +660,297 @@ describe("OTree tests", () => {
             expect(wrapper.emitted("update:modelValue")).toStrictEqual([
                 [options[0].value],
             ]);
+        });
+    });
+
+    describe("test checkable", () => {
+        const checkableOptions: TreeOptions<string> = [
+            { label: "Item A", value: "a" },
+            { label: "Item B", value: "b" },
+            { label: "Item C", value: "c" },
+        ];
+
+        test("renders checkboxes and updates selection when checked", async () => {
+            const wrapper = mount(OTree, {
+                props: {
+                    options: checkableOptions,
+                    checkable: true,
+                    modelValue: checkableOptions[0].value,
+                },
+            });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            expect(items.length).toBe(checkableOptions.length);
+
+            const checkboxes = wrapper.findAll('[data-oruga="checkbox"]');
+            expect(checkboxes.length).toBe(checkableOptions.length);
+
+            const firstCheckbox = checkboxes[0].find<HTMLInputElement>(
+                'input[type="checkbox"]',
+            );
+            expect(firstCheckbox.exists()).toBeTruthy();
+            expect(firstCheckbox.element.checked).toBe(true);
+
+            const lastCheckbox = checkboxes[2].find<HTMLInputElement>(
+                'input[type="checkbox"]',
+            );
+            expect(lastCheckbox.exists()).toBeTruthy();
+            expect(lastCheckbox.element.checked).toBe(false);
+
+            await lastCheckbox.trigger("click");
+
+            expect(items[2].classes("o-tree__item--selected")).toBeTruthy();
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe(
+                checkableOptions[2].value,
+            );
+            expect(wrapper.emitted("select")).toHaveLength(1);
+            expect(wrapper.emitted("select")?.[0][0]).toBe(
+                checkableOptions[2].value,
+            );
+        });
+
+        test("syncs checkboxes with multiple selection", async () => {
+            const wrapper = mount(OTree, {
+                props: {
+                    options: checkableOptions,
+                    checkable: true,
+                    selectable: true,
+                    multiple: true,
+                },
+            });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            const checkboxes = wrapper.findAll('[data-oruga="checkbox"]');
+            expect(checkboxes.length).toBe(items.length);
+
+            await checkboxes[0].trigger("click");
+            await checkboxes[2].trigger("click");
+
+            expect(items[0].classes("o-tree__item--selected")).toBeTruthy();
+            expect(items[2].classes("o-tree__item--selected")).toBeTruthy();
+
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(2);
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toHaveLength(
+                2,
+            );
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toContain(
+                checkableOptions[0].value,
+            );
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toContain(
+                checkableOptions[2].value,
+            );
+        });
+
+        test("handles deep nested tree items with checkable enabled", async () => {
+            const wrapper = mount(OTree, {
+                props: {
+                    options: options,
+                    checkable: true,
+                    collapsable: false,
+                    modelValue: options[0].value,
+                },
+            });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            expect(items.length).toBe(17); // length of all deep nested option items
+
+            const checkboxes = wrapper.findAll('[data-oruga="checkbox"]');
+            expect(checkboxes.length).toBe(17); // length of all deep nested option items
+
+            const nestedCheckbox = checkboxes[2].find<HTMLInputElement>(
+                'input[type="checkbox"]',
+            );
+            expect(nestedCheckbox.exists()).toBeTruthy();
+            expect(nestedCheckbox.element.checked).toBe(false);
+
+            await nestedCheckbox.trigger("click");
+
+            expect(items[2].classes("o-tree__item--selected")).toBeTruthy();
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toBe(
+                "expenses",
+            );
+            expect(wrapper.emitted("select")).toHaveLength(1);
+            expect(wrapper.emitted("select")?.[0][0]).toBe("expenses");
+        });
+    });
+
+    describe("handle options props correctly", () => {
+        const options: TreeOptions<string> = [
+            { label: "New York", value: "NY" },
+            { label: "Rome", value: "RM" },
+            { label: "London", value: "LDN" },
+            { label: "Istanbul", value: "IST" },
+            { label: "Paris", value: "PRS" },
+        ];
+
+        test("react accordingly when is using objects values", async () => {
+            const wrapper = mount(OTree, {
+                props: { options, selectable: true },
+            });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            expect(items.length).toBe(options.length);
+
+            items.forEach((item, index) => {
+                expect(item.text()).toEqual(options[index].label);
+            });
+
+            const itemLabel = items[1].find(".o-tree__item-label");
+            expect(itemLabel.exists()).toBeTruthy();
+            await itemLabel.trigger("click");
+            expect(items[0].classes("o-tree__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-tree__item--selected")).toBeTruthy();
+            expect(items[2].classes("o-tree__item--selected")).toBeFalsy();
+
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")?.[0][0]).toStrictEqual(
+                options[1].value,
+            );
+            expect(wrapper.emitted("select")).toHaveLength(1);
+            expect(wrapper.emitted("select")?.[0][0]).toStrictEqual(
+                options[1].value,
+            );
+        });
+
+        test("handle options as primitves correctly", () => {
+            const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
+
+            const wrapper = mount(OTree, { props: { options } });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            expect(items).toHaveLength(options.length);
+
+            items.forEach((el, idx) => {
+                expect(el.text()).toBe(String(options[idx]));
+                expect(el.attributes("aria-disabled")).toBe("false");
+                expect(el.attributes("aria-hidden")).toBe("false");
+                expect(el.attributes("aria-selected")).toBe("false");
+            });
+        });
+
+        test("handle options as object correctly", () => {
+            const options: OptionsProp = {
+                flint: "Flint",
+                silver: "Silver",
+                vane: "Vane",
+                0: "Zero",
+                1: "One",
+                2: "Two",
+            };
+
+            const wrapper = mount(OTree, { props: { options } });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            expect(items).toHaveLength(Object.keys(options).length);
+
+            items.forEach((el, idx) => {
+                expect(el.text()).toBe(Object.entries(options)[idx][1]);
+                expect(el.attributes("aria-disabled")).toBe("false");
+                expect(el.attributes("aria-hidden")).toBe("false");
+                expect(el.attributes("aria-selected")).toBe("false");
+            });
+        });
+
+        test("handle options as options array correctly", () => {
+            const options: TreeOptions<string | number> = [
+                { label: "Flint", value: "flint" },
+                { label: "Silver", value: "silver", disabled: true },
+                { label: "Vane", value: "vane" },
+                { label: "Zero", value: 0 },
+                { label: "One", value: 1 },
+                { label: "Two", value: 2, disabled: true },
+            ];
+
+            const wrapper = mount(OTree, { props: { options } });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            expect(items).toHaveLength(options.length);
+
+            items.forEach((el, idx) => {
+                expect(el.text()).toBe(options[idx].label);
+                expect(el.attributes("aria-disabled")).toBe(
+                    options[idx].disabled ? "true" : "false",
+                );
+                expect(el.attributes("aria-hidden")).toBe("false");
+                expect(el.attributes("aria-selected")).toBe("false");
+            });
+        });
+
+        test("handle grouped options correctly", () => {
+            const options: TreeOptions<string | number | object> = [
+                {
+                    label: "Black Sails",
+                    options: [
+                        { label: "Flint", value: "flint" },
+                        { label: "Silver", value: "silver" },
+                        { label: "Vane", value: "vane" },
+                        { label: "Billy", value: "billy" },
+                    ],
+                },
+                {
+                    label: "Breaking Bad",
+                    options: {
+                        heisenberg: "Heisenberg",
+                        jesse: "Jesse",
+                        saul: "Saul",
+                        mike: "Mike",
+                    },
+                },
+                {
+                    label: "Game of Thrones",
+                    disabled: true,
+                    options: [
+                        "Tyrion Lannister",
+                        "Jamie Lannister",
+                        "Daenerys Targaryen",
+                        "Jon Snow",
+                    ],
+                },
+            ];
+
+            const wrapper = mount(OTree, { props: { options } });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            expect(items).toHaveLength(15);
+
+            items.forEach((el, idx) => {
+                const isGroup = idx % 5 == 0;
+                const g_idx = Math.floor(idx / 5);
+                const o_idx = (idx % 5) - 1;
+
+                const option = options[g_idx];
+
+                if (isGroup) {
+                    const label = el.find(".o-tree__item-label");
+                    expect(label.exists()).toBeTruthy();
+                    expect(label.text()).toBe(option.label);
+                    expect(el.attributes("aria-disabled")).toBe(
+                        option.disabled ? "true" : "false",
+                    );
+                    expect(el.attributes("aria-hidden")).toBe("false");
+                    expect(el.attributes("aria-selected")).toBe("false");
+                } else {
+                    const g_options = option.options ?? [];
+
+                    let optionLabel;
+                    if (idx < 5) {
+                        optionLabel =
+                            (g_options[o_idx] as TreeItemProps<string>).label ||
+                            g_options[o_idx];
+                    } else if (idx < 10) {
+                        optionLabel = Object.entries(g_options)[o_idx][1];
+                    } else {
+                        optionLabel = g_options[o_idx];
+                    }
+
+                    expect(el.text()).toBe(optionLabel);
+                    expect(el.attributes("aria-disabled")).toBe("false");
+                    expect(el.attributes("aria-hidden")).toBe("true");
+                    expect(el.attributes("aria-selected")).toBe("false");
+                }
+            });
         });
     });
 });

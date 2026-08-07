@@ -83,7 +83,6 @@ defineSlots<{
 const rootRef = useTemplateRef("rootElement");
 
 const subtreeKey = Symbol("subtree");
-const identifier = useId();
 
 // provided data is a computed ref to ensure reactivity
 const subtreeProvidedData = computed<SubtreeComponent>(() => ({
@@ -97,11 +96,11 @@ const { childItems } = useProviderParent<TreeItemComponent<T>>({
 });
 
 /** inject functionalities and data from the subtree parent item component */
-const { parent: parentSubtree } = useProviderChild<SubtreeComponent>(rootRef, {
-    key: subtreeKey,
-    needParent: false,
-    identifier,
-});
+const { parent: parentSubtree, item: childItem } =
+    useProviderChild<SubtreeComponent>(rootRef, {
+        key: subtreeKey,
+        needParent: false,
+    });
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TreeItemComponent<T>>(() => ({
@@ -118,7 +117,11 @@ const providedData = computed<TreeItemComponent<T>>(() => ({
 const { parent, item } = useProviderChild<
     TreeComponent<T>,
     TreeItemComponent<T>
->(rootRef, { data: providedData, identifier });
+>(rootRef, { data: providedData });
+
+// here we override the identifier of the created sub item
+// with the identifier of main tree registered item to make them connected
+if (childItem.value) childItem.value.identifier = item.value.identifier;
 
 const indexer = parent.value.indexer;
 

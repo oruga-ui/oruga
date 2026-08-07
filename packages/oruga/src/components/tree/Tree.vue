@@ -262,13 +262,15 @@ function selectItem(item: TreeItem<T>, selection: boolean): void {
         }
     } else {
         // set selected option when multiple
-        const items = [item];
+        const items: TreeItem<T>[] = [];
         if (props.checkable) {
             // add child items to selection checkable
             const childs = flatChilds(item);
             items.push(...childs);
+        } else {
+            items.push(item);
         }
-        selectItems(Array.from(items), selection);
+        selectItems(items, selection);
     }
 }
 
