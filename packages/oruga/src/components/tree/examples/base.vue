@@ -19,8 +19,8 @@
                     <o-tree-item icon="calendar-plus" label="Report Review" />
                 </o-tree-item>
 
-                <o-tree-item icon="star" label="Movies">
-                    <o-tree-item icon="star" label="Al Pacino">
+                <o-tree-item icon="star" label="Movies" expanded>
+                    <o-tree-item icon="star" label="Al Pacino" expanded>
                         <o-tree-item icon="video" label="Scarface" />
                         <o-tree-item icon="video" label="Serpico" />
                     </o-tree-item>
