@@ -59,7 +59,6 @@ const props = defineProps({
     inline: { type: Boolean, default: false },
     modal: { type: Boolean, default: false },
     enableMobileNative: { type: Boolean, default: undefined },
-    stayOpen: { type: Boolean, default: false },
     openOnFocus: { type: Boolean, default: false },
     position: { type: String as PropType<PopoverPosition>, required: true },
     teleport: { type: [Boolean, String, Object], default: false },

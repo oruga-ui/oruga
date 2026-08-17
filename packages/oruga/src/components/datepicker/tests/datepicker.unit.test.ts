@@ -267,4 +267,64 @@ describe("ODatepicker", () => {
         expect(emits).toHaveLength(2);
         expect(emits?.[1][0]).toHaveLength(2);
     });
+
+    test("closes overlay on date selection when stayOpen is false", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1),
+                active: true,
+                stayOpen: false,
+            },
+        });
+
+        // find and click on a selectable date cell
+        const cells = wrapper.findAll(".o-datepicker__table__cell");
+        const cellToSelect = cells.find(
+            (c) =>
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
+        );
+        expect(cellToSelect).toBeDefined();
+
+        // select a date
+        await cellToSelect?.trigger("click");
+
+        // check that update:active event was emitted with false (overlay closes)
+        const updateActiveEmits = wrapper.emitted("update:active");
+        expect(updateActiveEmits).toBeDefined();
+        expect(updateActiveEmits?.[0]).toEqual([false]);
+    });
+
+    test("keeps overlay open on date selection when stayOpen is true", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1),
+                active: true,
+                stayOpen: true,
+            },
+        });
+
+        // find and click on a selectable date cell
+        const cells = wrapper.findAll(".o-datepicker__table__cell");
+        const cellToSelect = cells.find(
+            (c) =>
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
+        );
+        expect(cellToSelect).toBeDefined();
+
+        // select a date
+        await cellToSelect?.trigger("click");
+
+        // check that update:active event was NOT emitted (overlay stays open)
+        const updateActiveEmits = wrapper.emitted("update:active");
+        expect(updateActiveEmits).toBeUndefined();
+
+        // verify the content still has the active class
+        const contentElement = wrapper.find(".o-datepicker__content");
+        expect(contentElement.exists()).toBe(true);
+        expect(contentElement.classes("o-datepicker__content--active")).toBe(
+            true,
+        );
+    });
 });

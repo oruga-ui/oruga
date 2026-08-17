@@ -77,4 +77,62 @@ describe("OTimepicker tests", () => {
         expect(emits).toHaveLength(1);
         expect(input.element.value).toBe("00:00");
     });
+
+    test("closes overlay on time selection when stayOpen is false", async () => {
+        const wrapper = mount(OTimepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1, 12, 30),
+                active: true,
+                stayOpen: false,
+            },
+        });
+
+        // find the hours select and change its value
+        const selects = wrapper.findAll("select");
+        expect(selects.length).toBeGreaterThan(0);
+
+        const hoursSelect = selects[0];
+        expect(hoursSelect.exists()).toBe(true);
+
+        // select a different hour
+        await hoursSelect.setValue(14);
+        await hoursSelect.trigger("change");
+
+        // check that update:active event was emitted with false (overlay closes)
+        const updateActiveEmits = wrapper.emitted("update:active");
+        expect(updateActiveEmits).toBeDefined();
+        expect(updateActiveEmits?.[0]).toEqual([false]);
+    });
+
+    test("keeps overlay open on time selection when stayOpen is true", async () => {
+        const wrapper = mount(OTimepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1, 12, 30),
+                active: true,
+                stayOpen: true,
+            },
+        });
+
+        // find the hours select and change its value
+        const selects = wrapper.findAll("select");
+        expect(selects.length).toBeGreaterThan(0);
+
+        const hoursSelect = selects[0];
+        expect(hoursSelect.exists()).toBe(true);
+
+        // select a different hour
+        await hoursSelect.setValue(14);
+        await hoursSelect.trigger("change");
+
+        // check that update:active event was NOT emitted (overlay stays open)
+        const updateActiveEmits = wrapper.emitted("update:active");
+        expect(updateActiveEmits).toBeUndefined();
+
+        // verify the content still has the active class
+        const contentElement = wrapper.find(".o-timepicker__content");
+        expect(contentElement.exists()).toBe(true);
+        expect(contentElement.classes("o-timepicker__content--active")).toBe(
+            true,
+        );
+    });
 });
