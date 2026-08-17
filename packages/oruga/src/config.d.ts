@@ -3420,10 +3420,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
         timepicker?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Open picker on focus
-                 */
-                openOnFocus: boolean;
-                /**
                  * Makes input full width when inside a grouped or addon field
                  */
                 expanded: boolean;
