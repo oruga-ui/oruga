@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     label: undefined,
     disabled: false,
     clickable: true,
+    decorative: false,
     hidden: false,
     title: undefined,
     tag: undefined,
@@ -78,12 +79,20 @@ function setHidden(hidden: boolean): void {
 
 /** Shows if the item is viable or not (not disabled or hidden). */
 const isViable = computed(
-    () => !isHidden.value && !props.disabled && props.clickable,
+    () =>
+        !isHidden.value &&
+        !props.disabled &&
+        !props.decorative &&
+        props.clickable,
 );
 
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
-    () => !parent.value.disabled && !props.disabled && props.clickable,
+    () =>
+        !parent.value.disabled &&
+        !props.disabled &&
+        !props.decorative &&
+        props.clickable,
 );
 
 const isSelected = computed(() => {
@@ -97,6 +106,14 @@ const isSelected = computed(() => {
 
 const isFocused = computed(
     () => item.value.identifier === parent.value.focsuedIdentifier,
+);
+
+const itemRole = computed(() =>
+    props.decorative
+        ? "presentation"
+        : parent.value.selectable
+          ? "option"
+          : "menuitem",
 );
 
 /** Click listener, select the item. */
@@ -123,6 +140,12 @@ const rootClasses = defineClasses(
     ],
     ["itemSelectedClass", "o-dropdown__item--active", null, isSelected],
     ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
+    [
+        "itemSeperatorClass",
+        "o-dropdown__item--decorative",
+        null,
+        computed(() => props.decorative),
+    ],
     ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
 
@@ -140,13 +163,15 @@ const iconClasses = defineClasses(["itemIconClass", "o-dropdown__item-icon"]);
         data-oruga="dropdown-item"
         :data-id="`dropdown-${item.identifier}`"
         :class="rootClasses"
-        :role="parent.selectable ? 'option' : 'menuitem'"
+        :role="itemRole"
         tabindex="-1"
         :title="title"
         :href="href"
         :rel="rel"
         :target="target"
-        :aria-selected="parent.selectable ? isSelected : undefined"
+        :aria-selected="
+            !decorative && parent.selectable ? isSelected : undefined
+        "
         :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"

@@ -674,8 +674,7 @@ defineExpose({
                             <template v-if="isGroupOption(option)">
                                 <o-dropdown-item
                                     v-bind="option.item"
-                                    role="presentation"
-                                    :clickable="false">
+                                    decorative>
                                     <slot name="group" :group="option">
                                         <span>
                                             {{ option.item.label }}

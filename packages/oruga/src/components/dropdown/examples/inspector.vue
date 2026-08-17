@@ -141,6 +141,15 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
+    itemDecorativeClass: {
+        class: "itemDecorativeClass",
+        subitem: "dropdownitem",
+        description: "Class of the item element when is decorative.",
+        properties: ["decorative"],
+        action: (data): void => {
+            data.decorative = true;
+        },
+    },
     itemFocusedClass: {
         class: "itemFocusedClass",
         subitem: "dropdownitem",

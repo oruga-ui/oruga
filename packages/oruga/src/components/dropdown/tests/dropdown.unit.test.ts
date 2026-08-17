@@ -828,6 +828,12 @@ describe("ODropdown tests", () => {
                     expect(el.attributes("aria-disabled")).toBe(
                         option.disabled ? "true" : "false",
                     );
+                    expect(
+                        el.classes("o-dropdown__item--decorative"),
+                    ).toBeTruthy();
+                    expect(
+                        el.classes("o-dropdown__item--clickable"),
+                    ).toBeFalsy();
                 } else {
                     const g_options = options[g_idx].options;
 
