@@ -144,7 +144,7 @@ export type DropdownItemProps<T> = {
     disabled?: boolean;
     /** Item is clickable and emit an event */
     clickable?: boolean;
-    /** Defines the item as an decorative element with a `presentation` role */
+    /** Marks the item as a decorative element, which prevents any interactive behaviour */
     decorative?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
