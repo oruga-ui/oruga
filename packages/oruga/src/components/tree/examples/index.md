@@ -23,6 +23,9 @@ import CheckableCode from "./checkable.vue?raw";
 import Scrollable from "./scrollable.vue";
 import ScrollableCode from "./scrollable.vue?raw";
 
+import Filterable from "./filterable.vue";
+import FilterableCode from "./filterable.vue?raw";
+
 import Empty from "./empty.vue";
 import EmptyCode from "./empty.vue?raw";
 
@@ -105,6 +108,12 @@ When having to many options, consider adding a max height using the `scrollHeigh
 A group can be forced to stay open by setting `collapsable="false"`.
 
 <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
+
+### Filterable
+
+The `filterable` property enables a built-in search input to filter tree items. A custom `filter` function can be supplied for more advanced matching logic. By default, a lowercased item `label` string comparison is performed.
+
+<ExampleViewer :component="Filterable" :code="FilterableCode" />
 
 ### Empty
 

@@ -13,19 +13,20 @@ export type TreeComponent<T> = {
     toggleIcon: string;
     iconPack: string;
     iconSize: string;
+    filterActive: boolean;
     indexer: Indexer;
     selectItem: (value: TreeItem<T>, selection: boolean) => void;
     focusItem: (value: TreeItem<T>) => void;
 };
 
 export type TreeItemComponent<T> = Required<
-    Pick<TreeItemProps<T>, "value" | "expanded">
+    Pick<TreeItemProps<T>, "value" | "expanded" | "label">
 > & {
     children: TreeItem<T>[];
     hasChildren: boolean;
     isViable: boolean;
     setExpand: (state: boolean) => void;
-    matches: (value: string) => boolean;
+    setHidden: (state: boolean) => void;
 };
 
 export type TreeItem<T> = ProviderItem<TreeItemComponent<T>>;

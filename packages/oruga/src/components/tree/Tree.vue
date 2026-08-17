@@ -7,8 +7,10 @@ import {
     useId,
     useTemplateRef,
     watch,
+    watchEffect,
 } from "vue";
 
+import OInput from "../input/Input.vue";
 import OTreeItem from "../tree/TreeItem.vue";
 
 import {
@@ -63,6 +65,12 @@ const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     selectable: false,
     checkable: false,
     emptyLabel: () => getDefault("tree.emptyLabel"),
+    filterable: false,
+    backendFiltering: false,
+    filter: undefined,
+    filterIcon: undefined,
+    filterDebounce: 400,
+    filterPlaceholder: undefined,
     toggleIcon: () => getDefault("tree.toggleIcon", "chevron-right"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
@@ -97,11 +105,28 @@ const emits = defineEmits<{
     "scroll-start": [];
     /** scrolling inside the tree reached the end */
     "scroll-end": [];
+    /**
+     * on filter change event
+     * @param value {string} filter value
+     * @param event {Event} native event
+     */
+    filter: [value: string, event: Event];
 }>();
 
 defineSlots<{
     /** Define an additional header */
     header?(): void;
+    /**
+     * Override the filter input
+     * @param value {string} - filter input value
+     * @param onChange {(input: string, event: Event): void} - on filter input change event
+     * @param onKeydown {(event: Event): void} - on filter input keydown event
+     */
+    filter?(props: {
+        value: string;
+        onChange: (input: string, event: Event) => void;
+        onKeydown: (event: KeyboardEvent) => void;
+    }): void;
     /** Define the tree items here */
     default?(): void;
     /** Define the content to show if the list is empty */
@@ -141,6 +166,7 @@ const provideData = computed<TreeComponent<T>>(() => ({
     toggleIcon: props.toggleIcon,
     iconPack: props.iconPack,
     iconSize: props.iconSize,
+    filterActive: !!filterValue.value,
     indexer: indexer,
     selectItem,
     focusItem,
@@ -151,6 +177,15 @@ const { childItems } = useProviderParent<
     TreeItemComponent<T>,
     TreeComponent<T>
 >({ rootRef: listRef, data: provideData });
+
+/**
+ * Find the correct object of the item.
+ * Child items children might not have a data attribute, the correct object does.
+ * @param identifier - The item identifier.
+ */
+function findChild(identifier: string): TreeItem<T> | undefined {
+    return childItems.value.find((child) => child.identifier === identifier);
+}
 
 /** Shows if the items are selectable or not. */
 const isSelectable = computed(
@@ -238,9 +273,8 @@ function isItemSelected(item: TreeItem<T>): boolean {
 const flatChilds = (item: TreeItem<T>): TreeItem<T>[] => {
     // find correct object of the item
     // children might not have a data attribute, the correct object does
-    const current = childItems.value.find(
-        (child) => child.identifier === item.identifier,
-    );
+    const current = findChild(item.identifier);
+
     if (!current) return [];
     const descendants = current.data.children?.flatMap(flatChilds) ?? [];
     return [...descendants, current];
@@ -553,6 +587,67 @@ function onFocusout(event: FocusEvent): void {
 
 // #endregion --- Focus Feature ---
 
+// #region --- Filter Feature ---
+
+function onFilterChange(value: string, event: Event): void {
+    emits("filter", value, event);
+
+    focusedItem.value = undefined;
+    startRangeIndex.value = -1;
+}
+
+const filterValue = ref<string>("");
+
+if (!props.backendFiltering) {
+    watchEffect(() => {
+        if (!props.filterable) return;
+
+        const currentFilter = filterValue.value.trim();
+
+        const updateItemVisibility = (item: TreeItem<T>): boolean => {
+            // prevent filtering for presentation items
+            if (!item.data || (item.data as any).role === "presentation")
+                return false;
+
+            // no filter means not hidden
+            if (!currentFilter) {
+                // update states
+                item.data.setHidden(false);
+                item.data.setExpand(false);
+                return true;
+            }
+
+            const itemMatches =
+                typeof props.filter === "function"
+                    ? // call filter function if available
+                      props.filter(item.data.value, currentFilter)
+                    : // else check filter value matches item value
+                      matches(item, currentFilter);
+
+            const childMatches = item.data.children
+                .map((child) => findChild(child.identifier))
+                .filter(isDefined)
+                .some((child) => updateItemVisibility(child));
+
+            const shouldHide = !itemMatches && !childMatches;
+
+            // update states
+            item.data.setHidden(shouldHide);
+            item.data.setExpand(!shouldHide);
+            return !shouldHide;
+        };
+
+        childItems.value.forEach((item) => updateItemVisibility(item));
+    });
+}
+
+/** Check if a value matches the label (startsWith). */
+function matches(item: TreeItem<T>, value: string): boolean {
+    return !!item.data?.label?.toLowerCase().startsWith(value.toLowerCase());
+}
+
+// #endregion --- Filter Feature ---
+
 // #region --- Type-Ahead Feature ---
 
 const typeAheadValue = ref("");
@@ -567,7 +662,7 @@ watch(typeAheadValue, (value) => {
     if (!isEmpty(value)) {
         // find first item that starts with the search value
         const matchedItem = viableItems.value.find((item) =>
-            item.data.matches(value),
+            matches(item, value),
         );
 
         // focus the item
@@ -653,6 +748,43 @@ function onListKeyDown(event: KeyboardEvent): void {
     }
 }
 
+function onFilterKeyDown(event: KeyboardEvent): void {
+    switch (event.code) {
+        case "ArrowDown":
+            moveFocusDown(event);
+            event.preventDefault();
+            break;
+
+        case "ArrowUp":
+            moveFocusUp(event);
+            event.preventDefault();
+            break;
+
+        case "Home":
+            focusFirstItem(event);
+            event.preventDefault();
+            break;
+
+        case "End":
+            focusLastItem(event);
+            event.preventDefault();
+            break;
+
+        case "Enter":
+        case "NumpadEnter":
+            selectFocusedItem(event);
+            break;
+
+        case "ShiftLeft":
+        case "ShiftRight":
+            startFocusRange();
+            break;
+
+        default:
+            break;
+    }
+}
+
 // #endregion --- Keyboard Listener ---
 
 // #region --- Computed Component Classes ---
@@ -667,6 +799,12 @@ const rootClasses = defineClasses(
         computed(() => props.selectable),
     ],
     [
+        "filterableClass",
+        "o-tree--filterable",
+        null,
+        computed(() => props.filterable),
+    ],
+    [
         "multipleClass",
         "o-tree--multiple",
         null,
@@ -679,6 +817,8 @@ const listClasses = defineClasses(["listClass", "o-tree__list"]);
 const headerClasses = defineClasses(["headerClass", "o-tree__header"]);
 
 const footerClasses = defineClasses(["footerClass", "o-tree__footer"]);
+
+const filterClasses = defineClasses(["filterClass", "o-tree__filter"]);
 
 const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
 
@@ -695,7 +835,38 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
             <slot name="header" />
         </div>
 
-        <!-- Todo: maybe add filter?! -->
+        <div v-if="filterable" :class="filterClasses">
+            <slot
+                name="filter"
+                :value="filterValue"
+                :on-change="onFilterChange"
+                :on-keydown="onFilterKeyDown">
+                <o-input
+                    v-model="filterValue"
+                    v-bind="inputAttrs"
+                    name="filter"
+                    type="search"
+                    role="searchbox"
+                    :tabindex="!disabled && !isFocused ? 0 : -1"
+                    :debounce="filterDebounce"
+                    :placeholder="filterPlaceholder"
+                    :icon="filterIcon"
+                    :disabled="disabled"
+                    expanded
+                    size="small"
+                    aria-label="tree filter input"
+                    :aria-owns="id + '_list'"
+                    :aria-activedescendant="
+                        focusedItem
+                            ? `${id}-${focusedItem.identifier}`
+                            : undefined
+                    "
+                    autocomplete="off"
+                    :use-html5-validation="false"
+                    @input="onFilterChange"
+                    @keydown="onFilterKeyDown" />
+            </slot>
+        </div>
 
         <ul
             :id="id + '_list'"

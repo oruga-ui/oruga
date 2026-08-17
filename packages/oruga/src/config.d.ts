@@ -3742,6 +3742,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 emptyClass: ClassDefinition;
                 /**
+                 * Class of the filter wrapper element
+                 */
+                filterClass: ClassDefinition;
+                /**
+                 * Class of the root element when filterable
+                 */
+                filterableClass: ClassDefinition;
+                /**
                  * Class of the tree list element
                  */
                 listClass: ClassDefinition;

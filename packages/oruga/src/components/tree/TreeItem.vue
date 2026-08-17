@@ -105,12 +105,13 @@ const { parent: parentSubtree, item: childItem } =
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TreeItemComponent<T>>(() => ({
     value: props.value as T,
+    label: props.label,
     expanded: isExpanded.value,
     isViable: isViable.value,
     children: childItems.value,
     hasChildren: hasChildren.value,
     setExpand,
-    matches,
+    setHidden,
 }));
 
 /** inject functionalities and data from the parent tree component */
@@ -136,11 +137,20 @@ const hasToggleIcon = computed(
     () => parent.value.toggleIcon && hasChildren.value,
 );
 
+const localHidden = ref(false);
+
 const isHidden = computed(
     () =>
         props.hidden ||
-        (!!parentSubtree.value && !parentSubtree.value.expanded),
+        localHidden.value ||
+        (!!parentSubtree.value &&
+            !parentSubtree.value.expanded &&
+            !parent.value.filterActive),
 );
+
+function setHidden(state: boolean): void {
+    localHidden.value = state;
+}
 
 /** Shows if the item is viable or not (not disabled or hidden). */
 const isViable = computed(() => !isHidden.value && !props.disabled);
@@ -222,12 +232,6 @@ function setExpand(state: boolean): void {
     if (!parent.value.collapsable) return;
     if (!hasChildren.value) return;
     isExpanded.value = state;
-}
-
-/** Check if a value matches the label (startsWith). */
-// TODO: refactor to mave into Parent because not name does noch match implementation
-function matches(value: string): boolean {
-    return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
 }
 
 // #region --- Computed Component Classes ---
