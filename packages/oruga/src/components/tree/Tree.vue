@@ -117,7 +117,7 @@ defineSlots<{
     /** Define an additional header */
     header?(): void;
     /**
-     * Overridet the filter input
+     * Override the filter input
      * @param value {string} - filter input value
      * @param onChange {(input: string, event: Event): void} - on filter input change event
      * @param onKeydown {(event: Event): void} - on filter input keydown event
