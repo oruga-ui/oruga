@@ -1,3 +1,22 @@
+## [0.14.1](https://github.com/oruga-ui/oruga/compare/v0.14.0...v0.14.1) (2026-08-18)
+
+### Features
+
+* allow undefined for class bindings ([#1712](https://github.com/oruga-ui/oruga/issues/1712)) ([1231f24](https://github.com/oruga-ui/oruga/commit/1231f24b9daf652287c890878738af82828786a1))
+* **dropdown:** add item `decorative` property ([#1714](https://github.com/oruga-ui/oruga/issues/1714)) ([0745d5a](https://github.com/oruga-ui/oruga/commit/0745d5a5fcd41c6891a37d2981cbed7e1a2dd32a))
+* **dropdown:** add `href` link support ([#1715](https://github.com/oruga-ui/oruga/issues/1715)) ([fff1d4f](https://github.com/oruga-ui/oruga/commit/fff1d4f3ab042e3b4dadac0a1873b8b1a2504db2))
+* **dropdown:** add icon props to the dropdown item ([#1717](https://github.com/oruga-ui/oruga/issues/1717)) ([329bbc9](https://github.com/oruga-ui/oruga/commit/329bbc93db1064d990948dd29ac560795efea939))
+* **icon:** add `aria-hidden` to not clickable icons ([#1719](https://github.com/oruga-ui/oruga/issues/1719)) ([578d049](https://github.com/oruga-ui/oruga/commit/578d0495e04fef07b8a74d2429cba8b71fd8269f))
+* **listbox:** add `checkable` feature ([#1721](https://github.com/oruga-ui/oruga/issues/1721)) ([1848b4e](https://github.com/oruga-ui/oruga/commit/1848b4ee70ea9f3695aefb5704ca60f7b5ecff9a))
+* **tree:** add `filterable` feature ([#1725](https://github.com/oruga-ui/oruga/issues/1725)) ([d2ac409](https://github.com/oruga-ui/oruga/commit/d2ac409a2fd0324a3d738412df0fccea43e43e77))
+* **tree:** add `checkable` feature ([#1723](https://github.com/oruga-ui/oruga/issues/1723)) ([23c7f94](https://github.com/oruga-ui/oruga/commit/23c7f9414b42602901931cd756a4a858ed484811))
+
+### Bug Fixes
+
+* **datepicker|timepicker:** correct `stayOpen` property feature ([#1731](https://github.com/oruga-ui/oruga/issues/1731)) ([9b316e3](https://github.com/oruga-ui/oruga/commit/9b316e355a7411efe2f9ec4b0d0bbbf2fb269581)), closes [#1729](https://github.com/oruga-ui/oruga/issues/1729)
+* **tree:** collapse items on click when not selectable ([#1720](https://github.com/oruga-ui/oruga/issues/1720)) ([dec4631](https://github.com/oruga-ui/oruga/commit/dec4631e7a4ba5af868ad22ffd9ba943b6a65c00))
+* **tree:** prevent circular reactive update ([#1732](https://github.com/oruga-ui/oruga/issues/1732)) ([0784ebc](https://github.com/oruga-ui/oruga/commit/0784ebc87a5d4384d1b9b88589cadc75296611d7))
+
 ## [0.14.0](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.5...v0.14.0) (2026-08-03)
 
 ### ⚠ BREAKING CHANGES
