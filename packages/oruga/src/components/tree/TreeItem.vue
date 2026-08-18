@@ -143,9 +143,7 @@ const isHidden = computed(
     () =>
         props.hidden ||
         localHidden.value ||
-        (!!parentSubtree.value &&
-            !parentSubtree.value.expanded &&
-            !parent.value.filterActive),
+        (!!parentSubtree.value && !parentSubtree.value.expanded),
 );
 
 function setHidden(state: boolean): void {

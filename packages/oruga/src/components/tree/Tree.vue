@@ -7,7 +7,6 @@ import {
     useId,
     useTemplateRef,
     watch,
-    watchEffect,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -166,7 +165,6 @@ const provideData = computed<TreeComponent<T>>(() => ({
     toggleIcon: props.toggleIcon,
     iconPack: props.iconPack,
     iconSize: props.iconSize,
-    filterActive: !!filterValue.value,
     indexer: indexer,
     selectItem,
     focusItem,
@@ -599,7 +597,7 @@ function onFilterChange(value: string, event: Event): void {
 const filterValue = ref<string>("");
 
 if (!props.backendFiltering) {
-    watchEffect(() => {
+    watch([() => props.filterable, filterValue], () => {
         if (!props.filterable) return;
 
         const currentFilter = filterValue.value.trim();

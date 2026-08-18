@@ -13,7 +13,6 @@ export type TreeComponent<T> = {
     toggleIcon: string;
     iconPack: string;
     iconSize: string;
-    filterActive: boolean;
     indexer: Indexer;
     selectItem: (value: TreeItem<T>, selection: boolean) => void;
     focusItem: (value: TreeItem<T>) => void;
