@@ -133,7 +133,15 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/s
 
 > Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable       | Default          |
+| ------------------- | ---------------- |
+| // $btn-spacer      | 0.5rem           |
+| // $btn-font-size   | var(--text-base) |
+| // $btn-font-weight | 500              |
+| // $btn-padding     | 0.70rem 0.70rem  |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-tailwind/tree/main/src/assets/scss/components/_button.scss)
+
 </div>
 
 </section>
