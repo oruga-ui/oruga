@@ -41,7 +41,6 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     override: undefined,
     active: false,
     fullscreen: false,
-
     size: () => getDefault("dialog.size"),
     animation: () => getDefault("dialog.animation", "zoom-out"),
     backdrop: () => getDefault("dialog.backdrop", true),
