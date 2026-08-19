@@ -119,7 +119,12 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/s
 
 > Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable           | Default |
+| ----------------------- | ------- |
+| $loading-overlay-zindex | 9999    |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-tailwind/tree/main/src/assets/scss/components/_loading.scss)
+
 </div>
 
 </section>
