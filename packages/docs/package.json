@@ -24,7 +24,7 @@
     "@oruga-ui/theme-bootstrap": "0.12.0",
     "@oruga-ui/theme-bulma": "0.10.0",
     "@oruga-ui/theme-oruga": "0.10.0",
-    "@oruga-ui/theme-tailwind": "0.0.1",
+    "@oruga-ui/theme-tailwind": "0.0.2",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.2.0",
     "markdown-it-highlightjs": "^4.3.0"
