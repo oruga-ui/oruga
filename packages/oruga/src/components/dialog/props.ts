@@ -17,6 +17,11 @@ export type DialogProps<C extends Component = Component> = {
      * Examples include error messages that require confirmation and other action confirmation prompts.
      */
     alert?: boolean;
+    /**
+     * Size of the dialog
+     * @values small, medium, large
+     */
+    size?: string;
     /** Display dialog as full screen */
     fullscreen?: boolean;
     /** Max width of the dialog */
@@ -118,6 +123,8 @@ export type DialogClasses = Partial<{
     activeClass: ComponentClass;
     /** Class of the root element when fullscreen */
     fullscreenClass: ComponentClass;
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
     /** Class of the backdrop overlay element */
