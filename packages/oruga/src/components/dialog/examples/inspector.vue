@@ -23,6 +23,15 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.active = true;
         },
     },
+    sizeClass: {
+        class: "sizeClass",
+        description: "Class of the root element with size.",
+        properties: ["size"],
+        action: (data): void => {
+            data.active = true;
+            data.size = "sm";
+        },
+    },
     fullscreenClass: {
         class: "fullscreenClass",
         description: "Class of the root element when fullscreen",
