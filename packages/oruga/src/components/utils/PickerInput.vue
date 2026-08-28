@@ -13,6 +13,7 @@ import OInput from "../input/Input.vue";
 import {
     checkMinMaxDate,
     isDefined,
+    isEqual,
     isMobileAgent,
     isTrueish,
 } from "@/utils/helpers";
@@ -214,8 +215,9 @@ function setValue(value: string): void {
             (inputValue.value = props.formatter(date, isMobileNative.value)),
     );
 
-    // update the prop value
-    emits("update:value", date);
+    if (!isEqual(props.value, date))
+        // update the prop value
+        emits("update:value", date);
 }
 
 /** Get the value from html element behind the event and update the external value. */

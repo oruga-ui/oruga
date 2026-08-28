@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { mount, enableAutoUnmount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import ODatepicker from "@/components/datepicker/Datepicker.vue";
 
@@ -80,6 +81,27 @@ describe("ODatepicker", () => {
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(input.element.value).toBe("");
+    });
+
+    test("keeps the overlay open when navigating a populated picker after input blur", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2024, 0, 1), active: true },
+        });
+
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeTruthy();
+
+        const monthSelect = wrapper.find<HTMLSelectElement>(
+            'select[aria-label="Select Month"]',
+        );
+        monthSelect.element.focus();
+        await nextTick();
+        await monthSelect.setValue(1);
+
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeTruthy();
     });
 
     test("react accordingly when an date is selected with multiple prop", async () => {
