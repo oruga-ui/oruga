@@ -21,7 +21,9 @@ const isActive = ref(false);
             closeable>
             <template #title>Drag me by the header</template>
 
-            <template #subtitle>Click and drag the header to reposition</template>
+            <template #subtitle>
+                Click and drag the header to reposition
+            </template>
 
             <template #content>
                 <p>
