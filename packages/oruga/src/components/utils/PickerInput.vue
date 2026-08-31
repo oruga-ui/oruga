@@ -242,7 +242,10 @@ function onFocus(event: Event): void {
 }
 
 function onBlur(event: Event): void {
-    setEventValue(event);
+    const target = (event as FocusEvent).relatedTarget as Node | null;
+    if (!target || !contentRef.value?.contains(target)) {
+        setEventValue(event);
+    }
     emits("blur", event);
 }
 
