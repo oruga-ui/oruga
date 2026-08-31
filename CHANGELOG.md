@@ -1,3 +1,14 @@
+## [0.14.2](https://github.com/oruga-ui/oruga/compare/v0.14.1...v0.14.2) (2026-08-31)
+
+### Features
+
+* **dialog:** add `draggable` feature ([#1739](https://github.com/oruga-ui/oruga/issues/1739)) ([2f7ece3](https://github.com/oruga-ui/oruga/commit/2f7ece3773addd1248bcc0e28339d189247dcc76))
+* **dialog:** add `size` property and class ([#1735](https://github.com/oruga-ui/oruga/issues/1735)) ([3776b49](https://github.com/oruga-ui/oruga/commit/3776b49f88635abd2f944ad0e3625391791f8910))
+
+### Bug Fixes
+
+* **datepicker|timepicker:** prevent popover closing input on blur event without change ([#1738](https://github.com/oruga-ui/oruga/issues/1738)) ([2a95082](https://github.com/oruga-ui/oruga/commit/2a95082b86b3f07953dae256809984e9fd31b0e5)), closes [#1736](https://github.com/oruga-ui/oruga/issues/1736)
+
 ## [0.14.1](https://github.com/oruga-ui/oruga/compare/v0.14.0...v0.14.1) (2026-08-18)
 
 ### Features
