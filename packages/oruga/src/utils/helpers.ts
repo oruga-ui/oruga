@@ -196,6 +196,9 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
 
     // Check if both values are objecs.
     if (isObject(valueA) && isObject(valueB)) {
+        if (isDate(valueA) && isDate(valueB))
+            return valueA.getTime() === valueB.getTime();
+
         // Get the keys of both objects.
         const keys1 = Object.keys(valueA);
         const keys2 = Object.keys(valueB);
