@@ -3,6 +3,7 @@ import {
     computed,
     nextTick,
     onMounted,
+    ref,
     useId,
     useTemplateRef,
     watch,
@@ -18,6 +19,7 @@ import { toCssDimension } from "@/utils/helpers";
 import {
     defineClasses,
     unrefElement,
+    useEventListener,
     useMatchMedia,
     usePreventScrolling,
     useTeleport,
@@ -76,6 +78,7 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     teleport: () => getDefault("dialog.teleport", false),
     ariaLabel: undefined,
     ariaDescribedby: undefined,
+    draggable: () => getDefault("dialog.draggable", false),
 });
 
 const emits = defineEmits<{
@@ -274,6 +277,77 @@ function onCancel(event: Event): void {
 
 // #endregion --- Trigger Handler ---
 
+// #region --- Draggable Feature ---
+
+const isDragging = ref(false);
+const dragOffset = ref({ x: 0, y: 0 });
+const dragStart = ref({ x: 0, y: 0 });
+
+watch(
+    isActive,
+    (value) => {
+        // reset on dialog close
+        if (!value) {
+            isDragging.value = false;
+            dragOffset.value = { x: 0, y: 0 };
+        }
+    },
+    { flush: "sync" },
+);
+
+const dragStyle = computed(() =>
+    props.draggable && (dragOffset.value.x || dragOffset.value.y)
+        ? {
+              transform: `translate(${dragOffset.value.x}px, ${dragOffset.value.y}px)`,
+          }
+        : {},
+);
+
+function onDragStart(event: PointerEvent): void {
+    if (!props.draggable || props.fullscreen) return;
+    isDragging.value = true;
+    dragStart.value = {
+        x: event.clientX - dragOffset.value.x,
+        y: event.clientY - dragOffset.value.y,
+    };
+}
+
+function onDragMove(event: PointerEvent): void {
+    const newX = event.clientX - dragStart.value.x;
+    const newY = event.clientY - dragStart.value.y;
+
+    const el = unrefElement(rootRef);
+    if (el) {
+        const rect = el.getBoundingClientRect();
+        const naturalLeft = rect.left - dragOffset.value.x;
+        const naturalTop = rect.top - dragOffset.value.y;
+        const naturalRight = rect.right - dragOffset.value.x;
+        const naturalBottom = rect.bottom - dragOffset.value.y;
+
+        dragOffset.value = {
+            x: Math.min(
+                Math.max(newX, -naturalLeft),
+                window.innerWidth - naturalRight,
+            ),
+            y: Math.min(
+                Math.max(newY, -naturalTop),
+                window.innerHeight - naturalBottom,
+            ),
+        };
+    } else {
+        dragOffset.value = { x: newX, y: newY };
+    }
+}
+
+function onDragEnd(): void {
+    isDragging.value = false;
+}
+
+useEventListener(document, "pointermove", onDragMove, { trigger: isDragging });
+useEventListener(document, "pointerup", onDragEnd, { trigger: isDragging });
+
+// #endregion --- Draggable Feature ---
+
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -292,6 +366,13 @@ const rootClasses = defineClasses(
         null,
         computed(() => !!props.teleport),
     ],
+    [
+        "draggableClass",
+        "o-dialog--draggable",
+        null,
+        computed(() => !!props.draggable),
+    ],
+    ["draggingClass", "o-dialog--dragging", null, isDragging],
 );
 
 const backdropClasses = defineClasses(["backdropClass", "o-dialog__backdrop"]);
@@ -367,6 +448,7 @@ defineExpose({ close, confirm });
                 v-bind="$attrs"
                 data-oruga="dialog"
                 :class="rootClasses"
+                :style="dragStyle"
                 :role="alert ? 'alertdialog' : 'dialog'"
                 :closedBy="closedBy"
                 :aria-label="ariaLabel"
@@ -389,7 +471,8 @@ defineExpose({ close, confirm });
                             subtitle ||
                             closeable
                         "
-                        :class="headerClasses">
+                        :class="headerClasses"
+                        @pointerdown="onDragStart">
                         <slot name="header" :close="close" :confirm="confirm">
                             <h1
                                 v-if="$slots['title'] || title"

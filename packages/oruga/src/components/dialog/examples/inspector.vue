@@ -31,6 +31,25 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.fullscreen = true;
         },
     },
+    draggableClass: {
+        class: "draggableClass",
+        description: "Class of the root element when draggable is enabled.",
+        properties: ["draggable"],
+        action: (data): void => {
+            data.draggable = true;
+            data.active = true;
+        },
+    },
+    draggingClass: {
+        class: "draggingClass",
+        description:
+            "Class of the root element while the dialog is being dragged.",
+        properties: ["draggable"],
+        action: (data): void => {
+            data.draggable = true;
+            data.active = true;
+        },
+    },
     teleportClass: {
         class: "teleportClass",
         description: "Class of the root element when teleported.",
