@@ -8,6 +8,9 @@ import ModalCode from "./modal.vue?raw";
 import Alert from "./alert.vue";
 import AlertCode from "./alert.vue?raw";
 
+import Draggable from "./draggable.vue";
+import DraggableCode from "./draggable.vue?raw";
+
 import Form from "./form.vue";
 import FormCode from "./form.vue?raw";
 
@@ -57,6 +60,12 @@ Setting the `blockScroll` property removes the body scrollbar. However, the body
 An _alert_ dialog box is a type of modal dialog that interrupts the user's workflow in order to communicate an important message and to acquire a response. It is defined by setting the `alert` property. Examples include action confirmation prompts and error message confirmations. The dialog will have the [ARIA: alertdialog role](http://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alertdialog_role), enabling assistive technologies and browsers to distinguish it from other dialogs and giving them the option to treat it specially, e.g. by playing a system alert sound.
 
 <ExampleViewer :component="Alert" :code="AlertCode" />
+
+### Draggable
+
+Enabling the `draggable` property lets the user reposition the Dialog by dragging it from its header.
+
+<ExampleViewer :component="Draggable" :code="DraggableCode" />
 
 ### Form
 

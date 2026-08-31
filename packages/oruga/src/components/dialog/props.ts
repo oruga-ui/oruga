@@ -28,6 +28,8 @@ export type DialogProps<C extends Component = Component> = {
     maxWidth?: Numberish;
     /** Max height of the dialog */
     maxHeight?: Numberish;
+    /** Allow the dialog to be dragged by the header */
+    draggable?: boolean;
     /** Adds close button to the header to hide the dialog */
     closeable?: boolean;
     /** Close the dialog when clicked outside of the panel */
@@ -159,4 +161,8 @@ export type DialogClasses = Partial<{
     scrollClipClass: ComponentClass;
     /** Class of the body when modal is open and scroll is keeped */
     scrollKeepClass: ComponentClass;
+    /** Class of the root element when draggable is enabled */
+    draggableClass: ComponentClass;
+    /** Class of the root element while the dialog is being dragged */
+    draggingClass: ComponentClass;
 }>;

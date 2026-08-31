@@ -986,6 +986,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 maxHeight: Numberish;
                 /**
+                 * Allow the dialog to be dragged by the header
+                 */
+                draggable: boolean;
+                /**
                  * Adds close button to the header to hide the dialog
                  */
                 closeable: boolean;
@@ -1119,6 +1123,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the body when modal is open and scroll is keeped
                  */
                 scrollKeepClass: ClassDefinition;
+                /**
+                 * Class of the root element when draggable is enabled
+                 */
+                draggableClass: ClassDefinition;
+                /**
+                 * Class of the root element while the dialog is being dragged
+                 */
+                draggingClass: ClassDefinition;
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
