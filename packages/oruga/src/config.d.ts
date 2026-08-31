@@ -974,6 +974,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 backdrop: boolean;
                 /**
+                 * Size of the dialog
+                 */
+                size: string;
+                /**
                  * Max width of the dialog
                  */
                 maxWidth: Numberish;
@@ -1043,6 +1047,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element when fullscreen
                  */
                 fullscreenClass: ClassDefinition;
+                /**
+                 * Class of the root element with size
+                 */
+                sizeClass: ClassDefinition;
                 /**
                  * Class of the root element when teleported
                  */

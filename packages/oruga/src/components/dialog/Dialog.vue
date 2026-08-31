@@ -41,6 +41,7 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     override: undefined,
     active: false,
     fullscreen: false,
+    size: () => getDefault("dialog.size"),
     animation: () => getDefault("dialog.animation", "zoom-out"),
     backdrop: () => getDefault("dialog.backdrop", true),
     maxWidth: () => getDefault("dialog.maxWidth", "80vw"),
@@ -280,6 +281,12 @@ const rootClasses = defineClasses(
     ["rootClass", "o-dialog"],
     ["mobileClass", "o-dialog--mobile", null, isMobile],
     ["activeClass", "o-dialog--active", null, isActive],
+    [
+        "sizeClass",
+        "o-dialog--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
     [
         "fullscreenClass",
         "o-dialog--fullscreen",
