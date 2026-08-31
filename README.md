@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://oruga-ui.com">
-        <img width="240" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/public/logo.png" />
+        <img width="240" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/pages/public/logo.png" />
     </a>
 </p>
 
