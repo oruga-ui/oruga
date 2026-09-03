@@ -54,7 +54,7 @@ function pageChanged(page: number): void {
             <o-pagination
                 v-if="paginated"
                 v-bind="$attrs"
-                :current="currentPage"
+                :model-value="currentPage"
                 @change="pageChanged" />
         </div>
     </div>
