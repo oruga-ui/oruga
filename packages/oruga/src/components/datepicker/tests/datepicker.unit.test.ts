@@ -104,6 +104,46 @@ describe("ODatepicker", () => {
         ).toBeTruthy();
     });
 
+    test("keeps the overlay open on first interaction when clicking a nav button in a populated picker", async () => {
+        vi.useFakeTimers();
+
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2024, 0, 1) },
+        });
+
+        // picker is initially closed
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeFalsy();
+
+        // focus the input to open the picker via openOnFocus
+        const input = wrapper.find("input");
+        await input.trigger("focus");
+
+        // advance past the 250ms openOnFocus delay
+        vi.advanceTimersByTime(300);
+        await nextTick();
+
+        // picker should now be open
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeTruthy();
+
+        // blur the input (simulates focus moving away when clicking the nav button)
+        await input.trigger("blur");
+        await nextTick();
+
+        // click the previous month navigation button
+        const prevButton = wrapper.find(".o-datepicker__header__previous");
+        await prevButton.trigger("click");
+        await nextTick();
+
+        // picker should remain open after navigating months
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeTruthy();
+    });
+
     test("react accordingly when an date is selected with multiple prop", async () => {
         const wrapper = mount(ODatepicker, {
             props: { modelValue: [new Date()], multiple: true },

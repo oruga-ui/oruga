@@ -13,7 +13,6 @@ import OInput from "../input/Input.vue";
 import {
     checkMinMaxDate,
     isDefined,
-    isEqual,
     isMobileAgent,
     isTrueish,
 } from "@/utils/helpers";
@@ -215,8 +214,11 @@ function setValue(value: string): void {
             (inputValue.value = props.formatter(date, isMobileNative.value)),
     );
 
-    if (!isEqual(props.value, date))
-        // update the prop value
+    // Compare by formatted string: if the input value is identical to what the
+    // current prop formats to, nothing changed from the UI's perspective.
+    // This avoids false emits when the prop value has a time component that
+    // the formatter strips, which would make an isEqual(Date, Date) check fail.
+    if (props.formatter(props.value, isMobileNative.value) !== value)
         emits("update:value", date);
 }
 
