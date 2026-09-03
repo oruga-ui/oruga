@@ -1,3 +1,10 @@
+## [0.14.3](https://github.com/oruga-ui/oruga/compare/v0.14.2...v0.14.3) (2026-09-03)
+
+### Bug Fixes
+
+* **datepicker|timepicker:** do not close on popover interaction ([#1742](https://github.com/oruga-ui/oruga/issues/1742)) ([1ccff69](https://github.com/oruga-ui/oruga/commit/1ccff690b035aaac38017d328732b5e822039b51)), closes [#1741](https://github.com/oruga-ui/oruga/issues/1741)
+* **table:** select correct pagination page number for the current-page ([#1748](https://github.com/oruga-ui/oruga/issues/1748)) ([78838f1](https://github.com/oruga-ui/oruga/commit/78838f1ac521759cd936dd78f84c2911d01c926d)), closes [#1743](https://github.com/oruga-ui/oruga/issues/1743)
+
 ## [0.14.2](https://github.com/oruga-ui/oruga/compare/v0.14.1...v0.14.2) (2026-08-31)
 
 ### Features
