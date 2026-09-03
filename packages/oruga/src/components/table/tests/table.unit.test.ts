@@ -865,6 +865,31 @@ describe("OTable tests", () => {
             );
         });
 
+        test("highlights the current page when current page is updated", async () => {
+            const perPage = 3;
+
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "ID", field: "id" }],
+                    paginated: true,
+                    data,
+                    perPage,
+                },
+            });
+            await nextTick();
+
+            await wrapper.setProps({ currentPage: 2 });
+
+            expect(
+                wrapper.findAll("tbody tr").map((row) => row.text()),
+            ).toEqual(
+                data.slice(perPage, perPage * 2).map((row) => String(row.id)),
+            );
+            expect(wrapper.find(".o-pagination__button--current").text()).toBe(
+                "2",
+            );
+        });
+
         test("show correct amount of rows when per page is set to 5", async () => {
             const perPage = 5;
 
