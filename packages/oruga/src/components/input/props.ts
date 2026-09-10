@@ -1,4 +1,4 @@
-import type { CamelCaseKeys, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 import type { InputHTMLAttributes } from "vue";
 
@@ -6,34 +6,34 @@ export type InputType<IsNumber extends boolean> = IsNumber extends true
     ? number
     : string;
 
-type HTMLInputProps =
-    /* @vue-ignore */
-    Pick<
-        InputHTMLAttributes,
-        | "max"
-        | "min"
-        | "name"
-        | "pattern"
-        | "placeholder"
-        | "required"
-        | "title"
-        | "maxlength"
-        | "minlength"
-        | "readonly"
-        | "translate"
-        | "autocomplete"
-        | "aria-label"
-        | "aria-labelledby"
-    > & {
-        /**
-         * Native options to use in HTML5 validation,
-         * whether the value of the form's controls can be automatically completed by the browser.
-         */
-        autocomplete?: string;
-    };
+/**
+ * Native HTML input attributes that are passed through as fallthrough attrs
+ * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
+ * `maxlength` and `autocomplete` are intentionally excluded — they are managed
+ * as regular Vue props because the component reads them programmatically.
+ */
+export type HTMLInputPassthroughProps = /* @vue-ignore */ Pick<
+    InputHTMLAttributes,
+    | "max"
+    | "min"
+    | "name"
+    | "pattern"
+    | "placeholder"
+    | "required"
+    | "title"
+    | "minlength"
+    | "readonly"
+    | "translate"
+    | "autocomplete"
+> & {
+    /** Same as native aria-label */
+    ariaLabel?: string;
+    /** Same as native aria-labelledby */
+    ariaLabelledby?: string;
+};
 
 export type InputProps<IsNumber extends boolean = boolean> =
-    CamelCaseKeys<HTMLInputProps> & {
+    HTMLInputPassthroughProps & {
         /** Override existing theme classes completely */
         override?: boolean;
         /** Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. */
@@ -77,6 +77,8 @@ export type InputProps<IsNumber extends boolean = boolean> =
         counter?: boolean;
         /** Automatically adjust height in textarea */
         autosize?: boolean;
+        /** Same as native maxlength. Also used to show character counter when `counter` prop is enabled. */
+        maxlength?: number | string;
         /**
          * Icon pack to use
          * @values mdi, fa, fas and any other custom icon pack
