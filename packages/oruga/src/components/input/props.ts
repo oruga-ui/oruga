@@ -63,6 +63,11 @@ export type InputProps<IsNumber extends boolean = boolean> = {
     iconRightClickable?: boolean;
     /** Variant of right icon */
     iconRightVariant?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Add a button/icon to clear the inputed text */
     clearable?: boolean;
     /** Icon name to be added on the clear button */

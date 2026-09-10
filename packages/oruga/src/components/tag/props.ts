@@ -26,6 +26,11 @@ export type TagProps = {
      * @values mdi, fa, fas and any other custom icon pack
      */
     iconPack?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Add close button to close the item */
     closeable?: boolean;
     /** Close icon name */

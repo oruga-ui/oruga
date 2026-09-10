@@ -12,13 +12,13 @@ const time = ref<Date | undefined>(new Date());
                     <o-button
                         label="Now"
                         variant="primary"
-                        icon-left="clock"
+                        icon="clock"
                         @click="time = new Date()" />
 
                     <o-button
                         label="Clear"
                         variant="danger"
-                        icon-left="times"
+                        icon="times"
                         outlined
                         @click="time = undefined" />
                 </template>

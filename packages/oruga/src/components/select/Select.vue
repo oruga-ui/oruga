@@ -57,6 +57,7 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     iconRight: () => getDefault("select.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
+    iconSize: () => getDefault("select.iconSize"),
     id: () => useId(),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidation: "",
@@ -300,7 +301,7 @@ defineExpose({
             :clickable="iconClickable"
             :icon="icon"
             :pack="iconPack"
-            :size="size"
+            :size="iconSize ?? size"
             @click="leftIconClick($event)" />
 
         <select
@@ -352,7 +353,7 @@ defineExpose({
             :class="iconRightClasses"
             :icon="rightIcon"
             :pack="iconPack"
-            :size="size"
+            :size="iconSize ?? size"
             :variant="rightIconVariant"
             :clickable="iconRightClickable"
             @click="rightIconClick" />

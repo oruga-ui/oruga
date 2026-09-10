@@ -91,7 +91,7 @@ const keepChecked = ref(false);
             <o-button
                 variant="danger"
                 :disabled="!checkedRows.length"
-                icon-left="times"
+                icon="times"
                 label="Clear checked"
                 @click="checkedRows = []" />
             <o-select v-model="checkboxPosition" aria-label="Checkbox position">

@@ -79,6 +79,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     selectableHeader: false,
     selectableFooter: false,
     iconPack: () => getDefault("autocomplete.iconPack"),
+    iconSize: () => getDefault("autocomplete.iconSize"),
     icon: () => getDefault("autocomplete.icon"),
     iconClickable: false,
     iconRight: () => getDefault("autocomplete.iconRight"),
@@ -512,6 +513,7 @@ defineExpose({
                     :icon-right="computedIconRight"
                     :icon-right-clickable="computedIconRightClickable"
                     :icon-pack="iconPack"
+                    :icon-size="iconSize"
                     :placeholder="placeholder"
                     :maxlength="maxlength"
                     :autocomplete="autocomplete"

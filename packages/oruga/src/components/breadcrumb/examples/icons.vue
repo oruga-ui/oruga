@@ -30,15 +30,15 @@ const size = ref<string>("");
         <o-breadcrumb :size="size">
             <o-breadcrumb-item
                 label="Home"
-                icon-left="home"
+                icon="home"
                 :icon-size="iconSize" />
             <o-breadcrumb-item
                 label="Docs"
-                icon-left="plus"
+                icon="plus"
                 :icon-size="iconSize" />
             <o-breadcrumb-item
                 label="Breadcrumb"
-                icon-left="location"
+                icon="location"
                 :icon-size="iconSize"
                 active />
         </o-breadcrumb>

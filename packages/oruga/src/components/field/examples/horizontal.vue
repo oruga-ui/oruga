@@ -35,7 +35,7 @@
         <o-field horizontal>
             <o-button
                 variant="primary"
-                icon-left="envelope"
+                icon="envelope"
                 label="Send message"
                 outlined />
         </o-field>

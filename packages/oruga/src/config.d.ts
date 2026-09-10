@@ -68,6 +68,10 @@ declare module "./index" {
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
@@ -239,6 +243,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Icon pack to use
                  */
                 iconPack: string;
+                /**
+                 * Size of the icon
+                 */
+                iconSize: string;
                 /**
                  * Enable rounded style
                  */
@@ -596,9 +604,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Icon name for previous icon
                  */
@@ -933,9 +949,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Dropdown content is shown into a modal on mobile
                  */
@@ -1468,6 +1492,10 @@ See icon library documentation for custom classes.
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Size of the icon
+                 */
+                iconSize: string;
                 /**
                  * Add a button/icon to clear the inputed text
                  */
@@ -2288,6 +2316,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Same as native autocomplete options to use in HTML5 validation
                  */
                 autocomplete: string;
@@ -2607,6 +2639,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Icon pack
                  */
                 iconPack: string;
+                /**
+                 * Icon size
+                 */
+                iconSize: string;
                 /**
                  * Class of the step item element.
                  */
@@ -3157,6 +3193,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconPack: string;
                 /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
                  * Tabs item tag name
                  */
                 itemTag: DynamicComponent;
@@ -3296,6 +3336,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconPack: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Close icon name
                  */
                 closeIcon: string;
@@ -3387,9 +3431,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon name of close icon on selected item
                  */
                 closeIcon: string;
+                /**
+                 * Size of the close icon on selected item
+                 */
+                closeIconSize: string;
                 /**
                  * Accessibility label for the close button
                  */
@@ -3476,9 +3528,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Picker content is shown into a modal on mobile
                  */

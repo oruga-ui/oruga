@@ -75,6 +75,8 @@ const props = defineProps({
     icon: { type: String, default: undefined },
     iconRight: { type: String, default: undefined },
     iconRightClickable: { type: Boolean, default: undefined },
+    iconRightVariant: { type: String, default: undefined },
+    iconSize: { type: String, default: undefined },
     expanded: { type: Boolean, default: undefined },
     rounded: { type: Boolean, default: undefined },
     disabled: { type: Boolean, default: undefined },
@@ -348,8 +350,10 @@ defineExpose({ focus: setFocus });
                 :size="size"
                 :icon-pack="iconPack"
                 :icon="icon"
+                :icon-size="iconSize"
                 :icon-right="iconRight"
                 :icon-right-clickable="iconRightClickable"
+                :icon-right-variant="iconRightVariant"
                 :expanded="expanded"
                 :rounded="rounded"
                 :disabled="disabled"
@@ -378,8 +382,10 @@ defineExpose({ focus: setFocus });
                 :size="size"
                 :icon-pack="iconPack"
                 :icon="icon"
+                :icon-size="iconSize"
                 :icon-right="iconRight"
                 :icon-right-clickable="iconRightClickable"
+                :icon-right-variant="iconRightVariant"
                 :rounded="rounded"
                 :disabled="disabled"
                 :readonly="initialNativeType == 'text'"
