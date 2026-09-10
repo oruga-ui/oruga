@@ -3607,7 +3607,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Position of the Tooltip relative to the trigger
                  */
-                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
+                position: PopoverPosition;
                 /**
                  * Tooltip default animation
                  */
@@ -3616,45 +3616,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Limit the tooltip content width
                  */
                 maxWidth: string;
-                /**
-                 * Tooltip trigger tag name
-                 */
-                triggerTag: DynamicComponent;
-                /**
-                 * Show when hover over the trigger
-                 * @deprecated will be removed
-                 */
-                openOnHover: boolean;
-                /**
-                 * Show when trigger get focused
-                 * @deprecated will be removed
-                 */
-                openOnFocus: boolean;
-                /**
-                 * Show when clicked on the trigger
-                 * @deprecated will be removed - use OPopover instead
-                 */
-                openOnClick: boolean;
-                /**
-                 * Show when right clicked on the trigger
-                 * @deprecated will be removed - use OPopover instead
-                 */
-                openOnContextmenu: boolean;
-                /**
-                 * Close on hover out of the content
-                 * @deprecated will be removed
-                 */
-                closeable: boolean;
-                /**
-                 * Close when clicked outside of the panel
-                 * @deprecated will be removed
-                 */
-                closeOnOutside: boolean;
-                /**
-                 * Close when pressing escape key
-                 * @deprecated will be removed
-                 */
-                closeOnEscape: boolean;
                 /**
                  * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
@@ -3666,42 +3627,33 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 rootClass: ClassDefinition;
                 /**
-                 * Class of the root element when teleported
+                 * Class of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
+                /**
+                 * Class for the root element when active
+                 */
+                activeClass: ClassDefinition;
+                /**
+                 * Class of the content element when teleported
                  */
                 teleportClass: ClassDefinition;
-                /**
-                 * Class of the trigger element
-                 */
-                triggerClass: ClassDefinition;
                 /**
                  * Class of the content element
                  */
                 contentClass: ClassDefinition;
                 /**
-                 * Class of the content element with position
+                 * Class of the content element when active
                  */
-                positionClass: ClassDefinition;
+                contentActiveClass: ClassDefinition;
                 /**
                  * Class of the content element with variant
                  */
-                variantClass: ClassDefinition;
-                /**
-                 * Class of the content element when is multiline
-                 * @deprecated `multiple` prop will be removed
-                 */
-                multilineClass: ClassDefinition;
-                /**
-                 * Class of the content element when is always visible
-                 */
-                alwaysClass: ClassDefinition;
+                contentVariantClass: ClassDefinition;
                 /**
                  * Class of the arrow element
                  */
                 arrowClass: ClassDefinition;
-                /**
-                 * Class of the arrow element with position
-                 */
-                arrowPositionClass: ClassDefinition;
                 /**
                  * Class of the arrow element with variant
                  */
