@@ -94,22 +94,6 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
             data.mobile = "reduced";
         },
     },
-    scrollClipClass: {
-        class: "scrollClipClass",
-        description: "Class of the body when is visible and scroll is clipped.",
-        properties: ["clipScroll"],
-        action: (data): void => {
-            data.clipScroll = true;
-        },
-    },
-    scrollKeepClass: {
-        class: "scrollKeepClass",
-        description: "Class of the body when is visible and scroll is keeped.",
-        properties: ["clipScroll"],
-        action: (data): void => {
-            data.clipScroll = false;
-        },
-    },
 };
 </script>
 

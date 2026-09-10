@@ -80,11 +80,12 @@ export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
      */
     teleport?: boolean | string | object;
     /**
-     * Set `true` to remove the body scrollbar.
-     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-     * but will set the body to a fixed position, which may break some layouts.
+     * Strategy used to prevent background scrolling when open.
+     * `clip` removes the body scrollbar via `overflow: hidden`.
+     * `keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+     * @values clip, keep
      */
-    clipScroll?: boolean;
+    scrollStrategy?: "clip" | "keep";
     /** Ensures that each input has an accessible name. */
     labelledby?: string;
     /** Accessibility aria-label to be passed to the trigger element - usefull if selectable */
@@ -119,10 +120,6 @@ export type DropdownClasses = Partial<{
     contentModalClass: ComponentClass;
     /** Class of the content element when should has a backdrop */
     contentBackdropClass: ComponentClass;
-    /** Class of the body when dropdown is open and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when dropdown is open and scroll is keeped */
-    scrollKeepClass: ComponentClass;
 }>;
 
 export type DropdownItemProps<T> = {

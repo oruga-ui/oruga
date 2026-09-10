@@ -52,7 +52,8 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     closeOnBackdrop: () => getDefault("dialog.closeOnBackdrop", true),
     closeOnEscape: () => getDefault("dialog.closeOnEscape", true),
     closeOnConfirm: () => getDefault("dialog.closeOnConfirm", false),
-    blockScroll: () => getDefault("dialog.blockScroll", true),
+    lockScroll: () => getDefault("dialog.lockScroll", true),
+    scrollStrategy: () => getDefault("dialog.scrollStrategy", "keep"),
     textPosition: undefined,
     title: undefined,
     subtitle: undefined,
@@ -196,14 +197,14 @@ const closedBy = computed(() => {
 
 // #region --- Scroll Feature ---
 
-const toggleScroll = usePreventScrolling(props.blockScroll);
+const toggleScroll = usePreventScrolling(props.scrollStrategy);
 
 watch(
     isActive,
     (value) => {
-        if (hasBackdrop.value) toggleScroll(value);
+        if (props.lockScroll && hasBackdrop.value) toggleScroll(value);
     },
-    { immediate: true },
+    { immediate: true, flush: "post" },
 );
 
 // #endregion --- Scroll Feature ---

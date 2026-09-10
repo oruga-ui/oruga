@@ -167,24 +167,6 @@ const inspectData: InspectData<
             data.icon = "home";
         },
     },
-    scrollClipClass: {
-        class: "scrollClipClass",
-        description: "Class of the body when is open and scroll is clipped.",
-        properties: ["clipScroll"],
-        action: (data): void => {
-            data.clipScroll = true;
-            data.active = true;
-        },
-    },
-    scrollKeepClass: {
-        class: "scrollKeepClass",
-        description: "Class of the body when is open and scroll is keeped.",
-        properties: ["clipScroll"],
-        action: (data): void => {
-            data.clipScroll = false;
-            data.active = true;
-        },
-    },
 };
 </script>
 

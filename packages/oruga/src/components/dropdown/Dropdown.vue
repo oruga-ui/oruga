@@ -89,7 +89,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     mobileBreakpoint: () => getDefault("dropdown.mobileBreakpoint"),
     animation: () => getDefault("dropdown.animation", "fade"),
     teleport: () => getDefault("dropdown.teleport", false),
-    clipScroll: () => getDefault("dropdown.clipScroll", false),
+    scrollStrategy: () => getDefault("dropdown.scrollStrategy", "keep"),
     ariaLabel: undefined,
 });
 
@@ -236,19 +236,23 @@ const contentStyle = computed(() => ({
 
 const hoverable = computed(() => props.openOnHover);
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
+const toggleScroll = usePreventScrolling(props.scrollStrategy);
 
 watch(
     isActive,
     (value) => {
-        // on active set event handler if not open as modal
-        if (value) {
-            // keep first option always pre-focused
-            if (props.keepFirst && !focusedItem.value) moveFocus(1);
-        }
-        if (isModal.value) toggleScroll(value);
+        // keep first option always pre-focused
+        if (value && props.keepFirst && !focusedItem.value) moveFocus(1);
     },
     { flush: "post" },
+);
+
+watch(
+    isActive,
+    (value) => {
+        if (isModal.value) toggleScroll(value);
+    },
+    { immediate: true, flush: "post" },
 );
 
 // #region --- Child Items ---
