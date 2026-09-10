@@ -84,6 +84,8 @@ const thumbEndRef = useTemplateRef("thumbEndComponent");
 const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,
+    valueStart: valueStart.value,
+    valueEnd: Math.max(valueEnd.value, valueStart.value),
 }));
 
 /** provide functionalities and data to child item components */
@@ -97,11 +99,17 @@ const isThumbReversed = ref();
 const isTrackClickDisabled = ref();
 
 const minValue = computed(() =>
-    Math.min(valueStart.value || props.min, valueEnd.value || props.max),
+    Math.min(
+        Math.max(valueStart.value, props.min),
+        Math.min(valueEnd.value, props.max),
+    ),
 );
 
 const maxValue = computed(() =>
-    Math.max(valueStart.value || props.min, valueEnd.value || props.max),
+    Math.max(
+        Math.max(valueStart.value, props.min),
+        Math.min(valueEnd.value, props.max),
+    ),
 );
 
 const isRange = computed(() => isTrueish(props.range));
@@ -160,28 +168,30 @@ function setValues(newValue: number | number[] | undefined): void {
 const tickValues = computed(() => {
     if (!props.ticks || props.min > props.max || props.step === 0) return [];
     const result: number[] = [];
-    for (let i = props.min + props.step; i < props.max; i = i + props.step) {
+    for (let i = props.min; i <= props.max; i = i + props.step) {
         result.push(i);
     }
     return result;
 });
 
-const barSize = computed(() =>
-    isRange.value
+const barSize = computed(() => {
+    if (props.max === props.min) return "100%";
+    return isRange.value
         ? `${
               (100 * (maxValue.value - minValue.value)) /
               (props.max - props.min)
           }%`
         : `${
               (100 * (valueStart.value - props.min)) / (props.max - props.min)
-          }%`,
-);
+          }%`;
+});
 
-const barStart = computed(() =>
-    isRange.value
+const barStart = computed(() => {
+    if (props.max === props.min) return "0%";
+    return isRange.value
         ? `${(100 * (minValue.value - props.min)) / (props.max - props.min)}%`
-        : "0%",
-);
+        : "0%";
+});
 
 const barStyle = computed(() => ({
     width: barSize.value,
@@ -192,7 +202,7 @@ function getSliderSize(): number {
     return sliderRef.value?.getBoundingClientRect().width || 0;
 }
 
-function onSliderClick(event: MouseEvent): void {
+function onSliderClick(event: PointerEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
     if (
         !sliderRef.value ||
@@ -260,7 +270,7 @@ const trackClasses = defineClasses(["trackClass", "o-slider__track"]);
 const fillClasses = defineClasses(
     ["fillClass", "o-slider__fill"],
     [
-        "variantClass",
+        "fillVariantClass",
         "o-slider__fill--",
         computed(() => props.variant),
         computed(() => !!props.variant),

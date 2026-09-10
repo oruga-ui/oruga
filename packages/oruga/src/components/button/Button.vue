@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     iconPack: () => getDefault("button.iconPack"),
     iconLeft: undefined,
     iconRight: undefined,
+    ariaLabel: undefined,
 });
 
 defineEmits<{
@@ -48,6 +49,10 @@ defineEmits<{
 defineSlots<{
     /** Override the label, default is label prop */
     default?(): void;
+    /** Override the left icon. */
+    left?(): void;
+    /** Override the right icon. */
+    right?(): void;
 }>();
 
 const computedNativeType = computed(() =>
@@ -98,8 +103,6 @@ const rootClasses = defineClasses(
     ],
 );
 
-const wrapperClasses = defineClasses(["wrapperClass", "o-button__wrapper"]);
-
 const labelClasses = defineClasses(["labelClass", "o-button__label"]);
 
 const iconClasses = defineClasses(["iconClass", "o-button__icon"]);
@@ -124,27 +127,30 @@ const iconRightClasses = defineClasses([
         :class="rootClasses"
         :disabled="disabled ? true : null"
         :aria-disabled="disabled ? true : null"
+        :aria-label="ariaLabel"
         @click="$emit('click', $event)"
         @keydown.enter.prevent="$emit('click', $event)"
         @keydown.space.prevent="$emit('click', $event)">
-        <span :class="wrapperClasses">
+        <slot name="left">
             <o-icon
                 v-if="iconLeft"
                 :pack="iconPack"
                 :icon="iconLeft"
                 :size="size"
                 :class="[...iconClasses, ...iconLeftClasses]" />
+        </slot>
 
-            <span v-if="label || $slots.default" :class="labelClasses">
-                <slot>{{ label }}</slot>
-            </span>
+        <span v-if="label || $slots.default" :class="labelClasses">
+            <slot>{{ label }}</slot>
+        </span>
 
+        <slot name="right">
             <o-icon
                 v-if="iconRight"
                 :pack="iconPack"
                 :icon="iconRight"
                 :size="size"
                 :class="[...iconClasses, ...iconRightClasses]" />
-        </span>
+        </slot>
     </component>
 </template>

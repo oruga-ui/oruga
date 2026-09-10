@@ -29,6 +29,7 @@ type PovidedData<P, I = unknown> = {
     registerItem: (
         el: MaybeRefOrGetter<HTMLElement | null>,
         data: MaybeRefOrGetter<I>,
+        identifier?: string,
     ) => ProviderItem<I>;
     unregisterItem: (item: ProviderItem) => void;
     total: ComputedRef<number>;
@@ -119,9 +120,9 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
     function registerItem(
         el: MaybeRefOrGetter<HTMLElement | null>,
         data: MaybeRefOrGetter<ItemData>,
+        identifier: string = nextIndex(),
     ): ProviderItem<ItemData> {
         const index = childItems.value.length;
-        const identifier = nextIndex();
         const item = { el, index, identifier, data };
         // add new item to the child list
         // this unwraps all inner refs
@@ -173,6 +174,10 @@ type ProviderChildOptions<T = unknown> = {
      * @default true
      */
     register?: boolean;
+    /**
+     * Define a custom identifier for the child item
+     */
+    identifier?: string;
 };
 
 export function useProviderChild<ParentData = undefined, ItemData = unknown>(
@@ -274,7 +279,8 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
     const item = ref<ProviderItem<ItemData>>();
 
     // register item at parent
-    if (parent && options.register) item.value = parent.registerItem(el, data);
+    if (parent && options.register)
+        item.value = parent.registerItem(el, data, options.identifier);
 
     onUnmounted(() => {
         // unregister item at parent on item unmount

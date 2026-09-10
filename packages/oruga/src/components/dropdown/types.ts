@@ -18,7 +18,7 @@ export type DropdownItemComponent<T> = {
     label: string;
     isViable: boolean;
     setHidden: (hidden: boolean) => void;
-    selectItem: (event: Event) => void;
+    selectItem: () => void;
 };
 
 export type DropdownChildItem<T> = ProviderItem<DropdownItemComponent<T>>;

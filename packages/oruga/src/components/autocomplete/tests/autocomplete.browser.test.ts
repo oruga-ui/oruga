@@ -2,52 +2,47 @@ import { describe, expect, test } from "vitest";
 import { userEvent } from "vitest/browser";
 import { render } from "vitest-browser-vue";
 
-import { defineComponent, h, ref } from "vue";
+import { defineComponent, h, ref, type VNode } from "vue";
 
 import OAutocomplete from "../Autocomplete.vue";
 import OField from "../../field/Field.vue";
 
-const SimpleAutocomplete = defineComponent({
-    name: "SimpleAutocomplete",
-    setup() {
-        const options = [
-            "Angular 2",
-            "Ember",
-            "jQuery",
-            "Meteor",
-            "Node.js",
-            "React",
-            "RxJS",
-            "Vue.js",
-        ];
-        const name = ref("");
-        const selected = ref<string>();
+const SimpleAutocomplete = defineComponent(() => {
+    const options = [
+        "Angular 2",
+        "Ember",
+        "jQuery",
+        "Meteor",
+        "Node.js",
+        "React",
+        "RxJS",
+        "Vue.js",
+    ];
+    const name = ref<string>("");
+    const selected = ref<string>();
 
-        return { options, name, selected };
-    },
-    render() {
-        return h(
+    return (): VNode =>
+        h(
             OField,
             { label: "Find a JS framework" },
             {
                 default: () =>
                     h(OAutocomplete, {
-                        modelValue: this.name,
+                        modelValue: name.value,
                         "onUpdate:modelValue": (val) => {
-                            this.name = val;
+                            name.value = val as string;
                         },
-                        options: this.options,
+                        options: options,
                         placeholder: "e.g. jQuery",
                         icon: "search",
                         clearable: true,
                         onSelect: (val) => {
-                            this.selected = val;
+                            selected.value = val as string;
                         },
                     }),
                 empty: () => "No results found",
             },
         );
-    },
 });
 
 describe("<Autocomplete>", () => {

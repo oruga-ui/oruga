@@ -9,11 +9,12 @@ import type { StepsProps } from "../props";
 
 type ExampleProps = ComponentProps<typeof StepsExample>;
 
-describe("OSteps axe tests", () => {
+describe("OSteps a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
         title: string;
+        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         props?: StepsProps<unknown> & ExampleProps;
     }[] = [
         {

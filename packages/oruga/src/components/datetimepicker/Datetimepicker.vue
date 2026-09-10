@@ -150,8 +150,11 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { checkHtml5Validity, setFocus, onBlur, onFocus, onInvalid } =
-    useInputHandler(elementRef, emits, props);
+const { checkHtml5Validity, setFocus, setBlur } = useInputHandler(
+    elementRef,
+    props,
+    emits,
+);
 
 const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 
@@ -266,7 +269,7 @@ const timepickerDisabled = computed(
 // #region --- Formatter / Parser ---
 
 /** Format date into string */
-function format(value: Date): string {
+function format(value: Date | undefined): string {
     return datetimeFormatter(value);
 }
 
@@ -344,7 +347,12 @@ const timepickerWrapperClasses = defineClasses([
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: vmodel,
+});
 
 // #endregion --- Expose Public Functionalities ---
 </script>
@@ -364,7 +372,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
         :inline="inline"
         :readonly="readonly"
         :expanded="expanded"
-        :close-on-click="false"
         :formatter="format"
         :parser="parse"
         :min-date="minDate"
@@ -385,9 +392,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
         :teleport="teleport"
         :use-html5-validation="false"
         @update:model-value="updateVModel"
-        @focus="onFocus"
-        @blur="onBlur"
-        @invalid="onInvalid"
         @change-month="$emit('change-month', $event)"
         @change-year="$emit('change-year', $event)"
         @icon-click="$emit('icon-click', $event)"
@@ -431,8 +435,5 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
         :disabled="disabled"
         :readonly="false"
         :use-html5-validation="false"
-        @change="onChangeNativePicker"
-        @focus="onFocus"
-        @blur="onBlur"
-        @invalid="onInvalid" />
+        @change="onChangeNativePicker" />
 </template>

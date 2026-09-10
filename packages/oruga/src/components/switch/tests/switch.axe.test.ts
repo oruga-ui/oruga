@@ -6,7 +6,7 @@ import { nextTick } from "vue";
 import OSwitch from "../Switch.vue";
 import type { SwitchProps } from "../props";
 
-describe("OSwitch axe tests", () => {
+describe("OSwitch a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: { title: string; props?: SwitchProps<unknown> }[] = [

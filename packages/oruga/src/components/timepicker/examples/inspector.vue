@@ -12,6 +12,23 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         description: "Class of the root element when on mobile.",
         info: "Switch to mobile view to see it in action!",
     },
+    teleportClass: {
+        class: "teleportClass",
+        description: "Class of the root element when teleported.",
+        properties: ["teleport"],
+        action: (data): void => {
+            data.teleport = true;
+            data.active = true;
+        },
+    },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (data): void => {
+            data.disabled = true;
+        },
+    },
     sizeClass: {
         class: "sizeClass",
         description: "Class of the root element with size.",
@@ -22,10 +39,81 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
             data.active = true;
         },
     },
-    boxClass: {
-        class: "boxClass",
+    expandedClass: {
+        class: "expandedClass",
+        description: "Class of the root element when expanded.",
+        properties: ["expanded"],
+        action: (data): void => {
+            data.expanded = true;
+        },
+    },
+    inlineClass: {
+        class: "inlineClass",
+        description: "Class of the root element when inlined.",
+        properties: ["inline"],
+        action: (data): void => {
+            data.inline = true;
+        },
+    },
+    activeClass: {
+        class: "activeClass",
+        description: "Class of the root element when active.",
+        properties: ["active"],
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    triggerClass: {
+        class: "triggerClass",
+        description: "Class of the trigger element.",
+    },
+    contentClass: {
+        class: "contentClass",
         description:
-            "Class of the dropdown box element where you choose the date.",
+            "Class of the box container element where you choose the date.",
+        action: (data): void => {
+            data.inline = true;
+            data.active = true;
+        },
+    },
+    contentModalClass: {
+        class: "contentModalClass",
+        description: "Class of the content element when shown as modal.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+            data.active = true;
+        },
+    },
+    contentBackdropClass: {
+        class: "contentBackdropClass",
+        description: "Class of the content when should has a backdrop.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+            data.active = true;
+        },
+    },
+    contentActiveClass: {
+        class: "contentActiveClass",
+        description: "Class of the content element when active.",
+        properties: ["active"],
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    headerClass: {
+        class: "headerClass",
+        description: "Class of the content header element.",
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    bodyClass: {
+        class: "bodyClass",
+        description: "Class of the content body element.",
         action: (data): void => {
             data.active = true;
         },
@@ -39,7 +127,7 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
     },
     footerClass: {
         class: "footerClass",
-        description: "Class of the footer element.",
+        description: "Class of the content footer element.",
         action: (data): void => {
             data.active = true;
         },
@@ -47,34 +135,23 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
     inputClass: {
         class: "inputClass",
         description: "Class to apply on the input element.",
-        relatedClass: "inputClasses.rootClass",
+        relatedClass: "inputAttrs.rootClass",
         relatedComponent: "Input",
     },
-    inputClasses: {
-        class: "inputClasses",
-        description: "Classes to apply on the internal input component.",
+    inputAttrs: {
+        class: "inputAttrs",
+        description: "Properties to apply on the internal input component.",
         relatedComponent: "Input",
     },
-    dropdownClass: {
-        class: "dropdownClass",
-        description: "Class to apply on the dropdown element.",
-        relatedClass: "dropdownClasses.rootClass",
-        relatedComponent: "Dropdown",
-        action: (data): void => {
-            data.active = true;
-        },
+    selectClass: {
+        class: "selectClass",
+        description: "Class to apply on the select element.",
+        relatedClass: "selectAttrs.rootClass",
+        relatedComponent: "Select",
     },
-    dropdownClasses: {
-        class: "dropdownClasses",
-        description: "Classes to apply on the internal dropdown component.",
-        relatedComponent: "Dropdown",
-        action: (data): void => {
-            data.active = true;
-        },
-    },
-    selectClasses: {
-        class: "selectClasses",
-        description: "Classes to apply on the internal select component.",
+    selectAttrs: {
+        class: "selectAttrs",
+        description: "Properties to apply on the internal select component.",
         relatedComponent: "Select",
         action: (data): void => {
             data.active = true;

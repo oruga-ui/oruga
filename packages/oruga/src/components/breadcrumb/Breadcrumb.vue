@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useTemplateRef } from "vue";
 
+import OBreadcrumbItem from "../breadcrumb/BreadcrumbItem.vue";
+
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,

@@ -46,7 +46,7 @@ link.href =
 shadowRoot.appendChild(link);
 </script>
 
-<!-- eslint-disable-next-line vue/valid-template-root -->
+<!-- eslint-disable-next-line vue/valid-template-root vue/no-empty-component-block -->
 <template></template>
 
 <style lang="scss">
@@ -68,5 +68,9 @@ shadowRoot.appendChild(link);
 // bulma web component color fix
 [data-theme="light"] {
     --bulma-label-color: var(--bulma-text-strong);
+}
+
+[popover]:where(:not(:popover-open)) {
+    display: none !important;
 }
 </style>

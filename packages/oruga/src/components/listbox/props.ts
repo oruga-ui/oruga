@@ -1,11 +1,12 @@
 import type { ComponentClass, OptionsOrGroupsProp } from "@/types";
 import type { InputProps } from "../input/props";
+import type { CheckboxProps } from "../checkbox/props";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type ListboxOptions<T> = OptionsOrGroupsProp<ListItemProps<T>>;
 
-export type ListboxProps<T, IsMultiple extends boolean = false> = {
+export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -22,7 +23,7 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     /** Interaction is disabled */
     disabled?: boolean;
     /** Enable a checkbox on the item element */
-    // checkable?: boolean;
+    checkable?: boolean;
     /** Enables item selection */
     selectable?: boolean;
     /** Select current focused item when focused */
@@ -50,7 +51,7 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     iconPack?: string;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Defines a string value that labels an interactive element. */
+    /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
@@ -82,7 +83,7 @@ export type ListboxClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: InputProps<false>;
+    inputAttrs: InputProps<boolean>;
 }>;
 
 export type ListItemProps<T> = {
@@ -111,15 +112,10 @@ export type ListItemProps<T> = {
      * @values small, medium, large
      */
     iconSize?: string;
-    /** Defines a string value that labels an interactive element. */
+    /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
-    /**
-     * Internal parent provider key override
-     * @ignore
-     */
-    parentKey?: string;
 } & ListItemClasses;
 
 // class props (will not be displayed in the docs)
@@ -134,4 +130,13 @@ export type ListItemClasses = Partial<{
     itemFocusedClass: ComponentClass;
     /** Class of the item element when is disabled */
     itemDisabledClass: ComponentClass;
+    /** Class of the item icon element */
+    itemIconClass: ComponentClass;
+    /** Class for the HTML checkbox element when checkable */
+    checkboxClass: ComponentClass;
+    /**
+     * Class configuration for the internal checkbox component
+     * @ignore
+     */
+    checkboxAttrs: CheckboxProps<boolean>;
 }>;

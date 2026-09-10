@@ -6,7 +6,7 @@ import { nextTick } from "vue";
 import ORadio from "../Radio.vue";
 import type { RadioProps } from "../props";
 
-describe("OCheckbox axe tests", () => {
+describe("OCheckbox a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: { title: string; props?: RadioProps<unknown> }[] = [

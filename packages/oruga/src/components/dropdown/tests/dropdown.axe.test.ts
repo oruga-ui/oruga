@@ -8,7 +8,7 @@ import type { OptionsProp } from "@/composables";
 import ODropdown from "../Dropdown.vue";
 import type { DropdownProps } from "../props";
 
-describe("ODropdown axe tests", () => {
+describe("ODropdown a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: OptionsProp = [
@@ -29,11 +29,11 @@ describe("ODropdown axe tests", () => {
     }[] = [
         {
             title: "axe dropdown - base case",
-            props: { options },
+            props: { options, label: "Trigger" },
         },
         {
             title: "axe dropdown - active",
-            props: { options, active: true },
+            props: { options, active: true, label: "Trigger" },
         },
         {
             title: "axe dropdown - selectable",
@@ -74,23 +74,30 @@ describe("ODropdown axe tests", () => {
             },
         },
         {
-            title: "axe dropdown - inline",
-            props: { options, inline: true },
-        },
-        {
             title: "axe dropdown - position",
-            props: {
-                options,
-                position: "right",
-            },
+            props: { options, position: "right", label: "Trigger" },
         },
         {
             title: "axe dropdown - expanded",
-            props: { options, expanded: true },
+            props: { options, expanded: true, label: "Trigger" },
         },
         {
             title: "axe dropdown - teleport",
-            props: { options, teleport: true },
+            props: { options, teleport: true, label: "Trigger" },
+        },
+        {
+            title: "axe dropdown - href",
+            props: {
+                options: [
+                    ...options,
+                    {
+                        label: "Item 10",
+                        value: 10,
+                        href: "google.com",
+                        target: "_blank",
+                    },
+                ],
+            },
         },
     ];
 

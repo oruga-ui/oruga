@@ -49,7 +49,7 @@ describe("useLoadingProgrammatic tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test mounting with target correctly", async () => {
+    test("test mounting with target correctly", () => {
         const container = document.createElement("div");
         container.id = "my-cool-container";
         document.body.appendChild(container);
@@ -79,7 +79,7 @@ describe("useLoadingProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(1);
     });
 
-    test("test mounting with custom component correctly", async () => {
+    test("test mounting with custom component correctly", () => {
         const label = "My loading Content";
 
         // open element
@@ -101,7 +101,7 @@ describe("useLoadingProgrammatic tests", () => {
         expect(loading).toBeNull();
     });
 
-    test("test close event working correctly", async () => {
+    test("test close event working correctly", () => {
         const label = "My loading Content";
         const onClose = vi.fn();
 

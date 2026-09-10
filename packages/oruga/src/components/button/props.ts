@@ -46,6 +46,8 @@ export type ButtonProps = {
      * @values button, submit, reset
      */
     type?: "button" | "submit" | "reset";
+    /** Defines an accessible string value that labels an interactive element. */
+    ariaLabel?: string;
 } & ButtonClasses;
 
 // class props (will not be displayed in the docs)
@@ -68,8 +70,6 @@ export type ButtonClasses = Partial<{
     roundedClass: ComponentClass;
     /** Class of the root element when disabled */
     disabledClass: ComponentClass;
-    /** Class of the inner wrapper element */
-    wrapperClass: ComponentClass;
     /** Class of the icon element */
     iconClass: ComponentClass;
     /** Class of the icon element on the left */

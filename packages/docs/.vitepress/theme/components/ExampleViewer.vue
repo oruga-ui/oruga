@@ -22,21 +22,25 @@ const codeComputed = computed(() => {
 });
 
 const scriptCode = computed(() => {
-    if (!codeComputed.value.includes('<script setup lang="ts">')) return "";
+    let scriptTag;
+    if (codeComputed.value.includes("<script setup>"))
+        scriptTag = "<script setup>";
+    else if (codeComputed.value.includes('<script setup lang="ts">'))
+        scriptTag = '<script setup lang="ts">';
+    else return "";
 
-    const startIndex =
-        codeComputed.value.indexOf('<script setup lang="ts">') +
-        '<script setup lang="ts">'.length;
+    const startIndex = codeComputed.value.indexOf(scriptTag) + scriptTag.length;
     const endIndex = codeComputed.value.lastIndexOf("/script>") - 1;
 
     return codeComputed.value.substring(startIndex, endIndex);
 });
 
 const templateCode = computed(() => {
-    if (!codeComputed.value.includes("<template>")) return "";
+    const templateTag = "<template>";
+    if (!codeComputed.value.includes(templateTag)) return "";
 
     const startIndex =
-        codeComputed.value.indexOf("<template>") + "<template>".length;
+        codeComputed.value.indexOf(templateTag) + templateTag.length;
     const endIndex = codeComputed.value.lastIndexOf("</template>");
 
     return (
@@ -112,7 +116,7 @@ onMounted(() => {
 });
 
 function copy(val: string): void {
-    setTimeout(() => navigator.clipboard.writeText(val), 300);
+    setTimeout(() => void navigator.clipboard.writeText(val), 300);
 }
 </script>
 

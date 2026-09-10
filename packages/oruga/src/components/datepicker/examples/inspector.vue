@@ -26,6 +26,14 @@ const inspectData: InspectData<
         description: "Class of the root element when on mobile.",
         info: "Switch to mobile view to see it in action!",
     },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (data): void => {
+            data.disabled = true;
+        },
+    },
     sizeClass: {
         class: "sizeClass",
         description: "Class of the root element with size.",
@@ -43,18 +51,75 @@ const inspectData: InspectData<
             data.expanded = true;
         },
     },
-    boxClass: {
-        class: "boxClass",
+    inlineClass: {
+        class: "inlineClass",
+        description: "Class of the root element when inlined.",
+        properties: ["inline"],
+        action: (data): void => {
+            data.inline = true;
+        },
+    },
+    teleportClass: {
+        class: "teleportClass",
+        description: "Class of the root element when teleported.",
+        properties: ["teleport"],
+        action: (data): void => {
+            data.teleport = true;
+            data.active = true;
+        },
+    },
+    activeClass: {
+        class: "activeClass",
+        description: "Class of the root element when active.",
+        properties: ["active"],
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    triggerClass: {
+        class: "triggerClass",
+        description: "Class of the trigger element.",
+    },
+    contentClass: {
+        class: "contentClass",
         description:
-            "Class of the box container element where you choose the date.",
+            "Class of the content container element where you choose the date.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
         },
     },
+    contentActiveClass: {
+        class: "contentActiveClass",
+        description: "Class of the content element when active.",
+        properties: ["active"],
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    contentModalClass: {
+        class: "contentModalClass",
+        description: "Class of the content element when shown as modal.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+            data.active = true;
+        },
+    },
+    contentBackdropClass: {
+        class: "contentBackdropClass",
+        description: "Class of the content when should has a backdrop.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+            data.active = true;
+        },
+    },
     headerClass: {
         class: "headerClass",
-        description: "Class of the header element inside the box.",
+        description: "Class of the content header element.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -62,7 +127,7 @@ const inspectData: InspectData<
     },
     prevButtonClass: {
         class: "prevButtonClass",
-        description: "Class of the prev button element inside the box.",
+        description: "Class of the prev button element inside the header.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -70,7 +135,7 @@ const inspectData: InspectData<
     },
     nextButtonClass: {
         class: "nextButtonClass",
-        description: "Class of the next button element inside the box.",
+        description: "Class of the next button element inside the header.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -79,7 +144,7 @@ const inspectData: InspectData<
     listsClass: {
         class: "listsClass",
         description:
-            "Class of the month and year selects container inside the box.",
+            "Class of the month and year selects container inside the header.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -87,7 +152,7 @@ const inspectData: InspectData<
     },
     footerClass: {
         class: "footerClass",
-        description: "Class of the footer element.",
+        description: "Class of the content footer element.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -95,7 +160,7 @@ const inspectData: InspectData<
     },
     tableClass: {
         class: "tableClass",
-        description: "Class of the dates table element inside the box",
+        description: "Class of the dates table element.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -120,7 +185,7 @@ const inspectData: InspectData<
     },
     tableBodyClass: {
         class: "tableBodyClass",
-        description: "Class of the table body element inside the box.",
+        description: "Class of the table body element.",
         action: (data): void => {
             data.inline = true;
             data.active = true;
@@ -318,8 +383,7 @@ const inspectData: InspectData<
     },
     monthClass: {
         class: "monthClass",
-        description:
-            "Class of the month table element inside the box when type is `month`.",
+        description: "Class of the month table element inside type is `month`.",
         properties: ["type"],
         action: (data): void => {
             data.inline = true;
@@ -528,35 +592,24 @@ const inspectData: InspectData<
     inputClass: {
         class: "inputClass",
         description: "Class to apply on the input element.",
-        relatedClass: "inputClasses.rootClass",
+        relatedClass: "inputAttrs.rootClass",
         relatedComponent: "Input",
     },
-    inputClasses: {
-        class: "inputClasses",
-        description: "Classes to apply on the internal input component.",
+    inputAttrs: {
+        class: "inputAttrs",
+        description: "Properties to apply on the internal input component.",
         relatedComponent: "Input",
     },
-    dropdownClass: {
-        class: "dropdownClass",
-        description: "Class to apply on the dropdown element.",
-        relatedClass: "dropdownClasses.rootClass",
-        relatedComponent: "Dropdown",
-        action: (data): void => {
-            data.active = true;
-        },
+    selectClass: {
+        class: "selectClass",
+        description: "Class to apply on the select element.",
+        relatedClass: "selectAttrs.rootClass",
+        relatedComponent: "Select",
     },
-    dropdownClasses: {
-        class: "dropdownClasses",
-        description: "Classes to apply on the internal dropdown component.",
-        relatedComponent: "Dropdown",
-        action: (data): void => {
-            data.active = true;
-        },
-    },
-    selectClasses: {
-        class: "selectClasses",
+    selectAttrs: {
+        class: "selectAttrs",
         description:
-            "Classes to apply on the internal select component (month and year list).",
+            "Properties to apply on the internal select component (month and year list).",
         relatedComponent: "Select",
         action: (data): void => {
             data.active = true;

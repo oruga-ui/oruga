@@ -1,3 +1,234 @@
+## [0.14.3](https://github.com/oruga-ui/oruga/compare/v0.14.2...v0.14.3) (2026-09-03)
+
+### Bug Fixes
+
+* **datepicker|timepicker:** do not close on popover interaction ([#1742](https://github.com/oruga-ui/oruga/issues/1742)) ([1ccff69](https://github.com/oruga-ui/oruga/commit/1ccff690b035aaac38017d328732b5e822039b51)), closes [#1741](https://github.com/oruga-ui/oruga/issues/1741)
+* **table:** select correct pagination page number for the current-page ([#1748](https://github.com/oruga-ui/oruga/issues/1748)) ([78838f1](https://github.com/oruga-ui/oruga/commit/78838f1ac521759cd936dd78f84c2911d01c926d)), closes [#1743](https://github.com/oruga-ui/oruga/issues/1743)
+
+## [0.14.2](https://github.com/oruga-ui/oruga/compare/v0.14.1...v0.14.2) (2026-08-31)
+
+### Features
+
+* **dialog:** add `draggable` feature ([#1739](https://github.com/oruga-ui/oruga/issues/1739)) ([2f7ece3](https://github.com/oruga-ui/oruga/commit/2f7ece3773addd1248bcc0e28339d189247dcc76))
+* **dialog:** add `size` property and class ([#1735](https://github.com/oruga-ui/oruga/issues/1735)) ([3776b49](https://github.com/oruga-ui/oruga/commit/3776b49f88635abd2f944ad0e3625391791f8910))
+
+### Bug Fixes
+
+* **datepicker|timepicker:** prevent popover closing input on blur event without change ([#1738](https://github.com/oruga-ui/oruga/issues/1738)) ([2a95082](https://github.com/oruga-ui/oruga/commit/2a95082b86b3f07953dae256809984e9fd31b0e5)), closes [#1736](https://github.com/oruga-ui/oruga/issues/1736)
+
+## [0.14.1](https://github.com/oruga-ui/oruga/compare/v0.14.0...v0.14.1) (2026-08-18)
+
+### Features
+
+* allow undefined for class bindings ([#1712](https://github.com/oruga-ui/oruga/issues/1712)) ([1231f24](https://github.com/oruga-ui/oruga/commit/1231f24b9daf652287c890878738af82828786a1))
+* **dropdown:** add item `decorative` property ([#1714](https://github.com/oruga-ui/oruga/issues/1714)) ([0745d5a](https://github.com/oruga-ui/oruga/commit/0745d5a5fcd41c6891a37d2981cbed7e1a2dd32a))
+* **dropdown:** add `href` link support ([#1715](https://github.com/oruga-ui/oruga/issues/1715)) ([fff1d4f](https://github.com/oruga-ui/oruga/commit/fff1d4f3ab042e3b4dadac0a1873b8b1a2504db2))
+* **dropdown:** add icon props to the dropdown item ([#1717](https://github.com/oruga-ui/oruga/issues/1717)) ([329bbc9](https://github.com/oruga-ui/oruga/commit/329bbc93db1064d990948dd29ac560795efea939))
+* **icon:** add `aria-hidden` to not clickable icons ([#1719](https://github.com/oruga-ui/oruga/issues/1719)) ([578d049](https://github.com/oruga-ui/oruga/commit/578d0495e04fef07b8a74d2429cba8b71fd8269f))
+* **listbox:** add `checkable` feature ([#1721](https://github.com/oruga-ui/oruga/issues/1721)) ([1848b4e](https://github.com/oruga-ui/oruga/commit/1848b4ee70ea9f3695aefb5704ca60f7b5ecff9a))
+* **tree:** add `filterable` feature ([#1725](https://github.com/oruga-ui/oruga/issues/1725)) ([d2ac409](https://github.com/oruga-ui/oruga/commit/d2ac409a2fd0324a3d738412df0fccea43e43e77))
+* **tree:** add `checkable` feature ([#1723](https://github.com/oruga-ui/oruga/issues/1723)) ([23c7f94](https://github.com/oruga-ui/oruga/commit/23c7f9414b42602901931cd756a4a858ed484811))
+
+### Bug Fixes
+
+* **datepicker|timepicker:** correct `stayOpen` property feature ([#1731](https://github.com/oruga-ui/oruga/issues/1731)) ([9b316e3](https://github.com/oruga-ui/oruga/commit/9b316e355a7411efe2f9ec4b0d0bbbf2fb269581)), closes [#1729](https://github.com/oruga-ui/oruga/issues/1729)
+* **tree:** collapse items on click when not selectable ([#1720](https://github.com/oruga-ui/oruga/issues/1720)) ([dec4631](https://github.com/oruga-ui/oruga/commit/dec4631e7a4ba5af868ad22ffd9ba943b6a65c00))
+* **tree:** prevent circular reactive update ([#1732](https://github.com/oruga-ui/oruga/issues/1732)) ([0784ebc](https://github.com/oruga-ui/oruga/commit/0784ebc87a5d4384d1b9b88589cadc75296611d7))
+
+## [0.14.0](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.5...v0.14.0) (2026-08-03)
+
+### ⚠ BREAKING CHANGES
+
+* Dropped cjs support. The lib now only get exported as esm build.
+* The property name suffix of the forwarded properties for the sub-components fot renamed from `Classes` to `Attrs`.
+* **collapse:** The OCollapse component now uses the native [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details) element instead of a custom implementation.
+* **button:** The inner wrapper span of the OButton component got removed.
+* **dialog:** The `textPositionClass` property got renamed to `contentPositionClass` to match its relation.
+* **dialog:** The `wrapperClass` property changed to `contentClass`.
+* **drodpown:** The `inline` property of the ODropdown component got removed.
+* **dropdown:** The values for the `position` property of the ODropdown component have changed.
+* **datepicker:** The ODatepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the ODatepicker component has changed.
+* **timepicker:** The OTimepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the OTimepicker component has changed.
+* The ODropdown, ODatepicker, OTimepicker and ODatetimepicker components now using the native [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) instead of a custom implementation.
+* **field:** The property `multiline` of the OField component got removed to better support small screens by default.
+* **notification:** The `wrapperClass` property changed to `contentClass`.
+* **pagination:** The `current` property of the OPagination component got renamed to `modelValue`.
+* **slider:** The `variantClass` property got renamed to `fillVariantClass` to match its relation.
+* **upload:** The `draggableClass` property got renamed to `dragzoneClass`.
+
+### Features
+
+* drop cjs support and build esm only ([#1597](https://github.com/oruga-ui/oruga/issues/1597)) ([39193cd](https://github.com/oruga-ui/oruga/commit/39193cd55bc7b9b6a0939d167070c0d9b399ff13)), closes [#1412](https://github.com/oruga-ui/oruga/issues/1412)
+* expose blur function in input based components ([#1656](https://github.com/oruga-ui/oruga/issues/1656)) ([92aa06f](https://github.com/oruga-ui/oruga/commit/92aa06fc3cea10fb7cc038328723788887edff15))
+* unify popover-api based component classes ([#1672](https://github.com/oruga-ui/oruga/issues/1672)) ([0522c6e](https://github.com/oruga-ui/oruga/commit/0522c6e881772f2df58c2226b38dc5e102ec36cb))
+* **button:** add icon override template slots ([#1680](https://github.com/oruga-ui/oruga/issues/1680)) ([86d358c](https://github.com/oruga-ui/oruga/commit/86d358c648d63586302bb7d00a72e99ab5be3a0b))
+* **button:** remove inner wrapper span ([#1682](https://github.com/oruga-ui/oruga/issues/1682)) ([2e5e609](https://github.com/oruga-ui/oruga/commit/2e5e60916af4a10c14a6656e69f9eb4aca48bc24))
+* **collapse:** rewrite with HTML `details` tag ([#1586](https://github.com/oruga-ui/oruga/issues/1586)) ([76f9c8d](https://github.com/oruga-ui/oruga/commit/76f9c8dc9ab23c60b68390b953391cba5aba4e4b))
+* **datepicker|timepicker:** add inline class ([#1690](https://github.com/oruga-ui/oruga/issues/1690)) ([7b339e3](https://github.com/oruga-ui/oruga/commit/7b339e34d9f5938e4ff941c13affa929242a25ad))
+* **dialog:** convert "wrapperClass" into "contentClass" ([#1695](https://github.com/oruga-ui/oruga/issues/1695)) ([8f683bc](https://github.com/oruga-ui/oruga/commit/8f683bc2759ad7cf00cf19373b632efb3dc5ae76))
+* **drodpown:** remove `inline` property ([#1627](https://github.com/oruga-ui/oruga/issues/1627)) ([49b8d8f](https://github.com/oruga-ui/oruga/commit/49b8d8f380114d9a9999edcbf5ffc0c765473c9f))
+* **dropdown:** use Popover API instead of custom implementation ([#1636](https://github.com/oruga-ui/oruga/issues/1636)) ([19aa022](https://github.com/oruga-ui/oruga/commit/19aa022b0a53d55705dfa175e7504bb3ef90b379))
+* **field:** remove `multiline` property and add inverted `block` property ([#1683](https://github.com/oruga-ui/oruga/issues/1683)) ([71f45b4](https://github.com/oruga-ui/oruga/commit/71f45b49a79abffe38b79c6068d7ad1d12a4e6f8))
+* **notification:** restructure the content template ([#1694](https://github.com/oruga-ui/oruga/issues/1694)) ([4ff34b5](https://github.com/oruga-ui/oruga/commit/4ff34b56de1203f05ea8e77cc324e9ea40a98953))
+* **datepicker:** use popover api instead of ODropdown component ([#1633](https://github.com/oruga-ui/oruga/issues/1633)) ([90e343a](https://github.com/oruga-ui/oruga/commit/90e343a82537349d1aff0dab48eb20a9dc4fe47f))
+* **pagination:** rename `current` to `modelValue` ([#1661](https://github.com/oruga-ui/oruga/issues/1661)) ([7629db0](https://github.com/oruga-ui/oruga/commit/7629db09184c84c44d5f92d17f4e050f358114f7))
+* **popover:** add OPopover component based on native Popover API ([#1618](https://github.com/oruga-ui/oruga/issues/1618)) ([200dde9](https://github.com/oruga-ui/oruga/commit/200dde974f318124e6689fbeebcb68e8bced2669)), closes [#1520](https://github.com/oruga-ui/oruga/issues/1520)
+* **popover:** add close button ([#1677](https://github.com/oruga-ui/oruga/issues/1677)) ([4db39a6](https://github.com/oruga-ui/oruga/commit/4db39a67fd57adb5ee214a68ef9129b368a985f7))
+* **popover:** add header and body elements ([#1679](https://github.com/oruga-ui/oruga/issues/1679)) ([06f53ad](https://github.com/oruga-ui/oruga/commit/06f53ad800ee6de7193b681ad7804299dee9df88))
+* **popover:** add programmatic interface ([#1676](https://github.com/oruga-ui/oruga/issues/1676)) ([5df504d](https://github.com/oruga-ui/oruga/commit/5df504de0a7f96d0c8f674f1c3269674b2101a86))
+* **popover:** add a `role` property for the content element ([0a97f43](https://github.com/oruga-ui/oruga/commit/0a97f43eeea07d1a7452a0cd7b718b71372bc20b))
+* **popover:** add backdrop property ([#1637](https://github.com/oruga-ui/oruga/issues/1637)) ([faf2121](https://github.com/oruga-ui/oruga/commit/faf21219b3551272de7357c61d579754e37ecae4))
+* **slider:** add a `tickBeforeClass` and `tickAfterClass` class ([#1686](https://github.com/oruga-ui/oruga/issues/1686)) ([01df165](https://github.com/oruga-ui/oruga/commit/01df165f329eaa3a735b94352d22094036e3bd05))
+* **table:** expose `filteredRows` and `pageRows` readonly refs ([#1665](https://github.com/oruga-ui/oruga/issues/1665)) ([cf4217d](https://github.com/oruga-ui/oruga/commit/cf4217d377f17bc66e33386e8c953578dffa409c))
+* **timepicker:** use popover api instead of ODropdown component ([#1648](https://github.com/oruga-ui/oruga/issues/1648)) ([c6da6c5](https://github.com/oruga-ui/oruga/commit/c6da6c5c6ed33bdab953990f065da55032b31dea))
+* **timepicker:** add body wrapper element ([#1688](https://github.com/oruga-ui/oruga/issues/1688)) ([bbc329a](https://github.com/oruga-ui/oruga/commit/bbc329a1d68430f66a1d52f1c6d5167669c8dc12))
+* **tooltip:** deprecate trigger properties ([#1624](https://github.com/oruga-ui/oruga/issues/1624)) ([fdb2365](https://github.com/oruga-ui/oruga/commit/fdb2365a22fafff72a7b27d5fef11899aca54f2e)), references [#1520](https://github.com/oruga-ui/oruga/issues/1520)
+* **table:** add a `thSortIconDirectionClass` property ([#1707](https://github.com/oruga-ui/oruga/issues/1707)) ([0734941](https://github.com/oruga-ui/oruga/commit/07349414ec26ea60ca068f42525708ddd8fad44b))
+* **upload:** add `before` and `after` slots ([#1705](https://github.com/oruga-ui/oruga/issues/1705)) ([716dca8](https://github.com/oruga-ui/oruga/commit/716dca81ae4a7cf518192c8caf85d714d519ccde))
+* **upload:** redefine drag/drop class name ([#1691](https://github.com/oruga-ui/oruga/issues/1691)) ([d5aa719](https://github.com/oruga-ui/oruga/commit/d5aa7192216b9c0ffb078fa42ccdc78df00caffc))
+
+### Bug Fixes
+
+* correct volar/globals type exports ([#1666](https://github.com/oruga-ui/oruga/issues/1666)) ([de3057f](https://github.com/oruga-ui/oruga/commit/de3057f19abffdfea1a064e10598768daa927592))
+* **datepicker:** correct modal calculation  ([#1670](https://github.com/oruga-ui/oruga/issues/1670)) ([626964e](https://github.com/oruga-ui/oruga/commit/626964e3e26b7b020d175092257f5befd98ea1c5))
+* **dropdown:** correct popover modal behavior ([#1671](https://github.com/oruga-ui/oruga/issues/1671)) ([eedf0b8](https://github.com/oruga-ui/oruga/commit/eedf0b8f30babdbaed4d0ed927a7285988076e1c))
+* **popover:** correctly apply position change ([#1693](https://github.com/oruga-ui/oruga/issues/1693)) ([ad69204](https://github.com/oruga-ui/oruga/commit/ad69204c4356aa9191b70d4989dfed2aaf654b9b))
+* **picker:** correct popover related `position` prop types ([#1658](https://github.com/oruga-ui/oruga/issues/1658)) ([3c3acaa](https://github.com/oruga-ui/oruga/commit/3c3acaab512d43c2ded833d2dc5a2a255dda28a8))
+* **slider:** correct wrong calculation when having negative range ([#1685](https://github.com/oruga-ui/oruga/issues/1685)) ([6218260](https://github.com/oruga-ui/oruga/commit/621826009188309772c2e0b85e24034d15793b05))
+* **tabs:** correctly export TabsProps and TabItemProps types ([#1689](https://github.com/oruga-ui/oruga/issues/1689)) ([70cc23e](https://github.com/oruga-ui/oruga/commit/70cc23ebe46a5426e25a2150aa2c7b47db7a64ae))
+* **tree:** correct hidden state calculation for keyboard navigation ([#1659](https://github.com/oruga-ui/oruga/issues/1659)) ([f08aff1](https://github.com/oruga-ui/oruga/commit/f08aff160de6fce76e51afe4992c0da5fbc69328))
+
+## [0.14.0-pre.5](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.4...v0.14.0-pre.5) (2026-07-23)
+
+### ⚠ BREAKING CHANGES
+
+* **slider:** The `variantClass` property got renamed to `fillVariantClass` to match its relation.
+* **dialog:** The `textPositionClass` property got renamed to `contentPositionClass` to match its relation.
+* **dialog:** The `wrapperClass` property changed to `contentClass`.
+* **notification:** The `wrapperClass` property changed to `contentClass`.
+* **upload:** The `draggableClass` property got renamed to `dragzoneClass`.
+
+### Features
+
+* **datepicker|timepicker:** add inline class ([#1690](https://github.com/oruga-ui/oruga/issues/1690)) ([7b339e3](https://github.com/oruga-ui/oruga/commit/7b339e34d9f5938e4ff941c13affa929242a25ad))
+* **dialog:** convert "wrapperClass" into "contentClass" ([#1695](https://github.com/oruga-ui/oruga/issues/1695)) ([8f683bc](https://github.com/oruga-ui/oruga/commit/8f683bc2759ad7cf00cf19373b632efb3dc5ae76))
+* **notification:** restructure the content template ([#1694](https://github.com/oruga-ui/oruga/issues/1694)) ([4ff34b5](https://github.com/oruga-ui/oruga/commit/4ff34b56de1203f05ea8e77cc324e9ea40a98953))
+* **slider:** add a `tickBeforeClass` and `tickAfterClass` class ([#1686](https://github.com/oruga-ui/oruga/issues/1686)) ([01df165](https://github.com/oruga-ui/oruga/commit/01df165f329eaa3a735b94352d22094036e3bd05))
+* **timepicker:** add body wrapper element ([#1688](https://github.com/oruga-ui/oruga/issues/1688)) ([bbc329a](https://github.com/oruga-ui/oruga/commit/bbc329a1d68430f66a1d52f1c6d5167669c8dc12))
+* **upload:** redefine drag/drop class name ([#1691](https://github.com/oruga-ui/oruga/issues/1691)) ([d5aa719](https://github.com/oruga-ui/oruga/commit/d5aa7192216b9c0ffb078fa42ccdc78df00caffc))
+
+### Bug Fixes
+
+* **popover:** correctly apply position change ([#1693](https://github.com/oruga-ui/oruga/issues/1693)) ([ad69204](https://github.com/oruga-ui/oruga/commit/ad69204c4356aa9191b70d4989dfed2aaf654b9b))
+* **slider:** correct wrong calculation when having negative range ([#1685](https://github.com/oruga-ui/oruga/issues/1685)) ([6218260](https://github.com/oruga-ui/oruga/commit/621826009188309772c2e0b85e24034d15793b05))
+* **tabs:** correctly export TabsProps and TabItemProps types ([#1689](https://github.com/oruga-ui/oruga/issues/1689)) ([70cc23e](https://github.com/oruga-ui/oruga/commit/70cc23ebe46a5426e25a2150aa2c7b47db7a64ae))
+
+## [0.14.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.3...v0.14.0-pre.4) (2026-07-14)
+
+### ⚠ BREAKING CHANGES
+
+* **button:** The inner wrapper span of the OButton component got removed.
+* **field:** The property `multiline` of the OField component got removed to better support small screens by default.
+
+### Features
+
+* **button:** add icon override template slots ([#1680](https://github.com/oruga-ui/oruga/issues/1680)) ([86d358c](https://github.com/oruga-ui/oruga/commit/86d358c648d63586302bb7d00a72e99ab5be3a0b))
+* **button:** remove inner wrapper span ([#1682](https://github.com/oruga-ui/oruga/issues/1682)) ([2e5e609](https://github.com/oruga-ui/oruga/commit/2e5e60916af4a10c14a6656e69f9eb4aca48bc24))
+* **field:** remove `multiline` property and add inverted `block` property ([#1683](https://github.com/oruga-ui/oruga/issues/1683)) ([71f45b4](https://github.com/oruga-ui/oruga/commit/71f45b49a79abffe38b79c6068d7ad1d12a4e6f8))
+* **popover:** add header and body elements ([#1679](https://github.com/oruga-ui/oruga/issues/1679)) ([06f53ad](https://github.com/oruga-ui/oruga/commit/06f53ad800ee6de7193b681ad7804299dee9df88))
+
+## [0.14.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.2...v0.14.0-pre.3) (2026-07-10)
+
+### Features
+
+* **popover:** add close button ([#1677](https://github.com/oruga-ui/oruga/issues/1677)) ([4db39a6](https://github.com/oruga-ui/oruga/commit/4db39a67fd57adb5ee214a68ef9129b368a985f7))
+* **popover:** add programmatic interface ([#1676](https://github.com/oruga-ui/oruga/issues/1676)) ([5df504d](https://github.com/oruga-ui/oruga/commit/5df504de0a7f96d0c8f674f1c3269674b2101a86))
+* unify popover-api based component classes ([#1672](https://github.com/oruga-ui/oruga/issues/1672)) ([0522c6e](https://github.com/oruga-ui/oruga/commit/0522c6e881772f2df58c2226b38dc5e102ec36cb))
+
+## [0.14.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.14.0-pre.1...v0.14.0-pre.2) (2026-07-05)
+
+### ⚠ BREAKING CHANGES
+
+* The property name suffix of the forwarded properties for the sub-components fot renamed from `Classes` to `Attrs`.
+
+### Features
+
+* **table:** expose `filteredRows` and `pageRows` readonly refs ([#1665](https://github.com/oruga-ui/oruga/issues/1665)) ([cf4217d](https://github.com/oruga-ui/oruga/commit/cf4217d377f17bc66e33386e8c953578dffa409c))
+
+### Bug Fixes
+
+* correct volar/globals type exports ([#1666](https://github.com/oruga-ui/oruga/issues/1666)) ([de3057f](https://github.com/oruga-ui/oruga/commit/de3057f19abffdfea1a064e10598768daa927592))
+* **datepicker:** correct modal calculation  ([#1670](https://github.com/oruga-ui/oruga/issues/1670)) ([626964e](https://github.com/oruga-ui/oruga/commit/626964e3e26b7b020d175092257f5befd98ea1c5))
+* **dropdown:** correct popover modal behavior ([#1671](https://github.com/oruga-ui/oruga/issues/1671)) ([eedf0b8](https://github.com/oruga-ui/oruga/commit/eedf0b8f30babdbaed4d0ed927a7285988076e1c))
+
+### Code Refactoring
+
+* rename prop suffix `classes` to `attrs` for forwarded properties  ([#1631](https://github.com/oruga-ui/oruga/issues/1631)) ([c94a6c1](https://github.com/oruga-ui/oruga/commit/c94a6c1e88663bcd7230ca0a58d9017bf760096c))
+
+## [0.14.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.13.6...v0.14.0-pre.1) (2026-06-27)
+
+### ⚠ BREAKING CHANGES
+
+* Dropped cjs support. The lib now only get exported as esm build.
+* **pagination:** The `current` property of the OPagination component got renamed to `modelValue`.
+* **drodpown:** The `inline` property of the ODropdown component got removed.
+* **dropdown:** The values for the `position` property of the ODropdown component have changed.
+* **datepicker:** The ODatepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the ODatepicker component has changed.
+* **timepicker:** The OTimepicker component does not depends on the ODropdown component anymore. Therefore, some class props of the OTimepicker component has changed.
+* **collapse:** The OCollapse component now uses the native [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details) element instead of a custom implementation.
+* The ODropdown, ODatepicker, OTimepicker and ODatetimepicker components now using the native [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) instead of a custom implementation.
+
+### Features
+
+* **collapse:** rewrite with HTML `details` tag ([#1586](https://github.com/oruga-ui/oruga/issues/1586)) ([76f9c8d](https://github.com/oruga-ui/oruga/commit/76f9c8dc9ab23c60b68390b953391cba5aba4e4b))
+* **datepicker:** use popover api instead of ODropdown component ([#1633](https://github.com/oruga-ui/oruga/issues/1633)) ([90e343a](https://github.com/oruga-ui/oruga/commit/90e343a82537349d1aff0dab48eb20a9dc4fe47f))
+* **drodpown:** remove `inline` property ([#1627](https://github.com/oruga-ui/oruga/issues/1627)) ([49b8d8f](https://github.com/oruga-ui/oruga/commit/49b8d8f380114d9a9999edcbf5ffc0c765473c9f))
+* drop cjs support and build esm only ([#1597](https://github.com/oruga-ui/oruga/issues/1597)) ([39193cd](https://github.com/oruga-ui/oruga/commit/39193cd55bc7b9b6a0939d167070c0d9b399ff13)), closes [#1412](https://github.com/oruga-ui/oruga/issues/1412)
+* **dropdown:** use Popover API instead of custom implementation ([#1636](https://github.com/oruga-ui/oruga/issues/1636)) ([19aa022](https://github.com/oruga-ui/oruga/commit/19aa022b0a53d55705dfa175e7504bb3ef90b379))
+* expose blur function in input based components ([#1656](https://github.com/oruga-ui/oruga/issues/1656)) ([92aa06f](https://github.com/oruga-ui/oruga/commit/92aa06fc3cea10fb7cc038328723788887edff15))
+* **pagination:** rename `current` to `modelValue` ([#1661](https://github.com/oruga-ui/oruga/issues/1661)) ([7629db0](https://github.com/oruga-ui/oruga/commit/7629db09184c84c44d5f92d17f4e050f358114f7))
+* **popover:** add a `role` property for the content element ([0a97f43](https://github.com/oruga-ui/oruga/commit/0a97f43eeea07d1a7452a0cd7b718b71372bc20b))
+* **Popover:** add backdrop property ([#1637](https://github.com/oruga-ui/oruga/issues/1637)) ([faf2121](https://github.com/oruga-ui/oruga/commit/faf21219b3551272de7357c61d579754e37ecae4))
+* **popover:** add OPopover component based on native Popover API ([#1618](https://github.com/oruga-ui/oruga/issues/1618)) ([200dde9](https://github.com/oruga-ui/oruga/commit/200dde974f318124e6689fbeebcb68e8bced2669)), closes [#1520](https://github.com/oruga-ui/oruga/issues/1520)
+* **timepicker:** use popover api instead of ODropdown component ([#1648](https://github.com/oruga-ui/oruga/issues/1648)) ([c6da6c5](https://github.com/oruga-ui/oruga/commit/c6da6c5c6ed33bdab953990f065da55032b31dea))
+* **tooltip:** deprecate trigger properties ([#1624](https://github.com/oruga-ui/oruga/issues/1624)) ([fdb2365](https://github.com/oruga-ui/oruga/commit/fdb2365a22fafff72a7b27d5fef11899aca54f2e)), references [#1520](https://github.com/oruga-ui/oruga/issues/1520)
+
+### Bug Fixes
+
+* **picker:** correct popover related `position` prop types ([#1658](https://github.com/oruga-ui/oruga/issues/1658)) ([3c3acaa](https://github.com/oruga-ui/oruga/commit/3c3acaab512d43c2ded833d2dc5a2a255dda28a8))
+* **tree:** correct hidden state calculation for keyboard navigation ([#1659](https://github.com/oruga-ui/oruga/issues/1659)) ([f08aff1](https://github.com/oruga-ui/oruga/commit/f08aff160de6fce76e51afe4992c0da5fbc69328))
+
+## [0.13.6](https://github.com/oruga-ui/oruga/compare/v0.13.5...v0.13.6) (2026-06-10)
+
+### Bug Fixes
+
+* **input:** add ResizeObserver to calc input size when type `textarea` and `autosize` ([#1645](https://github.com/oruga-ui/oruga/issues/1645)) ([9a6f3c6](https://github.com/oruga-ui/oruga/commit/9a6f3c6f14dd2da88cb03ed96169d5cfb657a6d4)), closes [#1628](https://github.com/oruga-ui/oruga/issues/1628)
+* **taginput:** allow new items even the dropdown is open ([#1642](https://github.com/oruga-ui/oruga/issues/1642)) ([cf169f9](https://github.com/oruga-ui/oruga/commit/cf169f9b250133a96696b97bf7e65ce918e2971e)), closes [#1629](https://github.com/oruga-ui/oruga/issues/1629)
+
+## [0.13.5](https://github.com/oruga-ui/oruga/compare/v0.13.4...v0.13.5) (2026-04-23)
+
+### Bug Fixes
+
+* **datepicker:** show events in prev and next days of a month ([#1617](https://github.com/oruga-ui/oruga/issues/1617)) ([71b484b](https://github.com/oruga-ui/oruga/commit/71b484be25f758eded6b11f5319ed9e83bc71113)), closes [#1614](https://github.com/oruga-ui/oruga/issues/1614)
+* **dropdown:** solve type issues ([#1615](https://github.com/oruga-ui/oruga/issues/1615)) ([0332164](https://github.com/oruga-ui/oruga/commit/03321643c08fc0a746386284b1a536637387df10))
+* **table:** check all preserves previously checked rows if keep-checked is true ([#1616](https://github.com/oruga-ui/oruga/issues/1616)) ([680f2a1](https://github.com/oruga-ui/oruga/commit/680f2a1399c0eab4be27977ef70ff7882d30f3a5))
+
+## [0.13.4](https://github.com/oruga-ui/oruga/compare/v0.13.3...v0.13.4) (2026-04-10)
+
+### Features
+
+* **dialog:** add `returnValue` to component emits ([#1605](https://github.com/oruga-ui/oruga/issues/1605)) ([b0fe77c](https://github.com/oruga-ui/oruga/commit/b0fe77c60e65e5c6594955b2d700da7b5c05cf9c)), closes [#1604](https://github.com/oruga-ui/oruga/issues/1604)
+
+### Bug Fixes
+
+* **tree:** correct export component name ([#1606](https://github.com/oruga-ui/oruga/issues/1606)) ([3d291fa](https://github.com/oruga-ui/oruga/commit/3d291fa027691644d4ec149b508657ddbd2e7491))
+
+## [0.13.3](https://github.com/oruga-ui/oruga/compare/v0.13.2...v0.13.3) (2026-04-07)
+
+### Bug Fixes
+
+* **datepicker:** add missing `week-number-click` event ([#1602](https://github.com/oruga-ui/oruga/issues/1602)) ([ee172c7](https://github.com/oruga-ui/oruga/commit/ee172c774fb10a35736c6ab98b4296b255c84c79)), closes [#1600](https://github.com/oruga-ui/oruga/issues/1600)
+
 ## [0.13.2](https://github.com/oruga-ui/oruga/compare/v0.13.1...v0.13.2) (2026-04-03)
 
 ### Bug Fixes

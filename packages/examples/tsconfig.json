@@ -1,32 +1,40 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "importHelpers": true,
-    "allowSyntheticDefaultImports": true,
-    "noImplicitThis": false,
-    "noImplicitAny": false,
+    // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking
+    // specified here to keep it out of the root directory
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+
     // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
     "noUncheckedIndexedAccess": false,
 
-    "baseUrl": ".",
+    // reset root to include files from other packages
+    "rootDir": "../",
+
+    "sourceMap": true,
+    "importHelpers": true,
+    "noImplicitAny": false,
+
     "types": ["node", "vite/client"],
+
+    // path mapping for cleaner imports
     "paths": {
       "@/*": ["../oruga/src/*"],
       "@oruga-ui/oruga-next": ["../oruga/src/index"]
     }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.vue",
-    "../oruga/src/**/*.ts",
-    "../oruga/src/**/*.vue",
-    "vite.config.*"
+    "src/**/*",
+    // include lib code
+    "../oruga/src/**/*",
+    // include docs components
+    "../docs/.vitepress/theme/components/ExampleViewer.vue"
   ],
   "exclude": [
+    // exclude docs only code
+    "../oruga/src/**/inspector.vue",
+    // exclude test code
     "../oruga/src/__tests__/**",
-    "../oruga/src/**/*.test.ts",
-    "node_modules",
-    "dist"
+    "../oruga/src/**/*.test.ts"
   ]
 }

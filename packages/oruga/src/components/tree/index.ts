@@ -18,4 +18,4 @@ export default {
 } satisfies OrugaComponentPlugin;
 
 /** export tree components */
-export { Tree as OTree, TreeItem as OTreItem };
+export { Tree as OTree, TreeItem as OTreeItem };

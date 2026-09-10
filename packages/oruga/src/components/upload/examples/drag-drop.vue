@@ -22,7 +22,7 @@ function deleteDropFile(index): void {
         </o-field>
 
         <div class="tags">
-            <span v-for="(file, index) in dropFiles" :key="index">
+            <span v-for="(file, index) in dropFiles" :key="file.name">
                 {{ file.name }}
                 <o-button
                     icon-left="times"

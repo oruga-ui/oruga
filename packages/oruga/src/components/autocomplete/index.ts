@@ -1,4 +1,4 @@
-import type { App } from "vue";
+import { type App } from "vue";
 
 import Autocomplete from "./Autocomplete.vue";
 

@@ -38,6 +38,8 @@ export type IconProps = {
     spin?: boolean;
     /** Rotation 0-360 */
     rotation?: number | string;
+    /** Accessibility aria-label needed when clickable */
+    ariaLabel?: string;
 } & IconClasses;
 
 // class props (will not be displayed in the docs)

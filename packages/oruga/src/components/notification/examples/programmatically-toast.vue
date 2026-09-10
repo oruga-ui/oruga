@@ -7,7 +7,7 @@ const oruga = useOruga();
 function toast(): void {
     oruga.notification.open({
         rootClass: "toast toast-notification",
-        message: "Something happened correctly!",
+        content: "Something happened correctly!",
         position: "top",
         queue: true,
         rounded: true,
@@ -17,7 +17,7 @@ function toast(): void {
 function success(): void {
     oruga.notification.open({
         rootClass: "toast toast-notification",
-        message: "Something happened correctly!",
+        content: "Something happened correctly!",
         variant: "success",
         queue: true,
         rounded: true,
@@ -43,7 +43,7 @@ function danger(): void {
 function queueToast(): void {
     oruga.notification.open({
         rootClass: "toast toast-notification",
-        message: "Current time: " + Date.now(),
+        content: "Current time: " + Date.now(),
         position: "top",
         queue: true,
         rounded: true,
@@ -53,7 +53,7 @@ function queueToast(): void {
 function pause(): void {
     oruga.notification.open({
         rootClass: "toast toast-notification",
-        message: `I can be paused if you hover over me`,
+        content: `I can be paused if you hover over me`,
         variant: "warning",
         pauseOnHover: true,
         duration: 5000,
@@ -67,7 +67,7 @@ const infiniteToast = ref<ProgrammaticExpose>();
 function infinite(): void {
     infiniteToast.value = oruga.notification.open({
         rootClass: "toast toast-notification",
-        message: `I won't close until you explicitly close me!`,
+        content: `I won't close until you explicitly close me!`,
         variant: "warning",
         type: "warning",
         infinite: true,
@@ -90,19 +90,14 @@ function closeIndefinite(): void {
 <template>
     <section class="odocs-spaced">
         <p>
-            <o-button
-                label="Launch toast (default)"
-                size="medium"
-                @click="toast" />
+            <o-button label="Launch toast (default)" @click="toast" />
             <o-button
                 label="Launch toast (success)"
                 variant="success"
-                size="medium"
                 @click="success" />
             <o-button
                 label="Launch toast (danger)"
                 variant="danger"
-                size="medium"
                 @click="danger" />
         </p>
 
@@ -110,23 +105,19 @@ function closeIndefinite(): void {
             <o-button
                 label="Launch toast (queued)"
                 variant="primary"
-                size="medium"
                 @click="queueToast" />
             <o-button
                 label="Launch toast (pause on hover)"
                 variant="secondary"
-                size="medium"
                 @click="pause" />
             <o-button
                 label="Launch toast (infinite)"
                 variant="warning"
-                size="medium"
                 @click="infinite" />
             <o-button
                 v-if="infiniteToast"
                 label="close toast (infinite)"
                 variant="danger"
-                size="medium"
                 @click="closeIndefinite" />
         </p>
     </section>

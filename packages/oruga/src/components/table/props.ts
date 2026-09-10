@@ -53,10 +53,7 @@ export type TableProps<T> = {
     checkedRows?: T[];
     /** Show check/uncheck all checkbox in table header (if checkable) */
     checkableHeader?: boolean;
-    /**
-     * Make the checkbox column sticky (if checkable)
-     * @deprecated will be renamed to `checkboxSticky`
-     */
+    /** Make the checkbox column sticky (if checkable) */
     stickyCheckbox?: boolean;
     /**
      * Position of the checkbox (if checkable)
@@ -234,6 +231,8 @@ export type TableClasses = Partial<{
     thLabelClass: ComponentClass;
     /** Class of the table header sort icon element */
     thSortIconClass: ComponentClass;
+    /** Class of the table header sort icon element with direction */
+    thSortIconDirectionClass: ComponentClass;
     /** Class of the table `tr` element */
     trClass: ComponentClass;
     /** Class of the table `tr` element when selected */
@@ -262,10 +261,14 @@ export type TableClasses = Partial<{
      * Class configuration for the internal loading component
      * @ignore
      */
-    loadingClasses: object;
+    loadingAttrs: object;
 }>;
 
-export type FieldKey<T> = T extends never | unknown ? string : DeepKeys<T>;
+export type FieldKey<T> = T extends never
+    ? string
+    : T extends unknown
+      ? string
+      : DeepKeys<T>;
 
 export type TableColumnProps<T, K extends string = FieldKey<T>> = {
     /** Define the column label */

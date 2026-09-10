@@ -6,20 +6,18 @@ export type ListboxComponent<T> = {
     disabled: boolean;
     multiple: boolean;
     selectable: boolean;
-    // checkable: boolean;
+    checkable: boolean;
     selected: T | T[] | undefined;
     focsuedItem: ListItem<T> | undefined;
     selectItem: (value: ListItem<T>, selection: boolean) => void;
     focusItem: (value: ListItem<T>) => void;
 };
 
-export type ListItemComponent<T> = Pick<
-    ListItemProps<T>,
-    "value" | "hidden"
+export type ListItemComponent<T> = Required<
+    Pick<ListItemProps<T>, "value" | "hidden" | "label">
 > & {
     isViable: boolean;
     setHidden: (hidden: boolean) => void;
-    matches: (value: string) => boolean;
     selectItem: (event: Event) => void;
 };
 

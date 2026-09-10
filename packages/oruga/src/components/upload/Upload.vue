@@ -73,13 +73,20 @@ defineSlots<{
      * @param onclick {(event: Event): void} - click handler, only needed if a button is used
      */
     default?(props: { onclick: (event: Event) => void }): void;
+    /** Additional slot before the dragzone */
+    before?(): void;
+    /** Additional slot after the dragzone */
+    after?(): void;
 }>();
 
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionality
-const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
-    useInputHandler(inputRef, emits, props);
+const { checkHtml5Validity, isValid, setBlur, setFocus } = useInputHandler(
+    inputRef,
+    props,
+    emits,
+);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
@@ -195,7 +202,7 @@ function onClick(event: Event): void {
     }
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -226,35 +233,48 @@ const rootClasses = defineClasses(
     ],
 );
 
-const draggableClasses = defineClasses(
-    ["draggableClass", "o-upload__draggable"],
+const dragzoneClasses = defineClasses(
+    ["dragzoneClass", "o-upload__dragzone"],
     [
-        "draggableHoveredClass",
-        "o-upload__draggable--hovered",
+        "dragzoneHoveredClass",
+        "o-upload__dragzone--hovered",
         null,
         computed(() => dragDropFocus.value),
     ],
 );
 
-// --- Expose Public Functionalities ---
+const inputClasses = defineClasses(["inputClass", "o-upload__input"]);
+
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: vmodel,
+});
+
+// #endregion  --- Expose Public Functionalities ---
 </script>
 
 <template>
     <label data-oruga="upload" :class="rootClasses">
+        <slot name="before" />
+
         <template v-if="!dragDrop">
             <slot :onclick="onClick" />
         </template>
 
         <div
             v-else
-            :class="draggableClasses"
+            :class="dragzoneClasses"
             role="button"
             tabindex="0"
-            @mouseenter="updateDragDropFocus(true)"
-            @mouseleave="updateDragDropFocus(false)"
+            @pointerenter="updateDragDropFocus(true)"
+            @pointerleave="updateDragDropFocus(false)"
             @dragover.prevent="updateDragDropFocus(true)"
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
@@ -262,17 +282,17 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             <slot :onclick="onClick" />
         </div>
 
+        <slot name="after" />
+
         <input
             v-bind="inputBind"
             ref="inputElement"
+            :class="inputClasses"
             type="file"
             data-oruga-input="file"
             :multiple="props.multiple"
             :accept="accept"
             :disabled="disabled"
-            @change="onFileChange"
-            @focus="onFocus"
-            @blur="onBlur"
-            @invalid="onInvalid" />
+            @change="onFileChange" />
     </label>
 </template>

@@ -20,9 +20,9 @@ const keepOpen = ref(false);
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
 
-            <o-dropdown-item label="Action" />
-            <o-dropdown-item label="Another action" />
-            <o-dropdown-item label="Something else" />
+            <o-dropdown-item label="Action" icon="home" />
+            <o-dropdown-item label="Another action" icon="user" />
+            <o-dropdown-item label="Something else" icon="sync-alt" />
         </o-dropdown>
     </section>
 </template>

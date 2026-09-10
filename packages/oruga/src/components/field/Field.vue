@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<FieldProps>(), {
     messageId: () => useId(),
     grouped: false,
     addons: false,
-    multiline: false,
+    nowrap: false,
     horizontal: false,
     mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
@@ -114,11 +114,7 @@ const hasMessage = computed(
 );
 
 const hasBody = computed(
-    () =>
-        props.grouped ||
-        props.multiline ||
-        hasInnerField.value ||
-        hasAddons.value,
+    () => props.grouped || hasInnerField.value || hasAddons.value,
 );
 
 const hasAddons = computed(
@@ -241,12 +237,7 @@ const innerBodyClasses = defineClasses(
         null,
         computed(() => !props.grouped && hasAddons.value),
     ],
-    [
-        "multilineClass",
-        "o-field--multiline",
-        null,
-        computed(() => props.multiline),
-    ],
+    ["nowrapClass", "o-field--nowrap", null, computed(() => props.nowrap)],
 );
 
 const messageClasses = defineClasses(
@@ -329,8 +320,8 @@ const messageClasses = defineClasses(
             :class="messageClasses">
             <slot name="message" :message="fieldMessage">
                 <template v-if="Array.isArray(fieldMessage)">
-                    <div v-for="message in fieldMessage" :key="message">
-                        {{ message }}
+                    <div v-for="_message in fieldMessage" :key="_message">
+                        {{ _message }}
                     </div>
                 </template>
 

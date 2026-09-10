@@ -18,14 +18,14 @@ export type TreeComponent<T> = {
     focusItem: (value: TreeItem<T>) => void;
 };
 
-export type TreeItemComponent<T> = Pick<
-    TreeItemProps<T>,
-    "value" | "expanded"
+export type TreeItemComponent<T> = Required<
+    Pick<TreeItemProps<T>, "value" | "expanded" | "label">
 > & {
+    children: TreeItem<T>[];
     hasChildren: boolean;
     isViable: boolean;
     setExpand: (state: boolean) => void;
-    matches: (value: string) => boolean;
+    setHidden: (state: boolean) => void;
 };
 
 export type TreeItem<T> = ProviderItem<TreeItemComponent<T>>;

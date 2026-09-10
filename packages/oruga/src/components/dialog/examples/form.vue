@@ -48,8 +48,8 @@ function onLogin(): void {
             </o-field>
 
             <div style="display: flex; align-items: center; gap: 5px">
-                <o-button type="button" label="Close" @click="close" />
-                <o-button label="Login" variant="primary" @click="confirm" />
+                <o-button type="button" label="Close" @click="close()" />
+                <o-button label="Login" variant="primary" @click="confirm()" />
             </div>
         </form>
     </o-dialog>

@@ -9,6 +9,7 @@ import {
     watch,
 } from "vue";
 
+import OInput from "../input/Input.vue";
 import OTreeItem from "../tree/TreeItem.vue";
 
 import {
@@ -62,7 +63,13 @@ const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     collapsable: true,
     selectable: false,
     checkable: false,
-    emptyLabel: () => getDefault("tree.emptyLabel"), // TODO: add
+    emptyLabel: () => getDefault("tree.emptyLabel"),
+    filterable: false,
+    backendFiltering: false,
+    filter: undefined,
+    filterIcon: undefined,
+    filterDebounce: 400,
+    filterPlaceholder: undefined,
     toggleIcon: () => getDefault("tree.toggleIcon", "chevron-right"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
@@ -97,11 +104,28 @@ const emits = defineEmits<{
     "scroll-start": [];
     /** scrolling inside the tree reached the end */
     "scroll-end": [];
+    /**
+     * on filter change event
+     * @param value {string} filter value
+     * @param event {Event} native event
+     */
+    filter: [value: string, event: Event];
 }>();
 
 defineSlots<{
     /** Define an additional header */
     header?(): void;
+    /**
+     * Override the filter input
+     * @param value {string} - filter input value
+     * @param onChange {(input: string, event: Event): void} - on filter input change event
+     * @param onKeydown {(event: Event): void} - on filter input keydown event
+     */
+    filter?(props: {
+        value: string;
+        onChange: (input: string, event: Event) => void;
+        onKeydown: (event: KeyboardEvent) => void;
+    }): void;
     /** Define the tree items here */
     default?(): void;
     /** Define the content to show if the list is empty */
@@ -152,6 +176,20 @@ const { childItems } = useProviderParent<
     TreeComponent<T>
 >({ rootRef: listRef, data: provideData });
 
+/**
+ * Find the correct object of the item.
+ * Child items children might not have a data attribute, the correct object does.
+ * @param identifier - The item identifier.
+ */
+function findChild(identifier: string): TreeItem<T> | undefined {
+    return childItems.value.find((child) => child.identifier === identifier);
+}
+
+/** Shows if the items are selectable or not. */
+const isSelectable = computed(
+    () => !props.disabled && (props.selectable || props.checkable),
+);
+
 const hasViableItems = computed(() =>
     childItems.value.some((item) => item.data.isViable),
 );
@@ -161,7 +199,7 @@ const hasViableItems = computed(() =>
  * Returns empty list when no items are viable or component is disabled.
  */
 const viableItems = computed(() => {
-    if (!props.selectable || props.disabled) return [];
+    if (!isSelectable.value || props.disabled) return [];
     return childItems.value.filter((item) => item.data.isViable);
 });
 
@@ -230,48 +268,76 @@ function isItemSelected(item: TreeItem<T>): boolean {
     } else return isEqual(item.data.value, vmodel.value);
 }
 
-/** Replaces the modelValue when selectable and multiple. */
-function updateSelectedItems(items: TreeItem<T>[]): void {
-    if (!props.selectable || !isTrueish(props.multiple)) return;
-    const values = items.map((item) => item.data.value).filter(isDefined);
-    vmodel.value = values as ModelValue;
-}
+const flatChilds = (item: TreeItem<T>): TreeItem<T>[] => {
+    // find correct object of the item
+    // children might not have a data attribute, the correct object does
+    const current = findChild(item.identifier);
+
+    if (!current) return [];
+    const descendants = current.data.children?.flatMap(flatChilds) ?? [];
+    return [...descendants, current];
+};
 
 /** Updates the modelValue for one item when selectable. */
-function selectItem(item: TreeItem<T>, selection: boolean = true): void {
-    if (!props.selectable) return;
+function selectItem(item: TreeItem<T>, selection: boolean): void {
+    if (!isSelectable.value) return;
 
-    const value = item.data.value!;
+    const value = item.data.value;
     if (selection) emits("select", value);
 
     // set selected option
-    if (isTrueish(props.multiple)) {
-        if (vmodel.value && Array.isArray(vmodel.value)) {
-            if (selection && !vmodel.value.includes(value)) {
-                // add a value
-                vmodel.value = [...vmodel.value, value] as ModelValue;
-            } else if (!selection) {
-                // remove a value
-                vmodel.value = vmodel.value.filter(
-                    (val) => val !== value,
-                ) as ModelValue;
-            }
-        } else {
-            // init new value array
-            vmodel.value = (selection ? [value] : []) as ModelValue;
-        }
-    } else {
+    if (!isTrueish(props.multiple)) {
         if (!selection) vmodel.value = undefined;
         else if (vmodel.value !== value) {
             // update a single value
             vmodel.value = value as ModelValue;
         }
+    } else {
+        // set selected option when multiple
+        const items: TreeItem<T>[] = [];
+        if (props.checkable) {
+            // add child items to selection checkable
+            const childs = flatChilds(item);
+            items.push(...childs);
+        } else {
+            items.push(item);
+        }
+        selectItems(items, selection);
+    }
+}
+
+/**
+ * Update the modelValue then selectable and multiple is set.
+ * Use selection to define whether the given items should be included or excluded from modelValue.
+ * If no selection is given, the modelValue will be replaced by the given items.
+ */
+function selectItems(items: TreeItem<T>[], selection?: boolean): void {
+    if (!isSelectable.value || !isTrueish(props.multiple)) return;
+
+    const values = items.map((item) => item.data.value).filter(isDefined);
+
+    if (vmodel.value && Array.isArray(vmodel.value)) {
+        if (selection === true) {
+            const set = new Set([...vmodel.value, ...values]);
+            // add a value
+            vmodel.value = Array.from(set) as ModelValue;
+        } else if (selection === false) {
+            // remove a value
+            vmodel.value = vmodel.value.filter(
+                (val) => !values.includes(val),
+            ) as ModelValue;
+        } else {
+            vmodel.value = values as ModelValue;
+        }
+    } else {
+        // init new value array
+        vmodel.value = (selection ? values : []) as ModelValue;
     }
 }
 
 /** Select a range of items from a staring index to an end index. */
 function selectItemRange(start: number, end: number): void {
-    if (!props.selectable || !isTrueish(props.multiple)) return;
+    if (!isSelectable.value || !isTrueish(props.multiple)) return;
     if (start < 0 || end < 0) return;
 
     const rangeStart = Math.min(start, end);
@@ -283,7 +349,8 @@ function selectItemRange(start: number, end: number): void {
         .filter((item) => item.data.isViable);
 
     // select all items in the range
-    updateSelectedItems(items);
+    // replaced the existing items
+    selectItems(items);
 }
 
 /**
@@ -465,7 +532,7 @@ function focusLastItem(event?: KeyboardEvent): void {
 
 /** Select the current focused item. */
 function selectFocusedItem(event: KeyboardEvent): void {
-    if (!props.selectable || !focusedItem.value) return;
+    if (!isSelectable.value || !focusedItem.value) return;
 
     // ensure item is in view
     setFocus(focusedItem.value);
@@ -518,6 +585,67 @@ function onFocusout(event: FocusEvent): void {
 
 // #endregion --- Focus Feature ---
 
+// #region --- Filter Feature ---
+
+function onFilterChange(value: string, event: Event): void {
+    emits("filter", value, event);
+
+    focusedItem.value = undefined;
+    startRangeIndex.value = -1;
+}
+
+const filterValue = ref<string>("");
+
+if (!props.backendFiltering) {
+    watch([() => props.filterable, filterValue], () => {
+        if (!props.filterable) return;
+
+        const currentFilter = filterValue.value.trim();
+
+        const updateItemVisibility = (item: TreeItem<T>): boolean => {
+            // prevent filtering for presentation items
+            if (!item.data || (item.data as any).role === "presentation")
+                return false;
+
+            // no filter means not hidden
+            if (!currentFilter) {
+                // update states
+                item.data.setHidden(false);
+                item.data.setExpand(false);
+                return true;
+            }
+
+            const itemMatches =
+                typeof props.filter === "function"
+                    ? // call filter function if available
+                      props.filter(item.data.value, currentFilter)
+                    : // else check filter value matches item value
+                      matches(item, currentFilter);
+
+            const childMatches = item.data.children
+                .map((child) => findChild(child.identifier))
+                .filter(isDefined)
+                .some((child) => updateItemVisibility(child));
+
+            const shouldHide = !itemMatches && !childMatches;
+
+            // update states
+            item.data.setHidden(shouldHide);
+            item.data.setExpand(!shouldHide);
+            return !shouldHide;
+        };
+
+        childItems.value.forEach((item) => updateItemVisibility(item));
+    });
+}
+
+/** Check if a value matches the label (startsWith). */
+function matches(item: TreeItem<T>, value: string): boolean {
+    return !!item.data?.label?.toLowerCase().startsWith(value.toLowerCase());
+}
+
+// #endregion --- Filter Feature ---
+
 // #region --- Type-Ahead Feature ---
 
 const typeAheadValue = ref("");
@@ -532,7 +660,7 @@ watch(typeAheadValue, (value) => {
     if (!isEmpty(value)) {
         // find first item that starts with the search value
         const matchedItem = viableItems.value.find((item) =>
-            item.data.matches(value),
+            matches(item, value),
         );
 
         // focus the item
@@ -603,7 +731,7 @@ function onListKeyDown(event: KeyboardEvent): void {
         default:
             if (isTrueish(props.multiple) && event.code === "KeyA" && metaKey) {
                 // select all avaibale items
-                updateSelectedItems(viableItems.value);
+                selectItems(viableItems.value);
                 event.preventDefault();
                 break;
             }
@@ -614,6 +742,43 @@ function onListKeyDown(event: KeyboardEvent): void {
                 event.preventDefault();
             }
 
+            break;
+    }
+}
+
+function onFilterKeyDown(event: KeyboardEvent): void {
+    switch (event.code) {
+        case "ArrowDown":
+            moveFocusDown(event);
+            event.preventDefault();
+            break;
+
+        case "ArrowUp":
+            moveFocusUp(event);
+            event.preventDefault();
+            break;
+
+        case "Home":
+            focusFirstItem(event);
+            event.preventDefault();
+            break;
+
+        case "End":
+            focusLastItem(event);
+            event.preventDefault();
+            break;
+
+        case "Enter":
+        case "NumpadEnter":
+            selectFocusedItem(event);
+            break;
+
+        case "ShiftLeft":
+        case "ShiftRight":
+            startFocusRange();
+            break;
+
+        default:
             break;
     }
 }
@@ -632,6 +797,12 @@ const rootClasses = defineClasses(
         computed(() => props.selectable),
     ],
     [
+        "filterableClass",
+        "o-tree--filterable",
+        null,
+        computed(() => props.filterable),
+    ],
+    [
         "multipleClass",
         "o-tree--multiple",
         null,
@@ -645,6 +816,8 @@ const headerClasses = defineClasses(["headerClass", "o-tree__header"]);
 
 const footerClasses = defineClasses(["footerClass", "o-tree__footer"]);
 
+const filterClasses = defineClasses(["filterClass", "o-tree__filter"]);
+
 const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
 
 // #endregion --- Computed Component Classes ---
@@ -655,12 +828,43 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
         data-oruga="tree"
         :class="rootClasses"
         @focusout="onFocusout"
-        @mouseleave="isFocused && onFocusout($event)">
+        @pointerleave="isFocused && onFocusout($event)">
         <div v-if="$slots.header" :class="headerClasses">
             <slot name="header" />
         </div>
 
-        <!-- Todo: maybe add filter?! -->
+        <div v-if="filterable" :class="filterClasses">
+            <slot
+                name="filter"
+                :value="filterValue"
+                :on-change="onFilterChange"
+                :on-keydown="onFilterKeyDown">
+                <o-input
+                    v-model="filterValue"
+                    v-bind="inputAttrs"
+                    name="filter"
+                    type="search"
+                    role="searchbox"
+                    :tabindex="!disabled && !isFocused ? 0 : -1"
+                    :debounce="filterDebounce"
+                    :placeholder="filterPlaceholder"
+                    :icon="filterIcon"
+                    :disabled="disabled"
+                    expanded
+                    size="small"
+                    aria-label="tree filter input"
+                    :aria-owns="id + '_list'"
+                    :aria-activedescendant="
+                        focusedItem
+                            ? `${id}-${focusedItem.identifier}`
+                            : undefined
+                    "
+                    autocomplete="off"
+                    :use-html5-validation="false"
+                    @input="onFilterChange"
+                    @keydown="onFilterKeyDown" />
+            </slot>
+        </div>
 
         <ul
             :id="id + '_list'"
@@ -676,7 +880,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
             :aria-labelledby="props.ariaLabelledby ?? parentField?.labelId"
             :aria-disabled="disabled"
             @focusin="onFocusin"
-            @mouseleave="focusItem(undefined)"
+            @pointerleave="focusItem(undefined)"
             @keydown="onListKeyDown">
             <transition-group :name="animation">
                 <slot>

@@ -6,7 +6,7 @@ import { nextTick } from "vue";
 import OCheckbox from "../Checkbox.vue";
 import type { CheckboxProps } from "../props";
 
-describe("Checkbox axe tests", () => {
+describe("Checkbox a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: { title: string; props?: CheckboxProps<unknown> }[] = [

@@ -1,15 +1,15 @@
 import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
-import { nextTick, type Component } from "vue";
+import { nextTick } from "vue";
 
 import ODialog from "@/components/dialog/Dialog.vue";
 import type { DialogProps } from "../props";
 
-describe("ODialog axe test", () => {
+describe("ODialog a11y tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases: { title: string; props?: DialogProps<Component> }[] = [
+    const a11yCases: { title: string; props?: DialogProps }[] = [
         {
             title: "axe dialog - base case",
             props: {
@@ -22,7 +22,7 @@ describe("ODialog axe test", () => {
             },
         },
         {
-            title: "axe dialog - modal case case",
+            title: "axe dialog - modal case",
             props: {
                 backdrop: true,
                 title: "Adcanced Title",

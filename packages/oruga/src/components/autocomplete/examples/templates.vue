@@ -10,8 +10,14 @@
                 <template #header> Header </template>
 
                 <template #default>
-                    <o-dropdown-item label="Jesse Simmons" :value="1" />
-                    <o-dropdown-item label="John Jacobs" :value="2" />
+                    <o-dropdown-item
+                        label="Jesse Simmons"
+                        :value="1"
+                        icon="user" />
+                    <o-dropdown-item
+                        label="John Jacobs"
+                        :value="2"
+                        icon="user" />
                 </template>
 
                 <template #footer> Footer </template>

@@ -66,18 +66,12 @@ const visibleDayNames = computed(() => {
     return visibleDayNames;
 });
 
-/** Return array of all events in the specified month */
-const eventsInThisMonth = computed(() => {
+/** Return array of all events */
+const eventsList = computed(() => {
     if (!props.pickerProps.events) return [];
-    return props.pickerProps.events
-        .map((event) =>
-            !event.date && event instanceof Date ? { date: event } : event,
-        )
-        .filter(
-            (event) =>
-                event.date.getMonth() === focusedDateModel.value.month &&
-                event.date.getFullYear() === focusedDateModel.value.year,
-        );
+    return props.pickerProps.events.map((event) =>
+        !event.date && event instanceof Date ? { date: event } : event,
+    );
 });
 
 /** Return array of all weeks in the specified month */
@@ -105,7 +99,7 @@ const weeksInThisMonth = computed<Date[][]>(() => {
 
 function eventsInThisWeek(week: Date[]): DatepickerEvent[] {
     if (!props.pickerProps.events) return [];
-    return eventsInThisMonth.value.filter((event) => {
+    return eventsList.value.filter((event) => {
         const stripped = new Date(event.date);
         stripped.setHours(0, 0, 0, 0);
         const timed = stripped.getTime();
@@ -234,7 +228,7 @@ function onChangeFocus(date: Date): void {
     };
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const tableClasses = defineClasses(
     ["tableClass", "o-datepicker__table"],
@@ -265,6 +259,8 @@ const tableBodyClasses = defineClasses(
     // passing the picker props will add reactivity to property changes
     { props: props.pickerProps },
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -277,6 +273,7 @@ const tableBodyClasses = defineClasses(
                 <span>{{ day }}</span>
             </div>
         </header>
+
         <div :class="tableBodyClasses">
             <o-datepicker-table-row
                 v-for="(week, index) in weeksInThisMonth"

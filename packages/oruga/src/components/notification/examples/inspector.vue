@@ -3,12 +3,13 @@ import type { InspectData } from "@docs";
 import type {
     NotificationClasses,
     NotificationNoticeClasses,
+    NotificationNoticeProps,
     NotificationProps,
 } from "../props";
 
 const inspectData: InspectData<
     NotificationClasses & NotificationNoticeClasses,
-    NotificationProps
+    NotificationProps & NotificationNoticeProps
 > = {
     rootClass: {
         class: "rootClass",
@@ -49,21 +50,25 @@ const inspectData: InspectData<
             data.rounded = true;
         },
     },
-    wrapperClass: {
-        class: "wrapperClass",
-        description: "Class of the wrapper element.",
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the content element.",
+    },
+    headerClass: {
+        class: "headerClass",
+        description: "Class of the content header element.",
+    },
+    bodyClass: {
+        class: "bodyClass",
+        description: "Class of the content body element.",
     },
     iconClass: {
         class: "iconClass",
-        description: "Class of the icon element on the left.",
+        description: "Class of the content body icon element on the left.",
         properties: ["type"],
         action: (data): void => {
             data.type = "info";
         },
-    },
-    contentClass: {
-        class: "contentClass",
-        description: "Class of the content element.",
     },
     closeClass: {
         class: "closeClass",

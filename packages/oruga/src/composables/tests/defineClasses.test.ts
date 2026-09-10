@@ -6,7 +6,7 @@ import type { OrugaConfig } from "@/types";
 
 import { defineClasses } from "../defineClasses";
 
-describe("defineClasses test", async () => {
+describe("defineClasses test", () => {
     const variant = "small";
     const style = "simple";
     // a mocked component instance

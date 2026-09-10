@@ -7,11 +7,11 @@ const options: ListboxOptions<string> = [
         label: "Black Sails",
         disabled: true,
         options: [
-            { label: "Flint", value: "flint" },
-            { label: "Silver", value: "silver" },
-            { label: "Vane", value: "vane" },
-            { label: "Billy", value: "billy" },
-            { label: "Jack", value: "jack", disabled: true },
+            { label: "Flint", value: "flint", icon: "user" },
+            { label: "Silver", value: "silver", icon: "user" },
+            { label: "Vane", value: "vane", icon: "user" },
+            { label: "Billy", value: "billy", icon: "user" },
+            { label: "Jack", value: "jack", disabled: true, icon: "user" },
         ],
     },
     {

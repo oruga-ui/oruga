@@ -87,11 +87,11 @@ describe("OMenu tests", () => {
             const itemComps = wrapper.findAllComponents(OMenuItem);
             expect(itemComps.length).toBe(items.length);
             items.forEach((value, idx) => {
-                expect(itemComps[idx]!.attributes("data-oruga")).toBe(
+                expect(itemComps[idx].attributes("data-oruga")).toBe(
                     "menu-item",
                 );
-                expect(itemComps[idx]!.text()).toBe(value.label);
-                expect(itemComps[idx]!.classes()).toContain("o-menu__item");
+                expect(itemComps[idx].text()).toBe(value.label);
+                expect(itemComps[idx].classes()).toContain("o-menu__item");
             });
         });
 
@@ -104,20 +104,20 @@ describe("OMenu tests", () => {
                 );
             expect(itemComps.length).toBe(items.length);
 
-            const itemOne = itemComps[0]!;
-            const itemTwo = itemComps[1]!;
+            const itemOne = itemComps[0];
+            const itemTwo = itemComps[1];
             const itemButtonOne = itemOne.find("button");
             const itemButtonTwo = itemTwo.find("button");
             expect(itemButtonOne.exists()).toBeTruthy();
             expect(itemButtonTwo.exists()).toBeTruthy();
 
             await itemButtonOne.trigger("click");
-            expect(itemOne.emitted("update:active")![0]).toContainEqual(true);
+            expect(itemOne.emitted("update:active")?.[0]).toContainEqual(true);
             expect(itemTwo.emitted("update:active")).toBeUndefined();
 
             await itemButtonTwo.trigger("click");
-            expect(itemOne.emitted("update:active")![1]).toContainEqual(false);
-            expect(itemTwo.emitted("update:active")![0]).toContainEqual(true);
+            expect(itemOne.emitted("update:active")?.[1]).toContainEqual(false);
+            expect(itemTwo.emitted("update:active")?.[0]).toContainEqual(true);
         });
 
         test("react accordingly when item has disabled prop", async () => {
@@ -131,8 +131,8 @@ describe("OMenu tests", () => {
                 wrapper.findAllComponents<ComponentPublicInstance>(OMenuItem);
             expect(itemComps.length).toBe(items.length);
 
-            const itemOne = itemComps[0]!;
-            const itemTwo = itemComps[1]!;
+            const itemOne = itemComps[0];
+            const itemTwo = itemComps[1];
             const itemButtonOne = itemOne.find("button");
             const itemButtonTwo = itemTwo.find("button");
 
@@ -148,7 +148,7 @@ describe("OMenu tests", () => {
 
             await itemButtonTwo.trigger("click");
             expect(itemOne.emitted("update:active")).toBeUndefined();
-            expect(itemTwo.emitted("update:active")![0]).toContainEqual(true);
+            expect(itemTwo.emitted("update:active")?.[0]).toContainEqual(true);
         });
 
         test("react accordingly when item has active prop", async () => {
@@ -171,7 +171,9 @@ describe("OMenu tests", () => {
 
             await itemButton.trigger("click");
             expect(itemComp.emitted("update:active")).toHaveLength(1);
-            expect(itemComp.emitted("update:active")![0]).toContainEqual(false);
+            expect(itemComp.emitted("update:active")?.[0]).toContainEqual(
+                false,
+            );
         });
 
         test("react accordingly when item has tag prop", () => {
@@ -201,25 +203,25 @@ describe("OMenu tests", () => {
                 wrapper.findAllComponents<ComponentPublicInstance>(OMenuItem);
             expect(itemComps.length).toBe(items.length);
 
-            const itemOne = itemComps[0]!;
-            const itemTwo = itemComps[1]!;
+            const itemOne = itemComps[0];
+            const itemTwo = itemComps[1];
             const itemButtonOne = itemOne.find("button");
             const itemButtonTwo = itemTwo.find("button");
 
             await itemButtonOne.trigger("click");
-            expect(itemOne.emitted("update:active")![0]).toContainEqual(true);
+            expect(itemOne.emitted("update:active")?.[0]).toContainEqual(true);
             expect(itemOne.emitted("update:expanded")).toBeUndefined();
             expect(itemTwo.emitted("update:active")).toBeUndefined();
             expect(itemTwo.emitted("update:expanded")).toBeUndefined();
             await itemButtonTwo.trigger("click");
-            expect(itemOne.emitted("update:active")![1]).toContainEqual(false);
+            expect(itemOne.emitted("update:active")?.[1]).toContainEqual(false);
             expect(itemOne.emitted("update:expanded")).toBeUndefined();
-            expect(itemTwo.emitted("update:active")![0]).toContainEqual(true);
+            expect(itemTwo.emitted("update:active")?.[0]).toContainEqual(true);
             expect(itemTwo.emitted("update:expanded")).toBeUndefined();
             await itemButtonOne.trigger("click");
-            expect(itemOne.emitted("update:active")![2]).toContainEqual(true);
+            expect(itemOne.emitted("update:active")?.[2]).toContainEqual(true);
             expect(itemOne.emitted("update:expanded")).toBeUndefined();
-            expect(itemTwo.emitted("update:active")![1]).toContainEqual(false);
+            expect(itemTwo.emitted("update:active")?.[1]).toContainEqual(false);
             expect(itemTwo.emitted("update:expanded")).toBeUndefined();
         });
 
@@ -232,8 +234,8 @@ describe("OMenu tests", () => {
                 wrapper.findAllComponents<ComponentPublicInstance>(OMenuItem);
             expect(itemComps.length).toBe(items.length);
 
-            const itemOne = itemComps[0]!;
-            const itemTwo = itemComps[1]!;
+            const itemOne = itemComps[0];
+            const itemTwo = itemComps[1];
             const itemButtonOne = itemOne.find("button");
             const itemButtonTwo = itemTwo.find("button");
 

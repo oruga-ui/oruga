@@ -133,10 +133,10 @@ export function normalizeOptions<T extends object>(
 
                 if (groupable && "options" in option) {
                     const key = indexer.nextIndex();
-                    const options = normalizeOptions(
+                    const options = normalizeOptions<T>(
                         option.options,
                         indexer,
-                    ) as NormalizedOption<T>[];
+                    );
 
                     const item = { ...toValue(option) };
                     delete item.options; // delete options from item to prevent loop

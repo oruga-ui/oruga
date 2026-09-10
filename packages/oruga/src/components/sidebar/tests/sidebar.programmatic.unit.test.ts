@@ -54,7 +54,7 @@ describe("useSidebarProgrammatic tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test mounting with target correctly", async () => {
+    test("test mounting with target correctly", () => {
         const container = document.createElement("div");
         container.id = "my-cool-container";
         document.body.appendChild(container);
@@ -88,7 +88,7 @@ describe("useSidebarProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(1);
     });
 
-    test("test mounting with custom component correctly", async () => {
+    test("test mounting with custom component correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', 'abc')">Fancy Label</button>`,
         });
@@ -117,7 +117,7 @@ describe("useSidebarProgrammatic tests", () => {
         expect(sidebar).toBeNull();
     });
 
-    test("test close event working correctly", async () => {
+    test("test close event working correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
         });

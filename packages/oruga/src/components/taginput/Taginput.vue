@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T = string">
-import { computed, useAttrs, useTemplateRef, watchEffect, ref } from "vue";
+import { computed, useTemplateRef, ref, watch } from "vue";
 
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 import OTag from "../tag/Tag.vue";
@@ -8,7 +8,6 @@ import { getDefault } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
 import {
     defineClasses,
-    getActiveClasses,
     useInputHandler,
     useIndexer,
     type OptionItem,
@@ -53,7 +52,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     allowNew: () => getDefault("taginput.allowNew", false),
     allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
     validateItem: () => true,
-    createItem: (item: T | string) => item as T,
+    createItem: (item) => item,
     closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
@@ -63,7 +62,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
     teleport: () => getDefault("taginput.teleport", false),
-    autocompleteClasses: () => getDefault("taginput.autocompleteClasses", {}),
+    autocompleteAttrs: () => getDefault("taginput.autocompleteAttrs", {}),
 });
 
 const emits = defineEmits<{
@@ -175,8 +174,11 @@ const autocompleteRef = useTemplateRef<
 >("autocompleteComponent");
 
 // use form input functionalities
-const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } =
-    useInputHandler(autocompleteRef, emits, props);
+const { checkHtml5Validity, setFocus, setBlur, input } = useInputHandler(
+    autocompleteRef,
+    props,
+    emits,
+);
 
 const isDropdownActive = ref(false);
 
@@ -223,9 +225,9 @@ const hasInput = computed(
     () => props.maxitems == null || itemsLength.value < Number(props.maxitems),
 );
 
-watchEffect(() => {
+watch(hasInput, () => {
     // blur if input is empty
-    if (!hasInput.value) onBlur();
+    if (!hasInput.value) input.value?.blur();
 });
 
 function addItem(item?: T | string): void {
@@ -292,8 +294,7 @@ function onBackspace(): void {
 }
 
 function onEnter(event: Event): void {
-    // Add item if not select only and dropdown selection is closed
-    if (props.allowNew && !isDropdownActive.value) {
+    if (props.allowNew) {
         event.stopPropagation();
         addItem();
     }
@@ -339,33 +340,17 @@ const itemClasses = defineClasses(["itemClass", "o-taginput__item"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
-const autocompleteRootClasses = defineClasses([
-    "autocompleteClasses.rootClass",
-    "o-taginput__autocomplete",
-]);
-
-const autocompleteInputClasses = defineClasses([
-    "autocompleteClasses.inputClasses.inputClass",
-    "o-taginput__input",
-]);
-
-const attrs = useAttrs();
-
-const autocompleteBind = computed(() => ({
-    ...attrs,
-    "root-class": getActiveClasses(autocompleteRootClasses),
-    "input-classes": {
-        "input-class": getActiveClasses(autocompleteInputClasses),
-    },
-    ...props.autocompleteClasses,
-}));
-
 // #endregion --- Computed Component Classes ---
 
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: selectedItems,
+});
 
 // #endregion --- Expose Public Functionalities ---
 </script>
@@ -397,7 +382,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 ref="autocompleteComponent"
                 v-model:active="isDropdownActive"
                 v-model:input="inputValue"
-                v-bind="autocompleteBind"
+                v-bind="{ ...$attrs, ...autocompleteAttrs }"
                 :options="options"
                 :filter="filter"
                 :placeholder="placeholder"
@@ -415,9 +400,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 :use-html5-validation="false"
                 expanded
                 @input="onInput"
-                @focus="onFocus"
-                @blur="onBlur"
-                @invalid="onInvalid"
                 @keydown.enter="onEnter"
                 @keydown.tab="onEnter"
                 @keydown.backspace="onBackspace"

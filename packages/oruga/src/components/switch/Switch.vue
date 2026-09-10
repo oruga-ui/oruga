@@ -77,8 +77,11 @@ defineSlots<{
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
-    useInputHandler(inputRef, emits, props);
+const { checkHtml5Validity, setFocus, setBlur } = useInputHandler(
+    inputRef,
+    props,
+    emits,
+);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
@@ -105,7 +108,7 @@ function onInput(event: Event): void {
     emits("input", vmodel.value, event);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -154,10 +157,19 @@ const inputClasses = defineClasses(["inputClass", "o-switch__input"]);
 
 const labelClasses = defineClasses(["labelClass", "o-switch__label"]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: vmodel,
+});
+
+// #endregion  --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -180,9 +192,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             :autocomplete="autocomplete"
             :aria-checked="isChecked"
             :aria-labelledby="labelId"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid"
             @change="onInput" />
 
         <label

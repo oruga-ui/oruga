@@ -82,11 +82,12 @@ const columns: TableColumn<(typeof data)[number]>[] = [
 
 const checkboxPosition = ref<"left" | "right">("left");
 const checkedRows = ref([data[1], data[3]]);
+const keepChecked = ref(false);
 </script>
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-button
                 variant="danger"
                 :disabled="!checkedRows.length"
@@ -97,6 +98,7 @@ const checkedRows = ref([data[1], data[3]]);
                 <option value="left">Checkbox at left</option>
                 <option value="right">Checkbox at right</option>
             </o-select>
+            <o-switch v-model="keepChecked" label="Keep Checked" />
         </o-field>
 
         <o-table
@@ -106,6 +108,7 @@ const checkedRows = ref([data[1], data[3]]);
             row-key="id"
             checkable
             paginated
+            :keep-checked="keepChecked"
             :per-page="5"
             :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
             :checkbox-position="checkboxPosition">

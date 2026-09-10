@@ -1,11 +1,13 @@
 import type { ComponentClass } from "@/types";
 import type { OptionsProp } from "@/composables";
+import type { InputProps } from "../input/props";
+import type { CheckboxProps } from "../checkbox/props";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type TreeOptions<T> = OptionsProp<TreeItemProps<T>>;
 
-export type TreeProps<T, IsMultiple extends boolean = false> = {
+export type TreeProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The selected item value, use v-model to make it two-way binding */
@@ -28,6 +30,18 @@ export type TreeProps<T, IsMultiple extends boolean = false> = {
     scrollHeight?: string | number;
     /** A label which is displayed when no options are visible */
     emptyLabel?: string;
+    /** Enables client-side filtering of tree items */
+    filterable?: boolean;
+    /** Disable client-side filtering and rely on parent logic */
+    backendFiltering?: boolean;
+    /** Custom filter function to determine visibility */
+    filter?: (value: T, filterValue: string) => boolean;
+    /** The icon to display in the filter input */
+    filterIcon?: string;
+    /** Debounce delay for the filter input */
+    filterDebounce?: number;
+    /** Placeholder for the filter input */
+    filterPlaceholder?: string;
     /** The chevron icon to for the toggle element before each item */
     toggleIcon?: string;
     /**
@@ -42,7 +56,7 @@ export type TreeProps<T, IsMultiple extends boolean = false> = {
     iconSize?: string;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Defines a string value that labels an interactive element. */
+    /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
@@ -64,8 +78,17 @@ export type TreeClasses = Partial<{
     footerClass: ComponentClass;
     /** Class of the empty slot wrapper element */
     emptyClass: ComponentClass;
+    /** Class of the filter wrapper element */
+    filterClass: ComponentClass;
+    /** Class of the root element when filterable */
+    filterableClass: ComponentClass;
     /** Class of the tree list element */
     listClass: ComponentClass;
+    /**
+     * Class configuration for the internal input component
+     * @ignore
+     */
+    inputAttrs: InputProps<boolean>;
 }>;
 
 export type TreeItemProps<T> = {
@@ -101,7 +124,7 @@ export type TreeItemProps<T> = {
     iconSize?: string;
     /** Transition name to apply on tree list */
     animation?: string;
-    /** Defines a string value that labels an interactive element. */
+    /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
     ariaLabelledby?: string;
@@ -125,6 +148,13 @@ export type TreeItemClasses = Partial<{
     itemIconClass: ComponentClass;
     /** Class of the tree item label element element */
     itemLabelClass: ComponentClass;
+    /** Class for the HTML checkbox element when checkable */
+    checkboxClass: ComponentClass;
     /** Class of a subtree element of a tree item */
     subtreeClass: ComponentClass;
+    /**
+     * Class configuration for the internal checkbox component
+     * @ignore
+     */
+    checkboxAttrs: CheckboxProps<boolean>;
 }>;

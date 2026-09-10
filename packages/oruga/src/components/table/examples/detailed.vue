@@ -108,7 +108,7 @@ const detailedRows = ref([data.value[0]]);
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-switch v-model="showDetailIcon" label="Show detail chevron" />
             <o-switch
                 v-model="showCustomDetail"

@@ -9,6 +9,7 @@ import {
     useTemplateRef,
     toRaw,
     triggerRef,
+    shallowReadonly,
     type MaybeRefOrGetter,
     type VNode,
 } from "vue";
@@ -137,6 +138,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     ariaPreviousLabel: () => getDefault("table.ariaPreviousLabel"),
     ariaPageLabel: () => getDefault("table.ariaPageLabel"),
     ariaCurrentLabel: () => getDefault("table.ariaCurrentLabel"),
+    loadingAttrs: () => getDefault("table.loadingAttrs"),
 });
 
 const emits = defineEmits<{
@@ -238,14 +240,14 @@ const emits = defineEmits<{
      * @param index {number} - index of clicked row
      * @param event {Event} - native mouseenter event
      */
-    mouseenter: [row: T, index: number, event: Event];
+    mouseenter: [row: T, index: number, event: PointerEvent];
     /**
      * on row mouseleave event
      * @param row {unknown} - row data
      * @param index {number} - index of clicked row
      * @param event {Event} - native mouseleave event
      */
-    mouseleave: [row: T, index: number, event: Event];
+    mouseleave: [row: T, index: number, event: PointerEvent];
     /**
      * on cell click event
      * @param row {unknown} - row data
@@ -412,7 +414,7 @@ const { childItems } = useProviderParent<TableColumnComponent<T>>({
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
     if (!childItems.value.length) return [];
     return childItems.value.map((columnItem) => {
-        const column = toValue(columnItem.data!);
+        const column = toValue(columnItem.data);
 
         // create additional th attrs data
         let thAttrsData =
@@ -670,15 +672,15 @@ function isColumnSorted(column: TableColumnItem<T>): boolean {
 }
 
 // calculate default sort on columns change and on initial load
-watch(tableColumns, defaultSort, { immediate: true });
+watch(tableColumns, setDefaultSort, { immediate: true });
 
 /** sort column based on the default-sort prop if not already sorted */
-function defaultSort(): void {
+function setDefaultSort(): void {
     // prevent sort when not columns or already sorted (for example async data)
     if (!tableColumns.value.length || currentSortColumn.value) return;
     if (!props.defaultSort) return;
 
-    let sortField = props.defaultSort;
+    let sortField;
     let sortDirection = props.defaultSortDirection;
     if (Array.isArray(props.defaultSort)) {
         sortField = props.defaultSort[0];
@@ -867,10 +869,18 @@ function updateCheckedRows(checkAll?: boolean): void {
         // if all rows are already checked, check nothing
         tableCheckedRows.value = [];
     else {
-        // else set all visible rows as checked
-        tableCheckedRows.value = availableRows.value
-            .map((row) => row.value)
-            .filter((value) => props.isRowCheckable(value));
+        // keep previously checked rows from other pages if keepChecked is enabled
+        const previouslyChecked = props.keepChecked
+            ? tableCheckedRows.value
+            : [];
+
+        // set all visible rows as checked
+        tableCheckedRows.value = [
+            ...previouslyChecked,
+            ...availableRows.value
+                .map((row) => row.value)
+                .filter((value) => props.isRowCheckable(value)),
+        ];
     }
 
     // emit event after the reactive checked rows list got updated
@@ -1122,10 +1132,15 @@ const thDetailedClasses = defineClasses([
 
 const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
 
-const thSortIconClasses = defineClasses([
-    "thSortIconClass",
-    "o-table__th__sort-icon",
-]);
+const thSortIconClasses = defineClasses(
+    ["thSortIconClass", "o-table__th__sort-icon"],
+    [
+        "thSortIconDirectionClass",
+        "o-table__th__sort-icon--",
+        computed(() => (isAsc.value ? "asc" : "desc")),
+        computed(() => !!currentSortColumn.value),
+    ],
+);
 
 const trBaseClasses = defineClasses(["trClass", "o-table__tr"]);
 
@@ -1209,8 +1224,10 @@ function rowClasses(row: TableRow<T>): ClassBinding[] {
 
 /** expose functionalities for programmatic usage */
 defineExpose({
-    columns: tableColumns,
-    rows: tableRows,
+    columns: shallowReadonly(tableColumns),
+    rows: shallowReadonly(tableRows),
+    filteredRows: shallowReadonly(filteredRows),
+    pageRows: shallowReadonly(availableRows),
     filters,
     sort: sortByField,
 });
@@ -1546,7 +1563,7 @@ defineExpose({
                             @dblclick="
                                 $emit('dblclick', row.value, row.index, $event)
                             "
-                            @mouseenter="
+                            @pointerenter="
                                 $emit(
                                     'mouseenter',
                                     row.value,
@@ -1554,7 +1571,7 @@ defineExpose({
                                     $event,
                                 )
                             "
-                            @mouseleave="
+                            @pointerleave="
                                 $emit(
                                     'mouseleave',
                                     row.value,
@@ -1719,7 +1736,7 @@ defineExpose({
             </table>
             <slot name="loading" :loading="loading">
                 <o-loading
-                    v-bind="loadingClasses"
+                    v-bind="loadingAttrs"
                     :full-page="false"
                     :active="loading"
                     :icon="loadingIcon"

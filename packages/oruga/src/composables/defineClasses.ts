@@ -21,7 +21,12 @@ import {
     isTrueish,
 } from "@/utils/helpers";
 
-import type { ClassBinding, ComponentClass, TransformFunction } from "@/types";
+import type {
+    ClassBinding,
+    ClassBindingList,
+    ComponentClass,
+    TransformFunction,
+} from "@/types";
 
 // named tuple as prop definition
 type ComputedClass = readonly [
@@ -228,6 +233,7 @@ function computeClass(
 
     // --- Class Definition ---
 
+    // eslint-disable-next-line no-useless-assignment
     let instanceClassString: string | undefined = undefined;
     let configClassString: string | undefined = undefined;
     let defaultClassString: string | undefined = undefined;
@@ -295,7 +301,7 @@ function compileClass(
     // if definiton is undefined return empty class string
     if (typeof classDefinition === "undefined") return "";
 
-    let classBinding: ClassBinding | ClassBinding[];
+    let classBinding: ClassBinding | ClassBindingList;
 
     if (typeof classDefinition === "function")
         // call class definition function
@@ -323,7 +329,7 @@ function compileClass(
 }
 
 /** Transform a classBinding object into a string. */
-function processClassBinding(classBinding: ClassBinding): string {
+function processClassBinding(classBinding: ClassBinding | undefined): string {
     if (typeof classBinding === "string") return classBinding;
 
     if (typeof classBinding === "object")

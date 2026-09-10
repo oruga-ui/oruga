@@ -59,13 +59,13 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
             data.addons = true;
         },
     },
-    multilineClass: {
-        class: "multilineClass",
+    nowrapClass: {
+        class: "nowrapClass",
         description:
-            "Class for inner body wrapper element to fill up multiple lines.",
-        properties: ["multiline"],
+            "Class of the inner body wrapper element when shown as block without linebreak.",
+        properties: ["nowrap"],
         action: (data): void => {
-            data.multiline = true;
+            data.nowrap = true;
         },
     },
     horizontalClass: {

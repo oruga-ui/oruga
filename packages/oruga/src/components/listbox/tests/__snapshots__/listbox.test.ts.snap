@@ -7,19 +7,24 @@ exports[`OListbox tests > render correctly with items 1`] = `
   <ul id="v-0_list" role="listbox" tabindex="0" class="o-listbox__list" style="max-height: 225px; overflow: auto;" aria-disabled="false">
     <transition-group-stub name="fade" appear="false" persisted="false" css="true">
       <li id="v-0-1" data-oruga="listbox-item" data-id="listbox-1" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
-        <!-- TODO: add checkbox for checkable -->New York
+        <!--v-if-->
+        <!--v-if-->New York
       </li>
       <li id="v-0-2" data-oruga="listbox-item" data-id="listbox-2" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
-        <!-- TODO: add checkbox for checkable -->Rome
+        <!--v-if-->
+        <!--v-if-->Rome
       </li>
       <li id="v-0-3" data-oruga="listbox-item" data-id="listbox-3" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
-        <!-- TODO: add checkbox for checkable -->London
+        <!--v-if-->
+        <!--v-if-->London
       </li>
       <li id="v-0-4" data-oruga="listbox-item" data-id="listbox-4" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
-        <!-- TODO: add checkbox for checkable -->Istanbul
+        <!--v-if-->
+        <!--v-if-->Istanbul
       </li>
       <li id="v-0-5" data-oruga="listbox-item" data-id="listbox-5" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
-        <!-- TODO: add checkbox for checkable -->Paris
+        <!--v-if-->
+        <!--v-if-->Paris
       </li>
     </transition-group-stub>
   </ul>
@@ -37,23 +42,23 @@ exports[`OListbox tests > render correctly with options 1`] = `
   <ul id="v-0_list" role="listbox" tabindex="0" class="o-listbox__list" style="max-height: 225px; overflow: auto;" aria-disabled="false">
     <transition-group-stub name="fade" appear="false" persisted="false" css="true">
       <li id="v-0-1" data-oruga="listbox-item" data-id="listbox-1" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="New York" aria-setsize="5" aria-posinset="1">
-        <!-- TODO: add checkbox for checkable -->
+        <!--v-if-->
         <!--v-if--><span>New York</span>
       </li>
       <li id="v-0-2" data-oruga="listbox-item" data-id="listbox-2" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Rome" aria-setsize="5" aria-posinset="2">
-        <!-- TODO: add checkbox for checkable -->
+        <!--v-if-->
         <!--v-if--><span>Rome</span>
       </li>
       <li id="v-0-3" data-oruga="listbox-item" data-id="listbox-3" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="London" aria-setsize="5" aria-posinset="3">
-        <!-- TODO: add checkbox for checkable -->
+        <!--v-if-->
         <!--v-if--><span>London</span>
       </li>
       <li id="v-0-4" data-oruga="listbox-item" data-id="listbox-4" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Istanbul" aria-setsize="5" aria-posinset="4">
-        <!-- TODO: add checkbox for checkable -->
+        <!--v-if-->
         <!--v-if--><span>Istanbul</span>
       </li>
       <li id="v-0-5" data-oruga="listbox-item" data-id="listbox-5" class="o-listbox__item o-listbox__item--selectable" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Paris" aria-setsize="5" aria-posinset="5">
-        <!-- TODO: add checkbox for checkable -->
+        <!--v-if-->
         <!--v-if--><span>Paris</span>
       </li>
     </transition-group-stub>

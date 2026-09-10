@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="T">
 import { useId, computed, useTemplateRef, ref } from "vue";
 
+import OIcon from "../icon/Icon.vue";
+
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
@@ -24,8 +26,17 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     label: undefined,
     disabled: false,
     clickable: true,
+    decorative: false,
     hidden: false,
+    title: undefined,
     tag: undefined,
+    href: undefined,
+    rel: undefined,
+    target: undefined,
+    iconPack: undefined,
+    iconSize: undefined,
+    icon: undefined,
+    iconRight: undefined,
 });
 
 const emits = defineEmits<{
@@ -46,7 +57,7 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
-    value: props.value,
+    value: props.value as T,
     label: props.label,
     isViable: isViable.value,
     setHidden,
@@ -67,11 +78,21 @@ function setHidden(hidden: boolean): void {
 }
 
 /** Shows if the item is viable or not (not disabled or hidden). */
-const isViable = computed(() => !isHidden.value && isClickable.value);
+const isViable = computed(
+    () =>
+        !isHidden.value &&
+        !props.disabled &&
+        !props.decorative &&
+        props.clickable,
+);
 
 /** Shows if the item is clickable or not. */
 const isClickable = computed(
-    () => !parent.value.disabled && !props.disabled && props.clickable,
+    () =>
+        !parent.value.disabled &&
+        !props.disabled &&
+        !props.decorative &&
+        props.clickable,
 );
 
 const isSelected = computed(() => {
@@ -87,11 +108,19 @@ const isFocused = computed(
     () => item.value.identifier === parent.value.focsuedIdentifier,
 );
 
+const itemRole = computed(() =>
+    props.decorative
+        ? "presentation"
+        : parent.value.selectable
+          ? "option"
+          : "menuitem",
+);
+
 /** Click listener, select the item. */
 function onClick(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, event);
-    emits("click", props.value as T, event);
+    emits("click", providedData.value.value, event);
 }
 
 /** Hover listener, focus the item. */
@@ -111,30 +140,60 @@ const rootClasses = defineClasses(
     ],
     ["itemSelectedClass", "o-dropdown__item--active", null, isSelected],
     ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
+    [
+        "itemSeperatorClass",
+        "o-dropdown__item--decorative",
+        null,
+        computed(() => props.decorative),
+    ],
     ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
+
+const iconClasses = defineClasses(["itemIconClass", "o-dropdown__item-icon"]);
 
 // #endregion --- Computed Component Classes ---
 </script>
 
 <template>
     <component
-        :is="tag ?? parent.itemTag"
+        :is="href ? 'a' : (tag ?? parent.itemTag)"
         v-show="!isHidden"
         :id="`${parent.menuId}-${item.identifier}`"
         ref="rootElement"
         data-oruga="dropdown-item"
         :data-id="`dropdown-${item.identifier}`"
         :class="rootClasses"
-        :role="parent.selectable ? 'option' : 'menuitem'"
+        :role="itemRole"
         tabindex="-1"
-        :aria-selected="parent.selectable ? isSelected : undefined"
+        :title="title"
+        :href="href"
+        :rel="rel"
+        :target="target"
+        :aria-selected="
+            !decorative && parent.selectable ? isSelected : undefined
+        "
         :aria-hidden="isHidden"
         :aria-disabled="disabled"
         @click="onClick"
-        @mouseenter="focusItem"
+        @pointerenter="focusItem"
         @keydown.enter="onClick"
         @keydown.space="onClick">
-        <slot>{{ label }}</slot>
+        <o-icon
+            v-if="icon"
+            :class="iconClasses"
+            :icon="icon"
+            :size="iconSize"
+            :pack="iconPack" />
+
+        <slot>
+            <slot>{{ label }}</slot>
+        </slot>
+
+        <o-icon
+            v-if="iconRight"
+            :class="iconClasses"
+            :icon="iconRight"
+            :size="iconSize"
+            :pack="iconPack" />
     </component>
 </template>

@@ -1,7 +1,12 @@
 import type { MaybeRefOrGetter } from "vue";
 import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
-import type { ClassBinding, ClassFunction, DynamicComponent } from "./utils";
+import type {
+    ClassBinding,
+    ClassBindingList,
+    ClassFunction,
+    DynamicComponent,
+} from "./utils";
 
 /** export option types */
 export type {
@@ -10,10 +15,15 @@ export type {
     OptionsProp,
     OptionsGroupsProp,
     OptionsOrGroupsProp,
+    PopoverPosition,
 } from "@/composables";
 
 /** The class definition for a component class property. */
-export type ComponentClass = ClassBinding | ClassBinding[] | ClassFunction;
+export type ComponentClass =
+    | undefined
+    | ClassBinding
+    | ClassBindingList
+    | ClassFunction;
 
 /** The class object definiton a class in the global config object. */
 export type ClassObject = {
@@ -75,7 +85,7 @@ export type GlobalConfig = Partial<{
      * Teleport and programmatic default target
      * @default document.body
      */
-    teleportTarget: MaybeRefOrGetter<string | HTMLElement>;
+    teleportTarget: MaybeRefOrGetter<string | HTMLElement | ShadowRoot>;
     /**
      * Enable default form components HTML5 validation attribute
      * @default true
@@ -84,7 +94,7 @@ export type GlobalConfig = Partial<{
     /** Custom HTML5 validation invalid handler */
     invalidHandler: (
         validatable: ValidatableFormElement,
-        fieldElement?: Element | undefined,
+        fieldElement?: Element,
     ) => void;
     /** You can use transformClasses globally if you need to transform classes for any component. */
     transformClasses: TransformFunction;

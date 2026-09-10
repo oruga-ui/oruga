@@ -88,8 +88,8 @@ describe("OCarousel tests", () => {
         const items = wrapper.findAll('[data-oruga="carousel-item"]');
         expect(items.length).toBe(slides.length);
 
-        items.forEach((item, index) =>
-            expect(item.text()).toEqual(slides[index].title),
-        );
+        items.forEach((item, index) => {
+            expect(item.text()).toEqual(slides[index].title);
+        });
     });
 });

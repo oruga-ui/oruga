@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
     closeable: () => getDefault("tooltip.closeable", true),
     closeOnEscape: () => getDefault("tooltip.closeOnEscape", false),
     closeOnOutside: () => getDefault("tooltip.closeOnOutside", false),
-    teleport: () => getDefault("dropdown.teleport", false),
+    teleport: () => getDefault("tooltip.teleport", false),
 });
 
 const emits = defineEmits<{
@@ -255,10 +255,10 @@ const arrowClasses = defineClasses(
             :aria-describedby="id"
             @click="onClick"
             @contextmenu="onContextMenu"
-            @mouseenter="onHover"
+            @pointerenter="onHover"
             @focus.capture="onFocus"
             @blur.capture="onHoverLeave"
-            @mouseleave="onHoverLeave">
+            @pointerleave="onHoverLeave">
             <slot :active="isActive" />
         </component>
 

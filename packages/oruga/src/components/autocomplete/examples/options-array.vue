@@ -15,6 +15,7 @@ type Entity = {
 const options: AutocompleteOptions<Entity> = [
     {
         label: "Jesse Simmons",
+        icon: "user",
         value: {
             id: 1,
             user: { first_name: "Jesse", last_name: "Simmons" },
@@ -24,6 +25,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "John Jacobs",
+        icon: "user",
         value: {
             id: 2,
             user: { first_name: "John", last_name: "Jacobs" },
@@ -33,6 +35,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Tina Gilbert",
+        icon: "user",
         value: {
             id: 3,
             user: { first_name: "Tina", last_name: "Gilbert" },
@@ -42,6 +45,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Clarence Flores",
+        icon: "user",
         value: {
             id: 4,
             user: { first_name: "Clarence", last_name: "Flores" },
@@ -51,6 +55,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Anne Lee",
+        icon: "user",
         value: {
             id: 5,
             user: { first_name: "Anne", last_name: "Lee" },
@@ -60,6 +65,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Sara Armstrong",
+        icon: "user",
         value: {
             id: 6,
             user: { first_name: "Sara", last_name: "Armstrong" },
@@ -69,6 +75,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Anthony Webb",
+        icon: "user",
         value: {
             id: 7,
             user: { first_name: "Anthony", last_name: "Webb" },
@@ -78,6 +85,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Andrew Greene",
+        icon: "user",
         value: {
             id: 8,
             user: { first_name: "Andrew", last_name: "Greene" },
@@ -87,6 +95,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Russell White",
+        icon: "user",
         value: {
             id: 9,
             user: { first_name: "Russell", last_name: "White" },
@@ -96,6 +105,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Lori Hunter",
+        icon: "user",
         value: {
             id: 10,
             user: { first_name: "Lori", last_name: "Hunter" },
@@ -105,6 +115,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Ronald Wood",
+        icon: "user",
         value: {
             id: 11,
             user: { first_name: "Ronald", last_name: "Wood" },
@@ -114,6 +125,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Michael Harper",
+        icon: "user",
         value: {
             id: 12,
             user: { first_name: "Michael", last_name: "Harper" },
@@ -123,6 +135,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "George Dunn",
+        icon: "user",
         value: {
             id: 13,
             user: { first_name: "George", last_name: "Dunn" },
@@ -132,6 +145,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Eric Rogers",
+        icon: "user",
         value: {
             id: 14,
             user: { first_name: "Eric", last_name: "Rogers" },
@@ -141,6 +155,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Juan Meyer",
+        icon: "user",
         value: {
             id: 15,
             user: { first_name: "Juan", last_name: "Meyer" },
@@ -150,6 +165,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Silvia Rosa",
+        icon: "user",
         value: {
             id: 16,
             user: { first_name: "Silvia", last_name: "Rosa" },
@@ -159,6 +175,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Lori Cunningham",
+        icon: "user",
         value: {
             id: 17,
             user: { first_name: "Lori", last_name: "Cunningham" },
@@ -168,6 +185,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Charle Graham",
+        icon: "user",
         value: {
             id: 18,
             user: { first_name: "Charles", last_name: "Graham" },
@@ -177,6 +195,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Henry Morrison",
+        icon: "user",
         value: {
             id: 19,
             user: { first_name: "Henry", last_name: "Morrison" },
@@ -186,6 +205,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Albert Mendoza",
+        icon: "user",
         value: {
             id: 20,
             user: { first_name: "Albert", last_name: "Mendoza" },
@@ -195,6 +215,7 @@ const options: AutocompleteOptions<Entity> = [
     },
     {
         label: "Ruby Snyder",
+        icon: "user",
         value: {
             id: 21,
             user: { first_name: "Ruby", last_name: "Snyder" },

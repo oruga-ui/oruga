@@ -22,5 +22,13 @@
     "git": "https://github.com/oruga-ui/theme-bootstrap",
     "src": "https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets",
     "cdn": "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bootstrap@latest/dist/theme.css"
+  },
+  {
+    "label": "Tailwind",
+    "key": "theme-tailwind",
+    "path": "@oruga-ui/theme-tailwind/dist",
+    "git": "https://github.com/oruga-ui/theme-tailwind",
+    "src": "https://github.com/oruga-ui/theme-tailwind/tree/main/src/assets",
+    "cdn": "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-tailwind@latest/dist/theme.css"
   }
 ]

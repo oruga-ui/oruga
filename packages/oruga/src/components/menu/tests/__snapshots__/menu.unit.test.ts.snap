@@ -6,10 +6,10 @@ exports[`OMenu tests > menu integration tests > render correctly 1`] = `
     <!--v-if--><span>My Menu</span>
   </div>
   <ul id="v-0" class="o-menu__list" role="tree" tabindex="0" aria-labelledby="v-1">
-    <li id="v-0-1" data-oruga="menu-item" data-id="menu-1" class="o-menu__item" role="none"><button type="button" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span><span>label1</span></button><!-- sub menu items -->
+    <li id="v-0-1" data-oruga="menu-item" data-id="menu-1" class="o-menu__item" role="none"><button type="button" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span><span>label1</span></button><!-- sub menu items -->
       <!--v-if-->
     </li>
-    <li id="v-0-2" data-oruga="menu-item" data-id="menu-2" class="o-menu__item" role="none"><button type="button" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span><span>label2</span></button><!-- sub menu items -->
+    <li id="v-0-2" data-oruga="menu-item" data-id="menu-2" class="o-menu__item" role="none"><button type="button" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span><span>label2</span></button><!-- sub menu items -->
       <!--v-if-->
     </li>
   </ul>

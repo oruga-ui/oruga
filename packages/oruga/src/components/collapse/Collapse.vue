@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useId } from "vue";
+import { computed, useId, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
@@ -7,7 +7,7 @@ import { defineClasses } from "@/composables";
 import type { CollapseProps } from "./props";
 
 /**
- * An easy way to toggle what you want.
+ * An easy disclosure widget to toggle content visability.
  * @displayName Collapse
  * @style _collapse.scss
  */
@@ -19,10 +19,11 @@ defineOptions({
 
 const props = withDefaults(defineProps<CollapseProps>(), {
     override: undefined,
-    open: true,
+    open: false,
+    name: undefined,
+    label: undefined,
     expanded: false,
-    animation: () => getDefault("collapse.animation", "fade"),
-    position: () => getDefault("collapse.position", "top"),
+    position: () => getDefault("collapse.position", "bottom"),
     contentId: () => useId(),
     triggerId: () => useId(),
 });
@@ -33,10 +34,14 @@ const emits = defineEmits<{
      * @param value {boolean} - updated open prop
      */
     "update:open": [value: boolean];
-    /** on collapse opened */
-    open: [];
-    /** on collapse closed */
-    close: [];
+    /** on collapse opened
+     * @param event {ToggleEvent} - the native toggle event
+     */
+    open: [event: ToggleEvent];
+    /** on collapse closed
+     * @param event {ToggleEvent} - the native toggle event
+     */
+    close: [event: ToggleEvent];
 }>();
 
 defineSlots<{
@@ -49,16 +54,21 @@ defineSlots<{
     trigger?(props: { open: boolean }): void;
 }>();
 
-const isOpen = defineModel<boolean>("open", { default: true });
+const detailsRef = useTemplateRef("detailsElement");
 
-/** Toggle and emit events */
-function toggle(): void {
-    isOpen.value = !isOpen.value;
-    if (isOpen.value) emits("open");
-    else emits("close");
+const isOpen = defineModel<boolean>("open", { default: false });
+
+/** detail open state toggle handler */
+function onToggle(event: ToggleEvent): void {
+    if (!detailsRef.value) return;
+
+    isOpen.value = detailsRef.value.open;
+
+    if (detailsRef.value.open) emits("open", event);
+    else emits("close", event);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-collapse"],
@@ -81,31 +91,32 @@ const triggerClasses = defineClasses(
 );
 
 const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <div data-oruga="collapse" :class="rootClasses">
-        <div
+    <details
+        ref="detailsElement"
+        data-oruga="collapse"
+        :class="rootClasses"
+        :open="isOpen"
+        :name="name"
+        @toggle="onToggle">
+        <summary
             :id="triggerId"
-            :class="triggerClasses"
             role="button"
             tabindex="0"
+            :class="triggerClasses"
             :aria-controls="contentId"
-            :aria-expanded="isOpen"
-            @click="toggle"
-            @keydown.enter.prevent="toggle"
-            @keydown.space.prevent="toggle">
-            <slot name="trigger" :open="isOpen" />
-        </div>
+            :aria-expanded="isOpen">
+            <slot name="trigger" :open="isOpen">
+                {{ label }}
+            </slot>
+        </summary>
 
-        <Transition :name="animation">
-            <div
-                v-show="isOpen"
-                :id="contentId"
-                :class="contentClasses"
-                :aria-labelledby="triggerId">
-                <slot />
-            </div>
-        </Transition>
-    </div>
+        <div :id="contentId" :class="contentClasses">
+            <slot />
+        </div>
+    </details>
 </template>

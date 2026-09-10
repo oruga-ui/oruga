@@ -14,6 +14,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
+import { isClient } from "@/utils/ssr";
 import { isDefined, isTrueish } from "@/utils/helpers";
 import {
     defineClasses,
@@ -90,7 +91,7 @@ const emits = defineEmits<{
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} -  native event
+     * @param event {Event} - native event
      */
     blur: [event: Event];
     /**
@@ -112,18 +113,12 @@ const emits = defineEmits<{
 
 // --- Validation Feature ---
 
-const inputRef = useTemplateRef<HTMLInputElement>("inputElement");
+const rootRef = useTemplateRef("rootElement");
+const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
-const {
-    checkHtml5Validity,
-    onBlur,
-    onFocus,
-    onInvalid,
-    setFocus,
-    isValid,
-    isFocused,
-} = useInputHandler(inputRef, emits, props);
+const { checkHtml5Validity, setFocus, setBlur, isValid, isFocused } =
+    useInputHandler(inputRef, props, emits);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
@@ -158,6 +153,19 @@ watch(
 );
 
 onMounted(() => handleChange(vmodel.value));
+
+if (props.autosize && props.type === "textarea") {
+    const resizeObserver = window.ResizeObserver
+        ? new window.ResizeObserver(resize)
+        : undefined;
+
+    onMounted(() => {
+        // start resize observing
+        if (isClient && resizeObserver && rootRef.value) {
+            resizeObserver.observe(rootRef.value);
+        }
+    });
+}
 
 /**
  * Called when v-model changes:
@@ -360,13 +368,18 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+defineExpose({
+    checkHtml5Validity,
+    focus: setFocus,
+    blur: setBlur,
+    value: vmodel,
+});
 
-// #endregio  --- Expose Public Functionalities ---
+// #endregion  --- Expose Public Functionalities ---
 </script>
 
 <template>
-    <div data-oruga="input" :class="rootClasses">
+    <div ref="rootElement" data-oruga="input" :class="rootClasses">
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"
@@ -376,8 +389,22 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             :size="size"
             @click="iconClick" />
 
+        <textarea
+            v-if="type === 'textarea'"
+            v-bind="inputBind"
+            :id="id"
+            ref="inputElement"
+            :value="vmodel"
+            data-oruga-input="textarea"
+            :class="inputClasses"
+            :maxlength="maxlength"
+            :style="computedStyles"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            @input="debouncedInput" />
+
         <input
-            v-if="type !== 'textarea'"
+            v-else
             v-bind="inputBind"
             :id="id"
             ref="inputElement"
@@ -389,26 +416,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             :autocomplete="autocomplete"
             :placeholder="placeholder"
             :disabled="disabled"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid"
-            @input="debouncedInput" />
-
-        <textarea
-            v-else
-            v-bind="inputBind"
-            :id="id"
-            ref="inputElement"
-            :value="vmodel"
-            data-oruga-input="textarea"
-            :class="inputClasses"
-            :maxlength="maxlength"
-            :style="computedStyles"
-            :placeholder="placeholder"
-            :disabled="disabled"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid"
             @input="debouncedInput" />
 
         <o-icon

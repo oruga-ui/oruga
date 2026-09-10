@@ -3,6 +3,7 @@ import {
     computed,
     nextTick,
     onMounted,
+    ref,
     useId,
     useTemplateRef,
     watch,
@@ -17,10 +18,11 @@ import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import {
     defineClasses,
-    getTeleportDefault,
     unrefElement,
+    useEventListener,
     useMatchMedia,
     usePreventScrolling,
+    useTeleport,
 } from "@/composables";
 
 import type { DialogProps } from "./props";
@@ -41,6 +43,7 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     override: undefined,
     active: false,
     fullscreen: false,
+    size: () => getDefault("dialog.size"),
     animation: () => getDefault("dialog.animation", "zoom-out"),
     backdrop: () => getDefault("dialog.backdrop", true),
     maxWidth: () => getDefault("dialog.maxWidth", "80vw"),
@@ -76,6 +79,7 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     teleport: () => getDefault("dialog.teleport", false),
     ariaLabel: undefined,
     ariaDescribedby: undefined,
+    draggable: () => getDefault("dialog.draggable", false),
 });
 
 const emits = defineEmits<{
@@ -87,26 +91,31 @@ const emits = defineEmits<{
     /**
      * the event is fired when the dialog has been closed
      * @param event {Event} - native event
+     * @param value {String | undefined} - an optional return value
      */
-    close: [event: Event];
+    close: [event: Event, value?: string];
     /**
      * the event is fired when the user wish to dismiss the current open dialog
      * @param event {Event} - native event
+     * @param value {String | undefined} - an optional return value
      */
-    cancel: [event: Event];
+    cancel: [event: Event, value?: string];
     /**
      * the event is fired when the confirm button get clicked
-     * @param event {Event} native event
      */
-    confirm: [event: Event];
+    confirm: [];
 }>();
 
 defineSlots<{
     /**
      * Override the header
-     * @param close {(event: Event): void} - function to emit a `close` event
+     * @param close {(returnValue?: string): void} - function to emit a `close` event
+     * @param confirm {(): void} - function to emit a `confirm` event
      */
-    header?(props: { close: (event: Event) => void }): void;
+    header?(props: {
+        close: (returnValue?: string) => void;
+        confirm: () => void;
+    }): void;
     /** Override the header title, default is title prop */
     title?(): void;
     /** Override the header subtitle, default is subtitle prop */
@@ -117,30 +126,30 @@ defineSlots<{
     image?(): void;
     /**
      * Override the default dialog body
-     * @param close {(event: Event): void} - function to emit a `close` event
-     * @param confirm {(event: Event): void} - function to emit a `confirm` event
+     * @param close {(returnValue?: string): void} - function to emit a `close` event
+     * @param confirm {(): void} - function to emit a `confirm` event
      */
     default?(props: {
-        close: (event: Event) => void;
-        confirm: (event: Event) => void;
+        close: (returnValue?: string) => void;
+        confirm: () => void;
     }): void;
     /**
      * Override the body content, default is content prop
-     * @param close {(event: Event): void} - function to emit a `close` event
-     * @param confirm {(event: Event): void} - function to emit a `confirm` event
+     * @param close {(returnValue?: string): void} - function to emit a `close` event
+     * @param confirm {(): void} - function to emit a `confirm` event
      */
     content?(props: {
-        close: (event: Event) => void;
-        confirm: (event: Event) => void;
+        close: (returnValue?: string) => void;
+        confirm: () => void;
     }): void;
     /**
      * Override the footer
-     * @param close {(event: Event): void} - function to emit a `close` event
-     * @param confirm {(event: Event): void} - function to emit a `confirm` event
+     * @param close {(returnValue?: string): void} - function to emit a `close` event
+     * @param confirm {(): void} - function to emit a `confirm` event
      */
     footer?(props: {
-        close: (event: Event) => void;
-        confirm: (event: Event) => void;
+        close: (returnValue?: string) => void;
+        confirm: () => void;
     }): void;
     /** Define the cancel button label */
     cancelButton?(): void;
@@ -159,22 +168,16 @@ const titleId = useId();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const _teleport = computed(() =>
-    typeof props.teleport === "boolean"
-        ? { to: getTeleportDefault(), disabled: !props.teleport }
-        : { to: props.teleport, disabled: false },
-);
-
-const wrapperStyle = computed(() => ({
-    maxWidth: !props.fullscreen ? toCssDimension(props.maxWidth) : undefined,
-    maxHeight: !props.fullscreen ? toCssDimension(props.maxHeight) : undefined,
-}));
+const _teleport = useTeleport(props.teleport);
 
 const hasBackdrop = computed(
     () => props.backdrop || props.alert || rootRef.value?.ariaModal,
 );
 
-/** Specifies the types of user actions that can be used to close the dialog. */
+/**
+ * Specifies the types of user actions that can be used to close the dialog.
+ * See https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby
+ */
 const closedBy = computed(() => {
     // The dialog can be dismissed when the user clicks or taps outside it,
     // and with a platform-specific user action or a developer-specified mechanism.
@@ -223,13 +226,18 @@ onMounted(() => toggleDialog(isActive.value));
 
 watch(isActive, toggleDialog);
 
-/** show of close the dialog element */
+/** show or close the dialog element */
 function toggleDialog(value: boolean): void {
+    if (!rootRef.value) return;
+
     if (value) {
+        // reset the return value on each open
+        rootRef.value.returnValue = "";
+
         // trigger dialog show as modal with backdrop event
-        if (hasBackdrop.value) rootRef.value?.showModal();
+        if (hasBackdrop.value) rootRef.value.showModal();
         // trigger dialog show without backdrop event
-        else rootRef.value?.show();
+        else rootRef.value.show();
     } else if (rootRef.value?.open) {
         // trigger dialog close event
         rootRef.value.close();
@@ -237,38 +245,109 @@ function toggleDialog(value: boolean): void {
 }
 
 /** request the dialog to close when active */
-function cancel(): void {
+function close(returnValue?: string): void {
     if (!isActive.value || !rootRef.value) return;
 
-    // dialog.requestClose() is not suported in es2020
     // trigger dialog close event
-    // if (typeof rootRef.value.requestClose === "function")
-    //     // requestClose is a fairly new web API that is not yet supported in all environments
-    //     rootRef.value.requestClose();
-    // else
-    rootRef.value.close();
+    if (typeof rootRef.value.requestClose === "function")
+        // requestClose is a fairly new web API that is not yet supported in all environments
+        rootRef.value.requestClose(returnValue);
+    else rootRef.value.close(returnValue);
 }
 
-/** confirm button click event */
-function confirm(event: Event): void {
+/** emit a confirm event when active */
+function confirm(): void {
     if (!isActive.value || !rootRef.value) return;
 
-    emits("confirm", event);
-    if (props.closeOnConfirm) rootRef.value.close();
+    emits("confirm");
+    if (props.closeOnConfirm) rootRef.value.close("confirm");
 }
 
 /** native dialog close event */
 function onClose(event: Event): void {
     isActive.value = false;
-    emits("close", event);
+    const returnValue = rootRef.value?.returnValue;
+    emits("close", event, returnValue);
 }
 
 /** native dialog cancel event */
 function onCancel(event: Event): void {
-    emits("cancel", event);
+    const returnValue = rootRef.value?.returnValue;
+    emits("cancel", event, returnValue);
 }
 
 // #endregion --- Trigger Handler ---
+
+// #region --- Draggable Feature ---
+
+const isDragging = ref(false);
+const dragOffset = ref({ x: 0, y: 0 });
+const dragStart = ref({ x: 0, y: 0 });
+
+watch(
+    isActive,
+    (value) => {
+        // reset on dialog close
+        if (!value) {
+            isDragging.value = false;
+            dragOffset.value = { x: 0, y: 0 };
+        }
+    },
+    { flush: "sync" },
+);
+
+const dragStyle = computed(() =>
+    props.draggable && (dragOffset.value.x || dragOffset.value.y)
+        ? {
+              transform: `translate(${dragOffset.value.x}px, ${dragOffset.value.y}px)`,
+          }
+        : {},
+);
+
+function onDragStart(event: PointerEvent): void {
+    if (!props.draggable || props.fullscreen) return;
+    isDragging.value = true;
+    dragStart.value = {
+        x: event.clientX - dragOffset.value.x,
+        y: event.clientY - dragOffset.value.y,
+    };
+}
+
+function onDragMove(event: PointerEvent): void {
+    const newX = event.clientX - dragStart.value.x;
+    const newY = event.clientY - dragStart.value.y;
+
+    const el = unrefElement(rootRef);
+    if (el) {
+        const rect = el.getBoundingClientRect();
+        const naturalLeft = rect.left - dragOffset.value.x;
+        const naturalTop = rect.top - dragOffset.value.y;
+        const naturalRight = rect.right - dragOffset.value.x;
+        const naturalBottom = rect.bottom - dragOffset.value.y;
+
+        dragOffset.value = {
+            x: Math.min(
+                Math.max(newX, -naturalLeft),
+                window.innerWidth - naturalRight,
+            ),
+            y: Math.min(
+                Math.max(newY, -naturalTop),
+                window.innerHeight - naturalBottom,
+            ),
+        };
+    } else {
+        dragOffset.value = { x: newX, y: newY };
+    }
+}
+
+function onDragEnd(): void {
+    isDragging.value = false;
+}
+
+useEventListener(document, "pointermove", onDragMove, { trigger: isDragging });
+useEventListener(document, "pointerup", onDragEnd, { trigger: isDragging });
+
+// #endregion --- Draggable Feature ---
 
 // #region --- Computed Component Classes ---
 
@@ -276,6 +355,12 @@ const rootClasses = defineClasses(
     ["rootClass", "o-dialog"],
     ["mobileClass", "o-dialog--mobile", null, isMobile],
     ["activeClass", "o-dialog--active", null, isActive],
+    [
+        "sizeClass",
+        "o-dialog--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
     [
         "fullscreenClass",
         "o-dialog--fullscreen",
@@ -288,19 +373,31 @@ const rootClasses = defineClasses(
         null,
         computed(() => !!props.teleport),
     ],
+    [
+        "draggableClass",
+        "o-dialog--draggable",
+        null,
+        computed(() => !!props.draggable),
+    ],
+    ["draggingClass", "o-dialog--dragging", null, isDragging],
 );
 
 const backdropClasses = defineClasses(["backdropClass", "o-dialog__backdrop"]);
 
-const wrapperClasses = defineClasses(
-    ["wrapperClass", "o-dialog__wrapper"],
+const contentClasses = defineClasses(
+    ["contentClass", "o-dialog__content"],
     [
-        "textPositionClass",
-        "o-dialog__wrapper--",
+        "contentPositionClass",
+        "o-dialog__content--",
         computed(() => props.textPosition),
         computed(() => !!props.textPosition),
     ],
 );
+
+const contentStyle = computed(() => ({
+    maxWidth: !props.fullscreen ? toCssDimension(props.maxWidth) : undefined,
+    maxHeight: !props.fullscreen ? toCssDimension(props.maxHeight) : undefined,
+}));
 
 const headerClasses = defineClasses(["headerClass", "o-dialog__header"]);
 
@@ -318,11 +415,6 @@ const imageClasses = defineClasses(["imageClass", "o-dialog__image"]);
 const figureClasses = defineClasses(["figureClass", "o-dialog__image-figure"]);
 
 const bodyClasses = defineClasses(["bodyClass", "o-dialog__body"]);
-
-const contentClasses = defineClasses([
-    "contentClass",
-    "o-dialog__body-content",
-]);
 
 const footerClasses = defineClasses(
     ["footerClass", "o-dialog__footer"],
@@ -349,7 +441,7 @@ const cancelButtonClasses = defineClasses([
 // #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ close: cancel });
+defineExpose({ close, confirm });
 
 // #endregion --- Expose Public Functionalities ---
 </script>
@@ -363,6 +455,7 @@ defineExpose({ close: cancel });
                 v-bind="$attrs"
                 data-oruga="dialog"
                 :class="rootClasses"
+                :style="dragStyle"
                 :role="alert ? 'alertdialog' : 'dialog'"
                 :closedBy="closedBy"
                 :aria-label="ariaLabel"
@@ -374,7 +467,7 @@ defineExpose({ close: cancel });
                     v-if="backdrop && backdropClasses.length"
                     :class="backdropClasses" />
 
-                <div :class="wrapperClasses" :style="wrapperStyle">
+                <div :class="contentClasses" :style="contentStyle">
                     <!-- Header -->
                     <header
                         v-if="
@@ -385,8 +478,9 @@ defineExpose({ close: cancel });
                             subtitle ||
                             closeable
                         "
-                        :class="headerClasses">
-                        <slot name="header" :close="cancel">
+                        :class="headerClasses"
+                        @pointerdown="onDragStart">
+                        <slot name="header" :close="close" :confirm="confirm">
                             <h1
                                 v-if="$slots['title'] || title"
                                 :id="titleId"
@@ -408,7 +502,7 @@ defineExpose({ close: cancel });
                             :size="closeIconSize"
                             :label="ariaCloseLabel"
                             :classes="closeClasses"
-                            @click="cancel">
+                            @click="close">
                             <slot v-if="$slots['close']" name="close" />
                         </CloseButton>
                     </header>
@@ -433,23 +527,21 @@ defineExpose({ close: cancel });
                         </slot>
 
                         <!-- Main Content -->
-                        <slot :close="cancel" :confirm="confirm">
+                        <slot :close="close" :confirm="confirm">
                             <!-- injected component for programmatic usage -->
                             <component
                                 :is="$props.component"
                                 v-if="$props.component"
                                 v-bind="$props.props"
                                 v-on="$props.events || {}"
-                                @close="cancel" />
+                                @close="close" />
 
-                            <p v-else :class="contentClasses">
-                                <slot
-                                    name="content"
-                                    :close="cancel"
-                                    :confirm="confirm">
-                                    {{ content }}
-                                </slot>
-                            </p>
+                            <slot
+                                name="content"
+                                :close="close"
+                                :confirm="confirm">
+                                {{ content }}
+                            </slot>
                         </slot>
                     </div>
 
@@ -464,7 +556,7 @@ defineExpose({ close: cancel });
                     <footer
                         v-if="$slots['footer'] || cancelButton || confirmButton"
                         :class="footerClasses">
-                        <slot name="footer" :close="cancel" :confirm="confirm">
+                        <slot name="footer" :close="close" :confirm="confirm">
                             <OButton
                                 v-if="cancelButton || $slots['cancelButton']"
                                 ref="cancelButton"
@@ -473,7 +565,7 @@ defineExpose({ close: cancel });
                                 :variant="cancelVariant"
                                 :disabled="disableCancel"
                                 autofocus
-                                @click="cancel"
+                                @click="close('cancel')"
                                 @keyup.right="focusConfirmButton">
                                 <slot name="cancelButton">
                                     {{ cancelButton }}

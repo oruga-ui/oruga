@@ -222,6 +222,14 @@ const inspectData: InspectData<
     thSortIconClass: {
         class: "thSortIconClass",
         description: "Class of the table header sort icon element.",
+        properties: ["sortable"],
+        info: "Click on 'First Name' header to sort elements and see it in action!",
+    },
+    thSortIconDirectionClass: {
+        class: "thSortIconDirectionClass",
+        description:
+            "Class of the table header sort icon element with direction",
+        properties: ["sortable"],
         info: "Click on 'First Name' header to sort elements and see it in action!",
     },
     trClass: {
@@ -313,9 +321,10 @@ const inspectData: InspectData<
             data.tableClass = "inspector_table";
         },
     },
-    loadingClasses: {
-        class: "loadingClasses",
-        description: "Classes to apply on the internal loading component.",
+    loadingAttrs: {
+        class: "loadingAttrs",
+        description:
+            "Loading properties to apply on the internal loading component.",
         relatedComponent: "Loading",
     },
 };

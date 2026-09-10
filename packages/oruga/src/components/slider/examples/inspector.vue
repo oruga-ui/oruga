@@ -32,8 +32,8 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
         class: "fillClass",
         description: "Class of the filled part of the slider.",
     },
-    variantClass: {
-        class: "variantClass",
+    fillVariantClass: {
+        class: "fillVariantClass",
         description: "Class of the filled part of the slider with variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
@@ -78,6 +78,20 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
         class: "tickHiddenClass",
         subitem: "slidertick",
         description: "Class of the slider tick element when is hidden.",
+        properties: ["ticks"],
+    },
+    tickBeforeClass: {
+        class: "tickBeforeClass",
+        subitem: "slidertick",
+        description:
+            "Class of the slider tick element when is before the value.",
+        properties: ["ticks"],
+    },
+    tickAfterClass: {
+        class: "tickAfterClass",
+        subitem: "slidertick",
+        description:
+            "Class of the slider tick element when is before the value.",
         properties: ["ticks"],
     },
     tickLabelClass: {

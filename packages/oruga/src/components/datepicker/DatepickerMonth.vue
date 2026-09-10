@@ -310,7 +310,7 @@ function onRangeHoverEndDate(day: Date): void {
     if (isTrueish(props.pickerProps.range)) hoveredEndDate.value = day;
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 function dateMatch(dateOne, dateTwo, multiple = false): boolean {
     // if either date is null or undefined, return false
@@ -517,6 +517,8 @@ function eventClasses(event: DatepickerEvent): ClassBinding[] {
     );
     return classes.value;
 }
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -536,7 +538,7 @@ function eventClasses(event: DatepickerEvent): ClassBinding[] {
                         focusedDate.month === date.getMonth() ? undefined : 0
                     "
                     @click.prevent="selectDate(date)"
-                    @mouseenter="onRangeHoverEndDate(date)"
+                    @pointerenter="onRangeHoverEndDate(date)"
                     @focus="onRangeHoverEndDate(date)"
                     @keydown.prevent="onKeydown($event, date)">
                     {{ monthNames[date.getMonth()] }}

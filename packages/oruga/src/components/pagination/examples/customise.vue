@@ -9,7 +9,7 @@ const isDisabled = ref(false);
 const prevIcon = ref("chevron-left");
 const nextIcon = ref("chevron-right");
 const total = ref(200);
-const current = ref(10);
+const page = ref(10);
 const perPage = ref(10);
 const position = ref<"left" | "centered" | "right">("left");
 const size = ref("");
@@ -17,7 +17,7 @@ const size = ref("");
 
 <template>
     <section>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field label="Total">
                 <o-input v-model="total" type="number" number />
             </o-field>
@@ -25,7 +25,7 @@ const size = ref("");
                 <o-input v-model="perPage" type="number" number />
             </o-field>
         </o-field>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field label="Show buttons before current">
                 <o-input v-model="rangeBefore" type="number" number min="0" />
             </o-field>
@@ -33,7 +33,7 @@ const size = ref("");
                 <o-input v-model="rangeAfter" type="number" number min="0" />
             </o-field>
         </o-field>
-        <o-field grouped multiline>
+        <o-field grouped>
             <o-field label="Position">
                 <o-select v-model="position">
                     <option value="left">left</option>
@@ -71,7 +71,7 @@ const size = ref("");
         <hr />
 
         <o-pagination
-            v-model:current="current"
+            v-model="page"
             :total="total"
             :per-page="perPage"
             :range-before="rangeBefore || 0"
@@ -84,6 +84,6 @@ const size = ref("");
             :icon-prev="prevIcon"
             :icon-next="nextIcon" />
 
-        <p><b>Current:</b> {{ current }}</p>
+        <p><b>Current:</b> {{ page }}</p>
     </section>
 </template>

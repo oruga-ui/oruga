@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "vitest";
+﻿import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
 
@@ -7,7 +7,7 @@ import { nextTick } from "vue";
 import type { TableColumn } from "../types";
 import type { TableProps } from "../props";
 
-describe("OTable axe tests", () => {
+describe("OTable a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const data = [

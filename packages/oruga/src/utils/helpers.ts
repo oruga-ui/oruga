@@ -97,6 +97,22 @@ export function isPrintableCharacter(char: string = ""): boolean {
 }
 
 /**
+ * Check if the given date is in the min or max date.
+ * Returns the min date if the given date is lower;
+ * Returns the max date if the given date is higher;
+ * Else returns the given date.
+ */
+export function checkMinMaxDate(
+    date: Date,
+    min: Date | undefined,
+    max: Date | undefined,
+): Date {
+    if (!isDate(date)) return date;
+    if (min && date < min) date = min;
+    else if (max && date > max) date = max;
+    return date;
+}
+/**
  * Reorders an array starting from a given index, alternating between
  * the next and previous elements in a zigzag pattern.
  *
@@ -180,6 +196,9 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
 
     // Check if both values are objecs.
     if (isObject(valueA) && isObject(valueB)) {
+        if (isDate(valueA) && isDate(valueB))
+            return valueA.getTime() === valueB.getTime();
+
         // Get the keys of both objects.
         const keys1 = Object.keys(valueA);
         const keys2 = Object.keys(valueB);

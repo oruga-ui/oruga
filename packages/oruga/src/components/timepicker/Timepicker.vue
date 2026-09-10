@@ -2,11 +2,11 @@
 import { computed, ref, useTemplateRef, watch } from "vue";
 
 import OSelect from "../select/Select.vue";
-import OPickerWrapper from "../utils/PickerWrapper.vue";
+import OPickerInput from "../utils/PickerInput.vue";
 
 import { getDefault, getDefaultFunction } from "@/utils/config";
 import { isDate, isDefined, pad } from "@/utils/helpers";
-import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
+import { defineClasses, useMatchMedia } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
@@ -30,6 +30,8 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     override: undefined,
     modelValue: undefined,
     active: false,
+    stayOpen: false,
+    openOnFocus: true,
     minTime: undefined,
     maxTime: undefined,
     inline: false,
@@ -43,8 +45,6 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     incrementHours: 1,
     incrementMinutes: 1,
     incrementSeconds: 1,
-    openOnFocus: () => getDefault("timepicker.openOnFocus", true),
-    closeOnClick: () => getDefault("timepicker.closeOnClick", true),
     enableSeconds: false,
     defaultMinutes: undefined,
     defaultSeconds: undefined,
@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     creator: getDefaultFunction("timepicker.creator"),
     unselectableTimes: undefined,
     resetOnMeridianChange: false,
-    position: undefined,
+    position: () => getDefault("timepicker.position", "bottom"),
     iconPack: () => getDefault("timepicker.iconPack"),
     icon: () => getDefault("timepicker.icon"),
     iconRight: () => getDefault("timepicker.iconRight"),
@@ -66,15 +66,14 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     teleport: () => getDefault("timepicker.teleport", false),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
-    inputClasses: () => getDefault("timepicker.inputClasses"),
-    dropdownClasses: () => getDefault("timepicker.dropdownClasses"),
     ariaSelectSecondsLabel: () =>
         getDefault("timepicker.ariaSelectSecondLabel", "Select Second"),
     ariaSelectMinutesLabel: () =>
         getDefault("timepicker.ariaSelectMinuteLabel", "Select Minute"),
     ariaSelectHoursLabel: () =>
         getDefault("timepicker.ariaSelectHourLabel", "Select Hour"),
-    selectClasses: () => getDefault("timepicker.selectClasses"),
+    inputAttrs: () => getDefault("timepicker.inputAttrs"),
+    selectAttrs: () => getDefault("timepicker.selectAttrs"),
 });
 
 defineEmits<{
@@ -118,12 +117,24 @@ defineEmits<{
 defineSlots<{
     /** Override the trigger input element */
     trigger?(): void;
-    /** Define an additional content in the footer */
+    /** Define an additional content before the body */
+    header?(): void;
+    /** Override the content body */
+    body?(): void;
+    /** Define an additional content after the body */
     footer?(): void;
 }>();
 
-const { isMobile } = useMatchMedia(props.mobileBreakpoint);
+const pickerRef = useTemplateRef("pickerComponent");
 
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
+const isModal = computed(() =>
+    props.inline
+        ? false
+        : isMobile.value
+          ? props.mobileModal
+          : props.desktopModal,
+);
 const {
     dtf,
     timeCreator,
@@ -138,44 +149,45 @@ const {
     secondLiteral,
 } = useTimepickerMixins(props);
 
-const pickerRef = useTemplateRef("pickerComponent");
-
 // the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
+watch(vmodel, () => {
+    if (!props.inline && isActive.value && !props.stayOpen)
+        isActive.value = false;
+});
+
 const hoursSelected = ref<number>();
 const minutesSelected = ref<number>();
 const secondsSelected = ref<number>();
 const meridienSelected = ref<string>();
 
+/** Update internal value. */
 watch(
     () => props.modelValue,
-    (value) => updateValue(value),
+    (value) => {
+        if (Array.isArray(value)) value = value[0];
+        if (vmodel.value !== value) vmodel.value = value;
+        if (value) {
+            // update internal state
+            hoursSelected.value = value.getHours();
+            minutesSelected.value = value.getMinutes();
+            secondsSelected.value = value.getSeconds();
+            meridienSelected.value =
+                value.getHours() >= 12 ? pmString.value : amString.value;
+        } else {
+            // reset internal state
+            hoursSelected.value = undefined;
+            minutesSelected.value = undefined;
+            secondsSelected.value = undefined;
+            meridienSelected.value = amString.value;
+        }
+    },
     { immediate: true },
 );
-
-/** Update internal value. */
-function updateValue(value: Date | Date[] | undefined): void {
-    if (Array.isArray(value)) return updateValue(value[0]);
-    if (vmodel.value !== value) vmodel.value = value;
-    if (value) {
-        // update internal state
-        hoursSelected.value = value.getHours();
-        minutesSelected.value = value.getMinutes();
-        secondsSelected.value = value.getSeconds();
-        meridienSelected.value =
-            value.getHours() >= 12 ? pmString.value : amString.value;
-    } else {
-        // reset internal state
-        hoursSelected.value = undefined;
-        minutesSelected.value = undefined;
-        secondsSelected.value = undefined;
-        meridienSelected.value = amString.value;
-    }
-}
 
 const step = computed(() => (props.enableSeconds ? "1" : undefined));
 
@@ -448,7 +460,7 @@ function updateDateSelected(
     }
 }
 
-// --- Formatter / Parser ---
+// #region --- Formatter / Parser ---
 
 /** Format date into string */
 function format(value: Date | Date[] | undefined, isNative: boolean): string {
@@ -505,7 +517,9 @@ function parseNative(date: string): Date | undefined {
     return new Date(time.getTime());
 }
 
-// --- Event Handler ---
+// #endregion --- Formatter / Parser ---
+
+// #region --- Event Handler ---
 
 function onMeridienChange(value: string): void {
     if (isDefined(hoursSelected.value) && props.resetOnMeridianChange) {
@@ -560,7 +574,9 @@ function onSecondsChange(value: string): void {
     );
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Event Handler ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-timepicker"],
@@ -570,147 +586,196 @@ const rootClasses = defineClasses(
         computed(() => props.size),
         computed(() => !!props.size),
     ],
+    [
+        "disabledClass",
+        "o-timepicker--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "expandedClass",
+        "o-timepicker--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+    ["inlineClass", "o-timepicker--inline", null, computed(() => props.inline)],
     ["mobileClass", "o-timepicker--mobile", null, isMobile],
+    ["activeClass", "o-timepicker--active", null, isActive],
+    [
+        "teleportClass",
+        "o-timepicker--teleport",
+        null,
+        computed(() => !!props.teleport),
+    ],
 );
+
+const triggerClasses = defineClasses(["triggerClass", "o-timepicker__trigger"]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-timepicker__content"],
+    ["contentActiveClass", "o-timepicker__content--active", null, isActive],
+    ["contentModalClass", "o-timepicker__content--modal", null, isModal],
+    ["contentBackdropClass", "o-timepicker__content--backdrop", null, isModal],
+);
+
+const bodyClasses = defineClasses(["bodyClass", "o-timepicker__body"]);
+
+const inputClasses = defineClasses(["inputClass", "o-timepicker__input"]);
+
+const selectClasses = defineClasses(["selectClass", "o-timepicker__select"]);
 
 const separatorClasses = defineClasses([
     "separatorClass",
     "o-timepicker__separtor",
 ]);
 
+const headerClasses = defineClasses(["headerClass", "o-timepicker__header"]);
+
 const footerClasses = defineClasses(["footerClass", "o-timepicker__footer"]);
 
-const pickerDropdownClasses = defineClasses([
-    "dropdownClass",
-    "o-timepicker__dropdown",
-]);
+// #endregion --- Computed Component Classes ---
 
-const boxClasses = defineClasses(["boxClass", "o-timepicker__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses));
-
-const selectSelectClasses = defineClasses([
-    "selectClasses.selectClass",
-    "o-timepicker__select",
-]);
-
-const selectPlaceholderClasses = defineClasses([
-    "selectClasses.placeholderClass",
-    "o-timepicker__select-placeholder",
-]);
-
-const selectBind = computed(() => ({
-    "select-class": getActiveClasses(selectSelectClasses),
-    "placeholder-class": getActiveClasses(selectPlaceholderClasses),
-    ...props.selectClasses,
-}));
-
-// --- Expose Public Functionalities ---
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
-    <OPickerWrapper
-        ref="pickerComponent"
-        v-model:active="isActive"
-        :value="vmodel"
-        data-oruga="timepicker"
-        :picker-props="props"
-        :formatter="format"
-        :parser="parse"
-        type="time"
-        :max="maxTime"
-        :min="minTime"
-        :step="step"
-        :root-classes="rootClasses"
-        :dropdown-classes="pickerDropdownClasses"
-        :box-class="boxClassBind"
-        :dtf="dtf"
-        @update:value="updateValue"
-        @focus="$emit('focus', $event)"
-        @blur="$emit('blur', $event)"
-        @invalid="$emit('invalid', $event)"
-        @icon-click="$emit('icon-click', $event)"
-        @icon-right-click="$emit('icon-right-click', $event)">
-        <template v-if="$slots.trigger" #trigger>
-            <slot name="trigger" />
-        </template>
-
-        <o-select
-            v-bind="selectBind"
-            v-model="hoursSelected"
-            :options="hours"
-            override
+    <div data-oruga="timepicker" :class="rootClasses">
+        <OPickerInput
+            ref="pickerComponent"
+            v-bind="$attrs"
+            v-model:active="isActive"
+            v-model:value="vmodel"
+            :formatter="format"
+            :parser="parse"
+            :position="position"
+            :modal="isModal"
+            :inline="inline"
+            :open-on-focus="openOnFocus"
+            :dtf="dtf"
+            :placeholder="placeholder"
+            type="time"
+            :max="maxTime"
+            :min="minTime"
+            :step="step"
+            :size="size"
+            :icon-pack="iconPack"
+            :icon="icon"
+            :icon-right="iconRight"
+            :icon-right-clickable="iconRightClickable"
+            :expanded="expanded"
+            :rounded="rounded"
             :disabled="disabled"
-            placeholder="00"
-            :aria-label="ariaSelectHoursLabel"
-            :use-html5-validation="false"
-            @change="onHoursChange($event.target.value)" />
+            :readonly="readonly"
+            :use-html5-validation="useHtml5Validation"
+            :custom-validity="customValidity"
+            :input-class="inputClasses"
+            :trigger-class="triggerClasses"
+            :content-class="contentClasses"
+            :input-attrs="inputAttrs"
+            @focus="$emit('focus', $event)"
+            @blur="$emit('blur', $event)"
+            @invalid="$emit('invalid', $event)"
+            @icon-click="$emit('icon-click', $event)"
+            @icon-right-click="$emit('icon-right-click', $event)">
+            <template v-if="$slots.trigger" #trigger>
+                <slot name="trigger" />
+            </template>
 
-        <span :class="separatorClasses">{{ hourLiteral }}</span>
+            <header v-if="$slots.header" :class="headerClasses">
+                <slot name="header" />
+            </header>
 
-        <o-select
-            v-bind="selectBind"
-            v-model="minutesSelected"
-            override
-            :disabled="disabled"
-            placeholder="00"
-            :aria-label="ariaSelectMinutesLabel"
-            :use-html5-validation="false"
-            @change="onMinutesChange($event.target.value)">
-            <option
-                v-for="minute in minutes"
-                :key="minute.value"
-                :value="minute.value"
-                :disabled="isMinuteDisabled(minute.value)">
-                {{ minute.label }}
-            </option>
-        </o-select>
+            <div :class="bodyClasses">
+                <slot name="body">
+                    <o-select
+                        v-bind="selectAttrs"
+                        v-model="hoursSelected"
+                        :class="selectClasses"
+                        :options="hours"
+                        override
+                        :disabled="disabled"
+                        placeholder="00"
+                        :aria-label="ariaSelectHoursLabel"
+                        :use-html5-validation="false"
+                        @change="onHoursChange($event.target.value)" />
 
-        <template v-if="enableSeconds">
-            <span :class="separatorClasses">{{ minuteLiteral }}</span>
+                    <span :class="separatorClasses">{{ hourLiteral }}</span>
 
-            <o-select
-                v-bind="selectBind"
-                v-model="secondsSelected"
-                override
-                :disabled="disabled"
-                placeholder="00"
-                :aria-label="ariaSelectSecondsLabel"
-                :use-html5-validation="false"
-                @change="onSecondsChange($event.target.value)">
-                <option
-                    v-for="second in seconds"
-                    :key="second.value"
-                    :value="second.value"
-                    :disabled="isSecondDisabled(second.value)">
-                    {{ second.label }}
-                </option>
-            </o-select>
+                    <o-select
+                        v-bind="selectAttrs"
+                        v-model="minutesSelected"
+                        :class="selectClasses"
+                        override
+                        :disabled="disabled"
+                        placeholder="00"
+                        :aria-label="ariaSelectMinutesLabel"
+                        :use-html5-validation="false"
+                        @change="onMinutesChange($event.target.value)">
+                        <option
+                            v-for="minute in minutes"
+                            :key="minute.value"
+                            :value="minute.value"
+                            :disabled="isMinuteDisabled(minute.value)">
+                            {{ minute.label }}
+                        </option>
+                    </o-select>
 
-            <span :class="separatorClasses">{{ secondLiteral }}</span>
-        </template>
+                    <template v-if="enableSeconds">
+                        <span :class="separatorClasses">{{
+                            minuteLiteral
+                        }}</span>
 
-        <o-select
-            v-if="!isHourFormat24"
-            v-bind="selectBind"
-            v-model="meridienSelected"
-            override
-            :disabled="disabled"
-            :use-html5-validation="false"
-            @change="onMeridienChange($event.target.value)">
-            <option
-                v-for="meridien in meridiens"
-                :key="meridien"
-                :value="meridien"
-                :disabled="isMeridienDisabled(meridien)">
-                {{ meridien }}
-            </option>
-        </o-select>
+                        <o-select
+                            v-bind="selectAttrs"
+                            v-model="secondsSelected"
+                            :class="selectClasses"
+                            override
+                            :disabled="disabled"
+                            placeholder="00"
+                            :aria-label="ariaSelectSecondsLabel"
+                            :use-html5-validation="false"
+                            @change="onSecondsChange($event.target.value)">
+                            <option
+                                v-for="second in seconds"
+                                :key="second.value"
+                                :value="second.value"
+                                :disabled="isSecondDisabled(second.value)">
+                                {{ second.label }}
+                            </option>
+                        </o-select>
 
-        <footer v-if="$slots.footer" :class="footerClasses">
-            <slot name="footer" />
-        </footer>
-    </OPickerWrapper>
+                        <span :class="separatorClasses">{{
+                            secondLiteral
+                        }}</span>
+                    </template>
+
+                    <o-select
+                        v-if="!isHourFormat24"
+                        v-bind="selectAttrs"
+                        v-model="meridienSelected"
+                        :class="selectClasses"
+                        override
+                        :disabled="disabled"
+                        :use-html5-validation="false"
+                        @change="onMeridienChange($event.target.value)">
+                        <option
+                            v-for="meridien in meridiens"
+                            :key="meridien"
+                            :value="meridien"
+                            :disabled="isMeridienDisabled(meridien)">
+                            {{ meridien }}
+                        </option>
+                    </o-select>
+                </slot>
+            </div>
+
+            <footer v-if="$slots.footer" :class="footerClasses">
+                <slot name="footer" />
+            </footer>
+        </OPickerInput>
+    </div>
 </template>

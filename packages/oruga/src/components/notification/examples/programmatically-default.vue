@@ -10,7 +10,7 @@ function simple(): void {
 
 function success(): void {
     oruga.notification.open({
-        message: "Something happened correctly!",
+        content: "Something happened correctly!",
         variant: "success",
         closeable: true,
     });
@@ -36,7 +36,7 @@ function danger(): void {
 
 function pause(): void {
     oruga.notification.open({
-        message: `I can be paused if you hover over me`,
+        content: `I can be paused if you hover over me`,
         variant: "warning",
         type: "warning",
         pauseOnHover: true,
@@ -47,26 +47,24 @@ function pause(): void {
 <template>
     <section class="odocs-spaced">
         <p>
-            <o-button
-                label="Launch notification (default)"
-                size="medium"
-                @click="simple" />
+            <o-button label="Launch notification (default)" @click="simple" />
+        </p>
+        <p>
             <o-button
                 label="Launch notification (success)"
                 variant="success"
-                size="medium"
                 @click="success" />
         </p>
         <p>
             <o-button
                 label="Launch notification (danger)"
                 variant="danger"
-                size="medium"
                 @click="danger" />
+        </p>
+        <p>
             <o-button
                 label="Launch notification (pause on hover)"
                 variant="warning"
-                size="medium"
                 @click="pause" />
         </p>
     </section>

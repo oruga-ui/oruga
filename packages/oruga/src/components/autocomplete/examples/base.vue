@@ -31,8 +31,7 @@ const selected = ref<string>();
                 placeholder="e.g. jQuery"
                 icon="search"
                 clearable
-                open-on-focus>
-            </o-autocomplete>
+                open-on-focus />
 
             <p><b>Selected:</b> {{ selected }}</p>
         </o-field>

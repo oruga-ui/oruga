@@ -17,7 +17,7 @@ describe("OTag tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    test("has icon", async () => {
+    test("has icon", () => {
         const wrapper = mount(OTag, {
             props: { label: "My Tag", icon: "home" },
         });

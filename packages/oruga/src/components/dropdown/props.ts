@@ -1,11 +1,11 @@
 import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
-import type { OptionsOrGroupsProp } from "@/composables";
+import type { OptionsOrGroupsProp, PopoverPosition } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type DropdownOptions<T> = OptionsOrGroupsProp<DropdownItemProps<T>>;
 
-export type DropdownProps<T, IsMultiple extends boolean = false> = {
+export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The selected option value, use v-model to make it two-way binding */
@@ -20,11 +20,6 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     label?: string;
     /** Interaction is disabled */
     disabled?: boolean;
-    /**
-     * Menu content (items) are shown inline, trigger is removed
-     * @deprecated since 0.13.0, use the `OListbox` component instead
-     */
-    inline?: boolean;
     /** Enables item selection */
     selectable?: boolean;
     /** Menu content will be scrollable */
@@ -34,19 +29,10 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
     // scrollHeight?: string;
     /**
-     * Position of the dropdown relative to the trigger
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     * Position of the popover relative to the trigger
+     * @values top, bottom, left, right, center, [top, right], [top, left], [bottom, left], [bottom, right]
      */
-    position?:
-        | "auto"
-        | "top"
-        | "bottom"
-        | "left"
-        | "right"
-        | "top-right"
-        | "top-left"
-        | "bottom-left"
-        | "bottom-right";
+    position?: PopoverPosition;
     /** Custom animation (transition name) */
     animation?: string;
     /** Dropdown will be expanded (full-width) */
@@ -111,22 +97,13 @@ export type DropdownClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Class of the root element when shown as modal */
-    modalClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
-    /**
-     * Class of the root element when inlined
-     * @deprecated since 0.13.0, use the `OListbox` component instead
-     */
-    inlineClass: ComponentClass;
     /** Class of the root element when disabled */
     disabledClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class for the root element with position */
-    positionClass: ComponentClass;
-    /** Class for the root element when active or inline */
+    /** Class for the root element when active */
     activeClass: ComponentClass;
     /** Class for the root element when trigger is hoverable */
     hoverableClass: ComponentClass;
@@ -134,12 +111,14 @@ export type DropdownClasses = Partial<{
     triggerClass: ComponentClass;
     /** Class of the menu element */
     menuClass: ComponentClass;
-    /** Class of the menu element with position */
-    menuPositionClass: ComponentClass;
-    /** Class of the menu element when active or inline */
-    menuActiveClass: ComponentClass;
-    /** Class of the overlay when is shown as modal */
-    overlayClass: ComponentClass;
+    /** Class of the content element */
+    contentClass: ComponentClass;
+    /** Class of the content element when active */
+    contentActiveClass: ComponentClass;
+    /** Class of the content element when shown as modal */
+    contentModalClass: ComponentClass;
+    /** Class of the content element when should has a backdrop */
+    contentBackdropClass: ComponentClass;
     /** Class of the body when dropdown is open and scroll is clipped */
     scrollClipClass: ComponentClass;
     /** Class of the body when dropdown is open and scroll is keeped */
@@ -156,14 +135,50 @@ export type DropdownItemProps<T> = {
     value?: T;
     /** Item label, unnecessary when default slot is used */
     label?: string;
+    /**
+     * The native title property represents the title of the element
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/title
+     */
+    title?: string;
     /** Item is disabled */
     disabled?: boolean;
     /** Item is clickable and emit an event */
     clickable?: boolean;
+    /** Marks the item as a decorative element, which prevents any interactive behaviour */
+    decorative?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
     /** Dropdown item tag name */
     tag?: DynamicComponent;
+    /**
+     * Make the item a HTML anchor element with the URL that the hyperlink points to
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#href
+     */
+    href?: string;
+    /**
+     * The relationship of the linked URL as space-separated link types
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel
+     */
+    rel?: string;
+    /**
+     * Where to display the linked URL, as the name for a browsing context
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target
+     */
+    target?: string;
+    /**
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack?: string;
+    /**
+     * Icon size
+     * @values small, medium, large
+     */
+    iconSize?: string;
+    /** Icon to be shown before the label */
+    icon?: string;
+    /** Icon to be shown after the label */
+    iconRight?: string;
 } & DropdownItemClasses;
 
 // class props (will not be displayed in the docs)
@@ -176,6 +191,10 @@ export type DropdownItemClasses = Partial<{
     itemFocusedClass: ComponentClass;
     /** Class of the item element when clickable */
     itemClickableClass: ComponentClass;
+    /** Class of the item element when is decorative */
+    itemDecorativeClass: ComponentClass;
     /** Class of the item element when disabled */
     itemDisabledClass: ComponentClass;
+    /** Class of the item icon element */
+    itemIconClass: ComponentClass;
 }>;
