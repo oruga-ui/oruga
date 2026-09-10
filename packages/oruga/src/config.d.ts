@@ -1052,9 +1052,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 closeOnConfirm: boolean;
                 /**
-                 * Whether background scrollbar should be blocked/removed when dialog is visible
+                 * Whether page scrolling should be prevented when the dialog is open
                  */
-                blockScroll: boolean;
+                lockScroll: boolean;
+                /**
+                 * Strategy used to prevent background scrolling when open.
+`clip` removes the body scrollbar via `overflow: hidden`.
+`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+                 */
+                scrollStrategy: "clip" | "keep";
                 /**
                  * Icon pack to use for the close icon
                  */
@@ -1162,14 +1168,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 cancelButtonClass: ClassDefinition;
                 /**
-                 * Class of the body when modal is open and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when modal is open and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
-                /**
                  * Class of the root element when draggable is enabled
                  */
                 draggableClass: ClassDefinition;
@@ -1263,11 +1261,11 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 teleport: boolean | object | string;
                 /**
-                 * Set `true` to remove the body scrollbar.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Strategy used to prevent background scrolling when open.
+`clip` removes the body scrollbar via `overflow: hidden`.
+`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
                  */
-                clipScroll: boolean;
+                scrollStrategy: "clip" | "keep";
                 /**
                  * Class of the root element
                  */
@@ -1320,14 +1318,6 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class of the content element when should has a backdrop
                  */
                 contentBackdropClass: ClassDefinition;
-                /**
-                 * Class of the body when dropdown is open and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when dropdown is open and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
                 /**
                  * Class of the item element
                  */
@@ -1758,11 +1748,11 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconSize: string;
                 /**
-                 * Set `true` to remove the body scrollbar when `fullPage`.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Strategy used to prevent background scrolling when fullpage is active.
+`clip` removes the body scrollbar via `overflow: hidden`.
+`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
                  */
-                clipScroll: boolean;
+                scrollStrategy: "clip" | "keep";
                 /**
                  * Class of the root element
                  */
@@ -1783,14 +1773,6 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class for the label element
                  */
                 labelClass: ClassDefinition;
-                /**
-                 * Class of the body when fullpage and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when fullpage and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
             }>;
         menu?: ComponentConfigBase &
             Partial<{
@@ -1895,11 +1877,11 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                  */
                 closeOnEscape: boolean;
                 /**
-                 * Set `true` to remove the body scrollbar.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Strategy used to prevent background scrolling when open.
+`clip` removes the body scrollbar via `overflow: hidden`.
+`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
                  */
-                clipScroll: boolean;
+                scrollStrategy: "clip" | "keep";
                 /**
                  * Trap focus inside the modal
                  */
@@ -1971,14 +1953,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the close button element
                  */
                 closeClass: ClassDefinition;
-                /**
-                 * Class of the body when modal is open and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when modal is open and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
             }>;
         notification?: ComponentConfigBase &
             Partial<{
@@ -2233,11 +2207,11 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 ariaCloseLabel: string;
                 /**
-                 * Set `true` to remove the body scrollbar.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Strategy used to prevent background scrolling when open.
+`clip` removes the body scrollbar via `overflow: hidden`.
+`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
                  */
-                clipScroll: boolean;
+                scrollStrategy: "clip" | "keep";
                 /**
                  * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
@@ -2288,14 +2262,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the close element
                  */
                 closeClass: ClassDefinition;
-                /**
-                 * Class of the body when popover has backdrop and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when popover has backdrop and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
@@ -2480,11 +2446,11 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 closeOnEscape: boolean;
                 /**
-                 * Set `true` to remove the body scrollbar.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Strategy used to prevent background scrolling when open.
+`clip` removes the body scrollbar via `overflow: hidden`.
+`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
                  */
-                clipScroll: boolean;
+                scrollStrategy: "clip" | "keep";
                 /**
                  * Trap focus inside the sidebar
                  */
@@ -2555,14 +2521,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element when is fullwidth
                  */
                 fullwidthClass: ClassDefinition;
-                /**
-                 * Class of the body when is visible and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when is visible and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
             }>;
         skeleton?: ComponentConfigBase &
             Partial<{

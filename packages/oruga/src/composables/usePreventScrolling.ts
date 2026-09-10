@@ -1,63 +1,76 @@
-import {
-    computed,
-    onBeforeUnmount,
-    ref,
-    toValue,
-    type MaybeRefOrGetter,
-} from "vue";
+import { onBeforeUnmount, toValue, type MaybeRefOrGetter } from "vue";
 import { isClient } from "@/utils/ssr";
-import { defineClasses, getActiveClasses } from "./defineClasses";
+import { getDefault } from "@/utils/config";
+
+// Module-level state shared across all active scroll-lock instances so that
+// stacked overlays (e.g. a modal opening a dialog) don't cancel each other.
+let scrollLockCount = 0;
+let sharedActiveClass: string[] | null = null;
+let sharedIsClip: boolean | null = null;
+let sharedSavedScrollTop: number | undefined;
 
 /**
  * Prevent the background from scrolling if toggled.
- * Adds `clipped` or `keeped` class to the body.
- * True, alias `clip` removes the body scrollbar.
- * False, alias `keep` makes a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts.
- * @param clipScroll clip scrollbar or not
+ * Adds the global `scrollClipClass` or `scrollKeepClass` (from OrugaConfig root) to the body.
+ * `clip` removes the body scrollbar via overflow:hidden.
+ * `keep` maintains a phantom scrollbar via position:fixed to prevent layout shift.
+ * @param scrollStrategy which strategy to use when locking scroll
  */
 export function usePreventScrolling(
-    clipScroll: MaybeRefOrGetter<boolean>,
+    scrollStrategy: MaybeRefOrGetter<"clip" | "keep">,
 ): (active: boolean) => void {
-    const scrollClipClasses = defineClasses([
-        "scrollClipClass",
-        "o-scroll-clip",
-    ]);
-    const scrollKeepClasses = defineClasses([
-        "scrollKeepClass",
-        "o-scroll-keep",
-    ]);
-
-    const scrollClass = computed(() =>
-        getActiveClasses(
-            toValue(clipScroll)
-                ? scrollClipClasses.value
-                : scrollKeepClasses.value,
-        ),
-    );
-
-    const savedScrollTop = ref<number>();
+    const clipClass = getDefault("scrollClipClass", "o-scroll-clip")
+        .split(" ")
+        .filter(Boolean);
+    const keepClass = getDefault("scrollKeepClass", "o-scroll-keep")
+        .split(" ")
+        .filter(Boolean);
 
     // reset scroll
     onBeforeUnmount(() => toggleScroll(false));
 
     function toggleScroll(active: boolean): void {
         if (!isClient) return;
-        if (!scrollClass.value) return;
 
-        savedScrollTop.value = savedScrollTop.value
-            ? savedScrollTop.value
-            : document.documentElement.scrollTop;
+        if (active) {
+            if (scrollLockCount === 0) {
+                // First activator owns the lock: snapshot strategy and class, save scroll position.
+                sharedIsClip = toValue(scrollStrategy) === "clip";
+                sharedActiveClass = sharedIsClip ? clipClass : keepClass;
 
-        if (active) document.body.classList.add(...scrollClass.value);
-        else document.body.classList.remove(...scrollClass.value);
+                if (!sharedActiveClass.length) return;
 
-        if (!toValue(clipScroll)) {
-            if (active) {
-                document.body.style.top = `-${savedScrollTop.value}px`;
-            } else {
-                document.documentElement.scrollTop = savedScrollTop.value;
-                document.body.style.top = "";
-                savedScrollTop.value = undefined;
+                sharedSavedScrollTop = window.scrollY;
+                document.body.classList.add(...sharedActiveClass);
+
+                if (sharedIsClip) {
+                    // Compensate for the scrollbar disappearing to prevent layout shift.
+                    const scrollbarWidth =
+                        window.innerWidth -
+                        document.documentElement.clientWidth;
+                    document.body.style.paddingRight = `${scrollbarWidth}px`;
+                } else {
+                    document.body.style.top = `-${sharedSavedScrollTop}px`;
+                }
+            }
+            scrollLockCount++;
+        } else if (scrollLockCount > 0) {
+            if (--scrollLockCount === 0) {
+                // Last activator to close: restore everything.
+                if (sharedActiveClass) {
+                    document.body.classList.remove(...sharedActiveClass);
+                }
+
+                if (!sharedIsClip) {
+                    window.scrollTo({ top: sharedSavedScrollTop ?? 0 });
+                    document.body.style.top = "";
+                } else {
+                    document.body.style.paddingRight = "";
+                }
+
+                sharedActiveClass = null;
+                sharedIsClip = null;
+                sharedSavedScrollTop = undefined;
             }
         }
     }

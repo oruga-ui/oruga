@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     iconPack: () => getDefault("loading.iconPack"),
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
-    clipScroll: () => getDefault("loading.clipScroll", false),
+    scrollStrategy: () => getDefault("loading.scrollStrategy", "keep"),
 });
 
 const emits = defineEmits<{
@@ -65,11 +65,15 @@ const rootRef = useTemplateRef("rootElement");
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
+const toggleScroll = usePreventScrolling(props.scrollStrategy);
 
-watch(isActive, (value) => {
-    if (props.fullPage) toggleScroll(value);
-});
+watch(
+    isActive,
+    (value) => {
+        if (props.fullPage) toggleScroll(value);
+    },
+    { immediate: true, flush: "post" },
+);
 
 // #region --- Events Feature ---
 
