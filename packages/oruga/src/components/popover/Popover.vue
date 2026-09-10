@@ -166,8 +166,7 @@ function onBeforeToggle(event: ToggleEvent): void {
 }
 
 function onToggle(event: ToggleEvent): void {
-    if (event.newState === "open") isActive.value = true;
-    else isActive.value = false;
+    isActive.value = event.newState === "open";
 }
 
 // #endregion --- Event Handler ---
