@@ -2,20 +2,17 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Triggers from "./triggers.vue";
+import TriggersCode from "./triggers.vue?raw";
+
 import Variants from "./variants.vue";
 import VariantsCode from "./variants.vue?raw";
 
 import Position from "./position.vue";
 import PositionCode from "./position.vue?raw";
 
-import Multiline from "./multiline.vue";
-import MultilineCode from "./multiline.vue?raw";
-
 import Templates from "./templates.vue";
 import TemplatesCode from "./templates.vue?raw";
-
-import Triggers from "./triggers.vue";
-import TriggersCode from "./triggers.vue?raw";
 </script>
 
 ### Base
@@ -24,29 +21,23 @@ While a tooltip can be placed on any content, they generally are tips for tools 
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
+### Triggers
+
+The tooltip opens on hover and focus by default, providing accessible hover text for any trigger element. The `always` prop keeps it permanently visible, and the `active` prop allows external control via `v-model:active`. For click-triggered overlays, use the [`OPopover`](/components/Popover) component instead.
+
+<ExampleViewer :component="Triggers" :code="TriggersCode" />
+
 ### Position
 
 The direction in which the tooltip opens can be defined by the `position` prop. By default, the direction is automatically calculated from the distance to the edge of the window. Adding the `teleport` prop additionally will move the tooltip to the referenced DOM location instead.
 
 <ExampleViewer :component="Position" :code="PositionCode" />
 
-### Triggers
-
-The component accepts several different trigger variants, such as `openOnClick` or `openOnContextmenu` to only open on right click instead of left click. By default, only `openOnHover` is set. The action that close the component can also be customized using the `closeable`, `closeOnOutside` and `closeOnEscape` props.
-
-<ExampleViewer :component="Triggers" :code="TriggersCode" />
-
 ### Variants
 
 Different styles can be achieved with the `variant` prop.
 
 <ExampleViewer :component="Variants" :code="VariantsCode" />
-
-### Multiline
-
-Sometimes the tooltip label can be very long. Consider setting the `multiline` prop to force a line break.
-
-<ExampleViewer :component="Multiline" :code="MultilineCode" />
 
 ### Templates
 
