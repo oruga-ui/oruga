@@ -1,12 +1,5 @@
 <script setup lang="ts" generic="C extends Component">
-import {
-    ref,
-    computed,
-    watch,
-    onMounted,
-    useTemplateRef,
-    type Component,
-} from "vue";
+import { ref, computed, watch, useTemplateRef, type Component } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
@@ -48,7 +41,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     closeOnOutside: () => getDefault("sidebar.closeOnOutside", true),
     closeOnEscape: () => getDefault("sidebar.closeOnEscape", true),
     trapFocus: () => getDefault("sidebar.trapFocus", true),
-    clipScroll: () => getDefault("sidebar.clipScroll", false),
+    scrollStrategy: () => getDefault("sidebar.scrollStrategy", "keep"),
     mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
     teleport: () => getDefault("sidebar.teleport", false),
     component: undefined,
@@ -110,19 +103,15 @@ const hideOnMobile = computed(
     () => props.mobile === "hidden" && isMobile.value,
 );
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
+const toggleScroll = usePreventScrolling(props.scrollStrategy);
 
 watch(
     isActive,
     (value) => {
         if (props.overlay) toggleScroll(value);
     },
-    { flush: "post" },
+    { immediate: true, flush: "post" },
 );
-
-onMounted(() => {
-    if (isActive.value && props.overlay) toggleScroll(true);
-});
 
 // --- Events Feature ---
 

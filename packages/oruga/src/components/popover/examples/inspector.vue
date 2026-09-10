@@ -80,22 +80,6 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
         class: "closeClass",
         description: "Class of the close element.",
     },
-    scrollClipClass: {
-        class: "scrollClipClass",
-        description: "Class of the body when is open and scroll is clipped.",
-        properties: ["clipScroll"],
-        action: (data): void => {
-            data.clipScroll = true;
-        },
-    },
-    scrollKeepClass: {
-        class: "scrollKeepClass",
-        description: "Class of the body when is open and scroll is keeped.",
-        properties: ["clipScroll"],
-        action: (data): void => {
-            data.clipScroll = false;
-        },
-    },
 };
 </script>
 

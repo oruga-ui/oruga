@@ -38,8 +38,15 @@ export type DialogProps<C extends Component = Component> = {
     closeOnEscape?: boolean;
     /** Close the dialog when the confirm button is preset */
     closeOnConfirm?: boolean;
-    /** Whether background scrollbar should be blocked/removed when dialog is visible */
-    blockScroll?: boolean;
+    /** Whether page scrolling should be prevented when the dialog is open */
+    lockScroll?: boolean;
+    /**
+     * Strategy used to prevent background scrolling when open.
+     * `clip` removes the body scrollbar via `overflow: hidden`.
+     * `keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+     * @values clip, keep
+     */
+    scrollStrategy?: "clip" | "keep";
     /** Text alignment in its entirely */
     textPosition?: "center" | "left" | "right";
     /** Dialog header title, unnecessary when title slot is used */
@@ -157,10 +164,6 @@ export type DialogClasses = Partial<{
     confirmButtunClass: ComponentClass;
     /** Class of the footer cancel button element */
     cancelButtonClass: ComponentClass;
-    /** Class of the body when modal is open and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when modal is open and scroll is keeped */
-    scrollKeepClass: ComponentClass;
     /** Class of the root element when draggable is enabled */
     draggableClass: ComponentClass;
     /** Class of the root element while the dialog is being dragged */

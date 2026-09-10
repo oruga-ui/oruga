@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<PopoverProps<C>>(), {
     ariaCloseLabel: () => getDefault("popover.ariaCloseLabel", "Close"),
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
-    clipScroll: () => getDefault("popover.clipScroll", false),
+    scrollStrategy: () => getDefault("popover.scrollStrategy", "keep"),
     target: undefined,
     component: undefined,
     props: undefined,
@@ -148,14 +148,14 @@ const { open, close, toggle } = usePopoverAPI({
     onBeforeToggle,
 });
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
+const toggleScroll = usePreventScrolling(props.scrollStrategy);
 
 watch(
     isActive,
     (value) => {
         if (props.backdrop || props.modal) toggleScroll(value);
     },
-    { flush: "post" },
+    { immediate: true, flush: "post" },
 );
 
 // #region --- Event Handler ---

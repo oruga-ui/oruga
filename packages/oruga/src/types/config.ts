@@ -100,6 +100,10 @@ export type GlobalConfig = Partial<{
     transformClasses: TransformFunction;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: string;
+    /** Class of the body element when an overlay with scroll clipping is active */
+    scrollClipClass: string;
+    /** Class of the body element when an overlay with scroll keeping is active */
+    scrollKeepClass: string;
 }>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

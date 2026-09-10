@@ -32,11 +32,12 @@ export type SidebarProps<C extends Component = Component> = {
     /** Close when pressing escape key */
     closeOnEscape?: boolean;
     /**
-     * Set `true` to remove the body scrollbar.
-     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-     * but will set the body to a fixed position, which may break some layouts.
+     * Strategy used to prevent background scrolling when open.
+     * `clip` removes the body scrollbar via `overflow: hidden`.
+     * `keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+     * @values clip, keep
      */
-    clipScroll?: boolean;
+    scrollStrategy?: "clip" | "keep";
     /** Trap focus inside the sidebar */
     trapFocus?: boolean;
     /** Mobile breakpoint as `max-width` value */
@@ -91,8 +92,4 @@ export type SidebarClasses = Partial<{
     fullheightClass: ComponentClass;
     /** Class of the content element when is fullwidth */
     fullwidthClass: ComponentClass;
-    /** Class of the body when is visible and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when is visible and scroll is keeped */
-    scrollKeepClass: ComponentClass;
 }>;

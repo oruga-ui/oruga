@@ -30,11 +30,12 @@ export type LoadingProps = {
      */
     iconSize?: string;
     /**
-     * Set `true` to remove the body scrollbar when `fullPage`.
-     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-     * but will set the body to a fixed position, which may break some layouts.
+     * Strategy used to prevent background scrolling when fullpage is active.
+     * `clip` removes the body scrollbar via `overflow: hidden`.
+     * `keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+     * @values clip, keep
      */
-    clipScroll?: boolean;
+    scrollStrategy?: "clip" | "keep";
     /**
      * DOM container element for programmatic usage
      * @ignore internal property
@@ -54,8 +55,4 @@ export type LoadingClasses = Partial<{
     iconClass: ComponentClass;
     /** Class for the label element*/
     labelClass: ComponentClass;
-    /** Class of the body when fullpage and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when fullpage and scroll is keeped */
-    scrollKeepClass: ComponentClass;
 }>;
