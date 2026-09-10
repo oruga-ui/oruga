@@ -1,7 +1,7 @@
 {
   "name": "@oruga-ui/nuxt",
   "version": "0.0.1",
-  "description": "My new Nuxt module",
+  "description": "Nuxt module for @oruga-ui/oruga-next — Vue 3 UI component library",
   "license": "MIT",
   "type": "module",
   "main": "./dist/module.mjs",
@@ -42,8 +42,12 @@
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
+  "peerDependencies": {
+    "nuxt": ">=3.0.0"
+  },
   "dependencies": {
-    "@nuxt/kit": "^4.4.2"
+    "@nuxt/kit": "^4.4.2",
+    "@oruga-ui/oruga-next": "*"
   },
   "devDependencies": {
     "@nuxt/devtools": "^3.2.4",
