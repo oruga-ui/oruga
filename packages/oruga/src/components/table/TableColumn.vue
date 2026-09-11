@@ -53,7 +53,7 @@ defineSlots<{
      * @param toggleDetails {(): void} - toggle details function
      */
     default?(props: {
-        row: T extends unknown ? any : T;
+        row: unknown extends T ? any : T;
         column: TableColumn<T>;
         index: number;
         colindex: number;
