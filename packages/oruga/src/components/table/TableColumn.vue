@@ -6,6 +6,7 @@ import {
     escapeRegExpChars,
     getPropertyValue,
     isDefined,
+    isEqual,
     removeDiacriticsFromString,
     toCssDimension,
 } from "@/utils/helpers";
@@ -86,17 +87,27 @@ defineSlots<{
 
 const slots = useSlots();
 
-// provided data is a computed ref to ensure reactivity
-const providedData = computed<TableColumnComponent<T>>(() => ({
-    ...(props as TableColumn<T>),
-    $slots: slots,
-    style: style.value,
-    matches,
-    getValue,
-    thClasses: thClasses.value,
-    tdClasses: tdClasses.value,
-    thSubClasses: thSubheadingClasses.value,
-}));
+// provided data is a computed ref to ensure reactivity.
+// Using a stable-reference computed: when the new value is deeply equal to the
+// previous one, we return the same object reference. This prevents a reactive
+// cascade when props like tdAttrs / thAttrs receive a new object reference with
+// identical content on every render (e.g. an inline literal in a slot or after
+// HMR). Vue's computed only notifies subscribers when Object.is(old, new) is
+// false, so returning the same reference breaks the loop.
+const providedData = computed<TableColumnComponent<T>>((prev) => {
+    const next: TableColumnComponent<T> = {
+        ...(props as TableColumn<T>),
+        $slots: slots,
+        style: style.value,
+        matches,
+        getValue,
+        thClasses: thClasses.value,
+        tdClasses: tdClasses.value,
+        thSubClasses: thSubheadingClasses.value,
+    };
+    if (prev !== undefined && isEqual(prev, next)) return prev;
+    return next;
+});
 
 /** inject functionalities and data from the parent component */
 const { item } = useProviderChild<unknown, TableColumnComponent<T>>(rootRef, {
