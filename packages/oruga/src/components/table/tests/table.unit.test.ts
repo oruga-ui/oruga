@@ -1,10 +1,11 @@
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-import { nextTick } from "vue";
+import { defineComponent, h, nextTick, ref } from "vue";
 
 import type { TableColumn } from "../types";
 
 import OTable from "@/components/table/Table.vue";
+import OTableColumn from "@/components/table/TableColumn.vue";
 
 describe("OTable tests", () => {
     enableAutoUnmount(afterEach);
@@ -965,6 +966,71 @@ describe("OTable tests", () => {
             expect(wrapper.findAll("tbody tr")).toHaveLength(4); // Jesse/Anne/Hannes/Clarence
 
             vi.useRealTimers();
+        });
+    });
+
+    describe("test reactive stability", () => {
+        test("inline td-attrs object does not cause recursive update warning (issue #1531)", async () => {
+            // Spy on console.warn to detect Vue's "Maximum recursive updates exceeded" warning.
+            const warnSpy = vi
+                .spyOn(console, "warn")
+                .mockImplementation(() => {});
+
+            const tableData = ref([
+                { id: 1, name: "Jesse" },
+                { id: 2, name: "John" },
+            ]);
+
+            // Use a render function instead of a template so that Vue's static-hoisting
+            // optimisation does NOT apply: each render call creates a brand-new object
+            // for tdAttrs, exactly what happens to slot content after an HMR reload.
+            const TestComponent = defineComponent({
+                setup() {
+                    return () =>
+                        h(
+                            OTable,
+                            { data: tableData.value },
+                            {
+                                default: () => [
+                                    h(OTableColumn, {
+                                        field: "id",
+                                        label: "ID",
+                                        // New object reference on every render — reproduces #1531
+                                        tdAttrs: { class: "test-class" },
+                                    }),
+                                    h(OTableColumn, {
+                                        field: "name",
+                                        label: "Name",
+                                    }),
+                                ],
+                            },
+                        );
+                },
+            });
+
+            const wrapper = mount(TestComponent);
+            await nextTick(); // await child component rendering
+
+            // Verify td-attrs is initially applied
+            const tds = wrapper.findAll("td");
+            expect(tds[0].classes()).toContain("test-class");
+
+            // Trigger a re-render by mutating the reactive data
+            tableData.value = [...tableData.value, { id: 3, name: "Tina" }];
+            await nextTick();
+            await nextTick(); // extra tick to let all scheduled updates settle
+
+            // The bug would cause Vue to warn about "Maximum recursive updates exceeded"
+            const recursiveWarning = warnSpy.mock.calls.find((args) =>
+                String(args[0]).includes("Maximum recursive updates"),
+            );
+            expect(recursiveWarning).toBeUndefined();
+
+            // td-attrs must still be applied after the update
+            const tdsAfter = wrapper.findAll("td");
+            expect(tdsAfter[0].classes()).toContain("test-class");
+
+            warnSpy.mockRestore();
         });
     });
 });
