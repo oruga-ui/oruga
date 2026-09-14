@@ -7,7 +7,7 @@ export type CarouselProps<T> = {
     override?: boolean;
     /** The index of the current active element, use v-model to make it two-way binding */
     modelValue?: T;
-    /** Menu items, unnecessary when default slot is used */
+    /** Carousel options, unnecessary when default slot is used */
     options?: CarouselOptions<T>;
     /** Enable drag mode */
     dragable?: boolean;

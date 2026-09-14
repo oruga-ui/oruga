@@ -137,7 +137,7 @@ export type DialogClasses = Partial<{
     contentPositionClass: ComponentClass;
     /** Class of the content header element */
     headerClass: ComponentClass;
-    /** Class of the content  header title element */
+    /** Class of the content header title element */
     titleClass: ComponentClass;
     /** Class of the content header subtitle element */
     subtitleClass: ComponentClass;

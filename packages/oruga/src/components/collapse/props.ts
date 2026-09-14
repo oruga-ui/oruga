@@ -32,7 +32,7 @@ export type CollapseClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Clas of the root element with position */
+    /** Class of the root element with position */
     positionClass: ComponentClass;
     /** Class of the trigger element */
     triggerClass: ComponentClass;

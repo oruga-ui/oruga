@@ -55,11 +55,11 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Slots
 
-| Name    | Description                         | Bindings                                                                            |
-| ------- | ----------------------------------- | ----------------------------------------------------------------------------------- |
-| before  | Additional slot before the dragzone |                                                                                     |
-| default | Default content                     | **onclick** `(event: Event): void` - click handler, only needed if a button is used |
-| after   | Additional slot after the dragzone  |                                                                                     |
+| Name    | Description                         | Bindings                                                                          |
+| ------- | ----------------------------------- | --------------------------------------------------------------------------------- |
+| before  | Additional slot before the dragzone |                                                                                   |
+| default | Default content                     | **click** `(event: Event): void` - click handler, only needed if a button is used |
+| after   | Additional slot after the dragzone  |                                                                                   |
 
 </section>
 

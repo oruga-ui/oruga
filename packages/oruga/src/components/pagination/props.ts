@@ -14,9 +14,9 @@ export type PaginationProps = {
     rangeBefore?: number;
     /** Number of pagination items to show after current page */
     rangeAfter?: number;
-    /** Buttons will be disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
-    /** Enable rounded button style */
+    /** Enable rounded style */
     rounded?: boolean;
     /**
      * Pagination size

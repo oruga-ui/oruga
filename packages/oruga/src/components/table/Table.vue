@@ -336,9 +336,9 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /** Define extra `o-table-column` components here, even if you have some columns defined by prop */
+    /** Define extra items here before the columns defined by prop */
     before?(): void;
-    /** Define extra `o-table-column` components here, even if you have some columns defined by prop */
+    /** Define extra items here after the columns defined by prop */
     after?(): void;
     /** Define `o-table-column` here */
     default?(): void;
@@ -357,7 +357,7 @@ defineSlots<{
     }): void;
     /** Define a table caption here */
     caption?(): void;
-    /** Define content to palce before the header here */
+    /** Define content to place before the header here */
     preheader?(): void;
     /**
      * Override the check all checkbox
@@ -388,10 +388,10 @@ defineSlots<{
      * Override loading component
      * @param loading {boolean} - is loading state enabled
      */
-    loading?(): void;
-    /** Additional slot if table is paginated */
+    loading?(props: { loading: boolean }): void;
+    /** Additional content shown above the table when paginated */
     topLeft?(): void;
-    /** Additional slot if table is paginated */
+    /** Additional content shown below the table when paginated */
     bottomLeft?(): void;
 }>();
 

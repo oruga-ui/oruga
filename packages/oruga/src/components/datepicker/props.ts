@@ -37,7 +37,7 @@ export type DatepickerProps<
     /** Set custom month names, else use names based on locale */
     monthNames?: string[];
     /**
-     * Size of the control input
+     * Size of the input control
      * @values small, medium, large
      */
     size?: string;
@@ -53,7 +53,7 @@ export type DatepickerProps<
     maxDate?: Date;
     /** Makes input full width when inside a grouped or addon field */
     expanded?: boolean;
-    /** Makes the input rounded */
+    /** Makes the element rounded */
     rounded?: boolean;
     /** Display datepicker inline */
     inline?: boolean;
@@ -115,9 +115,9 @@ export type DatepickerProps<
     iconPrev?: string;
     /** Icon name for next icon */
     iconNext?: string;
-    /** Picker content is shown into a modal on mobile */
+    /** Overlay content is shown into a modal on mobile */
     mobileModal?: boolean;
-    /** Picker content is shown into a modal on desktop */
+    /** Overlay content is shown into a modal on desktop */
     desktopModal?: boolean;
     /** Enable mobile native input if device is a mobile agent */
     mobileNative?: boolean;

@@ -35,7 +35,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 | Prop name      | Description                                                                                                                    | Type      | Values                                                                          | Default                                                                                                                                                         |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------ | --------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active         | Whether modal is active or not, use v-model:active to make it two-way binding                                                  | boolean   | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                      |
+| active         | Whether notification is active or not, use v-model:active to make it two-way binding                                           | boolean   | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                      |
 | animation      | Custom animation (transition name)                                                                                             | string    | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>        |
 | ariaCloseLabel | Accessibility label for the close button                                                                                       | string    | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;ariaCloseLabel: "Close"<br>}</code>  |
 | closeIcon      | Close icon name                                                                                                                | string    | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
@@ -64,12 +64,12 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ### Slots
 
-| Name    | Description                                            | Bindings                                                                        |
-| ------- | ------------------------------------------------------ | ------------------------------------------------------------------------------- |
-| title   | Override the notification title, default is title prop | **close** `(...args: [] \| [Event]): void` - function to emit a `confirm` event |
-| default | Override the default notification body                 | **close** `(...args: [] \| [Event]): void` - function to emit a `confirm` event |
-| content | Override the body content, default is content prop     | **close** `(...args: [] \| [Event]): void` - function to emit a `confirm` event |
-| close   | Define a custom close icon                             |                                                                                 |
+| Name    | Description                                            | Bindings                                                                     |
+| ------- | ------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| title   | Override the notification title, default is title prop | **close** `(...args: [] \| [Event]): void` - function to close the component |
+| default | Override the default notification body                 | **close** `(...args: [] \| [Event]): void` - function to close the component |
+| content | Override the body content, default is content prop     | **close** `(...args: [] \| [Event]): void` - function to close the component |
+| close   | Define a custom close icon                             |                                                                              |
 
 </section>
 
@@ -109,9 +109,9 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name    | Description                            | Bindings |
+| ------- | -------------------------------------- | -------- |
+| default | Override the default notification body |          |
 
 </section>
 

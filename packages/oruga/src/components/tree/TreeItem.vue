@@ -76,7 +76,7 @@ defineSlots<{
         selected: boolean;
         disabled: boolean;
     }): void;
-    /** Define subtree items here  */
+    /** Define subtree items here */
     default?(): void;
 }>();
 

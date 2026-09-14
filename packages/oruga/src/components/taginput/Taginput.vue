@@ -156,7 +156,7 @@ defineSlots<{
         removeItem: (index: number, event: Event) => void;
     }): void;
     /**
-     * Define a selected option here
+     * Override the option rendering
      * @param option {object} - option object
      */
     option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;

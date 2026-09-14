@@ -34,7 +34,7 @@ The component implements the W3C ARIA APG [Button Pattern](https://www.w3.org/WA
 | Prop name | Description                                                            | Type                            | Values                                                                          | Default                                                                                                                                              |
 | --------- | ---------------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ariaLabel | Defines an accessible string value that labels an interactive element. | string                          | -                                                                               |                                                                                                                                                      |
-| disabled  | Button will be disabled                                                | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
+| disabled  | Interaction will be disabled                                           | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
 | expanded  | Button will be expanded (full-width)                                   | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
 | iconLeft  | Icon name to show on the left                                          | string                          | -                                                                               |                                                                                                                                                      |
 | iconPack  | Icon pack to use                                                       | string                          | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
@@ -60,9 +60,9 @@ The component implements the W3C ARIA APG [Button Pattern](https://www.w3.org/WA
 
 | Name    | Description                               | Bindings |
 | ------- | ----------------------------------------- | -------- |
-| left    | Override the left icon.                   |          |
+| left    | Override the left icon                    |          |
 | default | Override the label, default is label prop |          |
-| right   | Override the right icon.                  |          |
+| right   | Override the right icon                   |          |
 
 </section>
 

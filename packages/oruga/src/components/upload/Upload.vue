@@ -70,9 +70,9 @@ const emits = defineEmits<{
 defineSlots<{
     /**
      * Default content
-     * @param onclick {(event: Event): void} - click handler, only needed if a button is used
+     * @param click {(event: Event): void} - click handler, only needed if a button is used
      */
-    default?(props: { onclick: (event: Event) => void }): void;
+    default?(props: { click: (event: Event) => void }): void;
     /** Additional slot before the dragzone */
     before?(): void;
     /** Additional slot after the dragzone */
@@ -265,7 +265,7 @@ defineExpose({
         <slot name="before" />
 
         <template v-if="!dragDrop">
-            <slot :onclick="onClick" />
+            <slot :click="onClick" />
         </template>
 
         <div
@@ -279,7 +279,7 @@ defineExpose({
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
             @drop.prevent="onFileChange">
-            <slot :onclick="onClick" />
+            <slot :click="onClick" />
         </div>
 
         <slot name="after" />

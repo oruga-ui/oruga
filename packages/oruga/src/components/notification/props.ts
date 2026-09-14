@@ -14,7 +14,7 @@ export type NotificationProps<C extends Component = Component> = {
      * @deprecated use `content` prop instead
      */
     message?: string;
-    /** Whether modal is active or not, use v-model:active to make it two-way binding */
+    /** Whether notification is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /**
      * Type (color) of the notification
