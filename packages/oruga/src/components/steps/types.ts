@@ -16,7 +16,14 @@ export type StepsComponent = {
 
 export type StepItemComponent<T> = Pick<
     StepItemProps<T, Component>,
-    "value" | "label" | "step" | "disabled" | "visible" | "icon" | "iconPack"
+    | "value"
+    | "label"
+    | "step"
+    | "disabled"
+    | "visible"
+    | "icon"
+    | "iconPack"
+    | "iconSize"
 > & {
     $slots: Slots;
     stepClasses: ClassBinding[];

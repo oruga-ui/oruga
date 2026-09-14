@@ -56,6 +56,11 @@ export type SelectProps<T, IsMultiple extends boolean = boolean> = {
     iconRightClickable?: boolean;
     /** Variant of right icon */
     iconRightVariant?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. */
     id?: string;
     /** Same as native autocomplete options to use in HTML5 validation */

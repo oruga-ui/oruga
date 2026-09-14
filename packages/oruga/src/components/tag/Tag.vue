@@ -29,6 +29,7 @@ const props = withDefaults(defineProps<TagProps>(), {
     closeable: false,
     icon: undefined,
     iconPack: () => getDefault("tag.iconPack"),
+    iconSize: () => getDefault("tag.iconSize"),
     closeIcon: () => getDefault("tag.closeIcon", "close"),
     closeIconSize: () => getDefault("tag.closeIconSize"),
     ariaCloseLabel: () => getDefault("tag.ariaCloseLabel", "Close"),
@@ -92,7 +93,7 @@ const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
             :class="iconClasses"
             :pack="iconPack"
             :icon="icon"
-            :size="size" />
+            :size="iconSize ?? size" />
 
         <span v-if="$slots.default || label" :class="labelClasses">
             <slot>{{ label }}</slot>

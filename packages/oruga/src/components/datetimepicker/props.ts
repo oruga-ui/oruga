@@ -56,10 +56,17 @@ export type DatetimepickerProps = {
     iconPack?: string;
     /** Icon to be shown */
     icon?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Icon to be added on the right side */
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
+    /** Variant of the right icon */
+    iconRightVariant?: string;
     /** Dropdown content is shown into a modal on mobile */
     mobileModal?: boolean;
     /** Dropdown content is shown into a modal on desktop */

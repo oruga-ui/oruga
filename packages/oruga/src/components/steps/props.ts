@@ -137,6 +137,11 @@ export type StepItemProps<T, C extends Component = Component> = {
     icon?: string;
     /** Icon pack */
     iconPack?: string;
+    /**
+     * Icon size
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;
     /** Component to be injected */

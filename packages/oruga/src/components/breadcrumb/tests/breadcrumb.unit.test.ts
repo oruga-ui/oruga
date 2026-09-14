@@ -118,9 +118,9 @@ describe("OBreadcrumb tests", () => {
                 <o-breadcrumb
                     size="medium"
                     position="center">
-                    <o-breadcrumb-item icon-left="home" :active="true">Home</o-breadcrumb-item>
-                    <o-breadcrumb-item icon-left="plus" :disabled="true">Docs</o-breadcrumb-item>
-                    <o-breadcrumb-item icon-left="location">Breadcrumb</o-breadcrumb-item>
+                    <o-breadcrumb-item icon="home" :active="true">Home</o-breadcrumb-item>
+                    <o-breadcrumb-item icon="plus" :disabled="true">Docs</o-breadcrumb-item>
+                    <o-breadcrumb-item icon="location">Breadcrumb</o-breadcrumb-item>
                 </o-breadcrumb>
             `,
         };

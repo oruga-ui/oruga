@@ -35,7 +35,7 @@ describe("OButton tests", () => {
         const wrapper = mount(OButton, {
             props: {
                 iconPack: "mdi",
-                iconLeft: "check",
+                icon: "check",
                 iconRight: "close",
             },
         });

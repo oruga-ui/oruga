@@ -26,9 +26,14 @@ export type ButtonProps = {
      */
     iconPack?: string;
     /** Icon name to show on the left */
-    iconLeft?: string;
+    icon?: string;
     /** Icon name to show on the right */
     iconRight?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Enable rounded style */
     rounded?: boolean;
     /** Button will be expanded (full-width) */

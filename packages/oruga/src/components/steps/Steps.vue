@@ -372,7 +372,7 @@ const navigationClasses = defineClasses([
                         :class="item.data.iconClasses"
                         :icon="item.data.icon"
                         :pack="item.data.iconPack"
-                        :size="size" />
+                        :size="item.data.iconSize ?? size" />
                     <span v-else-if="item.data.step">
                         {{ item.data.step }}
                     </span>
@@ -403,7 +403,7 @@ const navigationClasses = defineClasses([
             <nav v-if="hasNavigation" :class="navigationClasses">
                 <o-button
                     role="button"
-                    :icon-left="iconPrev"
+                    :icon="iconPrev"
                     :icon-pack="iconPack"
                     :disabled="!hasPrev"
                     :aria-label="ariaPreviousLabel"
@@ -411,7 +411,7 @@ const navigationClasses = defineClasses([
 
                 <o-button
                     role="button"
-                    :icon-left="iconNext"
+                    :icon="iconNext"
                     :icon-pack="iconPack"
                     :disabled="!hasNext"
                     :aria-label="ariaNextLabel"
