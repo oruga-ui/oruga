@@ -194,12 +194,11 @@ function checkType(file: File): boolean {
 
 function onClick(event: Event): void {
     if (props.disabled) return;
+    // click input only if not drag and drop is used
+    if (props.dragDrop) return;
 
-    // click input if not drag and drop is used
-    if (!props.dragDrop) {
-        event.preventDefault();
-        if (inputRef.value) inputRef.value.click();
-    }
+    event.preventDefault();
+    if (inputRef.value) inputRef.value.click();
 }
 
 // #region --- Computed Component Classes ---
