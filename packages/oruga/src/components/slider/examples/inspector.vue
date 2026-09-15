@@ -9,7 +9,7 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
     },
     sizeClass: {
         class: "sizeClass",
-        description: "Class of the root elment with size.",
+        description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (data): void => {
@@ -48,7 +48,7 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
     thumbWrapperDraggingClass: {
         class: "thumbWrapperDraggingClass",
         description:
-            "Class to the thumb wrapper element when the slider is dragged .",
+            "Class of the thumb wrapper element when the slider is dragged.",
         info: "Drag the thumb to see it in action!",
     },
     thumbClass: {
@@ -91,7 +91,7 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
         class: "tickAfterClass",
         subitem: "slidertick",
         description:
-            "Class of the slider tick element when is before the value.",
+            "Class of the slider tick element when is after the value.",
         properties: ["ticks"],
     },
     tickLabelClass: {

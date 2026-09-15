@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
 });
 
 defineSlots<{
-    /** Place breadcrumb items here  */
+    /** Define breadcrumb items here */
     default?(): void;
 }>();
 

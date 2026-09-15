@@ -71,7 +71,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
     },
     disabledClass: {
         class: "disabledClass",
-        description: "Class of the button when disabled.",
+        description: "Class of the root element when disabled.",
         properties: ["disabled"],
         action: (data): void => {
             data.disabled = true;

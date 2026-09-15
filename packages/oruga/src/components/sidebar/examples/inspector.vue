@@ -104,7 +104,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
     },
     scrollKeepClass: {
         class: "scrollKeepClass",
-        description: "Class of the body when is visible and scroll is keeped.",
+        description: "Class of the body when is visible and scroll is kept.",
         properties: ["clipScroll"],
         action: (data): void => {
             data.clipScroll = false;

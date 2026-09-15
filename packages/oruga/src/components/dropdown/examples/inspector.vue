@@ -178,7 +178,7 @@ const inspectData: InspectData<
     },
     scrollKeepClass: {
         class: "scrollKeepClass",
-        description: "Class of the body when is open and scroll is keeped.",
+        description: "Class of the body when is open and scroll is kept.",
         properties: ["clipScroll"],
         action: (data): void => {
             data.clipScroll = false;

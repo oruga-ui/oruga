@@ -34,7 +34,7 @@ export type SwitchProps<T> = {
     trueValue?: T;
     /** Overrides the returned value when it's not checked */
     falseValue?: T;
-    /** Rounded style */
+    /** Enable rounded style */
     rounded?: boolean;
     /** Label position */
     position?: string;
@@ -42,7 +42,7 @@ export type SwitchProps<T> = {
     autocomplete?: string;
     /** Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. */
     id?: string;
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */
     customValidity?:

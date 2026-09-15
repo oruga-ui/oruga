@@ -1,5 +1,4 @@
-import type { ComponentClass, Numberish } from "@/types";
-import type { OptionsOrGroupsProp } from "@/composables";
+import type { ComponentClass, Numberish, OptionsOrGroupsProp } from "@/types";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -31,7 +30,7 @@ export type SelectProps<T, IsMultiple extends boolean = boolean> = {
     variant?: string;
     /** Text when nothing is selected */
     placeholder?: string;
-    /** Disable the input - same as native disabled */
+    /** Same as native disabled */
     disabled?: boolean;
     /** Same as native required */
     required?: boolean;

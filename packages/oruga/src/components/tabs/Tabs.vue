@@ -81,7 +81,7 @@ const emits = defineEmits<{
 defineSlots<{
     /** Additional slot before the tabs */
     before?(): void;
-    /** Define the tag items here */
+    /** Define the tab items here */
     default?(): void;
     /** Additional slot after the tabs */
     after?(): void;

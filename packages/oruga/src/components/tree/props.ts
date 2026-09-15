@@ -1,5 +1,4 @@
-import type { ComponentClass } from "@/types";
-import type { OptionsProp } from "@/composables";
+import type { ComponentClass, OptionsProp } from "@/types";
 import type { InputProps } from "../input/props";
 import type { CheckboxProps } from "../checkbox/props";
 
@@ -14,7 +13,7 @@ export type TreeProps<T, IsMultiple extends boolean = boolean> = {
     modelValue?: ValueType<T, IsMultiple>;
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
-    /** Tree items, unnecessary when default slot is used */
+    /** Tree options, unnecessary when default slot is used */
     options?: TreeOptions<T>;
     /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
     id?: string;
@@ -24,7 +23,7 @@ export type TreeProps<T, IsMultiple extends boolean = boolean> = {
     selectable?: boolean;
     /** Enable a checkbox on the item element */
     checkable?: boolean;
-    /** Tree will be disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
     /** Height of the tree, a scrollbar is defined if height of list exceeds this value */
     scrollHeight?: string | number;
@@ -58,7 +57,7 @@ export type TreeProps<T, IsMultiple extends boolean = boolean> = {
     animation?: string;
     /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
-    /** Identifier of the underlying input element. */
+    /** Accessibility aria-labelledby to associate a label element with this component */
     ariaLabelledby?: string;
 } & TreeClasses;
 
@@ -66,11 +65,11 @@ export type TreeProps<T, IsMultiple extends boolean = boolean> = {
 export type TreeClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Clas of the root element when disabled */
+    /** Class of the root element when disabled */
     disabledClass: ComponentClass;
-    /** Clas of the root element when selectable */
+    /** Class of the root element when selectable */
     selectableClass: ComponentClass;
-    /** Clas of the root element when multiple */
+    /** Class of the root element when multiple */
     multipleClass: ComponentClass;
     /** Class of the header slot wrapper element */
     headerClass: ComponentClass;
@@ -94,9 +93,12 @@ export type TreeClasses = Partial<{
 export type TreeItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Item value (it will be used as the v-model of the wrapper component) - default is an uuid */
+    /**
+     * Item value (it will be used as the v-model of the wrapper component) - default is an uuid
+     * @type string|number|object
+     */
     value?: T;
-    /** Subtree items, unnecessary when default slot is used */
+    /** Subtree options, unnecessary when default slot is used */
     options?: TreeOptions<T>;
     /** Tree item label */
     label?: string; // TODO: make required
@@ -104,7 +106,7 @@ export type TreeItemProps<T> = {
     selectable?: boolean;
     /** Tree item will be expanded */
     expanded?: boolean;
-    /** Tree item will be disabled */
+    /** Item will be disabled */
     disabled?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
@@ -126,7 +128,7 @@ export type TreeItemProps<T> = {
     animation?: string;
     /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
-    /** Identifier of the underlying input element. */
+    /** Accessibility aria-labelledby to associate a label element with this component */
     ariaLabelledby?: string;
 } & TreeItemClasses;
 

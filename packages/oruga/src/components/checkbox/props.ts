@@ -1,10 +1,12 @@
 import type { ComponentClass } from "@/types";
 
+type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
 export type CheckboxProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
-    modelValue?: IsMultiple extends true ? T[] : T;
+    modelValue?: ValueType<T, IsMultiple>;
     /** Defines the v-model as array of values */
     multiple?: IsMultiple;
     /**

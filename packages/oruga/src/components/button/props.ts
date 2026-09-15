@@ -33,7 +33,7 @@ export type ButtonProps = {
     rounded?: boolean;
     /** Button will be expanded (full-width) */
     expanded?: boolean;
-    /** Button will be disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
     /** Enable outlined style */
     outlined?: boolean;

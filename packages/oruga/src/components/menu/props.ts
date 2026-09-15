@@ -1,5 +1,4 @@
-import type { ComponentClass, DynamicComponent } from "@/types";
-import type { OptionsProp } from "@/composables";
+import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
 
 export type MenuOptions<T> = OptionsProp<MenuItemProps<T>>;
 
@@ -8,13 +7,13 @@ export type MenuProps<T> = {
     override?: boolean;
     /** The selected item value, use v-model to make it two-way binding */
     modelValue?: T;
-    /** Menu items, unnecessary when default slot is used */
+    /** Menu options, unnecessary when default slot is used */
     options?: MenuOptions<T>;
     /** Menu label */
     label?: string;
     /** If sub menu items are collapsible */
     accordion?: boolean;
-    /** Menu will be disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
     /** HTML element Id of the ol list element */
     menuId?: string;
@@ -53,17 +52,20 @@ export type MenuClasses = Partial<{
 export type MenuItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Item value (it will be used as the v-model of the wrapper component) - default is an uuid */
+    /**
+     * Item value (it will be used as the v-model value of the wrapper component) - default is an uuid
+     * @type string|number|object
+     */
     value?: T;
     /** The active state of the menu item, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Submenu items, unnecessary when default slot is used */
+    /** Submenu options, unnecessary when default slot is used */
     options?: MenuOptions<T>;
     /** Menu item label */
     label?: string;
     /** Menu item will be expanded */
     expanded?: boolean;
-    /** Menu item will be disabled */
+    /** Item will be disabled */
     disabled?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;

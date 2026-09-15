@@ -70,7 +70,7 @@ defineSlots<{
      * @param active {boolean} - item active state
      */
     label?(props: { expanded: boolean; active: boolean }): void;
-    /** Define submenu items here  */
+    /** Define submenu items here */
     default?(): void;
 }>();
 

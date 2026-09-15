@@ -49,9 +49,9 @@ defineEmits<{
 defineSlots<{
     /** Override the label, default is label prop */
     default?(): void;
-    /** Override the left icon. */
+    /** Override the left icon */
     left?(): void;
-    /** Override the right icon. */
+    /** Override the right icon */
     right?(): void;
 }>();
 
