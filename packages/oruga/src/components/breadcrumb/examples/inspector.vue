@@ -48,7 +48,7 @@ const inspectData: InspectData<
     },
     itemClass: {
         class: "itemClass",
-        description: " Class of the item element",
+        description: "Class of the item element",
     },
     disabledClass: {
         class: "disabledClass",
@@ -68,7 +68,7 @@ const inspectData: InspectData<
     },
     seperatorClass: {
         class: "seperatorClass",
-        description: "Class of the item seperator element",
+        description: "Class of the item separator element",
         properties: ["separator"],
         action: (data) => {
             data.separator = "/";

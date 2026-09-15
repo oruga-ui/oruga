@@ -17,7 +17,7 @@ const inspectData: InspectData<
     },
     disabledClass: {
         class: "disabledClass",
-        description: "Clas of the root element when disabled.",
+        description: "Class of the root element when disabled.",
         properties: ["disabled"],
         action: (data): void => {
             data.disabled = true;
