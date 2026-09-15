@@ -43,7 +43,8 @@ type ModelValue = InputProps<IsNumber>["modelValue"];
 
 const props = withDefaults(
     defineProps<
-        HTMLInputPassthroughProps &
+        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLInputPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+        /* @vue-ignore */ HTMLInputPassthroughProps &
             Omit<InputProps<IsNumber>, keyof HTMLInputPassthroughProps>
     >(),
     {
@@ -60,6 +61,7 @@ const props = withDefaults(
         counter: () => getDefault("input.counter", false),
         autosize: false,
         maxlength: undefined,
+        autocomplete: () => getDefault("input.autocomplete", "off"),
         iconPack: () => getDefault("input.iconPack"),
         icon: () => getDefault("input.icon"),
         iconClickable: false,
@@ -298,8 +300,9 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField?.value?.inputAttrs,
     ...attrs,
-    // managed native props are declared (not in attrs) so must be spread explicitly
+    // maxlength and autocomplete are declared Vue props (not in attrs), so must be explicit
     maxlength: props.maxlength,
+    autocomplete: props.autocomplete,
 }));
 
 const rootClasses = defineClasses(
