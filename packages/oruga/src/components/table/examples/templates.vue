@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { defineOTableColumn } from "@oruga-ui/oruga-next";
 
 const data = ref([
     {
@@ -48,6 +49,9 @@ const isSelectable = ref(false);
 const isCheckbale = ref(false);
 const isLoading = ref(false);
 const hasMobileCards = ref(true);
+
+// Typed column component — property `row` in #default slots is inferred from `data`
+const Column = defineOTableColumn<(typeof data.value)[number]>();
 </script>
 
 <template>
@@ -80,7 +84,7 @@ const hasMobileCards = ref(true);
             empty-label="Table is empty"
             empty-icon="frown">
             <template #before>
-                <o-table-column
+                <Column
                     v-slot="{ row }"
                     field="id"
                     label="ID"
@@ -89,27 +93,27 @@ const hasMobileCards = ref(true);
                     sortable
                     :th-attrs="{ style: { color: 'red' } }">
                     {{ row.id }}
-                </o-table-column>
+                </Column>
             </template>
 
-            <o-table-column
+            <Column
                 v-slot="{ row }"
                 field="first_name"
                 label="First Name"
                 sortable>
                 {{ row.first_name }}
-            </o-table-column>
+            </Column>
 
-            <o-table-column
+            <Column
                 v-slot="{ row }"
                 field="last_name"
                 label="Last Name"
                 sortable
                 :th-attrs="{ style: { 'min-width': '120px' } }">
                 {{ row.last_name }}
-            </o-table-column>
+            </Column>
 
-            <o-table-column
+            <Column
                 v-slot="{ row }"
                 field="date"
                 label="Date"
@@ -118,9 +122,9 @@ const hasMobileCards = ref(true);
                 sortable
                 :th-attrs="{ style: { 'font-style': 'italic' } }">
                 {{ new Date(row.date).toLocaleDateString() }}
-            </o-table-column>
+            </Column>
 
-            <o-table-column label="Gender" sortable>
+            <Column label="Gender" sortable>
                 <template #default="{ row }">
                     <o-icon
                         pack="fas"
@@ -135,7 +139,7 @@ const hasMobileCards = ref(true);
                 </template>
 
                 <template #subheading> Male/Female </template>
-            </o-table-column>
+            </Column>
 
             <template #footer>
                 <td colspan="5">Custom Footer</td>

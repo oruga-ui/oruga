@@ -234,6 +234,7 @@ describe("OTable tests", () => {
 
                 for (let j = 0; j < columns.length; j++) {
                     expect(tds[j].text()).toBe(
+                        // @ts-expect-error: test passes row as cell value for simplicity
                         columns[j].formatter?.(data[i], data[i]),
                     );
                 }
@@ -252,8 +253,8 @@ describe("OTable tests", () => {
                     tdAttrs: { class: "td-id" },
                 },
                 {
-                    field: "abc",
-                    label: "ABC",
+                    field: "last_name",
+                    label: "Last Name",
                     sortable: true,
                     thAttrs: { class: "th-abc" },
                     tdAttrs: { class: "td-abc" },
