@@ -69,11 +69,3 @@ export type DeepKeys<T> =
             }[keyof T & string]
           : never)
     | (keyof T & string);
-
-type CamelCase<T extends string> = T extends `${infer A}-${infer B}`
-    ? `${A}${Capitalize<B>}`
-    : T;
-
-export type CamelCaseKeys<T extends object> = {
-    [key in keyof T as key extends string ? CamelCase<key> : key]: T[key];
-};
