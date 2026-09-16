@@ -58,89 +58,88 @@ export type HTMLInputPassthroughProps = {
     wrap?: TextareaHTMLAttributes["wrap"];
 } & AriaAttributes;
 
-export type InputProps<IsNumber extends boolean = boolean> =
-    HTMLInputPassthroughProps & {
-        /** Override existing theme classes completely */
-        override?: boolean;
-        /** Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. */
-        id?: string;
-        /**
-         * The input value state, use v-model to make it two-way binding
-         * @type string | number
-         */
-        modelValue?: InputType<IsNumber>;
-        /**
-         * Convert the ´modelValue` into type `number`
-         * @type boolean
-         */
-        number?: IsNumber;
-        /**
-         * Input type, like native
-         * @values Any native input type, and textarea
-         */
-        type?: string;
-        /**
-         * Size of the control
-         * @values small, medium, large
-         */
-        size?: string;
-        /**
-         * Color variant of the control
-         * @values primary, info, success, warning, danger, and any other custom color
-         */
-        variant?: string;
-        /** Number of milliseconds to delay before emitting the value */
-        debounce?: number;
-        /** Makes input full width when inside a grouped or addon field */
-        expanded?: boolean;
-        /** Makes the element rounded */
-        rounded?: boolean;
-        /** Same as native disabled */
-        disabled?: boolean;
-        /** Adds the reveal password functionality */
-        passwordReveal?: boolean;
-        /** Show character counter when maxlength prop is passed */
-        counter?: boolean;
-        /** Automatically adjust height in textarea */
-        autosize?: boolean;
-        /** Same as native maxlength. Also used to show character counter when `counter` prop is enabled. */
-        maxlength?: number | string;
-        /**
-         * Icon pack to use
-         * @values mdi, fa, fas and any other custom icon pack
-         */
-        iconPack?: string;
-        /** Icon to be shown */
-        icon?: string;
-        /** Makes the icon clickable */
-        iconClickable?: boolean;
-        /** Icon to be added on the right side */
-        iconRight?: string;
-        /** Make the icon right clickable */
-        iconRightClickable?: boolean;
-        /** Variant of right icon */
-        iconRightVariant?: string;
-        /** Add a button/icon to clear the inputed text */
-        clearable?: boolean;
-        /** Icon name to be added on the clear button */
-        clearIcon?: string;
-        /** Show status icon using field and variant prop */
-        statusIcon?: boolean;
-        /**
-         * Native options to use in HTML5 validation,
-         * whether the value of the form's controls can be automatically completed by the browser.
-         */
-        autocomplete?: string;
-        /** Enable HTML 5 native validation */
-        useHtml5Validation?: boolean;
-        /** Custom HTML 5 validation error to set on the form control */
-        customValidity?:
-            | string
-            | ((
-                  currentValue: InputType<IsNumber> | null | undefined,
-                  state: ValidityState,
-              ) => string);
-    } & InputClasses;
+export type InputProps<IsNumber extends boolean = boolean> = {
+    /** Override existing theme classes completely */
+    override?: boolean;
+    /** Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. */
+    id?: string;
+    /**
+     * The input value state, use v-model to make it two-way binding
+     * @type string | number
+     */
+    modelValue?: InputType<IsNumber>;
+    /**
+     * Convert the ´modelValue` into type `number`
+     * @type boolean
+     */
+    number?: IsNumber;
+    /**
+     * Input type, like native
+     * @values Any native input type, and textarea
+     */
+    type?: string;
+    /**
+     * Size of the control
+     * @values small, medium, large
+     */
+    size?: string;
+    /**
+     * Color variant of the control
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    variant?: string;
+    /** Number of milliseconds to delay before emitting the value */
+    debounce?: number;
+    /** Makes input full width when inside a grouped or addon field */
+    expanded?: boolean;
+    /** Makes the element rounded */
+    rounded?: boolean;
+    /** Same as native disabled */
+    disabled?: boolean;
+    /** Adds the reveal password functionality */
+    passwordReveal?: boolean;
+    /** Show character counter when maxlength prop is passed */
+    counter?: boolean;
+    /** Automatically adjust height in textarea */
+    autosize?: boolean;
+    /** Same as native maxlength. Also used to show character counter when `counter` prop is enabled. */
+    maxlength?: number | string;
+    /**
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack?: string;
+    /** Icon to be shown */
+    icon?: string;
+    /** Makes the icon clickable */
+    iconClickable?: boolean;
+    /** Icon to be added on the right side */
+    iconRight?: string;
+    /** Make the icon right clickable */
+    iconRightClickable?: boolean;
+    /** Variant of right icon */
+    iconRightVariant?: string;
+    /** Add a button/icon to clear the inputed text */
+    clearable?: boolean;
+    /** Icon name to be added on the clear button */
+    clearIcon?: string;
+    /** Show status icon using field and variant prop */
+    statusIcon?: boolean;
+    /**
+     * Native options to use in HTML5 validation,
+     * whether the value of the form's controls can be automatically completed by the browser.
+     */
+    autocomplete?: string;
+    /** Enable HTML 5 native validation */
+    useHtml5Validation?: boolean;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?:
+        | string
+        | ((
+              currentValue: InputType<IsNumber> | null | undefined,
+              state: ValidityState,
+          ) => string);
+} & InputClasses;
 
 // class props (will not be displayed in the docs)
 export type InputClasses = Partial<{

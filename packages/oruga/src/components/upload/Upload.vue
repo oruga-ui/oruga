@@ -32,9 +32,9 @@ type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<
-        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLUploadPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-        /* @vue-ignore */ HTMLUploadPassthroughProps &
-            Omit<UploadProps<T, IsMultiple>, keyof HTMLUploadPassthroughProps>
+        UploadProps<T, IsMultiple> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLUploadPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLUploadPassthroughProps
     >(),
     {
         override: undefined,
@@ -276,9 +276,9 @@ defineExpose({
 
         <div
             v-else
-            :class="dragzoneClasses"
             role="button"
             tabindex="0"
+            :class="dragzoneClasses"
             @pointerenter="updateDragDropFocus(true)"
             @pointerleave="updateDragDropFocus(false)"
             @dragover.prevent="updateDragDropFocus(true)"
@@ -291,14 +291,14 @@ defineExpose({
         <slot name="after" />
 
         <input
-            v-bind="inputBind"
             ref="inputElement"
-            :class="inputClasses"
             type="file"
             data-oruga-input="file"
+            :class="inputClasses"
             :multiple="props.multiple"
             :accept="accept"
             :disabled="disabled"
+            v-bind="inputBind"
             @change="onFileChange" />
     </label>
 </template>

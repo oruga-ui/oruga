@@ -25,7 +25,7 @@ export type HTMLButtonPassthroughProps = {
     formtarget?: ButtonHTMLAttributes["formtarget"];
 } & AriaAttributes;
 
-export type ButtonProps = HTMLButtonPassthroughProps & {
+export type ButtonProps = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

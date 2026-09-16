@@ -5,7 +5,7 @@ import { axe } from "jest-axe";
 
 import OSelect from "../Select.vue";
 import OField from "../../field/Field.vue";
-import type { SelectProps } from "../props.ts";
+import type { HTMLSelectPassthroughProps, SelectProps } from "../props.ts";
 
 const TestComponent = defineComponent(
     (props) => (): VNode =>
@@ -17,7 +17,7 @@ describe("OSelect a11y tests", () => {
 
     const a11yCases: {
         title: string;
-        props?: SelectProps<unknown, true | false>;
+        props?: SelectProps<unknown, true | false> & HTMLSelectPassthroughProps;
     }[] = [
         {
             title: "axe select - base case",

@@ -22,9 +22,9 @@ defineOptions({
 
 const props = withDefaults(
     defineProps<
-        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLButtonPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-        /* @vue-ignore */ HTMLButtonPassthroughProps &
-            Omit<ButtonProps, keyof HTMLButtonPassthroughProps>
+        ButtonProps &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLButtonPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLButtonPassthroughProps
     >(),
     {
         override: undefined,
@@ -127,14 +127,14 @@ const iconRightClasses = defineClasses([
 <template>
     <component
         :is="tag"
-        v-bind="$attrs"
-        data-oruga="button"
-        :type="computedNativeType"
         role="button"
+        :type="computedNativeType"
         tabindex="0"
+        data-oruga="button"
         :class="rootClasses"
         :disabled="disabled ? true : null"
         :aria-disabled="disabled ? true : null"
+        v-bind="$attrs"
         @click="$emit('click', $event)"
         @keydown.enter.prevent="$emit('click', $event)"
         @keydown.space.prevent="$emit('click', $event)">

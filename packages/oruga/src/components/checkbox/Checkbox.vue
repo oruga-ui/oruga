@@ -25,12 +25,9 @@ type ModelValue = CheckboxProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<
-        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLCheckboxPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-        /* @vue-ignore */ HTMLCheckboxPassthroughProps &
-            Omit<
-                CheckboxProps<T, IsMultiple>,
-                keyof HTMLCheckboxPassthroughProps
-            >
+        CheckboxProps<T, IsMultiple> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLCheckboxPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLCheckboxPassthroughProps
     >(),
     {
         override: undefined,
@@ -181,7 +178,6 @@ defineExpose({
 <template>
     <div data-oruga="checkbox" :class="rootClasses">
         <input
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             v-model="vmodel"
@@ -195,6 +191,7 @@ defineExpose({
             :disabled="disabled"
             :aria-checked="indeterminate ? 'mixed' : isChecked"
             :aria-labelledby="labelId"
+            v-bind="inputBind"
             @change="onInput" />
 
         <label

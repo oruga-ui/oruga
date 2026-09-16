@@ -5,7 +5,7 @@ import { axe } from "jest-axe";
 
 import OInput from "../Input.vue";
 import OField from "../../field/Field.vue";
-import type { InputProps } from "../props.ts";
+import type { HTMLInputPassthroughProps, InputProps } from "../props.ts";
 
 const TestComponent = defineComponent(
     (props) => (): VNode =>
@@ -17,7 +17,7 @@ describe("OInput a11y tests", () => {
 
     const a11yCases: {
         title: string;
-        props?: InputProps<true | false>;
+        props?: InputProps<true | false> & HTMLInputPassthroughProps;
     }[] = [
         { title: "axe input - base case", props: { modelValue: "hello" } },
         {

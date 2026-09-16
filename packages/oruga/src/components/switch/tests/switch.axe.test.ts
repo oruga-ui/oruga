@@ -4,12 +4,15 @@ import { axe } from "jest-axe";
 import { nextTick } from "vue";
 
 import OSwitch from "../Switch.vue";
-import type { SwitchProps } from "../props";
+import type { HTMLSwitchPassthroughProps, SwitchProps } from "../props";
 
 describe("OSwitch a11y tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases: { title: string; props?: SwitchProps<unknown> }[] = [
+    const a11yCases: {
+        title: string;
+        props?: SwitchProps<unknown> & HTMLSwitchPassthroughProps;
+    }[] = [
         {
             title: "axe switch - base case",
             props: { label: "Switch Label" },

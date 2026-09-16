@@ -40,9 +40,9 @@ type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<
-        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLSelectPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-        /* @vue-ignore */ HTMLSelectPassthroughProps &
-            Omit<SelectProps<T, IsMultiple>, keyof HTMLSelectPassthroughProps>
+        SelectProps<T, IsMultiple> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLSelectPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLSelectPassthroughProps
     >(),
     {
         override: undefined,

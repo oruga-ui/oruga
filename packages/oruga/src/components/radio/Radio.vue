@@ -22,9 +22,9 @@ defineOptions({
 
 const props = withDefaults(
     defineProps<
-        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLRadioPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-        /* @vue-ignore */ HTMLRadioPassthroughProps &
-            Omit<RadioProps<T>, keyof HTMLRadioPassthroughProps>
+        RadioProps<T> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLRadioPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLRadioPassthroughProps
     >(),
     {
         override: undefined,
@@ -155,7 +155,6 @@ defineExpose({
 <template>
     <div data-oruga="radio" :class="rootClasses">
         <input
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             v-model="vmodel"
@@ -166,6 +165,7 @@ defineExpose({
             :disabled="disabled"
             :aria-checked="isChecked"
             :aria-labelledby="labelId"
+            v-bind="inputBind"
             @change="onInput" />
 
         <label

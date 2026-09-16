@@ -4,12 +4,15 @@ import { axe } from "jest-axe";
 import { nextTick } from "vue";
 
 import OCheckbox from "../Checkbox.vue";
-import type { CheckboxProps } from "../props";
+import type { CheckboxProps, HTMLCheckboxPassthroughProps } from "../props";
 
 describe("Checkbox a11y tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases: { title: string; props?: CheckboxProps<unknown> }[] = [
+    const a11yCases: {
+        title: string;
+        props?: CheckboxProps<unknown> & HTMLCheckboxPassthroughProps;
+    }[] = [
         {
             title: "axe checkbox - base case",
             props: { label: "Checkbox Label" },

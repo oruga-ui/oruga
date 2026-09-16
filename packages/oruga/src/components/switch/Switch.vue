@@ -22,9 +22,9 @@ defineOptions({
 
 const props = withDefaults(
     defineProps<
-        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLSwitchPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-        /* @vue-ignore */ HTMLSwitchPassthroughProps &
-            Omit<SwitchProps<T>, keyof HTMLSwitchPassthroughProps>
+        SwitchProps<T> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLSwitchPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLSwitchPassthroughProps
     >(),
     {
         override: undefined,
@@ -182,7 +182,6 @@ defineExpose({
 <template>
     <div data-oruga="switch" :class="rootClasses">
         <input
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             v-model="vmodel"
@@ -196,6 +195,7 @@ defineExpose({
             :disabled="disabled"
             :aria-checked="isChecked"
             :aria-labelledby="labelId"
+            v-bind="inputBind"
             @change="onInput" />
 
         <label

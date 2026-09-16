@@ -43,9 +43,9 @@ type ModelValue = InputProps<IsNumber>["modelValue"];
 
 const props = withDefaults(
     defineProps<
-        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLInputPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-        /* @vue-ignore */ HTMLInputPassthroughProps &
-            Omit<InputProps<IsNumber>, keyof HTMLInputPassthroughProps>
+        InputProps<IsNumber> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLInputPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLInputPassthroughProps
     >(),
     {
         override: undefined,
@@ -400,7 +400,6 @@ defineExpose({
 
         <textarea
             v-if="type === 'textarea'"
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             :value="vmodel"
@@ -408,11 +407,11 @@ defineExpose({
             :class="inputClasses"
             :style="computedStyles"
             :disabled="disabled"
+            v-bind="inputBind"
             @input="debouncedInput" />
 
         <input
             v-else
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             :value="vmodel"
@@ -420,6 +419,7 @@ defineExpose({
             :data-oruga-input="inputType"
             :class="inputClasses"
             :disabled="disabled"
+            v-bind="inputBind"
             @input="debouncedInput" />
 
         <o-icon

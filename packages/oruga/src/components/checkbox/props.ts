@@ -16,10 +16,7 @@ export type HTMLCheckboxPassthroughProps = {
     form?: InputHTMLAttributes["form"];
 } & AriaAttributes;
 
-export type CheckboxProps<
-    T,
-    IsMultiple extends boolean = boolean,
-> = HTMLCheckboxPassthroughProps & {
+export type CheckboxProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
