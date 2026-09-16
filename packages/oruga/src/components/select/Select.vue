@@ -22,7 +22,7 @@ import {
 
 import { injectField } from "../field/fieldInjection";
 
-import type { SelectProps } from "./props";
+import type { SelectProps, HTMLSelectPassthroughProps } from "./props";
 
 /**
  * Select an item in a list. Use with Field to access all functionalities.
@@ -38,31 +38,37 @@ defineOptions({
 
 type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
-const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
-    override: undefined,
-    modelValue: undefined,
-    // multiple: false,
-    options: undefined,
-    size: () => getDefault("select.size"),
-    variant: () => getDefault("select.variant"),
-    placeholder: undefined,
-    disabled: false,
-    required: false,
-    expanded: () => getDefault("select.expanded", false),
-    rounded: false,
-    nativeSize: undefined,
-    iconPack: () => getDefault("select.iconPack"),
-    icon: () => getDefault("select.icon"),
-    iconClickable: false,
-    iconRight: () => getDefault("select.iconRight"),
-    iconRightClickable: false,
-    iconRightVariant: undefined,
-    id: () => useId(),
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
-    customValidation: "",
-    autocomplete: () => getDefault("select.autocomplete", "off"),
-    statusIcon: () => getDefault("statusIcon", true),
-});
+const props = withDefaults(
+    defineProps<
+        SelectProps<T, IsMultiple> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLSelectPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLSelectPassthroughProps
+    >(),
+    {
+        override: undefined,
+        modelValue: undefined,
+        // multiple: false,
+        id: () => useId(),
+        options: undefined,
+        size: () => getDefault("select.size"),
+        variant: () => getDefault("select.variant"),
+        placeholder: undefined,
+        disabled: false,
+        expanded: () => getDefault("select.expanded", false),
+        rounded: false,
+        nativeSize: undefined,
+        statusIcon: () => getDefault("statusIcon", true),
+        iconPack: () => getDefault("select.iconPack"),
+        icon: () => getDefault("select.icon"),
+        iconClickable: false,
+        iconRight: () => getDefault("select.iconRight"),
+        iconRightClickable: false,
+        iconRightVariant: undefined,
+        autocomplete: () => getDefault("select.autocomplete", "off"),
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
+        customValidity: "",
+    },
+);
 
 const emits = defineEmits<{
     /**
@@ -199,6 +205,7 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField?.value?.inputAttrs,
     ...attrs,
+    autocomplete: props.autocomplete,
 }));
 
 const rootClasses = defineClasses(
@@ -310,11 +317,9 @@ defineExpose({
             v-model="vmodel"
             data-oruga-input="select"
             :class="selectClasses"
-            :autocomplete="autocomplete"
             :multiple="props.multiple"
             :size="nativeSize"
-            :disabled="disabled"
-            :required="required">
+            :disabled="disabled">
             <template v-if="placeholder || $slots.placeholder">
                 <option v-if="placeholderVisible" value="" disabled hidden>
                     <slot name="placeholder">

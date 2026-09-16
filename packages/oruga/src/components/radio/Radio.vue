@@ -6,7 +6,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { RadioProps } from "./props";
+import type { RadioProps, HTMLRadioPassthroughProps } from "./props";
 
 /**
  * Select an option from a set of options.
@@ -20,20 +20,26 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<RadioProps<T>>(), {
-    override: undefined,
-    modelValue: undefined,
-    id: () => useId(),
-    label: undefined,
-    name: undefined,
-    variant: () => getDefault("radio.variant"),
-    size: () => getDefault("radio.size"),
-    disabled: false,
-    required: false,
-    nativeValue: undefined,
-    autocomplete: () => getDefault("radio.autocomplete", "off"),
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
-});
+const props = withDefaults(
+    defineProps<
+        RadioProps<T> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLRadioPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLRadioPassthroughProps
+    >(),
+    {
+        override: undefined,
+        modelValue: undefined,
+        id: () => useId(),
+        label: undefined,
+        variant: () => getDefault("radio.variant"),
+        size: () => getDefault("radio.size"),
+        disabled: false,
+        nativeValue: undefined,
+        autocomplete: () => getDefault("radio.autocomplete", "off"),
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
+        customValidity: "",
+    },
+);
 
 const emits = defineEmits<{
     /**
@@ -105,6 +111,7 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField?.value?.inputAttrs,
     ...attrs,
+    autocomplete: props.autocomplete,
 }));
 
 const rootClasses = defineClasses(
@@ -148,20 +155,17 @@ defineExpose({
 <template>
     <div data-oruga="radio" :class="rootClasses">
         <input
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             v-model="vmodel"
             type="radio"
             data-oruga-input="radio"
             :class="inputClasses"
-            :name="name"
             :value="nativeValue"
-            :required="required"
             :disabled="disabled"
-            :autocomplete="autocomplete"
             :aria-checked="isChecked"
             :aria-labelledby="labelId"
+            v-bind="inputBind"
             @change="onInput" />
 
         <label

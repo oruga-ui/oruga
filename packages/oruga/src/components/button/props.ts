@@ -1,4 +1,29 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
+import type { AriaAttributes, ButtonHTMLAttributes } from "vue";
+
+/**
+ * Native HTML button attributes available as typed props for TypeScript consumers.
+ * Since Button does not use `inheritAttrs: false`, these flow through Vue's normal
+ * attribute inheritance to the root element.
+ */
+export type HTMLButtonPassthroughProps = {
+    /** Same as native name */
+    name?: ButtonHTMLAttributes["name"];
+    /** Same as native value */
+    value?: ButtonHTMLAttributes["value"];
+    /** Same as native form */
+    form?: ButtonHTMLAttributes["form"];
+    /** Override the parent form's action URL (submit buttons only) */
+    formaction?: ButtonHTMLAttributes["formaction"];
+    /** Override the parent form's enctype (submit buttons only) */
+    formenctype?: ButtonHTMLAttributes["formenctype"];
+    /** Override the parent form's method (submit buttons only) */
+    formmethod?: ButtonHTMLAttributes["formmethod"];
+    /** Skip HTML5 validation for this submit button */
+    formnovalidate?: ButtonHTMLAttributes["formnovalidate"];
+    /** Override the parent form's target (submit buttons only) */
+    formtarget?: ButtonHTMLAttributes["formtarget"];
+} & AriaAttributes;
 
 export type ButtonProps = {
     /** Override existing theme classes completely */
@@ -46,8 +71,6 @@ export type ButtonProps = {
      * @values button, submit, reset
      */
     type?: "button" | "submit" | "reset";
-    /** Defines an accessible string value that labels an interactive element. */
-    ariaLabel?: string;
 } & ButtonClasses;
 
 // class props (will not be displayed in the docs)

@@ -466,7 +466,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 size: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -1449,6 +1450,10 @@ See icon library documentation for custom classes.
                  */
                 variant: string;
                 /**
+                 * Number of milliseconds to delay before emitting the value
+                 */
+                debounce: number;
+                /**
                  * Makes input full width when inside a grouped or addon field
                  */
                 expanded: boolean;
@@ -1477,11 +1482,8 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
-                 * Number of milliseconds to delay before emitting the value
-                 */
-                debounce: number;
-                /**
-                 * Native options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -2229,7 +2231,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 size: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -2288,7 +2291,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -2775,7 +2779,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 right: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**

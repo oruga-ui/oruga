@@ -1,12 +1,68 @@
 import type { ComponentClass } from "@/types";
+import type {
+    AriaAttributes,
+    InputHTMLAttributes,
+    TextareaHTMLAttributes,
+} from "vue";
 
 export type InputType<IsNumber extends boolean> = IsNumber extends true
     ? number
     : string;
 
+/**
+ * Native HTML input attributes passed through as fallthrough attrs
+ * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
+ * `maxlength` and `autocomplete` are intentionally excluded — they are managed
+ * as regular Vue props because the component reads them programmatically.
+ */
+export type HTMLInputPassthroughProps = {
+    /** Same as native placeholder */
+    placeholder?: InputHTMLAttributes["placeholder"];
+    /** Same as native required */
+    required?: InputHTMLAttributes["required"];
+    /** Same as native readonly */
+    readonly?: InputHTMLAttributes["readonly"];
+    /** Same as native name */
+    name?: InputHTMLAttributes["name"];
+    /** Same as native min */
+    min?: InputHTMLAttributes["min"];
+    /** Same as native max */
+    max?: InputHTMLAttributes["max"];
+    /** Same as native pattern */
+    pattern?: InputHTMLAttributes["pattern"];
+    /** Same as native title */
+    title?: InputHTMLAttributes["title"];
+    /** Same as native minlength */
+    minlength?: InputHTMLAttributes["minlength"];
+    /** Same as native translate */
+    translate?: InputHTMLAttributes["translate"];
+    /** Same as native step */
+    step?: InputHTMLAttributes["step"];
+    /** Same as native inputmode */
+    inputmode?: InputHTMLAttributes["inputmode"];
+    /** Same as native enterkeyhint */
+    enterkeyhint?: InputHTMLAttributes["enterkeyhint"];
+    /** Same as native spellcheck */
+    spellcheck?: InputHTMLAttributes["spellcheck"];
+    /** Same as native autocapitalize */
+    autocapitalize?: InputHTMLAttributes["autocapitalize"];
+    /** Same as native list */
+    list?: InputHTMLAttributes["list"];
+    /** Same as native form */
+    form?: InputHTMLAttributes["form"];
+    /** Same as native rows (textarea only) */
+    rows?: TextareaHTMLAttributes["rows"];
+    /** Same as native cols (textarea only) */
+    cols?: TextareaHTMLAttributes["cols"];
+    /** Same as native wrap (textarea only) */
+    wrap?: TextareaHTMLAttributes["wrap"];
+} & AriaAttributes;
+
 export type InputProps<IsNumber extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
+    /** Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. */
+    id?: string;
     /**
      * The input value state, use v-model to make it two-way binding
      * @type string | number
@@ -32,8 +88,8 @@ export type InputProps<IsNumber extends boolean = boolean> = {
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
-    /** Input placeholder */
-    placeholder?: string;
+    /** Number of milliseconds to delay before emitting the value */
+    debounce?: number;
     /** Makes input full width when inside a grouped or addon field */
     expanded?: boolean;
     /** Makes the element rounded */
@@ -42,12 +98,12 @@ export type InputProps<IsNumber extends boolean = boolean> = {
     disabled?: boolean;
     /** Adds the reveal password functionality */
     passwordReveal?: boolean;
-    /** Same as native maxlength, plus character counter */
-    maxlength?: number | string;
     /** Show character counter when maxlength prop is passed */
     counter?: boolean;
     /** Automatically adjust height in textarea */
     autosize?: boolean;
+    /** Same as native maxlength. Also used to show character counter when `counter` prop is enabled. */
+    maxlength?: number | string;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -69,12 +125,11 @@ export type InputProps<IsNumber extends boolean = boolean> = {
     clearIcon?: string;
     /** Show status icon using field and variant prop */
     statusIcon?: boolean;
-    /** Number of milliseconds to delay before emitting the value */
-    debounce?: number;
-    /** Native options to use in HTML5 validation */
+    /**
+     * Native options to use in HTML5 validation,
+     * whether the value of the form's controls can be automatically completed by the browser.
+     */
     autocomplete?: string;
-    /** Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. */
-    id?: string;
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */

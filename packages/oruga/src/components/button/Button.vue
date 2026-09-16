@@ -6,7 +6,7 @@ import OIcon from "../icon/Icon.vue";
 import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ButtonProps } from "./props";
+import type { ButtonProps, HTMLButtonPassthroughProps } from "./props";
 
 /**
  * The classic button, in different colors, sizes, and states.
@@ -17,26 +17,33 @@ defineOptions({
     isOruga: true,
     name: "OButton",
     configField: "button",
+    inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<ButtonProps>(), {
-    override: undefined,
-    tag: () => getDefault("button.tag", "button"),
-    variant: () => getDefault("button.variant"),
-    size: () => getDefault("button.size"),
-    label: undefined,
-    rounded: () => getDefault("button.rounded", false),
-    expanded: false,
-    disabled: false,
-    outlined: false,
-    loading: false,
-    inverted: false,
-    type: "button",
-    iconPack: () => getDefault("button.iconPack"),
-    iconLeft: undefined,
-    iconRight: undefined,
-    ariaLabel: undefined,
-});
+const props = withDefaults(
+    defineProps<
+        ButtonProps &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLButtonPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLButtonPassthroughProps
+    >(),
+    {
+        override: undefined,
+        tag: () => getDefault("button.tag", "button"),
+        variant: () => getDefault("button.variant"),
+        size: () => getDefault("button.size"),
+        label: undefined,
+        rounded: () => getDefault("button.rounded", false),
+        expanded: false,
+        disabled: false,
+        outlined: false,
+        loading: false,
+        inverted: false,
+        type: "button",
+        iconPack: () => getDefault("button.iconPack"),
+        iconLeft: undefined,
+        iconRight: undefined,
+    },
+);
 
 defineEmits<{
     /**
@@ -120,14 +127,14 @@ const iconRightClasses = defineClasses([
 <template>
     <component
         :is="tag"
-        data-oruga="button"
-        :type="computedNativeType"
         role="button"
+        :type="computedNativeType"
         tabindex="0"
+        data-oruga="button"
         :class="rootClasses"
         :disabled="disabled ? true : null"
         :aria-disabled="disabled ? true : null"
-        :aria-label="ariaLabel"
+        v-bind="$attrs"
         @click="$emit('click', $event)"
         @keydown.enter.prevent="$emit('click', $event)"
         @keydown.space.prevent="$emit('click', $event)">

@@ -1,6 +1,20 @@
 import type { ComponentClass, Numberish, OptionsOrGroupsProp } from "@/types";
+import type { AriaAttributes, SelectHTMLAttributes } from "vue";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+/**
+ * Native HTML select attributes passed through as fallthrough attrs
+ * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
+ */
+export type HTMLSelectPassthroughProps = {
+    /** Same as native required */
+    required?: SelectHTMLAttributes["required"];
+    /** Same as native name */
+    name?: SelectHTMLAttributes["name"];
+    /** Same as native form */
+    form?: SelectHTMLAttributes["form"];
+} & AriaAttributes;
 
 export type SelectOption<T = string | number> = {
     label: string;
@@ -32,8 +46,6 @@ export type SelectProps<T, IsMultiple extends boolean = boolean> = {
     placeholder?: string;
     /** Same as native disabled */
     disabled?: boolean;
-    /** Same as native required */
-    required?: boolean;
     /** Makes input full width when inside a grouped or addon field */
     expanded?: boolean;
     /** Makes the element rounded */
@@ -57,10 +69,13 @@ export type SelectProps<T, IsMultiple extends boolean = boolean> = {
     iconRightVariant?: string;
     /** Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. */
     id?: string;
-    /** Same as native autocomplete options to use in HTML5 validation */
-    autocomplete?: string;
     /** Show status icon using field and variant prop */
     statusIcon?: boolean;
+    /**
+     * Native options to use in HTML5 validation,
+     * whether the value of the form's controls can be automatically completed by the browser.
+     */
+    autocomplete?: string;
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */

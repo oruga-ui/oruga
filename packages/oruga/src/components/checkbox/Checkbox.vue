@@ -6,7 +6,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { CheckboxProps } from "./props";
+import type { CheckboxProps, HTMLCheckboxPassthroughProps } from "./props";
 import { isTrueish } from "@/utils/helpers";
 
 /**
@@ -23,25 +23,30 @@ defineOptions({
 
 type ModelValue = CheckboxProps<T, IsMultiple>["modelValue"];
 
-const props = withDefaults(defineProps<CheckboxProps<T, IsMultiple>>(), {
-    override: undefined,
-    modelValue: undefined,
-    // multiple: false,
-    id: () => useId(),
-    variant: () => getDefault("checkbox.variant"),
-    size: () => getDefault("checkbox.size"),
-    label: undefined,
-    indeterminate: false,
-    required: false,
-    disabled: false,
-    name: undefined,
-    nativeValue: undefined,
-    trueValue: undefined,
-    falseValue: undefined,
-    autocomplete: () => getDefault("checkbox.autocomplete", "off"),
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
-    customValidity: "",
-});
+const props = withDefaults(
+    defineProps<
+        CheckboxProps<T, IsMultiple> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLCheckboxPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLCheckboxPassthroughProps
+    >(),
+    {
+        override: undefined,
+        modelValue: undefined,
+        // multiple: false,
+        id: () => useId(),
+        variant: () => getDefault("checkbox.variant"),
+        size: () => getDefault("checkbox.size"),
+        label: undefined,
+        indeterminate: false,
+        disabled: false,
+        nativeValue: undefined,
+        trueValue: undefined,
+        falseValue: undefined,
+        autocomplete: () => getDefault("checkbox.autocomplete", "off"),
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
+        customValidity: "",
+    },
+);
 
 const emits = defineEmits<{
     /**
@@ -119,6 +124,7 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField.value?.inputAttrs,
     ...attrs,
+    autocomplete: props.autocomplete,
 }));
 
 const rootClasses = defineClasses(
@@ -172,23 +178,20 @@ defineExpose({
 <template>
     <div data-oruga="checkbox" :class="rootClasses">
         <input
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             v-model="vmodel"
             type="checkbox"
             data-oruga-input="checkbox"
             :class="inputClasses"
-            :name="name"
             :value="nativeValue"
             :true-value="trueValue ?? true"
             :false-value="falseValue ?? false"
-            :required="required"
             :indeterminate="indeterminate"
             :disabled="disabled"
-            :autocomplete="autocomplete"
             :aria-checked="indeterminate ? 'mixed' : isChecked"
             :aria-labelledby="labelId"
+            v-bind="inputBind"
             @change="onInput" />
 
         <label

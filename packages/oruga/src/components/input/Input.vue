@@ -25,7 +25,7 @@ import {
 
 import { injectField } from "../field/fieldInjection";
 
-import type { InputProps } from "./props";
+import type { HTMLInputPassthroughProps, InputProps } from "./props";
 
 /**
  * Get user Input. Use with Field to access all functionalities.
@@ -41,36 +41,42 @@ defineOptions({
 
 type ModelValue = InputProps<IsNumber>["modelValue"];
 
-const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
-    override: undefined,
-    modelValue: undefined,
-    // number: false,
-    type: "text",
-    size: () => getDefault("input.size"),
-    variant: () => getDefault("input.variant"),
-    placeholder: undefined,
-    expanded: () => getDefault("input.expanded", false),
-    rounded: false,
-    disabled: false,
-    passwordReveal: false,
-    maxlength: undefined,
-    counter: () => getDefault("input.counter", false),
-    autosize: false,
-    iconPack: () => getDefault("input.iconPack"),
-    icon: () => getDefault("input.icon"),
-    iconClickable: false,
-    iconRight: () => getDefault("input.iconRight"),
-    iconRightClickable: false,
-    iconRightVariant: undefined,
-    clearable: () => getDefault("input.clearable", false),
-    clearIcon: () => getDefault("input.clearIcon", "close-circle"),
-    statusIcon: () => getDefault("statusIcon", true),
-    debounce: () => getDefault("autocomplete.debounce"),
-    autocomplete: () => getDefault("input.autocomplete", "off"),
-    id: () => useId(),
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
-    customValidity: "",
-});
+const props = withDefaults(
+    defineProps<
+        InputProps<IsNumber> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLInputPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ HTMLInputPassthroughProps
+    >(),
+    {
+        override: undefined,
+        modelValue: undefined,
+        // number: false,
+        type: "text",
+        size: () => getDefault("input.size"),
+        variant: () => getDefault("input.variant"),
+        expanded: () => getDefault("input.expanded", false),
+        rounded: false,
+        disabled: false,
+        passwordReveal: false,
+        counter: () => getDefault("input.counter", false),
+        autosize: false,
+        maxlength: undefined,
+        autocomplete: () => getDefault("input.autocomplete", "off"),
+        iconPack: () => getDefault("input.iconPack"),
+        icon: () => getDefault("input.icon"),
+        iconClickable: false,
+        iconRight: () => getDefault("input.iconRight"),
+        iconRightClickable: false,
+        iconRightVariant: undefined,
+        clearable: () => getDefault("input.clearable", false),
+        clearIcon: () => getDefault("input.clearIcon", "close-circle"),
+        statusIcon: () => getDefault("statusIcon", true),
+        debounce: () => getDefault("autocomplete.debounce"),
+        id: () => useId(),
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
+        customValidity: "",
+    },
+);
 
 const emits = defineEmits<{
     /**
@@ -294,6 +300,9 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField?.value?.inputAttrs,
     ...attrs,
+    // maxlength and autocomplete are declared Vue props (not in attrs), so must be explicit
+    maxlength: props.maxlength,
+    autocomplete: props.autocomplete,
 }));
 
 const rootClasses = defineClasses(
@@ -391,31 +400,26 @@ defineExpose({
 
         <textarea
             v-if="type === 'textarea'"
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             :value="vmodel"
             data-oruga-input="textarea"
             :class="inputClasses"
-            :maxlength="maxlength"
             :style="computedStyles"
-            :placeholder="placeholder"
             :disabled="disabled"
+            v-bind="inputBind"
             @input="debouncedInput" />
 
         <input
             v-else
-            v-bind="inputBind"
             :id="id"
             ref="inputElement"
             :value="vmodel"
             :type="inputType"
             :data-oruga-input="inputType"
             :class="inputClasses"
-            :maxlength="maxlength"
-            :autocomplete="autocomplete"
-            :placeholder="placeholder"
             :disabled="disabled"
+            v-bind="inputBind"
             @input="debouncedInput" />
 
         <o-icon

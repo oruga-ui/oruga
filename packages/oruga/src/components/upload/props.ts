@@ -1,6 +1,20 @@
 import type { ComponentClass } from "@/types";
+import type { AriaAttributes, InputHTMLAttributes } from "vue";
 
 type UploadType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+/**
+ * Native HTML input attributes passed through as fallthrough attrs
+ * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
+ */
+export type HTMLUploadPassthroughProps = {
+    /** Same as native required */
+    required?: InputHTMLAttributes["required"];
+    /** Same as native name */
+    name?: InputHTMLAttributes["name"];
+    /** Same as native form */
+    form?: InputHTMLAttributes["form"];
+} & AriaAttributes;
 
 export type UploadProps<
     T extends object | typeof File,

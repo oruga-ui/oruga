@@ -5,7 +5,7 @@ import { axe } from "jest-axe";
 
 import OUpload from "../Upload.vue";
 import OField from "../../field/Field.vue";
-import type { UploadProps } from "../props.ts";
+import type { HTMLUploadPassthroughProps, UploadProps } from "../props.ts";
 
 const TestComponent = defineComponent(
     (props) => (): VNode =>
@@ -17,7 +17,7 @@ describe("OUpload a11y tests", () => {
 
     const a11yCases: {
         title: string;
-        props?: UploadProps<object, true | false>;
+        props?: UploadProps<object, true | false> & HTMLUploadPassthroughProps;
     }[] = [
         { title: "axe upload - base case" },
         { title: "axe upload - disabled", props: { disabled: true } },
