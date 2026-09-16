@@ -6,7 +6,7 @@ import OIcon from "../icon/Icon.vue";
 import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ButtonProps } from "./props";
+import type { ButtonProps, HTMLButtonPassthroughProps } from "./props";
 
 /**
  * The classic button, in different colors, sizes, and states.
@@ -19,24 +19,31 @@ defineOptions({
     configField: "button",
 });
 
-const props = withDefaults(defineProps<ButtonProps>(), {
-    override: undefined,
-    tag: () => getDefault("button.tag", "button"),
-    variant: () => getDefault("button.variant"),
-    size: () => getDefault("button.size"),
-    label: undefined,
-    rounded: () => getDefault("button.rounded", false),
-    expanded: false,
-    disabled: false,
-    outlined: false,
-    loading: false,
-    inverted: false,
-    type: "button",
-    iconPack: () => getDefault("button.iconPack"),
-    iconLeft: undefined,
-    iconRight: undefined,
-    ariaLabel: undefined,
-});
+const props = withDefaults(
+    defineProps<
+        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLButtonPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+        /* @vue-ignore */ HTMLButtonPassthroughProps &
+            Omit<ButtonProps, keyof HTMLButtonPassthroughProps>
+    >(),
+    {
+        override: undefined,
+        tag: () => getDefault("button.tag", "button"),
+        variant: () => getDefault("button.variant"),
+        size: () => getDefault("button.size"),
+        label: undefined,
+        rounded: () => getDefault("button.rounded", false),
+        expanded: false,
+        disabled: false,
+        outlined: false,
+        loading: false,
+        inverted: false,
+        type: "button",
+        iconPack: () => getDefault("button.iconPack"),
+        iconLeft: undefined,
+        iconRight: undefined,
+        ariaLabel: undefined,
+    },
+);
 
 defineEmits<{
     /**

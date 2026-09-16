@@ -6,7 +6,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { SwitchProps } from "./props";
+import type { SwitchProps, HTMLSwitchPassthroughProps } from "./props";
 
 /**
  * Switch between two opposing states.
@@ -20,25 +20,31 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<SwitchProps<T>>(), {
-    override: undefined,
-    modelValue: undefined,
-    id: () => useId(),
-    label: undefined,
-    variant: () => getDefault("switch.variant"),
-    passiveVariant: () => getDefault("switch.passiveVariant"),
-    size: () => getDefault("switch.size"),
-    position: () => getDefault("switch.right", "position"),
-    rounded: () => getDefault("switch.rounded", true),
-    required: false,
-    disabled: false,
-    name: undefined,
-    nativeValue: undefined,
-    trueValue: undefined,
-    falseValue: undefined,
-    autocomplete: () => getDefault("switch.autocomplete", "off"),
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
-});
+const props = withDefaults(
+    defineProps<
+        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLSwitchPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+        /* @vue-ignore */ HTMLSwitchPassthroughProps &
+            Omit<SwitchProps<T>, keyof HTMLSwitchPassthroughProps>
+    >(),
+    {
+        override: undefined,
+        modelValue: undefined,
+        id: () => useId(),
+        label: undefined,
+        variant: () => getDefault("switch.variant"),
+        passiveVariant: () => getDefault("switch.passiveVariant"),
+        size: () => getDefault("switch.size"),
+        position: () => getDefault("switch.right", "position"),
+        rounded: () => getDefault("switch.rounded", true),
+        disabled: false,
+        nativeValue: undefined,
+        trueValue: undefined,
+        falseValue: undefined,
+        autocomplete: () => getDefault("switch.autocomplete", "off"),
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
+        customValidation: "",
+    },
+);
 
 const emits = defineEmits<{
     /**
@@ -115,6 +121,7 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField.value?.inputAttrs,
     ...attrs,
+    autocomplete: props.autocomplete,
 }));
 
 const rootClasses = defineClasses(
@@ -183,13 +190,10 @@ defineExpose({
             role="switch"
             data-oruga-input="switch"
             :class="inputClasses"
-            :name="name"
             :value="nativeValue"
             :true-value="trueValue ?? true"
             :false-value="falseValue ?? false"
-            :required="required"
             :disabled="disabled"
-            :autocomplete="autocomplete"
             :aria-checked="isChecked"
             :aria-labelledby="labelId"
             @change="onInput" />

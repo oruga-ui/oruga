@@ -14,7 +14,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { UploadProps } from "./props";
+import type { UploadProps, HTMLUploadPassthroughProps } from "./props";
 
 /**
  * Upload one or more files.
@@ -30,19 +30,27 @@ defineOptions({
 
 type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
 
-const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
-    override: undefined,
-    modelValue: undefined,
-    // multiple: false,
-    variant: () => getDefault("upload.variant"),
-    disabled: false,
-    expanded: () => getDefault("upload.expanded", false),
-    accept: undefined,
-    dragDrop: false,
-    native: true,
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
-    customValidity: "",
-});
+const props = withDefaults(
+    defineProps<
+        // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLUploadPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+        /* @vue-ignore */ HTMLUploadPassthroughProps &
+            Omit<UploadProps<T, IsMultiple>, keyof HTMLUploadPassthroughProps>
+    >(),
+    {
+        override: undefined,
+        modelValue: undefined,
+        // multiple: false,
+        variant: () => getDefault("upload.variant"),
+        disabled: false,
+        expanded: () => getDefault("upload.expanded", false),
+        accept: undefined,
+        dragDrop: false,
+        native: true,
+        autocomplete: () => getDefault("upload.autocomplete", "off"),
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
+        customValidity: "",
+    },
+);
 
 const emits = defineEmits<{
     /**
@@ -209,6 +217,7 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField?.value?.inputAttrs,
     ...attrs,
+    autocomplete: props.autocomplete,
 }));
 
 const rootClasses = defineClasses(

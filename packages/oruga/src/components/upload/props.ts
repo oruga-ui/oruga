@@ -1,6 +1,16 @@
 import type { ComponentClass } from "@/types";
+import type { AriaAttributes, InputHTMLAttributes } from "vue";
 
 type UploadType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+/**
+ * Native HTML input attributes passed through as fallthrough attrs
+ * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
+ */
+export type HTMLUploadPassthroughProps = {
+    /** Same as native form */
+    form?: InputHTMLAttributes["form"];
+} & AriaAttributes;
 
 export type UploadProps<
     T extends object | typeof File,
@@ -30,6 +40,11 @@ export type UploadProps<
     dragDrop?: boolean;
     /** Replace last chosen files every time (like native file input element) */
     native?: boolean;
+    /**
+     * Native options to use in HTML5 validation,
+     * whether the value of the form's controls can be automatically completed by the browser.
+     */
+    autocomplete?: string;
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */
