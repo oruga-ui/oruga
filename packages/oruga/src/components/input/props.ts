@@ -42,6 +42,10 @@ export type HTMLInputPassthroughProps = {
     inputmode?: InputHTMLAttributes["inputmode"];
     /** Same as native enterkeyhint */
     enterkeyhint?: InputHTMLAttributes["enterkeyhint"];
+    /** Same as native spellcheck */
+    spellcheck?: InputHTMLAttributes["spellcheck"];
+    /** Same as native autocapitalize */
+    autocapitalize?: InputHTMLAttributes["autocapitalize"];
     /** Same as native list */
     list?: InputHTMLAttributes["list"];
     /** Same as native form */

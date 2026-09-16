@@ -13,6 +13,16 @@ export type HTMLButtonPassthroughProps = {
     value?: ButtonHTMLAttributes["value"];
     /** Same as native form */
     form?: ButtonHTMLAttributes["form"];
+    /** Override the parent form's action URL (submit buttons only) */
+    formaction?: ButtonHTMLAttributes["formaction"];
+    /** Override the parent form's enctype (submit buttons only) */
+    formenctype?: ButtonHTMLAttributes["formenctype"];
+    /** Override the parent form's method (submit buttons only) */
+    formmethod?: ButtonHTMLAttributes["formmethod"];
+    /** Skip HTML5 validation for this submit button */
+    formnovalidate?: ButtonHTMLAttributes["formnovalidate"];
+    /** Override the parent form's target (submit buttons only) */
+    formtarget?: ButtonHTMLAttributes["formtarget"];
 } & AriaAttributes;
 
 export type ButtonProps = {
