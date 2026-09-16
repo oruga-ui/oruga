@@ -66,7 +66,7 @@ const props = withDefaults(
         iconRightVariant: undefined,
         autocomplete: () => getDefault("select.autocomplete", "off"),
         useHtml5Validation: () => getDefault("useHtml5Validation", true),
-        customValidation: "",
+        customValidity: "",
     },
 );
 

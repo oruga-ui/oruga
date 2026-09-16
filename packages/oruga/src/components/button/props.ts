@@ -61,8 +61,6 @@ export type ButtonProps = {
      * @values button, submit, reset
      */
     type?: "button" | "submit" | "reset";
-    /** Defines an accessible string value that labels an interactive element. */
-    ariaLabel?: string;
 } & ButtonClasses;
 
 // class props (will not be displayed in the docs)

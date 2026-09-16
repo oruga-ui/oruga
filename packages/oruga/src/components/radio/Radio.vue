@@ -37,7 +37,7 @@ const props = withDefaults(
         nativeValue: undefined,
         autocomplete: () => getDefault("radio.autocomplete", "off"),
         useHtml5Validation: () => getDefault("useHtml5Validation", true),
-        customValidation: "",
+        customValidity: "",
     },
 );
 

@@ -46,7 +46,6 @@ const props = withDefaults(
         accept: undefined,
         dragDrop: false,
         native: true,
-        autocomplete: () => getDefault("upload.autocomplete", "off"),
         useHtml5Validation: () => getDefault("useHtml5Validation", true),
         customValidity: "",
     },
@@ -216,7 +215,6 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField?.value?.inputAttrs,
     ...attrs,
-    autocomplete: props.autocomplete,
 }));
 
 const rootClasses = defineClasses(

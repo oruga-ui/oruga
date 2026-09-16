@@ -17,6 +17,7 @@ defineOptions({
     isOruga: true,
     name: "OButton",
     configField: "button",
+    inheritAttrs: false,
 });
 
 const props = withDefaults(
@@ -41,7 +42,6 @@ const props = withDefaults(
         iconPack: () => getDefault("button.iconPack"),
         iconLeft: undefined,
         iconRight: undefined,
-        ariaLabel: undefined,
     },
 );
 
@@ -127,6 +127,7 @@ const iconRightClasses = defineClasses([
 <template>
     <component
         :is="tag"
+        v-bind="$attrs"
         data-oruga="button"
         :type="computedNativeType"
         role="button"
@@ -134,7 +135,6 @@ const iconRightClasses = defineClasses([
         :class="rootClasses"
         :disabled="disabled ? true : null"
         :aria-disabled="disabled ? true : null"
-        :aria-label="ariaLabel"
         @click="$emit('click', $event)"
         @keydown.enter.prevent="$emit('click', $event)"
         @keydown.space.prevent="$emit('click', $event)">

@@ -3842,11 +3842,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expanded: boolean;
                 /**
-                 * Native options to use in HTML5 validation,
-whether the value of the form's controls can be automatically completed by the browser.
-                 */
-                autocomplete: string;
-                /**
                  * Color variant of the control
                  */
                 variant: string;

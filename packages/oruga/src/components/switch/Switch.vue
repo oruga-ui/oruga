@@ -42,7 +42,7 @@ const props = withDefaults(
         falseValue: undefined,
         autocomplete: () => getDefault("switch.autocomplete", "off"),
         useHtml5Validation: () => getDefault("useHtml5Validation", true),
-        customValidation: "",
+        customValidity: "",
     },
 );
 
