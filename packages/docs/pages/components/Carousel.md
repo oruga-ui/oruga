@@ -60,7 +60,7 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 | itemsToList             | Number of items to switch at once                                                                                                                            | number                         | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;itemsToList: 1<br>}</code>                                        |
 | itemsToShow             | Number of items to show at once                                                                                                                              | number                         | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;itemsToShow: 1<br>}</code>                                        |
 | v-model                 | The index of the current active element, use v-model to make it two-way binding<br/>The selected item value or index, use v-model to make it two-way binding | unknown                        | -                                                 |                                                                                                                                                                                          |
-| options                 | Menu items, unnecessary when default slot is used                                                                                                            | CarouselOptions&lt;unknown&gt; | -                                                 |                                                                                                                                                                                          |
+| options                 | Carousel options, unnecessary when default slot is used                                                                                                      | CarouselOptions&lt;unknown&gt; | -                                                 |                                                                                                                                                                                          |
 | overlay                 | Show an overlay                                                                                                                                              | boolean                        | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                              |
 | override                | Override existing theme classes completely                                                                                                                   | boolean                        | -                                                 |                                                                                                                                                                                          |
 | pauseHover              | Pause autoplay on hover                                                                                                                                      | boolean                        | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                              |
@@ -210,7 +210,11 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 > Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default |
+| ------------- | ------- |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-tailwind/tree/main/src/assets/scss/components/_carousel.scss)
+
 </div>
 
 </section>

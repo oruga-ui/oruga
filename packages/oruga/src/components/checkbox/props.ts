@@ -16,6 +16,8 @@ export type HTMLCheckboxPassthroughProps = {
     form?: InputHTMLAttributes["form"];
 } & AriaAttributes;
 
+type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
 export type CheckboxProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;

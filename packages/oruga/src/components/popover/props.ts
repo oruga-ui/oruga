@@ -29,7 +29,7 @@ export type PopoverProps<C extends Component = Component> = {
     position?: PopoverPosition;
     /** Defines a delay (in ms) before the content appears */
     delay?: number;
-    /** The component will be disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
     /** Adds a backdrop to the background */
     backdrop?: boolean;

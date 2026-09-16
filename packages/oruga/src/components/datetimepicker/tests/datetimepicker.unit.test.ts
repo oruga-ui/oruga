@@ -82,4 +82,64 @@ describe("ODatetimepicker tests", () => {
         expect(emits).toHaveLength(1);
         expect(input.element.value).toBe("");
     });
+
+    test("closes overlay on datetime selection when stayOpen is false", async () => {
+        const wrapper = mount(ODatetimepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1, 12, 30),
+                active: true,
+                stayOpen: false,
+            },
+        });
+
+        // find and click on a selectable date cell from the embedded datepicker
+        const cells = wrapper.findAll(".o-datepicker__table__cell");
+        const cellToSelect = cells.find(
+            (c) =>
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
+        );
+        expect(cellToSelect).toBeDefined();
+
+        // select a date
+        await cellToSelect?.trigger("click");
+
+        // check that update:active event was emitted with false (overlay closes)
+        const updateActiveEmits = wrapper.emitted("update:active");
+        expect(updateActiveEmits).toBeDefined();
+        expect(updateActiveEmits?.[0]).toEqual([false]);
+    });
+
+    test("keeps overlay open on datetime selection when stayOpen is true", async () => {
+        const wrapper = mount(ODatetimepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1, 12, 30),
+                active: true,
+                stayOpen: true,
+            },
+        });
+
+        // find and click on a selectable date cell from the embedded datepicker
+        const cells = wrapper.findAll(".o-datepicker__table__cell");
+        const cellToSelect = cells.find(
+            (c) =>
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
+        );
+        expect(cellToSelect).toBeDefined();
+
+        // select a date
+        await cellToSelect?.trigger("click");
+
+        // check that update:active event was NOT emitted (overlay stays open)
+        const updateActiveEmits = wrapper.emitted("update:active");
+        expect(updateActiveEmits).toBeUndefined();
+
+        // verify the datepicker content still has the active class
+        const contentElement = wrapper.find(".o-datepicker__content");
+        expect(contentElement.exists()).toBe(true);
+        expect(contentElement.classes("o-datepicker__content--active")).toBe(
+            true,
+        );
+    });
 });

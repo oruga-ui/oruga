@@ -37,7 +37,7 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 | Prop name | Description                                                      | Type                            | Values                                                                          | Default                                                                                                                                                  |
 | --------- | ---------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ariaLabel | Accessibility aria-label to be passed to the nav wrapper element | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaLabel: "Breadcrumb"<br>}</code>  |
-| options   | breadcrumb items, unnecessary when default slot is used          | BreadcrumnOptions               | -                                                                               |                                                                                                                                                          |
+| options   | Breadcrumb options, unnecessary when default slot is used        | BreadcrumbOptions               | -                                                                               |                                                                                                                                                          |
 | override  | Override existing theme classes completely                       | boolean                         | -                                                                               |                                                                                                                                                          |
 | position  | Position of the breadcrumb                                       | "centered" \| "left" \| "right" | `left`, `centered`, `right`                                                     | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;position: undefined<br>}</code> |
 | separator | The separator between breadcrumb items                           | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: "/"<br>}</code>      |
@@ -46,9 +46,9 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 ### Slots
 
-| Name    | Description                 | Bindings |
-| ------- | --------------------------- | -------- |
-| default | Place breadcrumb items here |          |
+| Name    | Description                  | Bindings |
+| ------- | ---------------------------- | -------- |
+| default | Define breadcrumb items here |          |
 
 </section>
 
@@ -69,7 +69,7 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 | Prop name | Description                                       | Type             | Values                                                      | Default                                                                                                                                                  |
 | --------- | ------------------------------------------------- | ---------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | active    | Whether item is active or not                     | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
-| disabled  | Item is disabled                                  | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| disabled  | Item will be disabled                             | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
 | hidden    | Define whether the item is visible or not         | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
 | iconLeft  | Icon name to show on the left                     | string           | -                                                           |                                                                                                                                                          |
 | iconPack  | Icon pack to use                                  | string           | `mdi`, `fa`, `fas and any other custom icon pack`           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |

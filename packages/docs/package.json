@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/docs-next",
-  "version": "0.14.0",
+  "version": "0.14.3",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -24,7 +24,7 @@
     "@oruga-ui/theme-bootstrap": "0.12.0",
     "@oruga-ui/theme-bulma": "0.10.0",
     "@oruga-ui/theme-oruga": "0.10.0",
-    "@oruga-ui/theme-tailwind": "0.0.1",
+    "@oruga-ui/theme-tailwind": "0.0.2",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.2.0",
     "markdown-it-highlightjs": "^4.3.0"

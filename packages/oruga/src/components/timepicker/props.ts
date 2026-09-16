@@ -7,7 +7,7 @@ export type TimepickerProps = {
     override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
     modelValue?: Date;
-    /** The active state of the dropdown */
+    /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
     /** The picker stays open after date got picked */
     stayOpen?: boolean;
@@ -23,23 +23,33 @@ export type TimepickerProps = {
     placeholder?: string;
     /** Makes input full width when inside a grouped or addon field */
     expanded?: boolean;
-    /** Makes the input rounded */
+    /** Makes the element rounded */
     rounded?: boolean;
     /** Same as native input readonly */
     readonly?: boolean;
     /** Same as native disabled */
     disabled?: boolean;
     /**
-     * Size of the button
+     * Size of the input control
      * @values small, medium, large
      */
     size?: string;
+    /**
+     * Hour format
+     * @values 12, 24
+     */
     hourFormat?: "12" | "24" | 12 | 24;
+    /** Step for the hours select */
     incrementHours?: number;
+    /** Step for the minutes select */
     incrementMinutes?: number;
+    /** Step for the seconds select */
     incrementSeconds?: number;
+    /** Enable seconds select */
     enableSeconds?: boolean;
+    /** Default minutes value when no date is selected */
     defaultMinutes?: number;
+    /** Default seconds value when no date is selected */
     defaultSeconds?: number;
     /** Date format locale */
     locale?: string;
@@ -47,7 +57,7 @@ export type TimepickerProps = {
     formatter?: (date: TimepickerProps["modelValue"]) => string;
     /** Custom function to parse a string into a date */
     parser?: (date: string) => TimepickerProps["modelValue"];
-    /** time creator function, default is `new Date()` */
+    /** Time creator function, default is `new Date()` */
     creator?: () => Date;
     /** Define a list of times which can not be selected */
     unselectableTimes?: Date[] | ((date: Date) => boolean);
@@ -69,11 +79,11 @@ export type TimepickerProps = {
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
-    /** Picker content is shown into a modal on mobile */
+    /** Overlay content is shown into a modal on mobile */
     mobileModal?: boolean;
-    /** Picker content is shown into a modal on desktop */
+    /** Overlay content is shown into a modal on desktop */
     desktopModal?: boolean;
-    /** Enable mobile native input if mobile agent */
+    /** Enable mobile native input if device is a mobile agent */
     mobileNative?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;

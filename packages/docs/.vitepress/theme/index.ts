@@ -21,6 +21,7 @@ import {
 // Themes
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
+import { tailwindConfig } from "@oruga-ui/theme-tailwind";
 
 // Icons
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -138,6 +139,11 @@ export default {
                 case "theme-bootstrap": {
                     // update base orugaConfig with bootstrapConfig
                     orugaConfig = Object.assign(orugaConfig, bootstrapConfig);
+                    break;
+                }
+                case "theme-tailwind": {
+                    // update base orugaConfig with tailwindConfig
+                    orugaConfig = Object.assign(orugaConfig, tailwindConfig);
                     break;
                 }
             }

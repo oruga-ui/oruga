@@ -141,6 +141,15 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
+    itemDecorativeClass: {
+        class: "itemDecorativeClass",
+        subitem: "dropdownitem",
+        description: "Class of the item element when is decorative.",
+        properties: ["decorative"],
+        action: (data): void => {
+            data.decorative = true;
+        },
+    },
     itemFocusedClass: {
         class: "itemFocusedClass",
         subitem: "dropdownitem",
@@ -169,7 +178,7 @@ const inspectData: InspectData<
     },
     scrollKeepClass: {
         class: "scrollKeepClass",
-        description: "Class of the body when is open and scroll is keeped.",
+        description: "Class of the body when is open and scroll is kept.",
         properties: ["clipScroll"],
         action: (data): void => {
             data.clipScroll = false;

@@ -84,7 +84,7 @@ export type InputProps<IsNumber extends boolean = boolean> = {
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
-    /** Number of milliseconds to delay before the value get emitted */
+    /** Number of milliseconds to delay before emitting the value */
     debounce?: number;
     /** Makes input full width when inside a grouped or addon field */
     expanded?: boolean;
@@ -100,11 +100,6 @@ export type InputProps<IsNumber extends boolean = boolean> = {
     autosize?: boolean;
     /** Same as native maxlength. Also used to show character counter when `counter` prop is enabled. */
     maxlength?: number | string;
-    /**
-     * Native options to use in HTML5 validation,
-     * whether the value of the form's controls can be automatically completed by the browser.
-     */
-    autocomplete?: string;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -126,6 +121,11 @@ export type InputProps<IsNumber extends boolean = boolean> = {
     clearIcon?: string;
     /** Show status icon using field and variant prop */
     statusIcon?: boolean;
+    /**
+     * Native options to use in HTML5 validation,
+     * whether the value of the form's controls can be automatically completed by the browser.
+     */
+    autocomplete?: string;
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */

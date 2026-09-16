@@ -246,7 +246,7 @@ const inspectData: InspectData<
     },
     trDetailedClass: {
         class: "trDetailedClass",
-        description: "Class of the table `tr` element when detailed. ",
+        description: "Class of the table `tr` element when detailed.",
         info: "Expand details to see it in action!",
         properties: ["detailed"],
         action: (data): void => {
@@ -274,7 +274,7 @@ const inspectData: InspectData<
     },
     tdClass: {
         class: "tdClass",
-        description: "Class of the Table `td` element.",
+        description: "Class of the table `td` element.",
     },
     tdPositionClass: {
         class: "tdPositionClass",

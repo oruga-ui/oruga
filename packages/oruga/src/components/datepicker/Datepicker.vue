@@ -197,6 +197,11 @@ const { dtf, dateCreator, dateFormatter, dateParser } =
 // the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
+watch(vmodel, () => {
+    if (!props.inline && isActive.value && !props.stayOpen && !props.multiple)
+        isActive.value = false;
+});
+
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
@@ -614,7 +619,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :modal="isModal"
             :inline="inline"
             :open-on-focus="openOnFocus"
-            :stay-open="multiple || stayOpen"
             :dtf="dtf"
             :placeholder="placeholder"
             :type="!isTypeMonth ? 'date' : 'month'"

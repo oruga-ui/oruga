@@ -37,6 +37,11 @@ const props = defineProps({
     },
 });
 
+defineSlots<{
+    /** Override tick content, default is label prop */
+    default?(): void;
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 /** inject functionalities and data from the parent component */

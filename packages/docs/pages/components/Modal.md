@@ -76,7 +76,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 
 | Name    | Description                                    | Bindings                                                      |
 | ------- | ---------------------------------------------- | ------------------------------------------------------------- |
-| default | Modal default content, default is content prop | **clsoe** `(...args): void` - function to close the component |
+| default | Modal default content, default is content prop | **close** `(...args): void` - function to close the component |
 | close   | Define a custom close icon                     |                                                               |
 
 </section>
@@ -134,7 +134,11 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 
 > Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default |
+| ------------- | ------- |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-tailwind/tree/main/src/assets/scss/components/_modal.scss)
+
 </div>
 
 </section>

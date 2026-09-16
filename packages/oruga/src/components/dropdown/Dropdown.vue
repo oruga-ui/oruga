@@ -79,10 +79,10 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     menuTag: () => getDefault("dropdown.menuTag", "div"),
     itemTag: () => getDefault("dropdown.itemTag", "div"),
     triggerTag: () => getDefault("dropdown.triggerTag", "div"),
-    openOnClick: () => getDefault("tooltip.openOnClick", true),
-    openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
-    openOnHover: () => getDefault("tooltip.openOnHover", false),
-    openOnFocus: () => getDefault("tooltip.openOnFocus", false),
+    openOnClick: () => getDefault("dropdown.openOnClick", true),
+    openOnContextmenu: () => getDefault("dropdown.openOnContextmenu", false),
+    openOnHover: () => getDefault("dropdown.openOnHover", false),
+    openOnFocus: () => getDefault("dropdown.openOnFocus", false),
     delay: undefined,
     desktopModal: () => getDefault("dropdown.desktopModal", false),
     mobileModal: () => getDefault("dropdown.mobileModal", true),
@@ -149,12 +149,12 @@ defineSlots<{
      */
     default?(props: { toggle: () => void }): void;
     /**
-     * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
+     * Define extra items here before the options defined by prop
      * @param toggle {(): void} - toggle dropdown active state
-     * */
+     */
     before?(props: { toggle: () => void }): void;
     /**
-     * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
+     * Define extra items here after the options defined by prop
      * @param toggle {(): void} - toggle dropdown active state
      */
     after?(props: { toggle: () => void }): void;
@@ -674,8 +674,7 @@ defineExpose({
                             <template v-if="isGroupOption(option)">
                                 <o-dropdown-item
                                     v-bind="option.item"
-                                    role="presentation"
-                                    :clickable="false">
+                                    decorative>
                                     <slot name="group" :group="option">
                                         <span>
                                             {{ option.item.label }}

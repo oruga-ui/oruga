@@ -59,7 +59,6 @@ const props = defineProps({
     inline: { type: Boolean, default: false },
     modal: { type: Boolean, default: false },
     enableMobileNative: { type: Boolean, default: undefined },
-    stayOpen: { type: Boolean, default: false },
     openOnFocus: { type: Boolean, default: false },
     position: { type: String as PropType<PopoverPosition>, required: true },
     teleport: { type: [Boolean, String, Object], default: false },
@@ -215,8 +214,12 @@ function setValue(value: string): void {
             (inputValue.value = props.formatter(date, isMobileNative.value)),
     );
 
-    // update the prop value
-    emits("update:value", date);
+    // Compare by formatted string: if the input value is identical to what the
+    // current prop formats to, nothing changed from the UI's perspective.
+    // This avoids false emits when the prop value has a time component that
+    // the formatter strips, which would make an isEqual(Date, Date) check fail.
+    if (props.formatter(props.value, isMobileNative.value) !== value)
+        emits("update:value", date);
 }
 
 /** Get the value from html element behind the event and update the external value. */

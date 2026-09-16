@@ -36,7 +36,7 @@ declare module "./index" {
                  */
                 expanded: boolean;
                 /**
-                 * Number of milliseconds to delay before to emit input event
+                 * Number of milliseconds to delay before emitting the input event
                  */
                 debounce: number;
                 /**
@@ -201,7 +201,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 activeClass: ClassDefinition;
                 /**
-                 * Class of the item seperator element
+                 * Class of the item separator element
                  */
                 seperatorClass: ClassDefinition;
                 /**
@@ -224,13 +224,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
         button?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Button tag name
+                 * Class of the root element
                  */
-                tag: DynamicComponent;
+                rootClass: ClassDefinition;
                 /**
-                 * Color variant of the control
+                 * Class of the root element when disabled
                  */
-                variant: string;
+                disabledClass: ClassDefinition;
+                /**
+                 * Class of the root element when expanded
+                 */
+                expandedClass: ClassDefinition;
                 /**
                  * Size of the control
                  */
@@ -240,13 +244,13 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconPack: string;
                 /**
-                 * Enable rounded style
+                 * Button tag name
                  */
-                rounded: boolean;
+                tag: DynamicComponent;
                 /**
-                 * Class of the root element
+                 * Color variant of the control
                  */
-                rootClass: ClassDefinition;
+                variant: string;
                 /**
                  * Class of the root element with size
                  */
@@ -255,6 +259,26 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element with variant
                  */
                 variantClass: ClassDefinition;
+                /**
+                 * Class of the root element when rounded
+                 */
+                roundedClass: ClassDefinition;
+                /**
+                 * Class of the icon element on the left
+                 */
+                iconLeftClass: ClassDefinition;
+                /**
+                 * Class of the icon element on the right
+                 */
+                iconRightClass: ClassDefinition;
+                /**
+                 * Class of the icon element
+                 */
+                iconClass: ClassDefinition;
+                /**
+                 * Enable rounded style
+                 */
+                rounded: boolean;
                 /**
                  * Class of the root element when outlined
                  */
@@ -267,30 +291,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element when loading
                  */
                 loadingClass: ClassDefinition;
-                /**
-                 * Class of the root element when expanded
-                 */
-                expandedClass: ClassDefinition;
-                /**
-                 * Class of the root element when rounded
-                 */
-                roundedClass: ClassDefinition;
-                /**
-                 * Class of the root element when disabled
-                 */
-                disabledClass: ClassDefinition;
-                /**
-                 * Class of the icon element
-                 */
-                iconClass: ClassDefinition;
-                /**
-                 * Class of the icon element on the left
-                 */
-                iconLeftClass: ClassDefinition;
-                /**
-                 * Class of the icon element on the right
-                 */
-                iconRightClass: ClassDefinition;
                 /**
                  * Class of the label element
                  */
@@ -458,21 +458,30 @@ In addition, any CSS selector string or an actual DOM node can be used.
         checkbox?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Color variant of the control
+                 * Class of the root element
                  */
-                variant: string;
+                rootClass: ClassDefinition;
+                /**
+                 * Class of the native input element
+                 */
+                inputClass: ClassDefinition;
+                /**
+                 * Class of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
                 /**
                  * Size of the control
                  */
                 size: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
-                 * Class of the root element
+                 * Color variant of the control
                  */
-                rootClass: ClassDefinition;
+                variant: string;
                 /**
                  * Class of the root element with size
                  */
@@ -482,9 +491,9 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 variantClass: ClassDefinition;
                 /**
-                 * Class of the root element when disabled
+                 * Class of the label element
                  */
-                disabledClass: ClassDefinition;
+                labelClass: ClassDefinition;
                 /**
                  * Class of the root element when checked
                  */
@@ -493,14 +502,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the the root element when indeterminate
                  */
                 indeterminateClass: ClassDefinition;
-                /**
-                 * Class of the native input element
-                 */
-                inputClass: ClassDefinition;
-                /**
-                 * Class of the label element
-                 */
-                labelClass: ClassDefinition;
             }>;
         collapse?: ComponentConfigBase &
             Partial<{
@@ -517,7 +518,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expandedClass: ClassDefinition;
                 /**
-                 * Clas of the root element with position
+                 * Class of the root element with position
                  */
                 positionClass: ClassDefinition;
                 /**
@@ -540,7 +541,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 monthNames: string[];
                 /**
-                 * Size of the control input
+                 * Size of the input control
                  */
                 size: string;
                 /**
@@ -608,11 +609,11 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconNext: string;
                 /**
-                 * Picker content is shown into a modal on mobile
+                 * Overlay content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Picker content is shown into a modal on desktop
+                 * Overlay content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
@@ -937,15 +938,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
-                 * Dropdown content is shown into a modal on mobile
+                 * Overlay content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Dropdown content is shown into a modal on desktop
+                 * Overlay content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
-                 * Enable mobile native input if mobile agent
+                 * Enable mobile native input if device is a mobile agent
                  */
                 mobileNative: boolean;
                 /**
@@ -974,6 +975,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 backdrop: boolean;
                 /**
+                 * Size of the dialog
+                 */
+                size: string;
+                /**
                  * Max width of the dialog
                  */
                 maxWidth: Numberish;
@@ -981,6 +986,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Max height of the dialog
                  */
                 maxHeight: Numberish;
+                /**
+                 * Allow the dialog to be dragged by the header
+                 */
+                draggable: boolean;
                 /**
                  * Adds close button to the header to hide the dialog
                  */
@@ -1044,6 +1053,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 fullscreenClass: ClassDefinition;
                 /**
+                 * Class of the root element with size
+                 */
+                sizeClass: ClassDefinition;
+                /**
                  * Class of the root element when teleported
                  */
                 teleportClass: ClassDefinition;
@@ -1064,7 +1077,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 headerClass: ClassDefinition;
                 /**
-                 * Class of the content  header title element
+                 * Class of the content header title element
                  */
                 titleClass: ClassDefinition;
                 /**
@@ -1111,6 +1124,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the body when modal is open and scroll is keeped
                  */
                 scrollKeepClass: ClassDefinition;
+                /**
+                 * Class of the root element when draggable is enabled
+                 */
+                draggableClass: ClassDefinition;
+                /**
+                 * Class of the root element while the dialog is being dragged
+                 */
+                draggingClass: ClassDefinition;
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
@@ -1263,7 +1284,7 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 scrollKeepClass: ClassDefinition;
                 /**
-                 * Class of the item element.
+                 * Class of the item element
                  */
                 itemClass: ClassDefinition;
                 /**
@@ -1278,6 +1299,10 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class of the item element when clickable
                  */
                 itemClickableClass: ClassDefinition;
+                /**
+                 * Class of the item element when is decorative
+                 */
+                itemDecorativeClass: ClassDefinition;
                 /**
                  * Class of the item element when disabled
                  */
@@ -1417,38 +1442,54 @@ See icon library documentation for custom classes.
         input?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Native options to use in HTML5 validation,
-whether the value of the form's controls can be automatically completed by the browser.
+                 * Class of the root element
                  */
-                autocomplete: AutoFillBase;
+                rootClass: ClassDefinition;
                 /**
-                 * Size of the control
+                 * Class of the native input element
                  */
-                size: string;
+                inputClass: ClassDefinition;
                 /**
-                 * Color variant of the control
+                 * Class of the root element when disabled
                  */
-                variant: string;
+                disabledClass: ClassDefinition;
                 /**
-                 * Number of milliseconds to delay before the value get emitted
+                 * Class of the root element when expanded
                  */
-                debounce: number;
+                expandedClass: ClassDefinition;
                 /**
                  * Makes input full width when inside a grouped or addon field
                  */
                 expanded: boolean;
                 /**
-                 * Show character counter when maxlength prop is passed
+                 * Size of the control
                  */
-                counter: boolean;
+                size: string;
                 /**
                  * Icon pack to use
                  */
                 iconPack: string;
                 /**
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
+                 */
+                autocomplete: string;
+                /**
                  * Icon to be shown
                  */
                 icon: string;
+                /**
+                 * Color variant of the control
+                 */
+                variant: string;
+                /**
+                 * Number of milliseconds to delay before emitting the value
+                 */
+                debounce: number;
+                /**
+                 * Show character counter when maxlength prop is passed
+                 */
+                counter: boolean;
                 /**
                  * Icon to be added on the right side
                  */
@@ -1462,10 +1503,6 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 clearIcon: string;
                 /**
-                 * Class of the root element
-                 */
-                rootClass: ClassDefinition;
-                /**
                  * Class of the root element with size
                  */
                 sizeClass: ClassDefinition;
@@ -1474,17 +1511,9 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 variantClass: ClassDefinition;
                 /**
-                 * Class of the root element when expanded
-                 */
-                expandedClass: ClassDefinition;
-                /**
                  * Class of the root element when rounded
                  */
                 roundedClass: ClassDefinition;
-                /**
-                 * Class of the root element when disabled
-                 */
-                disabledClass: ClassDefinition;
                 /**
                  * Class of the root element when type `textarea`
                  */
@@ -1493,10 +1522,6 @@ whether the value of the form's controls can be automatically completed by the b
                  * Class to the root element when has a right icon
                  */
                 hasIconRightClass: ClassDefinition;
-                /**
-                 * Class of the native input element
-                 */
-                inputClass: ClassDefinition;
                 /**
                  * Class of the native input element with left icon space
                  */
@@ -1561,19 +1586,19 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 rootClass: ClassDefinition;
                 /**
-                 * Clas of the root element when disabled
+                 * Class of the root element when disabled
                  */
                 disabledClass: ClassDefinition;
                 /**
-                 * Clas of the root element when selectable
+                 * Class of the root element when selectable
                  */
                 selectableClass: ClassDefinition;
                 /**
-                 * Clas of the root element when filterable
+                 * Class of the root element when filterable
                  */
                 filterableClass: ClassDefinition;
                 /**
-                 * Clas of the root element when multiple
+                 * Class of the root element when multiple
                  */
                 multipleClass: ClassDefinition;
                 /**
@@ -1605,7 +1630,7 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconSize: string;
                 /**
-                 * Class of the item element.
+                 * Class of the item element
                  */
                 itemClass: ClassDefinition;
                 /**
@@ -1984,7 +2009,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 perPage: number | string;
                 /**
-                 * Enable rounded button style
+                 * Enable rounded style
                  */
                 rounded: boolean;
                 /**
@@ -2198,80 +2223,30 @@ In addition, any CSS selector string or an actual DOM node can be used.
         radio?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Color variant of the control
-                 */
-                variant: string;
-                /**
-                 * Size of the control
-                 */
-                size: string;
-                /**
-                 * Same as native autocomplete options to use in HTML5 validation
-                 */
-                autocomplete: string;
-                /**
                  * Class of the root element
                  */
                 rootClass: ClassDefinition;
-                /**
-                 * Class of the root element with size
-                 */
-                sizeClass: ClassDefinition;
-                /**
-                 * Class of the root element with variant
-                 */
-                variantClass: ClassDefinition;
-                /**
-                 * Class of the root element when disabled
-                 */
-                disabledClass: ClassDefinition;
-                /**
-                 * Class of the root element when checked
-                 */
-                checkedClass: ClassDefinition;
                 /**
                  * Class of the native input element
                  */
                 inputClass: ClassDefinition;
                 /**
-                 * Class of the label element
+                 * Class of the root element when disabled
                  */
-                labelClass: ClassDefinition;
-            }>;
-        select?: ComponentConfigBase &
-            Partial<{
+                disabledClass: ClassDefinition;
                 /**
-                 * Vertical size of input
+                 * Size of the control
                  */
                 size: string;
+                /**
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
+                 */
+                autocomplete: string;
                 /**
                  * Color variant of the control
                  */
                 variant: string;
-                /**
-                 * Makes input full width when inside a grouped or addon field
-                 */
-                expanded: boolean;
-                /**
-                 * Icon pack to use
-                 */
-                iconPack: string;
-                /**
-                 * Icon to be shown
-                 */
-                icon: string;
-                /**
-                 * Icon to be added on the right side
-                 */
-                iconRight: string;
-                /**
-                 * Same as native autocomplete options to use in HTML5 validation
-                 */
-                autocomplete: string;
-                /**
-                 * Class of the root element
-                 */
-                rootClass: ClassDefinition;
                 /**
                  * Class of the root element with size
                  */
@@ -2281,13 +2256,65 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 variantClass: ClassDefinition;
                 /**
-                 * Class of the root element when expanded
+                 * Class of the label element
                  */
-                expandedClass: ClassDefinition;
+                labelClass: ClassDefinition;
+                /**
+                 * Class of the root element when checked
+                 */
+                checkedClass: ClassDefinition;
+            }>;
+        select?: ComponentConfigBase &
+            Partial<{
+                /**
+                 * Class of the root element
+                 */
+                rootClass: ClassDefinition;
                 /**
                  * Class of the root element when disabled
                  */
                 disabledClass: ClassDefinition;
+                /**
+                 * Class of the root element when expanded
+                 */
+                expandedClass: ClassDefinition;
+                /**
+                 * Makes input full width when inside a grouped or addon field
+                 */
+                expanded: boolean;
+                /**
+                 * Vertical size of input
+                 */
+                size: string;
+                /**
+                 * Icon pack to use
+                 */
+                iconPack: string;
+                /**
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
+                 */
+                autocomplete: string;
+                /**
+                 * Icon to be shown
+                 */
+                icon: string;
+                /**
+                 * Color variant of the control
+                 */
+                variant: string;
+                /**
+                 * Icon to be added on the right side
+                 */
+                iconRight: string;
+                /**
+                 * Class of the root element with size
+                 */
+                sizeClass: ClassDefinition;
+                /**
+                 * Class of the root element with variant
+                 */
+                variantClass: ClassDefinition;
                 /**
                  * Class of the root element when rounded
                  */
@@ -2297,22 +2324,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 hasIconRightClass: ClassDefinition;
                 /**
-                 * Class of the root element when multiple
-                 */
-                multipleClass: ClassDefinition;
-                /**
-                 * Class of the native select element
-                 */
-                selectClass: ClassDefinition;
-                /**
-                 * Class of the native select element with placeholder
-                 */
-                placeholderClass: ClassDefinition;
-                /**
-                 * Class of the native select element when arrowed
-                 */
-                arrowedClass: ClassDefinition;
-                /**
                  * Class of the native select element with left icon space
                  */
                 iconLeftSpaceClass: ClassDefinition;
@@ -2321,6 +2332,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRightSpaceClass: ClassDefinition;
                 /**
+                 * Class of the native select element with placeholder
+                 */
+                placeholderClass: ClassDefinition;
+                /**
                  * Class of the left icon element
                  */
                 iconLeftClass: ClassDefinition;
@@ -2328,6 +2343,18 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the right icon element
                  */
                 iconRightClass: ClassDefinition;
+                /**
+                 * Class of the root element when multiple
+                 */
+                multipleClass: ClassDefinition;
+                /**
+                 * Class of the native select element
+                 */
+                selectClass: ClassDefinition;
+                /**
+                 * Class of the native select element when arrowed
+                 */
+                arrowedClass: ClassDefinition;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
@@ -2685,7 +2712,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileClass: ClassDefinition;
                 /**
-                 * Size of the root element with size
+                 * Class of the root element with size
                  */
                 sizeClass: ClassDefinition;
                 /**
@@ -2732,33 +2759,34 @@ In addition, any CSS selector string or an actual DOM node can be used.
         switch?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Color variant of the control
+                 * Class of the root element
                  */
-                variant: string;
+                rootClass: ClassDefinition;
                 /**
-                 * Color of the switch when is passive
+                 * Class of the native input element
                  */
-                passiveVariant: string;
+                inputClass: ClassDefinition;
                 /**
-                 * Size of the control
+                 * Class of the root element when disabled
                  */
-                size: string;
-                /**
-                 * Rounded style
-                 */
-                rounded: boolean;
+                disabledClass: ClassDefinition;
                 /**
                  * Label position
                  */
                 right: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Size of the control
+                 */
+                size: string;
+                /**
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
-                 * Class of the root element
+                 * Color variant of the control
                  */
-                rootClass: ClassDefinition;
+                variant: string;
                 /**
                  * Class of the root element with size
                  */
@@ -2768,33 +2796,33 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 variantClass: ClassDefinition;
                 /**
-                 * Class of the root element with passive variant
+                 * Class of the root element when rounded
                  */
-                passiveVariantClass: ClassDefinition;
+                roundedClass: ClassDefinition;
                 /**
                  * Class of the root element with position
                  */
                 positionClass: ClassDefinition;
                 /**
-                 * Class of the root element when disabled
+                 * Enable rounded style
                  */
-                disabledClass: ClassDefinition;
+                rounded: boolean;
                 /**
-                 * Class of the root element when rounded
+                 * Class of the label element
                  */
-                roundedClass: ClassDefinition;
+                labelClass: ClassDefinition;
                 /**
                  * Class of the root element when checked
                  */
                 checkedClass: ClassDefinition;
                 /**
-                 * Class of the native input element
+                 * Color of the switch when is passive
                  */
-                inputClass: ClassDefinition;
+                passiveVariant: string;
                 /**
-                 * Class of the label element
+                 * Class of the root element with passive variant
                  */
-                labelClass: ClassDefinition;
+                passiveVariantClass: ClassDefinition;
             }>;
         table?: ComponentConfigBase &
             Partial<{
@@ -3257,7 +3285,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
         tag?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Color variant of the breadcrumb
+                 * Color variant of the control
                  */
                 variant: string;
                 /**
@@ -3421,15 +3449,11 @@ In addition, any CSS selector string or an actual DOM node can be used.
         timepicker?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Open picker on focus
-                 */
-                openOnFocus: boolean;
-                /**
                  * Makes input full width when inside a grouped or addon field
                  */
                 expanded: boolean;
                 /**
-                 * Size of the button
+                 * Size of the input control
                  */
                 size: string;
                 /**
@@ -3441,7 +3465,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 parser: ((date: string) => Date) | undefined;
                 /**
-                 * time creator function, default is `new Date()`
+                 * Time creator function, default is `new Date()`
                  */
                 creator: (() => Date);
                 /**
@@ -3461,15 +3485,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
-                 * Picker content is shown into a modal on mobile
+                 * Overlay content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Picker content is shown into a modal on desktop
+                 * Overlay content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
-                 * Enable mobile native input if mobile agent
+                 * Enable mobile native input if device is a mobile agent
                  */
                 mobileNative: boolean;
                 /**
@@ -3719,15 +3743,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 rootClass: ClassDefinition;
                 /**
-                 * Clas of the root element when disabled
+                 * Class of the root element when disabled
                  */
                 disabledClass: ClassDefinition;
                 /**
-                 * Clas of the root element when selectable
+                 * Class of the root element when selectable
                  */
                 selectableClass: ClassDefinition;
                 /**
-                 * Clas of the root element when multiple
+                 * Class of the root element when multiple
                  */
                 multipleClass: ClassDefinition;
                 /**
@@ -3742,6 +3766,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the empty slot wrapper element
                  */
                 emptyClass: ClassDefinition;
+                /**
+                 * Class of the filter wrapper element
+                 */
+                filterClass: ClassDefinition;
+                /**
+                 * Class of the root element when filterable
+                 */
+                filterableClass: ClassDefinition;
                 /**
                  * Class of the tree list element
                  */
@@ -3794,25 +3826,30 @@ In addition, any CSS selector string or an actual DOM node can be used.
         upload?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Color variant of the control
-                 */
-                variant: string;
-                /**
-                 * Upload will be expanded (full-width)
-                 */
-                expanded: boolean;
-                /**
                  * Class of the root element
                  */
                 rootClass: ClassDefinition;
+                /**
+                 * Class of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
                 /**
                  * Class of the root element when expanded
                  */
                 expandedClass: ClassDefinition;
                 /**
-                 * Class of the root element when disabled
+                 * Upload will be expanded (full-width)
                  */
-                disabledClass: ClassDefinition;
+                expanded: boolean;
+                /**
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
+                 */
+                autocomplete: string;
+                /**
+                 * Color variant of the control
+                 */
+                variant: string;
                 /**
                  * Class of the root element with variant
                  */

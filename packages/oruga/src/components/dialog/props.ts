@@ -17,12 +17,19 @@ export type DialogProps<C extends Component = Component> = {
      * Examples include error messages that require confirmation and other action confirmation prompts.
      */
     alert?: boolean;
+    /**
+     * Size of the dialog
+     * @values small, medium, large
+     */
+    size?: string;
     /** Display dialog as full screen */
     fullscreen?: boolean;
     /** Max width of the dialog */
     maxWidth?: Numberish;
     /** Max height of the dialog */
     maxHeight?: Numberish;
+    /** Allow the dialog to be dragged by the header */
+    draggable?: boolean;
     /** Adds close button to the header to hide the dialog */
     closeable?: boolean;
     /** Close the dialog when clicked outside of the panel */
@@ -118,6 +125,8 @@ export type DialogClasses = Partial<{
     activeClass: ComponentClass;
     /** Class of the root element when fullscreen */
     fullscreenClass: ComponentClass;
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;
     /** Class of the backdrop overlay element */
@@ -128,7 +137,7 @@ export type DialogClasses = Partial<{
     contentPositionClass: ComponentClass;
     /** Class of the content header element */
     headerClass: ComponentClass;
-    /** Class of the content  header title element */
+    /** Class of the content header title element */
     titleClass: ComponentClass;
     /** Class of the content header subtitle element */
     subtitleClass: ComponentClass;
@@ -152,4 +161,8 @@ export type DialogClasses = Partial<{
     scrollClipClass: ComponentClass;
     /** Class of the body when modal is open and scroll is keeped */
     scrollKeepClass: ComponentClass;
+    /** Class of the root element when draggable is enabled */
+    draggableClass: ComponentClass;
+    /** Class of the root element while the dialog is being dragged */
+    draggingClass: ComponentClass;
 }>;

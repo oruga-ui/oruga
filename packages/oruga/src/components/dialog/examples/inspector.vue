@@ -23,12 +23,40 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.active = true;
         },
     },
+    sizeClass: {
+        class: "sizeClass",
+        description: "Class of the root element with size.",
+        properties: ["size"],
+        action: (data): void => {
+            data.active = true;
+            data.size = "sm";
+        },
+    },
     fullscreenClass: {
         class: "fullscreenClass",
         description: "Class of the root element when fullscreen",
         properties: ["fullscreen"],
         action: (data): void => {
             data.fullscreen = true;
+        },
+    },
+    draggableClass: {
+        class: "draggableClass",
+        description: "Class of the root element when draggable is enabled.",
+        properties: ["draggable"],
+        action: (data): void => {
+            data.draggable = true;
+            data.active = true;
+        },
+    },
+    draggingClass: {
+        class: "draggingClass",
+        description:
+            "Class of the root element while the dialog is being dragged.",
+        properties: ["draggable"],
+        action: (data): void => {
+            data.draggable = true;
+            data.active = true;
         },
     },
     teleportClass: {
@@ -80,7 +108,7 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
     },
     bodyClass: {
         class: "bodyClass",
-        description: " Class of the content body element.",
+        description: "Class of the content body element.",
     },
     figureClass: {
         class: "figureClass",
@@ -88,7 +116,7 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
     },
     imageClass: {
         class: "imageClass",
-        description: " Class of the content body image element.",
+        description: "Class of the content body image element.",
     },
     footerClass: {
         class: "footerClass",

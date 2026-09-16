@@ -14,11 +14,10 @@ export type ListboxComponent<T> = {
 };
 
 export type ListItemComponent<T> = Required<
-    Pick<ListItemProps<T>, "value" | "hidden">
+    Pick<ListItemProps<T>, "value" | "hidden" | "label">
 > & {
     isViable: boolean;
     setHidden: (hidden: boolean) => void;
-    matches: (value: string) => boolean;
     selectItem: (event: Event) => void;
 };
 

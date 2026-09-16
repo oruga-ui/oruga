@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { mount, enableAutoUnmount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import ODatepicker from "@/components/datepicker/Datepicker.vue";
 
@@ -80,6 +81,67 @@ describe("ODatepicker", () => {
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(input.element.value).toBe("");
+    });
+
+    test("keeps the overlay open when navigating a populated picker after input blur", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2024, 0, 1), active: true },
+        });
+
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeTruthy();
+
+        const monthSelect = wrapper.find<HTMLSelectElement>(
+            'select[aria-label="Select Month"]',
+        );
+        monthSelect.element.focus();
+        await nextTick();
+        await monthSelect.setValue(1);
+
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeTruthy();
+    });
+
+    test("keeps the overlay open on first interaction when clicking a nav button in a populated picker", async () => {
+        vi.useFakeTimers();
+
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2024, 0, 1) },
+        });
+
+        // picker is initially closed
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeFalsy();
+
+        // focus the input to open the picker via openOnFocus
+        const input = wrapper.find("input");
+        await input.trigger("focus");
+
+        // advance past the 250ms openOnFocus delay
+        vi.advanceTimersByTime(300);
+        await nextTick();
+
+        // picker should now be open
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeTruthy();
+
+        // blur the input (simulates focus moving away when clicking the nav button)
+        await input.trigger("blur");
+        await nextTick();
+
+        // click the previous month navigation button
+        const prevButton = wrapper.find(".o-datepicker__header__previous");
+        await prevButton.trigger("click");
+        await nextTick();
+
+        // picker should remain open after navigating months
+        expect(
+            wrapper.find(".o-datepicker__content--active").exists(),
+        ).toBeTruthy();
     });
 
     test("react accordingly when an date is selected with multiple prop", async () => {
@@ -266,5 +328,65 @@ describe("ODatepicker", () => {
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
         expect(emits?.[1][0]).toHaveLength(2);
+    });
+
+    test("closes overlay on date selection when stayOpen is false", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1),
+                active: true,
+                stayOpen: false,
+            },
+        });
+
+        // find and click on a selectable date cell
+        const cells = wrapper.findAll(".o-datepicker__table__cell");
+        const cellToSelect = cells.find(
+            (c) =>
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
+        );
+        expect(cellToSelect).toBeDefined();
+
+        // select a date
+        await cellToSelect?.trigger("click");
+
+        // check that update:active event was emitted with false (overlay closes)
+        const updateActiveEmits = wrapper.emitted("update:active");
+        expect(updateActiveEmits).toBeDefined();
+        expect(updateActiveEmits?.[0]).toEqual([false]);
+    });
+
+    test("keeps overlay open on date selection when stayOpen is true", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1),
+                active: true,
+                stayOpen: true,
+            },
+        });
+
+        // find and click on a selectable date cell
+        const cells = wrapper.findAll(".o-datepicker__table__cell");
+        const cellToSelect = cells.find(
+            (c) =>
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
+        );
+        expect(cellToSelect).toBeDefined();
+
+        // select a date
+        await cellToSelect?.trigger("click");
+
+        // check that update:active event was NOT emitted (overlay stays open)
+        const updateActiveEmits = wrapper.emitted("update:active");
+        expect(updateActiveEmits).toBeUndefined();
+
+        // verify the content still has the active class
+        const contentElement = wrapper.find(".o-datepicker__content");
+        expect(contentElement.exists()).toBe(true);
+        expect(contentElement.classes("o-datepicker__content--active")).toBe(
+            true,
+        );
     });
 });

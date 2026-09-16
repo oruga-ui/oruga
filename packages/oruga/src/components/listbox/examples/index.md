@@ -93,7 +93,7 @@ You can use the `checkable` property to show a checkbox on the item. The checkbo
 
 ### Filterable
 
-The component provides a built-in filtering feature, which can be enabled by adding the `filterable` property. A custom filter function can be defined using the `filter` property. By default, a lowercased label string comparison is performed.
+The `filterable` property enables a built-in search input to filter list items. A custom `filter` function can be supplied for more advanced matching logic. By default, a lowercased item `label` string comparison is performed.
 
 <ExampleViewer :component="Filterable" :code="FilterableCode" />
 

@@ -1,5 +1,6 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import ODialog from "@/components/dialog/Dialog.vue";
 
@@ -381,6 +382,182 @@ describe("ODialog test", () => {
 
             const loading = wrapper.find('[data-oruga="loading"]');
             expect(loading.exists()).toBeTruthy();
+        });
+    });
+
+    describe("test draggable", () => {
+        const defaultProps = { active: true, title: "Draggable Dialog" };
+        const defaultGlobal = { stubs: { transition: true, teleport: true } };
+
+        test("dialog has draggable class when draggable is true", () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.classes("o-dialog--draggable")).toBeTruthy();
+            expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
+        });
+
+        test("dialog does not have draggable class when draggable is false", () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: false },
+                global: defaultGlobal,
+            });
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.classes("o-dialog--draggable")).toBeFalsy();
+        });
+
+        test("dialog gets dragging class on pointerdown on header", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header");
+            expect(header.exists()).toBeTruthy();
+
+            header.element.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    clientX: 100,
+                    clientY: 100,
+                    bubbles: true,
+                }),
+            );
+            await nextTick();
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.classes("o-dialog--dragging")).toBeTruthy();
+        });
+
+        test("dialog translates on pointermove while dragging", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header");
+            header.element.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    clientX: 100,
+                    clientY: 100,
+                    bubbles: true,
+                }),
+            );
+            // wait for isDragging to become true and the pointermove listener to be registered
+            await nextTick();
+
+            document.dispatchEvent(
+                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            );
+            await nextTick();
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.element.style.transform).toContain("translate");
+        });
+
+        test("dragging stops and dragging class is removed on pointerup", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header");
+            header.element.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    clientX: 100,
+                    clientY: 100,
+                    bubbles: true,
+                }),
+            );
+            await nextTick();
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.classes("o-dialog--dragging")).toBeTruthy();
+
+            document.dispatchEvent(new PointerEvent("pointerup"));
+            await nextTick();
+
+            expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
+        });
+
+        test("drag position resets when dialog becomes inactive", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header");
+            header.element.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    clientX: 100,
+                    clientY: 100,
+                    bubbles: true,
+                }),
+            );
+            await nextTick();
+
+            document.dispatchEvent(
+                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            );
+            await nextTick();
+
+            let dialog = wrapper.find("dialog");
+            expect(dialog.element.style.transform).toContain("translate");
+
+            await wrapper.setProps({ active: false });
+            await nextTick();
+
+            dialog = wrapper.find("dialog");
+            expect(dialog.element.style.transform).toBeFalsy();
+        });
+
+        test("does not start dragging when fullscreen is true", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true, fullscreen: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header");
+            header.element.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    clientX: 100,
+                    clientY: 100,
+                    bubbles: true,
+                }),
+            );
+            await nextTick();
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
+        });
+
+        test("does not drag when draggable is false", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: false },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header");
+            header.element.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    clientX: 100,
+                    clientY: 100,
+                    bubbles: true,
+                }),
+            );
+            await nextTick();
+
+            document.dispatchEvent(
+                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            );
+            await nextTick();
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
+            expect(dialog.element.style.transform).toBeFalsy();
         });
     });
 

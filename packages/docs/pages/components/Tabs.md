@@ -68,7 +68,7 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 | ------- | ------------------------------- | -------- |
 | before  | Additional slot before the tabs |          |
 | after   | Additional slot after the tabs  |          |
-| default | Define the tag items here       |          |
+| default | Define the tab items here       |          |
 
 </section>
 
@@ -94,7 +94,7 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 | events    | Events to be binded to the injected component                                             | EmitsToProps&lt;ComponentEmit&lt;C&gt;&gt; | -                                                                               |                                                                                                                                                     |
 | icon      | Icon shown to the left of the label                                                       | string                                     | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>      |
 | iconPack  | Icon pack                                                                                 | string                                     | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>  |
-| label     | Item label                                                                                | string                                     | -                                                                               |                                                                                                                                                     |
+| label     | Item label, unnecessary when header slot is used                                          | string                                     | -                                                                               |                                                                                                                                                     |
 | override  | Override existing theme classes completely                                                | boolean                                    | -                                                                               |                                                                                                                                                     |
 | props     | Props to be binded to the injected component                                              | ComponentProps&lt;C&gt;                    | -                                                                               |                                                                                                                                                     |
 | tag       | Tabs item tag name                                                                        | DynamicComponent                           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: PlainButton<br>}</code> |
@@ -202,7 +202,11 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/s
 
 > Current theme ➜ _[Tailwind](https://github.com/oruga-ui/theme-tailwind)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default |
+| ------------- | ------- |
+
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-tailwind/tree/main/src/assets/scss/components/_tabs.scss)
+
 </div>
 
 </section>

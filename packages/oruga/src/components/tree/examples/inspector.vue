@@ -17,7 +17,7 @@ const inspectData: InspectData<
     },
     disabledClass: {
         class: "disabledClass",
-        description: "Clas of the root element when disabled.",
+        description: "Class of the root element when disabled.",
         properties: ["disabled"],
         action: (data): void => {
             data.disabled = true;
@@ -29,6 +29,14 @@ const inspectData: InspectData<
         properties: ["selectable"],
         action: (data): void => {
             data.selectable = true;
+        },
+    },
+    filterableClass: {
+        class: "filterableClass",
+        description: "Class of the root element when filterable.",
+        properties: ["filterable"],
+        action: (data): void => {
+            data.filterable = true;
         },
     },
     multipleClass: {
@@ -53,6 +61,10 @@ const inspectData: InspectData<
         action: (data): void => {
             data.options = [];
         },
+    },
+    filterClass: {
+        class: "filterClass",
+        description: "Class of the filter wrapper element.",
     },
     listClass: {
         class: "listClass",
@@ -123,6 +135,11 @@ const inspectData: InspectData<
         class: "checkboxAttrs",
         description: "Properties to apply on the internal checkbox component.",
         relatedComponent: "Checkbox",
+    },
+    inputAttrs: {
+        class: "inputAttrs",
+        description: "Properties to apply on the internal input component.",
+        relatedComponent: "Input",
     },
 };
 </script>

@@ -30,6 +30,8 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     override: undefined,
     modelValue: undefined,
     active: false,
+    stayOpen: false,
+    openOnFocus: true,
     minTime: undefined,
     maxTime: undefined,
     inline: false,
@@ -43,7 +45,6 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     incrementHours: 1,
     incrementMinutes: 1,
     incrementSeconds: 1,
-    openOnFocus: () => getDefault("timepicker.openOnFocus", true),
     enableSeconds: false,
     defaultMinutes: undefined,
     defaultSeconds: undefined,
@@ -153,6 +154,11 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
+
+watch(vmodel, () => {
+    if (!props.inline && isActive.value && !props.stayOpen)
+        isActive.value = false;
+});
 
 const hoursSelected = ref<number>();
 const minutesSelected = ref<number>();
@@ -649,7 +655,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :modal="isModal"
             :inline="inline"
             :open-on-focus="openOnFocus"
-            :stay-open="stayOpen"
             :dtf="dtf"
             :placeholder="placeholder"
             type="time"

@@ -1,10 +1,12 @@
 import type { ComponentClass } from "@/types";
 
+type ValueType<IsRange> = IsRange extends true ? [number, number] : number;
+
 export type SliderProps<IsRange extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
-    modelValue?: IsRange extends true ? [number, number] : number;
+    modelValue?: ValueType<IsRange>;
     /** Enable range slider */
     range?: IsRange;
     /** Minimum value */
@@ -36,7 +38,7 @@ export type SliderProps<IsRange extends boolean = boolean> = {
     tooltipAlways?: boolean;
     /** Rounded thumb */
     rounded?: boolean;
-    /** Slider will be disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
     /** Update v-model only when dragging is finished */
     lazy?: boolean;

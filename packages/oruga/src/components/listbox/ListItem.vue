@@ -59,10 +59,10 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({
     value: props.value as T,
+    label: props.label,
     hidden: isHidden.value,
     isViable: isViable.value,
     setHidden,
-    matches,
     selectItem: (): void => rootRef.value?.click(),
 }));
 
@@ -114,12 +114,6 @@ function clickItem(event: Event): void {
     if (!isSelectable.value) return;
     parent.value.selectItem(item.value, !isSelected.value);
     emits("click", providedData.value.value, event);
-}
-
-/** Check if a given value matches the item label (startsWith). */
-// TODO: refactor to mave into Parent because not name does noch match implementation
-function matches(value: string): boolean {
-    return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
 }
 
 // #region --- Computed Component Classes ---
