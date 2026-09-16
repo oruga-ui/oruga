@@ -19,7 +19,7 @@ export type HTMLUploadPassthroughProps = {
 export type UploadProps<
     T extends object | typeof File,
     IsMultiple extends boolean = boolean,
-> = {
+> = HTMLUploadPassthroughProps & {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

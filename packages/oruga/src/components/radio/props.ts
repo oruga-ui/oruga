@@ -14,7 +14,7 @@ export type HTMLRadioPassthroughProps = {
     form?: InputHTMLAttributes["form"];
 } & AriaAttributes;
 
-export type RadioProps<T> = {
+export type RadioProps<T> = HTMLRadioPassthroughProps & {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state, use v-model to make it two-way binding */

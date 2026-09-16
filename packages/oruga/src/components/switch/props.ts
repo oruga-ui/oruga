@@ -14,7 +14,7 @@ export type HTMLSwitchPassthroughProps = {
     form?: InputHTMLAttributes["form"];
 } & AriaAttributes;
 
-export type SwitchProps<T> = {
+export type SwitchProps<T> = HTMLSwitchPassthroughProps & {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
