@@ -1,6 +1,7 @@
 import { describe, test, expect } from "vitest";
 import { render } from "vitest-browser-vue";
 import { userEvent } from "vitest/browser";
+import { h } from "vue";
 
 import OPopover from "@/components/popover/Popover.vue";
 
@@ -8,9 +9,12 @@ describe("<Popover>", () => {
     const renderComponent = () =>
         render(OPopover, {
             slots: {
-                content:
-                    '<div data-testid="content">Lorem ipsum dolor sit amet.</div>',
-                default: '<button data-testid="trigger">trigger</button>',
+                content: () =>
+                    h("div", { "data-testid": "content" }, [
+                        "Lorem ipsum dolor sit amet.",
+                    ]),
+                default: () =>
+                    h("button", { "data-testid": "trigger" }, ["trigger"]),
             },
         });
 
