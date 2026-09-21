@@ -396,7 +396,7 @@ defineExpose({
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
                 :teleport="teleport"
-                :has-counter="false"
+                :counter="false"
                 :use-html5-validation="false"
                 expanded
                 @input="onInput"

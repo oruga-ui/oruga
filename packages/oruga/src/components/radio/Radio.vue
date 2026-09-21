@@ -6,7 +6,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { RadioProps, HTMLRadioPassthroughProps } from "./props";
+import type { RadioProps, RadioNativeProps } from "./props";
 
 /**
  * Select an option from a set of options.
@@ -23,8 +23,8 @@ defineOptions({
 const props = withDefaults(
     defineProps<
         RadioProps<T> &
-            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLRadioPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-            /* @vue-ignore */ HTMLRadioPassthroughProps
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in RadioNativeProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ RadioNativeProps
     >(),
     {
         override: undefined,

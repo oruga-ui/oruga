@@ -4,10 +4,10 @@ import type { AriaAttributes, SelectHTMLAttributes } from "vue";
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 /**
- * Native HTML select attributes passed through as fallthrough attrs
- * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
+ * Native `<select>` attributes exposed as typed component props,
+ * including all `aria-*` attributes.
  */
-export type HTMLSelectPassthroughProps = {
+export type SelectNativeProps = {
     /** Same as native required */
     required?: SelectHTMLAttributes["required"];
     /** Same as native name */

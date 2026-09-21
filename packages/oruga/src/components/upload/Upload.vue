@@ -14,7 +14,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { UploadProps, HTMLUploadPassthroughProps } from "./props";
+import type { UploadProps, UploadNativeProps } from "./props";
 
 /**
  * Upload one or more files.
@@ -33,8 +33,8 @@ type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
 const props = withDefaults(
     defineProps<
         UploadProps<T, IsMultiple> &
-            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLUploadPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-            /* @vue-ignore */ HTMLUploadPassthroughProps
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in UploadNativeProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ UploadNativeProps
     >(),
     {
         override: undefined,

@@ -2,12 +2,12 @@
 import { computed, useAttrs, useId, useSlots, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
+import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { CheckboxProps, HTMLCheckboxPassthroughProps } from "./props";
-import { isTrueish } from "@/utils/helpers";
+import type { CheckboxProps, CheckboxNativeProps } from "./props";
 
 /**
  * Select a single or grouped options.
@@ -26,8 +26,8 @@ type ModelValue = CheckboxProps<T, IsMultiple>["modelValue"];
 const props = withDefaults(
     defineProps<
         CheckboxProps<T, IsMultiple> &
-            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLCheckboxPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-            /* @vue-ignore */ HTMLCheckboxPassthroughProps
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in CheckboxNativeProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ CheckboxNativeProps
     >(),
     {
         override: undefined,

@@ -6,7 +6,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { SwitchProps, HTMLSwitchPassthroughProps } from "./props";
+import type { SwitchProps, SwitchNativeProps } from "./props";
 
 /**
  * Switch between two opposing states.
@@ -23,8 +23,8 @@ defineOptions({
 const props = withDefaults(
     defineProps<
         SwitchProps<T> &
-            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLSwitchPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-            /* @vue-ignore */ HTMLSwitchPassthroughProps
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in SwitchNativeProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ SwitchNativeProps
     >(),
     {
         override: undefined,

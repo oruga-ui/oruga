@@ -2,11 +2,10 @@ import type { ComponentClass, DynamicComponent } from "@/types";
 import type { AriaAttributes, ButtonHTMLAttributes } from "vue";
 
 /**
- * Native HTML button attributes available as typed props for TypeScript consumers.
- * Since Button does not use `inheritAttrs: false`, these flow through Vue's normal
- * attribute inheritance to the root element.
+ * Native `<button>` attributes exposed as typed component props,
+ * including form-override attributes and all `aria-*` attributes.
  */
-export type HTMLButtonPassthroughProps = {
+export type ButtonNativeProps = {
     /** Same as native name */
     name?: ButtonHTMLAttributes["name"];
     /** Same as native value */

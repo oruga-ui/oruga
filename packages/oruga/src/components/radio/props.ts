@@ -2,10 +2,10 @@ import type { ComponentClass } from "@/types";
 import type { AriaAttributes, InputHTMLAttributes } from "vue";
 
 /**
- * Native HTML input attributes passed through as fallthrough attrs
- * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
+ * Native `<input type="radio">` attributes exposed as typed component props,
+ * including all `aria-*` attributes.
  */
-export type HTMLRadioPassthroughProps = {
+export type RadioNativeProps = {
     /** Same as native required */
     required?: InputHTMLAttributes["required"];
     /** Same as native name */

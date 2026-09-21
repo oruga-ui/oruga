@@ -4,14 +4,14 @@ import { axe } from "jest-axe";
 import { nextTick } from "vue";
 
 import OButton from "../Button.vue";
-import type { ButtonProps, HTMLButtonPassthroughProps } from "../props.ts";
+import type { ButtonProps, ButtonNativeProps } from "../props.ts";
 
 describe("OButton a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
         title: string;
-        props?: ButtonProps & HTMLButtonPassthroughProps;
+        props?: ButtonProps & ButtonNativeProps;
     }[] = [
         { title: "axe button - base case", props: { label: "Button" } },
         {

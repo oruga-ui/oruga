@@ -25,7 +25,7 @@ import {
 
 import { injectField } from "../field/fieldInjection";
 
-import type { HTMLInputPassthroughProps, InputProps } from "./props";
+import type { InputProps, InputNativeProps } from "./props";
 
 /**
  * Get user Input. Use with Field to access all functionalities.
@@ -44,8 +44,8 @@ type ModelValue = InputProps<IsNumber>["modelValue"];
 const props = withDefaults(
     defineProps<
         InputProps<IsNumber> &
-            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLInputPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-            /* @vue-ignore */ HTMLInputPassthroughProps
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in InputNativeProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ InputNativeProps
     >(),
     {
         override: undefined,

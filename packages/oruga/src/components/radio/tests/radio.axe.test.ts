@@ -4,14 +4,14 @@ import { axe } from "jest-axe";
 import { nextTick } from "vue";
 
 import ORadio from "../Radio.vue";
-import type { HTMLRadioPassthroughProps, RadioProps } from "../props";
+import type { RadioProps, RadioNativeProps } from "../props";
 
 describe("OCheckbox a11y tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases: {
         title: string;
-        props?: RadioProps<unknown> & HTMLRadioPassthroughProps;
+        props?: RadioProps<unknown> & RadioNativeProps;
     }[] = [
         {
             title: "axe radio - base case",

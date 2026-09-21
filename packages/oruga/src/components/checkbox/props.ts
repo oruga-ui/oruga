@@ -4,10 +4,10 @@ import type { AriaAttributes, InputHTMLAttributes } from "vue";
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 /**
- * Native HTML input attributes passed through as fallthrough attrs
- * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
+ * Native `<input type="checkbox">` attributes exposed as typed component props,
+ * including all `aria-*` attributes.
  */
-export type HTMLCheckboxPassthroughProps = {
+export type CheckboxNativeProps = {
     /** Same as native required */
     required?: InputHTMLAttributes["required"];
     /** Same as native name */

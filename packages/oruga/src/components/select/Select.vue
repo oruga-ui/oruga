@@ -22,7 +22,7 @@ import {
 
 import { injectField } from "../field/fieldInjection";
 
-import type { SelectProps, HTMLSelectPassthroughProps } from "./props";
+import type { SelectProps, SelectNativeProps } from "./props";
 
 /**
  * Select an item in a list. Use with Field to access all functionalities.
@@ -41,8 +41,8 @@ type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 const props = withDefaults(
     defineProps<
         SelectProps<T, IsMultiple> &
-            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLSelectPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-            /* @vue-ignore */ HTMLSelectPassthroughProps
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in SelectNativeProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ SelectNativeProps
     >(),
     {
         override: undefined,

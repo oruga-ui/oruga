@@ -10,12 +10,10 @@ export type InputType<IsNumber extends boolean> = IsNumber extends true
     : string;
 
 /**
- * Native HTML input attributes passed through as fallthrough attrs
- * (not compiled as reactive Vue props). Applied via `@vue-ignore` in `defineProps`.
- * `maxlength` and `autocomplete` are intentionally excluded — they are managed
- * as regular Vue props because the component reads them programmatically.
+ * Native `<input>` and `<textarea>` attributes exposed as typed component props,
+ * including all `aria-*` attributes.
  */
-export type HTMLInputPassthroughProps = {
+export type InputNativeProps = {
     /** Same as native placeholder */
     placeholder?: InputHTMLAttributes["placeholder"];
     /** Same as native required */

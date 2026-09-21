@@ -6,7 +6,7 @@ import OIcon from "../icon/Icon.vue";
 import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ButtonProps, HTMLButtonPassthroughProps } from "./props";
+import type { ButtonProps, ButtonNativeProps } from "./props";
 
 /**
  * The classic button, in different colors, sizes, and states.
@@ -23,8 +23,8 @@ defineOptions({
 const props = withDefaults(
     defineProps<
         ButtonProps &
-            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in HTMLButtonPassthroughProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
-            /* @vue-ignore */ HTMLButtonPassthroughProps
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in ButtonNativeProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ ButtonNativeProps
     >(),
     {
         override: undefined,
