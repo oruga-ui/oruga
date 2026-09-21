@@ -16,7 +16,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
       <!--v-if-->
       <div class="o-timepicker__body">
         <div data-oruga="select" class="">
-          <!--v-if--><select class="o-timepicker__select" aria-label="Select Hour" id="v-1" data-oruga-input="select" autocomplete="off">
+          <!--v-if--><select class="o-timepicker__select" aria-label="Select Hour" autocomplete="off" id="v-1" data-oruga-input="select">
             <!--v-if-->
             <option selected="" value="0">00</option>
             <option value="1">01</option>
@@ -46,7 +46,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
           <!--v-if-->
         </div><span class="o-timepicker__separtor">:</span>
         <div data-oruga="select" class="">
-          <!--v-if--><select class="o-timepicker__select" aria-label="Select Minute" id="v-2" data-oruga-input="select" autocomplete="off">
+          <!--v-if--><select class="o-timepicker__select" aria-label="Select Minute" autocomplete="off" id="v-2" data-oruga-input="select">
             <!--v-if-->
             <option value="0">00</option>
             <option value="1">01</option>
