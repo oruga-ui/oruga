@@ -2,7 +2,7 @@ import { createVNode, markRaw, type VNode } from "vue";
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 
-import { OModal } from "@/components/modal";
+import { OButton } from "@/components/button";
 
 import InstanceRegistry from "../InstanceRegistry";
 import {
@@ -51,14 +51,14 @@ describe("ProgrammaticComponent tests", () => {
         const content = "This is my content";
         const wrapper = mount(ProgrammaticComponent, {
             props: {
-                component: markRaw(OModal),
-                props: { content },
+                component: markRaw(OButton),
+                props: { label: content },
             },
         });
 
-        const model = wrapper.find('[data-oruga="modal"]');
-        expect(model.exists()).toBeTruthy();
-        expect(model.text()).toBe(content);
+        const button = wrapper.find("button");
+        expect(button.exists()).toBeTruthy();
+        expect(button.text()).toBe(content);
     });
 
     test("test close is called correctly", async () => {

@@ -98,7 +98,6 @@ List of components with an programmatic interface:
 
 - [`Dialog`](/components/Dialog.html#programmatically)
 - [`Loading`](/components/Loading.html#programmatically)
-- [`Modal`](/components/Modal.html#programmatically)
 - [`Notification`](/components/Notification.html#programmatically)
 - [`Popover`](/components/Popover.html#programmatically)
 - [`Sidebar`](/components/Sidebar.html#programmatically)
