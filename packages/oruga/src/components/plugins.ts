@@ -13,7 +13,6 @@ import Icon from "./icon";
 import Input from "./input";
 import Listbox from "./listbox";
 import Loading from "./loading";
-import Menu from "./menu";
 import Modal from "./modal";
 import Notification from "./notification";
 import Pagination from "./pagination";
@@ -51,7 +50,6 @@ export {
     Input,
     Listbox,
     Loading,
-    Menu,
     Modal,
     Notification,
     Pagination,
