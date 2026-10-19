@@ -41,7 +41,6 @@ const IGNORE_COMPONENTS = [
     "*/PaginationButton.vue",
     "*/TabItem.vue",
     "*/StepItem.vue",
-    "*/MenuItem.vue",
     "*/ListItem.vue",
     "*/TreeItem.vue",
     "*/DatepickerTable.vue",
