@@ -10,7 +10,9 @@ import {
 } from "vue";
 import {
     unrefElement,
+    useAnimationsAPI,
     useEventListener,
+    type AnimationName,
     type EventTarget,
 } from "@/composables";
 
@@ -45,6 +47,12 @@ export type PopoverAPIOptions = {
     targetTrigger?: boolean;
     /** An Optional delay (in ms) before opening the popover. */
     delay?: number;
+    /**
+     * Open/close animation, played via the Web Animations API.
+     * Set to `false` to disable.
+     * @default false
+     */
+    animation?: MaybeRefOrGetter<AnimationName | false | undefined>;
     /** An optional watch source which will be watched and to open or close the popover. */
     trigger?: WatchSource<boolean>;
     /** Stop interactions. */
@@ -74,8 +82,11 @@ export type PopoverAPIOptions = {
  * @returns Popover API handler.
  */
 export function usePopoverAPI(options: PopoverAPIOptions): {
+    /** Open the popover. */
     open: () => void;
+    /** Close the popover. */
     close: () => void;
+    /** Toggle the popover. */
     toggle: () => void;
 } {
     const {
@@ -84,17 +95,30 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         delay,
         trigger,
         disabled,
+        animation,
         targetTrigger = true,
         targetRef,
         contentRef,
     } = options;
 
-    let timeout: ReturnType<typeof setTimeout> | undefined;
-
     const active = ref(false);
+    // mirrors the real native popover open state, kept in sync exclusively
+    // via the `toggle` event (see `onNativeToggle`), since that's the only
+    // reliable, synchronous signal for state changes we didn't initiate
+    // ourselves (e.g. light-dismiss, or a native `popovertarget` click)
+    let nativeOpen = false;
+
+    let timeout: ReturnType<typeof setTimeout> | undefined;
 
     let targetEl: HTMLElement | undefined | null;
     let contentEl: HTMLElement | undefined | null;
+
+    const { play } = useAnimationsAPI();
+
+    /** plays the open/close animation (if any), resolving once it's finished */
+    function playAnimation(opening: boolean): Promise<void> {
+        return play(contentEl, toValue(animation), opening);
+    }
 
     if (isRef(trigger)) {
         // show/hide popover when trigger changes
@@ -117,25 +141,34 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         // always open on the next JS loop after all events have been handled
         timeout = setTimeout(() => {
             if (!contentEl || !targetEl || active.value) return;
-            contentEl.showPopover({ source: targetEl }); // open popover with native api
+            // guard against double-opening while a deferred `close()` is
+            // still waiting on the leave animation to actually hide it
+            if (!nativeOpen) contentEl.showPopover({ source: targetEl }); // open popover with native api
             timeout = undefined;
             active.value = true;
+            playAnimation(true);
         }, delay);
     }
 
     function close(): void {
         if (toValue(disabled)) return;
         if (timeout) clearTimeout(timeout);
-        if (!contentEl) return;
-        contentEl.hidePopover(); // hide popover with native api
+        if (!active.value) return;
+        // flip the visual state first (consumers watching the `trigger`/
+        // model sync off this), then play the leave animation, and only
+        // hide the native popover once it has actually finished - this is
+        // the fix: the native hide no longer happens instantly
         active.value = false;
+        playAnimation(false).then(() => {
+            if (active.value || !nativeOpen || !contentEl) return;
+            contentEl.hidePopover(); // hide popover with native api
+        });
     }
 
     function toggle(): void {
         if (toValue(disabled)) return;
-        if (!contentEl) return;
-        contentEl.togglePopover(); // toggle popover state with native api
-        active.value = !active.value;
+        if (active.value) close();
+        else open();
     }
 
     function onTriggerClick(event: Event): void {
@@ -163,9 +196,20 @@ export function usePopoverAPI(options: PopoverAPIOptions): {
         useEventListener(targetRef, "keydown", onTriggerKeydown);
     }
 
+    function onNativeToggle(event: ToggleEvent): void {
+        nativeOpen = event.newState === "open";
+
+        // keep the visual `active` state in sync with the real native
+        // popover state, including changes we didn't initiate ourselves
+        // (light-dismiss, Escape, popover group exclusivity, ...)
+        if (nativeOpen && !active.value) active.value = true;
+        else if (!nativeOpen && active.value) active.value = false;
+
+        options.onToggle?.(event);
+    }
+
     // add toggle event listener on content element
-    if (typeof options.onToggle === "function")
-        useEventListener(contentRef, "toggle", options.onToggle);
+    useEventListener(contentRef, "toggle", onNativeToggle);
     if (typeof options.onBeforeToggle === "function")
         useEventListener(contentRef, "beforetoggle", options.onBeforeToggle);
 

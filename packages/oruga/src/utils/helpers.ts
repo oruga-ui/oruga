@@ -1,4 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
+import { isClient } from "@/utils/ssr";
 import type { DeepKeys, DeepType, Numberish } from "@/types";
 
 /**
@@ -37,6 +38,12 @@ export function bound(val: number, min: number, max: number): number {
  */
 export const isObject = (value: unknown): value is object =>
     !!value && typeof value === "object" && !Array.isArray(value);
+
+/**
+ * checks if the user prefers reduced motion (OS/browser level a11y setting)
+ */
+export const prefersReducedMotion = (): boolean =>
+    isClient && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
  * checks if the value is of type date
