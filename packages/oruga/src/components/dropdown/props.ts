@@ -43,9 +43,7 @@ export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
      * Open/close animation using the native Web Animations API.
      * Set to `false` to disable the built-in animation.
      *
-     * Alternatively, you can implement a fully custom transition with CSS using
-     * the `@starting-style` and `transition-behaviour: allow-discrete` properties,
-     * targeting the `[popover]`/`:popover-open` state, with no JS needed.
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
      * @default 'fade'
      */
     animation?: AnimationName | false;
