@@ -4,6 +4,7 @@ import type {
     DynamicComponent,
     Numberish,
     PopoverPosition,
+    PopoverAnimationName,
 } from "@/types";
 
 // Auto generated component theme config declarations
@@ -88,9 +89,14 @@ declare module "./index" {
                  */
                 desktopModal: boolean;
                 /**
-                 * Transition name to apply on dropdown list
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, you can implement a fully custom transition with CSS using
+the `@starting-style` and `transition-behaviour: allow-discrete` properties,
+targeting the `[popover]`/`:popover-open` state, with no JS needed.
                  */
-                animation: string;
+                animation: false | PopoverAnimationName;
                 /**
                  * Native options to use in HTML5 validation
                  */
@@ -1144,9 +1150,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 position: PopoverPosition;
                 /**
-                 * Custom animation (transition name)
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, you can implement a fully custom transition with CSS using
+the `@starting-style` and `transition-behaviour: allow-discrete` properties,
+targeting the `[popover]`/`:popover-open` state, with no JS needed.
                  */
-                animation: string;
+                animation: false | PopoverAnimationName;
                 /**
                  * Dropdown menu tag name
                  */
@@ -2132,9 +2143,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 position: PopoverPosition;
                 /**
-                 * Show and dismiss animation
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, you can implement a fully custom transition with CSS using
+the `@starting-style` and `transition-behaviour: allow-discrete` properties,
+targeting the `[popover]`/`:popover-open` state, with no JS needed.
                  */
-                animation: string;
+                animation: false | PopoverAnimationName;
                 /**
                  * Adds close button to the content
                  */
