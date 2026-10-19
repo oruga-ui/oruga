@@ -22,7 +22,6 @@ declare module "vue" {
         OLoading: (typeof import("@oruga-ui/oruga-next"))["OLoading"];
         OMenu: (typeof import("@oruga-ui/oruga-next"))["OMenu"];
         OMenuItem: (typeof import("@oruga-ui/oruga-next"))["OMenuItem"];
-        OModal: (typeof import("@oruga-ui/oruga-next"))["OModal"];
         ONotification: (typeof import("@oruga-ui/oruga-next"))["ONotification"];
         ONotificationNotice: (typeof import("@oruga-ui/oruga-next"))["ONotificationNotice"];
         OPagination: (typeof import("@oruga-ui/oruga-next"))["OPagination"];

@@ -14,7 +14,6 @@ export * from "./input";
 export * from "./listbox";
 export * from "./loading";
 export * from "./menu";
-export * from "./modal";
 export * from "./notification";
 export * from "./pagination";
 export * from "./popover";
