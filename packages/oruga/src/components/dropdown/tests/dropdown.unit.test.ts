@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, afterEach } from "vitest";
-import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 import { nextTick, type ComponentPublicInstance } from "vue";
 import { setTimeout } from "timers/promises";
 
@@ -158,6 +158,7 @@ describe("ODropdown tests", () => {
             expect(items.length).toBe(simpleOptions.length);
 
             await items[1].trigger("click");
+            await flushPromises(); // drain animation microtask before flushing timers
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
@@ -184,7 +185,7 @@ describe("ODropdown tests", () => {
 
             // click outside
             window.dispatchEvent(new Event("click"));
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             const activeEmits = wrapper.emitted("update:active");
@@ -209,7 +210,7 @@ describe("ODropdown tests", () => {
 
             // click outside
             window.dispatchEvent(new Event("click"));
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             expect(wrapper.emitted("update:active")).toBeUndefined();
@@ -239,6 +240,8 @@ describe("ODropdown tests", () => {
 
             // close on trigger click
             await trigger.trigger("click");
+            await flushPromises(); // drain animation microtask before flushing timers
+
             expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
         });
@@ -356,7 +359,7 @@ describe("ODropdown tests", () => {
             window.dispatchEvent(
                 new CustomEvent("scroll", { detail: "anything" }),
             );
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             const activeEmits = wrapper.emitted("update:active");

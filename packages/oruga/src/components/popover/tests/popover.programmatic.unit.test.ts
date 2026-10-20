@@ -32,6 +32,7 @@ describe("usePopoverProgrammatic tests", () => {
 
         // open element
         const { close, promise } = factory.open({ content, target });
+        vi.runAllTimers(); // await popup open
 
         // check promise get called
         const handler = vi.fn();
@@ -70,6 +71,7 @@ describe("usePopoverProgrammatic tests", () => {
             { content, target },
             "#my-cool-container",
         );
+        vi.runAllTimers(); // await popup open
 
         // check element exist
         const popover = document.body.querySelector('[data-oruga="popover"]');
@@ -93,7 +95,7 @@ describe("usePopoverProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(2);
     });
 
-    test("test mounting with custom component correctly", () => {
+    test("test mounting with custom component correctly", async () => {
         const onClose = vi.fn();
 
         const component = createVNode({
@@ -107,6 +109,7 @@ describe("usePopoverProgrammatic tests", () => {
             onClose,
             props: { "data-oruga": "programmatic" },
         });
+        vi.runAllTimers(); // await popup open
 
         // check element exist
         const popover = document.body.querySelector('[data-oruga="popover"]');
@@ -119,6 +122,7 @@ describe("usePopoverProgrammatic tests", () => {
 
         // close element on button click
         button?.click();
+        await flushPromises(); // drain animation microtask before flushing timers
         vi.runAllTimers();
 
         // check element does not exist
@@ -130,12 +134,13 @@ describe("usePopoverProgrammatic tests", () => {
         expect(onClose).toHaveBeenCalledOnce();
     });
 
-    test("test internal close (x) event working correctly", () => {
+    test("test internal close (x) event working correctly", async () => {
         const content = "My Popover Content";
         const onClose = vi.fn();
 
         // open element
         factory.open({ content, target, closeable: true, onClose });
+        vi.runAllTimers(); // await popup open
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>(
@@ -145,6 +150,7 @@ describe("usePopoverProgrammatic tests", () => {
 
         // close element on 'x' button click
         el?.click();
+        await flushPromises(); // drain animation microtask before flushing timers
         vi.runAllTimers();
 
         // check element does not exist
@@ -154,7 +160,7 @@ describe("usePopoverProgrammatic tests", () => {
         expect(onClose).toHaveBeenCalledOnce();
     });
 
-    test("test external close event working correctly", () => {
+    test("test external close event working correctly", async () => {
         const component = createVNode({
             template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
         });
@@ -162,6 +168,7 @@ describe("usePopoverProgrammatic tests", () => {
 
         // open element
         factory.open({ component, target, onClose });
+        vi.runAllTimers(); // await popup open
 
         expect(factory.count()).toBe(1);
 
@@ -171,6 +178,7 @@ describe("usePopoverProgrammatic tests", () => {
 
         // close element on 'x' button click
         el?.click();
+        await flushPromises(); // drain animation microtask before flushing timers
         vi.runAllTimers();
 
         expect(factory.count()).toBe(0);
