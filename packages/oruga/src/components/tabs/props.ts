@@ -96,7 +96,7 @@ export type TabItemProps<T, C extends Component = Component> = {
      * @type string|number|object
      */
     value?: T;
-    /** Item label */
+    /** Item label, unnecessary when header slot is used */
     label?: string;
     /**
      * Color variant of the control

@@ -149,12 +149,12 @@ defineSlots<{
      */
     default?(props: { toggle: () => void }): void;
     /**
-     * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
+     * Define extra items here before the options defined by prop
      * @param toggle {(): void} - toggle dropdown active state
-     * */
+     */
     before?(props: { toggle: () => void }): void;
     /**
-     * Define extra `o-dropdown-item` components here, even if you have some options defined by prop
+     * Define extra items here after the options defined by prop
      * @param toggle {(): void} - toggle dropdown active state
      */
     after?(props: { toggle: () => void }): void;

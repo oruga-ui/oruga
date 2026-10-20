@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { BreadcrumnOptions } from "@oruga-ui/oruga-next";
+import type { BreadcrumbOptions } from "@oruga-ui/oruga-next";
 
-const options: BreadcrumnOptions = [
+const options: BreadcrumbOptions = [
     {
         label: "Home",
         href: "/",

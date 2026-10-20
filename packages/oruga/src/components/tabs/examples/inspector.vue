@@ -93,9 +93,9 @@ const inspectData: InspectData<
     },
     tabVariantClass: {
         class: "tabVariantClass",
-        subitem: "stepitem",
+        subitem: "tabitem",
         description:
-            "Class of the step item element with variant (default value by parent steps component).",
+            "Class of the tab item element with variant (default value by parent tabs component).",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (data): void => {

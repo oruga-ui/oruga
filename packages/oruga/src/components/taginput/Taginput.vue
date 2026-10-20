@@ -158,7 +158,7 @@ defineSlots<{
         removeItem: (index: number, event: Event) => void;
     }): void;
     /**
-     * Define a selected option here
+     * Override the option rendering
      * @param option {object} - option object
      */
     option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
@@ -400,7 +400,7 @@ defineExpose({
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
                 :teleport="teleport"
-                :has-counter="false"
+                :counter="false"
                 :use-html5-validation="false"
                 expanded
                 @input="onInput"

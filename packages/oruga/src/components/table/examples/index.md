@@ -74,10 +74,6 @@ Define the table the way you need it. To customise the appearance of the column 
 The row object can be accessed by the `row` slot property.
 Additionally, a `header` or `subheader` template slot can be used to customise the appearance of the column header label. See the full template slot definition below.
 
-::: info Limitations
-Due to the way the Vue reactivity system works, it is not possible to define a JavaScript object for the `thAttrs` and `tdAttrs` properties of the `o-table-column` component directly in the template block. This will result in a recursive rendering error. In order to use an object as value, the object must be defined as variable in the script block. (See [Issue #1531](https://github.com/oruga-ui/oruga/issues/1531))
-:::
-
 <ExampleViewer :component="Templates" :code="TemplatesCode" />
 
 ### Detailed

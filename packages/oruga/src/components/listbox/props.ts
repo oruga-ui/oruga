@@ -16,11 +16,11 @@ export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
     modelValue?: ValueType<T, IsMultiple>;
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
-    /** Autocomplete options */
+    /** Listbox options, unnecessary when default slot is used */
     options?: ListboxOptions<T>;
     /** Same as native id. Also pass the id to an wrapping `o-field` component - default is an uuid. */
     id?: string;
-    /** Interaction is disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
     /** Enable a checkbox on the item element */
     checkable?: boolean;
@@ -53,7 +53,7 @@ export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
     animation?: string;
     /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
-    /** Identifier of the underlying input element. */
+    /** Accessibility aria-labelledby to associate a label element with this component */
     ariaLabelledby?: string;
 } & ListboxClasses;
 
@@ -61,13 +61,13 @@ export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
 export type ListboxClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Clas of the root element when disabled */
+    /** Class of the root element when disabled */
     disabledClass: ComponentClass;
-    /** Clas of the root element when selectable */
+    /** Class of the root element when selectable */
     selectableClass: ComponentClass;
-    /** Clas of the root element when filterable */
+    /** Class of the root element when filterable */
     filterableClass: ComponentClass;
-    /** Clas of the root element when multiple */
+    /** Class of the root element when multiple */
     multipleClass: ComponentClass;
     /** Class of the header slot wrapper element */
     headerClass: ComponentClass;
@@ -90,13 +90,13 @@ export type ListItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
-     * Item value (it will be used as v-model of wrapper component) - default is an uuid
+     * Item value (it will be used as the v-model value of the wrapper component) - default is an uuid
      * @type string|number|object
      */
     value?: T;
     /** Item label, unnecessary when default slot is used */
     label?: string; // TODO: make required
-    /** Item is disabled */
+    /** Item will be disabled */
     disabled?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
@@ -114,13 +114,13 @@ export type ListItemProps<T> = {
     iconSize?: string;
     /** Defines an accessible string value that labels an interactive element. */
     ariaLabel?: string;
-    /** Identifier of the underlying input element. */
+    /** Accessibility aria-labelledby to associate a label element with this component */
     ariaLabelledby?: string;
 } & ListItemClasses;
 
 // class props (will not be displayed in the docs)
 export type ListItemClasses = Partial<{
-    /** Class of the item element. */
+    /** Class of the item element */
     itemClass: ComponentClass;
     /** Class of the item element when is selectable */
     itemSelectableClass: ComponentClass;

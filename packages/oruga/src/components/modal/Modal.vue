@@ -83,7 +83,7 @@ const emits = defineEmits<{
 defineSlots<{
     /**
      * Modal default content, default is content prop
-     * @param clsoe {(...args): void} - function to close the component
+     * @param close {(...args): void} - function to close the component
      */
     default?(props: {
         close: (...args: [] | [Event] | CloseEventArgs<C>) => void;

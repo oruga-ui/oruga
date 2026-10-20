@@ -44,11 +44,11 @@ export type AutocompleteProps<T> = {
     expanded?: boolean;
     /** Makes the element rounded */
     rounded?: boolean;
-    /** Same as native input disabled */
+    /** Same as native disabled */
     disabled?: boolean;
     /** Same as native maxlength, plus character counter */
     maxlength?: Numberish;
-    /** Number of milliseconds to delay before to emit input event */
+    /** Number of milliseconds to delay before emitting the input event */
     debounce?: number;
     /** The first option will always be focused (easier to just hit enter or tab) */
     keepFirst?: boolean;
@@ -58,7 +58,7 @@ export type AutocompleteProps<T> = {
     clearOnSelect?: boolean;
     /** Open dropdown list on focus */
     openOnFocus?: boolean;
-    /** Trigger the select event for focused option when drodpown got closed */
+    /** Trigger the select event for focused option when dropdown got closed */
     selectOnClose?: boolean;
     /** Allows the header in the autocomplete to be selectable */
     selectableHeader?: boolean;

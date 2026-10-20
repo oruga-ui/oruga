@@ -6,7 +6,7 @@ export type TaginputOptions<T> = AutocompleteOptions<T>;
 export type TaginputProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected items, use v-model to make it two-way binding binding */
+    /** The selected items, use v-model to make it two-way binding */
     modelValue?: T[];
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;
@@ -38,7 +38,7 @@ export type TaginputProps<T> = {
     placeholder?: string;
     /** Makes input full width when inside a grouped or addon field */
     expanded?: boolean;
-    /** Same as native input disabled */
+    /** Same as native disabled */
     disabled?: boolean;
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
     keepFirst?: boolean;

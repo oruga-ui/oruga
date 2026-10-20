@@ -6,7 +6,7 @@ export type TagProps = {
     /** Tag label, unnecessary when default slot is used */
     label?: string;
     /**
-     * Color variant of the breadcrumb
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;

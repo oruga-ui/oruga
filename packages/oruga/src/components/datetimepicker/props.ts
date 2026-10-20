@@ -24,7 +24,7 @@ export type DatetimepickerProps = {
     size?: string;
     /** Makes input full width when inside a grouped or addon field */
     expanded?: boolean;
-    /** Makes the input rounded */
+    /** Makes the element rounded */
     rounded?: boolean;
     /** Input placeholder */
     placeholder?: string;
@@ -67,11 +67,11 @@ export type DatetimepickerProps = {
     iconRightClickable?: boolean;
     /** Variant of the right icon */
     iconRightVariant?: string;
-    /** Dropdown content is shown into a modal on mobile */
+    /** Overlay content is shown into a modal on mobile */
     mobileModal?: boolean;
-    /** Dropdown content is shown into a modal on desktop */
+    /** Overlay content is shown into a modal on desktop */
     desktopModal?: boolean;
-    /** Enable mobile native input if mobile agent */
+    /** Enable mobile native input if device is a mobile agent */
     mobileNative?: boolean;
     /**
      * Append the component to another part of the DOM.

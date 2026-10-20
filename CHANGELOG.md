@@ -1,3 +1,15 @@
+## [0.14.4](https://github.com/oruga-ui/oruga/compare/v0.14.3...v0.14.4) (2026-09-21)
+
+### Features
+
+* **forms:** add typed native HTML attribute passthrough props ([#1762](https://github.com/oruga-ui/oruga/issues/1762)) ([1b78cdb](https://github.com/oruga-ui/oruga/commit/1b78cdb27126179c2cb085974ea7072f8498aa92))
+* **table:** add `defineOTableColumn<T>()` helper for typed column slots ([#1757](https://github.com/oruga-ui/oruga/issues/1757)) ([77e8db9](https://github.com/oruga-ui/oruga/commit/77e8db9fec0e8a35092fb08573e0203b90b2ae94)), references [#default](https://github.com/oruga-ui/oruga/issues/default)
+
+### Bug Fixes
+
+* **dropdown|tooltip:** correct wrong prop default paths ([#1754](https://github.com/oruga-ui/oruga/issues/1754)) ([cc678cd](https://github.com/oruga-ui/oruga/commit/cc678cdec54bc5378ad168fc96c10cb638fdb365))
+* **table:** prevent recursive update cascade for inline td-attrs/th-attrs objects ([#1758](https://github.com/oruga-ui/oruga/issues/1758)) ([0e8f2b4](https://github.com/oruga-ui/oruga/commit/0e8f2b42c3d1c8d39b620fab802d2eb60f93e001)), closes [#1531](https://github.com/oruga-ui/oruga/issues/1531)
+
 ## [0.14.3](https://github.com/oruga-ui/oruga/compare/v0.14.2...v0.14.3) (2026-09-03)
 
 ### Bug Fixes
