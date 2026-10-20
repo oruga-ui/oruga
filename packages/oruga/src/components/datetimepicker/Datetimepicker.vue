@@ -52,8 +52,10 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     position: undefined,
     iconPack: () => getDefault("datetimepicker.iconPack"),
     icon: () => getDefault("datetimepicker.icon"),
+    iconSize: () => getDefault("datetimepicker.iconSize"),
     iconRight: () => getDefault("datetimepicker.iconRight"),
     iconRightClickable: false,
+    iconRightVariant: () => getDefault("datetimepicker.iconRightVariant"),
     desktopModal: () => getDefault("datetimepicker.desktopModal", false),
     mobileModal: () => getDefault("datetimepicker.mobileModal", true),
     mobileNative: () => getDefault("datetimepicker.mobileNative", true),
@@ -377,8 +379,10 @@ defineExpose({
         :min-date="minDate"
         :max-date="maxDate"
         :icon="icon"
+        :icon-size="iconSize"
         :icon-right="iconRight"
         :icon-right-clickable="iconRightClickable"
+        :icon-right-variant="iconRightVariant"
         :icon-pack="iconPack"
         :size="datepickerSize"
         :placeholder="placeholder"
@@ -431,6 +435,7 @@ defineExpose({
         :size="datepickerSize"
         :icon-pack="iconPack"
         :icon="icon"
+        :icon-size="iconSize"
         :rounded="rounded"
         :disabled="disabled"
         :readonly="false"

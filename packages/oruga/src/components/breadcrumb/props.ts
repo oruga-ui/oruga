@@ -54,7 +54,7 @@ export type BreadcrumbItemProps = {
     /** Define whether the item is visible or not */
     hidden?: boolean;
     /** Icon name to show on the left */
-    iconLeft?: string;
+    icon?: string;
     /** Icon name to show on the right */
     iconRight?: string;
     /**

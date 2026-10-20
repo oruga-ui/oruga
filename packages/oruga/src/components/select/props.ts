@@ -67,6 +67,11 @@ export type SelectProps<T, IsMultiple extends boolean = boolean> = {
     iconRightClickable?: boolean;
     /** Variant of right icon */
     iconRightVariant?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. */
     id?: string;
     /** Show status icon using field and variant prop */

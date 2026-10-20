@@ -68,6 +68,7 @@ const props = withDefaults(
         iconRight: () => getDefault("input.iconRight"),
         iconRightClickable: false,
         iconRightVariant: undefined,
+        iconSize: () => getDefault("input.iconSize"),
         clearable: () => getDefault("input.clearable", false),
         clearIcon: () => getDefault("input.clearIcon", "close-circle"),
         statusIcon: () => getDefault("statusIcon", true),
@@ -395,7 +396,7 @@ defineExpose({
             :clickable="iconClickable"
             :icon="icon"
             :pack="iconPack"
-            :size="size"
+            :size="iconSize ?? size"
             @click="iconClick" />
 
         <textarea
@@ -427,7 +428,7 @@ defineExpose({
             :class="iconRightClasses"
             :icon="computedIconRight"
             :pack="iconPack"
-            :size="size"
+            :size="iconSize ?? size"
             :variant="computedIconRightVariant"
             :clickable="passwordReveal || clearable || iconRightClickable"
             @click="rightIconClick" />

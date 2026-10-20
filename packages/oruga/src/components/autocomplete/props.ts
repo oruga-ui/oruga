@@ -73,6 +73,11 @@ export type AutocompleteProps<T> = {
     iconPack?: string;
     /** Icon to be shown */
     icon?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Makes the icon clickable */
     iconClickable?: boolean;
     /** Icon to be added on the right side */

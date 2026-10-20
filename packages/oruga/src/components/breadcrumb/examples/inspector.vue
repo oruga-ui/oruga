@@ -81,18 +81,18 @@ const inspectData: InspectData<
     iconClass: {
         class: "iconClass",
         description: "Class of the item icon element",
-        properties: ["iconLeft", "iconRight"],
+        properties: ["icon", "iconRight"],
         action: (data) => {
-            data.iconLeft = "home";
+            data.icon = "home";
             data.iconRight = "home";
         },
     },
     iconLeftClass: {
         class: "iconLeftClass",
         description: "Class of the item left icon element",
-        properties: ["iconLeft"],
+        properties: ["icon"],
         action: (data) => {
-            data.iconLeft = "home";
+            data.icon = "home";
         },
     },
     iconRightClass: {
