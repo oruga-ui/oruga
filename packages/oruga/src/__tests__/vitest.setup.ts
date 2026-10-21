@@ -44,6 +44,16 @@ Object.defineProperties(HTMLDialogElement.prototype, {
         configurable: true,
         writable: true,
     },
+    requestClose: {
+        value(returnValue?: string) {
+            if (typeof returnValue !== "undefined") this.returnValue = returnValue;
+            const cancelEvent = new Event("cancel", { cancelable: true });
+            const notCancelled = this.dispatchEvent(cancelEvent);
+            if (notCancelled) this.close();
+        },
+        configurable: true,
+        writable: true,
+    },
 });
 
 class MockToggleEvent extends Event {
@@ -139,6 +149,32 @@ Object.defineProperties(HTMLElement.prototype, {
         configurable: true,
         writable: true,
     },
+});
+
+// add missing Web Animations API jsdom implementation (https://github.com/jsdom/jsdom/issues/3041)
+Object.defineProperty(HTMLElement.prototype, "animate", {
+    value() {
+        const animation = {
+            playState: "running",
+            finished: undefined as unknown as Promise<void>,
+            cancel() {
+                this.playState = "idle";
+            },
+            reverse() {
+                // no-op direction flip - the mock resolves immediately either way
+            },
+            play() {},
+            pause() {},
+        };
+
+        animation.finished = Promise.resolve().then(() => {
+            animation.playState = "finished";
+        });
+
+        return animation;
+    },
+    configurable: true,
+    writable: true,
 });
 
 // create a global oruga instance for all tests

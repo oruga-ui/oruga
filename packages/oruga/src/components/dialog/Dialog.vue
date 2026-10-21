@@ -19,6 +19,7 @@ import { toCssDimension } from "@/utils/helpers";
 import {
     defineClasses,
     unrefElement,
+    useAnimationsAPI,
     useEventListener,
     useMatchMedia,
     usePreventScrolling,
@@ -222,6 +223,13 @@ function focusConfirmButton(): void {
 
 // #region --- Trigger Handler ---
 
+const { play, canPlay } = useAnimationsAPI();
+
+// whether a deferred (animated) close is currently in flight - guards
+// against the stale `.then()` below closing the dialog after a reopen
+// reversed the leave animation back to visible
+let closing = false;
+
 onMounted(() => toggleDialog(isActive.value));
 
 watch(isActive, toggleDialog);
@@ -231,6 +239,15 @@ function toggleDialog(value: boolean): void {
     if (!rootRef.value) return;
 
     if (value) {
+        if (rootRef.value.open) {
+            // a deferred close was interrupted by a reopen - reverse the
+            // leave animation back to visible instead of re-opening (which
+            // would throw InvalidStateError on an already-open dialog)
+            closing = false;
+            play(rootRef.value, props.animation, true);
+            return;
+        }
+
         // reset the return value on each open
         rootRef.value.returnValue = "";
 
@@ -238,21 +255,28 @@ function toggleDialog(value: boolean): void {
         if (hasBackdrop.value) rootRef.value.showModal();
         // trigger dialog show without backdrop event
         else rootRef.value.show();
+
+        play(rootRef.value, props.animation, true);
     } else if (rootRef.value?.open) {
-        // trigger dialog close event
-        rootRef.value.close();
+        // trigger dialog close event, deferred/animated via `onCancel` below
+        // when supported
+        requestNativeClose();
     }
+}
+
+/** request the native dialog to close, going through `requestClose` (interceptable via `cancel`) when supported */
+function requestNativeClose(returnValue?: string): void {
+    if (!rootRef.value) return;
+    if (typeof rootRef.value.requestClose === "function")
+        // requestClose is a fairly new web API that is not yet supported in all environments
+        rootRef.value.requestClose(returnValue);
+    else rootRef.value.close(returnValue);
 }
 
 /** request the dialog to close when active */
 function close(returnValue?: string): void {
     if (!isActive.value || !rootRef.value) return;
-
-    // trigger dialog close event
-    if (typeof rootRef.value.requestClose === "function")
-        // requestClose is a fairly new web API that is not yet supported in all environments
-        rootRef.value.requestClose(returnValue);
-    else rootRef.value.close(returnValue);
+    requestNativeClose(returnValue);
 }
 
 /** emit a confirm event when active */
@@ -260,7 +284,7 @@ function confirm(): void {
     if (!isActive.value || !rootRef.value) return;
 
     emits("confirm");
-    if (props.closeOnConfirm) rootRef.value.close("confirm");
+    if (props.closeOnConfirm) requestNativeClose("confirm");
 }
 
 /** native dialog close event */
@@ -270,10 +294,24 @@ function onClose(event: Event): void {
     emits("close", event, returnValue);
 }
 
-/** native dialog cancel event */
+/**
+ * native dialog cancel event - fired (cancelable) for every close trigger:
+ * Escape, light-dismiss, and `requestClose()` calls above. Intercept it to
+ * play the leave animation before the dialog actually closes.
+ */
 function onCancel(event: Event): void {
-    const returnValue = rootRef.value?.returnValue;
-    emits("cancel", event, returnValue);
+    emits("cancel", event, rootRef.value?.returnValue);
+
+    if (!canPlay(rootRef.value, props.animation)) return; // let the native close proceed immediately
+    event.preventDefault();
+    if (closing) return; // already animating out
+
+    closing = true;
+    play(rootRef.value, props.animation, false).then(() => {
+        if (!closing) return; // a reopen reversed the animation - stay open
+        closing = false;
+        rootRef.value?.close(); // real, non-cancelable close - fires `close`, no re-entrant `cancel`
+    });
 }
 
 // #endregion --- Trigger Handler ---
@@ -448,149 +486,143 @@ defineExpose({ close, confirm });
 
 <template>
     <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-        <transition :name="animation">
-            <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
-            <dialog
-                ref="rootElement"
-                v-bind="$attrs"
-                data-oruga="dialog"
-                :class="rootClasses"
-                :style="dragStyle"
-                :role="alert ? 'alertdialog' : 'dialog'"
-                :closedBy="closedBy"
-                :aria-label="ariaLabel"
-                :aria-describedby="title ? titleId : ariaDescribedby"
-                @close="onClose"
-                @cancel="onCancel">
-                <!-- Backdrop -->
+        <dialog
+            ref="rootElement"
+            v-bind="$attrs"
+            data-oruga="dialog"
+            :class="rootClasses"
+            :style="dragStyle"
+            :role="alert ? 'alertdialog' : 'dialog'"
+            :closedBy="closedBy"
+            :aria-label="ariaLabel"
+            :aria-describedby="title ? titleId : ariaDescribedby"
+            @close="onClose"
+            @cancel="onCancel">
+            <!-- Backdrop -->
+            <div
+                v-if="backdrop && backdropClasses.length"
+                :class="backdropClasses" />
+
+            <div :class="contentClasses" :style="contentStyle">
+                <!-- Header -->
+                <header
+                    v-if="
+                        $slots['header'] ||
+                        $slots['title'] ||
+                        $slots['subtitle'] ||
+                        title ||
+                        subtitle ||
+                        closeable
+                    "
+                    :class="headerClasses"
+                    @pointerdown="onDragStart">
+                    <slot name="header" :close="close" :confirm="confirm">
+                        <h1
+                            v-if="$slots['title'] || title"
+                            :id="titleId"
+                            :class="titleClasses">
+                            <slot name="title"> {{ title }} </slot>
+                        </h1>
+
+                        <h2
+                            v-if="$slots['subtitle'] || subtitle"
+                            :class="subtitleClasses">
+                            <slot name="subtitle"> {{ subtitle }} </slot>
+                        </h2>
+                    </slot>
+
+                    <CloseButton
+                        v-if="closeable"
+                        :pack="iconPack"
+                        :icon="closeIcon"
+                        :size="closeIconSize"
+                        :label="ariaCloseLabel"
+                        :classes="closeClasses"
+                        @click="close">
+                        <slot v-if="$slots['close']" name="close" />
+                    </CloseButton>
+                </header>
+
+                <!-- Body -->
                 <div
-                    v-if="backdrop && backdropClasses.length"
-                    :class="backdropClasses" />
+                    v-if="
+                        $slots['default'] ||
+                        $slots['content'] ||
+                        $props.component ||
+                        content
+                    "
+                    :class="bodyClasses">
+                    <!-- Image -->
+                    <slot name="image">
+                        <figure v-if="imageSrc" :class="figureClasses">
+                            <img
+                                :src="imageSrc"
+                                :alt="imageAlt"
+                                :class="imageClasses" />
+                        </figure>
+                    </slot>
 
-                <div :class="contentClasses" :style="contentStyle">
-                    <!-- Header -->
-                    <header
-                        v-if="
-                            $slots['header'] ||
-                            $slots['title'] ||
-                            $slots['subtitle'] ||
-                            title ||
-                            subtitle ||
-                            closeable
-                        "
-                        :class="headerClasses"
-                        @pointerdown="onDragStart">
-                        <slot name="header" :close="close" :confirm="confirm">
-                            <h1
-                                v-if="$slots['title'] || title"
-                                :id="titleId"
-                                :class="titleClasses">
-                                <slot name="title"> {{ title }} </slot>
-                            </h1>
+                    <!-- Main Content -->
+                    <slot :close="close" :confirm="confirm">
+                        <!-- injected component for programmatic usage -->
+                        <component
+                            :is="$props.component"
+                            v-if="$props.component"
+                            v-bind="$props.props"
+                            v-on="$props.events || {}"
+                            @close="close" />
 
-                            <h2
-                                v-if="$slots['subtitle'] || subtitle"
-                                :class="subtitleClasses">
-                                <slot name="subtitle"> {{ subtitle }} </slot>
-                            </h2>
+                        <slot name="content" :close="close" :confirm="confirm">
+                            {{ content }}
                         </slot>
-
-                        <CloseButton
-                            v-if="closeable"
-                            :pack="iconPack"
-                            :icon="closeIcon"
-                            :size="closeIconSize"
-                            :label="ariaCloseLabel"
-                            :classes="closeClasses"
-                            @click="close">
-                            <slot v-if="$slots['close']" name="close" />
-                        </CloseButton>
-                    </header>
-
-                    <!-- Body -->
-                    <div
-                        v-if="
-                            $slots['default'] ||
-                            $slots['content'] ||
-                            $props.component ||
-                            content
-                        "
-                        :class="bodyClasses">
-                        <!-- Image -->
-                        <slot name="image">
-                            <figure v-if="imageSrc" :class="figureClasses">
-                                <img
-                                    :src="imageSrc"
-                                    :alt="imageAlt"
-                                    :class="imageClasses" />
-                            </figure>
-                        </slot>
-
-                        <!-- Main Content -->
-                        <slot :close="close" :confirm="confirm">
-                            <!-- injected component for programmatic usage -->
-                            <component
-                                :is="$props.component"
-                                v-if="$props.component"
-                                v-bind="$props.props"
-                                v-on="$props.events || {}"
-                                @close="close" />
-
-                            <slot
-                                name="content"
-                                :close="close"
-                                :confirm="confirm">
-                                {{ content }}
-                            </slot>
-                        </slot>
-                    </div>
-
-                    <!-- Loading -->
-                    <o-loading
-                        :active="loading"
-                        :full-page="false"
-                        :label="loadingLabel"
-                        :icon-pack="iconPack" />
-
-                    <!-- Footer -->
-                    <footer
-                        v-if="$slots['footer'] || cancelButton || confirmButton"
-                        :class="footerClasses">
-                        <slot name="footer" :close="close" :confirm="confirm">
-                            <OButton
-                                v-if="cancelButton || $slots['cancelButton']"
-                                ref="cancelButton"
-                                :class="cancelButtonClasses"
-                                :label="cancelButton"
-                                :variant="cancelVariant"
-                                :disabled="disableCancel"
-                                autofocus
-                                @click="close('cancel')"
-                                @keyup.right="focusConfirmButton">
-                                <slot name="cancelButton">
-                                    {{ cancelButton }}
-                                </slot>
-                            </OButton>
-
-                            <OButton
-                                v-if="confirmButton || $slots['confirmButton']"
-                                ref="confirmButton"
-                                :class="confirmButtonClasses"
-                                :label="confirmButton"
-                                :variant="confirmVariant"
-                                :disabled="disableConfirm"
-                                :loading="loading"
-                                autofocus
-                                @click="confirm"
-                                @keyup.left="focusCancelButton">
-                                <slot name="confirmButton">
-                                    {{ confirmButton }}
-                                </slot>
-                            </OButton>
-                        </slot>
-                    </footer>
+                    </slot>
                 </div>
-            </dialog>
-        </transition>
+
+                <!-- Loading -->
+                <o-loading
+                    :active="loading"
+                    :full-page="false"
+                    :label="loadingLabel"
+                    :icon-pack="iconPack" />
+
+                <!-- Footer -->
+                <footer
+                    v-if="$slots['footer'] || cancelButton || confirmButton"
+                    :class="footerClasses">
+                    <slot name="footer" :close="close" :confirm="confirm">
+                        <OButton
+                            v-if="cancelButton || $slots['cancelButton']"
+                            ref="cancelButton"
+                            :class="cancelButtonClasses"
+                            :label="cancelButton"
+                            :variant="cancelVariant"
+                            :disabled="disableCancel"
+                            autofocus
+                            @click="close('cancel')"
+                            @keyup.right="focusConfirmButton">
+                            <slot name="cancelButton">
+                                {{ cancelButton }}
+                            </slot>
+                        </OButton>
+
+                        <OButton
+                            v-if="confirmButton || $slots['confirmButton']"
+                            ref="confirmButton"
+                            :class="confirmButtonClasses"
+                            :label="confirmButton"
+                            :variant="confirmVariant"
+                            :disabled="disableConfirm"
+                            :loading="loading"
+                            autofocus
+                            @click="confirm"
+                            @keyup.left="focusCancelButton">
+                            <slot name="confirmButton">
+                                {{ confirmButton }}
+                            </slot>
+                        </OButton>
+                    </slot>
+                </footer>
+            </div>
+        </dialog>
     </Teleport>
 </template>

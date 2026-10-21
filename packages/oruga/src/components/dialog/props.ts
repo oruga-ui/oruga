@@ -1,5 +1,10 @@
 import type { Component } from "vue";
-import type { ComponentClass, ComponentEmits, Numberish } from "@/types";
+import type {
+    AnimationName,
+    ComponentClass,
+    ComponentEmits,
+    Numberish,
+} from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type DialogProps<C extends Component = Component> = {
@@ -7,8 +12,14 @@ export type DialogProps<C extends Component = Component> = {
     override?: boolean;
     /** Whether dialog is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Custom animation (transition name) */
-    animation?: string;
+    /**
+     * Open/close animation using the native Web Animations API.
+     * Set to `false` to disable the built-in animation.
+     *
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+     * @default 'zoom-out'
+     */
+    animation?: AnimationName | false;
     /** Show an backdrop overlay background; make it a modal dialog */
     backdrop?: boolean;
     /**
