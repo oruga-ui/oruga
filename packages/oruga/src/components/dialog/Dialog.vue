@@ -30,6 +30,7 @@ import type { DialogProps } from "./props";
 
 /**
  * Dialog is a container to display content in an overlay window.
+ * It is based on the native `<dialog>` element.
  * @displayName Dialog
  * @style _dialog.scss
  */
@@ -199,27 +200,12 @@ const closedBy = computed(() => {
 
 const toggleScroll = usePreventScrolling(props.blockScroll);
 
-watch(
-    isActive,
-    (value) => {
-        if (hasBackdrop.value) toggleScroll(value);
-    },
-    { immediate: true },
-);
+watch(() => isActive.value && props.backdrop, toggleScroll, {
+    immediate: true,
+    flush: "post",
+});
 
 // #endregion --- Scroll Feature ---
-
-// #region --- Focus Feature ---
-
-function focusCancelButton(): void {
-    nextTick(() => unrefElement(cancelButtonRef)?.focus());
-}
-
-function focusConfirmButton(): void {
-    nextTick(() => unrefElement(confirmButtonRef)?.focus());
-}
-
-// #endregion --- Focus Feature ---
 
 // #region --- Trigger Handler ---
 
@@ -315,6 +301,18 @@ function onCancel(event: Event): void {
 }
 
 // #endregion --- Trigger Handler ---
+
+// #region --- Focus Feature ---
+
+function focusCancelButton(): void {
+    nextTick(() => unrefElement(cancelButtonRef)?.focus());
+}
+
+function focusConfirmButton(): void {
+    nextTick(() => unrefElement(confirmButtonRef)?.focus());
+}
+
+// #endregion --- Focus Feature ---
 
 // #region --- Draggable Feature ---
 
