@@ -18,7 +18,7 @@ import {
 } from "@/utils/helpers";
 import { unrefElement, usePopoverAPI } from "@/composables";
 
-import type { ComponentClass, PopoverPosition } from "@/types";
+import type { AnimationName, ComponentClass, PopoverPosition } from "@/types";
 import { useTeleport } from "@/composables/useTeleport";
 
 /**
@@ -62,7 +62,11 @@ const props = defineProps({
     openOnFocus: { type: Boolean, default: false },
     position: { type: String as PropType<PopoverPosition>, required: true },
     teleport: { type: [Boolean, String, Object], default: false },
-    animation: { type: String, default: undefined },
+    /** Open/close animation, played via the Web Animations API. Set to `false` to disable. */
+    animation: {
+        type: [String, Boolean] as PropType<AnimationName | false>,
+        default: undefined,
+    },
 
     // input props
     placeholder: { type: String, default: undefined },
@@ -144,6 +148,7 @@ if (!props.inline) {
         position: popoverPosition,
         behavior: "auto",
         trigger: isActive,
+        animation: () => props.animation,
         targetRef: triggerRef,
         contentRef: contentRef,
         onToggle,
@@ -398,14 +403,11 @@ defineExpose({ focus: setFocus });
     </div>
 
     <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-        <transition :name="animation">
-            <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
-            <div
-                ref="contentElement"
-                :class="contentClass"
-                :popover="inline ? undefined : ''">
-                <slot />
-            </div>
-        </transition>
+        <div
+            ref="contentElement"
+            :class="contentClass"
+            :popover="inline ? undefined : ''">
+            <slot />
+        </div>
     </Teleport>
 </template>

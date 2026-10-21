@@ -1,4 +1,9 @@
-import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
+import type {
+    AnimationName,
+    ComponentClass,
+    DynamicComponent,
+    Numberish,
+} from "@/types";
 import type { InputProps } from "../input/props";
 import type { DropdownOptions } from "../dropdown/props";
 
@@ -91,8 +96,14 @@ export type AutocompleteProps<T> = {
     mobileModal?: boolean;
     /** Dropdown content (items) are shown into a modal on desktop */
     desktopModal?: boolean;
-    /** Transition name to apply on dropdown list */
-    animation?: string;
+    /**
+     * Open/close animation using the native Web Animations API.
+     * Set to `false` to disable the built-in animation.
+     *
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+     * @default 'fade'
+     */
+    animation?: AnimationName | false;
     /** Native options to use in HTML5 validation */
     autocomplete?: string;
     /** Enable HTML 5 native validation */
