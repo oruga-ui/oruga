@@ -29,6 +29,7 @@ import type { DialogProps } from "./props";
 
 /**
  * Dialog is a container to display content in an overlay window.
+ * It is based on the native `<dialog>` element.
  * @displayName Dialog
  * @style _dialog.scss
  */
