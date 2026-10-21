@@ -4,6 +4,7 @@ import { prefersReducedMotion } from "@/utils/helpers";
 export type AnimationName =
     | "fade"
     | "scale"
+    | "zoom-in"
     | "zoom-out"
     | "slide-up"
     | "slide-down"
@@ -23,6 +24,14 @@ const ANIMATION_PRESETS: Record<
     scale: {
         keyframes: [
             { opacity: 0, transform: "scale(0.95)" },
+            { opacity: 1, transform: "scale(1)" },
+        ],
+        options: { duration: 150, easing: "ease-out", fill: "both" },
+    },
+    // grows from a clearly smaller size, in contrast to the subtle `scale`
+    "zoom-in": {
+        keyframes: [
+            { opacity: 0, transform: "scale(0.85)" },
             { opacity: 1, transform: "scale(1)" },
         ],
         options: { duration: 150, easing: "ease-out", fill: "both" },
@@ -83,6 +92,8 @@ const ANIMATION_PRESETS: Record<
  * Plays named [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)
  * presets on an element, tracking the in-flight animation
  * so a rapid open/close reverses smoothly instead of jump-cutting.
+ * The end state of an opening animation is released once it has finished,
+ * so inline styles of the element apply again while it is open.
  */
 export function useAnimationsAPI(): {
     /** Checks whether a preset would actually play for the given element. */
@@ -90,19 +101,14 @@ export function useAnimationsAPI(): {
         el: HTMLElement | undefined | null,
         name: AnimationName | false | undefined,
     ) => boolean;
-    /**
-     * Plays a named preset, resolving once it has finished (or immediately if it's a no-op).
-     * With `withBackdrop` the `::backdrop` of the element fades in and out together with the preset.
-     */
+    /** Plays a named preset, resolving once it has finished (or immediately if it's a no-op). */
     play: (
         el: HTMLElement | undefined | null,
         name: AnimationName | false | undefined,
         opening: boolean,
-        withBackdrop?: boolean,
     ) => Promise<void>;
 } {
     let current: Animation | undefined;
-    let currentBackdrop: Animation | undefined;
 
     function canPlay(
         el: HTMLElement | undefined | null,
@@ -115,31 +121,30 @@ export function useAnimationsAPI(): {
         );
     }
 
-    /** Fades the `::backdrop` of the element, using the timing of the given preset. */
-    function animateBackdrop(
-        el: HTMLElement,
-        options: KeyframeAnimationOptions,
-        opening: boolean,
-    ): Animation | undefined {
-        try {
-            // a single keyframe fades from/to the style which is defined by the theme
-            const animation = el.animate([{ opacity: 0 }], {
-                ...options,
-                pseudoElement: "::backdrop",
-            });
-            if (!opening) animation.reverse();
-            return animation;
-        } catch {
-            // the browser does not support animating the `::backdrop`
-            return undefined;
-        }
+    /**
+     * Release the held `fill: "both"` effect of an animation once it has finished opening.
+     * An animation effect overrides inline styles, so a held effect would hide e.g. an
+     * inline `transform`, which is set by the consumer while the element is open.
+     * A closing animation keeps its end state until the element gets closed.
+     */
+    function releaseWhenOpened(animation: Animation): void {
+        animation.finished.then(
+            () => {
+                // replaced by another animation
+                if (current !== animation) return;
+                // finished in reverse direction, which means it has been closed
+                if (!(animation.playbackRate > 0)) return;
+                animation.cancel();
+                current = undefined;
+            },
+            () => undefined, // ignore AbortError thrown when an animation is cancelled
+        );
     }
 
     function play(
         el: HTMLElement | undefined | null,
         name: AnimationName | false | undefined,
         opening: boolean,
-        withBackdrop = false,
     ): Promise<void> {
         if (!canPlay(el, name)) return Promise.resolve();
         const preset = ANIMATION_PRESETS[name as AnimationName];
@@ -147,17 +152,13 @@ export function useAnimationsAPI(): {
         if (current && current.playState !== "finished") {
             // smoothly reverse an in-flight animation instead of jump-cutting
             current.reverse();
-            currentBackdrop?.reverse();
         } else {
             // release the previous (finished) animation's held `fill: "both"`
             // effect before replacing it
             current?.cancel();
-            currentBackdrop?.cancel();
-            currentBackdrop = undefined;
             current = el!.animate(preset.keyframes, preset.options);
             if (!opening) current.reverse();
-            if (withBackdrop)
-                currentBackdrop = animateBackdrop(el!, preset.options, opening);
+            releaseWhenOpened(current);
         }
 
         return current.finished.then(

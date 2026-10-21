@@ -41,7 +41,6 @@ export type DrawerProps<C extends Component = Component> = {
      * Open/close animation using the native Web Animations API.
      * By default the drawer slides in from the edge defined by `position`.
      * Set to `false` to disable the built-in animation.
-     * A `backdrop` fades in and out together with the animation.
      *
      * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
      * @default 'slide-from-<position>'
@@ -54,10 +53,7 @@ export type DrawerProps<C extends Component = Component> = {
      * Requires a browser with `closedby` support of the dialog element.
      */
     closeOnBackdrop?: boolean;
-    /**
-     * Close when pressing escape key.
-     * Browsers with `closedby` support also close on escape when `closeOnBackdrop` is enabled.
-     */
+    /** Close when pressing escape key */
     closeOnEscape?: boolean;
     /** Close the drawer when the confirm button is pressed */
     closeOnConfirm?: boolean;

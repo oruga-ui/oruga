@@ -30,7 +30,9 @@ Object.defineProperties(HTMLDialogElement.prototype, {
         writable: true,
     },
     close: {
-        value() {
+        value(returnValue?: string) {
+            if (typeof returnValue !== "undefined")
+                this.returnValue = returnValue;
             this.open = false;
             this.dispatchEvent(new Event("close"));
         },

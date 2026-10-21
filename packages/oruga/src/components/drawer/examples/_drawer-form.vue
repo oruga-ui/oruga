@@ -5,65 +5,50 @@ defineOptions({
 
 defineProps({
     email: { type: String, default: "" },
-    password: { type: String, default: "" },
 });
 
-defineEmits<{
+const emit = defineEmits<{
+    /** close the drawer with an optional return value */
     close: [returnValue?: string];
 }>();
+
+function onSubmit(): void {
+    // the native form validation has already succeeded here
+    emit("close", "login");
+}
 </script>
 
 <template>
-    <form action="">
-        <header>
-            <p>Login</p>
-            <o-icon
-                clickable
-                native-type="button"
-                icon="times"
-                @click="$emit('close')" />
-        </header>
+    <form @submit.prevent="onSubmit">
+        <o-field label="Email">
+            <o-input
+                type="email"
+                autocomplete="email"
+                autofocus
+                :model-value="email"
+                placeholder="Your email"
+                required />
+        </o-field>
 
-        <section>
-            <o-field label="Email">
-                <o-input
-                    type="email"
-                    :value="email"
-                    placeholder="Your email"
-                    required />
-            </o-field>
+        <o-field label="Password">
+            <o-input
+                type="password"
+                autocomplete="current-password"
+                password-reveal
+                placeholder="Your password"
+                required />
+        </o-field>
 
-            <o-field label="Password">
-                <o-input
-                    type="password"
-                    :value="password"
-                    password-reveal
-                    placeholder="Your password"
-                    required />
-            </o-field>
+        <o-field>
+            <o-checkbox label="Remember me" />
+        </o-field>
 
-            <o-field>
-                <o-checkbox label="Remember me" />
-            </o-field>
-        </section>
-
-        <footer>
+        <div style="display: flex; align-items: center; gap: 5px">
             <o-button
-                label="Close"
                 type="button"
-                @click="$emit('close')" />
-            <o-button label="Login" variant="primary" />
-        </footer>
+                label="Cancel"
+                @click="emit('close', 'cancel')" />
+            <o-button type="submit" label="Login" variant="primary" />
+        </div>
     </form>
 </template>
-
-<style scoped>
-form {
-    padding: 15px;
-}
-
-form header {
-    display: flex;
-    justify-content: space-between;
-}
-</style>
