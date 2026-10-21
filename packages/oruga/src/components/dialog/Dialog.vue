@@ -15,12 +15,12 @@ import OButton from "@/components/button/Button.vue";
 import CloseButton from "@/components/utils/CloseButton.vue";
 
 import { getDefault } from "@/utils/config";
-import { toCssDimension } from "@/utils/helpers";
+import { INTERACTIVE_SELECTOR, toCssDimension } from "@/utils/helpers";
+import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
     unrefElement,
     useAnimationsAPI,
-    useEventListener,
     useMatchMedia,
     usePreventScrolling,
     useTeleport,
@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     active: false,
     fullscreen: false,
     size: () => getDefault("dialog.size"),
-    animation: () => getDefault("dialog.animation", "zoom-out"),
+    animation: () => getDefault("dialog.animation", "zoom-in"),
     backdrop: () => getDefault("dialog.backdrop", true),
     maxWidth: () => getDefault("dialog.maxWidth", "80vw"),
     maxHeight: () => getDefault("dialog.maxHeight", "80vh"),
@@ -170,11 +170,20 @@ const titleId = useId();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const _teleport = useTeleport(props.teleport);
+const _teleport = useTeleport(() => props.teleport);
 
-const hasBackdrop = computed(
-    () => props.backdrop || props.alert || rootRef.value?.ariaModal,
-);
+/** Whether the dialog is shown as modal, with a backdrop and an inert page. */
+const isModal = computed(() => !!(props.backdrop || props.alert));
+
+// #region --- Dialog Feature ---
+
+const { play, canPlay } = useAnimationsAPI();
+
+/**
+ * Whether a deferred (animated) close is currently in flight.
+ * Guards against a stale animation callback closing the dialog after a reopen reversed the leave animation.
+ */
+let isClosing = false;
 
 /**
  * Specifies the types of user actions that can be used to close the dialog.
@@ -184,7 +193,7 @@ const closedBy = computed(() => {
     // The dialog can be dismissed when the user clicks or taps outside it,
     // and with a platform-specific user action or a developer-specified mechanism.
     if (
-        hasBackdrop.value &&
+        isModal.value &&
         props.closeOnBackdrop &&
         !props.alert &&
         !props.fullscreen
@@ -196,111 +205,151 @@ const closedBy = computed(() => {
     else return "none";
 });
 
+/** Whether the browser supports the `closedby` attribute of the dialog element. */
+function supportsClosedBy(): boolean {
+    return isClient && "closedBy" in HTMLDialogElement.prototype;
+}
+
+/**
+ * Whether the escape key is currently pressed.
+ * The `closedby="any"` value does not allow to distinguish an escape key close request from a light dismiss,
+ * but the key event is fired before the cancel event.
+ */
+let isEscapePressed = false;
+
+function onKeydown(event: KeyboardEvent): void {
+    if (event.key === "Escape") isEscapePressed = true;
+}
+
+function onKeyup(event: KeyboardEvent): void {
+    if (event.key === "Escape") isEscapePressed = false;
+}
+
+// an initially active dialog (e.g. programmatic usage) is opened with the enter animation
+onMounted(() => {
+    if (isActive.value) enter();
+});
+
+watch(isActive, (value) => {
+    if (value) enter();
+    else leave();
+});
+
+/** Open the native dialog and play the enter animation. */
+function enter(): void {
+    if (!rootRef.value) return;
+
+    if (rootRef.value.open) {
+        // a deferred close was interrupted by a reopen:
+        // reverse the leave animation back to visible instead of opening again
+        if (isClosing) {
+            isClosing = false;
+            play(rootRef.value, props.animation, true);
+        }
+        return;
+    }
+
+    openDialog();
+    play(rootRef.value, props.animation, true);
+}
+
+/**
+ * Play the leave animation and close the native dialog afterwards,
+ * otherwise the dialog would disappear before it has been animated out.
+ * @param returnValue - optional return value of the dialog
+ */
+function leave(returnValue?: string): void {
+    // nothing to close, e.g. when the dialog has been closed from outside
+    if (!rootRef.value?.open) return;
+
+    // close immediately when there is nothing to animate
+    if (!canPlay(rootRef.value, props.animation)) {
+        isClosing = false;
+        rootRef.value.close(returnValue);
+        return;
+    }
+
+    // already animating out
+    if (isClosing) return;
+
+    isClosing = true;
+    play(rootRef.value, props.animation, false).then(() => {
+        // a reopen reversed the animation - stay open
+        if (!isClosing) return;
+        isClosing = false;
+        rootRef.value?.close(returnValue);
+    });
+}
+
+/** Show the dialog as modal with backdrop when modal, otherwise as non-modal. */
+function openDialog(): void {
+    if (!rootRef.value || rootRef.value.open) return;
+    // reset the return value on each open
+    rootRef.value.returnValue = "";
+    if (isModal.value) rootRef.value.showModal();
+    else rootRef.value.show();
+}
+
+// #endregion --- Dialog Feature ---
+
 // #region --- Scroll Feature ---
 
-const toggleScroll = usePreventScrolling(props.blockScroll);
+const toggleScroll = usePreventScrolling(() => props.blockScroll);
 
-watch(() => isActive.value && props.backdrop, toggleScroll, {
+watch(() => isActive.value && isModal.value, toggleScroll, {
     immediate: true,
     flush: "post",
 });
 
 // #endregion --- Scroll Feature ---
 
-// #region --- Trigger Handler ---
+// #region --- Events Feature ---
 
-const { play, canPlay } = useAnimationsAPI();
-
-// whether a deferred (animated) close is currently in flight - guards
-// against the stale `.then()` below closing the dialog after a reopen
-// reversed the leave animation back to visible
-let closing = false;
-
-onMounted(() => toggleDialog(isActive.value));
-
-watch(isActive, toggleDialog);
-
-/** show or close the dialog element */
-function toggleDialog(value: boolean): void {
-    if (!rootRef.value) return;
-
-    if (value) {
-        if (rootRef.value.open) {
-            // a deferred close was interrupted by a reopen - reverse the
-            // leave animation back to visible instead of re-opening (which
-            // would throw InvalidStateError on an already-open dialog)
-            closing = false;
-            play(rootRef.value, props.animation, true);
-            return;
-        }
-
-        // reset the return value on each open
-        rootRef.value.returnValue = "";
-
-        // trigger dialog show as modal with backdrop event
-        if (hasBackdrop.value) rootRef.value.showModal();
-        // trigger dialog show without backdrop event
-        else rootRef.value.show();
-
-        play(rootRef.value, props.animation, true);
-    } else if (rootRef.value?.open) {
-        // trigger dialog close event, deferred/animated via `onCancel` below
-        // when supported
-        requestNativeClose();
-    }
-}
-
-/** request the native dialog to close, going through `requestClose` (interceptable via `cancel`) when supported */
-function requestNativeClose(returnValue?: string): void {
-    if (!rootRef.value) return;
-    if (typeof rootRef.value.requestClose === "function")
-        // requestClose is a fairly new web API that is not yet supported in all environments
-        rootRef.value.requestClose(returnValue);
-    else rootRef.value.close(returnValue);
-}
-
-/** request the dialog to close when active */
-function close(returnValue?: string): void {
-    if (!isActive.value || !rootRef.value) return;
-    requestNativeClose(returnValue);
-}
-
-/** emit a confirm event when active */
-function confirm(): void {
-    if (!isActive.value || !rootRef.value) return;
-
-    emits("confirm");
-    if (props.closeOnConfirm) requestNativeClose("confirm");
-}
-
-/** native dialog close event */
-function onClose(event: Event): void {
-    isActive.value = false;
-    const returnValue = rootRef.value?.returnValue;
-    emits("close", event, returnValue);
+/**
+ * Native dialog cancel event, which get triggered by a close request (e.g. escape key) or a light dismiss.
+ * It is not fired when the dialog is closed by the component itself, e.g. by the close or cancel button.
+ */
+function onCancel(event: Event): void {
+    // take control over the native close request to be able to animate the leave
+    event.preventDefault();
+    emits("cancel", event, rootRef.value?.returnValue);
+    if (!isActive.value) return;
+    // the escape key must not close the dialog, even if `closedby="any"` allows it for the light dismiss.
+    // without `closedby` support, every cancel event is a close request.
+    const isEscape = isEscapePressed || !supportsClosedBy();
+    isEscapePressed = false;
+    if (isEscape && !props.closeOnEscape) return;
+    leave();
 }
 
 /**
- * native dialog cancel event - fired (cancelable) for every close trigger:
- * Escape, light-dismiss, and `requestClose()` calls above. Intercept it to
- * play the leave animation before the dialog actually closes.
+ * Native dialog close event, which get triggered when the dialog has been closed.
+ * This is either after the leave animation or when the dialog get closed from outside, e.g. by a form.
  */
-function onCancel(event: Event): void {
-    emits("cancel", event, rootRef.value?.returnValue);
-
-    if (!canPlay(rootRef.value, props.animation)) return; // let the native close proceed immediately
-    event.preventDefault();
-    if (closing) return; // already animating out
-
-    closing = true;
-    play(rootRef.value, props.animation, false).then(() => {
-        if (!closing) return; // a reopen reversed the animation - stay open
-        closing = false;
-        rootRef.value?.close(); // real, non-cancelable close - fires `close`, no re-entrant `cancel`
-    });
+function onClose(event: Event): void {
+    isClosing = false;
+    isActive.value = false;
+    emits("close", event, rootRef.value?.returnValue);
 }
 
-// #endregion --- Trigger Handler ---
+/**
+ * Close the dialog. The `close` event is emitted when the dialog has been closed.
+ * @param returnValue - optional return value, which is passed to the `close` event
+ */
+function close(returnValue?: string): void {
+    if (!isActive.value) return;
+    // ignore everything but strings, e.g. events which are passed by an event handler
+    leave(typeof returnValue === "string" ? returnValue : undefined);
+}
+
+/** Emit a confirm event when active. */
+function confirm(): void {
+    if (!isActive.value) return;
+    emits("confirm");
+    if (props.closeOnConfirm) leave("confirm");
+}
+
+// #endregion --- Events Feature ---
 
 // #region --- Focus Feature ---
 
@@ -335,13 +384,31 @@ watch(
 const dragStyle = computed(() =>
     props.draggable && (dragOffset.value.x || dragOffset.value.y)
         ? {
-              transform: `translate(${dragOffset.value.x}px, ${dragOffset.value.y}px)`,
+              // the `translate` property composes with the `transform` of the animation and the theme
+              translate: `${dragOffset.value.x}px ${dragOffset.value.y}px`,
           }
         : {},
 );
 
+/** Whether the dialog can be dragged by the user. */
+const isDraggable = computed(() => props.draggable && !props.fullscreen);
+
+/** The header is the drag handle, so the browser must not scroll the page when it is touched. */
+const headerStyle = computed(() =>
+    isDraggable.value ? { touchAction: "none" } : undefined,
+);
+
 function onDragStart(event: PointerEvent): void {
-    if (!props.draggable || props.fullscreen) return;
+    if (!isDraggable.value || event.button !== 0) return;
+    // interactive elements, which must stay usable instead of starting a drag
+    if ((event.target as Element).closest(INTERACTIVE_SELECTOR)) return;
+
+    // all following pointer events are sent to the header,
+    // even if the pointer leaves it while dragging
+    const handle = event.currentTarget as HTMLElement;
+    if (typeof handle.setPointerCapture === "function")
+        handle.setPointerCapture(event.pointerId);
+
     isDragging.value = true;
     dragStart.value = {
         x: event.clientX - dragOffset.value.x,
@@ -350,6 +417,8 @@ function onDragStart(event: PointerEvent): void {
 }
 
 function onDragMove(event: PointerEvent): void {
+    if (!isDragging.value) return;
+
     const newX = event.clientX - dragStart.value.x;
     const newY = event.clientY - dragStart.value.y;
 
@@ -376,12 +445,17 @@ function onDragMove(event: PointerEvent): void {
     }
 }
 
-function onDragEnd(): void {
+function onDragEnd(event: PointerEvent): void {
+    if (!isDragging.value) return;
     isDragging.value = false;
-}
 
-useEventListener(document, "pointermove", onDragMove, { trigger: isDragging });
-useEventListener(document, "pointerup", onDragEnd, { trigger: isDragging });
+    const handle = event.currentTarget as HTMLElement;
+    if (
+        typeof handle.hasPointerCapture === "function" &&
+        handle.hasPointerCapture(event.pointerId)
+    )
+        handle.releasePointerCapture(event.pointerId);
+}
 
 // #endregion --- Draggable Feature ---
 
@@ -490,10 +564,13 @@ defineExpose({ close, confirm });
             data-oruga="dialog"
             :class="rootClasses"
             :style="dragStyle"
-            :role="alert ? 'alertdialog' : 'dialog'"
-            :closedBy="closedBy"
+            :role="alert ? 'alertdialog' : undefined"
+            :closedby="closedBy"
             :aria-label="ariaLabel"
-            :aria-describedby="title ? titleId : ariaDescribedby"
+            :aria-labelledby="$slots['title'] || title ? titleId : undefined"
+            :aria-describedby="ariaDescribedby"
+            @keydown="onKeydown"
+            @keyup="onKeyup"
             @close="onClose"
             @cancel="onCancel">
             <!-- Backdrop -->
@@ -513,7 +590,11 @@ defineExpose({ close, confirm });
                         closeable
                     "
                     :class="headerClasses"
-                    @pointerdown="onDragStart">
+                    :style="headerStyle"
+                    @pointerdown="onDragStart"
+                    @pointermove="onDragMove"
+                    @pointerup="onDragEnd"
+                    @pointercancel="onDragEnd">
                     <slot name="header" :close="close" :confirm="confirm">
                         <h1
                             v-if="$slots['title'] || title"
@@ -536,7 +617,7 @@ defineExpose({ close, confirm });
                         :size="closeIconSize"
                         :label="ariaCloseLabel"
                         :classes="closeClasses"
-                        @click="close">
+                        @click="close()">
                         <slot v-if="$slots['close']" name="close" />
                     </CloseButton>
                 </header>
@@ -547,6 +628,7 @@ defineExpose({ close, confirm });
                         $slots['default'] ||
                         $slots['content'] ||
                         $props.component ||
+                        imageSrc ||
                         content
                     "
                     :class="bodyClasses">

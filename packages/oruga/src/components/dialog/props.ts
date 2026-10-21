@@ -43,7 +43,10 @@ export type DialogProps<C extends Component = Component> = {
     draggable?: boolean;
     /** Adds close button to the header to hide the dialog */
     closeable?: boolean;
-    /** Close the dialog when clicked outside of the panel */
+    /**
+     * Close the dialog when clicked outside of the panel.
+     * This requires a browser which supports the `closedby` attribute of the dialog element.
+     */
     closeOnBackdrop?: boolean;
     /** Close the dialog when pressing escape key */
     closeOnEscape?: boolean;
@@ -107,9 +110,9 @@ export type DialogProps<C extends Component = Component> = {
     cancelVariant?: string;
     /** Position of the footer buttons */
     buttonPosition?: "center" | "left" | "right";
-    /** Accessibility aria-label to be passed to the div root element */
+    /** Accessibility aria-label to be passed to the dialog root element - if a title is set, the dialog is labelled by the title */
     ariaLabel?: string;
-    /** Accessibility aria-describedby to be passed to the div root element - if a title is set, it is linked to the title */
+    /** Accessibility aria-describedby to be passed to the dialog root element */
     ariaDescribedby?: string;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
@@ -165,7 +168,7 @@ export type DialogClasses = Partial<{
     /** Class of the content footer element with position */
     footerPositionClass: ComponentClass;
     /** Class of the footer confirm button element */
-    confirmButtunClass: ComponentClass;
+    confirmButtonClass: ComponentClass;
     /** Class of the footer cancel button element */
     cancelButtonClass: ComponentClass;
     /** Class of the body when modal is open and scroll is clipped */

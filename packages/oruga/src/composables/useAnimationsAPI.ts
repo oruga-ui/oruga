@@ -4,6 +4,7 @@ import { prefersReducedMotion } from "@/utils/helpers";
 export type AnimationName =
     | "fade"
     | "scale"
+    | "zoom-in"
     | "zoom-out"
     | "slide-up"
     | "slide-down";
@@ -19,6 +20,14 @@ const ANIMATION_PRESETS: Record<
     scale: {
         keyframes: [
             { opacity: 0, transform: "scale(0.95)" },
+            { opacity: 1, transform: "scale(1)" },
+        ],
+        options: { duration: 150, easing: "ease-out", fill: "both" },
+    },
+    // grows from a clearly smaller size, in contrast to the subtle `scale`
+    "zoom-in": {
+        keyframes: [
+            { opacity: 0, transform: "scale(0.85)" },
             { opacity: 1, transform: "scale(1)" },
         ],
         options: { duration: 150, easing: "ease-out", fill: "both" },
@@ -50,6 +59,8 @@ const ANIMATION_PRESETS: Record<
  * Plays named [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)
  * presets on an element, tracking the in-flight animation
  * so a rapid open/close reverses smoothly instead of jump-cutting.
+ * The end state of an opening animation is released once it has finished,
+ * so inline styles of the element apply again while it is open.
  */
 export function useAnimationsAPI(): {
     /** Checks whether a preset would actually play for the given element. */
@@ -77,6 +88,26 @@ export function useAnimationsAPI(): {
         );
     }
 
+    /**
+     * Release the held `fill: "both"` effect of an animation once it has finished opening.
+     * An animation effect overrides inline styles, so a held effect would hide e.g. an
+     * inline `transform`, which is set by the consumer while the element is open.
+     * A closing animation keeps its end state until the element gets closed.
+     */
+    function releaseWhenOpened(animation: Animation): void {
+        animation.finished.then(
+            () => {
+                // replaced by another animation
+                if (current !== animation) return;
+                // finished in reverse direction, which means it has been closed
+                if (!(animation.playbackRate > 0)) return;
+                animation.cancel();
+                current = undefined;
+            },
+            () => undefined, // ignore AbortError thrown when an animation is cancelled
+        );
+    }
+
     function play(
         el: HTMLElement | undefined | null,
         name: AnimationName | false | undefined,
@@ -94,6 +125,7 @@ export function useAnimationsAPI(): {
             current?.cancel();
             current = el!.animate(preset.keyframes, preset.options);
             if (!opening) current.reverse();
+            releaseWhenOpened(current);
         }
 
         return current.finished.then(

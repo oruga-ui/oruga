@@ -76,6 +76,20 @@ describe("useAnimationsAPI test", () => {
             expect(options).toMatchObject({ fill: "both" });
         });
 
+        test("should animate the `zoom-in` preset from a smaller size", () => {
+            const el = document.createElement("div");
+            const animateSpy = vi.spyOn(el, "animate");
+            const { play } = useAnimationsAPI();
+
+            play(el, "zoom-in", true);
+
+            const [keyframes] = animateSpy.mock.calls[0];
+            expect(keyframes).toEqual([
+                { opacity: 0, transform: "scale(0.85)" },
+                { opacity: 1, transform: "scale(1)" },
+            ]);
+        });
+
         test("should reverse the playback direction when closing", () => {
             const el = document.createElement("div");
             const reverseSpy = vi.fn();
@@ -150,6 +164,107 @@ describe("useAnimationsAPI test", () => {
             const { play } = useAnimationsAPI();
 
             await expect(play(el, "fade", true)).resolves.toBeUndefined();
+        });
+    });
+
+    /** A fake animation with a manually resolved `finished` promise and a direction which follows `reverse`. */
+    function createFakeAnimation(): Animation & { finish: () => void } {
+        let finish = (): void => {};
+        const animation = {
+            playState: "running",
+            playbackRate: 1,
+            finished: new Promise<void>((resolve) => {
+                finish = () => {
+                    animation.playState = "finished";
+                    resolve();
+                };
+            }),
+            reverse: vi.fn(() => {
+                animation.playbackRate *= -1;
+            }),
+            cancel: vi.fn(),
+            finish: () => finish(),
+        };
+        return animation as unknown as Animation & { finish: () => void };
+    }
+
+    describe("release of the opening animation", () => {
+        test("should cancel the animation once it has finished opening", async () => {
+            const el = document.createElement("div");
+            const animation = createFakeAnimation();
+            vi.spyOn(el, "animate").mockReturnValue(animation);
+            const { play } = useAnimationsAPI();
+
+            const result = play(el, "fade", true);
+            expect(animation.cancel).not.toHaveBeenCalled();
+
+            animation.finish();
+            await result;
+
+            expect(animation.cancel).toHaveBeenCalledTimes(1);
+        });
+
+        test("should keep the end state of a closing animation", async () => {
+            const el = document.createElement("div");
+            const animation = createFakeAnimation();
+            vi.spyOn(el, "animate").mockReturnValue(animation);
+            const { play } = useAnimationsAPI();
+
+            const result = play(el, "fade", false);
+            animation.finish();
+            await result;
+
+            expect(animation.cancel).not.toHaveBeenCalled();
+        });
+
+        test("should keep the end state when an opening animation got reversed", async () => {
+            const el = document.createElement("div");
+            const animation = createFakeAnimation();
+            vi.spyOn(el, "animate").mockReturnValue(animation);
+            const { play } = useAnimationsAPI();
+
+            play(el, "fade", true);
+            const result = play(el, "fade", false); // reverses the in-flight animation
+            animation.finish();
+            await result;
+
+            expect(animation.cancel).not.toHaveBeenCalled();
+        });
+
+        test("should release the animation when a closing got reversed back to opening", async () => {
+            const el = document.createElement("div");
+            const animation = createFakeAnimation();
+            vi.spyOn(el, "animate").mockReturnValue(animation);
+            const { play } = useAnimationsAPI();
+
+            play(el, "fade", false);
+            const result = play(el, "fade", true); // reverses the in-flight animation
+            animation.finish();
+            await result;
+
+            expect(animation.cancel).toHaveBeenCalledTimes(1);
+        });
+
+        test("should start a new animation after the opening animation was released", async () => {
+            const el = document.createElement("div");
+            const opening = createFakeAnimation();
+            const closing = createFakeAnimation();
+            const animateSpy = vi
+                .spyOn(el, "animate")
+                .mockReturnValueOnce(opening)
+                .mockReturnValueOnce(closing);
+            const { play } = useAnimationsAPI();
+
+            const result = play(el, "fade", true);
+            opening.finish();
+            await result;
+
+            play(el, "fade", false);
+
+            // the released animation must not be reversed, because it has been cancelled
+            expect(opening.reverse).not.toHaveBeenCalled();
+            expect(animateSpy).toHaveBeenCalledTimes(2);
+            expect(closing.reverse).toHaveBeenCalledTimes(1);
         });
     });
 });

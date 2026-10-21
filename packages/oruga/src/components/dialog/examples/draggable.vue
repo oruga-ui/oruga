@@ -8,17 +8,11 @@ const isActive = ref(false);
     <section>
         <o-button
             label="Open Draggable Dialog"
-            size="medium"
             variant="primary"
-            :aria-expanded="isActive"
-            aria-controls="draggable-dialog"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
-        <o-dialog
-            id="draggable-dialog"
-            v-model:active="isActive"
-            draggable
-            closeable>
+        <o-dialog v-model:active="isActive" draggable closeable>
             <template #title>Drag me by the header</template>
 
             <template #subtitle>

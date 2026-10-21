@@ -30,7 +30,9 @@ Object.defineProperties(HTMLDialogElement.prototype, {
         writable: true,
     },
     close: {
-        value() {
+        value(returnValue?: string) {
+            if (typeof returnValue !== "undefined")
+                this.returnValue = returnValue;
             this.open = false;
             this.dispatchEvent(new Event("close"));
         },
@@ -46,7 +48,8 @@ Object.defineProperties(HTMLDialogElement.prototype, {
     },
     requestClose: {
         value(returnValue?: string) {
-            if (typeof returnValue !== "undefined") this.returnValue = returnValue;
+            if (typeof returnValue !== "undefined")
+                this.returnValue = returnValue;
             const cancelEvent = new Event("cancel", { cancelable: true });
             const notCancelled = this.dispatchEvent(cancelEvent);
             if (notCancelled) this.close();

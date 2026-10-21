@@ -1115,7 +1115,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class of the footer confirm button element
                  */
-                confirmButtunClass: ClassDefinition;
+                confirmButtonClass: ClassDefinition;
                 /**
                  * Class of the footer cancel button element
                  */

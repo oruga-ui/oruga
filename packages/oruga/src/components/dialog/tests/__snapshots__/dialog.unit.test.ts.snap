@@ -3,7 +3,7 @@
 exports[`ODialog test > render correctly 1`] = `
 "<teleport-stub to="[object HTMLBodyElement]" disabled="true">
   <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
-    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="dialog" closedby="closerequest" aria-describedby="v-0" open="">
+    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" closedby="closerequest" aria-labelledby="v-0" open="">
       <!-- Backdrop -->
       <!--v-if-->
       <div class="o-dialog__content" style="max-width: 80vw; max-height: 80vh;">
@@ -61,7 +61,7 @@ exports[`ODialog test > test alert case 1`] = `
 exports[`ODialog test > test modal case 1`] = `
 "<teleport-stub to="[object HTMLBodyElement]" disabled="true">
   <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
-    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="dialog" closedby="any" open="">
+    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" closedby="any" open="">
       <!-- Backdrop -->
       <div class="o-dialog__backdrop"></div>
       <div class="o-dialog__content" style="max-width: 80vw; max-height: 80vh;">
