@@ -7,6 +7,7 @@ export * from "./collapse";
 export * from "./datepicker";
 export * from "./datetimepicker";
 export * from "./dialog";
+export * from "./drawer";
 export * from "./dropdown";
 export * from "./field";
 export * from "./icon";
