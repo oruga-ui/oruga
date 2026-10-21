@@ -9,6 +9,7 @@ const isActive = ref(false);
         <o-button
             label="Open Drawer"
             variant="primary"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
         <o-drawer

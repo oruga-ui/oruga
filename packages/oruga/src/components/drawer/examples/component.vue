@@ -11,12 +11,14 @@ const isDrawerActive = ref(false);
             label="Open Drawer"
             size="medium"
             variant="primary"
+            aria-haspopup="dialog"
             @click="isDrawerActive = true" />
 
         <o-drawer
             v-model:active="isDrawerActive"
-            aria-label="Login"
-            :component="Form"
-            :backdrop="true" />
+            title="Login"
+            closeable
+            backdrop
+            :component="Form" />
     </section>
 </template>

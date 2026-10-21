@@ -4,6 +4,7 @@ import { ref } from "vue";
 type Animation =
     | "fade"
     | "scale"
+    | "zoom-in"
     | "zoom-out"
     | "slide-up"
     | "slide-down"
@@ -39,6 +40,7 @@ const animation = ref<Animation | false | undefined>(undefined);
                     <option :value="false">None</option>
                     <option value="fade">fade</option>
                     <option value="scale">scale</option>
+                    <option value="zoom-in">zoom-in</option>
                     <option value="zoom-out">zoom-out</option>
                     <option value="slide-up">slide-up</option>
                     <option value="slide-down">slide-down</option>
@@ -53,6 +55,7 @@ const animation = ref<Animation | false | undefined>(undefined);
         <o-button
             label="Show Drawer"
             variant="primary"
+            aria-haspopup="dialog"
             @click="active = true" />
 
         <o-drawer

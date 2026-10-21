@@ -25,6 +25,7 @@ const position = ref<"left" | "top" | "bottom" | "right">("left");
         <o-button
             label="Open Drawer"
             variant="primary"
+            aria-haspopup="dialog"
             @click="active = true" />
 
         <o-drawer

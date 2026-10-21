@@ -95,7 +95,10 @@ describe("ODrawer tests", () => {
         });
 
         test("render position and fullscreen classes", () => {
-            const wrapper = mountDrawer({ position: "right", fullscreen: true });
+            const wrapper = mountDrawer({
+                position: "right",
+                fullscreen: true,
+            });
             const dialog = wrapper.find("dialog");
             expect(dialog.classes("o-drawer--right")).toBeTruthy();
             expect(dialog.classes("o-drawer--fullscreen")).toBeTruthy();
@@ -329,7 +332,11 @@ describe("ODrawer tests", () => {
                 });
             await wrapper.setProps({ active: true });
             await nextTick();
-            return { wrapper, dialog, handle: wrapper.find('[role="separator"]') };
+            return {
+                wrapper,
+                dialog,
+                handle: wrapper.find('[role="separator"]'),
+            };
         }
 
         function pointer(
@@ -716,24 +723,30 @@ describe("ODrawer tests", () => {
             expect(wrapper.find("header").classes("c-header")).toBe(true);
             expect(wrapper.find("h1").classes("c-title")).toBe(true);
             expect(wrapper.find("h2").classes("c-subtitle")).toBe(true);
-            expect(wrapper.find('[data-oruga="close"]').classes("c-close")).toBe(
+            expect(
+                wrapper.find('[data-oruga="close"]').classes("c-close"),
+            ).toBe(true);
+            expect(wrapper.find(".o-drawer__body").classes("c-body")).toBe(
                 true,
             );
-            expect(wrapper.find(".o-drawer__body").classes("c-body")).toBe(true);
             expect(wrapper.find("footer").classes("c-footer")).toBe(true);
-            expect(wrapper.find(".o-drawer__confirm-button").classes("c-confirm")).toBe(
-                true,
-            );
-            expect(wrapper.find(".o-drawer__cancel-button").classes("c-cancel")).toBe(
-                true,
-            );
+            expect(
+                wrapper.find(".o-drawer__confirm-button").classes("c-confirm"),
+            ).toBe(true);
+            expect(
+                wrapper.find(".o-drawer__cancel-button").classes("c-cancel"),
+            ).toBe(true);
         });
     });
 
     describe("slots", () => {
         test("title and subtitle slots replace the props", () => {
             const wrapper = mountDrawerWith(
-                { active: true, title: "Prop title", subtitle: "Prop subtitle" },
+                {
+                    active: true,
+                    title: "Prop title",
+                    subtitle: "Prop subtitle",
+                },
                 {
                     title: "<b>Slot title</b>",
                     subtitle: "<i>Slot subtitle</i>",
@@ -844,7 +857,9 @@ describe("ODrawer tests", () => {
                 },
             );
             expect(wrapper.find(".o-drawer__cancel-button").text()).toBe("No");
-            expect(wrapper.find(".o-drawer__confirm-button").text()).toBe("Yes");
+            expect(wrapper.find(".o-drawer__confirm-button").text()).toBe(
+                "Yes",
+            );
         });
     });
 
@@ -872,7 +887,9 @@ describe("ODrawer tests", () => {
                 cancelButton: "CANCEL",
             });
             expect(
-                wrapper.find(".o-drawer__confirm-button").attributes("disabled"),
+                wrapper
+                    .find(".o-drawer__confirm-button")
+                    .attributes("disabled"),
             ).toBeUndefined();
             expect(
                 wrapper.find(".o-drawer__cancel-button").attributes("disabled"),
@@ -910,7 +927,9 @@ describe("ODrawer tests", () => {
                 buttonPosition,
             });
             expect(
-                wrapper.find("footer").classes(`o-drawer__footer--${buttonPosition}`),
+                wrapper
+                    .find("footer")
+                    .classes(`o-drawer__footer--${buttonPosition}`),
             ).toBe(true);
         });
 
@@ -984,9 +1003,9 @@ describe("ODrawer tests", () => {
                 component: Injected,
                 props: { label: "Hello" },
             });
-            expect(
-                wrapper.find(".o-drawer__body .injected-label").text(),
-            ).toBe("Hello");
+            expect(wrapper.find(".o-drawer__body .injected-label").text()).toBe(
+                "Hello",
+            );
         });
 
         test("forwards the events of the component", async () => {
@@ -1080,7 +1099,10 @@ describe("ODrawer tests", () => {
 
     describe("reopen", () => {
         test("can be opened again after it has been closed", async () => {
-            const showModal = vi.spyOn(HTMLDialogElement.prototype, "showModal");
+            const showModal = vi.spyOn(
+                HTMLDialogElement.prototype,
+                "showModal",
+            );
             const wrapper = mountDrawerWith({ active: true, backdrop: true });
             const dialog = wrapper.find("dialog").element as HTMLDialogElement;
             expect(dialog.open).toBe(true);
@@ -1100,11 +1122,15 @@ describe("ODrawer tests", () => {
 
             wrapper
                 .find("dialog")
-                .element.dispatchEvent(new Event("cancel", { cancelable: true }));
+                .element.dispatchEvent(
+                    new Event("cancel", { cancelable: true }),
+                );
             await nextTick();
 
             expect(wrapper.emitted("update:active")).toEqual([[false]]);
-            expect(wrapper.find("dialog").classes("o-drawer--active")).toBe(false);
+            expect(wrapper.find("dialog").classes("o-drawer--active")).toBe(
+                false,
+            );
         });
     });
 
@@ -1185,9 +1211,12 @@ describe("ODrawer tests", () => {
     });
 
     describe("close events", () => {
-        function getClose(wrapper: ReturnType<typeof mountDrawer>): (value?: unknown) => void {
-            return (wrapper.vm as unknown as { close: (value?: unknown) => void })
-                .close;
+        function getClose(
+            wrapper: ReturnType<typeof mountDrawer>,
+        ): (value?: unknown) => void {
+            return (
+                wrapper.vm as unknown as { close: (value?: unknown) => void }
+            ).close;
         }
 
         test("cancel event prevents the native close and closes the drawer", async () => {
@@ -1227,6 +1256,76 @@ describe("ODrawer tests", () => {
             expect(wrapper.emitted("close")).toBeUndefined();
             expect(wrapper.emitted("update:active")).toBeUndefined();
             expect((dialog.element as HTMLDialogElement).open).toBe(true);
+        });
+
+        describe("with closedby support", () => {
+            // simulate a browser, which supports the `closedby` attribute
+            beforeEach(() => {
+                Object.defineProperty(HTMLDialogElement.prototype, "closedBy", {
+                    value: "",
+                    configurable: true,
+                });
+            });
+            afterEach(() => {
+                delete (HTMLDialogElement.prototype as { closedBy?: string })
+                    .closedBy;
+            });
+
+            function escapeAndCancel(dialog: Element): Event {
+                dialog.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: "Escape",
+                        bubbles: true,
+                    }),
+                );
+                const event = new Event("cancel", { cancelable: true });
+                dialog.dispatchEvent(event);
+                dialog.dispatchEvent(
+                    new KeyboardEvent("keyup", {
+                        key: "Escape",
+                        bubbles: true,
+                    }),
+                );
+                return event;
+            }
+
+            test("closeOnEscape=false ignores the escape key but allows the light dismiss", async () => {
+                const wrapper = mountDrawer({
+                    active: true,
+                    closeOnEscape: false,
+                    closeOnBackdrop: true,
+                });
+                const dialog = wrapper.find("dialog")
+                    .element as HTMLDialogElement;
+
+                // escape key
+                const escape = escapeAndCancel(dialog);
+                await flushPromises();
+                expect(escape.defaultPrevented).toBe(true);
+                expect(wrapper.emitted("close")).toBeUndefined();
+                expect(dialog.open).toBe(true);
+
+                // light dismiss, which is a cancel event without a key event
+                dialog.dispatchEvent(new Event("cancel", { cancelable: true }));
+                await flushPromises();
+                expect(wrapper.emitted("close")).toHaveLength(1);
+                expect(dialog.open).toBe(false);
+            });
+
+            test("closeOnEscape=true closes the drawer with the escape key", async () => {
+                const wrapper = mountDrawer({
+                    active: true,
+                    closeOnEscape: true,
+                });
+                const dialog = wrapper.find("dialog")
+                    .element as HTMLDialogElement;
+
+                escapeAndCancel(dialog);
+                await flushPromises();
+
+                expect(wrapper.emitted("close")).toHaveLength(1);
+                expect(dialog.open).toBe(false);
+            });
         });
 
         test("native close event closes the drawer", async () => {
@@ -1361,9 +1460,36 @@ describe("ODrawer tests", () => {
             expect(animate).not.toHaveBeenCalled();
         });
 
-        test("does not animate when initially active", () => {
-            mountDrawer({ active: true, animation: undefined });
+        test("plays the enter animation when initially active", () => {
+            const wrapper = mountDrawer({
+                active: true,
+                animation: undefined,
+            });
+
+            expect(animate).toHaveBeenCalledOnce();
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+            expect(dialog.open).toBe(true);
+        });
+
+        test("does not animate when initially active without animation", () => {
+            mountDrawer({ active: true, animation: false });
             expect(animate).not.toHaveBeenCalled();
+        });
+
+        test("does not play a leave animation for a drawer which is closed from outside", async () => {
+            const wrapper = mountDrawer({
+                active: true,
+                animation: undefined,
+            });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+            // the enter animation
+            expect(animate).toHaveBeenCalledOnce();
+
+            dialog.close();
+            await flushPromises();
+
+            expect(wrapper.emitted("update:active")).toEqual([[false]]);
+            expect(animate).toHaveBeenCalledOnce();
         });
 
         test("closes the dialog after the leave animation has finished", async () => {
@@ -1417,7 +1543,7 @@ describe("ODrawer tests", () => {
             expect(closeSpy).toHaveBeenCalledTimes(1);
         });
 
-        test("fades the backdrop together with the drawer when opening", async () => {
+        test("does not animate the backdrop", async () => {
             const wrapper = mountDrawer({
                 backdrop: true,
                 animation: undefined,
@@ -1425,38 +1551,11 @@ describe("ODrawer tests", () => {
             await wrapper.setProps({ active: true });
             await nextTick();
 
-            expect(animate).toHaveBeenCalledTimes(2);
-            expect(animate.mock.calls[1][1]).toMatchObject({
-                pseudoElement: "::backdrop",
-            });
-        });
-
-        test("fades the backdrop together with the drawer when closing", async () => {
-            const wrapper = mountDrawer({
-                active: true,
-                backdrop: true,
-                animation: undefined,
-            });
-            await wrapper.setProps({ active: false });
-            await nextTick();
-
-            expect(animate).toHaveBeenCalledTimes(2);
-            expect(animate.mock.calls[1][1]).toMatchObject({
-                pseudoElement: "::backdrop",
-            });
-            // both animations are played in reverse
-            expect(animation.reverse).toHaveBeenCalledTimes(2);
-        });
-
-        test("does not animate a backdrop when there is none", async () => {
-            const wrapper = mountDrawer({
-                backdrop: false,
-                animation: undefined,
-            });
-            await wrapper.setProps({ active: true });
-            await nextTick();
-
+            // only the drawer itself is animated
             expect(animate).toHaveBeenCalledOnce();
+            expect(animate.mock.calls[0][1]).not.toHaveProperty(
+                "pseudoElement",
+            );
         });
     });
 
@@ -1532,18 +1631,26 @@ describe("ODrawer tests", () => {
         test("clips the scroll with blockScroll", async () => {
             mountDrawer({ active: true, backdrop: true, blockScroll: true });
             await nextTick();
-            expect(document.body.classList.contains("o-scroll-clip")).toBe(true);
-            expect(document.body.classList.contains("o-scroll-keep")).toBe(false);
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                true,
+            );
+            expect(document.body.classList.contains("o-scroll-keep")).toBe(
+                false,
+            );
         });
 
         test("releases the scroll lock when it gets unmounted", async () => {
             const wrapper = mountDrawer({ active: true, backdrop: true });
             await nextTick();
-            expect(document.body.classList.contains("o-scroll-keep")).toBe(true);
+            expect(document.body.classList.contains("o-scroll-keep")).toBe(
+                true,
+            );
 
             wrapper.unmount();
 
-            expect(document.body.classList.contains("o-scroll-keep")).toBe(false);
+            expect(document.body.classList.contains("o-scroll-keep")).toBe(
+                false,
+            );
         });
     });
 });

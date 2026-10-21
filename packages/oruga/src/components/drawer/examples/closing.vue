@@ -26,6 +26,7 @@ function addLog(message: string): void {
         <o-button
             label="Show Drawer"
             variant="primary"
+            aria-haspopup="dialog"
             @click="active = true" />
 
         <ul>

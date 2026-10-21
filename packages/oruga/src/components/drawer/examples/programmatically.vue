@@ -20,9 +20,12 @@ function imageDrawer(): void {
 
 function formDrawer(): void {
     oruga.drawer.open({
-        ariaLabel: "Login",
-        component: Form,
+        title: "Login",
+        closeable: true,
         backdrop: true,
+        // the component closes the drawer by emitting a `close` event
+        component: Form,
+        props: { email: "oruga@example.com" },
     });
 }
 </script>
@@ -33,12 +36,14 @@ function formDrawer(): void {
             <o-button
                 label="Open Drawer (HTML)"
                 variant="primary"
+                aria-haspopup="dialog"
                 @click="imageDrawer()" />
 
             <o-button
                 label="Open Drawer (Component)"
                 size="medium"
                 variant="primary"
+                aria-haspopup="dialog"
                 @click="formDrawer()" />
         </p>
     </section>

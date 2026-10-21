@@ -170,7 +170,7 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const _teleport = useTeleport(props.teleport);
+const _teleport = useTeleport(() => props.teleport);
 
 // #region --- Animation Feature ---
 
@@ -218,13 +218,28 @@ const closedBy = computed(() => {
 });
 
 /** Whether the browser supports the `closedby` attribute of the dialog element. */
-const supportsClosedBy = isClient && "closedBy" in HTMLDialogElement.prototype;
+function supportsClosedBy(): boolean {
+    return isClient && "closedBy" in HTMLDialogElement.prototype;
+}
 
+/**
+ * Whether the escape key is currently pressed.
+ * The `closedby="any"` value does not allow to distinguish an escape key close request from a light dismiss,
+ * but the key event is fired before the cancel event.
+ */
+let isEscapePressed = false;
+
+function onKeydown(event: KeyboardEvent): void {
+    if (event.key === "Escape") isEscapePressed = true;
+}
+
+function onKeyup(event: KeyboardEvent): void {
+    if (event.key === "Escape") isEscapePressed = false;
+}
+
+// an initially active drawer (e.g. programmatic usage) is opened with the enter animation
 onMounted(() => {
-    if (isActive.value) {
-        openDialog();
-        measureSize();
-    }
+    if (isActive.value) enter();
 });
 
 watch(
@@ -245,14 +260,14 @@ function enter(): void {
         // reverse the leave animation back to visible instead of opening again
         if (isClosing) {
             isClosing = false;
-            play(rootRef.value, animationName.value, true, props.backdrop);
+            play(rootRef.value, animationName.value, true);
         }
         return;
     }
 
     openDialog();
     measureSize();
-    play(rootRef.value, animationName.value, true, props.backdrop);
+    play(rootRef.value, animationName.value, true);
 }
 
 /**
@@ -274,7 +289,7 @@ function leave(returnValue?: string): void {
     if (isClosing) return;
 
     isClosing = true;
-    play(rootRef.value, animationName.value, false, props.backdrop).then(() => {
+    play(rootRef.value, animationName.value, false).then(() => {
         // a reopen reversed the animation - stay open
         if (!isClosing) return;
         isClosing = false;
@@ -306,7 +321,7 @@ onBeforeUnmount(() => {
 
 // #region --- Scroll Feature ---
 
-const toggleScroll = usePreventScrolling(props.blockScroll);
+const toggleScroll = usePreventScrolling(() => props.blockScroll);
 
 watch(() => isActive.value && props.backdrop, toggleScroll, {
     immediate: true,
@@ -326,8 +341,11 @@ function onCancel(event: Event): void {
     event.preventDefault();
     emits("cancel", event, rootRef.value?.returnValue);
     if (!isActive.value) return;
-    // without `closedby` support, every cancel event is a close request
-    if (!supportsClosedBy && !props.closeOnEscape) return;
+    // the escape key must not close the drawer, even if `closedby="any"` allows it for the light dismiss.
+    // without `closedby` support, every cancel event is a close request.
+    const isEscape = isEscapePressed || !supportsClosedBy();
+    isEscapePressed = false;
+    if (isEscape && !props.closeOnEscape) return;
     leave();
 }
 
@@ -634,6 +652,8 @@ defineExpose({ close, confirm });
             :aria-label="ariaLabel"
             :aria-labelledby="$slots['title'] || title ? titleId : undefined"
             :aria-describedby="ariaDescribedby"
+            @keydown="onKeydown"
+            @keyup="onKeyup"
             @cancel="onCancel"
             @close="onClose">
             <!-- Header -->

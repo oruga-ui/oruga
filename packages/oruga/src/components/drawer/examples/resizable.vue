@@ -22,6 +22,7 @@ const size = ref<number>();
         <o-button
             label="Show Drawer"
             variant="primary"
+            aria-haspopup="dialog"
             @click="active = true" />
 
         <o-drawer

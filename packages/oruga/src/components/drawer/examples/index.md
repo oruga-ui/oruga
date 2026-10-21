@@ -2,11 +2,8 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
-import Structure from "./structure.vue";
-import StructureCode from "./structure.vue?raw";
-
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Templates from "./templates.vue";
+import TemplatesCode from "./templates.vue?raw";
 
 import Loading from "./loading.vue";
 import LoadingCode from "./loading.vue?raw";
@@ -28,6 +25,9 @@ import ComponentCode from "./component.vue?raw";
 
 import Programmatically from "./programmatically.vue";
 import ProgrammaticallyCode from "./programmatically.vue?raw";
+
+import ProgrammaticallyAsync from "./programmatically-async.vue";
+import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 </script>
 
 ### Base
@@ -41,33 +41,6 @@ A drawer needs an accessible name. A `title` labels the drawer automatically, ot
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
-### Header, body and footer
-
-Like the [Dialog](/components/Dialog.html), the drawer offers an optional header, a body and an optional footer.
-The header is rendered when a `title`, `subtitle` or the `closeable` prop is used, and the footer when a `confirmButton` or `cancelButton` is set.
-Each part can be replaced with the template slots `header`, `title`, `subtitle`, `default`, `content` and `footer`.
-
-::: info Accessibility Note:
-The `title` labels the drawer through `aria-labelledby`. Use `ariaDescribedby` to reference an element which describes the drawer.
-The label of the close button can be set with `ariaCloseLabel` (default `"Close"`), e.g. for a translation.
-:::
-
-<ExampleViewer :component="Structure" :code="StructureCode" />
-
-### Slots
-
-Every part of the drawer can be replaced with a template slot. The slots `header`, `default`, `content` and `footer` receive the `close` and `confirm` functions. `close` accepts an optional string, which is passed as value to the `close` event. The template slot `close` replaces the icon of the close button.
-
-<ExampleViewer :component="Slots" :code="SlotsCode" />
-
-### Loading
-
-The `loading` prop shows a loading spinner over the drawer, with an optional `loadingLabel`, and sets the confirm button to its loading state.
-
-::: info Accessibility Note:
-The loading overlay is announced as a status (`role="status"`, `aria-live="polite"`). Set a `loadingLabel`, so users of assistive technologies get a message too.
-:::
-
 <ExampleViewer :component="Loading" :code="LoadingCode" />
 
 ### Closing
@@ -79,6 +52,8 @@ The `cancel` event is emitted when the user wishes to dismiss the drawer, and th
 ::: info Accessibility Note:
 With a `backdrop` the drawer is opened as modal dialog: the page behind is inert, the focus stays inside the drawer and returns to the previously focused element when the drawer is closed.
 Without a `backdrop` the drawer is non-modal. The page stays interactive and the focus is not trapped.
+
+Do not remove all ways to close a drawer. Keep at least one visible control, such as a close or cancel button, because not every user knows the escape key or is able to click on the backdrop.
 :::
 
 <ExampleViewer :component="Closing" :code="ClosingCode" />
@@ -93,6 +68,14 @@ The animation is skipped when the user prefers reduced motion (`prefers-reduced-
 :::
 
 <ExampleViewer :component="Animation" :code="AnimationCode" />
+
+### Loading
+
+The `loading` prop shows a loading spinner over the drawer, with an optional `loadingLabel`, and sets the confirm button to its loading state. Disable the other ways to close the drawer while it is busy.
+
+::: info Accessibility Note:
+The loading overlay is announced as a status (`role="status"`, `aria-live="polite"`). Set a `loadingLabel`, so users of assistive technologies get a message too.
+:::
 
 ### Resizable
 
@@ -110,6 +93,21 @@ The resize handle is a keyboard accessible separator (`role="separator"`) with `
 The `teleport` prop allows the drawer to be "teleported" into any DOM node outside the DOM hierarchy of that component. By default, if only a boolean is passed, the drawer will be teleported to the document body. In addition, any other destination can be passed as a value to the `teleport` prop.
 
 <ExampleViewer :component="Teleport" :code="TeleportCode" />
+
+### Templates
+
+Like the [Dialog](/components/Dialog.html), the drawer is separated into a _header_, _body_ and _footer_ section, which can be defined separately either through properties or template slots.
+The header is rendered when a `title`, `subtitle` or the `closeable` property is used, and the footer when a `confirmButton` or `cancelButton` is set.
+Therefore, the component provides the `header`, `title`, `subtitle`, `close`, `default`, `content`, `footer` as well as `confirmButton` and `cancelButton` named template slots, which can be used to customise HTML content.
+The slots `header`, `default`, `content` and `footer` receive the `close` and `confirm` functions. `close` accepts an optional string, which is passed as value to the `close` event. The template slot `close` replaces the icon of the close button.
+
+::: info Accessibility Note:
+The `title` labels the drawer through `aria-labelledby`. Use `ariaDescribedby` to reference an element which describes the drawer.
+The label of the close button can be set with `ariaCloseLabel` (default `"Close"`), e.g. for a translation.
+The content of the `cancelButton` and `confirmButton` slots is rendered inside a button. Do not place other interactive elements, such as links, in these slots to avoid [nested-interactive](https://accessibilityinsights.io/info-examples/web/nested-interactive/) accessibility problems.
+:::
+
+<ExampleViewer :component="Templates" :code="TemplatesCode" />
 
 ### Dynamic Component
 
@@ -131,4 +129,12 @@ oruga.drawer.open({...});
 Also set an `ariaLabel` or a `title` for a drawer which is opened programmatically.
 :::
 
+A component which is rendered inside the drawer can close it by emitting a `close` event with an optional return value, which is passed to the `close` event of the drawer.
+
 <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
+
+A programmatic instance returns a promise to await for. The promise gets resolved when the drawer gets closed, with the arguments of the `close` event.
+
+<ExampleViewer
+    :component="ProgrammaticallyAsync"
+    :code="ProgrammaticallyAsyncCode" />
