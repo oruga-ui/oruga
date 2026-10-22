@@ -17,7 +17,6 @@ export type DialogProps<C extends Component = Component> = {
      * Set to `false` to disable the built-in animation.
      *
      * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
-     * @default 'zoom-out'
      */
     animation?: AnimationName | false;
     /** Show an backdrop overlay background; make it a modal dialog */

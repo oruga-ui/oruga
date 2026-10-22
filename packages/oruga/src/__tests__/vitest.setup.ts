@@ -46,17 +46,6 @@ Object.defineProperties(HTMLDialogElement.prototype, {
         configurable: true,
         writable: true,
     },
-    requestClose: {
-        value(returnValue?: string) {
-            if (typeof returnValue !== "undefined")
-                this.returnValue = returnValue;
-            const cancelEvent = new Event("cancel", { cancelable: true });
-            const notCancelled = this.dispatchEvent(cancelEvent);
-            if (notCancelled) this.close();
-        },
-        configurable: true,
-        writable: true,
-    },
 });
 
 class MockToggleEvent extends Event {
@@ -159,15 +148,18 @@ Object.defineProperty(HTMLElement.prototype, "animate", {
     value() {
         const animation = {
             playState: "running",
+            // like the real API, a reversed animation has a negative playback rate
+            playbackRate: 1,
             finished: undefined as unknown as Promise<void>,
-            cancel() {
+            cancel(): void {
                 this.playState = "idle";
             },
-            reverse() {
-                // no-op direction flip - the mock resolves immediately either way
+            reverse(): void {
+                // only flips the direction - the mock resolves immediately either way
+                this.playbackRate *= -1;
             },
-            play() {},
-            pause() {},
+            play(): void {},
+            pause(): void {},
         };
 
         animation.finished = Promise.resolve().then(() => {

@@ -101,6 +101,7 @@ describe("ODialog test", () => {
     });
 
     test("hide when active change to false", async () => {
+        const animate = vi.spyOn(HTMLElement.prototype, "animate");
         const wrapper = mount(ODialog, {
             props: {
                 active: true,
@@ -110,10 +111,14 @@ describe("ODialog test", () => {
         const dialog = wrapper.find("dialog");
         expect(dialog.exists()).toBeTruthy();
         expect(dialog.classes("o-dialog--active")).toBeTruthy();
+        expect((dialog.element as HTMLDialogElement).open).toBe(true);
 
         await wrapper.setProps({ active: false });
         await flushPromises(); // wait for the leave animation
 
+        // the dialog has been animated and closed natively
+        expect(animate).toHaveBeenCalled();
+        expect((dialog.element as HTMLDialogElement).open).toBe(false);
         expect(wrapper.emitted("confirm")).toBeUndefined();
         expect(wrapper.emitted("close")).toHaveLength(1);
         expect(dialog.classes("o-dialog--active")).toBeFalsy();
@@ -484,15 +489,19 @@ describe("ODialog test", () => {
             );
             await nextTick();
 
-            const dialog = wrapper.find("dialog");
-            expect(dialog.classes("o-dialog--dragging")).toBeTruthy();
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                true,
+            );
 
             header.element.dispatchEvent(
                 new PointerEvent("pointerup", { bubbles: true }),
             );
             await nextTick();
 
-            expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
+            // query the dialog again, because the element is replaced on re-render
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
         });
 
         test("drag position resets when dialog becomes inactive", async () => {
@@ -719,9 +728,11 @@ describe("ODialog test", () => {
             finish: () => void;
             animate: ReturnType<typeof vi.fn>;
             reverse: ReturnType<typeof vi.fn>;
+            cancel: ReturnType<typeof vi.fn>;
         } {
             let finish = (): void => {};
             const reverse = vi.fn();
+            const cancel = vi.fn();
             const animate = vi.fn(() => {
                 const animation = {
                     playState: "running",
@@ -733,14 +744,35 @@ describe("ODialog test", () => {
                         reverse();
                         animation.playbackRate *= -1;
                     },
-                    cancel: vi.fn(),
+                    cancel,
                 };
                 return animation as unknown as Animation;
             });
             vi.spyOn(HTMLElement.prototype, "animate").mockImplementation(
                 animate,
             );
-            return { finish: () => finish(), animate, reverse };
+            return { finish: () => finish(), animate, reverse, cancel };
+        }
+
+        /**
+         * Mocks the user preference for reduced motion.
+         * `matchMedia` is already a mock in the test setup, so spying on it would not be restored afterwards.
+         * @returns a function to restore the previous `matchMedia`
+         */
+        function mockReducedMotion(): () => void {
+            const original = window.matchMedia;
+            window.matchMedia = vi.fn(
+                (query: string) =>
+                    ({
+                        matches: true,
+                        media: query,
+                        addEventListener: vi.fn(),
+                        removeEventListener: vi.fn(),
+                    }) as unknown as MediaQueryList,
+            );
+            return () => {
+                window.matchMedia = original;
+            };
         }
 
         type DialogExposed = { close: (value?: string) => void };
@@ -788,18 +820,53 @@ describe("ODialog test", () => {
             expect(wrapper.emitted("update:active")![0]).toEqual([false]);
         });
 
-        test("the cancel button closes with the return value 'cancel'", async () => {
+        test("the cancel button closes with the return value 'cancel' after the leave animation", async () => {
+            const { finish } = mockPendingAnimation();
             const wrapper = mount(ODialog, {
                 props: { active: true, cancelButton: "cancel" },
             });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
 
             await wrapper.find(".o-dialog__cancel-button").trigger("click");
             await flushPromises();
 
+            // still open while the leave animation is playing
+            expect(dialog.open).toBe(true);
+            expect(wrapper.emitted("close")).toBeUndefined();
+
+            finish();
+            await flushPromises();
+
+            expect(dialog.open).toBe(false);
             expect(wrapper.emitted("close")![0][1]).toBe("cancel");
         });
 
-        test("closeOnConfirm closes with the return value 'confirm'", async () => {
+        test("closeOnConfirm closes with the return value 'confirm' after the leave animation", async () => {
+            const { finish } = mockPendingAnimation();
+            const wrapper = mount(ODialog, {
+                props: {
+                    active: true,
+                    confirmButton: "ok",
+                    closeOnConfirm: true,
+                },
+            });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            await wrapper.find(".o-dialog__confirm-button").trigger("click");
+            await flushPromises();
+
+            expect(dialog.open).toBe(true);
+            expect(wrapper.emitted("confirm")).toHaveLength(1);
+
+            finish();
+            await flushPromises();
+
+            expect(dialog.open).toBe(false);
+            expect(wrapper.emitted("close")![0][1]).toBe("confirm");
+        });
+
+        test("confirming again during the leave animation does not emit confirm twice", async () => {
+            const { finish } = mockPendingAnimation();
             const wrapper = mount(ODialog, {
                 props: {
                     active: true,
@@ -808,10 +875,89 @@ describe("ODialog test", () => {
                 },
             });
 
-            await wrapper.find(".o-dialog__confirm-button").trigger("click");
+            const button = wrapper.find(".o-dialog__confirm-button");
+            await button.trigger("click");
+            await button.trigger("click"); // e.g. a double click
             await flushPromises();
 
+            expect(wrapper.emitted("confirm")).toHaveLength(1);
+
+            finish();
+            await flushPromises();
+
+            expect(wrapper.emitted("close")).toHaveLength(1);
             expect(wrapper.emitted("close")![0][1]).toBe("confirm");
+        });
+
+        test("a repeated cancel request during the leave animation does not emit cancel twice", async () => {
+            const { finish } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            dialog.dispatchEvent(new Event("cancel", { cancelable: true }));
+            // e.g. a key repeat of the escape key, which must still not close natively
+            const repeated = new Event("cancel", { cancelable: true });
+            dialog.dispatchEvent(repeated);
+            await flushPromises();
+
+            expect(repeated.defaultPrevented).toBe(true);
+            expect(wrapper.emitted("cancel")).toHaveLength(1);
+
+            finish();
+            await flushPromises();
+
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+
+        test("an explicit return value is kept when the close is requested again without one", async () => {
+            const { finish } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            (wrapper.vm as unknown as DialogExposed).close("a");
+            // the parent closes the dialog while the leave animation is playing
+            await wrapper.setProps({ active: false });
+
+            finish();
+            await flushPromises();
+
+            expect(dialog.returnValue).toBe("a");
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+
+        test("unmounting cancels the animation and does not close afterwards", async () => {
+            const { finish, cancel } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+
+            (wrapper.vm as unknown as DialogExposed).close("x");
+            wrapper.unmount();
+
+            expect(cancel).toHaveBeenCalledTimes(1);
+
+            finish();
+            await flushPromises();
+
+            expect(wrapper.emitted("close")).toBeUndefined();
+        });
+
+        test("reduced motion opens and closes the dialog without an animation", () => {
+            const restoreMatchMedia = mockReducedMotion();
+            try {
+                const animate = vi.spyOn(HTMLElement.prototype, "animate");
+                const wrapper = mount(ODialog, { props: { active: true } });
+                const dialog = wrapper.find("dialog")
+                    .element as HTMLDialogElement;
+
+                expect(dialog.open).toBe(true);
+
+                (wrapper.vm as unknown as DialogExposed).close("x");
+
+                expect(animate).not.toHaveBeenCalled();
+                expect(dialog.open).toBe(false);
+                expect(dialog.returnValue).toBe("x");
+            } finally {
+                restoreMatchMedia();
+            }
         });
 
         test("the close button does not pass the click event as return value", async () => {
@@ -826,7 +972,7 @@ describe("ODialog test", () => {
             expect(wrapper.emitted("close")![0][1]).toBe("");
         });
 
-        test("closing without an animation closes immediately", async () => {
+        test("closing without an animation closes immediately", () => {
             const wrapper = mount(ODialog, {
                 props: { active: true, animation: false },
             });

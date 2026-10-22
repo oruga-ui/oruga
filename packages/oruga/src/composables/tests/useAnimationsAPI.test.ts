@@ -1,4 +1,5 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi, type Mock } from "vitest";
+import { flushPromises } from "@vue/test-utils";
 
 import { useAnimationsAPI, type AnimationName } from "..";
 
@@ -50,6 +51,18 @@ describe("useAnimationsAPI test", () => {
             const { canPlay } = useAnimationsAPI();
             const el = document.createElement("div");
             expect(canPlay(el, "fade")).toBe(true);
+        });
+
+        test("should not throw when `matchMedia` is not available", () => {
+            const original = window.matchMedia;
+            window.matchMedia = undefined as unknown as typeof original;
+            try {
+                const { canPlay } = useAnimationsAPI();
+                const el = document.createElement("div");
+                expect(canPlay(el, "fade")).toBe(true);
+            } finally {
+                window.matchMedia = original;
+            }
         });
     });
 
@@ -108,17 +121,52 @@ describe("useAnimationsAPI test", () => {
 
         test("should resolve once the animation has finished", async () => {
             const el = document.createElement("div");
+            const animation = createFakeAnimation();
+            vi.spyOn(el, "animate").mockReturnValue(animation);
             const { play } = useAnimationsAPI();
 
-            const animateSpy = vi.spyOn(el, "animate");
-            const result = play(el, "fade", true);
-            const animation = animateSpy.mock.results[0].value as Animation & {
-                playState: string;
-            };
+            let isResolved = false;
+            const result = play(el, "fade", true).then(() => {
+                isResolved = true;
+            });
 
-            expect(animation.playState).toBe("running");
+            // still pending while the animation is running
+            await flushPromises();
+            expect(isResolved).toBe(false);
+
+            animation.finish();
             await result;
-            expect(animation.playState).toBe("finished");
+            expect(isResolved).toBe(true);
+        });
+
+        test("should not reverse an in-flight animation which already plays in the requested direction", () => {
+            const el = document.createElement("div");
+            const animation = createFakeAnimation();
+            const animateSpy = vi
+                .spyOn(el, "animate")
+                .mockReturnValue(animation);
+            const { play } = useAnimationsAPI();
+
+            play(el, "fade", true);
+            play(el, "fade", true);
+
+            expect(animateSpy).toHaveBeenCalledTimes(1);
+            expect(animation.reverse).not.toHaveBeenCalled();
+        });
+
+        test("should not reverse an in-flight closing animation when closing again", () => {
+            const el = document.createElement("div");
+            const animation = createFakeAnimation();
+            const animateSpy = vi
+                .spyOn(el, "animate")
+                .mockReturnValue(animation);
+            const { play } = useAnimationsAPI();
+
+            play(el, "fade", false); // reversed once on creation
+            play(el, "fade", false);
+
+            expect(animateSpy).toHaveBeenCalledTimes(1);
+            expect(animation.reverse).toHaveBeenCalledTimes(1);
         });
 
         test("should reverse an in-flight animation instead of starting a new one", () => {
@@ -141,7 +189,8 @@ describe("useAnimationsAPI test", () => {
             const animateSpy = vi.spyOn(el, "animate");
             const { play } = useAnimationsAPI();
 
-            await play(el, "fade", true);
+            // a finished closing animation holds its end state, an opening one is already released
+            await play(el, "fade", false);
             const first = animateSpy.mock.results[0].value as Animation;
             const cancelSpy = vi.spyOn(first, "cancel");
 
@@ -167,8 +216,17 @@ describe("useAnimationsAPI test", () => {
         });
     });
 
-    /** A fake animation with a manually resolved `finished` promise and a direction which follows `reverse`. */
-    function createFakeAnimation(): Animation & { finish: () => void } {
+    /**
+     * A fake animation with a manually resolved `finished` promise and a direction which follows `reverse`.
+     * `reverse` and `cancel` are typed as mocks, so they can be asserted without unbound method access.
+     */
+    type FakeAnimation = Omit<Animation, "reverse" | "cancel"> & {
+        reverse: Mock<() => void>;
+        cancel: Mock<() => void>;
+        finish: () => void;
+    };
+
+    function createFakeAnimation(): FakeAnimation {
         let finish = (): void => {};
         const animation = {
             playState: "running",
@@ -185,7 +243,7 @@ describe("useAnimationsAPI test", () => {
             cancel: vi.fn(),
             finish: () => finish(),
         };
-        return animation as unknown as Animation & { finish: () => void };
+        return animation as unknown as FakeAnimation;
     }
 
     describe("release of the opening animation", () => {
@@ -265,6 +323,34 @@ describe("useAnimationsAPI test", () => {
             expect(opening.reverse).not.toHaveBeenCalled();
             expect(animateSpy).toHaveBeenCalledTimes(2);
             expect(closing.reverse).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("cancel", () => {
+        test("should not throw without an animation", () => {
+            const { cancel } = useAnimationsAPI();
+            expect(() => cancel()).not.toThrow();
+        });
+
+        test("should cancel the in-flight animation and start a new one afterwards", () => {
+            const el = document.createElement("div");
+            const first = createFakeAnimation();
+            const second = createFakeAnimation();
+            const animateSpy = vi
+                .spyOn(el, "animate")
+                .mockReturnValueOnce(first)
+                .mockReturnValueOnce(second);
+            const { play, cancel } = useAnimationsAPI();
+
+            play(el, "fade", true);
+            cancel();
+            expect(first.cancel).toHaveBeenCalledTimes(1);
+
+            play(el, "fade", false);
+
+            // the cancelled animation must not be reversed
+            expect(first.reverse).not.toHaveBeenCalled();
+            expect(animateSpy).toHaveBeenCalledTimes(2);
         });
     });
 });

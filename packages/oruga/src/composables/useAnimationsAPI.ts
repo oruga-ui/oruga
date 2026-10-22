@@ -53,7 +53,7 @@ const ANIMATION_PRESETS: Record<
         ],
         options: { duration: 150, easing: "ease-out", fill: "both" },
     },
-};
+} as const;
 
 /**
  * Plays named [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)
@@ -74,6 +74,8 @@ export function useAnimationsAPI(): {
         name: AnimationName | false | undefined,
         opening: boolean,
     ) => Promise<void>;
+    /** Cancels the in-flight animation and releases its held end state, e.g. when the element gets unmounted. */
+    cancel: () => void;
 } {
     let current: Animation | undefined;
 
@@ -117,8 +119,9 @@ export function useAnimationsAPI(): {
         const preset = ANIMATION_PRESETS[name as AnimationName];
 
         if (current && current.playState !== "finished") {
-            // smoothly reverse an in-flight animation instead of jump-cutting
-            current.reverse();
+            // smoothly reverse an in-flight animation instead of jump-cutting,
+            // but only when it is playing in the opposite direction of the requested one
+            if (current.playbackRate > 0 !== opening) current.reverse();
         } else {
             // release the previous (finished) animation's held `fill: "both"`
             // effect before replacing it
@@ -134,5 +137,10 @@ export function useAnimationsAPI(): {
         );
     }
 
-    return { canPlay, play };
+    function cancel(): void {
+        current?.cancel();
+        current = undefined;
+    }
+
+    return { canPlay, play, cancel };
 }

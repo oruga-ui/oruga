@@ -2,6 +2,7 @@
 import {
     computed,
     nextTick,
+    onBeforeUnmount,
     onMounted,
     ref,
     useId,
@@ -39,6 +40,8 @@ defineOptions({
     name: "ODialog",
     configField: "dialog",
     inheritAttrs: false,
+    // the exposed `close` plays the leave animation and emits `close` afterwards
+    deferredClose: true,
 });
 
 const props = withDefaults(defineProps<DialogProps<C>>(), {
@@ -177,13 +180,19 @@ const isModal = computed(() => !!(props.backdrop || props.alert));
 
 // #region --- Dialog Feature ---
 
-const { play, canPlay } = useAnimationsAPI();
+const { play, canPlay, cancel: cancelAnimation } = useAnimationsAPI();
 
 /**
  * Whether a deferred (animated) close is currently in flight.
  * Guards against a stale animation callback closing the dialog after a reopen reversed the leave animation.
  */
 let isClosing = false;
+
+onBeforeUnmount(() => {
+    // do not leave an animation with a held end state behind
+    cancelAnimation();
+    isClosing = false;
+});
 
 /**
  * Specifies the types of user actions that can be used to close the dialog.
@@ -244,6 +253,7 @@ function enter(): void {
         // reverse the leave animation back to visible instead of opening again
         if (isClosing) {
             isClosing = false;
+            rootRef.value.returnValue = "";
             play(rootRef.value, props.animation, true);
         }
         return;
@@ -312,6 +322,8 @@ watch(() => isActive.value && isModal.value, toggleScroll, {
 function onCancel(event: Event): void {
     // take control over the native close request to be able to animate the leave
     event.preventDefault();
+    // already animating out, e.g. a repeated escape key
+    if (isClosing) return;
     emits("cancel", event, rootRef.value?.returnValue);
     if (!isActive.value) return;
     // the escape key must not close the dialog, even if `closedby="any"` allows it for the light dismiss.
@@ -342,9 +354,9 @@ function close(returnValue?: string): void {
     leave(typeof returnValue === "string" ? returnValue : undefined);
 }
 
-/** Emit a confirm event when active. */
+/** Emit a confirm event when active and not already closing. */
 function confirm(): void {
-    if (!isActive.value) return;
+    if (!isActive.value || isClosing) return;
     emits("confirm");
     if (props.closeOnConfirm) leave("confirm");
 }

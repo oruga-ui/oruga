@@ -1137,9 +1137,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 draggingClass: ClassDefinition;
             }>;
-        drawer?: ComponentConfigBase &
-            Partial<{
-            }>;
         dropdown?: ComponentConfigBase &
             Partial<{
                 /**
