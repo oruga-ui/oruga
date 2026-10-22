@@ -41,8 +41,6 @@ A drawer needs an accessible name. A `title` labels the drawer automatically, ot
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
-<ExampleViewer :component="Loading" :code="LoadingCode" />
-
 ### Closing
 
 By default the drawer closes when the user presses the escape key or clicks outside of the panel, which can be turned off with `closeOnEscape` and `closeOnBackdrop`. With `backdrop` the drawer is opened as modal dialog and the rest of the page becomes inert. In that case the `blockScroll` property controls how the page scrolling is blocked.
@@ -76,6 +74,8 @@ The `loading` prop shows a loading spinner over the drawer, with an optional `lo
 ::: info Accessibility Note:
 The loading overlay is announced as a status (`role="status"`, `aria-live="polite"`). Set a `loadingLabel`, so users of assistive technologies get a message too.
 :::
+
+<ExampleViewer :component="Loading" :code="LoadingCode" />
 
 ### Resizable
 
