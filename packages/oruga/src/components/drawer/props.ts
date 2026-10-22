@@ -61,6 +61,8 @@ export type DrawerProps<C extends Component = Component> = {
      * Set `true` to remove the body scrollbar.
      * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
      * but will set the body to a fixed position, which may break some layouts.
+     * The scroll is only blocked while the drawer is open with a `backdrop`;
+     * a drawer without a backdrop leaves the page scroll untouched.
      */
     blockScroll?: boolean;
     /**
@@ -162,8 +164,8 @@ export type DrawerClasses = Partial<{
     confirmButtonClass: ComponentClass;
     /** Class of the footer cancel button element */
     cancelButtonClass: ComponentClass;
-    /** Class of the body when is visible and scroll is clipped */
+    /** Class of the body while a drawer with a backdrop is open and `blockScroll` is `true` (the scrollbar is clipped) */
     scrollClipClass: ComponentClass;
-    /** Class of the body when is visible and scroll is keeped */
+    /** Class of the body while a drawer with a backdrop is open and `blockScroll` is `false` (the scrollbar is kept) */
     scrollKeepClass: ComponentClass;
 }>;

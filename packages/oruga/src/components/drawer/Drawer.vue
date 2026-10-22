@@ -21,6 +21,7 @@ import {
     defineClasses,
     unrefElement,
     useAnimationsAPI,
+    useEventListener,
     useMatchMedia,
     usePreventScrolling,
     useTeleport,
@@ -40,6 +41,8 @@ defineOptions({
     name: "ODrawer",
     configField: "drawer",
     inheritAttrs: false,
+    // the exposed `close` plays the leave animation and emits `close` afterwards
+    deferredClose: true,
 });
 
 const props = withDefaults(defineProps<DrawerProps<C>>(), {
@@ -174,7 +177,7 @@ const _teleport = useTeleport(() => props.teleport);
 
 // #region --- Animation Feature ---
 
-const { play, canPlay } = useAnimationsAPI();
+const { play, canPlay, cancel: cancelAnimation } = useAnimationsAPI();
 
 /** The default animation of each position, which slides the drawer in from its edge. */
 const POSITION_ANIMATIONS = {
@@ -194,16 +197,22 @@ const animationName = computed<AnimationName | false>(() =>
         : props.animation,
 );
 
+// #endregion --- Animation Feature ---
+
+// #region --- Dialog Feature ---
+
 /**
  * Whether a deferred (animated) close is currently in flight.
  * Guards against a stale animation callback closing the dialog after a reopen reversed the leave animation.
  */
 let isClosing = false;
 
-// #endregion --- Animation Feature ---
-
-// #region --- Dialog Feature ---
-
+onBeforeUnmount(() => {
+    // do not leave an animation with a held end state behind
+    cancelAnimation();
+    isClosing = false;
+    closeDialog();
+});
 /**
  * Specifies the types of user actions that can be used to close the dialog.
  * See https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby
@@ -266,6 +275,8 @@ function enter(): void {
     }
 
     openDialog();
+    // the scroll is locked by a modal drawer with a backdrop
+    isScrollLocked.value = props.backdrop;
     measureSize();
     play(rootRef.value, animationName.value, true);
 }
@@ -312,21 +323,21 @@ function closeDialog(): void {
     rootRef.value.close();
 }
 
-onBeforeUnmount(() => {
-    isClosing = false;
-    closeDialog();
-});
-
 // #endregion --- Dialog Feature ---
 
 // #region --- Scroll Feature ---
 
 const toggleScroll = usePreventScrolling(() => props.blockScroll);
 
-watch(() => isActive.value && props.backdrop, toggleScroll, {
-    immediate: true,
-    flush: "post",
-});
+/**
+ * Whether the page scroll is locked by this drawer.
+ * The lock is held from the open until the dialog has actually been closed,
+ * so it is not released while the leave animation is still playing.
+ * A drawer without a backdrop never touches the lock, which might be held by another overlay.
+ */
+const isScrollLocked = ref(false);
+
+watch(isScrollLocked, toggleScroll, { flush: "post" });
 
 // #endregion --- Scroll Feature ---
 
@@ -339,6 +350,8 @@ watch(() => isActive.value && props.backdrop, toggleScroll, {
 function onCancel(event: Event): void {
     // take control over the native close request to be able to animate the leave
     event.preventDefault();
+    // already animating out, e.g. a repeated escape key
+    if (isClosing) return;
     emits("cancel", event, rootRef.value?.returnValue);
     if (!isActive.value) return;
     // the escape key must not close the drawer, even if `closedby="any"` allows it for the light dismiss.
@@ -356,6 +369,7 @@ function onCancel(event: Event): void {
 function onClose(event: Event): void {
     isClosing = false;
     isResizing.value = false;
+    isScrollLocked.value = false;
     isActive.value = false;
     emits("close", event, rootRef.value?.returnValue);
 }
@@ -405,8 +419,10 @@ const isHeight = computed(
     () => props.position === "top" || props.position === "bottom",
 );
 
-/** Whether the drawer can be resized by the user. */
-const isResizable = computed(() => props.resizable && !props.fullscreen);
+/** Whether the drawer can be resized by the user. A fullscreen or mobile drawer always fills the viewport. */
+const isResizable = computed(
+    () => props.resizable && !props.fullscreen && !isMobile.value,
+);
 
 /** The drawer grows when the pointer moves away from the edge it is attached to. */
 const growsWithPointer = computed(
@@ -448,23 +464,39 @@ function getLimits(): { min: number; max: number } {
 
     const viewport = isHeight.value ? window.innerHeight : window.innerWidth;
 
-    // a computed value of `none` or `auto` is no number
     const style = rootRef.value
         ? window.getComputedStyle(rootRef.value)
         : undefined;
-    const cssMin = parseFloat(
-        (isHeight.value ? style?.minHeight : style?.minWidth) ?? "",
+    const cssMin = parseCssSize(
+        isHeight.value ? style?.minHeight : style?.minWidth,
+        viewport,
     );
-    const cssMax = parseFloat(
-        (isHeight.value ? style?.maxHeight : style?.maxWidth) ?? "",
+    const cssMax = parseCssSize(
+        isHeight.value ? style?.maxHeight : style?.maxWidth,
+        viewport,
     );
 
-    const max = Math.min(Number.isFinite(cssMax) ? cssMax : viewport, viewport);
-    const min = Math.min(
-        Math.max(Number.isFinite(cssMin) ? cssMin : 0, DEFAULT_MIN_SIZE),
-        max,
-    );
+    const max = Math.min(cssMax ?? viewport, viewport);
+    const min = Math.min(Math.max(cssMin ?? 0, DEFAULT_MIN_SIZE), max);
     return { min, max };
+}
+
+/**
+ * Parse a computed CSS size to px.
+ * A drawer is attached to the edges of the viewport, so a percentage is relative to the viewport size.
+ * Every other value, e.g. `none` or `auto`, is no size.
+ * @param value - computed CSS size
+ * @param viewport - viewport size in px
+ */
+function parseCssSize(
+    value: string | undefined,
+    viewport: number,
+): number | undefined {
+    const number = parseFloat(value ?? "");
+    if (!Number.isFinite(number)) return undefined;
+    if (value!.endsWith("px")) return number;
+    if (value!.endsWith("%")) return (number / 100) * viewport;
+    return undefined;
 }
 
 /** Measure the current size of the dialog. */
@@ -494,7 +526,8 @@ function getPointer(event: PointerEvent): number {
 }
 
 function onResizeStart(event: PointerEvent): void {
-    if (!rootRef.value) return;
+    // only the main button starts a resize, a context menu would swallow the pointerup
+    if (!rootRef.value || event.button !== 0) return;
 
     const handle = event.currentTarget as HTMLElement;
 
@@ -529,6 +562,20 @@ function onResizeEnd(event: PointerEvent): void {
         handle.hasPointerCapture(event.pointerId)
     )
         handle.releasePointerCapture(event.pointerId);
+}
+
+// the limits and a size which is out of the limits change with the viewport
+if (isClient)
+    useEventListener(window, "resize", onViewportResize, {
+        trigger: isActive,
+        passive: true,
+    });
+
+function onViewportResize(): void {
+    if (!isResizable.value) return;
+    measureSize();
+    // keep a user defined size inside of the new limits
+    if (size.value !== undefined) setSize(size.value);
 }
 
 /** The arrow keys which increase the size of the drawer, depending on its position. */
@@ -777,6 +824,7 @@ defineExpose({ close, confirm });
                 @pointermove="onResizeMove"
                 @pointerup="onResizeEnd"
                 @pointercancel="onResizeEnd"
+                @lostpointercapture="onResizeEnd"
                 @keydown="onResizeKeydown" />
         </dialog>
     </Teleport>
