@@ -30,7 +30,9 @@ Object.defineProperties(HTMLDialogElement.prototype, {
         writable: true,
     },
     close: {
-        value() {
+        value(returnValue?: string) {
+            if (typeof returnValue !== "undefined")
+                this.returnValue = returnValue;
             this.open = false;
             this.dispatchEvent(new Event("close"));
         },
@@ -139,6 +141,35 @@ Object.defineProperties(HTMLElement.prototype, {
         configurable: true,
         writable: true,
     },
+});
+
+// add missing Web Animations API jsdom implementation (https://github.com/jsdom/jsdom/issues/3041)
+Object.defineProperty(HTMLElement.prototype, "animate", {
+    value() {
+        const animation = {
+            playState: "running",
+            // like the real API, a reversed animation has a negative playback rate
+            playbackRate: 1,
+            finished: undefined as unknown as Promise<void>,
+            cancel(): void {
+                this.playState = "idle";
+            },
+            reverse(): void {
+                // only flips the direction - the mock resolves immediately either way
+                this.playbackRate *= -1;
+            },
+            play(): void {},
+            pause(): void {},
+        };
+
+        animation.finished = Promise.resolve().then(() => {
+            animation.playState = "finished";
+        });
+
+        return animation;
+    },
+    configurable: true,
+    writable: true,
 });
 
 // create a global oruga instance for all tests

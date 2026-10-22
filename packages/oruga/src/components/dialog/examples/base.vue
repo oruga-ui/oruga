@@ -8,17 +8,11 @@ const isActive = ref(false);
     <section>
         <o-button
             label="Open Dialog"
-            size="medium"
             variant="primary"
-            :aria-expanded="isActive"
-            aria-controls="base-dialog"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
-        <o-dialog
-            id="base-dialog"
-            v-model:active="isActive"
-            closeable
-            :backdrop="false">
+        <o-dialog v-model:active="isActive" closeable :backdrop="false">
             <template #title>Dialog Title</template>
 
             <template #subtitle>Dialog Subtitle</template>
