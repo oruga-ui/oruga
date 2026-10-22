@@ -1,4 +1,5 @@
 import type {
+    AnimationName,
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
@@ -1132,6 +1133,169 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the root element while the dialog is being dragged
                  */
                 draggingClass: ClassDefinition;
+            }>;
+        drawer?: ComponentConfigBase &
+            Partial<{
+                /**
+                 * Show a backdrop backdrop background; make it a modal dialog.
+The rest of the page becomes inert while the drawer is open.
+The backdrop can be styled with the `::backdrop` pseudo-element.
+                 */
+                backdrop: boolean;
+                /**
+                 * Drawer position
+                 */
+                position: "bottom" | "left" | "right" | "top";
+                /**
+                 * Allow the user to resize the drawer by dragging its inner edge or with the arrow keys.
+The drawer is resized in width for the positions `left` and `right`, otherwise in height.
+The size is limited by the CSS `min-width` / `max-width` (`min-height` / `max-height`) of the drawer and the viewport.
+Has no effect when the drawer is in `fullscreen`.
+                 */
+                resizable: boolean;
+                /**
+                 * Open/close animation using the native Web Animations API.
+By default the drawer slides in from the edge defined by `position`.
+Set to `false` to disable the built-in animation.
+A `backdrop` fades in and out together with the animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+                 */
+                animation: AnimationName | false;
+                /**
+                 * Adds close button to the header to hide the drawer
+                 */
+                closeable: boolean;
+                /**
+                 * Close when clicked outside of the panel.
+Requires a browser with `closedby` support of the dialog element.
+                 */
+                closeOnBackdrop: boolean;
+                /**
+                 * Close when pressing escape key.
+Browsers with `closedby` support also close on escape when `closeOnBackdrop` is enabled.
+                 */
+                closeOnEscape: boolean;
+                /**
+                 * Close the drawer when the confirm button is pressed
+                 */
+                closeOnConfirm: boolean;
+                /**
+                 * Set `true` to remove the body scrollbar.
+When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+but will set the body to a fixed position, which may break some layouts.
+                 */
+                blockScroll: boolean;
+                /**
+                 * Icon pack to use for the close icon
+                 */
+                iconPack: string;
+                /**
+                 * Close icon name
+                 */
+                closeIcon: string;
+                /**
+                 * Close icon size
+                 */
+                closeIconSize: string;
+                /**
+                 * Accessibility label for the close button
+                 */
+                ariaCloseLabel: string;
+                /**
+                 * Accessibility label for the resize handle
+                 */
+                ariaResizeLabel: string;
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
+                mobileBreakpoint: string;
+                /**
+                 * Append the component to another part of the DOM.
+Set `true` to append the component to the body.
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
+                teleport: boolean | object | string;
+                /**
+                 * Class of the root element
+                 */
+                rootClass: ClassDefinition;
+                /**
+                 * Class of the root element when on mobile
+                 */
+                mobileClass: ClassDefinition;
+                /**
+                 * Class of the root element when active
+                 */
+                activeClass: ClassDefinition;
+                /**
+                 * Class of the root element when teleported
+                 */
+                teleportClass: ClassDefinition;
+                /**
+                 * Class of the root element with position
+                 */
+                positionClass: ClassDefinition;
+                /**
+                 * Class of the root element when is fullscreen
+                 */
+                fullscreenClass: ClassDefinition;
+                /**
+                 * Class of the root element when is resizable
+                 */
+                resizableClass: ClassDefinition;
+                /**
+                 * Class of the root element while the drawer is being resized
+                 */
+                resizingClass: ClassDefinition;
+                /**
+                 * Class of the resize handle element
+                 */
+                resizeHandleClass: ClassDefinition;
+                /**
+                 * Class of the header element
+                 */
+                headerClass: ClassDefinition;
+                /**
+                 * Class of the header title element
+                 */
+                titleClass: ClassDefinition;
+                /**
+                 * Class of the header subtitle element
+                 */
+                subtitleClass: ClassDefinition;
+                /**
+                 * Class of the header close element
+                 */
+                closeClass: ClassDefinition;
+                /**
+                 * Class of the body element
+                 */
+                bodyClass: ClassDefinition;
+                /**
+                 * Class of the footer element
+                 */
+                footerClass: ClassDefinition;
+                /**
+                 * Class of the footer element with position
+                 */
+                footerPositionClass: ClassDefinition;
+                /**
+                 * Class of the footer confirm button element
+                 */
+                confirmButtonClass: ClassDefinition;
+                /**
+                 * Class of the footer cancel button element
+                 */
+                cancelButtonClass: ClassDefinition;
+                /**
+                 * Class of the body when is visible and scroll is clipped
+                 */
+                scrollClipClass: ClassDefinition;
+                /**
+                 * Class of the body when is visible and scroll is keeped
+                 */
+                scrollKeepClass: ClassDefinition;
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{

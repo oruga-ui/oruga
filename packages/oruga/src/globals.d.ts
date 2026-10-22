@@ -12,6 +12,7 @@ declare module "vue" {
         ODatepicker: (typeof import("@oruga-ui/oruga-next"))["ODatepicker"];
         ODatetimepicker: (typeof import("@oruga-ui/oruga-next"))["ODatetimepicker"];
         ODialog: (typeof import("@oruga-ui/oruga-next"))["ODialog"];
+        ODrawer: (typeof import("@oruga-ui/oruga-next"))["ODrawer"];
         ODropdown: (typeof import("@oruga-ui/oruga-next"))["ODropdown"];
         ODropdownItem: (typeof import("@oruga-ui/oruga-next"))["ODropdownItem"];
         OField: (typeof import("@oruga-ui/oruga-next"))["OField"];
