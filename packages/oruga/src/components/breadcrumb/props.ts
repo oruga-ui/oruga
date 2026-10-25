@@ -1,12 +1,12 @@
 import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
 
-export type BreadcrumnOptions = OptionsProp<BreadcrumbItemProps>;
+export type BreadcrumbOptions = OptionsProp<BreadcrumbItemProps>;
 
 export type BreadcrumbProps = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** breadcrumb items, unnecessary when default slot is used */
-    options?: BreadcrumnOptions;
+    /** Breadcrumb options, unnecessary when default slot is used */
+    options?: BreadcrumbOptions;
     /**
      * Size of the breadcrumb
      * @values small, medium, large
@@ -49,7 +49,7 @@ export type BreadcrumbItemProps = {
     label?: string;
     /** Whether item is active or not */
     active?: boolean;
-    /** Item is disabled */
+    /** Item will be disabled */
     disabled?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
@@ -82,7 +82,7 @@ export type BreadcrumbItemClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the item element when active */
     activeClass: ComponentClass;
-    /** Class of the item seperator element */
+    /** Class of the item separator element */
     seperatorClass: ComponentClass;
     /** Class of the item link element */
     linkClass: ComponentClass;

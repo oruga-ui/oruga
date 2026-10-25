@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.14.3",
+  "version": "0.14.4",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "license": "MIT",
@@ -74,7 +74,7 @@
     "core-js": "^3.49.0",
     "jest-axe": "^10.0.0",
     "jsdom": "^29.1.1",
-    "vite": "^8.1.0",
+    "vite": "^8.3.4",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.1.11",
     "vitest-browser-vue": "^2.1.0",

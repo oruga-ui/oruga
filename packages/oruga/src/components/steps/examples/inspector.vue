@@ -22,7 +22,7 @@ const inspectData: InspectData<
     },
     sizeClass: {
         class: "sizeClass",
-        description: "Size of the root element with size.",
+        description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (data): void => {

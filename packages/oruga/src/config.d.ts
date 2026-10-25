@@ -36,7 +36,7 @@ declare module "./index" {
                  */
                 expanded: boolean;
                 /**
-                 * Number of milliseconds to delay before to emit input event
+                 * Number of milliseconds to delay before emitting the input event
                  */
                 debounce: number;
                 /**
@@ -201,7 +201,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 activeClass: ClassDefinition;
                 /**
-                 * Class of the item seperator element
+                 * Class of the item separator element
                  */
                 seperatorClass: ClassDefinition;
                 /**
@@ -466,7 +466,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 size: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -517,7 +518,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expandedClass: ClassDefinition;
                 /**
-                 * Clas of the root element with position
+                 * Class of the root element with position
                  */
                 positionClass: ClassDefinition;
                 /**
@@ -540,7 +541,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 monthNames: string[];
                 /**
-                 * Size of the control input
+                 * Size of the input control
                  */
                 size: string;
                 /**
@@ -608,11 +609,11 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconNext: string;
                 /**
-                 * Picker content is shown into a modal on mobile
+                 * Overlay content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Picker content is shown into a modal on desktop
+                 * Overlay content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
@@ -937,15 +938,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
-                 * Dropdown content is shown into a modal on mobile
+                 * Overlay content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Dropdown content is shown into a modal on desktop
+                 * Overlay content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
-                 * Enable mobile native input if mobile agent
+                 * Enable mobile native input if device is a mobile agent
                  */
                 mobileNative: boolean;
                 /**
@@ -1076,7 +1077,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 headerClass: ClassDefinition;
                 /**
-                 * Class of the content  header title element
+                 * Class of the content header title element
                  */
                 titleClass: ClassDefinition;
                 /**
@@ -1283,7 +1284,7 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 scrollKeepClass: ClassDefinition;
                 /**
-                 * Class of the item element.
+                 * Class of the item element
                  */
                 itemClass: ClassDefinition;
                 /**
@@ -1449,6 +1450,10 @@ See icon library documentation for custom classes.
                  */
                 variant: string;
                 /**
+                 * Number of milliseconds to delay before emitting the value
+                 */
+                debounce: number;
+                /**
                  * Makes input full width when inside a grouped or addon field
                  */
                 expanded: boolean;
@@ -1477,11 +1482,8 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
-                 * Number of milliseconds to delay before the value get emitted
-                 */
-                debounce: number;
-                /**
-                 * Native options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -1584,19 +1586,19 @@ See icon library documentation for custom classes.
                  */
                 rootClass: ClassDefinition;
                 /**
-                 * Clas of the root element when disabled
+                 * Class of the root element when disabled
                  */
                 disabledClass: ClassDefinition;
                 /**
-                 * Clas of the root element when selectable
+                 * Class of the root element when selectable
                  */
                 selectableClass: ClassDefinition;
                 /**
-                 * Clas of the root element when filterable
+                 * Class of the root element when filterable
                  */
                 filterableClass: ClassDefinition;
                 /**
-                 * Clas of the root element when multiple
+                 * Class of the root element when multiple
                  */
                 multipleClass: ClassDefinition;
                 /**
@@ -1628,7 +1630,7 @@ See icon library documentation for custom classes.
                  */
                 iconSize: string;
                 /**
-                 * Class of the item element.
+                 * Class of the item element
                  */
                 itemClass: ClassDefinition;
                 /**
@@ -2007,7 +2009,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 perPage: number | string;
                 /**
-                 * Enable rounded button style
+                 * Enable rounded style
                  */
                 rounded: boolean;
                 /**
@@ -2229,7 +2231,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 size: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -2288,7 +2291,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -2708,7 +2712,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileClass: ClassDefinition;
                 /**
-                 * Size of the root element with size
+                 * Class of the root element with size
                  */
                 sizeClass: ClassDefinition;
                 /**
@@ -2767,7 +2771,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 size: string;
                 /**
-                 * Rounded style
+                 * Enable rounded style
                  */
                 rounded: boolean;
                 /**
@@ -2775,7 +2779,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 right: string;
                 /**
-                 * Same as native autocomplete options to use in HTML5 validation
+                 * Native options to use in HTML5 validation,
+whether the value of the form's controls can be automatically completed by the browser.
                  */
                 autocomplete: string;
                 /**
@@ -3280,7 +3285,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
         tag?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Color variant of the breadcrumb
+                 * Color variant of the control
                  */
                 variant: string;
                 /**
@@ -3448,7 +3453,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 expanded: boolean;
                 /**
-                 * Size of the button
+                 * Size of the input control
                  */
                 size: string;
                 /**
@@ -3460,7 +3465,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 parser: ((date: string) => Date) | undefined;
                 /**
-                 * time creator function, default is `new Date()`
+                 * Time creator function, default is `new Date()`
                  */
                 creator: (() => Date);
                 /**
@@ -3480,15 +3485,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 iconRight: string;
                 /**
-                 * Picker content is shown into a modal on mobile
+                 * Overlay content is shown into a modal on mobile
                  */
                 mobileModal: boolean;
                 /**
-                 * Picker content is shown into a modal on desktop
+                 * Overlay content is shown into a modal on desktop
                  */
                 desktopModal: boolean;
                 /**
-                 * Enable mobile native input if mobile agent
+                 * Enable mobile native input if device is a mobile agent
                  */
                 mobileNative: boolean;
                 /**
@@ -3738,15 +3743,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 rootClass: ClassDefinition;
                 /**
-                 * Clas of the root element when disabled
+                 * Class of the root element when disabled
                  */
                 disabledClass: ClassDefinition;
                 /**
-                 * Clas of the root element when selectable
+                 * Class of the root element when selectable
                  */
                 selectableClass: ClassDefinition;
                 /**
-                 * Clas of the root element when multiple
+                 * Class of the root element when multiple
                  */
                 multipleClass: ClassDefinition;
                 /**

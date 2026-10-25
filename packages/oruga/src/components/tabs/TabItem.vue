@@ -64,7 +64,7 @@ defineSlots<{
      * Override tab header label
      * @param active {boolean} - if item is shown
      */
-    header?(): VNode[];
+    header?(props: { active: boolean }): VNode[];
 }>();
 
 const rootRef = useTemplateRef("rootElement");

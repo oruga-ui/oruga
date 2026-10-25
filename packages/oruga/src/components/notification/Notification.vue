@@ -60,17 +60,17 @@ const emits = defineEmits<{
 defineSlots<{
     /**
      * Override the notification title, default is title prop
-     * @param close {(...args: [] | [Event]): void} -  function to emit a `confirm` event
+     * @param close {(...args: [] | [Event]): void} -  function to close the component
      */
     title?(props: { close: () => void }): void;
     /**
      * Override the default notification body
-     * @param close {(...args: [] | [Event]): void} -  function to emit a `confirm` event
+     * @param close {(...args: [] | [Event]): void} -  function to close the component
      */
     default?(props: { close: (...args: [] | [Event]) => void }): void;
     /**
      * Override the body content, default is content prop
-     * @param close {(...args: [] | [Event]): void} -  function to emit a `confirm` event
+     * @param close {(...args: [] | [Event]): void} -  function to close the component
      */
     content?(props: { close: () => void }): void;
     /** Define a custom close icon */

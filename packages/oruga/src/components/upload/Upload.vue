@@ -14,7 +14,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { UploadProps } from "./props";
+import type { UploadProps, UploadNativeProps } from "./props";
 
 /**
  * Upload one or more files.
@@ -30,19 +30,26 @@ defineOptions({
 
 type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
 
-const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
-    override: undefined,
-    modelValue: undefined,
-    // multiple: false,
-    variant: () => getDefault("upload.variant"),
-    disabled: false,
-    expanded: () => getDefault("upload.expanded", false),
-    accept: undefined,
-    dragDrop: false,
-    native: true,
-    useHtml5Validation: () => getDefault("useHtml5Validation", true),
-    customValidity: "",
-});
+const props = withDefaults(
+    defineProps<
+        UploadProps<T, IsMultiple> &
+            // eslint-disable-next-line vue/prop-name-casing -- aria-* keys in UploadNativeProps are @vue-ignore'd (not Vue props, just typed fallthrough attrs)
+            /* @vue-ignore */ UploadNativeProps
+    >(),
+    {
+        override: undefined,
+        modelValue: undefined,
+        // multiple: false,
+        variant: () => getDefault("upload.variant"),
+        disabled: false,
+        expanded: () => getDefault("upload.expanded", false),
+        accept: undefined,
+        dragDrop: false,
+        native: true,
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
+        customValidity: "",
+    },
+);
 
 const emits = defineEmits<{
     /**
@@ -70,9 +77,9 @@ const emits = defineEmits<{
 defineSlots<{
     /**
      * Default content
-     * @param onclick {(event: Event): void} - click handler, only needed if a button is used
+     * @param click {(event: Event): void} - click handler, only needed if a button is used
      */
-    default?(props: { onclick: (event: Event) => void }): void;
+    default?(props: { click: (event: Event) => void }): void;
     /** Additional slot before the dragzone */
     before?(): void;
     /** Additional slot after the dragzone */
@@ -194,12 +201,11 @@ function checkType(file: File): boolean {
 
 function onClick(event: Event): void {
     if (props.disabled) return;
+    // click input only if not drag and drop is used
+    if (props.dragDrop) return;
 
-    // click input if not drag and drop is used
-    if (!props.dragDrop) {
-        event.preventDefault();
-        if (inputRef.value) inputRef.value.click();
-    }
+    event.preventDefault();
+    if (inputRef.value) inputRef.value.click();
 }
 
 // #region --- Computed Component Classes ---
@@ -265,34 +271,34 @@ defineExpose({
         <slot name="before" />
 
         <template v-if="!dragDrop">
-            <slot :onclick="onClick" />
+            <slot :click="onClick" />
         </template>
 
         <div
             v-else
-            :class="dragzoneClasses"
             role="button"
             tabindex="0"
+            :class="dragzoneClasses"
             @pointerenter="updateDragDropFocus(true)"
             @pointerleave="updateDragDropFocus(false)"
             @dragover.prevent="updateDragDropFocus(true)"
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
             @drop.prevent="onFileChange">
-            <slot :onclick="onClick" />
+            <slot :click="onClick" />
         </div>
 
         <slot name="after" />
 
         <input
-            v-bind="inputBind"
             ref="inputElement"
-            :class="inputClasses"
             type="file"
             data-oruga-input="file"
+            :class="inputClasses"
             :multiple="props.multiple"
             :accept="accept"
             :disabled="disabled"
+            v-bind="inputBind"
             @change="onFileChange" />
     </label>
 </template>

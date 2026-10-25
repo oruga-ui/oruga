@@ -81,7 +81,7 @@ export type StepsClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Size of the root element with size */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
     /** Class of the root element when is vertical */
     verticalClass: ComponentClass;
@@ -113,7 +113,7 @@ export type StepItemProps<T, C extends Component = Component> = {
      * @type string|number|object
      */
     value?: T;
-    /** Item label */
+    /** Item label, unnecessary when header slot is used */
     label?: string;
     /** Step marker content (when there is no icon) */
     step?: Numberish;

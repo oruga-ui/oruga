@@ -23,7 +23,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
     },
     sizeClass: {
         class: "sizeClass",
-        description: "Class for the root elemnt with size.",
+        description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (data): void => {

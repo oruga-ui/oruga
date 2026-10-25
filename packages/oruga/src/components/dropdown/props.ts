@@ -1,5 +1,10 @@
-import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
-import type { OptionsOrGroupsProp, PopoverPosition } from "@/composables";
+import type {
+    ComponentClass,
+    DynamicComponent,
+    Numberish,
+    OptionsOrGroupsProp,
+    PopoverPosition,
+} from "@/types";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -18,7 +23,7 @@ export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
     active?: boolean;
     /** Trigger label, unnecessary when trigger slot is used */
     label?: string;
-    /** Interaction is disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
     /** Enables item selection */
     selectable?: boolean;
@@ -140,7 +145,7 @@ export type DropdownItemProps<T> = {
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/title
      */
     title?: string;
-    /** Item is disabled */
+    /** Item will be disabled */
     disabled?: boolean;
     /** Item is clickable and emit an event */
     clickable?: boolean;
@@ -183,7 +188,7 @@ export type DropdownItemProps<T> = {
 
 // class props (will not be displayed in the docs)
 export type DropdownItemClasses = Partial<{
-    /** Class of the item element. */
+    /** Class of the item element */
     itemClass: ComponentClass;
     /** Class of the item element when selected */
     itemSelectedClass: ComponentClass;

@@ -108,7 +108,7 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
     },
     bodyClass: {
         class: "bodyClass",
-        description: " Class of the content body element.",
+        description: "Class of the content body element.",
     },
     figureClass: {
         class: "figureClass",
@@ -116,7 +116,7 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
     },
     imageClass: {
         class: "imageClass",
-        description: " Class of the content body image element.",
+        description: "Class of the content body image element.",
     },
     footerClass: {
         class: "footerClass",

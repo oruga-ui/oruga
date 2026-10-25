@@ -5,11 +5,11 @@ import type { ComponentProps } from "vue-component-type-helpers";
 export type SidebarProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Whether siedbar is active or not, use v-model:active to make it two-way binding */
+    /** Whether sidebar is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Show an overlay background */
     overlay?: boolean;
-    /** Display the Sidebear inline */
+    /** Display the Sidebar inline */
     inline?: boolean;
     /**
      * Sidebar position

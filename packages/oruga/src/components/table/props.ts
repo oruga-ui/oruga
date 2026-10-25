@@ -264,11 +264,7 @@ export type TableClasses = Partial<{
     loadingAttrs: object;
 }>;
 
-export type FieldKey<T> = T extends never
-    ? string
-    : T extends unknown
-      ? string
-      : DeepKeys<T>;
+export type FieldKey<T> = unknown extends T ? string : DeepKeys<T>;
 
 export type TableColumnProps<T, K extends string = FieldKey<T>> = {
     /** Define the column label */

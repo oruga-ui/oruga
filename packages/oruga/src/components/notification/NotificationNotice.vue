@@ -49,6 +49,11 @@ const emits = defineEmits<{
     close: [...args: [] | [Event] | CloseEventArgs<C>];
 }>();
 
+defineSlots<{
+    /** Override the default notification body */
+    default?(): void;
+}>();
+
 const notificationRef = useTemplateRef("notificationComponent");
 
 const isActive = ref(true);

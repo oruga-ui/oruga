@@ -30,7 +30,7 @@ export type TooltipProps = {
         | "bottom-right";
     /** Tooltip will be always active */
     always?: boolean;
-    /** Tooltip will be disabled */
+    /** Interaction will be disabled */
     disabled?: boolean;
     /** Tooltip default animation */
     animation?: string;

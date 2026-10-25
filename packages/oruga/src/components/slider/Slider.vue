@@ -72,7 +72,7 @@ const emits = defineEmits<{
 }>();
 
 defineSlots<{
-    /**  Define additional slider ticks here */
+    /** Define additional slider ticks here */
     default?(): void;
 }>();
 
