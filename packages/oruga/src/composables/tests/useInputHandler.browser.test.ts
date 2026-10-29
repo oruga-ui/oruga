@@ -89,7 +89,7 @@ const visibleWithin = (parent: Element, child: Element): boolean => {
 
 describe("useInputHandler", () => {
     test("shows validation message on blur", async () => {
-        const screen = render(NativeForm);
+        const screen = await render(NativeForm);
         const input = screen.getByRole("textbox");
         const message = findMessage(screen);
         await expect.element(message).not.toBeInTheDocument();
@@ -121,7 +121,7 @@ describe("useInputHandler", () => {
                 ],
             );
 
-        const screen = render(ScrollingForm);
+        const screen = await render(ScrollingForm);
         const message = findMessage(screen);
         await expect.element(message).not.toBeInTheDocument();
 
@@ -161,7 +161,7 @@ describe("useInputHandler", () => {
                 ],
             );
 
-        const screen = render(ScrollingForm);
+        const screen = await render(ScrollingForm);
         const input = screen.getByRole("textbox");
         const submit = screen.getByRole("button");
 
@@ -199,7 +199,7 @@ describe("useInputHandler", () => {
                 ];
             },
         });
-        const screen = render(TriggerField);
+        const screen = await render(TriggerField);
         const button = screen.getByRole("button");
         const message = findMessage(screen);
         await expect.element(message).not.toBeInTheDocument();
@@ -208,7 +208,7 @@ describe("useInputHandler", () => {
     });
 
     test("hides validation message on input change", async () => {
-        const screen = render(NativeForm);
+        const screen = await render(NativeForm);
         const input = screen.getByRole("textbox");
         await input.click();
         await userEvent.keyboard("{Tab}");
@@ -220,13 +220,13 @@ describe("useInputHandler", () => {
     });
 
     test("hides validation message when input is disabled", async () => {
-        const screen = render(NativeForm);
+        const screen = await render(NativeForm);
         const input = screen.getByRole("textbox");
         await input.click();
         await userEvent.keyboard("{Tab}");
         const message = findMessage(screen);
         await expect.element(message).toBeInTheDocument();
-        screen.rerender({ disabled: true });
+        await screen.rerender({ disabled: true });
         await expect.element(message).not.toBeInTheDocument();
     });
 
@@ -254,24 +254,24 @@ describe("useInputHandler", () => {
             },
         });
 
-        const screen = render(FieldsetForm);
+        const screen = await render(FieldsetForm);
         const input = screen.getByRole("textbox");
         await input.click();
         await userEvent.keyboard("{Tab}");
         const message = findMessage(screen);
         await expect.element(message).toBeInTheDocument();
-        screen.rerender({ disabled: true });
+        await screen.rerender({ disabled: true });
         await expect.element(message).not.toBeInTheDocument();
     });
 
     test("hides validation message when validation attribute is removed", async () => {
-        const screen = render(NativeForm);
+        const screen = await render(NativeForm);
         const input = screen.getByRole("textbox");
         await input.click();
         await userEvent.keyboard("{Tab}");
         const message = findMessage(screen);
         await expect.element(message).toBeInTheDocument();
-        screen.rerender({ required: false });
+        await screen.rerender({ required: false });
         await expect.element(message).not.toBeInTheDocument();
     });
 
@@ -296,13 +296,13 @@ describe("useInputHandler", () => {
             },
         });
 
-        const screen = render(NumberForm);
+        const screen = await render(NumberForm);
         const input = screen.getByRole("spinbutton");
         await input.click();
         await userEvent.keyboard("{Tab}");
         const message = findMessage(screen);
         await expect.element(message).toBeInTheDocument();
-        screen.rerender({ max: 2 });
+        await screen.rerender({ max: 2 });
         await expect.element(message).not.toBeInTheDocument();
     });
 
@@ -320,7 +320,7 @@ describe("useInputHandler", () => {
                 ),
         });
 
-        const screen = render(FormWithParentMessage);
+        const screen = await render(FormWithParentMessage);
         const input = screen.getByRole("textbox");
         await input.click();
         await userEvent.keyboard("{Tab}");
@@ -329,7 +329,7 @@ describe("useInputHandler", () => {
     });
 
     test("sets custom message", async () => {
-        const screen = render(() =>
+        const screen = await render(() =>
             h(NativeForm, {
                 customValidity: "Override message",
             }),
@@ -342,7 +342,7 @@ describe("useInputHandler", () => {
     });
 
     test("overrides native validation message", async () => {
-        const screen = render(() =>
+        const screen = await render(() =>
             h(NativeForm, {
                 customValidity: (_, validity) =>
                     validity.valueMissing ? "Override message" : "",

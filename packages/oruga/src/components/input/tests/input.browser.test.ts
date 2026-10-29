@@ -25,13 +25,13 @@ const BrowserInput = defineComponent(
 
 describe("<Input>", () => {
     test("works", async () => {
-        const screen = render(BrowserInput);
+        const screen = await render(BrowserInput);
         const input = screen.container.querySelector("input");
         expect(input).toBeTruthy();
         await userEvent.click(input!);
         await expect.element(input).toHaveFocus();
         await userEvent.keyboard("j");
-        screen.unmount();
+        await screen.unmount();
     });
 
     test("does resize correctly when textarea is hidden at mount time", async () => {
@@ -53,7 +53,7 @@ describe("<Input>", () => {
                 ),
         );
 
-        const screen = render(HiddenTextarea);
+        const screen = await render(HiddenTextarea);
         await nextTick();
 
         const textarea = screen.container.querySelector("textarea");
@@ -61,7 +61,7 @@ describe("<Input>", () => {
 
         // When mounted in a hidden container, scrollHeight is 0 and the textarea height stays 0px
         expect(textarea!.scrollHeight).toBe(0);
-        expect(textarea!.style.height).toBe("auto");
+        expect(textarea!.style.height).toBe("0px");
 
         const hiddenContainer =
             screen.container.querySelector("#hidden-container");
@@ -74,6 +74,6 @@ describe("<Input>", () => {
         expect(textarea!.scrollHeight).toBeGreaterThan(0);
         expect(parseInt(textarea!.style.height)).toBeGreaterThan(0);
 
-        screen.unmount();
+        await screen.unmount();
     });
 });

@@ -47,7 +47,7 @@ const SimpleAutocomplete = defineComponent(() => {
 
 describe("<Autocomplete>", () => {
     test("works", async () => {
-        const screen = render(SimpleAutocomplete);
+        const screen = await render(SimpleAutocomplete);
         const input = screen.getByRole("textbox");
         await input.click();
         await expect.element(input).toHaveFocus();
@@ -56,6 +56,6 @@ describe("<Autocomplete>", () => {
         await expect.element(dropdown).toBeVisible();
         await userEvent.keyboard("{ArrowDown}{ArrowDown}{Enter}");
         await expect.element(input).toHaveValue("Node.js");
-        screen.unmount();
+        await screen.unmount();
     });
 });

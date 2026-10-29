@@ -47,7 +47,7 @@
     "@eslint/compat": "^2.1.1",
     "@eslint/js": "^10.0.1",
     "@tsconfig/node24": "^24.0.5",
-    "@types/node": "^26.6.6",
+    "@types/node": "^24.19.2",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/tsconfig": "^0.9.1",

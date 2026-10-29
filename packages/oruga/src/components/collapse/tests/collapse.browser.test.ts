@@ -54,7 +54,7 @@ const SimpleCollapse = defineComponent(() => {
 
 describe("<Collapse>", () => {
     test("works", async () => {
-        const screen = render(SimpleCollapse);
+        const screen = await render(SimpleCollapse);
         const firstContent = screen.getByTestId("content-0");
         await expect.element(firstContent).toBeVisible();
         const secondContent = screen.getByTestId("content-1");
