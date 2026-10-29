@@ -255,7 +255,7 @@ describe("useProgrammatic tests", () => {
         try {
             // open a programmatic component which generates an id
             let programmaticId = "";
-            factory.open({
+            const { close } = factory.open({
                 setup() {
                     programmaticId = useId();
                     return () => h("div");
@@ -273,6 +273,10 @@ describe("useProgrammatic tests", () => {
             expect(baseId).not.toBe(programmaticId);
 
             baseApp.unmount();
+
+            // close the programmatic component
+            close();
+            vi.runAllTimers();
         } finally {
             setActiveOruga(previousOruga);
         }
