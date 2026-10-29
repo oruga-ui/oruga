@@ -168,6 +168,9 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         },
     },
 };
+
+// there seems to be template parsing problem when having "https://" directly in the template
+const imageSrc = "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4";
 </script>
 
 <template>
@@ -177,7 +180,7 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             title="Dialog title"
             subtitle="Dialog subtitle"
             image-alt="Oruga Logo"
-            image-src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+            :image-src="imageSrc"
             content="With supporting text below as a natural lead-in to additional content."
             footer="Footer content"
             v-bind="props" />

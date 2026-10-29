@@ -162,7 +162,7 @@ const emits = defineEmits<{
      * @param newRow {unknown} - new select value
      * @param oldRow {unknown} - old select value
      */
-    select: [newRow: T, oldRow: T];
+    select: [newRow: T | undefined, oldRow: T | undefined];
     /**
      * on row checked event
      * @param value {unknown[]} - all checked rows
@@ -534,12 +534,12 @@ function hasCustomFooterSlot(): boolean {
 
 /** check if two rows are equal by a custom compare function or the rowKey attribute */
 function isRowEqual(
-    sourceRow: MaybeRefOrGetter<T>,
-    targetRow: MaybeRefOrGetter<T>,
+    sourceRow: MaybeRefOrGetter<T | undefined>,
+    targetRow: MaybeRefOrGetter<T | undefined>,
 ): boolean {
     const el1 = toRaw(toValue(sourceRow));
     const el2 = toRaw(toValue(targetRow));
-    if (!isDefined(targetRow)) return false;
+    if (!isDefined(el1) || !isDefined(el2)) return false;
     if (typeof props.customCompare === "function")
         return props.customCompare(el1, el2);
     if (props.rowKey)
@@ -761,7 +761,9 @@ function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
 
 // #region --- Row Selection Feature ---
 
-const tableSelectedRow = defineModel<T>("selected", { default: undefined });
+const tableSelectedRow = defineModel<T | undefined>("selected", {
+    default: undefined,
+});
 
 /** table arrow keys listener, change selection */
 function onArrowPressed(delta: 1 | -1, event: KeyboardEvent): void {
@@ -816,12 +818,13 @@ function selectRow(row: TableRow<T>, event: Event): void {
 
     if (!props.selectable) return;
 
-    if (isRowEqual(tableSelectedRow, row.value)) return;
+    if (isRowEqual(tableSelectedRow.value, row.value)) return;
     if (!props.isRowSelectable(row.value)) return;
 
-    tableSelectedRow.value = row.value;
     // emit new and old row
     emits("select", row.value, tableSelectedRow.value);
+
+    tableSelectedRow.value = row.value;
 }
 
 // #endregion --- Row Selection Feature ---
@@ -829,7 +832,7 @@ function selectRow(row: TableRow<T>, event: Event): void {
 // #region --- Row Checkable Feature ---
 
 const tableCheckedRows = defineModel<T[]>("checkedRows", {
-    default: [],
+    default: () => [],
 });
 
 /** reset checkedRows whem page props changes */
@@ -921,7 +924,7 @@ function removeCheckedRow(row: TableRow<T>): void {
 // #region --- Detail Row Feature ---
 
 const visibleDetailedRows = defineModel<T[]>("detailedRows", {
-    default: [],
+    default: () => [],
 });
 
 /**
