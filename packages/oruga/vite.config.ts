@@ -8,13 +8,16 @@ import { playwright } from "@vitest/browser-playwright";
 import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
 
-import { peerDependencies, version } from "./package.json";
+import {
+    peerDependencies,
+    version,
+} from "./package.json" with { type: "json" };
 
 const bannerTxt = `/*! Oruga v${version} | MIT License | github.com/oruga-ui/oruga */`;
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    root: __dirname,
+    root: import.meta.dirname,
     plugins: [
         vue(),
         dts({
@@ -48,7 +51,7 @@ export default defineConfig({
         sourcemap: true,
         lib: {
             name: "Oruga",
-            entry: resolve(__dirname, "src/index.ts"),
+            entry: resolve(import.meta.dirname, "src/index.ts"),
             formats: ["es"],
             fileName: "index",
         },
@@ -81,7 +84,10 @@ export default defineConfig({
                     name: "unit",
                     environment: "jsdom",
                     setupFiles: [
-                        resolve(__dirname, "./src/__tests__/vitest.setup.ts"),
+                        resolve(
+                            import.meta.dirname,
+                            "./src/__tests__/vitest.setup.ts",
+                        ),
                     ],
                     // exclude browser tests
                     exclude: ["src/**/*.browser.test.{ts,js}"],
@@ -94,7 +100,7 @@ export default defineConfig({
                     setupFiles: [
                         "vitest-browser-vue",
                         resolve(
-                            __dirname,
+                            import.meta.dirname,
                             "./src/__tests__/vitest.browser.setup.ts",
                         ),
                     ],
