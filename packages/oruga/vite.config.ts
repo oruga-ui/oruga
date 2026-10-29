@@ -8,12 +8,9 @@ import { playwright } from "@vitest/browser-playwright";
 import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
 
-import {
-    peerDependencies,
-    version,
-} from "./package.json" with { type: "json" };
+import pkg from "./package.json" with { type: "json" };
 
-const bannerTxt = `/*! Oruga v${version} | MIT License | github.com/oruga-ui/oruga */`;
+const bannerTxt = `/*! Oruga v${pkg.version} | MIT License | github.com/oruga-ui/oruga */`;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,9 +20,10 @@ export default defineConfig({
         dts({
             tsconfigPath: "./tsconfig.lib.json",
             entryRoot: "./src",
-            outDir: "./dist/types",
-            bundledPackages: ["vue-component-type-helpers"],
+            outDirs: "./dist/types",
+            // bundleTypes: { bundledPackages: ["vue-component-type-helpers"] },
             copyDtsFiles: true,
+            processor: "vue",
         }),
     ],
     resolve: {
@@ -58,7 +56,7 @@ export default defineConfig({
         rolldownOptions: {
             // make sure to externalize deps that shouldn't be bundled
             // into your library
-            external: Object.keys(peerDependencies),
+            external: Object.keys(pkg.peerDependencies),
             output: {
                 banner: bannerTxt,
                 exports: "named",
