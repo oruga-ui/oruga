@@ -6,7 +6,7 @@ import Markdown from "unplugin-vue-markdown/vite";
 import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
 
-import { peerDependencies } from "./package.json" with { type: "json" };
+import pkg from "./package.json" with { type: "json" };
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,8 +18,9 @@ export default defineConfig({
         Markdown({}),
         dts({
             entryRoot: "../", // reset root to include files from other packages
-            outDir: "./dist/types",
+            outDirs: "./dist/types",
             copyDtsFiles: true,
+            processor: "vue",
         }),
     ],
     resolve: {
@@ -45,7 +46,7 @@ export default defineConfig({
         rolldownOptions: {
             // make sure to externalize deps that shouldn't be bundled
             // into your library
-            external: Object.keys(peerDependencies),
+            external: Object.keys(pkg.peerDependencies),
             output: {
                 // Browser build minified version
                 exports: "named",
