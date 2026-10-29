@@ -20,6 +20,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = RadioProps<T>["modelValue"];
+
 const props = withDefaults(
     defineProps<
         RadioProps<T> &
@@ -46,13 +48,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown} - updated modelValue prop
      */
-    "update:model-value": [value: T];
+    "update:model-value": [value: ModelValue];
     /**
      * on input change event
      * @param value {unknown} - input value
      * @param event {Event} - native event
      */
-    input: [value: T, event: Event];
+    input: [value: ModelValue, event: Event];
     /**
      * on input focus event
      * @param event {Event} - native event
@@ -96,7 +98,7 @@ const labelId =
 // if no `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField.value?.setInputId(props.id);
 
-const vmodel = defineModel<T>({ default: undefined });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 const isChecked = computed(() => vmodel.value === props.nativeValue);
 

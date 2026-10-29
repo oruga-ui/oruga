@@ -163,7 +163,10 @@ function removeNestedSchemas(schema: PropertyMetaSchema): void {
         schema.schema?.forEach((enumSchema) => removeNestedSchemas(enumSchema));
         return;
     }
-    delete schema.schema;
+
+    if ("schema" in schema) {
+        delete schema.schema;
+    }
 }
 
 /** trasnform vue-component-meta props type into vue-docgen-api props type */
