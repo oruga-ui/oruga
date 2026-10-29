@@ -27,13 +27,15 @@ export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
 /** Remove generic <[x: string]: any> index signature structure from type */
 export type RemoveIndex<T> = {
-    [K in keyof T as string extends K
-        ? never
-        : number extends K
-          ? never
-          : symbol extends K
+    [
+        K in keyof T as string extends K
             ? never
-            : K]: T[K];
+            : number extends K
+              ? never
+              : symbol extends K
+                ? never
+                : K
+    ]: T[K];
 };
 
 /** Custom type helper which extracts the `$emits` type of an component and converts it to an props object. */

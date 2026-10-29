@@ -136,9 +136,7 @@ export type DatepickerProps<
         | string
         | ((
               currentValue:
-                  | DatepickerType<IsRange, IsMultiple>
-                  | null
-                  | undefined,
+                  DatepickerType<IsRange, IsMultiple> | null | undefined,
               state: ValidityState,
           ) => string);
     /** Accessibility next button aria label */

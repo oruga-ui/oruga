@@ -76,6 +76,7 @@ export default defineConfigWithVueTs([
       "vue/padding-line-between-blocks": ["error", "always"],
       "vue/multi-word-component-names": "off",
       "vue/no-empty-component-block": "error",
+      "vue/no-dupe-keys": "off",
       "vue/block-order": ["error", { order: ["script", "template", "style"] }],
       "vue/block-lang": ["error", { script: { lang: "ts" } }],
       "vue/html-closing-bracket-newline": [
