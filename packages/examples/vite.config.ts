@@ -6,11 +6,11 @@ import Markdown from "unplugin-vue-markdown/vite";
 import { resolve } from "path";
 import { fileURLToPath, URL } from "url";
 
-import { peerDependencies } from "./package.json";
+import { peerDependencies } from "./package.json" with { type: "json" };
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    root: __dirname,
+    root: import.meta.dirname,
     plugins: [
         vue({
             include: [/\.vue$/, /\.md$/], // <-- allows Vue to compile Markdown files
@@ -38,7 +38,7 @@ export default defineConfig({
         lib: {
             // build minified version with index.ts entry
             name: "Oruga Examples",
-            entry: resolve(__dirname, "src/index.ts"),
+            entry: resolve(import.meta.dirname, "src/index.ts"),
             formats: ["es"],
             fileName: "index",
         },
