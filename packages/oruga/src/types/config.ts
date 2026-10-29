@@ -20,10 +20,7 @@ export type {
 
 /** The class definition for a component class property. */
 export type ComponentClass =
-    | undefined
-    | ClassBinding
-    | ClassBindingList
-    | ClassFunction;
+    undefined | ClassBinding | ClassBindingList | ClassFunction;
 
 /** The class object definiton a class in the global config object. */
 export type ClassObject = {

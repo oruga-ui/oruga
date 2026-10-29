@@ -64,8 +64,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
             modelValue?: unknown;
             useHtml5Validation?: boolean;
             customValidity?:
-                | string
-                | ((currentValue: any, v: ValidityState) => string);
+                string | ((currentValue: any, v: ValidityState) => string);
         }>
     >,
     /** emitted input events */
