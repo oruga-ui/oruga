@@ -7,15 +7,10 @@ import {
 } from "vue";
 
 export type MaybeElement =
-    | HTMLElement
-    | Component
-    | ComponentPublicInstance
-    | undefined
-    | null;
+    HTMLElement | Component | ComponentPublicInstance | undefined | null;
 
 export type UnRefElementReturn<T extends MaybeElement> = T extends
-    | ComponentPublicInstance
-    | Component
+    ComponentPublicInstance | Component
     ? HTMLElement
     : T;
 

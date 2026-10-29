@@ -59,15 +59,15 @@ The **Skeleton** component can be used as a loading animations or space-fillers 
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                   | Default                                                                                                                               |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| $skeleton-spacer                | 0.5em                                                                                                                                 |
-| $skeleton-duration              | 1.5s                                                                                                                                  |
-| $skeleton-font-size             | h.useVar("font-size")                                                                                                                 |
-| $skeleton-background-color      | vars.$grey-lighter                                                                                                                    |
-| $skeleton-background            | linear-gradient( 90deg, $skeleton-background-color 25%,    rgba($skeleton-background-color, 0.5) 50%, $skeleton-background-color 75%) |
-| $skeleton-border-radius         | h.useVar("border-radius")                                                                                                             |
-| $skeleton-border-radius-rounded | h.useVar("border-radius-rounded")                                                                                                     |
+| SASS Variable                   | Default                                                                                                                            |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| $skeleton-spacer                | 0.5em                                                                                                                              |
+| $skeleton-duration              | 1.5s                                                                                                                               |
+| $skeleton-font-size             | h.useVar("font-size")                                                                                                              |
+| $skeleton-background-color      | vars.$grey-lighter                                                                                                                 |
+| $skeleton-background            | linear-gradient( 90deg, $skeleton-background-color 25%, rgba($skeleton-background-color, 0.5) 50%, $skeleton-background-color 75%) |
+| $skeleton-border-radius         | h.useVar("border-radius")                                                                                                          |
+| $skeleton-border-radius-rounded | h.useVar("border-radius-rounded")                                                                                                  |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_skeleton.scss)
 
@@ -89,12 +89,12 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/a
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable      | Default                                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------------------------------------- |
-| $skeleton-bg-color | $dark-bg-subtle                                                                                               |
-| $skeleton-bg       | linear-gradient( 90deg, $skeleton-bg-color 25%,    rgba($skeleton-bg-color, 0.5) 50%, $skeleton-bg-color 75%) |
-| $skeleton-duration | 1.5s                                                                                                          |
-| $skeleton-margin   | 0.5rem 0 0 0                                                                                                  |
+| SASS Variable      | Default                                                                                                    |
+| ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| $skeleton-bg-color | $dark-bg-subtle                                                                                            |
+| $skeleton-bg       | linear-gradient( 90deg, $skeleton-bg-color 25%, rgba($skeleton-bg-color, 0.5) 50%, $skeleton-bg-color 75%) |
+| $skeleton-duration | 1.5s                                                                                                       |
+| $skeleton-margin   | 0.5rem 0 0 0                                                                                               |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_skeleton.scss)
 
