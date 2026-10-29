@@ -8,7 +8,7 @@ import OButton from "../Button.vue";
 describe("<Button>", () => {
     const tags = ["button", "input", "a", "div"];
     test.each(tags)("render button text with tag '%s'", async (tag) => {
-        const screen = render(OButton, {
+        const screen = await render(OButton, {
             props: { tag },
             slots: {
                 default: () => "Hello World!",

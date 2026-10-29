@@ -5,6 +5,14 @@ import { createTestingOruga } from "@/utils/config";
 
 expect.extend(toHaveNoViolations);
 
+// vitest does not extend `jest.Matchers`, so register the jest-axe matcher types manually
+declare module "vitest" {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface Matchers<R extends void | Promise<void>, T> {
+        toHaveNoViolations(): R;
+    }
+}
+
 // mock window.machMedia function
 Object.defineProperty(window, "matchMedia", {
     writable: true,
