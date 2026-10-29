@@ -63,8 +63,9 @@
     "replace-in-file": "^8.4.0",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
+    "vue": "^3.5.44",
     "vue-component-meta": "^3.3.13",
-    "vue-tsc": "^3.3.5"
+    "vue-tsc": "^3.3.13"
   },
   "browserslist": [
     "defaults",
