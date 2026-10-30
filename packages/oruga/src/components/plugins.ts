@@ -7,6 +7,7 @@ import Collapse from "./collapse";
 import Datepicker from "./datepicker";
 import Datetimepicker from "./datetimepicker";
 import Dialog from "./dialog";
+import Drawer from "./drawer";
 import Dropdown from "./dropdown";
 import Field from "./field";
 import Icon from "./icon";
@@ -45,6 +46,7 @@ export {
     Datepicker,
     Datetimepicker,
     Dialog,
+    Drawer,
     Dropdown,
     Field,
     Icon,
