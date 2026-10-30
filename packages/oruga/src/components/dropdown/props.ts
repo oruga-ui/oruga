@@ -1,4 +1,5 @@
 import type {
+    AnimationName,
     ComponentClass,
     DynamicComponent,
     Numberish,
@@ -38,8 +39,14 @@ export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
      * @values top, bottom, left, right, center, [top, right], [top, left], [bottom, left], [bottom, right]
      */
     position?: PopoverPosition;
-    /** Custom animation (transition name) */
-    animation?: string;
+    /**
+     * Open/close animation using the native Web Animations API.
+     * Set to `false` to disable the built-in animation.
+     *
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+     * @default 'fade'
+     */
+    animation?: AnimationName | false;
     /** Dropdown will be expanded (full-width) */
     expanded?: boolean;
     /** HTML element Id of the dropdown menu element */

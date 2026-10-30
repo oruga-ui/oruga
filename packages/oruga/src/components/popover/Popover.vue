@@ -141,6 +141,7 @@ const { open, close, toggle } = usePopoverAPI({
     behavior: props.behavior,
     trigger: isActive,
     disabled: () => props.disabled,
+    animation: () => props.animation,
     targetTrigger: !props.target,
     targetRef: triggerRef,
     contentRef,
@@ -229,46 +230,43 @@ defineExpose({ close, open, toggle });
         <slot :active="isActive" :open="open" />
 
         <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-            <transition :name="animation">
-                <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
-                <div
-                    :id="id"
-                    ref="contentElement"
-                    :class="contentClasses"
-                    :role="role"
-                    popover>
-                    <div v-if="title || $slots['title']" :class="headerClasses">
-                        <slot name="title" :close="close">
-                            {{ title }}
-                        </slot>
-                    </div>
-
-                    <CloseButton
-                        v-if="closeable"
-                        :pack="iconPack"
-                        :icon="closeIcon"
-                        :size="closeIconSize"
-                        :label="ariaCloseLabel"
-                        :classes="closeClasses"
-                        @click="close">
-                        <slot v-if="$slots['close']" name="close" />
-                    </CloseButton>
-
-                    <div :class="bodyClasses">
-                        <!-- injected component for programmatic usage -->
-                        <component
-                            :is="$props.component"
-                            v-if="$props.component"
-                            v-bind="$props.props"
-                            v-on="$props.events || {}"
-                            @close="close" />
-
-                        <slot name="content" :close="close">
-                            {{ content }}
-                        </slot>
-                    </div>
+            <div
+                :id="id"
+                ref="contentElement"
+                :class="contentClasses"
+                :role="role"
+                popover>
+                <div v-if="title || $slots['title']" :class="headerClasses">
+                    <slot name="title" :close="close">
+                        {{ title }}
+                    </slot>
                 </div>
-            </transition>
+
+                <CloseButton
+                    v-if="closeable"
+                    :pack="iconPack"
+                    :icon="closeIcon"
+                    :size="closeIconSize"
+                    :label="ariaCloseLabel"
+                    :classes="closeClasses"
+                    @click="close">
+                    <slot v-if="$slots['close']" name="close" />
+                </CloseButton>
+
+                <div :class="bodyClasses">
+                    <!-- injected component for programmatic usage -->
+                    <component
+                        :is="$props.component"
+                        v-if="$props.component"
+                        v-bind="$props.props"
+                        v-on="$props.events || {}"
+                        @close="close" />
+
+                    <slot name="content" :close="close">
+                        {{ content }}
+                    </slot>
+                </div>
+            </div>
         </Teleport>
     </div>
 </template>
