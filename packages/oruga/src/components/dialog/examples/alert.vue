@@ -8,23 +8,25 @@ const isActive = ref(false);
     <section>
         <o-button
             label="Open Alert Dialog"
-            size="medium"
             variant="primary"
-            :aria-expanded="isActive"
-            aria-controls="alert-dialog"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
         <o-dialog
-            id="alert-dialog"
             v-model:active="isActive"
             alert
             title="Delete Dialog"
-            content="Are you sure you want to delete this?"
+            aria-describedby="alert-dialog-message"
             text-position="center"
             button-position="center"
             cancel-button="Cancel"
             confirm-button="Delete"
             confirm-variant="danger"
-            close-on-confirm />
+            close-on-confirm>
+            <p id="alert-dialog-message">
+                Are you sure you want to delete this? This action cannot be
+                undone.
+            </p>
+        </o-dialog>
     </section>
 </template>

@@ -131,8 +131,8 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.buttonPosition = "center";
         },
     },
-    confirmButtunClass: {
-        class: "confirmButtunClass",
+    confirmButtonClass: {
+        class: "confirmButtonClass",
         description: "Class of the footer confirm button element.",
         properties: ["confirmButton"],
         action: (data) => {

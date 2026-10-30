@@ -1,4 +1,5 @@
 import type {
+    AnimationName,
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
@@ -967,9 +968,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
         dialog?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Custom animation (transition name)
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
                  */
-                animation: string;
+                animation: AnimationName | false;
                 /**
                  * Show an backdrop overlay background; make it a modal dialog
                  */
@@ -1111,7 +1115,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class of the footer confirm button element
                  */
-                confirmButtunClass: ClassDefinition;
+                confirmButtonClass: ClassDefinition;
                 /**
                  * Class of the footer cancel button element
                  */
