@@ -350,7 +350,7 @@ const contentClasses = defineClasses(
                     :class="item.data.iconClasses"
                     :icon="item.data.icon"
                     :pack="item.data.iconPack"
-                    :size="size" />
+                    :size="item.data.iconSize ?? size" />
                 <span :class="item.data.labelClasses">
                     {{ item.data.label }}
                 </span>

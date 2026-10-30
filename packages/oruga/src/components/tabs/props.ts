@@ -112,6 +112,11 @@ export type TabItemProps<T, C extends Component = Component> = {
     icon?: string;
     /** Icon pack */
     iconPack?: string;
+    /**
+     * Icon size
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Tabs item tag name */
     tag?: DynamicComponent;
     /** Text content, unnecessary when default slot is used */

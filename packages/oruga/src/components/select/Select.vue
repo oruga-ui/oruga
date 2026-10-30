@@ -64,6 +64,7 @@ const props = withDefaults(
         iconRight: () => getDefault("select.iconRight"),
         iconRightClickable: false,
         iconRightVariant: undefined,
+        iconSize: () => getDefault("select.iconSize"),
         autocomplete: () => getDefault("select.autocomplete", "off"),
         useHtml5Validation: () => getDefault("useHtml5Validation", true),
         customValidity: "",
@@ -307,7 +308,7 @@ defineExpose({
             :clickable="iconClickable"
             :icon="icon"
             :pack="iconPack"
-            :size="size"
+            :size="iconSize ?? size"
             @click="leftIconClick($event)" />
 
         <select
@@ -357,7 +358,7 @@ defineExpose({
             :class="iconRightClasses"
             :icon="rightIcon"
             :pack="iconPack"
-            :size="size"
+            :size="iconSize ?? size"
             :variant="rightIconVariant"
             :clickable="iconRightClickable"
             @click="rightIconClick" />

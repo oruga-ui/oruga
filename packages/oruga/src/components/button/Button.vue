@@ -40,8 +40,9 @@ const props = withDefaults(
         inverted: false,
         type: "button",
         iconPack: () => getDefault("button.iconPack"),
-        iconLeft: undefined,
+        icon: undefined,
         iconRight: undefined,
+        iconSize: () => getDefault("button.iconSize"),
     },
 );
 
@@ -140,10 +141,10 @@ const iconRightClasses = defineClasses([
         @keydown.space.prevent="$emit('click', $event)">
         <slot name="left">
             <o-icon
-                v-if="iconLeft"
+                v-if="icon"
                 :pack="iconPack"
-                :icon="iconLeft"
-                :size="size"
+                :icon="icon"
+                :size="iconSize ?? size"
                 :class="[...iconClasses, ...iconLeftClasses]" />
         </slot>
 
@@ -156,7 +157,7 @@ const iconRightClasses = defineClasses([
                 v-if="iconRight"
                 :pack="iconPack"
                 :icon="iconRight"
-                :size="size"
+                :size="iconSize ?? size"
                 :class="[...iconClasses, ...iconRightClasses]" />
         </slot>
     </component>

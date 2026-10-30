@@ -68,6 +68,10 @@ declare module "./index" {
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
@@ -239,6 +243,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Icon pack to use
                  */
                 iconPack: string;
+                /**
+                 * Size of the icon
+                 */
+                iconSize: string;
                 /**
                  * Enable rounded style
                  */
@@ -597,9 +605,17 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Icon name for previous icon
                  */
@@ -934,9 +950,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Overlay content is shown into a modal on mobile
                  */
@@ -1473,6 +1497,10 @@ See icon library documentation for custom classes.
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Size of the icon
+                 */
+                iconSize: string;
                 /**
                  * Add a button/icon to clear the inputed text
                  */
@@ -2291,6 +2319,10 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconRight: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.
                  */
@@ -2611,6 +2643,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Icon pack
                  */
                 iconPack: string;
+                /**
+                 * Icon size
+                 */
+                iconSize: string;
                 /**
                  * Class of the step item element.
                  */
@@ -3162,6 +3198,10 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconPack: string;
                 /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
                  * Tabs item tag name
                  */
                 itemTag: DynamicComponent;
@@ -3301,6 +3341,10 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconPack: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Close icon name
                  */
                 closeIcon: string;
@@ -3392,9 +3436,17 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon name of close icon on selected item
                  */
                 closeIcon: string;
+                /**
+                 * Size of the close icon on selected item
+                 */
+                closeIconSize: string;
                 /**
                  * Accessibility label for the close button
                  */
@@ -3481,9 +3533,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Overlay content is shown into a modal on mobile
                  */
