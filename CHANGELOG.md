@@ -1,3 +1,9 @@
+## [0.14.5](https://github.com/oruga-ui/oruga/compare/v0.14.4...v0.14.5) (2026-11-02)
+
+### Bug Fixes
+
+* **programmatic:** don't write idPrefix to the base app config ([#1779](https://github.com/oruga-ui/oruga/issues/1779)) ([f5c7d06](https://github.com/oruga-ui/oruga/commit/f5c7d06c91da0d94e3bf947fa9eec88c919f3317)), closes [#1532](https://github.com/oruga-ui/oruga/issues/1532)
+
 ## [0.14.4](https://github.com/oruga-ui/oruga/compare/v0.14.3...v0.14.4) (2026-09-21)
 
 ### Features
