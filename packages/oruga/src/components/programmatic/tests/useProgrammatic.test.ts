@@ -1,6 +1,8 @@
-import { createVNode, h } from "vue";
+import { createApp, createVNode, h, useId } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
+
+import { createOruga, getActiveOruga, setActiveOruga } from "@/utils/config";
 
 import InstanceRegistry from "../InstanceRegistry";
 import useProgrammaticComponent from "../useProgrammatic";
@@ -235,5 +237,48 @@ describe("useProgrammatic tests", () => {
         // close element
         close();
         vi.runAllTimers();
+    });
+
+    test("test programmatic app does not modify the base app config", () => {
+        // create a base app with its own oruga instance
+        const previousOruga = getActiveOruga();
+        let baseId = "";
+        const baseApp = createApp({
+            setup() {
+                baseId = useId();
+                return () => h("div");
+            },
+        });
+        baseApp.config.idPrefix = "base";
+        baseApp.use(createOruga());
+
+        try {
+            // open a programmatic component which generates an id
+            let programmaticId = "";
+            const { close } = factory.open({
+                setup() {
+                    programmaticId = useId();
+                    return () => h("div");
+                },
+            });
+
+            // the programmatic app should use its own id prefix
+            expect(programmaticId).toMatch(/^programmatic-/);
+            // the base app config should not be touched
+            expect(baseApp.config.idPrefix).toBe("base");
+
+            // components created in the base app afterwards should keep the base prefix
+            baseApp.mount(document.createElement("div"));
+            expect(baseId).toMatch(/^base-/);
+            expect(baseId).not.toBe(programmaticId);
+
+            baseApp.unmount();
+
+            // close the programmatic component
+            close();
+            vi.runAllTimers();
+        } finally {
+            setActiveOruga(previousOruga);
+        }
     });
 });
