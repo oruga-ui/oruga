@@ -21,7 +21,7 @@ import SizesCode from "./sizes.vue?raw";
 
 ### Closeable
 
-Closeable tags have a button that can be focused, it emits a `close` event when clicked. The button can be overriden by the `close` slot.
+Closeable tags have a button that can be focused, it emits a `close` event when clicked. The button can be overridden by the `close` slot.
 
 <ExampleViewer :component="Closeable" :code="CloseableCode" />
 
@@ -33,12 +33,12 @@ Using the badge style with the `badge` prop can highlight information to a user 
 
 ### Variants
 
-Like with buttons, different styles can be achieved with the `variant` prop.
+Different styles can be achieved with the `variant` prop.
 
 <ExampleViewer :component="Variants" :code="VariantsCode" />
 
 ### Sizes
 
-The component can also be displayed in different sizes using the `size` prop.
+The component can be displayed in different sizes using the `size` prop.
 
 <ExampleViewer :component="Sizes" :code="SizesCode" />

@@ -47,7 +47,7 @@ The tabs header can be positioned by the `position` prop.
 
 ### Expanded
 
-When the `expanded` prop is set, the tabs header will be occupy the full with it can have.
+When the `expanded` prop is set, the tabs header will occupy the full width available.
 
 <ExampleViewer :component="Expanded" :code="ExpandedCode" />
 
@@ -69,14 +69,14 @@ Adding the `vertical` prop displays the component vertically instead of horizont
 
 <ExampleViewer :component="Vertical" :code="VerticalCode" />
 
-### Custom header
+### Custom Header
 
 The individual tab label can be customised using the `header` slot.
 
 <ExampleViewer :component="CustomHeader" :code="CustomHeaderCode" />
 
-### Long header
+### Long Header
 
-The `multiple` prop allows to break the tab header to be broken into multiple lines if there are too many tabs for one line.
+The `multiline` prop allows the tab header to break into multiple lines if there are too many tabs for one line.
 
 <ExampleViewer :component="LongHeader" :code="LongHeaderCode" />

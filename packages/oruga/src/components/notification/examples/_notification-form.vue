@@ -25,7 +25,6 @@ defineEmits<{
                 <p class="modal-card-title">Login</p>
                 <o-icon
                     clickable
-                    native-type="button"
                     icon="times"
                     @click="$emit('close', $event)" />
             </header>

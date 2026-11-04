@@ -33,13 +33,13 @@ Different styles can be achieved with the `variant` prop.
 
 <ExampleViewer :component="Variants" :code="VariantsCode" />
 
-### Use types
+### Use Types
 
-The `type` prop selects a matching icon for the notification. It does not change the colour, so combine it with the `variant` prop to style the notification as well.
+The `type` prop (`info`, `success`, `warning` or `danger`) selects a matching icon for the notification.It does not change the color, so combine it with the `variant` prop to style the notification as well.
 
 <ExampleViewer :component="UseTypes" :code="UseTypesCode" />
 
-### Add custom buttons
+### Add Custom Buttons
 
 <ExampleViewer :component="AddCustomButtons" :code="AddCustomButtonsCode" />
 
@@ -57,7 +57,7 @@ oruga.notification.open("Notify!");
     :component="ProgrammaticallyDefault"
     :code="ProgrammaticallyDefaultCode" />
 
-Toasts are lightweight notifications designed to resemble the push notifications popularised by mobile and desktop operating systems. They should consist of simple text only and be queued so as not to overwhelm the user.
+Toasts are lightweight notifications designed to resemble the push notifications popularised by mobile and desktop operating systems. They should be short and concise, and be queued so as not to overwhelm the user.
 
 <ExampleViewer
     :component="ProgrammaticallyToast"

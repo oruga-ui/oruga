@@ -58,7 +58,7 @@ const variant = ref<string>();
 
             <o-step-item label="Profile" icon="user">
                 Profile: Lorem ipsum dolor sit amet. <br />
-                Profile: Lorem ipsum dolor sit amet.? <br />
+                Profile: Lorem ipsum dolor sit amet. <br />
                 Profile: Lorem ipsum dolor sit amet. <br />
                 Profile: Lorem ipsum dolor sit amet.
             </o-step-item>

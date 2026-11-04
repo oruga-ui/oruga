@@ -20,7 +20,7 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 
 ### Base
 
-Setting the `clipScroll` prop removes the body scrollbar. By default, the body retains a non scrollable scrollbar to prevent the background from shifting. However, this will set the body to `position="fixed"`, which may cause some layouts to break.
+Setting the `clip-scroll` prop removes the body scrollbar. By default, the body retains a non scrollable scrollbar to prevent the background from shifting. However, this will set the body to `position="fixed"`, which may cause some layouts to break.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 

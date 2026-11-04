@@ -32,7 +32,11 @@ The direction in which the tooltip opens can be defined by the `position` prop. 
 
 ### Triggers
 
-The component accepts several different trigger variants, such as `openOnClick` or `openOnContextmenu` to only open on right click instead of left click. By default, only `openOnHover` is set. The action that close the component can also be customized using the `closeable`, `closeOnOutside` and `closeOnEscape` props.
+::: warning Deprecated
+The trigger and close props (`open-on-hover`, `open-on-focus`, `open-on-click`, `open-on-contextmenu`, `closeable`, `close-on-outside` and `close-on-escape`) are deprecated and will be removed in a future version. Use the [Popover](/components/Popover) component for click-triggered or interactive content.
+:::
+
+By default, the tooltip is shown while the trigger is hovered. The `always` prop keeps it permanently visible, and the `active` prop (`v-model:active`) allows to control it programmatically.
 
 <ExampleViewer :component="Triggers" :code="TriggersCode" />
 
@@ -42,9 +46,9 @@ Different styles can be achieved with the `variant` prop.
 
 <ExampleViewer :component="Variants" :code="VariantsCode" />
 
-### Multiline
+### Max Width
 
-Sometimes the tooltip label can be very long. Consider setting the `multiline` prop to force a line break.
+Sometimes the tooltip label can be very long. Use the `max-width` prop to limit the width of the tooltip content, so that long text wraps onto multiple lines.
 
 <ExampleViewer :component="Multiline" :code="MultilineCode" />
 

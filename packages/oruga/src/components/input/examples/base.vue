@@ -56,11 +56,7 @@
         </o-field>
 
         <o-field label="Counter">
-            <o-input
-                placeholder="Counter"
-                :maxlength="10"
-                :maxitems="5"
-                counter />
+            <o-input placeholder="Counter" :maxlength="10" counter />
         </o-field>
     </section>
 </template>

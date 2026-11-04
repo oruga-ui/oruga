@@ -7,7 +7,7 @@
             <o-breadcrumb-item label="Breadcrumb" active />
         </o-breadcrumb>
 
-        <!-- Position center -->
+        <!-- Position centered -->
         <o-breadcrumb position="centered">
             <o-breadcrumb-item label="Home" disabled />
             <o-breadcrumb-item label="Docs" />

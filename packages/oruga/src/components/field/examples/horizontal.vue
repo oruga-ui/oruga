@@ -29,7 +29,7 @@
         </o-field>
 
         <o-field horizontal label="Message">
-            <o-input type="textarea" placeholder="Enter a messasge..." />
+            <o-input type="textarea" placeholder="Enter a message..." />
         </o-field>
 
         <o-field horizontal>

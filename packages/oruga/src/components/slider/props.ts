@@ -50,7 +50,7 @@ export type SliderProps<IsRange extends boolean = boolean> = {
     indicator?: boolean;
     /**
      * Define v-model format
-     * @values row, percent
+     * @values raw, percent
      */
     format?: "raw" | "percent";
     /** Date format locale */

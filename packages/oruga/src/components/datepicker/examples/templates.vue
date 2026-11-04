@@ -22,7 +22,7 @@ const selectedString = computed(() => selected.value?.toDateString() || "");
 
 function selectMonth(month: number | undefined): void {
     // January is 0, so only check for a missing value
-    if (month === undefined) return;
+    if (month === undefined || month === null) return;
 
     const date = selected.value ? new Date(selected.value) : new Date();
     date.setMonth(month);

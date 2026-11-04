@@ -20,13 +20,13 @@ import AutoplayCode from "./autoplay.vue?raw";
 
 ### Base
 
-Here is a basic example of a carousel with some slides. When no `value` is set for an item, the index of the slide is used to as `v-model` value.
+Here is a basic example of a carousel with some slides. When no `value` is set for an item, the index of the slide is used as `v-model` value.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
 ### Indicators
 
-Alongside the previous/next controls, slide indicators can be activated using the `indicators` prop. Indicators allow the user to jump directly to a particular slide. The position can be set with the `indicatorPosition` and `indicatorInside` props to display the indicators at the top or bottom and inside or outside the slide. If there is more than one style defined for the indicators in a theme, the style can be customised by using the `indicatorStyle` prop.
+Alongside the previous/next controls, slide indicators can be activated using the `indicators` prop. Indicators allow the user to jump directly to a particular slide. The position can be set with the `indicator-position` and `indicator-inside` props to display the indicators at the top or bottom and inside or outside the slide. If there is more than one style defined for the indicators in a theme, the style can be customised by using the `indicator-style` prop.
 
 <ExampleViewer :component="Indicators" :code="IndicatorsCode" />
 
