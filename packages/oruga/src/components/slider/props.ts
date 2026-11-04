@@ -5,9 +5,15 @@ type ValueType<IsRange> = IsRange extends true ? [number, number] : number;
 export type SliderProps<IsRange extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state, use v-model to make it two-way binding */
+    /**
+     * The input value state, use v-model to make it two-way binding
+     * @type number|[number, number]
+     */
     modelValue?: ValueType<IsRange>;
-    /** Enable range slider */
+    /**
+     * Enable range slider
+     * @type boolean
+     */
     range?: IsRange;
     /** Minimum value */
     min?: number;

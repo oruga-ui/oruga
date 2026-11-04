@@ -13,9 +13,15 @@ export type DropdownOptions<T> = OptionsOrGroupsProp<DropdownItemProps<T>>;
 export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected option value, use v-model to make it two-way binding */
+    /**
+     * The selected option value, use v-model to make it two-way binding
+     * @type string|number|object
+     */
     modelValue?: ValueType<T, IsMultiple>;
-    /** Allows multiple selections - converts the `modelValue` into an array */
+    /**
+     * Allows multiple selections - converts the `modelValue` into an array
+     * @type boolean
+     */
     multiple?: IsMultiple;
     /** Dropdown options, unnecessary when default slot is used */
     options?: DropdownOptions<T>;
