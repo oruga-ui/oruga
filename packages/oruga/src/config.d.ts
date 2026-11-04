@@ -635,6 +635,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 ariaNextLabel: string;
                 /**
+                 * Accessibility previous button aria label
+                 */
+                ariaPreviousLabel: string;
+                /**
                  * Accessibility month select aria label
                  */
                 ariaSelectMonthLabel: string;

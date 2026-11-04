@@ -96,7 +96,7 @@ const props = withDefaults(
         ariaNextLabel: () =>
             getDefault("datepicker.ariaNextLabel", "Next Page"),
         ariaPreviousLabel: () =>
-            getDefault("datepicker.ariaNextLabel", "Previous Page"),
+            getDefault("datepicker.ariaPreviousLabel", "Previous Page"),
         ariaSelectMonthLabel: () =>
             getDefault("datepicker.ariaSelectMonthLabel", "Select Month"),
         ariaSelectYearLabel: () =>
