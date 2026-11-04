@@ -1,8 +1,6 @@
 <template>
     <section>
-        <o-notification
-            v-slot="{ close }"
-            aria-close-label="Close notification">
+        <o-notification v-slot="{ close }">
             <div class="notification-content">
                 <span>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -10,7 +8,7 @@
                     imperdiet, elit sapien laoreet elit
                 </span>
                 <o-button
-                    label="Cancel"
+                    label="Dismiss"
                     variant="primary"
                     size="small"
                     @click="close()" />

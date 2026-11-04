@@ -21,7 +21,7 @@ const isCardModalActive = ref(false);
                 @click="isCardModalActive = true" />
         </p>
 
-        <o-modal v-model:active="isImageModalActive">
+        <o-modal v-model:active="isImageModalActive" aria-label="Oruga logo">
             <p style="text-align: center">
                 <img
                     style="background-color: white"
@@ -30,7 +30,11 @@ const isCardModalActive = ref(false);
             </p>
         </o-modal>
 
-        <o-modal v-model:active="isCardModalActive" :width="640" clip-scroll>
+        <o-modal
+            v-model:active="isCardModalActive"
+            aria-label="Lorem ipsum text"
+            :width="640"
+            clip-scroll>
             <div style="padding: 10px; background-color: white">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.

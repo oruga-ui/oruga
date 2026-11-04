@@ -14,6 +14,7 @@ const isActive = ref(false);
 
         <o-dialog
             v-model:active="isActive"
+            aria-label="Fullscreen dialog"
             closeable
             fullscreen
             title="Dialog Title"

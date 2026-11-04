@@ -21,6 +21,7 @@ defineEmits<{
                 <o-icon
                     clickable
                     icon="times"
+                    aria-label="Close notification"
                     @click="$emit('close', $event)" />
             </header>
             <section class="modal-card-body">

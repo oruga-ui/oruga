@@ -56,10 +56,17 @@ const events = [
             <o-switch v-model="bars" label="Indicator Bars" />
         </o-field>
 
-        <o-datepicker
-            v-model="date"
-            inline
-            :events="events"
-            :indicators="bars ? 'bars' : 'dots'" />
+        <!--
+            An inline picker has no input to label, so the group gives it a name.
+            The event indicators (dots/bars) are purely visual. In your app,
+            also expose events as text, e.g. in a list below the calendar.
+        -->
+        <div role="group" aria-label="Event calendar">
+            <o-datepicker
+                v-model="date"
+                inline
+                :events="events"
+                :indicators="bars ? 'bars' : 'dots'" />
+        </div>
     </section>
 </template>

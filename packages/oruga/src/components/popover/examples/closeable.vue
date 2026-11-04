@@ -1,5 +1,6 @@
 <template>
     <section>
+        <!-- "manual" has no Escape or light dismiss, the popover must offer its own close control -->
         <o-popover closeable behavior="manual">
             <template #default="{ open }">
                 <o-button @click="open"> Open popover! </o-button>

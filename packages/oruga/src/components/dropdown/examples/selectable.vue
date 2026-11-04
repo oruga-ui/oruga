@@ -25,6 +25,7 @@ const selectOnFocus = ref(false);
                 <o-dropdown
                     v-model:model-value="selectedOption"
                     selectable
+                    aria-label="Single selection"
                     :keep-open="keepOpen"
                     :keep-first="keepFirst"
                     :select-on-close="selectOnClose"
@@ -51,6 +52,7 @@ const selectOnFocus = ref(false);
                     v-model:model-value="selectedOptions"
                     selectable
                     multiple
+                    aria-label="Multiple selection"
                     :keep-open="keepOpen"
                     :keep-first="keepFirst"
                     :select-on-close="selectOnClose"

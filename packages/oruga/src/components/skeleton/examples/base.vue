@@ -26,7 +26,7 @@ const animated = ref(true);
             <o-skeleton :animated="animated" />
         </o-field>
 
-        <o-field label=" Count 2">
+        <o-field label="Count 2">
             <o-skeleton :animated="animated" :count="2" />
         </o-field>
     </section>

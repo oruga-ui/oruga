@@ -4,14 +4,11 @@ import { ref } from "vue";
 const collapses = ref([
     {
         title: "Open to read something interesting written for you!",
-        text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-          Nulla accumsan, metus ultrices eleifend gravida, <br />
-          nulla nunc varius lectus, nec rutrum justo nibh eu lectus. <br />
-          Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`,
+        text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`,
     },
     {
         title: "What is the difference between Oruga and Buefy?",
-        text: "Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. <br />",
+        text: "Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus.",
     },
     {
         title: "Nothing special, ignore it!",
@@ -42,7 +39,7 @@ const collapses = ref([
             </template>
 
             <div class="card-content">
-                <p class="content" v-html="collapse.text" />
+                <p class="content">{{ collapse.text }}</p>
             </div>
         </o-collapse>
     </section>

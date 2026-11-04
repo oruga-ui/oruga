@@ -17,6 +17,7 @@ const isActive = ref(false);
         <o-dialog
             id="draggable-dialog"
             v-model:active="isActive"
+            aria-label="Draggable dialog"
             draggable
             closeable>
             <template #title>Drag me by the header</template>

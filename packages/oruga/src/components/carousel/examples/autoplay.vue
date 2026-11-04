@@ -63,6 +63,7 @@ const slides = [
 
         <o-carousel
             v-model="currentSlide"
+            aria-label="Colour slides with autoplay"
             :dragable="dragable"
             :autoplay="autoplay"
             :pause-hover="pauseHover"

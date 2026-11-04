@@ -8,13 +8,13 @@ const maxDatetime = ref<Date>();
 <template>
     <section>
         <o-field grouped>
-            <o-field label="Min Datetime">
+            <o-field label="Earliest allowed time">
                 <o-datetimepicker
                     v-model="minDatetime"
                     placeholder="Click to select..."
                     icon="calendar" />
             </o-field>
-            <o-field label="Max Datetime">
+            <o-field label="Latest allowed time">
                 <o-datetimepicker
                     v-model="maxDatetime"
                     placeholder="Click to select..."
@@ -22,7 +22,7 @@ const maxDatetime = ref<Date>();
             </o-field>
         </o-field>
 
-        <o-field label="Select datetime">
+        <o-field label="Booking time">
             <o-datetimepicker
                 rounded
                 placeholder="Click to select..."

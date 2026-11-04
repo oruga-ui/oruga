@@ -44,7 +44,7 @@ const locale = ref("en-US");
             </o-field>
         </o-field>
 
-        <o-field label="Select datetime">
+        <o-field label="Meeting time">
             <o-datetimepicker
                 v-model="selected"
                 placeholder="Click to select..."

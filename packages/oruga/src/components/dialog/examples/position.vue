@@ -14,6 +14,7 @@ const isActive = ref(false);
 
         <o-dialog
             v-model:active="isActive"
+            aria-label="Confirm action"
             close-on-confirm
             title="Dialog Title"
             subtitle="Dialog Subtitle"

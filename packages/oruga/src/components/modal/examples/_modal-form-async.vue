@@ -21,6 +21,7 @@ defineEmits<{
                 <o-icon
                     clickable
                     icon="times"
+                    aria-label="Close dialog"
                     @click.prevent="$emit('close', $event)" />
             </header>
 

@@ -26,6 +26,7 @@ culpa ratione quam perferendis esse, cupiditate neque quas!`;
         <o-dialog
             id="modal-dialog"
             v-model:active="isActive"
+            aria-label="Modal dialog"
             backdrop
             :loading="isLoading"
             :title="title"

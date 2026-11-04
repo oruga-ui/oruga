@@ -112,6 +112,8 @@ const keepChecked = ref(false);
             :per-page="5"
             :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
             :checkbox-position="checkboxPosition">
+            <template #caption>Contacts</template>
+
             <template #bottomLeft>
                 <b>Total checked</b>: {{ checkedRows.length }}
             </template>

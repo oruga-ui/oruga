@@ -18,6 +18,7 @@ const isActive = ref(false);
             id="alert-dialog"
             v-model:active="isActive"
             alert
+            aria-label="Confirm deletion"
             title="Delete Dialog"
             content="Are you sure you want to delete this?"
             text-position="center"

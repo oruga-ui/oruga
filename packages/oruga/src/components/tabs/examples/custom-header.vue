@@ -12,7 +12,7 @@ onMounted(() => {
 
 <template>
     <section>
-        <o-tabs type="boxed">
+        <o-tabs type="boxed" aria-label="Repository sections">
             <o-tab-item>
                 <template #header>
                     <o-icon icon="info-circle" root-class="custom-icon" />

@@ -6,7 +6,7 @@ const checkboxGroup = ref(["Flint"]);
 
 <template>
     <section>
-        <o-field>
+        <o-field role="group" aria-label="Characters">
             <o-checkbox
                 v-model="checkboxGroup"
                 multiple

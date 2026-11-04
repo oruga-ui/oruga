@@ -75,6 +75,8 @@ const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
 
 <template>
     <section>
-        <o-table :data="data" :columns="columns" />
+        <o-table :data="data" :columns="columns">
+            <template #caption>Contacts</template>
+        </o-table>
     </section>
 </template>

@@ -14,7 +14,7 @@ const maxDate = new Date(
 
 <template>
     <section>
-        <o-field label="Select a date">
+        <o-field label="Booking date">
             <o-datepicker
                 placeholder="Click to select..."
                 icon="calendar"

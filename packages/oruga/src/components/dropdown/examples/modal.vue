@@ -1,6 +1,6 @@
 <template>
     <section class="odocs-spaced">
-        <o-dropdown mobile-modal desktop-modal aria-label="modal example">
+        <o-dropdown mobile-modal desktop-modal aria-label="Example actions">
             <template #trigger>
                 <o-button variant="primary" label="Click to open modal!" />
             </template>

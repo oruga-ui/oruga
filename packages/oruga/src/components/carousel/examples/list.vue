@@ -83,6 +83,7 @@ const slides = [
         <o-carousel
             :key="itemsToList + itemsToShow"
             v-model="currentSlide"
+            aria-label="Photo slides list"
             :arrows="arrows"
             :arrows-hover="arrowsHover"
             :dragable="dragable"

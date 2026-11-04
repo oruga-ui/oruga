@@ -14,7 +14,9 @@ const selected = ref<string>();
 
 <template>
     <section>
-        <o-tree v-model="selected" :options="options" selectable />
+        <o-field label="Library items">
+            <o-tree v-model="selected" :options="options" selectable />
+        </o-field>
 
         <p><b>Selected:</b> {{ selected }}</p>
     </section>

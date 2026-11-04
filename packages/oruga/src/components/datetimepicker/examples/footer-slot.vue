@@ -6,7 +6,7 @@ const datetime = ref<Date | undefined>(new Date());
 
 <template>
     <section>
-        <o-field label="Select datetime">
+        <o-field label="Reminder time">
             <o-datetimepicker
                 v-model="datetime"
                 rounded

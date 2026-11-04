@@ -31,7 +31,7 @@ function selectMonth(month: number | undefined): void {
 
 <template>
     <section>
-        <o-field label="Select a date" grouped nowrap>
+        <o-field label="Selected date" grouped nowrap>
             <o-datepicker
                 v-model="selected"
                 :first-day-of-week="1"
@@ -48,6 +48,7 @@ function selectMonth(month: number | undefined): void {
                         <o-select
                             :model-value="selected?.getMonth()"
                             :options="months"
+                            aria-label="Month"
                             @update:model-value="selectMonth" />
 
                         <o-button

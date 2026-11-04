@@ -12,7 +12,10 @@ const keepOpen = ref(false);
             <o-switch v-model="keepFirst">Keep first</o-switch>
         </o-field>
 
-        <o-dropdown :keep-open="keepOpen" :keep-first="keepFirst">
+        <o-dropdown
+            :keep-open="keepOpen"
+            :keep-first="keepFirst"
+            aria-label="Example actions">
             <template #trigger="{ active }">
                 <o-button
                     variant="primary"

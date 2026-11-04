@@ -99,6 +99,8 @@ onMounted(() => {
             aria-current-label="Current page"
             @page-change="onPageChange"
             @sort="onSort">
+            <template #caption>Movies</template>
+
             <o-table-column
                 v-slot="{ row }"
                 field="original_title"
