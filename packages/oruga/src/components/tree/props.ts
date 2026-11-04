@@ -9,9 +9,15 @@ export type TreeOptions<T> = OptionsProp<TreeItemProps<T>>;
 export type TreeProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected item value, use v-model to make it two-way binding */
+    /**
+     * The selected item value, use v-model to make it two-way binding
+     * @type string|number|object
+     */
     modelValue?: ValueType<T, IsMultiple>;
-    /** Allows multiple selections - converts the `modelValue` into an array */
+    /**
+     * Allows multiple selections - converts the `modelValue` into an array
+     * @type boolean
+     */
     multiple?: IsMultiple;
     /** Tree options, unnecessary when default slot is used */
     options?: TreeOptions<T>;

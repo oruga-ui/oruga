@@ -17,7 +17,10 @@ export type RadioNativeProps = {
 export type RadioProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state, use v-model to make it two-way binding */
+    /**
+     * The input value state, use v-model to make it two-way binding
+     * @type string|number|boolean|object
+     */
     modelValue?: T;
     /**
      * Color variant of the control
@@ -31,7 +34,10 @@ export type RadioProps<T> = {
     size?: string;
     /** Input label, unnecessary when default slot is used */
     label?: string;
-    /** Same as native value */
+    /**
+     * Same as native value
+     * @type string|number|boolean|object
+     */
     nativeValue?: T;
     /** Same as native disabled */
     disabled?: boolean;

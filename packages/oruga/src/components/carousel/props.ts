@@ -5,7 +5,10 @@ export type CarouselOptions<T> = OptionsProp<CarouselItemProps<T>>;
 export type CarouselProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The index of the current active element, use v-model to make it two-way binding */
+    /**
+     * The index of the current active element, use v-model to make it two-way binding
+     * @type string|number|object
+     */
     modelValue?: T;
     /** Carousel options, unnecessary when default slot is used */
     options?: CarouselOptions<T>;
@@ -113,7 +116,10 @@ export type CarouselClasses = Partial<{
 export type CarouselItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Item value (it will be used as the v-model of the wrapper component) - default is the item index */
+    /**
+     * Item value (it will be used as the v-model of the wrapper component) - default is the item index
+     * @type string|number|object
+     */
     value?: T;
     /** Make item clickable */
     clickable?: boolean;
