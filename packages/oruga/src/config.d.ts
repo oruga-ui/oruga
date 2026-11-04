@@ -3602,15 +3602,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Accessibility seconds select aria label
                  */
-                ariaSelectSecondLabel: string;
+                ariaSelectSecondsLabel: string;
                 /**
                  * Accessibility minutes select aria label
                  */
-                ariaSelectMinuteLabel: string;
+                ariaSelectMinutesLabel: string;
                 /**
                  * Accessibility hours select aria label
                  */
-                ariaSelectHourLabel: string;
+                ariaSelectHoursLabel: string;
                 /**
                  * Class of the root element
                  */

@@ -74,11 +74,11 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
     ariaSelectSecondsLabel: () =>
-        getDefault("timepicker.ariaSelectSecondLabel", "Select Second"),
+        getDefault("timepicker.ariaSelectSecondsLabel", "Select Second"),
     ariaSelectMinutesLabel: () =>
-        getDefault("timepicker.ariaSelectMinuteLabel", "Select Minute"),
+        getDefault("timepicker.ariaSelectMinutesLabel", "Select Minute"),
     ariaSelectHoursLabel: () =>
-        getDefault("timepicker.ariaSelectHourLabel", "Select Hour"),
+        getDefault("timepicker.ariaSelectHoursLabel", "Select Hour"),
     inputAttrs: () => getDefault("timepicker.inputAttrs"),
     selectAttrs: () => getDefault("timepicker.selectAttrs"),
 });
