@@ -4,8 +4,8 @@
 
 <section class="odocs-head">
 
-The **Datetimepicker** input component allow users to select a date and time based on their browser’s locale from a customizable calendar, or to type the date directly into the input with full internationalization support.
-The input opens a simple popover/modal for selecting a date, and uses the native datetimepicker for mobile.
+The **Datetimepicker** input component allows users to select a date and time based on their browser’s locale from a customizable calendar, or to type the date directly into the input with full internationalization support.
+The input opens a simple popover/modal for selecting a date, and uses the native datetimepicker on mobile devices by default (see the `mobile-native` prop).
 
 The component is based on the [Datepicker](/components/Datepicker) and [Timepicker](/components/Timepicker) components.
 The overlay is implemented using the native [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API).

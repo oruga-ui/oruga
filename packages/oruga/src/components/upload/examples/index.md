@@ -16,7 +16,7 @@ import VariantsCode from "./variants.vue?raw";
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
-### Drag&Drop
+### Drag & Drop
 
 Enable drag and drop using the `drag-drop` prop. To allow multiple files to be uploaded, set the `multiple` prop.
 

@@ -12,15 +12,13 @@ const maxDatetime = ref<Date>();
                 <o-datetimepicker
                     v-model="minDatetime"
                     placeholder="Click to select..."
-                    icon="calendar"
-                    editable />
+                    icon="calendar" />
             </o-field>
             <o-field label="Max Datetime">
                 <o-datetimepicker
                     v-model="maxDatetime"
                     placeholder="Click to select..."
-                    icon="calendar"
-                    editable />
+                    icon="calendar" />
             </o-field>
         </o-field>
 

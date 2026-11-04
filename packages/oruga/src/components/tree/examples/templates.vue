@@ -1,7 +1,7 @@
 <template>
     <section>
         <o-field label="Sidebar">
-            <o-tree label="Links" :collapsable="false">
+            <o-tree :collapsable="false">
                 <o-tree-item icon="link">
                     <template #label>
                         <a href="https://github.com/oruga-ui/" target="_blank">

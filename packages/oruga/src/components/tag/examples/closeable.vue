@@ -7,7 +7,7 @@
 
             <o-tag closeable aria-close-label="Close tag">
                 <template #default>
-                    Attached tag label with custom and colored icon
+                    Closeable tag label with a custom close button
                 </template>
 
                 <template #close> Cancel </template>

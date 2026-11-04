@@ -25,8 +25,7 @@ const currentMenu = ref({ icon: "users", text: "People" });
             v-model="currentMenu"
             :scrollable="isScrollable"
             :max-height="200"
-            selectable
-            check-scroll>
+            selectable>
             <template #trigger>
                 <o-button
                     variant="primary"

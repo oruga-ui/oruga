@@ -37,7 +37,7 @@ import TemplatesCode from "./templates.vue?raw";
 
 The component allows the user to navigate through a hierarchically organised collection. For example, a file system navigator that uses a tree view, each item displays a folder or file. Folder items can be expanded to reveal the contents of the folder, which may be files, folders, or both.
 
-Groups can be expanded on default by setting the `expanded` property.
+Groups can be expanded on default by setting the `expanded` property. To keep all groups permanently open and prevent them from being collapsed, set `:collapsable="false"` on the tree.
 
 ::: info Accessibility Note:
 A tree view is primarily navigated with _arrow_ keys on the keyboard instead of the _tab_ key. This form of navigation is more similar to native applications than to web applications. For this reason, consider alternative options to address the functionality you need before using a tree component. A tree component is at the most times not needed for typical site navigation that is styled to look like a tree with expandable sections.
@@ -47,7 +47,7 @@ A tree view is primarily navigated with _arrow_ keys on the keyboard instead of 
 
 ### Selection
 
-When setting the `selectable` property, users can select one or more items. The current selected item value is available in the `modelValue` property. In "multi-select" trees users are able to select more than one item and `modelValue` will be an array if items.
+When setting the `selectable` property, users can select one or more items. The current selected item value is available in the `model-value` property. In "multi-select" trees users are able to select more than one item and `model-value` will be an array if items.
 
 Once the `selectable` property is set, groups can only be opened by clicking on the chevron rather than on the full item.
 
@@ -91,7 +91,7 @@ You may also provide the `options` prop where the keys are values and the values
 
 #### Array of objects
 
-The most flexible way to define options is to provide an array of objects. The object has the same properties as the `<o-list-item>` component.
+The most flexible way to define options is to provide an array of objects. The object has the same properties as the `<o-tree-item>` component.
 
 <ExampleViewer :component="OptionsArray" :code="OptionsArrayCode" />
 
@@ -103,9 +103,7 @@ You can use the `checkable` property to show a checkbox on the item. The checkbo
 
 ### Scrollable
 
-When having to many options, consider adding a max height using the `scrollHeight` property, which allows to cap the tree at a fixed `max-height`. This will render a long tree of options with a scrollbar. The component will emit a `scroll-start` or `scroll-end` event, when the top or bottom of the tree is reached.
-
-A group can be forced to stay open by setting `collapsable="false"`.
+When having too many options, consider adding a max height using the `scroll-height` property, which allows to cap the tree at a fixed `max-height`. This will render a long tree of options with a scrollbar. The component will emit a `scroll-start` or `scroll-end` event, when the top or bottom of the tree is reached.
 
 <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
@@ -117,7 +115,7 @@ The `filterable` property enables a built-in search input to filter tree items. 
 
 ### Empty
 
-The `emptyLabel` property can be used to display a label when no option is visible. Alternatively, the `empty` template slot can be used to define custom HTML.
+The `empty-label` property can be used to display a label when no option is visible. Alternatively, the `empty` template slot can be used to define custom HTML.
 
 <ExampleViewer :component="Empty" :code="EmptyCode" />
 

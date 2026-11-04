@@ -11,7 +11,7 @@ const groupOptions: AutocompleteOptions<string> = [
             { label: "Silver", value: "silver" },
             { label: "Vane", value: "vane" },
             { label: "Billy", value: "billy" },
-            { label: "Jack", value: "silver", disabled: true },
+            { label: "Jack", value: "jack", disabled: true },
         ],
     },
     {

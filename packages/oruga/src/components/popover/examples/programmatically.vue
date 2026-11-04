@@ -11,7 +11,7 @@ function openTextPopover(): void {
         {
             // the target element the popover will be attached to
             target: target,
-            content: "This overlay can have some usefull information.",
+            content: "This overlay can have some useful information.",
         },
         // placing target here again to mount the popover inside the target instead of body
         target,

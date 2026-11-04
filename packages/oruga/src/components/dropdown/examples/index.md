@@ -37,17 +37,17 @@ import PositionCode from "./position.vue?raw";
 
 By default the dropdown will be a simple unselectable menu using the [ARIA: menu role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/menu_role). A menu generally represents a list of actions or functions that the user can invoke.
 
-When a user clicks an option in a menu that has been opened, the menu usually closes. This can be changed with the `keepOpen` property. When a menu opens, keyboard focus can be placed on the first menu item using the `keepFirst` property.
+When a user clicks an option in a menu that has been opened, the menu usually closes. This can be changed with the `keep-open` property. When a menu opens, keyboard focus can be placed on the first menu item using the `keep-first` property.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
 ### Triggers
 
-The trigger can be defined by placing any element in the `trigger` template slot or using the `triggerTag` property.
+The trigger can be defined by placing any element in the `trigger` template slot or using the `trigger-tag` property.
 
-To open the dropdown, the component can detect several different interaction variants, such as `openOnHover`, `openOnFocus` or `openOnContextmenu` to only open on right click instead of left click. By default, only `openOnClick` is set.
+To open the dropdown, the component can detect several different interaction variants, such as `open-on-hover`, `open-on-focus` or `open-on-contextmenu` to only open on right click instead of left click. By default, only `open-on-click` is set.
 
-The action that closes the component can also be customised using the `closeOnOutside` and `closeOnScroll` properties.
+The action that closes the component can also be customised using the `close-on-outside` and `close-on-scroll` properties.
 
 Adding the `teleport` prop will move the dropdown menu to the referenced DOM location or the `document.body` instead.
 
@@ -96,13 +96,13 @@ You can also use the array of objects syntax to create grouped options, wrapping
 
 The component can be configured to have the options as a selectable list by adding the `selectable` property. This applies the [ARIA: combobox role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/combobox_role) to the root element and changes the menu to an [ARIA: listbox role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/listbox_role). The combobox role identifies an element as either an input or a button that controls another element, that can dynamically pop up to help the user set a value.
 
-By default only one option can be selected and the selected option will be refereced by the `modelValue` property. Adding the `multiple` property will change the `modelValue` to an array of selected options.
+By default only one option can be selected and the selected option will be referenced by the `model-value` property. Adding the `multiple` property will change the `model-value` to an array of selected options.
 
 <ExampleViewer :component="Selectable" :code="SelectableCode" />
 
 ### Scrollable
 
-When having to many options, consider adding the `scrollable` property, which allows the options container to remain at a fixed height. The `max-height` property can be used to define the max container height.
+When having too many options, consider adding the `scrollable` property, which allows the options container to remain at a fixed height. The `max-height` property can be used to define the max container height.
 
 <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
@@ -117,7 +117,7 @@ The menu can also consists of a list of links by using the `href` attribute for 
 The content can be opened in a _modal_ mode either for mobile or desktop only, or for both, by adding the `mobile-modal` and `desktop-modal` properties.
 
 ::: info Accessibility Note:
-The dropdown modal style is mainly useful for improving the mobile experience. If you want to create a true modal, the [ODialog](/components/Dialog.html) element is the way to go.
+The dropdown modal style is mainly useful for improving the mobile experience. If you want to create a true modal, the [ODialog](/components/Dialog) element is the way to go.
 :::
 
 <ExampleViewer :component="Modal" :code="ModalCode" />

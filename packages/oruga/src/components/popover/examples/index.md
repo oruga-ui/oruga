@@ -43,7 +43,7 @@ this should match the role of the popover content. You can see all possible valu
 
 ### Position
 
-The direction in which the popover opens can be explicity defined using
+The direction in which the popover opens can be explicitly defined using
 the `position` property. By default, the direction is automatically
 calculated based on the distance to the edge of the window.
 
@@ -66,7 +66,7 @@ Using `closeable` a close button can be added to the content.
 
 ### Backdrop
 
-The the `backdrop` property allows a full-page overlay to be added to the top-layer of the page. By default, attempting to interact with the backdrop will close the popover.
+The `backdrop` property allows a full-page overlay to be added to the top-layer of the page. By default, attempting to interact with the backdrop will close the popover.
 
 <ExampleViewer :component="Backdrop" :code="BackdropCode" />
 
@@ -75,7 +75,7 @@ The the `backdrop` property allows a full-page overlay to be added to the top-la
 When the `modal` property is added, the popover appears in the middle of the screen as a modal-style overlay with a full-page backdrop. The `position` property is ignored when the `modal` property is used.
 
 ::: info Accessibility Note:
-The popover modal style is mainly useful for improving the mobile experience. If you want to create a true modal, the [ODialog](/components/Dialog.html) element is the way to go.
+The popover modal style is mainly useful for improving the mobile experience. If you want to create a true modal, the [ODialog](/components/Dialog) element is the way to go.
 :::
 <ExampleViewer :component="Modal" :code="ModalCode" />
 
@@ -89,7 +89,7 @@ const oruga = useOruga();
 oruga.popover.open({...});
 ```
 
-The programmatic popover composable requires a `trigger` property in order to define the target element to which the popover will be attached to.
+The programmatic popover composable requires a `target` property in order to define the target element to which the popover will be attached to.
 
 A programmatic instance returns a promise to await for. The promise gets resolved when the popover gets closed.
 

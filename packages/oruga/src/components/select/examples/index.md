@@ -86,7 +86,7 @@ Sometimes it may be desirable to manually output the contents of a select list i
 The input also supports a `multiple` attribute that allows multi-selection. When used the `v-model` attribute will be an array of values.
 
 ::: info Accessibility Notes
-Select inputs with the `multiple` attribute can be challenging for some users because they require holding-down the control or command keys to perform multiple selections. Depending on your audience, you may want to consider using a [**checkbox input**](/components/Checkbox.html#array) instead.
+Select inputs with the `multiple` attribute can be challenging for some users because they require holding-down the control or command keys to perform multiple selections. Depending on your audience, you may want to consider using a [**checkbox input**](/components/Checkbox#array) instead.
 :::
 
 <ExampleViewer :component="Multiple" :code="MultipleCode" />

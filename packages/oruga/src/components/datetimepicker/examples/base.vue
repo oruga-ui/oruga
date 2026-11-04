@@ -4,8 +4,8 @@ import { ref } from "vue";
 const selected = ref(new Date());
 const showWeekNumber = ref(false);
 const enableSeconds = ref(false);
-const hourFormat = ref<"12" | "24" | undefined>("24"); // Browser locale
-const locale = ref("en-US"); // Browser locale
+const hourFormat = ref<"12" | "24" | undefined>("24");
+const locale = ref("en-US");
 </script>
 
 <template>
@@ -25,7 +25,7 @@ const locale = ref("en-US"); // Browser locale
                     <option value="ja-JP">ja-JP</option>
                     <option value="pt-BR">pt-BR</option>
                     <option value="ru-RU">ru-RU</option>
-                    <option value="zn-CN">zn-CN</option>
+                    <option value="zh-CN">zh-CN</option>
                 </o-select>
             </o-field>
             <o-field label="Hour format">

@@ -14,13 +14,13 @@ import PositionCode from "./position.vue?raw";
 
 ### Base
 
-The length of the loading beam can be defined using the `width` prop.
+The width of the skeleton can be defined using the `width` prop.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
 ### Circle
 
-Make in round using the `circle` prop.
+Make it round using the `circle` prop.
 
 <ExampleViewer :component="Circle" :code="CircleCode" />
 
@@ -32,6 +32,6 @@ The component can be displayed in different sizes using the `size` prop.
 
 ### Position
 
-Use the `position` prop to define the vertical placement.
+Use the `position` prop to define the horizontal alignment (`left`, `centered` or `right`).
 
 <ExampleViewer :component="Position" :code="PositionCode" />

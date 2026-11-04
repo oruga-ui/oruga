@@ -17,7 +17,7 @@ async function component(): Promise<void> {
 
     oruga.notification.open({
         duration: 5000,
-        content: "Modal dialog returned " + JSON.stringify(result),
+        content: "Notification returned " + JSON.stringify(result),
         variant: "info",
         position: "top",
         closeable: true,

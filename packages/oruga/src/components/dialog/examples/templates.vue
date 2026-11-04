@@ -34,11 +34,11 @@ const isActive = ref(false);
             </template>
 
             <template #cancelButton>
-                <a href="#" class="dialog-link">A link</a>
+                <span>Custom cancel</span>
             </template>
 
             <template #confirmButton>
-                <a href="#" class="dialog-link">Another link</a>
+                <span>Custom confirm</span>
             </template>
         </o-dialog>
     </section>

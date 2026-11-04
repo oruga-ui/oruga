@@ -17,7 +17,7 @@ const teleport = ref(false);
                 <template #content>
                     <h4 style="margin-top: 0">Heading</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur warning elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Fusce id fermentum quam
                     </p>
                     <a href="#">Some Link</a>
@@ -30,7 +30,7 @@ const teleport = ref(false);
                 <template #content>
                     <h4 style="margin-top: 0">Heading</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur warning elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Fusce id fermentum quam
                     </p>
                     <a href="#">Some Link</a>
@@ -43,7 +43,7 @@ const teleport = ref(false);
                 <template #content>
                     <h4 style="margin-top: 0">Heading</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur warning elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Fusce id fermentum quam
                     </p>
                     <a href="#">Some Link</a>
@@ -56,7 +56,7 @@ const teleport = ref(false);
                 <template #content>
                     <h4 style="margin-top: 0">Heading</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur warning elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Fusce id fermentum quam
                     </p>
                     <a href="#">Some Link</a>
