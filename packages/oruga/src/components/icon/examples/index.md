@@ -2,6 +2,9 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Clickable from "./clickable.vue";
+import ClickableCode from "./clickable.vue?raw";
+
 import CustomIconPack from "./custom-icon-pack.vue";
 import CustomIconPackCode from "./custom-icon-pack.vue?raw";
 
@@ -88,6 +91,13 @@ Always provide an `aria-label` property when the icon has the `clickable` proper
 :::
 
 <ExampleViewer :component="Base" :code="BaseCode" />
+
+### Clickable
+
+A clickable icon gets `role="button"` and is focusable, so it needs an `aria-label` that names the action it triggers.
+For icon-only controls, prefer a button component with an `aria-label` instead.
+
+<ExampleViewer :component="Clickable" :code="ClickableCode" />
 
 ### Custom Icon Pack
 

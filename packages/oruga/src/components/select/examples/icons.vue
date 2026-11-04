@@ -3,7 +3,7 @@
         <o-field>
             <o-select
                 placeholder="Select a name"
-                aria-label="Select a name"
+                aria-label="Name with search icon"
                 icon="search"
                 icon-clickable>
                 <option value="flint">Flint</option>
@@ -14,7 +14,7 @@
         <o-field>
             <o-select
                 placeholder="Select a name"
-                aria-label="Select a name"
+                aria-label="Name with envelope and clear icons"
                 icon="envelope"
                 icon-right="times-circle"
                 icon-right-clickable>

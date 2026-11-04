@@ -10,7 +10,7 @@ function deleteDropFile(index): void {
 
 <template>
     <section>
-        <o-field>
+        <o-field label="Attachments">
             <o-upload v-model="dropFiles" multiple drag-drop>
                 <div style="text-align: center">
                     <p>
@@ -26,6 +26,7 @@ function deleteDropFile(index): void {
                 {{ file.name }}
                 <o-button
                     icon-left="times"
+                    :aria-label="`Remove ${file.name}`"
                     size="small"
                     native-type="button"
                     @click="deleteDropFile(index)">

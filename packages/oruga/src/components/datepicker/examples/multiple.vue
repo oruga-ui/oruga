@@ -6,7 +6,7 @@ const dates = ref<Date[]>([]);
 
 <template>
     <section>
-        <o-field label="Select a date">
+        <o-field label="Available dates">
             <o-datepicker
                 v-model="dates"
                 multiple

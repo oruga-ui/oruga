@@ -44,6 +44,7 @@ function getType(item: string): string {
                         v-for="(item, index) in options"
                         :key="index"
                         :label="item.label"
+                        :aria-label="`Remove ${item.label}`"
                         :variant="getType(item.value)"
                         rounded
                         :style="{ margin: '5px' }"

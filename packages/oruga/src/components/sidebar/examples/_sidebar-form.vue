@@ -17,7 +17,11 @@ defineEmits<{
     <form action="">
         <header>
             <p>Login</p>
-            <o-icon clickable icon="times" @click="$emit('close', $event)" />
+            <o-icon
+                clickable
+                icon="times"
+                aria-label="Close sidebar"
+                @click="$emit('close', $event)" />
         </header>
 
         <section>

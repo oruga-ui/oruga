@@ -42,6 +42,7 @@ const type = ref("default");
             :size="size"
             :type="type"
             vertical
+            aria-label="Media categories"
             :expanded="expanded">
             <o-tab-item label="Pictures" icon="images">
                 Lorem ipsum dolor sit amet. <br />

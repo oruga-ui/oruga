@@ -1,17 +1,20 @@
 <template>
     <section>
         <o-field grouped variant="danger" message="What do you want to search?">
-            <o-input placeholder="Search..." />
+            <o-input placeholder="Search..." aria-label="Search" />
             <o-button variant="primary" label="Search" />
         </o-field>
 
         <o-field grouped message="What do you want to search?" nowrap>
-            <o-input placeholder="Search..." expanded />
+            <o-input
+                placeholder="Search..."
+                aria-label="Search term"
+                expanded />
             <o-button variant="primary" label="Search" />
         </o-field>
 
         <o-field grouped>
-            <o-input aria-label="some input" />
+            <o-input aria-label="Text input" />
             <o-button>First</o-button>
             <o-button>Second</o-button>
             <o-button>Third</o-button>

@@ -13,7 +13,7 @@ const showBooks = ref(false);
             <o-button label="Set Music" @click="activeTab = 'music'" />
         </o-field>
 
-        <o-tabs v-model="activeTab">
+        <o-tabs v-model="activeTab" aria-label="Content categories">
             <o-tab-item value="pictures" label="Pictures" icon="image">
                 what light is light, if Silvia be not seen? <br />
                 What joy is joy.

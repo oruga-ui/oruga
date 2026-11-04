@@ -21,6 +21,7 @@ function onLogin(): void {
     <o-dialog
         v-slot="{ close, confirm }"
         v-model:active="isActive"
+        aria-label="Login"
         :backdrop="false"
         title="Login"
         closeable

@@ -14,6 +14,7 @@ const isActive = ref(false);
 
         <o-dialog
             v-model:active="isActive"
+            aria-label="Oruga logo"
             image-alt="Oruga Logo"
             image-src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
     </section>

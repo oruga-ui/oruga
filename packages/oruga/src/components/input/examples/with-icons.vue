@@ -18,6 +18,7 @@ function clearIconClick(): void {
         <o-field>
             <o-input
                 placeholder="Search..."
+                aria-label="Search with left icon"
                 type="search"
                 icon="search"
                 icon-clickable
@@ -27,6 +28,7 @@ function clearIconClick(): void {
         <o-field>
             <o-input
                 placeholder="Search..."
+                aria-label="Search with right icon"
                 type="search"
                 icon-right="search"
                 icon-right-clickable />
@@ -36,6 +38,7 @@ function clearIconClick(): void {
             <o-input
                 v-model="email"
                 placeholder="Email"
+                aria-label="Email address"
                 type="email"
                 icon="envelope"
                 icon-right="times-circle"

@@ -6,6 +6,7 @@ const oruga = useOruga();
 
 function openConfirmDialog(): void {
     oruga.dialog.open({
+        ariaLabel: "Confirm save",
         title: "Save Dialog",
         content: "Are you sure you want to save this?",
         confirmButton: "Save",
@@ -22,6 +23,7 @@ function openImageDialog(): void {
     ]);
 
     oruga.dialog.open({
+        ariaLabel: "Oruga logo",
         component: vnode,
         closeOnBackdrop: true,
         closeOnEscape: true,

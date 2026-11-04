@@ -6,22 +6,23 @@ const selected = ref<string>("");
 
 <template>
     <section>
-        <o-select
-            v-model="selected"
-            placeholder="Select a character"
-            aria-label="Select a character"
-            icon="user"
-            expanded
-            :options="[
-                {
-                    label: 'Names',
-                    options: ['Flint', 'Silver', 'Vane', 'Jack'],
-                },
-                {
-                    label: 'Numbers',
-                    options: [1, 2, 3],
-                },
-            ]" />
+        <o-field label="Character">
+            <o-select
+                v-model="selected"
+                placeholder="Select a character"
+                icon="user"
+                expanded
+                :options="[
+                    {
+                        label: 'Names',
+                        options: ['Flint', 'Silver', 'Vane', 'Jack'],
+                    },
+                    {
+                        label: 'Numbers',
+                        options: [1, 2, 3],
+                    },
+                ]" />
+        </o-field>
 
         <p><b>Selected:</b> {{ selected }}</p>
     </section>

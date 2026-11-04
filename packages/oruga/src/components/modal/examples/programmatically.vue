@@ -15,12 +15,14 @@ function imageModal(): void {
     ]);
 
     oruga.modal.open({
+        ariaLabel: "Oruga logo",
         component: vnode,
     });
 }
 
 function cardModal(): void {
     oruga.modal.open({
+        ariaLabel: "Sign in",
         component: ModalForm,
         trapFocus: true,
         closeable: false,

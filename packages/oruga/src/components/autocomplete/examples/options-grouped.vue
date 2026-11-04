@@ -41,13 +41,15 @@ const groupSelected = ref();
 
 <template>
     <section>
-        <o-autocomplete
-            v-model="groupSelected"
-            :options="groupOptions"
-            placeholder="Find a name grouped by film..."
-            open-on-focus>
-            <template #header>Film Character Groups</template>
-        </o-autocomplete>
+        <o-field label="Character by film">
+            <o-autocomplete
+                v-model="groupSelected"
+                :options="groupOptions"
+                placeholder="Find a name grouped by film..."
+                open-on-focus>
+                <template #header>Film Character Groups</template>
+            </o-autocomplete>
+        </o-field>
 
         <p><b>Selected:</b> {{ groupSelected }}</p>
     </section>

@@ -27,7 +27,7 @@ const mobile = ref<
             </o-field>
             <o-field label="Override layout for small screens">
                 <o-select v-model="mobile">
-                    <option :value="undefined"></option>
+                    <option :value="undefined">Default</option>
                     <option value="reduced">Reduced</option>
                     <option value="expanded">Expanded</option>
                     <option value="fullwidth">Fullwidth</option>

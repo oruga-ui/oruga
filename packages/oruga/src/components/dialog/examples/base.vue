@@ -17,6 +17,7 @@ const isActive = ref(false);
         <o-dialog
             id="base-dialog"
             v-model:active="isActive"
+            aria-label="Dialog with lorem ipsum text"
             closeable
             :backdrop="false">
             <template #title>Dialog Title</template>

@@ -12,7 +12,10 @@ const isActive = ref(false);
             variant="primary"
             @click="isActive = true" />
 
-        <o-modal v-model:active="isActive" teleport>
+        <o-modal
+            v-model:active="isActive"
+            aria-label="Teleported modal"
+            teleport>
             <div style="padding: 10px; background-color: white">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.

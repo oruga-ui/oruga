@@ -1,7 +1,7 @@
 <template>
     <section>
         <o-popover>
-            <o-button> Open popover! </o-button>
+            <o-button aria-haspopup="dialog"> Open popover! </o-button>
 
             <template #content>
                 <b>Lorem ipsum dolor sit amet</b>, consectetur adipiscing elit.

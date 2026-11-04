@@ -41,7 +41,9 @@ const selected = ref<string>();
 
 <template>
     <section>
-        <o-listbox v-model="selected" :options="options" />
+        <o-field label="Select a character">
+            <o-listbox v-model="selected" :options="options" />
+        </o-field>
 
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
