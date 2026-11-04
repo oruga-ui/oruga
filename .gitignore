@@ -22,6 +22,12 @@ yarn-error.log*
 *.sln
 *.sw?
 
+# AI files
+CLAUDE.md
+AGENTS.md
+.devcontainer
+.claude
+
 # generated files
 packages/oruga/README.md
 
