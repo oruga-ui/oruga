@@ -201,10 +201,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 activeClass: ClassDefinition;
                 /**
-                 * Class of the item separator element
-                 */
-                seperatorClass: ClassDefinition;
-                /**
                  * Class of the item link element
                  */
                 linkClass: ClassDefinition;
