@@ -2401,6 +2401,10 @@ but will set the body to a fixed position, which may break some layouts.
                  */
                 trapFocus: boolean;
                 /**
+                 * Accessibility aria-label to name the sidebar, used as the dialog name when shown with an overlay
+                 */
+                ariaLabel: string;
+                /**
                  * Mobile breakpoint as `max-width` value
                  */
                 mobileBreakpoint: string;
