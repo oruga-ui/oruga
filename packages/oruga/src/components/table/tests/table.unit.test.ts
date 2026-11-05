@@ -892,6 +892,32 @@ describe("OTable tests", () => {
             );
         });
 
+        test.each(["top", "bottom", "both"] as const)(
+            "pass the pagination order to the pagination at position %s",
+            (paginationPosition) => {
+                const wrapper = mount(OTable, {
+                    props: {
+                        columns: [{ label: "ID", field: "id" }],
+                        paginated: true,
+                        paginationPosition,
+                        paginationOrder: "left",
+                        data,
+                        perPage: 3,
+                    },
+                });
+
+                const paginations = wrapper.findAll(".o-pagination");
+                expect(paginations).toHaveLength(
+                    paginationPosition === "both" ? 2 : 1,
+                );
+                for (const pagination of paginations) {
+                    expect(pagination.classes("o-pagination--left")).toBe(true);
+                    // must not leak as a DOM attribute
+                    expect(pagination.attributes("order")).toBeUndefined();
+                }
+            },
+        );
+
         test("show correct amount of rows when per page is set to 5", async () => {
             const perPage = 5;
 
