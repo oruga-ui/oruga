@@ -1375,10 +1375,17 @@ defineExpose({
                                             : 'descending'
                                         : undefined
                                 "
+                                :tabindex="column.sortable ? 0 : undefined"
                                 :aria-colindex="
                                     ariaColIndexStart + column.index
                                 "
                                 @click.stop="sort(column, true, $event)"
+                                @keydown.enter.self.prevent="
+                                    sort(column, true, $event)
+                                "
+                                @keydown.space.self.prevent="
+                                    sort(column, true, $event)
+                                "
                                 @dragstart="
                                     handleColumnDragStart(column, $event)
                                 "
