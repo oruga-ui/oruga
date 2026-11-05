@@ -89,9 +89,10 @@ describe("OButton tests", () => {
         expect(wrapper.attributes("aria-disabled")).toBe("true");
     });
 
-    const tags = ["button", "input", "a", "div"];
-    test.each(tags)(
-        "expect click handler only get triggered once for '%s'",
+    // The browser dispatches a click event on keyboard activation of native
+    // elements. The component must not emit a second click on keydown.
+    test.each(["button", "input"])(
+        "expect native '%s' to emit click only once per activation",
         async (tag) => {
             const wrapper = mount(OButton, {
                 props: { tag },
@@ -100,17 +101,79 @@ describe("OButton tests", () => {
 
             const button = wrapper.find<HTMLElement>(tag);
             expect(button.exists()).toBeTruthy();
-
-            button.element.focus();
+            expect(button.attributes("role")).toBeUndefined();
+            expect(button.attributes("tabindex")).toBeUndefined();
 
             await button.trigger("click");
             expect(wrapper.emitted("click")).toHaveLength(1);
 
+            // jsdom does not turn key presses into a click on native elements,
+            // so nothing is emitted here. This only guards against the
+            // component emitting a click of its own on keydown, which would
+            // be a duplicate in a browser. Keyboard activation is covered by
+            // the browser test.
             await button.trigger("keydown.enter");
-            expect(wrapper.emitted("click")).toHaveLength(2);
-
             await button.trigger("keydown.space");
-            expect(wrapper.emitted("click")).toHaveLength(3);
+            expect(wrapper.emitted("click")).toHaveLength(1);
+        },
+    );
+
+    test("expect custom element to be activated by keyboard", async () => {
+        const wrapper = mount(OButton, {
+            props: { tag: "div" },
+            attachTo: document.body,
+        });
+
+        const button = wrapper.find<HTMLElement>("div");
+        expect(button.attributes("role")).toBe("button");
+        expect(button.attributes("tabindex")).toBe("0");
+
+        await button.trigger("click");
+        expect(wrapper.emitted("click")).toHaveLength(1);
+
+        await button.trigger("keydown.enter");
+        expect(wrapper.emitted("click")).toHaveLength(2);
+
+        await button.trigger("keydown.space");
+        expect(wrapper.emitted("click")).toHaveLength(3);
+    });
+
+    test("expect space on a link to not scroll but to activate it", () => {
+        const wrapper = mount(OButton, {
+            props: { tag: "a" },
+            attrs: { href: "#" },
+            attachTo: document.body,
+        });
+        const link = wrapper.find<HTMLElement>("a");
+
+        const keydown = new KeyboardEvent("keydown", {
+            key: " ",
+            bubbles: true,
+            cancelable: true,
+        });
+        link.element.dispatchEvent(keydown);
+        // the browser would scroll the page on space otherwise
+        expect(keydown.defaultPrevented).toBeTruthy();
+        // the link is activated like a button
+        expect(wrapper.emitted("click")).toHaveLength(1);
+    });
+
+    test.each(["a", "div"])(
+        "expect disabled '%s' to not emit click",
+        async (tag) => {
+            const wrapper = mount(OButton, {
+                props: { tag, disabled: true },
+                attachTo: document.body,
+            });
+
+            const button = wrapper.find<HTMLElement>(tag);
+            expect(button.attributes("aria-disabled")).toBe("true");
+            expect(button.attributes("tabindex")).toBe("-1");
+
+            await button.trigger("click");
+            await button.trigger("keydown.enter");
+            await button.trigger("keydown.space");
+            expect(wrapper.emitted("click")).toBeUndefined();
         },
     );
 });
