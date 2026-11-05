@@ -1,5 +1,6 @@
 import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import OSlider from "@/components/slider/Slider.vue";
 
@@ -62,5 +63,57 @@ describe("OSlider tests", () => {
 
         expect(wrapper.emitted("change")).toBeTruthy();
         expect(wrapper.emitted("change")?.[0]?.[0]).toBeGreaterThan(30);
+    });
+
+    describe("range thumbs crossing each other", () => {
+        test("keep their values when a thumb reaches zero", async () => {
+            const wrapper = mount({
+                components: { OSlider },
+                data: () => ({ value: [20, 80] }),
+                template: `<OSlider v-model="value" range :min="0" :max="100" />`,
+            });
+            await nextTick();
+
+            const [startThumb, endThumb] = wrapper.findAll('[role="slider"]');
+
+            // move the start thumb past the end thumb
+            await startThumb.trigger("keydown", { key: "End" });
+            expect(wrapper.vm.value).toEqual([80, 100]);
+
+            // move the end thumb down to zero
+            await endThumb.trigger("keydown", { key: "Home" });
+            expect(wrapper.vm.value).toEqual([0, 100]);
+            expect(startThumb.attributes("aria-valuenow")).toBe("100");
+            expect(endThumb.attributes("aria-valuenow")).toBe("0");
+
+            // move the end thumb up again from where it is
+            await endThumb.trigger("keydown", { key: "ArrowRight" });
+            expect(wrapper.vm.value).toEqual([1, 100]);
+            expect(startThumb.attributes("aria-valuenow")).toBe("100");
+            expect(endThumb.attributes("aria-valuenow")).toBe("1");
+        });
+
+        test("keep their values when a thumb passes zero", async () => {
+            const wrapper = mount({
+                components: { OSlider },
+                data: () => ({ value: [-20, 20] }),
+                template: `<OSlider v-model="value" range :min="-50" :max="50" />`,
+            });
+            await nextTick();
+
+            const [startThumb, endThumb] = wrapper.findAll('[role="slider"]');
+
+            // move the start thumb past the end thumb
+            await startThumb.trigger("keydown", { key: "End" });
+            expect(wrapper.vm.value).toEqual([20, 50]);
+
+            // move the end thumb down through zero
+            for (let i = 0; i < 25; i++)
+                await endThumb.trigger("keydown", { key: "ArrowLeft" });
+
+            expect(wrapper.vm.value).toEqual([-5, 50]);
+            expect(startThumb.attributes("aria-valuenow")).toBe("50");
+            expect(endThumb.attributes("aria-valuenow")).toBe("-5");
+        });
     });
 });

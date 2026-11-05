@@ -124,10 +124,7 @@ const vmodel = computed<ModelValue>(
 /** update vmodel value on internal value change */
 watch([valueStart, valueEnd], () => {
     if (isRange.value)
-        isThumbReversed.value =
-            valueStart.value && valueEnd.value
-                ? valueStart.value > valueEnd.value
-                : false;
+        isThumbReversed.value = valueStart.value > valueEnd.value;
     if (!props.lazy || !dragging.value)
         emits("update:model-value", vmodel.value); // update external vmodel
     if (dragging.value) emits("dragging", vmodel.value);
