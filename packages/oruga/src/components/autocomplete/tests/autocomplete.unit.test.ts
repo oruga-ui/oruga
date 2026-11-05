@@ -663,4 +663,86 @@ describe("OAutocomplete tests", () => {
             });
         });
     });
+
+    describe("handle numeric option values correctly", () => {
+        const NUMBER_OPTIONS: AutocompleteOptions<number> = [
+            { label: "Zero", value: 0 },
+            { label: "One", value: 1 },
+            { label: "Two", value: 2 },
+        ];
+
+        test.each(NUMBER_OPTIONS.map((option, index) => ({ option, index })))(
+            "select the option with value $option.value",
+            async ({ option, index }) => {
+                const wrapper = mount(OAutocomplete, {
+                    props: { options: NUMBER_OPTIONS, openOnFocus: true },
+                    slots: {
+                        header: "<h1>SLOT HEADER</h1>",
+                        footer: "<h1>SLOT FOOTER</h1>",
+                    },
+                });
+
+                const input = wrapper.find("input");
+                expect(input.exists()).toBeTruthy();
+
+                // open menu
+                await input.trigger("focus");
+
+                // move to the option and select by enter
+                for (let i = 0; i <= index; i++)
+                    await input.trigger("keydown", { key: "Down" });
+                await input.trigger("keydown", { key: "Enter" });
+
+                expect(wrapper.emitted("select")).toStrictEqual([
+                    [option.value],
+                ]);
+                expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                    [option.value],
+                ]);
+                expect(wrapper.emitted("select-header")).toBeUndefined();
+                expect(wrapper.emitted("select-footer")).toBeUndefined();
+                expect(input.element.value).toBe(option.label);
+            },
+        );
+
+        test("show the label of an initial `0` value", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: { options: NUMBER_OPTIONS, modelValue: 0 },
+            });
+            await nextTick(); // await child component rendering
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+            expect(input.element.value).toBe("Zero");
+        });
+
+        test("filter options with the values 0, 1 and 2", async () => {
+            vi.useFakeTimers();
+
+            const wrapper = mount(OAutocomplete, {
+                props: { options: NUMBER_OPTIONS, active: true },
+                attachTo: document.body,
+            });
+            await nextTick(); // await child component rendering
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue("one");
+            vi.runAllTimers(); // await debounce input handler
+
+            await nextTick(); // await child component rendering
+
+            const optionElements = wrapper.findAll(
+                '[data-oruga="dropdown-item"]',
+            );
+            expect(optionElements).toHaveLength(NUMBER_OPTIONS.length);
+            expect(optionElements.map((option) => option.isVisible())).toEqual([
+                false,
+                true,
+                false,
+            ]);
+            vi.useRealTimers();
+        });
+    });
 });
