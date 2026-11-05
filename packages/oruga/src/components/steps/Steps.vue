@@ -402,7 +402,6 @@ const navigationClasses = defineClasses([
             :next="{ disabled: !hasNext, action: () => moveActiveItem(1) }">
             <nav v-if="hasNavigation" :class="navigationClasses">
                 <o-button
-                    role="button"
                     :icon-left="iconPrev"
                     :icon-pack="iconPack"
                     :disabled="!hasPrev"
@@ -410,7 +409,6 @@ const navigationClasses = defineClasses([
                     @click.prevent="moveActiveItem(-1)" />
 
                 <o-button
-                    role="button"
                     :icon-left="iconNext"
                     :icon-pack="iconPack"
                     :disabled="!hasNext"

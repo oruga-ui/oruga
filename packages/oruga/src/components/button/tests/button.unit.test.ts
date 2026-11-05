@@ -112,8 +112,8 @@ describe("OButton tests", () => {
             // component emitting a click of its own on keydown, which would
             // be a duplicate in a browser. Keyboard activation is covered by
             // the browser test.
-            await button.trigger("keydown.enter");
-            await button.trigger("keydown.space");
+            await button.trigger("keydown", { key: "Enter" });
+            await button.trigger("keydown", { key: " " });
             expect(wrapper.emitted("click")).toHaveLength(1);
         },
     );
@@ -131,10 +131,12 @@ describe("OButton tests", () => {
         await button.trigger("click");
         expect(wrapper.emitted("click")).toHaveLength(1);
 
-        await button.trigger("keydown.enter");
+        // the component checks `event.key`, which `keydown.enter` of the
+        // test utils does not set
+        await button.trigger("keydown", { key: "Enter" });
         expect(wrapper.emitted("click")).toHaveLength(2);
 
-        await button.trigger("keydown.space");
+        await button.trigger("keydown", { key: " " });
         expect(wrapper.emitted("click")).toHaveLength(3);
     });
 
@@ -171,8 +173,8 @@ describe("OButton tests", () => {
             expect(button.attributes("tabindex")).toBe("-1");
 
             await button.trigger("click");
-            await button.trigger("keydown.enter");
-            await button.trigger("keydown.space");
+            await button.trigger("keydown", { key: "Enter" });
+            await button.trigger("keydown", { key: " " });
             expect(wrapper.emitted("click")).toBeUndefined();
         },
     );
