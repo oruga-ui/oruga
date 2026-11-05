@@ -19,4 +19,35 @@ describe("ONotification tests", () => {
         const element = wrapper.find("article");
         expect(element.attributes("data-oruga")).toBe("notification");
     });
+
+    describe("live region", () => {
+        test("announce politely by default", () => {
+            const wrapper = mount(ONotification, {
+                props: { content: "Saved", variant: "success" },
+            });
+            const element = wrapper.find("article");
+            expect(element.attributes("role")).toBe("status");
+            expect(element.attributes("aria-atomic")).toBe("true");
+        });
+
+        test.each(["warning", "danger"])(
+            "announce the variant %s as alert",
+            (variant) => {
+                const wrapper = mount(ONotification, {
+                    props: { content: "Failed", variant },
+                });
+                expect(wrapper.find("article").attributes("role")).toBe(
+                    "alert",
+                );
+            },
+        );
+
+        test("prefer a role passed by the user", () => {
+            const wrapper = mount(ONotification, {
+                props: { content: "Failed", variant: "danger" },
+                attrs: { role: "log" },
+            });
+            expect(wrapper.find("article").attributes("role")).toBe("log");
+        });
+    });
 });

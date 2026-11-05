@@ -97,6 +97,16 @@ const computedIcon = computed(() => {
     }
 });
 
+/**
+ * Warning and danger interrupt the user, everything else is announced politely.
+ * Attributes passed by the user take precedence.
+ */
+const liveRegionRole = computed(() =>
+    props.variant === "warning" || props.variant === "danger"
+        ? "alert"
+        : "status",
+);
+
 /** set active to false and emit close event */
 function close(...args: [] | [Event]): void {
     isActive.value = false;
@@ -141,6 +151,8 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
     <transition :name="animation">
         <article
             v-show="isActive"
+            :role="liveRegionRole"
+            aria-atomic="true"
             v-bind="$attrs"
             data-oruga="notification"
             :class="rootClasses">
