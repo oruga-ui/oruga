@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, watch } from "vue";
+import { computed, useTemplateRef, watch } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -68,14 +68,12 @@ defineSlots<{
 
 const rootRef = useTemplateRef("rootElement");
 
-const isFullPage = defineModel<boolean>("fullPage", { default: true });
-
 const isActive = defineModel<boolean>("active", { default: false });
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 
 watch(isActive, (value) => {
-    if (isFullPage.value) toggleScroll(value);
+    if (props.fullPage) toggleScroll(value);
 });
 
 // #region --- Events Feature ---
@@ -113,7 +111,12 @@ function close(event: Event): void {
 
 const rootClasses = defineClasses(
     ["rootClass", "o-loading"],
-    ["fullPageClass", "o-loading--fullpage", null, isFullPage],
+    [
+        "fullPageClass",
+        "o-loading--fullpage",
+        null,
+        computed(() => props.fullPage),
+    ],
 );
 
 const overlayClasses = defineClasses(["overlayClass", "o-loading__overlay"]);
