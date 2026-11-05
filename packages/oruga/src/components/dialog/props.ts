@@ -154,7 +154,7 @@ export type DialogClasses = Partial<{
     /** Class of the content footer element with position */
     footerPositionClass: ComponentClass;
     /** Class of the footer confirm button element */
-    confirmButtunClass: ComponentClass;
+    confirmButtonClass: ComponentClass;
     /** Class of the footer cancel button element */
     cancelButtonClass: ComponentClass;
     /** Class of the body when modal is open and scroll is clipped */
