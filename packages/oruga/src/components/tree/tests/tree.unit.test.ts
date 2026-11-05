@@ -795,6 +795,17 @@ describe("OTree tests", () => {
             expect(icon.classes()).toContain("pi-discord");
         });
 
+        test("label the filter input", async () => {
+            const wrapper = mount(OTree, {
+                props: { options, filterable: true },
+            });
+            const input = wrapper.find('[data-oruga="input"] input');
+            expect(input.attributes("aria-label")).toBe("tree filter input");
+
+            await wrapper.setProps({ ariaFilterLabel: "Filter the tree" });
+            expect(input.attributes("aria-label")).toBe("Filter the tree");
+        });
+
         test("should correctly filter tree items", async () => {
             const wrapper = mount(OTree, {
                 props: { options, filterable: true },

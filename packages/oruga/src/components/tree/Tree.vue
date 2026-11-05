@@ -70,6 +70,8 @@ const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     filterIcon: undefined,
     filterDebounce: 400,
     filterPlaceholder: undefined,
+    ariaFilterLabel: () =>
+        getDefault("tree.ariaFilterLabel", "tree filter input"),
     toggleIcon: () => getDefault("tree.toggleIcon", "chevron-right"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
@@ -852,7 +854,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
                     :disabled="disabled"
                     expanded
                     size="small"
-                    aria-label="tree filter input"
+                    :aria-label="ariaFilterLabel"
                     :aria-owns="id + '_list'"
                     :aria-activedescendant="
                         focusedItem

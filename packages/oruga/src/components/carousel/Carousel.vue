@@ -18,7 +18,13 @@ import OIcon from "../icon/Icon.vue";
 import OCarouselItem from "./CarouselItem.vue";
 
 import { getDefault } from "@/utils/config";
-import { sign, mod, bound, isDefined } from "@/utils/helpers";
+import {
+    sign,
+    mod,
+    bound,
+    isDefined,
+    resolvePlaceholder,
+} from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -88,6 +94,10 @@ const props = withDefaults(defineProps<CarouselProps<T>>(), {
     ariaNextLabel: () => getDefault("carousel.ariaNextLabel", "Next Slide"),
     ariaPreviousLabel: () =>
         getDefault("carousel.ariaPreviousLabel", "Previous Slide"),
+    ariaIndicatorsLabel: () =>
+        getDefault("carousel.ariaIndicatorsLabel", "Slides"),
+    ariaIndicatorLabel: () =>
+        getDefault("carousel.ariaIndicatorLabel", "Slide {value}"),
 });
 
 const emits = defineEmits<{
@@ -698,7 +708,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                 v-if="indicators"
                 :class="indicatorsClasses"
                 role="tablist"
-                aria-label="Slides">
+                :aria-label="ariaIndicatorsLabel">
                 <div
                     v-for="item in indicatorItems"
                     :id="`carousel-${item.identifier}`"
@@ -708,7 +718,9 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                     :tabindex="
                         item.identifier === activeItem?.identifier ? '0' : '-1'
                     "
-                    :aria-label="`Slide ${item.identifier}`"
+                    :aria-label="
+                        resolvePlaceholder(ariaIndicatorLabel, item.index + 1)
+                    "
                     :aria-controls="`carouselpanel-${item.identifier}`"
                     :aria-selected="item.identifier === activeItem?.identifier"
                     @click="onChange(item)"

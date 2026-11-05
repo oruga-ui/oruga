@@ -92,4 +92,62 @@ describe("OCarousel tests", () => {
             expect(item.text()).toEqual(slides[index].title);
         });
     });
+    describe("test indicator labels", () => {
+        const slides = [{ title: "One" }, { title: "Two" }, { title: "Three" }];
+
+        test("render the default english labels with the slide number", async () => {
+            const wrapper = mount(OCarousel, {
+                props: { options: slides, indicators: true },
+            });
+            await nextTick(); // await items rendered
+
+            const list = wrapper.find("[role=tablist]");
+            expect(list.attributes("aria-label")).toBe("Slides");
+
+            const tabs = wrapper.findAll("[role=tab]");
+            expect(tabs.map((tab) => tab.attributes("aria-label"))).toEqual([
+                "Slide 1",
+                "Slide 2",
+                "Slide 3",
+            ]);
+        });
+
+        test("render labels from a string with a placeholder", async () => {
+            const wrapper = mount(OCarousel, {
+                props: {
+                    options: slides,
+                    indicators: true,
+                    ariaIndicatorsLabel: "Folien",
+                    ariaIndicatorLabel: "Folie {value}",
+                },
+            });
+            await nextTick(); // await items rendered
+
+            expect(
+                wrapper.find("[role=tablist]").attributes("aria-label"),
+            ).toBe("Folien");
+            expect(
+                wrapper
+                    .findAll("[role=tab]")
+                    .map((tab) => tab.attributes("aria-label")),
+            ).toEqual(["Folie 1", "Folie 2", "Folie 3"]);
+        });
+
+        test("render labels from a function", async () => {
+            const wrapper = mount(OCarousel, {
+                props: {
+                    options: slides,
+                    indicators: true,
+                    ariaIndicatorLabel: (number) => `go to ${number}`,
+                },
+            });
+            await nextTick(); // await items rendered
+
+            expect(
+                wrapper
+                    .findAll("[role=tab]")
+                    .map((tab) => tab.attributes("aria-label")),
+            ).toEqual(["go to 1", "go to 2", "go to 3"]);
+        });
+    });
 });

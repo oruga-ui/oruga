@@ -363,6 +363,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 ariaPreviousLabel: string;
                 /**
+                 * Accessibility aria label of the slide indicators
+                 */
+                ariaIndicatorsLabel: string;
+                /**
+                 * Accessibility aria label of a slide indicator.
+A string can use the `{value}` placeholder for the slide number, a function receives the number.
+                 */
+                ariaIndicatorLabel: string | ((value: string) => string);
+                /**
                  * Class of the root element
                  */
                 rootClass: ClassDefinition;
@@ -1569,6 +1578,10 @@ whether the value of the form's controls can be automatically completed by the b
                  * Placeholder of the column search input
                  */
                 filterPlaceholder: string;
+                /**
+                 * Accessibility label for the filter input
+                 */
+                ariaFilterLabel: string;
                 /**
                  * Number of milliseconds to delay the filter event
                  */
@@ -3007,6 +3020,25 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 ariaCurrentLabel: string;
                 /**
+                 * Accessibility label for the check all rows checkbox.
+                 */
+                ariaCheckAllLabel: string;
+                /**
+                 * Accessibility label for the checkbox of a row.
+A string can use the `{value}` placeholder for the row label, a function receives the label.
+                 */
+                ariaCheckRowLabel: string | ((label: string) => string);
+                /**
+                 * Accessibility label for the toggle button of the row detail.
+A string can use the `{value}` placeholder for the row label, a function receives the label.
+                 */
+                ariaOpenDetailLabel: string | ((label: string) => string);
+                /**
+                 * Accessibility label for the filter input of a column.
+A string can use the `{value}` placeholder for the column label, a function receives the label.
+                 */
+                ariaColumnFilterLabel: string | ((label: string) => string);
+                /**
                  * Class of the root element
                  */
                 rootClass: ClassDefinition;
@@ -3722,6 +3754,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * A label which is displayed when no options are visible
                  */
                 emptyLabel: string;
+                /**
+                 * Accessibility label for the filter input
+                 */
+                ariaFilterLabel: string;
                 /**
                  * The chevron icon to for the toggle element before each item
                  */

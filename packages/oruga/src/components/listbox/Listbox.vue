@@ -74,6 +74,8 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     filterIcon: () => getDefault("listbox.filterIcon"),
     filterDebounce: () => getDefault("listbox.filterDebounce", 400),
     filterPlaceholder: () => getDefault("listbox.filterPlaceholder"),
+    ariaFilterLabel: () =>
+        getDefault("listbox.ariaFilterLabel", "listbox filter input"),
     iconPack: () => getDefault("listbox.iconPack"),
     animation: () => getDefault("listbox.animation", "fade"),
     id: () => useId(),
@@ -752,7 +754,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                     :disabled="disabled"
                     expanded
                     size="small"
-                    aria-label="listbox filter input"
+                    :aria-label="ariaFilterLabel"
                     :aria-owns="id + '_list'"
                     :aria-activedescendant="
                         focusedItem
