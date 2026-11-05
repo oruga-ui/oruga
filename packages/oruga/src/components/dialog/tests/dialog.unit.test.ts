@@ -176,6 +176,50 @@ describe("ODialog test", () => {
             expect(header.html()).toContain(titleSlot);
         });
 
+        test("name the dialog by the title prop", () => {
+            const wrapper = mount(ODialog, { props: { title: "TEST_TITLE" } });
+
+            const dialog = wrapper.find("dialog");
+            const title = wrapper.find(".o-dialog__header-title");
+            expect(title.attributes("id")).toBeTruthy();
+            expect(dialog.attributes("aria-labelledby")).toBe(
+                title.attributes("id"),
+            );
+            expect(dialog.attributes("aria-describedby")).toBeUndefined();
+        });
+
+        test("name the dialog by the title slot", () => {
+            const wrapper = mount(ODialog, {
+                slots: { title: "TEST_TITLE" },
+            });
+
+            const dialog = wrapper.find("dialog");
+            const title = wrapper.find(".o-dialog__header-title");
+            expect(title.attributes("id")).toBeTruthy();
+            expect(dialog.attributes("aria-labelledby")).toBe(
+                title.attributes("id"),
+            );
+        });
+
+        test("prefer aria-label over the title as name", () => {
+            const wrapper = mount(ODialog, {
+                props: { title: "TEST_TITLE", ariaLabel: "TEST_LABEL" },
+            });
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.attributes("aria-label")).toBe("TEST_LABEL");
+            expect(dialog.attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("pass aria-describedby through", () => {
+            const wrapper = mount(ODialog, {
+                props: { title: "TEST_TITLE", ariaDescribedby: "desc" },
+            });
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.attributes("aria-describedby")).toBe("desc");
+        });
+
         test("test subtitle prop", () => {
             const subtitle = "<div>TEST_SUBTITLE</div>";
             const wrapper = mount(ODialog, {
