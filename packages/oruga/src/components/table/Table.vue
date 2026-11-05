@@ -134,6 +134,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     mobileBreakpoint: () => getDefault("table.mobileBreakpoint"),
     mobileCards: () => getDefault("table.mobileCards", true),
     mobileSortPlaceholder: () => getDefault("table.mobileSortPlaceholder"),
+    ariaPaginationLabel: () => getDefault("table.ariaPaginationLabel"),
     ariaNextLabel: () => getDefault("table.ariaNextLabel"),
     ariaPreviousLabel: () => getDefault("table.ariaPreviousLabel"),
     ariaPageLabel: () => getDefault("table.ariaPageLabel"),
@@ -1290,6 +1291,7 @@ defineExpose({
                     :range-before="paginationRangeBefore"
                     :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
+                    :aria-label="ariaPaginationLabel"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
                     :aria-page-label="ariaPageLabel"
@@ -1772,6 +1774,7 @@ defineExpose({
                     :range-before="paginationRangeBefore"
                     :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
+                    :aria-label="ariaPaginationLabel"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
                     :aria-page-label="ariaPageLabel"

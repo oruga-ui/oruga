@@ -2045,6 +2045,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileBreakpoint: string;
                 /**
+                 * Accessibility label for the pagination `nav` landmark.
+                 */
+                ariaLabel: string;
+                /**
                  * Accessibility label for the next page button.
                  */
                 ariaNextLabel: string;
@@ -2990,6 +2994,10 @@ whether the value of the form's controls can be automatically completed by the b
                  * Select placeholder text when nothing is selected (if mobileCards)
                  */
                 mobileSortPlaceholder: string;
+                /**
+                 * Accessibility label for the pagination `nav` landmark.
+                 */
+                ariaPaginationLabel: string;
                 /**
                  * Accessibility label for the pagination next page button.
                  */

@@ -533,6 +533,22 @@ describe("OTable tests", () => {
             "Zebra", // Z
         ];
 
+        test("passes ariaPaginationLabel to the pagination nav", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "ID", field: "id" }],
+                    data: [{ id: 1 }, { id: 2 }, { id: 3 }],
+                    perPage: 1,
+                    paginated: true,
+                    ariaPaginationLabel: "Table pages",
+                },
+            });
+            await nextTick();
+
+            const nav = wrapper.find('nav[data-oruga="pagination"]');
+            expect(nav.attributes("aria-label")).toBe("Table pages");
+        });
+
         test("tests sort default when paginated", async () => {
             const perPage = 10;
             let lastId = 1;
