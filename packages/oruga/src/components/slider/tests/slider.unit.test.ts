@@ -1,6 +1,8 @@
 import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { h } from "vue";
 
+import OField from "@/components/field/Field.vue";
 import OSlider from "@/components/slider/Slider.vue";
 
 describe("OSlider tests", () => {
@@ -62,5 +64,60 @@ describe("OSlider tests", () => {
 
         expect(wrapper.emitted("change")).toBeTruthy();
         expect(wrapper.emitted("change")?.[0]?.[0]).toBeGreaterThan(30);
+    });
+
+    describe("accessible names", () => {
+        const field = (slider: ReturnType<typeof h>) =>
+            mount(OField, {
+                props: { label: "Price" },
+                slots: { default: () => slider },
+            });
+
+        test("uses the label of a parent field when no aria-label is given", () => {
+            const wrapper = field(h(OSlider, { modelValue: 30 }));
+            const thumb = wrapper.find('[role="slider"]');
+            expect(thumb.attributes("aria-labelledby")).toBeTruthy();
+            expect(thumb.attributes("aria-label")).toBeUndefined();
+        });
+
+        test("an own aria-label replaces the label of a parent field", () => {
+            const wrapper = field(
+                h(OSlider, { modelValue: 30, ariaLabel: "Volume" }),
+            );
+            const thumb = wrapper.find('[role="slider"]');
+            expect(thumb.attributes("aria-label")).toBe("Volume");
+            expect(thumb.attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("range thumbs get separate names", () => {
+            const wrapper = field(
+                h(OSlider, {
+                    modelValue: [20, 60],
+                    range: true,
+                    ariaStartLabel: "Minimum price",
+                    ariaEndLabel: "Maximum price",
+                }),
+            );
+            const thumbs = wrapper.findAll('[role="slider"]');
+            expect(thumbs).toHaveLength(2);
+            expect(thumbs[0].attributes("aria-label")).toBe("Minimum price");
+            expect(thumbs[1].attributes("aria-label")).toBe("Maximum price");
+            expect(thumbs[0].attributes("aria-labelledby")).toBeUndefined();
+            expect(thumbs[1].attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("range thumbs fall back to ariaLabel", () => {
+            const wrapper = mount(OSlider, {
+                props: {
+                    modelValue: [20, 60],
+                    range: true,
+                    ariaLabel: "Price",
+                    ariaEndLabel: "Maximum price",
+                },
+            });
+            const thumbs = wrapper.findAll('[role="slider"]');
+            expect(thumbs[0].attributes("aria-label")).toBe("Price");
+            expect(thumbs[1].attributes("aria-label")).toBe("Maximum price");
+        });
     });
 });

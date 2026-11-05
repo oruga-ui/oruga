@@ -27,6 +27,8 @@ const props = defineProps<{
     sliderSize: () => number;
     thumbWrapperClasses: ClassBinding[];
     thumbClasses: ClassBinding[];
+    /** accessible name of this thumb */
+    ariaLabel?: string;
 }>();
 
 const emits = defineEmits<{
@@ -60,7 +62,6 @@ const max = computed(() => props.sliderProps.max);
 const min = computed(() => props.sliderProps.min);
 const step = computed(() => props.sliderProps.step);
 const indicator = computed(() => props.sliderProps.indicator);
-const ariaLabel = computed(() => props.sliderProps.ariaLabel);
 
 const precision = computed(() => {
     const precisions = [min.value, max.value, step.value].map((item) => {
@@ -214,7 +215,7 @@ defineExpose({ setPosition });
                 :tabindex="disabled ? undefined : 0"
                 role="slider"
                 :aria-label="ariaLabel"
-                :aria-labelledby="parentField?.labelId"
+                :aria-labelledby="ariaLabel ? undefined : parentField?.labelId"
                 :aria-valuenow="modelValue"
                 :aria-valuemin="min"
                 :aria-valuemax="max"

@@ -2533,9 +2533,18 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 format: "percent" | "raw";
                 /**
-                 * Accessibility aria-label to to be passed to the slider thumb element.
+                 * Accessibility aria-label to be passed to the slider thumb element.
+It replaces the label of a parent field as the name of the thumb.
                  */
                 ariaLabel: string;
+                /**
+                 * Accessibility label for the start thumb of a range slider, falls back to `ariaLabel`.
+                 */
+                ariaStartLabel: string;
+                /**
+                 * Accessibility label for the end thumb of a range slider, falls back to `ariaLabel`.
+                 */
+                ariaEndLabel: string;
                 /**
                  * Class of the root element
                  */

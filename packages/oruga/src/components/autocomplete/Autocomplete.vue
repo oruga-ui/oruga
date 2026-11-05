@@ -25,7 +25,7 @@ import {
     type OptionItem,
 } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { AutocompleteProps } from "./props";
 import type { DropdownItemProps } from "../dropdown/props";
@@ -423,8 +423,7 @@ function rightIconClick(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+    ...mergeFieldAttrs(parentField?.value?.inputAttrs, attrs),
     ...props.inputAttrs,
 }));
 
