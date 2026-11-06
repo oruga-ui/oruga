@@ -853,4 +853,84 @@ describe("ODropdown tests", () => {
             });
         });
     });
+
+    describe("props toggled after setup", () => {
+        /** fake the layout of the menu, which jsdom does not compute */
+        function fakeScrollPosition(
+            menu: HTMLElement,
+            scrollTop: number,
+        ): void {
+            Object.defineProperty(menu, "scrollHeight", { value: 300 });
+            Object.defineProperty(menu, "clientHeight", { value: 100 });
+            Object.defineProperty(menu, "scrollTop", { value: scrollTop });
+        }
+
+        test("scroll events are emitted after scrollable is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, scrollable: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+            const menu = wrapper.find(".o-dropdown__menu").element;
+            fakeScrollPosition(menu as HTMLElement, 200);
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toBeUndefined();
+
+            await wrapper.setProps({ scrollable: true });
+            await nextTick(); // await listener registration
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toHaveLength(1);
+        });
+
+        test("scroll events stop after scrollable is disabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, scrollable: true },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+            const menu = wrapper.find(".o-dropdown__menu").element;
+            fakeScrollPosition(menu as HTMLElement, 200);
+
+            await wrapper.setProps({ scrollable: false });
+            await nextTick(); // await listener removal
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toBeUndefined();
+        });
+
+        test("closes on click outside after closeOnOutside is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, closeOnOutside: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+
+            await wrapper.setProps({ closeOnOutside: true });
+            await nextTick(); // await listener registration
+
+            window.dispatchEvent(new Event("click"));
+            await nextTick(); // await dom update
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+
+        test("closes on page scroll after closeOnScroll is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, closeOnScroll: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+
+            await wrapper.setProps({ closeOnScroll: true });
+            await nextTick(); // await listener registration
+
+            window.dispatchEvent(new Event("scroll"));
+            await nextTick(); // await dom update
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+    });
 });
