@@ -175,6 +175,8 @@ export type TableProps<T> = {
     mobileCards?: boolean;
     /** Select placeholder text when nothing is selected (if mobileCards)*/
     mobileSortPlaceholder?: string;
+    /** Accessibility label for the pagination `nav` landmark. */
+    ariaPaginationLabel?: string;
     /** Accessibility label for the pagination next page button. */
     ariaNextLabel?: string;
     /** Accessibility label for the pagination previous page button. */
