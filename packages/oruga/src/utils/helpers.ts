@@ -409,3 +409,29 @@ export const isMobileAgent = {
         isMobileAgent.Opera() ||
         isMobileAgent.Windows(),
 };
+
+/**
+ * Split an object into two objects by a predicate on its keys.
+ *
+ * @param obj - Object to split.
+ * @param predicate - Called with each key, returns `true` to put the entry into the first object.
+ * @returns A tuple of the entries matching the predicate and the remaining entries.
+ */
+export function splitObject<T extends object>(
+    obj: T,
+    predicate: (key: string) => boolean,
+): [Partial<T>, Partial<T>] {
+    const picked: Partial<T> = {};
+    const rest: Partial<T> = {};
+    for (const key of Object.keys(obj))
+        (predicate(key) ? picked : rest)[key] = obj[key];
+    return [picked, rest];
+}
+
+/**
+ * Checks if a fallthrough attribute belongs to the root element of a component
+ * which forwards all other attributes to an inner element.
+ * These are `class`, `style` and `data-*` attributes.
+ */
+export const isRootAttr = (key: string): boolean =>
+    key === "class" || key === "style" || key.startsWith("data-");

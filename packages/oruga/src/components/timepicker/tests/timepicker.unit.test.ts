@@ -1,4 +1,4 @@
-import { describe, test, expect, afterEach } from "vitest";
+import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 
 import OTimepicker from "@/components/timepicker/Timepicker.vue";
@@ -134,5 +134,59 @@ describe("OTimepicker tests", () => {
         expect(contentElement.classes("o-timepicker__content--active")).toBe(
             true,
         );
+    });
+
+    describe("attribute placement", () => {
+        test("input attributes land on the input only", () => {
+            const wrapper = mount(OTimepicker, {
+                attrs: {
+                    "aria-label": "Start time",
+                    name: "when",
+                    required: true,
+                },
+            });
+            const input = wrapper.find("input");
+            expect(input.attributes("aria-label")).toBe("Start time");
+            expect(input.attributes("name")).toBe("when");
+            expect(wrapper.attributes("aria-label")).toBeUndefined();
+            expect(wrapper.attributes("name")).toBeUndefined();
+            expect(wrapper.findAll("[aria-label='Start time']")).toHaveLength(
+                1,
+            );
+        });
+
+        test("class, style and data attributes land on the root only", () => {
+            const wrapper = mount(OTimepicker, {
+                attrs: {
+                    class: "custom",
+                    style: "margin: 1px",
+                    "data-testid": "picker",
+                },
+            });
+            expect(wrapper.classes("custom")).toBe(true);
+            expect(wrapper.attributes("data-testid")).toBe("picker");
+            expect(wrapper.attributes("data-oruga")).toBe("timepicker");
+
+            const input = wrapper.find("input");
+            expect(input.classes("custom")).toBe(false);
+            expect(input.attributes("data-testid")).toBeUndefined();
+            expect(input.attributes("style")).toBeUndefined();
+        });
+
+        test("listeners are called once", async () => {
+            const onKeydown = vi.fn();
+            const wrapper = mount(OTimepicker, { attrs: { onKeydown } });
+            await wrapper.find("input").trigger("keydown", { key: "a" });
+            expect(onKeydown).toHaveBeenCalledTimes(1);
+        });
+
+        test("an inline picker keeps all attributes on the root", () => {
+            const wrapper = mount(OTimepicker, {
+                props: { inline: true },
+                attrs: { "aria-label": "Start time" },
+            });
+            expect(wrapper.find("input").exists()).toBe(false);
+            expect(wrapper.attributes("aria-label")).toBe("Start time");
+        });
     });
 });
