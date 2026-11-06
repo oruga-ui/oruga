@@ -109,7 +109,9 @@ describe("OAutocomplete tests", () => {
 
         // check default selected value
         expect(input.element.value).toBe(OPTIONS[2]);
-        expect(optionElements[2].classes("itemSelectedClass"));
+        expect(
+            optionElements[2].classes("o-dropdown__item--active"),
+        ).toBeTruthy();
         expect(optionElements[2].attributes("aria-selected")).toBeTruthy();
 
         // chenge selection
@@ -118,7 +120,9 @@ describe("OAutocomplete tests", () => {
 
         // check new selected value
         expect(input.element.value).toBe(OPTIONS[0]);
-        expect(optionElements[0].classes("itemSelectedClass"));
+        expect(
+            optionElements[0].classes("o-dropdown__item--active"),
+        ).toBeTruthy();
         expect(optionElements[0].attributes("aria-selected")).toBeTruthy();
     });
 
@@ -233,7 +237,7 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeTruthy();
         const firstItem = dropdown.find('[data-oruga="dropdown-item"]');
         expect(firstItem.exists()).toBeTruthy();
-        expect(firstItem.classes("o-dropdown__item--focused"));
+        expect(firstItem.classes("o-dropdown__item--focused")).toBeTruthy();
     });
 
     test("keepFirst works as input changes", async () => {
@@ -290,7 +294,7 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeFalsy();
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OAutocomplete);
 
@@ -443,7 +447,7 @@ describe("OAutocomplete tests", () => {
             expect(icon.exists()).toBeTruthy();
             await icon.trigger("click");
 
-            expect(input.element.value).toEqual("");
+            expect(input.element.value).toStrictEqual("");
         });
 
         test("clear button does not appear when clearable property is not set to true", () => {
@@ -633,34 +637,118 @@ describe("OAutocomplete tests", () => {
             );
             expect(optionElements).toHaveLength(15);
 
-            optionElements.forEach((el, idx) => {
-                const isGroup = idx % 5 == 0;
-                const g_idx = Math.floor(idx / 5);
-                const o_idx = (idx % 5) - 1;
-
-                if (isGroup) {
+            // every fifth element is a group header
+            optionElements
+                .filter((_, idx) => idx % 5 == 0)
+                .forEach((el, g_idx) => {
                     const option = options[g_idx];
                     expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
                         option.disabled ? "true" : "false",
                     );
+                });
+
+            optionElements.forEach((el, idx) => {
+                // group headers are checked above
+                if (idx % 5 == 0) return;
+
+                const g_idx = Math.floor(idx / 5);
+                const o_idx = (idx % 5) - 1;
+                const g_options = options[g_idx].options;
+
+                let optionLabel;
+                if (idx < 5) {
+                    optionLabel = (
+                        g_options[o_idx] as DropdownItemProps<string>
+                    ).label;
+                } else if (idx < 10) {
+                    optionLabel = Object.entries(g_options)[o_idx][1];
                 } else {
-                    const g_options = options[g_idx].options;
-
-                    let optionLabel;
-                    if (idx < 5) {
-                        optionLabel = (
-                            g_options[o_idx] as DropdownItemProps<string>
-                        ).label;
-                    } else if (idx < 10) {
-                        optionLabel = Object.entries(g_options)[o_idx][1];
-                    } else {
-                        optionLabel = g_options[o_idx];
-                    }
-
-                    expect(el.text()).toBe(optionLabel);
+                    optionLabel = g_options[o_idx];
                 }
+
+                expect(el.text()).toBe(optionLabel);
             });
+        });
+    });
+
+    describe("handle numeric option values correctly", () => {
+        const NUMBER_OPTIONS: AutocompleteOptions<number> = [
+            { label: "Zero", value: 0 },
+            { label: "One", value: 1 },
+            { label: "Two", value: 2 },
+        ];
+
+        test.each(NUMBER_OPTIONS.map((option, index) => ({ option, index })))(
+            "select the option with value $option.value",
+            async ({ option, index }) => {
+                const wrapper = mount(OAutocomplete, {
+                    props: { options: NUMBER_OPTIONS, openOnFocus: true },
+                    slots: {
+                        header: "<h1>SLOT HEADER</h1>",
+                        footer: "<h1>SLOT FOOTER</h1>",
+                    },
+                });
+
+                const input = wrapper.find("input");
+                expect(input.exists()).toBeTruthy();
+
+                // open menu
+                await input.trigger("focus");
+
+                // move to the option and select by enter
+                for (let i = 0; i <= index; i++)
+                    await input.trigger("keydown", { key: "Down" });
+                await input.trigger("keydown", { key: "Enter" });
+
+                expect(wrapper.emitted("select")).toStrictEqual([
+                    [option.value],
+                ]);
+                expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                    [option.value],
+                ]);
+                expect(wrapper.emitted("select-header")).toBeUndefined();
+                expect(wrapper.emitted("select-footer")).toBeUndefined();
+                expect(input.element.value).toBe(option.label);
+            },
+        );
+
+        test("show the label of an initial `0` value", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: { options: NUMBER_OPTIONS, modelValue: 0 },
+            });
+            await nextTick(); // await child component rendering
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+            expect(input.element.value).toBe("Zero");
+        });
+
+        test("filter options with the values 0, 1 and 2", async () => {
+            vi.useFakeTimers();
+
+            const wrapper = mount(OAutocomplete, {
+                props: { options: NUMBER_OPTIONS, active: true },
+                attachTo: document.body,
+            });
+            await nextTick(); // await child component rendering
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue("one");
+            vi.runAllTimers(); // await debounce input handler
+
+            await nextTick(); // await child component rendering
+
+            const optionElements = wrapper.findAll(
+                '[data-oruga="dropdown-item"]',
+            );
+            expect(optionElements).toHaveLength(NUMBER_OPTIONS.length);
+            expect(
+                optionElements.map((option) => option.isVisible()),
+            ).toStrictEqual([false, true, false]);
+            vi.useRealTimers();
         });
     });
 });

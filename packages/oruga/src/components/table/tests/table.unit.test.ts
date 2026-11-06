@@ -155,8 +155,8 @@ describe("OTable tests", () => {
         expect(bodyRows).toHaveLength(data.length);
     });
 
-    describe("test column props", () => {
-        test("test column label", async () => {
+    describe("verify column props", () => {
+        test("column label", async () => {
             const wrapper = mount<TableType>(OTable, {
                 props: { data, columns },
             });
@@ -172,7 +172,7 @@ describe("OTable tests", () => {
             }
         });
 
-        test("test column field", async () => {
+        test("column field", async () => {
             const wrapper = mount<TableType>(OTable, {
                 props: { data, columns },
             });
@@ -195,7 +195,7 @@ describe("OTable tests", () => {
             }
         });
 
-        test("test column formatter", async () => {
+        test("column formatter", async () => {
             const columns: TableColumn<(typeof data)[number]>[] = [
                 {
                     label: "ID",
@@ -241,7 +241,7 @@ describe("OTable tests", () => {
             }
         });
 
-        test("test column thAttrs and tdAttrs", async () => {
+        test("column thAttrs and tdAttrs", async () => {
             const columns: TableColumn<(typeof data)[number]>[] = [
                 {
                     field: "id",
@@ -284,7 +284,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test filterable", () => {
+    describe("verify filterable", () => {
         const data = [
             { id: 1, name: "Jesse" },
             { id: 2, name: "João" },
@@ -503,7 +503,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test sorting", () => {
+    describe("verify sorting", () => {
         const random_words = [
             "Apfel", // A
             "Ball", // B
@@ -758,7 +758,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test checkable", () => {
+    describe("verify checkable", () => {
         test("tests header has checkAll checkbox", async () => {
             const wrapper = mount(OTable, {
                 props: {
@@ -855,7 +855,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test pageable", () => {
+    describe("verify pageable", () => {
         test("show correct amount of rows when per page is set to 3", async () => {
             const perPage = 3;
 
@@ -900,7 +900,7 @@ describe("OTable tests", () => {
 
             expect(
                 wrapper.findAll("tbody tr").map((row) => row.text()),
-            ).toEqual(
+            ).toStrictEqual(
                 data.slice(perPage, perPage * 2).map((row) => String(row.id)),
             );
             expect(wrapper.find(".o-pagination__button--current").text()).toBe(
@@ -986,7 +986,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test reactive stability", () => {
+    describe("verify reactive stability", () => {
         test("inline td-attrs object does not cause recursive update warning (issue #1531)", async () => {
             // Spy on console.warn to detect Vue's "Maximum recursive updates exceeded" warning.
             const warnSpy = vi

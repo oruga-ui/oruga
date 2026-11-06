@@ -8,6 +8,8 @@ import { injectField } from "../field/fieldInjection";
 
 import type { RadioProps, RadioNativeProps } from "./props";
 
+type ModelValue = RadioProps<T>["modelValue"];
+
 /**
  * Select an option from a set of options.
  * @displayName Radio
@@ -19,8 +21,6 @@ defineOptions({
     configField: "radio",
     inheritAttrs: false,
 });
-
-type ModelValue = RadioProps<T>["modelValue"];
 
 const props = withDefaults(
     defineProps<
