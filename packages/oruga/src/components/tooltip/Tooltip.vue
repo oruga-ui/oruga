@@ -278,7 +278,7 @@ const arrowClasses = defineClasses(
                     :class="contentClasses"
                     :style="contentStyle"
                     role="tooltip">
-                    <span :class="arrowClasses"></span>
+                    <span :class="arrowClasses" />
                     <slot name="content">{{ label }}</slot>
                 </div>
             </transition>

@@ -23,7 +23,7 @@ describe("useDialogProgrammatic tests", () => {
 
     enableAutoUnmount(afterEach);
 
-    test("test mounting component correctly", async () => {
+    test("mounting component correctly", async () => {
         const content = "My Dialog Content";
 
         // open element
@@ -54,7 +54,7 @@ describe("useDialogProgrammatic tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test mounting with target correctly", () => {
+    test("mounting with target correctly", () => {
         const container = document.createElement("div");
         container.id = "my-cool-container";
         document.body.appendChild(container);
@@ -86,7 +86,7 @@ describe("useDialogProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(1);
     });
 
-    test("test mounting with custom component correctly", () => {
+    test("mounting with custom component correctly", () => {
         const onClose = vi.fn();
 
         const component = createVNode({
@@ -122,7 +122,7 @@ describe("useDialogProgrammatic tests", () => {
         expect(onClose).toHaveBeenCalledOnce();
     });
 
-    test("test internal close (x) event working correctly", () => {
+    test("internal close (x) event working correctly", () => {
         const content = "My Dialog Content";
         const onClose = vi.fn();
 
@@ -146,7 +146,7 @@ describe("useDialogProgrammatic tests", () => {
         expect(onClose).toHaveBeenCalledOnce();
     });
 
-    test("test external close event working correctly", () => {
+    test("external close event working correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
         });

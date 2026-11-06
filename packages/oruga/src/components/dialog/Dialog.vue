@@ -459,7 +459,12 @@ defineExpose({ close, confirm });
                 :role="alert ? 'alertdialog' : 'dialog'"
                 :closedBy="closedBy"
                 :aria-label="ariaLabel"
-                :aria-describedby="title ? titleId : ariaDescribedby"
+                :aria-labelledby="
+                    (title || $slots['title']) && !ariaLabel
+                        ? titleId
+                        : undefined
+                "
+                :aria-describedby="ariaDescribedby"
                 @close="onClose"
                 @cancel="onCancel">
                 <!-- Backdrop -->
