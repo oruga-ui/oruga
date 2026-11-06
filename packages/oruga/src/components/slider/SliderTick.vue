@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useTemplateRef, type PropType } from "vue";
+import { computed, useTemplateRef } from "vue";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { SliderComponent } from "./types";
@@ -14,28 +14,30 @@ defineOptions({
     configField: "slider",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Value of single tick */
-    value: { type: Number, required: true },
-    /** Tick label */
-    label: { type: [String, Number], default: undefined },
-    tickClass: {
-        type: [String, Function, Array] as PropType<ComponentClass>,
-        default: undefined,
+const props = withDefaults(
+    defineProps<{
+        /** Override existing theme classes completely */
+        override?: boolean;
+        /** Value of single tick */
+        value: number;
+        /** Tick label */
+        label?: string | number;
+        /** Class of the tick */
+        tickClass?: ComponentClass;
+        /** Class when slider tick is hidden */
+        tickHiddenClass?: ComponentClass;
+        /** Class of tick label */
+        tickLabelClass?: ComponentClass;
+    }>(),
+    {
+        // keep `undefined` so the config fallback applies instead of boolean casting to false
+        override: undefined,
+        label: undefined,
+        tickClass: undefined,
+        tickHiddenClass: undefined,
+        tickLabelClass: undefined,
     },
-    /** Class when slider tick is hidden */
-    tickHiddenClass: {
-        type: [String, Function, Array] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of tick label */
-    tickLabelClass: {
-        type: [String, Function, Array] as PropType<ComponentClass>,
-        default: undefined,
-    },
-});
+);
 
 defineSlots<{
     /** Override tick content, default is label prop */

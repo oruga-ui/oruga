@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-    watch,
-    nextTick,
-    onBeforeUnmount,
-    ref,
-    type Component,
-    type PropType,
-} from "vue";
+import { watch, nextTick, onBeforeUnmount, ref, type Component } from "vue";
 import { isClient } from "@/utils/ssr";
 import {
     getScrollingParent,
@@ -16,6 +9,48 @@ import {
 } from "@/composables";
 
 type Position = "top" | "bottom" | "left" | "right";
+type Point = { x: number; y: number };
+
+defineOptions({ inheritAttrs: false });
+
+const props = withDefaults(
+    defineProps<{
+        /** teleport the content to another DOM node, `true` targets the body */
+        teleport: boolean | string | object;
+        /** the element the content is positioned relative to */
+        trigger?: MaybeElement;
+        /**
+         * Position of the component relative to the trigger
+         * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+         */
+        position:
+            | "auto"
+            | "top"
+            | "bottom"
+            | "left"
+            | "right"
+            | "top-right"
+            | "top-left"
+            | "bottom-left"
+            | "bottom-right";
+        /** Used for calculation position auto */
+        defaultPosition?: Position;
+        /** disable the position calculation */
+        disabled?: boolean;
+        /** update positioning on teleport */
+        disablePositioning?: boolean;
+    }>(),
+    {
+        defaultPosition: "top",
+        disabled: false,
+        disablePositioning: true,
+        trigger: undefined,
+    },
+);
+
+const emits = defineEmits<{
+    "update:position": [value: string];
+}>();
 
 const opposites: Record<Position, Position> = {
     top: "bottom",
@@ -23,56 +58,6 @@ const opposites: Record<Position, Position> = {
     right: "left",
     left: "right",
 };
-
-type Point = { x: number; y: number };
-
-defineOptions({ inheritAttrs: false });
-
-const props = defineProps({
-    teleport: {
-        type: [Boolean, String, Object],
-        required: true,
-    },
-    trigger: {
-        type: Object as PropType<MaybeElement>,
-        default: undefined,
-    },
-    /**
-     * Position of the component relative to the trigger
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
-     */
-    position: {
-        type: String,
-        validator: (value: string) =>
-            [
-                "auto",
-                "top",
-                "bottom",
-                "left",
-                "right",
-                "top-right",
-                "top-left",
-                "bottom-left",
-                "bottom-right",
-            ].includes(value),
-        required: true,
-    },
-    /** Used for calculation position auto */
-    defaultPosition: {
-        type: String as PropType<Position>,
-        validator: (value: string) =>
-            ["top", "bottom", "left", "right"].includes(value),
-        default: "top",
-    },
-    /** disable the position calculation */
-    disabled: { type: Boolean, default: false },
-    /** update positioning on teleport */
-    disablePositioning: { type: Boolean, default: true },
-});
-
-const emits = defineEmits<{
-    "update:position": [value: string];
-}>();
 
 const _teleport = useTeleport(props.teleport);
 
@@ -223,7 +208,7 @@ function updatePositioning(): void {
 }
 
 /** calculate best position if auto */
-function getAutoPosition(): string {
+function getAutoPosition(): Position {
     let bestPosition = props.defaultPosition;
     if (!props.trigger || !contentRef.value) return bestPosition;
     if (!scrollingParent.value) return bestPosition;

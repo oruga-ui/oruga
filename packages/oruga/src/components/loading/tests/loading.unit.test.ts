@@ -38,7 +38,7 @@ describe("OLoading tests", () => {
         expect(container.classes("o-loading--fullpage")).toBeTruthy();
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("react accordingly when pressing escape with close on escape", async () => {
             const wrapper = mount(OLoading, {
                 props: { active: true, closeOnEscape: true },

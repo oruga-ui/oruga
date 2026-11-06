@@ -129,7 +129,12 @@ export abstract class ProgrammaticFactory {
         let app: App | undefined = createApp(ProgrammaticComponent, {
             registry: options.registry, // programmatic registry instance
             component, // the component which should be rendered
-            props: { ...options.props, container: targetElement }, // component props including the target as `container`
+            // component props including the target as `container`
+            props: {
+                ...options.props,
+                /** the element the component is mounted into */
+                container: targetElement,
+            },
             onClose: options.onClose, // custom onClose handler
             onDestroy, // node destory cleanup handler
         });

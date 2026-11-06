@@ -3,10 +3,15 @@ defineOptions({
     inheritAttrs: false,
 });
 
-defineProps({
-    email: { type: String, default: "" },
-    password: { type: String, default: "" },
-});
+withDefaults(
+    defineProps<{
+        /** initial value of the email input */
+        email?: string;
+        /** initial value of the password input */
+        password?: string;
+    }>(),
+    { email: "", password: "" },
+);
 
 defineEmits<{
     close: [value: Event];

@@ -88,8 +88,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
                 icon="sync-alt"
                 :icon-spin="true"
                 label="Loading..."
-                v-bind="props">
-            </o-loading>
+                v-bind="props" />
         </p>
         <b>Click on "Inspect" button to open the loading</b>
     </inspector-wrapper>

@@ -58,6 +58,15 @@ export default defineComponent<SlotComponentProps<{ $slots: Slots }>>(
     {
         name: "OSlotComponent",
         // manual runtime props declaration is currently still needed.
-        props: ["component", "props", "name", "tag"],
+        props: [
+            /** the component which provides the slot */
+            "component",
+            /** props passed to the slot */
+            "props",
+            /** name of the slot to render */
+            "name",
+            /** tag of the wrapping element */
+            "tag",
+        ],
     },
 );

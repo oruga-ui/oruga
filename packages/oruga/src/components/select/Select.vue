@@ -24,6 +24,8 @@ import { injectField } from "../field/fieldInjection";
 
 import type { SelectProps, SelectNativeProps } from "./props";
 
+type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
+
 /**
  * Select an item in a list. Use with Field to access all functionalities.
  * @displayName Select
@@ -35,8 +37,6 @@ defineOptions({
     configField: "select",
     inheritAttrs: false,
 });
-
-type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<
