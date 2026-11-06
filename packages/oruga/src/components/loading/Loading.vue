@@ -143,7 +143,8 @@ defineExpose({ close });
             data-oruga="loading"
             :class="rootClasses"
             role="status"
-            aria-live="polite">
+            aria-live="polite"
+            :aria-label="$slots.default ? label : undefined">
             <div
                 :class="overlayClasses"
                 :tabindex="-1"
