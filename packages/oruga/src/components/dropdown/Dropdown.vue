@@ -224,6 +224,7 @@ const {
     behavior: "manual",
     trigger: isActive,
     disabled: () => props.disabled,
+    animation: () => props.animation,
     targetRef: triggerRef,
     contentRef: menuRef,
     onToggle: onPopoverToggle,
@@ -647,69 +648,64 @@ defineExpose({
         </component>
 
         <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-            <transition :name="animation">
-                <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
-                <component
-                    :is="menuTag"
-                    :id="menuId"
-                    ref="menuElement"
-                    :tabindex="-1"
-                    :class="contentClasses"
-                    :style="contentStyle"
-                    :role="selectable ? 'listbox' : 'menu'"
-                    :aria-labelledby="labelId"
-                    :aria-label="ariaLabel"
-                    :aria-hidden="!selectable ? disabled : undefined"
-                    :aria-multiselectable="
-                        selectable ? isTrueish(multiple) : undefined
-                    "
-                    popover
-                    @pointerleave="onMenuHoverLeave">
-                    <slot name="before" :toggle="togglePopover" />
+            <component
+                :is="menuTag"
+                :id="menuId"
+                ref="menuElement"
+                :tabindex="-1"
+                :class="contentClasses"
+                :style="contentStyle"
+                :role="selectable ? 'listbox' : 'menu'"
+                :aria-labelledby="labelId"
+                :aria-label="ariaLabel"
+                :aria-hidden="!selectable ? disabled : undefined"
+                :aria-multiselectable="
+                    selectable ? isTrueish(multiple) : undefined
+                "
+                popover
+                @pointerleave="onMenuHoverLeave">
+                <slot name="before" :toggle="togglePopover" />
 
-                    <slot :toggle="togglePopover">
-                        <template
-                            v-for="option in normalizedOptions"
-                            :key="option.key">
-                            <template v-if="isGroupOption(option)">
-                                <o-dropdown-item
-                                    v-bind="option.item"
-                                    decorative>
-                                    <slot name="group" :group="option">
-                                        <span>
-                                            {{ option.item.label }}
-                                        </span>
-                                    </slot>
-                                </o-dropdown-item>
+                <slot :toggle="togglePopover">
+                    <template
+                        v-for="option in normalizedOptions"
+                        :key="option.key">
+                        <template v-if="isGroupOption(option)">
+                            <o-dropdown-item v-bind="option.item" decorative>
+                                <slot name="group" :group="option">
+                                    <span>
+                                        {{ option.item.label }}
+                                    </span>
+                                </slot>
+                            </o-dropdown-item>
 
-                                <o-dropdown-item
-                                    v-for="_option in option.options"
-                                    v-bind="_option.item"
-                                    :key="_option.key">
-                                    <slot name="option" :option="_option">
-                                        <span>
-                                            {{ _option.item.label }}
-                                        </span>
-                                    </slot>
-                                </o-dropdown-item>
-                            </template>
-
-                            <o-dropdown-item v-else v-bind="option.item">
-                                <slot name="option" :option="option">
-                                    <span> {{ option.item.label }} </span>
+                            <o-dropdown-item
+                                v-for="_option in option.options"
+                                v-bind="_option.item"
+                                :key="_option.key">
+                                <slot name="option" :option="_option">
+                                    <span>
+                                        {{ _option.item.label }}
+                                    </span>
                                 </slot>
                             </o-dropdown-item>
                         </template>
-                    </slot>
 
-                    <slot
-                        v-if="!hasViableItems"
-                        name="empty"
-                        :toggle="togglePopover" />
+                        <o-dropdown-item v-else v-bind="option.item">
+                            <slot name="option" :option="option">
+                                <span> {{ option.item.label }} </span>
+                            </slot>
+                        </o-dropdown-item>
+                    </template>
+                </slot>
 
-                    <slot name="after" :toggle="togglePopover" />
-                </component>
-            </transition>
+                <slot
+                    v-if="!hasViableItems"
+                    name="empty"
+                    :toggle="togglePopover" />
+
+                <slot name="after" :toggle="togglePopover" />
+            </component>
         </Teleport>
     </div>
 </template>
