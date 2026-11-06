@@ -63,7 +63,7 @@ describe("OUpload tests", () => {
         });
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OUpload);
 

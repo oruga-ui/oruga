@@ -9,6 +9,8 @@ import { injectField } from "../field/fieldInjection";
 
 import type { CheckboxProps, CheckboxNativeProps } from "./props";
 
+type ModelValue = CheckboxProps<T, IsMultiple>["modelValue"];
+
 /**
  * Select a single or grouped options.
  * @displayName Checkbox
@@ -20,8 +22,6 @@ defineOptions({
     configField: "checkbox",
     inheritAttrs: false,
 });
-
-type ModelValue = CheckboxProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<

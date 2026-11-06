@@ -2,16 +2,35 @@
 import { computed, onMounted, ref } from "vue";
 import VueTelescopeClient from "./VueTelescopeClient.js";
 
-const props = defineProps({
-    slugs: { type: Object, required: true },
-    imageWidth: { type: Number, default: 800 },
-    sortBy: { type: String, default: "rank" },
-    sortDirection: { type: String, default: "asc" },
-    labelRetry: { type: String, default: "Retry" },
-    labelError: { type: String, default: "Something went wrong!" },
-    labelLoadMore: { type: String, default: "Load More" },
-    labelLoading: { type: String, default: "Loading..." },
-});
+const props = withDefaults(
+    defineProps<{
+        /** Vue Telescope slugs to fetch the showcase entries for */
+        slugs: object;
+        /** width of the requested screenshots in pixels */
+        imageWidth?: number;
+        /** field the entries are sorted by */
+        sortBy?: string;
+        /** sort direction of the entries */
+        sortDirection?: string;
+        /** label of the retry button */
+        labelRetry?: string;
+        /** message shown when loading failed */
+        labelError?: string;
+        /** label of the load more button */
+        labelLoadMore?: string;
+        /** label of the load more button while loading */
+        labelLoading?: string;
+    }>(),
+    {
+        imageWidth: 800,
+        sortBy: "rank",
+        sortDirection: "asc",
+        labelRetry: "Retry",
+        labelError: "Something went wrong!",
+        labelLoadMore: "Load More",
+        labelLoading: "Loading...",
+    },
+);
 
 const items = ref<any[]>([]);
 const count = ref(0);
@@ -116,6 +135,7 @@ function loadMoreItems(): void {
                     }">
                     <button
                         v-if="hasMoreItems"
+                        type="button"
                         class="button"
                         @click="loadMoreItems">
                         {{ !loading ? labelLoadMore : labelLoading }}
@@ -125,7 +145,10 @@ function loadMoreItems(): void {
             <div v-if="retry">
                 <slot name="retry" :first-load-items="firstLoadItems">
                     <div class="retry-label">{{ labelError }}</div>
-                    <button class="button" @click="firstLoadItems">
+                    <button
+                        type="button"
+                        class="button"
+                        @click="firstLoadItems">
                         {{ labelRetry }}
                     </button>
                 </slot>

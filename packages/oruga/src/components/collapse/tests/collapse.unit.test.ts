@@ -22,12 +22,12 @@ describe("OCollapse tests", () => {
 
         const summary = wrapper.find("summary");
         expect(summary.exists()).toBeTruthy();
-        expect(summary.classes("o-collapse__trigger"));
+        expect(summary.classes("o-collapse__trigger")).toBeTruthy();
         expect(summary.text()).toBe("Trigger Button");
 
         const content = wrapper.find("div");
         expect(content.exists()).toBeTruthy();
-        expect(summary.classes("o-collapse__content"));
+        expect(content.classes("o-collapse__content")).toBeTruthy();
         expect(content.text()).toBe(
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         );

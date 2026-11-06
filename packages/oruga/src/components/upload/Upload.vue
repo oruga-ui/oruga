@@ -16,6 +16,8 @@ import { injectField } from "../field/fieldInjection";
 
 import type { UploadProps, UploadNativeProps } from "./props";
 
+type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
+
 /**
  * Upload one or more files.
  * @displayName Upload
@@ -27,8 +29,6 @@ defineOptions({
     configField: "upload",
     inheritAttrs: false,
 });
-
-type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<
