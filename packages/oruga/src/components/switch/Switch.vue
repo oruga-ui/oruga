@@ -36,7 +36,7 @@ const props = withDefaults(
         variant: () => getDefault("switch.variant"),
         passiveVariant: () => getDefault("switch.passiveVariant"),
         size: () => getDefault("switch.size"),
-        position: () => getDefault("switch.right", "position"),
+        position: () => getDefault("switch.position", "right"),
         rounded: () => getDefault("switch.rounded", true),
         disabled: false,
         nativeValue: undefined,
