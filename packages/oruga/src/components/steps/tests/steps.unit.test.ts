@@ -41,10 +41,12 @@ describe("OSteps tests", () => {
                 OStepItem,
             },
             props: {
+                /** props bound to the steps component */
                 stepProps: {
                     type: Object as PropType<StepsProps<unknown>>,
                     default: () => {},
                 },
+                /** props bound to the step item component */
                 itemProps: {
                     type: Object as PropType<StepItemProps<unknown, any>>,
                     default: () => {},

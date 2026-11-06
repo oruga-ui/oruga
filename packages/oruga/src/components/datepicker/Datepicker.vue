@@ -24,6 +24,8 @@ import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
 import type { SelectOption } from "../select";
 
+type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
+
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile.
  * @displayName Datepicker
@@ -34,8 +36,6 @@ defineOptions({
     name: "ODatepicker",
     configField: "datepicker",
 });
-
-type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<DatepickerProps<IsRange, IsMultiple>>(),

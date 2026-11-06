@@ -17,6 +17,8 @@ import {
 import type { MenuChildItem, MenuComponent, MenuItemComponent } from "./types";
 import type { MenuProps } from "./props";
 
+type ModelValue = MenuProps<T>["modelValue"];
+
 /**
  * A simple menu, for any type of vertical navigation.
  * @displayName Menu
@@ -29,8 +31,6 @@ defineOptions({
     name: "OMenu",
     configField: "menu",
 });
-
-type ModelValue = MenuProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<MenuProps<T>>(), {
     override: undefined,

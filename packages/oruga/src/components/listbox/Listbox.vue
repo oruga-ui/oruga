@@ -43,6 +43,8 @@ import { injectField } from "@/components/field/fieldInjection";
 import type { ListboxProps } from "./props";
 import type { ListItem, ListboxComponent, ListItemComponent } from "./types";
 
+type ModelValue = ListboxProps<T, IsMultiple>["modelValue"];
+
 /**
  * Listbox is used to select one or more values from a list of items.
  * @displayName Listbox
@@ -54,8 +56,6 @@ defineOptions({
     name: "OListbox",
     configField: "listbox",
 });
-
-type ModelValue = ListboxProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     override: undefined,

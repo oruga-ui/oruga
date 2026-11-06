@@ -37,6 +37,8 @@ enum SpecialOption {
     EMPTY,
 }
 
+type ModelValue = AutocompleteProps<T>["modelValue"];
+
 /**
  * Extended input that provide suggestions while the user types.
  * @displayName Autocomplete
@@ -48,8 +50,6 @@ defineOptions({
     configField: "autocomplete",
     inheritAttrs: false,
 });
-
-type ModelValue = AutocompleteProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     override: undefined,

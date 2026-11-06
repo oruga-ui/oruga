@@ -26,6 +26,8 @@ import {
 import type { StepItem, StepItemComponent, StepsComponent } from "./types";
 import type { StepsProps } from "./props";
 
+type ModelValue = StepsProps<T>["modelValue"];
+
 /**
  * Responsive horizontal process steps.
  * @displayName Steps
@@ -37,8 +39,6 @@ defineOptions({
     name: "OSteps",
     configField: "steps",
 });
-
-type ModelValue = StepsProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<StepsProps<T>>(), {
     override: undefined,

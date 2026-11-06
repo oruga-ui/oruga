@@ -39,6 +39,8 @@ import { injectField } from "@/components/field/fieldInjection";
 import type { TreeProps } from "./props";
 import type { TreeComponent, TreeItem, TreeItemComponent } from "./types";
 
+type ModelValue = TreeProps<T, IsMultiple>["modelValue"];
+
 /**
  * A simple tree view, for any type of hierarchical list.
  * @displayName Tree
@@ -50,8 +52,6 @@ defineOptions({
     name: "OTree",
     configField: "tree",
 });
-
-type ModelValue = TreeProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     override: undefined,

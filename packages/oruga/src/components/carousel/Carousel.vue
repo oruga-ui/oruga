@@ -36,6 +36,8 @@ import type {
 } from "./types";
 import type { CarouselProps } from "./props";
 
+type ModelValue = CarouselProps<T>["modelValue"];
+
 /**
  * A Slideshow for cycling images in confined spaces.
  * @displayName Carousel
@@ -47,8 +49,6 @@ defineOptions({
     name: "OCarousel",
     configField: "carousel",
 });
-
-type ModelValue = CarouselProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<CarouselProps<T>>(), {
     override: undefined,
