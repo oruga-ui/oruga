@@ -23,7 +23,7 @@ describe("useNotificationProgrammatic tests", () => {
 
     enableAutoUnmount(afterEach);
 
-    test("test mounting component correctly", async () => {
+    test("mounting component correctly", async () => {
         const content = "My Fany Message";
 
         // open element
@@ -56,7 +56,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test mounting with target correctly", async () => {
+    test("mounting with target correctly", async () => {
         const container = document.createElement("div");
         container.id = "my-cool-container";
         document.body.appendChild(container);
@@ -106,7 +106,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(1);
     });
 
-    test("test mounting with custom component correctly", () => {
+    test("mounting with custom component correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', 'abc')">Fancy Label</button>`,
         });
@@ -139,7 +139,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(notification).toBeNull();
     });
 
-    test("test close event working correctly", () => {
+    test("close event working correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
         });

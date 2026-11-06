@@ -13,7 +13,7 @@ const showWeekNumber = ref(false);
         <o-field grouped>
             <o-field label="Locale">
                 <o-select v-model="locale" placeholder="Locale">
-                    <option :value="undefined"></option>
+                    <option :value="undefined" />
                     <option value="de-DE">de-DE</option>
                     <option value="en-CA">en-CA</option>
                     <option value="en-GB">en-GB</option>

@@ -17,7 +17,8 @@ export type NotificationProps<C extends Component = Component> = {
     /** Whether notification is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /**
-     * Type (color) of the notification
+     * Type of the notification, selects the default icon.
+     * It does not change the color, use the `variant` prop for that.
      * @values info, success, warning, danger
      */
     type?: string;

@@ -11,6 +11,8 @@ import { defineClasses, useProviderParent } from "@/composables";
 import type { SliderComponent } from "./types";
 import type { SliderProps } from "./props";
 
+type ModelValue = SliderProps<IsRange>["modelValue"];
+
 /**
  * A slider to select a value or range from a given range.
  * @displayName Slider
@@ -22,8 +24,6 @@ defineOptions({
     name: "OSlider",
     configField: "slider",
 });
-
-type ModelValue = SliderProps<IsRange>["modelValue"];
 
 const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     override: undefined,
@@ -124,10 +124,7 @@ const vmodel = computed<ModelValue>(
 /** update vmodel value on internal value change */
 watch([valueStart, valueEnd], () => {
     if (isRange.value)
-        isThumbReversed.value =
-            valueStart.value && valueEnd.value
-                ? valueStart.value > valueEnd.value
-                : false;
+        isThumbReversed.value = valueStart.value > valueEnd.value;
     if (!props.lazy || !dragging.value)
         emits("update:model-value", vmodel.value); // update external vmodel
     if (dragging.value) emits("dragging", vmodel.value);

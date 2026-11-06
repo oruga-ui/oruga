@@ -89,7 +89,7 @@ describe("OCarousel tests", () => {
         expect(items.length).toBe(slides.length);
 
         items.forEach((item, index) => {
-            expect(item.text()).toEqual(slides[index].title);
+            expect(item.text()).toStrictEqual(slides[index].title);
         });
     });
 });

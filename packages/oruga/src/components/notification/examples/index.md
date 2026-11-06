@@ -35,7 +35,7 @@ Different styles can be achieved with the `variant` prop.
 
 ### Use types
 
-The `type` prop in combination with the `variant` prop adds specific icons to the notification.
+The `type` prop selects a matching icon for the notification. It does not change the colour, so combine it with the `variant` prop to style the notification as well.
 
 <ExampleViewer :component="UseTypes" :code="UseTypesCode" />
 
