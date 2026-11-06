@@ -652,7 +652,7 @@ describe("OTable tests", () => {
                 wrapper
                     .findAll("tbody tr td:nth-child(2)")
                     .map((td) => td.text()),
-            ).toEqual(["Anna", "Bob", "Tina"]);
+            ).toStrictEqual(["Anna", "Bob", "Tina"]);
 
             // toggle the direction
             await ths[1].trigger("keydown", { key: "Enter" });
