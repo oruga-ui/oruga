@@ -270,12 +270,12 @@ describe("OInput tests", () => {
         });
     });
     describe("clickable icon names", () => {
-        test("the left icon uses ariaIconLabel", () => {
+        test("the left icon uses ariaIconLeftLabel", () => {
             const wrapper = mount(OInput, {
                 props: {
                     icon: "foo",
                     iconClickable: true,
-                    ariaIconLabel: "Search",
+                    ariaIconLeftLabel: "Search",
                 },
             });
             const icon = wrapper.find("[data-oruga='icon']");
@@ -297,7 +297,7 @@ describe("OInput tests", () => {
 
         test("a decorative icon has no name and stays hidden", () => {
             const wrapper = mount(OInput, {
-                props: { icon: "foo", ariaIconLabel: "Search" },
+                props: { icon: "foo", ariaIconLeftLabel: "Search" },
             });
             const icon = wrapper.find("[data-oruga='icon']");
             expect(icon.attributes("aria-label")).toBeUndefined();

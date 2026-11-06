@@ -408,7 +408,7 @@ describe("OSelect tests", () => {
             props: {
                 icon: "foo",
                 iconClickable: true,
-                ariaIconLabel: "Filter",
+                ariaIconLeftLabel: "Filter",
                 iconRight: "arrow",
                 iconRightClickable: true,
                 ariaIconRightLabel: "Open",
