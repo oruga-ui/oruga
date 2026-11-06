@@ -917,6 +917,90 @@ describe("OTable tests", () => {
         });
     });
 
+    describe("test accessibility labels", () => {
+        const labelColumns = [
+            { label: "ID", field: "id", numeric: true },
+            { label: "Name", field: "first_name", filterable: true },
+        ];
+
+        function labels(wrapper: ReturnType<typeof mount>): string[] {
+            return [
+                ...wrapper.findAll(
+                    "thead input, tbody input, tbody [role=button]",
+                ),
+            ]
+                .map((el) => el.attributes("aria-label"))
+                .filter((label): label is string => !!label);
+        }
+
+        test("render the default english labels", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: labelColumns,
+                    data: data.slice(0, 1),
+                    checkable: true,
+                    detailed: true,
+                },
+                slots: { detail: "DETAIL" },
+            });
+            await nextTick();
+
+            expect(labels(wrapper)).toStrictEqual([
+                "Check all",
+                "Name filter",
+                "Open row 0 details",
+                "Check row 0",
+            ]);
+        });
+
+        test("render labels from strings with a placeholder", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: labelColumns,
+                    data: data.slice(0, 1),
+                    checkable: true,
+                    detailed: true,
+                    ariaCheckAllLabel: "Alle auswählen",
+                    ariaCheckRowLabel: "{value} auswählen",
+                    ariaOpenDetailLabel: "Details von {value} öffnen",
+                    ariaColumnFilterLabel: "Filter für {value}",
+                },
+                slots: { detail: "DETAIL" },
+            });
+            await nextTick();
+
+            expect(labels(wrapper)).toStrictEqual([
+                "Alle auswählen",
+                "Filter für Name",
+                "Details von row 0 öffnen",
+                "row 0 auswählen",
+            ]);
+        });
+
+        test("render labels from functions", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: labelColumns,
+                    data: data.slice(0, 1),
+                    checkable: true,
+                    detailed: true,
+                    ariaCheckRowLabel: (label) => `select ${label}`,
+                    ariaOpenDetailLabel: (label) => `show ${label}`,
+                    ariaColumnFilterLabel: (label) => `find ${label}`,
+                },
+                slots: { detail: "DETAIL" },
+            });
+            await nextTick();
+
+            expect(labels(wrapper)).toStrictEqual([
+                "Check all",
+                "find Name",
+                "show row 0",
+                "select row 0",
+            ]);
+        });
+    });
+
     describe("verify pageable", () => {
         test("show correct amount of rows when per page is set to 3", async () => {
             const perPage = 3;
