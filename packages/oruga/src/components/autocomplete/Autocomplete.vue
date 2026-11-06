@@ -14,7 +14,7 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { getDefault } from "@/utils/config";
-import { isEqual } from "@/utils/helpers";
+import { isDefined, isEqual } from "@/utils/helpers";
 import {
     defineClasses,
     normalizeOptions,
@@ -31,11 +31,18 @@ import type { AutocompleteProps } from "./props";
 import type { DropdownItemProps } from "../dropdown/props";
 import type { ComponentExposed } from "vue-component-type-helpers";
 
-enum SpecialOption {
-    Header,
-    Footer,
-    EMPTY,
-}
+/**
+ * Values of the header, footer and empty dropdown items.
+ * Symbols are used so that they can never be equal to an option value.
+ */
+const HeaderOption: unique symbol = Symbol("header");
+const FooterOption: unique symbol = Symbol("footer");
+const EmptyOption: unique symbol = Symbol("empty");
+
+type SpecialOption =
+    typeof HeaderOption | typeof FooterOption | typeof EmptyOption;
+
+type ModelValue = AutocompleteProps<T>["modelValue"];
 
 /**
  * Extended input that provide suggestions while the user types.
@@ -48,8 +55,6 @@ defineOptions({
     configField: "autocomplete",
     inheritAttrs: false,
 });
-
-type ModelValue = AutocompleteProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     override: undefined,
@@ -238,9 +243,9 @@ watch(inputValue, (filter: string): void => {
     if (props.backendFiltering) return;
     childItems.value.forEach((item) => {
         // prevent the empty state from hidding
-        if (item.data.value === SpecialOption.Header) return;
-        if (item.data.value === SpecialOption.Footer) return;
-        if (item.data.value === SpecialOption.EMPTY) return;
+        if (item.data.value === HeaderOption) return;
+        if (item.data.value === FooterOption) return;
+        if (item.data.value === EmptyOption) return;
 
         // check if the value matches the filter string
         const containsFilter =
@@ -312,7 +317,7 @@ watch(
 watch(
     childItems,
     () => {
-        if (selectedValue.value) updateInput(selectedValue.value);
+        if (isDefined(selectedValue.value)) updateInput(selectedValue.value);
     },
     { once: true },
 );
@@ -346,13 +351,13 @@ function setSelected(item: T | SpecialOption | undefined): void {
     let value: T | undefined = undefined;
 
     // check if emoty was selected
-    if (item === SpecialOption.EMPTY) return;
+    if (item === EmptyOption) return;
     // Check if header or footer was selected
-    if (item === SpecialOption.Header) {
+    if (item === HeaderOption) {
         emits("select-header");
-    } else if (item === SpecialOption.Footer) {
+    } else if (item === FooterOption) {
         emits("select-footer");
-    } else if (item) {
+    } else {
         value = item;
     }
 
@@ -532,7 +537,7 @@ defineExpose({
             <template #before="{ toggle }">
                 <o-dropdown-item
                     v-if="$slots.header"
-                    :value="SpecialOption.Header"
+                    :value="HeaderOption"
                     :clickable="selectableHeader"
                     :class="[...itemClasses, ...itemHeaderClasses]">
                     <slot name="header" :toggle />
@@ -580,7 +585,7 @@ defineExpose({
 
             <template v-if="$slots.empty" #empty="{ toggle }">
                 <o-dropdown-item
-                    :value="SpecialOption.EMPTY"
+                    :value="EmptyOption"
                     :clickable="false"
                     :class="[...itemClasses, ...itemEmptyClasses]">
                     <slot name="empty" :toggle />
@@ -590,7 +595,7 @@ defineExpose({
             <template #after="{ toggle }">
                 <o-dropdown-item
                     v-if="$slots.footer"
-                    :value="SpecialOption.Footer"
+                    :value="FooterOption"
                     :clickable="selectableFooter"
                     :class="[...itemClasses, ...itemFooterClasses]">
                     <slot name="footer" :toggle />

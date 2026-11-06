@@ -41,10 +41,12 @@ describe("OSteps tests", () => {
                 OStepItem,
             },
             props: {
+                /** props bound to the steps component */
                 stepProps: {
                     type: Object as PropType<StepsProps<unknown>>,
                     default: () => {},
                 },
+                /** props bound to the step item component */
                 itemProps: {
                     type: Object as PropType<StepItemProps<unknown, any>>,
                     default: () => {},
@@ -55,7 +57,7 @@ describe("OSteps tests", () => {
                   </OSteps>`,
         });
 
-        test("test render correctly", () => {
+        test("render correctly", () => {
             const wrapper = mount(Testcomponent, {
                 props: {
                     itemProps: {
@@ -310,6 +312,45 @@ describe("OSteps tests", () => {
                     ],
                 ]);
             });
+
+            test.each([false, true])(
+                "move focus with the arrow keys of the orientation when vertical is %s",
+                async (vertical) => {
+                    const wrapper = mount(OSteps, {
+                        props: { options, vertical, modelValue: "silver" },
+                        attachTo: document.body,
+                    });
+                    await nextTick(); // await child items got rendered
+
+                    const steps = wrapper.findAll<HTMLElement>("[role=tab]");
+                    expect(steps).toHaveLength(options.length);
+
+                    // the key is checked by the component, `keydown.down` of the
+                    // test utils does not set it
+                    const next = vertical ? "ArrowDown" : "ArrowRight";
+                    const prev = vertical ? "ArrowUp" : "ArrowLeft";
+                    // the arrow keys of the other orientation are ignored and keep scrolling
+                    const other = vertical ? "ArrowRight" : "ArrowDown";
+
+                    await steps[1].trigger("keydown", { key: next });
+                    expect(document.activeElement).toBe(steps[2].element);
+
+                    await steps[2].trigger("keydown", { key: next });
+                    expect(document.activeElement).toBe(steps[3].element);
+
+                    await steps[3].trigger("keydown", { key: prev });
+                    expect(document.activeElement).toBe(steps[2].element);
+
+                    const keydown = new KeyboardEvent("keydown", {
+                        key: other,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    steps[2].element.dispatchEvent(keydown);
+                    expect(keydown.defaultPrevented).toBeFalsy();
+                    expect(document.activeElement).toBe(steps[2].element);
+                },
+            );
         });
 
         describe("handle options props correctly", () => {
