@@ -745,11 +745,9 @@ describe("OAutocomplete tests", () => {
                 '[data-oruga="dropdown-item"]',
             );
             expect(optionElements).toHaveLength(NUMBER_OPTIONS.length);
-            expect(optionElements.map((option) => option.isVisible())).toEqual([
-                false,
-                true,
-                false,
-            ]);
+            expect(
+                optionElements.map((option) => option.isVisible()),
+            ).toStrictEqual([false, true, false]);
             vi.useRealTimers();
         });
     });
