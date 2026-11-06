@@ -8,8 +8,8 @@ const isActive = ref(false);
     <section>
         <o-button
             label="Open Dialog"
-            size="medium"
             variant="primary"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
         <o-dialog v-model:active="isActive" closeable>
@@ -34,11 +34,11 @@ const isActive = ref(false);
             </template>
 
             <template #cancelButton>
-                <a href="#" class="dialog-link">A link</a>
+                <span>Not now</span>
             </template>
 
             <template #confirmButton>
-                <a href="#" class="dialog-link">Another link</a>
+                <strong>Got it</strong>
             </template>
         </o-dialog>
     </section>
