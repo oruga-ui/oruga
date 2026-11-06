@@ -152,6 +152,7 @@ describe("OCheckbox tests", () => {
             expect(wrapper.vm.value).toEqual(falseValue);
         });
     });
+
     describe("accessible name within a field", () => {
         const controls = () =>
             mount(OField, {
