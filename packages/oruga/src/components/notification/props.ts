@@ -115,7 +115,9 @@ export type NotificationNoticeProps<C extends Component = Component> = {
     rounded?: boolean;
     /** Hide notification after duration (in miliseconds) */
     duration?: number;
-    /** Pause and show on hover until hover off, if infinite is false. */
+    /**
+     * Pause and show while the pointer is over the notification or focus is inside it, until both are gone. Ignored if infinite is true.
+     */
     pauseOnHover?: boolean;
     /** Show the Notification infinitely until it is dismissed. */
     infinite?: boolean;
