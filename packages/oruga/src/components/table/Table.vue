@@ -697,13 +697,20 @@ function setDefaultSort(): void {
     } else {
         sortField = props.defaultSort;
     }
-    sortByField(sortField, sortDirection);
+
+    const sortColumn = findColumnByField(sortField);
+    if (!sortColumn?.sortable) return;
+    isAsc.value = sortDirection.toLowerCase() === "asc";
+    // the initial sort is not a change of the sorting, so don't emit `sort`
+    applySort(sortColumn);
+}
+
+function findColumnByField(field: string): TableColumnItem<T> | undefined {
+    return tableColumns.value.find((column) => column.field === field);
 }
 
 function sortByField(field: string, direction: "asc" | "desc"): void {
-    const sortColumn = tableColumns.value.find(
-        (column) => column.field === field,
-    );
+    const sortColumn = findColumnByField(field);
     if (sortColumn) {
         isAsc.value = direction.toLowerCase() === "asc";
         sort(sortColumn);
@@ -727,10 +734,13 @@ function sort(
             ? !isAsc.value
             : props.defaultSortDirection.toLowerCase() === "asc";
 
-    // if not first time sort
-    if (currentSortColumn.value)
-        emits("sort", column, isAsc.value ? "asc" : "desc", event);
+    emits("sort", column, isAsc.value ? "asc" : "desc", event);
 
+    applySort(column);
+}
+
+/** set the current sort column and sort the rows by it */
+function applySort(column: TableColumnItem<T>): void {
     currentSortColumn.value = column;
 
     // sort rows by mutating the array
