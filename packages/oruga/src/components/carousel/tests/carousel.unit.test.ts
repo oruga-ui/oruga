@@ -173,11 +173,9 @@ describe("OCarousel tests", () => {
             expect(list.attributes("aria-label")).toBe("Slides");
 
             const tabs = wrapper.findAll("[role=tab]");
-            expect(tabs.map((tab) => tab.attributes("aria-label"))).toEqual([
-                "Slide 1",
-                "Slide 2",
-                "Slide 3",
-            ]);
+            expect(
+                tabs.map((tab) => tab.attributes("aria-label")),
+            ).toStrictEqual(["Slide 1", "Slide 2", "Slide 3"]);
         });
 
         test("render labels from a string with a placeholder", async () => {
@@ -198,7 +196,7 @@ describe("OCarousel tests", () => {
                 wrapper
                     .findAll("[role=tab]")
                     .map((tab) => tab.attributes("aria-label")),
-            ).toEqual(["Folie 1", "Folie 2", "Folie 3"]);
+            ).toStrictEqual(["Folie 1", "Folie 2", "Folie 3"]);
         });
 
         test("render labels from a function", async () => {
@@ -215,7 +213,7 @@ describe("OCarousel tests", () => {
                 wrapper
                     .findAll("[role=tab]")
                     .map((tab) => tab.attributes("aria-label")),
-            ).toEqual(["go to 1", "go to 2", "go to 3"]);
+            ).toStrictEqual(["go to 1", "go to 2", "go to 3"]);
         });
     });
 });
