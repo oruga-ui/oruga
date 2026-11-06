@@ -636,6 +636,82 @@ describe("OTable tests", () => {
             }
         });
 
+        test("emit sort on the first sort of an unsorted table", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    backendSorting: true,
+                    columns: [
+                        { label: "ID", field: "id", sortable: true },
+                        { label: "Name", field: "name", sortable: true },
+                    ],
+                    data: [
+                        { id: 2, name: "Bob" },
+                        { id: 1, name: "Tina" },
+                    ],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            expect(wrapper.emitted("sort")).toBeUndefined();
+
+            const ths = wrapper.findAll("thead th");
+
+            await ths[1].trigger("click");
+            expect(wrapper.emitted("sort")).toHaveLength(1);
+            expect(wrapper.emitted("sort")![0][0]).toMatchObject({
+                field: "name",
+            });
+            expect(wrapper.emitted("sort")![0][1]).toBe("asc");
+            expect(wrapper.emitted("sort")![0][2]).toBeInstanceOf(Event);
+
+            await ths[1].trigger("click");
+            expect(wrapper.emitted("sort")).toHaveLength(2);
+            expect(wrapper.emitted("sort")![1][1]).toBe("desc");
+
+            // backend sorted rows keep their order
+            const firstCells = wrapper
+                .findAll("tbody tr")
+                .map((tr) => tr.find("td").text());
+            expect(firstCells).toStrictEqual(["2", "1"]);
+        });
+
+        test("emit sort when the exposed sort function sorts an unsorted table", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "ID", field: "id", sortable: true }],
+                    data: [{ id: 1 }, { id: 2 }],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            wrapper.vm.sort("id", "desc");
+            await nextTick();
+
+            expect(wrapper.emitted("sort")).toHaveLength(1);
+            expect(wrapper.emitted("sort")![0][1]).toBe("desc");
+            expect(wrapper.find("tbody td").text()).toBe("2");
+        });
+
+        test("does not emit sort for the default sort", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "ID", field: "id", sortable: true }],
+                    data: [{ id: 2 }, { id: 1 }],
+                    defaultSort: "id",
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const th = wrapper.find("thead th");
+            expect(th.attributes("aria-sort")).toBe("ascending");
+            expect(wrapper.find("tbody td").text()).toBe("1");
+            expect(wrapper.emitted("sort")).toBeUndefined();
+
+            await th.trigger("click");
+            expect(wrapper.emitted("sort")).toHaveLength(1);
+            expect(wrapper.emitted("sort")![0][1]).toBe("desc");
+        });
+
         test("sort a column with the keyboard", async () => {
             const wrapper = mount(OTable, {
                 props: {
