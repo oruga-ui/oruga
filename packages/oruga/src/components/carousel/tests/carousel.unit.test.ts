@@ -98,7 +98,10 @@ describe("OCarousel tests", () => {
             const TestComponent = defineComponent({
                 components: { OCarousel, OCarouselItem },
                 props: { clickable: Boolean },
-                emits: ["click"],
+                emits: [
+                    // eslint-disable-next-line vue/no-unused-emit-declarations
+                    "click",
+                ],
                 template: `<OCarousel :autoplay="false" @click="$emit('click')">
                     <OCarouselItem v-for="n in 3" :key="n" :clickable="clickable">
                         <button class="inner">Slide {{ n }}</button>
@@ -114,7 +117,7 @@ describe("OCarousel tests", () => {
         test("are focusable with a roving tab stop on the active item", async () => {
             const wrapper = await mountCarousel(true);
             const items = wrapper.findAll('[data-oruga="carousel-item"]');
-            expect(items.map((i) => i.attributes("tabindex"))).toEqual([
+            expect(items.map((i) => i.attributes("tabindex"))).toStrictEqual([
                 "0",
                 "-1",
                 "-1",
