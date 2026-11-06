@@ -28,7 +28,7 @@ const locale = ref(); // Browser locale
                     <option value="ja-JP">ja-JP</option>
                     <option value="pt-BR">pt-BR</option>
                     <option value="ru-RU">ru-RU</option>
-                    <option value="zn-CN">zn-CN</option>
+                    <option value="zh-CN">zh-CN</option>
                 </o-select>
             </o-field>
             <o-field label="Hour format">

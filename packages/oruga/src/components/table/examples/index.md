@@ -78,19 +78,19 @@ Additionally, a `header` or `subheader` template slot can be used to customise t
 
 ### Detailed
 
-Each row can have a collapse section by adding the `detailed` prop. The rows with an open detail section are combined in the `detailed-rows` prop, which is two-way bindable. By default, the detail is displayed as another tr, but adding `custom-detail-row` removes the tr wrapper from the provided `detail` template slot. Consider defining whether a row can have a detail section with a function given by the `is-detailed-visibile` prop.
+Each row can have a collapse section by adding the `detailed` prop. The rows with an open detail section are combined in the `detailed-rows` prop, which is two-way bindable. By default, the detail is displayed as another tr, but adding `custom-detail-row` removes the tr wrapper from the provided `detail` template slot. Consider defining whether a row can have a detail section with a function given by the `is-detailed-visible` prop.
 
 <ExampleViewer :component="Detailed" :code="DetailedCode" />
 
 ### Pagination
 
-The table component uses the [pagination](/components/Pagination.html) component when the `paginated` prop is set. The `per-page` prop can be used to specify the number of rows per page. Any property prefixed with "pagination" is passed to the pagination component.
+The table component uses the [Pagination](/components/Pagination) component when the `paginated` prop is set. The `per-page` prop can be used to specify the number of rows per page. The `pagination-position` prop defines whether the pagination is rendered at the top, the bottom or both. The `pagination-size`, `pagination-rounded`, `pagination-simple`, `pagination-range-before`, `pagination-range-after` and `pagination-order` props, as well as the `aria-next-label`, `aria-previous-label`, `aria-page-label` and `aria-current-label` props, configure the pagination component.
 
 <ExampleViewer :component="Pagination" :code="PaginationCode" />
 
 ### Filterable
 
-Columns can have a search filter input by adding `filterable` to the TableColumn component item. The search filter can be debounced to avoid multiple filtering when typing wich adding the `filter-debounce` prop to the Table component.
+Columns can have a search filter input by adding `filterable` to the TableColumn component item. The search filter can be debounced to avoid multiple filtering when typing which adding the `filter-debounce` prop to the Table component.
 
 <ExampleViewer :component="Filterable" :code="FilterableCode" />
 
@@ -106,7 +106,7 @@ Adding the `sticky-header` prop to the Table component makes the header stick to
 
 <ExampleViewer :component="Sticky" :code="StickyCode" />
 
-### Draggable rows/columns
+### Draggable Rows/Columns
 
 Use `draggable`/`draggable-column` prop to allow rows and columns to be draggable. Manage dragging using `dragstart`/`columndragstart`, `dragover`/`columndragover` and `drop`/`columndrop` events.
 

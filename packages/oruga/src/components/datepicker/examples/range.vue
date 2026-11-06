@@ -11,7 +11,6 @@ const dates = ref<[Date, Date] | []>([]);
                 v-model="dates"
                 placeholder="Click to select..."
                 icon="calendar"
-                trap-focus
                 range />
         </o-field>
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { OButton } from "@/components/button";
 import { ref } from "vue";
 
 const isActive = ref(false);
@@ -8,10 +7,7 @@ const isActive = ref(false);
 <template>
     <section class="odocs-spaced">
         <p>
-            <o-dropdown
-                :trigger-tag="OButton"
-                variant="primary"
-                label="Default">
+            <o-dropdown trigger-tag="OButton" variant="primary" label="Default">
                 <o-dropdown-item label="Action" />
                 <o-dropdown-item label="Another action" />
                 <o-dropdown-item label="Something else" />
@@ -64,7 +60,7 @@ const isActive = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown teleport label="Append to body" :trigger-tag="OButton">
+            <o-dropdown teleport label="Append to body" trigger-tag="OButton">
                 <o-dropdown-item label="Action" />
                 <o-dropdown-item label="Another action" />
                 <o-dropdown-item label="Something else" />

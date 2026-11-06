@@ -43,7 +43,7 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 
 As dialogs are generally placed as an overlay on top of the rest of the page content, every dialog needs a mechanism that allows users to close it. The most reliable way is to include an explicit button for this purpose, such as a _Confirm_, _Cancel_ or _Close_ button. The component itself can handle different types of user actions that can be used to close the dialog box.
 
-The main `closeable` property will add a close button to the dialog header. The `closeOnBackdrop` property adds a a light dismiss user action, which closes the dialog box when the user clicks or taps outside of it. The `closeOnEscape` property allows platform-specific user actions, such as pressing the <kbd>ESC</kbd> key on desktop platforms, or performing a "back" or "dismiss" gesture on mobile platforms, to close the dialog box. Furthermore, by setting the `cancelButton` or `confirmButton` properties, associated buttons will be rendered in the footer section. With `closeOnConfirm`, the confirm button can also be used to close the dialog.
+The main `closeable` property will add a close button to the dialog header. The `close-on-backdrop` property adds a light dismiss user action, which closes the dialog box when the user clicks or taps outside of it. The `close-on-escape` property allows platform-specific user actions, such as pressing the <kbd>ESC</kbd> key on desktop platforms, or performing a "back" or "dismiss" gesture on mobile platforms, to close the dialog box. Furthermore, by setting the `cancel-button` or `confirm-button` properties, associated buttons will be rendered in the footer section. With `close-on-confirm`, the confirm button can also be used to close the dialog.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
@@ -51,7 +51,7 @@ The main `closeable` property will add a close button to the dialog header. The 
 
 A simple _modal_ dialog box is created by setting the `backdrop` property, which inert the background. By default, attempting to interact with the backdrop closes the dialog box.
 
-Setting the `blockScroll` property removes the body scrollbar. However, the body retains a non-scrollable scrollbar to prevent the background from shifting. This will set the body to `position="fixed"`, which may cause some layouts to break.
+By default, the `block-scroll` property removes the body scrollbar while the modal dialog is open, so the page behind it cannot be scrolled. When set to `false`, the body keeps a non-scrollable scrollbar to prevent the background from shifting, but the body is set to `position: fixed`, which may cause some layouts to break. This only applies to dialogs with a `backdrop`.
 
 <ExampleViewer :component="Modal" :code="ModalCode" />
 
@@ -81,19 +81,19 @@ Using the `fullscreen` property, the dialog will cover the entire user viewport.
 
 ### Image
 
-The component provides a separate image section in the _body_ where an image can be placed using the `imageSrc` property. For accessibility reasons, don't forget to add an `imageAlt` property too.
+The component provides a separate image section in the _body_ where an image can be placed using the `image-src` property. For accessibility reasons, don't forget to add an `image-alt` property too.
 
 <ExampleViewer :component="Image" :code="ImageCode" />
 
 ### Position
 
-You can quickly change the alignment of all the text in the dialog box using the `textPosition` property. Additionally, you can align the footer buttons independently using the `buttonPosition` property.
+You can quickly change the alignment of all the text in the dialog box using the `text-position` property. Additionally, you can align the footer buttons independently using the `button-position` property.
 
 <ExampleViewer :component="Position" :code="PositionCode" />
 
 ### Templates
 
-The dialog container is seperated into a _header_, _body_ and _footer_ section, which can be defined separately either through properties or template slots. Therefore, the component provides a `header`, `title`, `subtitle`, `content`, `footer` as well as `confirmButton` and `cancelButton` named template slots, which can be used to customise HTML content.
+The dialog container is separated into a _header_, _body_ and _footer_ section, which can be defined separately either through properties or template slots. Therefore, the component provides a `header`, `title`, `subtitle`, `content`, `footer` as well as `confirmButton` and `cancelButton` named template slots, which can be used to customise HTML content.
 
 <ExampleViewer :component="Templates" :code="TemplatesCode" />
 

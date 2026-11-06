@@ -5,8 +5,8 @@ import BaseCode from "./base.vue?raw";
 import Inline from "./inline.vue";
 import InlineCode from "./inline.vue?raw";
 
-import MinMaxDate from "./min-max-date.vue";
-import MinMaxDateCode from "./min-max-date.vue?raw";
+import MinMaxTime from "./min-max-time.vue";
+import MinMaxTimeCode from "./min-max-time.vue?raw";
 
 import Templates from "./templates.vue";
 import TemplatesCode from "./templates.vue?raw";
@@ -25,11 +25,11 @@ To render the component inline instead of a dropdown/modal use the `inline` prop
 
 <ExampleViewer :component="Inline" :code="InlineCode" />
 
-### Min/Max date
+### Min/Max Time
 
 Use the `min-time` and `max-time` props to define a limited time range for the user to choose from.
 
-<ExampleViewer :component="MinMaxDate" :code="MinMaxDateCode" />
+<ExampleViewer :component="MinMaxTime" :code="MinMaxTimeCode" />
 
 ### Templates
 

@@ -46,7 +46,7 @@ const isStriped = ref(false);
 const isNarrowed = ref(false);
 const isHoverable = ref(false);
 const isSelectable = ref(false);
-const isCheckbale = ref(false);
+const isCheckable = ref(false);
 const isLoading = ref(false);
 const hasMobileCards = ref(true);
 
@@ -62,7 +62,7 @@ const Column = defineOTableColumn<(typeof data.value)[number]>();
             <o-switch v-model="isNarrowed" label="Narrowed" />
             <o-switch v-model="isHoverable" label="Hoverable" />
             <o-switch v-model="isSelectable" label="Selectable" />
-            <o-switch v-model="isCheckbale" label="Checkable" />
+            <o-switch v-model="isCheckable" label="Checkable" />
             <o-switch v-model="isLoading" label="Loading state" />
             <o-switch v-model="isEmpty" label="Empty" />
             <o-switch v-model="hasMobileCards">
@@ -77,7 +77,7 @@ const Column = defineOTableColumn<(typeof data.value)[number]>();
             :striped="isStriped"
             :narrowed="isNarrowed"
             :hoverable="isHoverable"
-            :checkable="isCheckbale"
+            :checkable="isCheckable"
             :loading="isLoading"
             :selectable="isSelectable"
             :mobile-cards="hasMobileCards"

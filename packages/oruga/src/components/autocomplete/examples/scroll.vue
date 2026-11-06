@@ -65,7 +65,6 @@ function getMoreAsyncData(): void {
                 :options="options"
                 placeholder="e.g. Fight Club"
                 expanded
-                check-scroll
                 backend-filtering
                 :debounce="500"
                 @input="getAsyncData"
@@ -75,6 +74,7 @@ function getMoreAsyncData(): void {
                         <div class="media-left">
                             <img
                                 width="32"
+                                :alt="`Poster of ${option.item.value.title}`"
                                 :src="`https://image.tmdb.org/t/p/w500/${option.item.value.poster_path}`" />
                         </div>
                         <div class="media-content">
@@ -91,7 +91,7 @@ function getMoreAsyncData(): void {
 
                 <template v-if="page > totalPages || !options.length" #footer>
                     <span class="ex-text-grey">
-                        Thats it! No more movies found.
+                        That's it! No more movies found.
                     </span>
                 </template>
             </o-autocomplete>

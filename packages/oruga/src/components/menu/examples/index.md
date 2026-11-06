@@ -9,6 +9,10 @@ import Options from "./options.vue";
 import OptionsCode from "./options.vue?raw";
 </script>
 
+::: warning Deprecated
+This component is deprecated since v0.13.0 and will be removed. Use the [Tree](/components/Tree) component instead.
+:::
+
 ### Base
 
 <ExampleViewer :component="Base" :code="BaseCode" />

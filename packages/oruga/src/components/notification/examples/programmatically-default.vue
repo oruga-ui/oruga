@@ -69,18 +69,3 @@ function pause(): void {
         </p>
     </section>
 </template>
-
-<style>
-.toast-notification {
-    margin: 0.5em 0;
-    text-align: center;
-    box-shadow:
-        0 1px 4px rgb(0 0 0 / 12%),
-        0 0 6px rgb(0 0 0 / 4%);
-    border-radius: 2em;
-    padding: 0.75em 1.5em;
-    pointer-events: auto;
-    color: rgba(0, 0, 0, 0.7);
-    background: #ffdd57;
-}
-</style>

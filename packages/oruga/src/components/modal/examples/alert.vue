@@ -16,7 +16,9 @@ const isModalActive = ref(false);
 
         <o-modal
             v-model:active="isModalActive"
-            :cancelable="false"
+            :closeable="false"
+            :close-on-outside="false"
+            :close-on-escape="false"
             alert
             aria-labelledby="dialog_label"
             aria-describedby="dialog_desc">

@@ -21,7 +21,7 @@ const selected = ref<Date | undefined>(new Date());
 const selectedString = computed(() => selected.value?.toDateString() || "");
 
 function selectMonth(month: number | undefined): void {
-    if (!month) return;
+    if (month === undefined || month === null) return;
 
     const date = selected.value ? new Date(selected.value) : new Date();
     date.setMonth(month);

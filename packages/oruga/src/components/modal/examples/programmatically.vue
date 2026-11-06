@@ -23,7 +23,9 @@ function cardModal(): void {
     oruga.modal.open({
         component: ModalForm,
         trapFocus: true,
-        cancelable: false,
+        closeable: false,
+        closeOnOutside: false,
+        closeOnEscape: false,
     });
 }
 </script>
