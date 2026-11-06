@@ -29,4 +29,31 @@ describe("OIcon tests", () => {
 
         expect(wrapper.attributes("aria-hidden")).toBeUndefined();
     });
+
+    test("render a labelled icon as image", () => {
+        const wrapper = mount(OIcon, { props: { ariaLabel: "Warning" } });
+
+        // aria-label is only valid on an element with a role
+        expect(wrapper.attributes("role")).toBe("img");
+        expect(wrapper.attributes("aria-label")).toBe("Warning");
+    });
+
+    test("render a clickable icon as button", async () => {
+        const wrapper = mount(OIcon, {
+            props: { clickable: true, ariaLabel: "Close" },
+        });
+
+        expect(wrapper.attributes("role")).toBe("button");
+        expect(wrapper.attributes("tabindex")).toBe("0");
+        expect(wrapper.attributes("aria-hidden")).toBeUndefined();
+
+        await wrapper.trigger("click");
+        expect(wrapper.emitted("click")).toHaveLength(1);
+    });
+
+    test("render a decorative icon without role", () => {
+        const wrapper = mount(OIcon);
+
+        expect(wrapper.attributes("role")).toBeUndefined();
+    });
 });

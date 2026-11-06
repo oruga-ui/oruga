@@ -104,6 +104,32 @@ describe("ODatepicker", () => {
         ).toBeTruthy();
     });
 
+    test("emit change-month with 0 when January is selected", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2024, 1, 10), active: true },
+        });
+
+        await wrapper
+            .find<HTMLSelectElement>('select[aria-label="Select Month"]')
+            .setValue(0);
+
+        expect(wrapper.emitted("change-month")).toStrictEqual([[0]]);
+        expect(wrapper.emitted("change-year")).toBeUndefined();
+    });
+
+    test("emit change-month and change-year when wrapping to the previous year", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2024, 0, 10), active: true },
+        });
+
+        await wrapper
+            .find<HTMLSelectElement>('select[aria-label="Select Month"]')
+            .trigger("keydown", { key: "ArrowLeft" });
+
+        expect(wrapper.emitted("change-month")).toStrictEqual([[11]]);
+        expect(wrapper.emitted("change-year")).toStrictEqual([[2023]]);
+    });
+
     test("keeps the overlay open on first interaction when clicking a nav button in a populated picker", async () => {
         vi.useFakeTimers();
 
@@ -354,7 +380,7 @@ describe("ODatepicker", () => {
         // check that update:active event was emitted with false (overlay closes)
         const updateActiveEmits = wrapper.emitted("update:active");
         expect(updateActiveEmits).toBeDefined();
-        expect(updateActiveEmits?.[0]).toEqual([false]);
+        expect(updateActiveEmits?.[0]).toStrictEqual([false]);
     });
 
     test("keeps overlay open on date selection when stayOpen is true", async () => {

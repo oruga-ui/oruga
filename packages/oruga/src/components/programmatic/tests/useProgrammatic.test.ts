@@ -27,7 +27,7 @@ describe("useProgrammatic tests", () => {
 
     enableAutoUnmount(afterEach);
 
-    test("test mounting component correctly", async () => {
+    test("mounting component correctly", async () => {
         const component = createVNode({
             template: `<button id="mycomp"></button>`,
         });
@@ -56,7 +56,7 @@ describe("useProgrammatic tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test mounting with target correctly", () => {
+    test("mounting with target correctly", () => {
         const container = document.createElement("div");
         container.id = "my-cool-container";
         document.body.appendChild(container);
@@ -88,7 +88,7 @@ describe("useProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(1);
     });
 
-    test("test close event working correctly", () => {
+    test("close event working correctly", () => {
         const component = createVNode({
             template: `<button id="mycomp" @click="$emit('close', 'abc')"></button>`,
         });
@@ -113,7 +113,7 @@ describe("useProgrammatic tests", () => {
         expect(onClose).toHaveBeenCalledOnce();
     });
 
-    test("test props working correctly", () => {
+    test("props working correctly", () => {
         const component = createVNode({
             template: `<button id="mycomp"></button>`,
         });
@@ -141,7 +141,7 @@ describe("useProgrammatic tests", () => {
         expect(el).toBeNull();
     });
 
-    test("test using custom instance registry", () => {
+    test("using custom instance registry", () => {
         const instanceRegistry = new InstanceRegistry();
 
         expect(instanceRegistry.count()).toBe(0);
@@ -158,7 +158,7 @@ describe("useProgrammatic tests", () => {
         expect(instanceRegistry.count()).toBe(0);
     });
 
-    test("test closeAll is working correctly", () => {
+    test("closeAll is working correctly", () => {
         const root = document.createElement("div");
 
         // open elements
@@ -181,7 +181,7 @@ describe("useProgrammatic tests", () => {
         expect(apps).toHaveLength(0);
     });
 
-    test("test close last is working correctly", () => {
+    test("close last is working correctly", () => {
         // open elements
         factory.open("div");
         factory.open("div");
@@ -210,7 +210,7 @@ describe("useProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(0);
     });
 
-    test("test render slot correctly", () => {
+    test("render slot correctly", () => {
         // create inner slot element
         const slot = h("p", { "data-oruga": "inner-slot" }, "HELP");
 
@@ -239,7 +239,7 @@ describe("useProgrammatic tests", () => {
         vi.runAllTimers();
     });
 
-    test("test programmatic app does not modify the base app config", () => {
+    test("programmatic app does not modify the base app config", () => {
         // create a base app with its own oruga instance
         const previousOruga = getActiveOruga();
         let baseId = "";

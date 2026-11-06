@@ -7,7 +7,10 @@ export type LoadingProps = {
     active?: boolean;
     /** Loader will overlay the full page */
     fullPage?: boolean;
-    /** Show a label beside the icon, unnecessary when default slot is used */
+    /**
+     * Show a label beside the icon.
+     * When the default slot is used, the label is not rendered but names the loading status for assistive technology.
+     */
     label?: string;
     /** Custom animation (transition name) */
     animation?: string;

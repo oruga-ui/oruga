@@ -1,16 +1,34 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, useTemplateRef, nextTick } from "vue";
+import {
+    ref,
+    computed,
+    onMounted,
+    useTemplateRef,
+    nextTick,
+    type Component,
+} from "vue";
 import MarkdownIt from "markdown-it";
 import MarkdownItHighlightjs from "markdown-it-highlightjs";
 
-const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
+const props = withDefaults(
+    defineProps<{
+        /** raw source code of the example, displayed in the code tabs */
+        code: string;
+        /** the example component to render in the preview */
+        component?: Component;
+        /** show the code tabs below the preview */
+        showCode?: boolean;
+        /** expand the code tabs initially */
+        open?: boolean;
+    }>(),
+    {
+        component: undefined,
+        showCode: true,
+        open: false,
+    },
+);
 
-const props = defineProps({
-    code: { type: String, required: true },
-    component: { type: Object, default: undefined },
-    showCode: { type: Boolean, default: true },
-    open: { type: Boolean, default: false },
-});
+const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
 
 const uid = Date.now().toString(36) + Math.random().toString(36).substring(2);
 
@@ -175,6 +193,7 @@ function copy(val: string): void {
                         class="language-html"
                         :class="{ active: tab === 'HTML' }">
                         <button
+                            type="button"
                             title="Copy Code"
                             class="copy"
                             @click="copy(templateCode)" />
@@ -191,6 +210,7 @@ function copy(val: string): void {
                         class="language-js"
                         :class="{ active: tab === 'SCRIPT' }">
                         <button
+                            type="button"
                             title="Copy Code"
                             class="copy"
                             @click="copy(scriptCode)" />
@@ -205,6 +225,7 @@ function copy(val: string): void {
                         class="language-css"
                         :class="{ active: tab === 'STYLE' }">
                         <button
+                            type="button"
                             title="Copy Code"
                             class="copy"
                             @click="copy(styleCode)" />
