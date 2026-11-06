@@ -4,9 +4,10 @@ import { ref } from "vue";
 import OTabs from "@/components/tabs/Tabs.vue";
 import OTabItem from "@/components/tabs/TabItem.vue";
 
-defineProps({
-    isStepsClickable: { type: Boolean, default: false },
-});
+defineProps<{
+    /** make the tab items clickable */
+    isStepsClickable?: boolean;
+}>();
 
 const activeTab = ref(1);
 </script>

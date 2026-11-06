@@ -1,5 +1,49 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`ODialog test > alert case 1`] = `
+"<teleport-stub to="[object HTMLBodyElement]" disabled="true">
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="alertdialog" closedby="closerequest" open="">
+      <!-- Backdrop -->
+      <div class="o-dialog__backdrop"></div>
+      <div class="o-dialog__content" style="max-width: 80vw; max-height: 80vh;">
+        <!-- Header -->
+        <!--v-if-->
+        <!-- Body -->
+        <!--v-if-->
+        <!-- Loading -->
+        <transition-stub name="fade" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub><!-- Footer -->
+        <!--v-if-->
+      </div>
+    </dialog>
+  </transition-stub>
+</teleport-stub>"
+`;
+
+exports[`ODialog test > modal case 1`] = `
+"<teleport-stub to="[object HTMLBodyElement]" disabled="true">
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="dialog" closedby="any" open="">
+      <!-- Backdrop -->
+      <div class="o-dialog__backdrop"></div>
+      <div class="o-dialog__content" style="max-width: 80vw; max-height: 80vh;">
+        <!-- Header -->
+        <!--v-if-->
+        <!-- Body -->
+        <!--v-if-->
+        <!-- Loading -->
+        <transition-stub name="fade" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub><!-- Footer -->
+        <!--v-if-->
+      </div>
+    </dialog>
+  </transition-stub>
+</teleport-stub>"
+`;
+
 exports[`ODialog test > render correctly 1`] = `
 "<teleport-stub to="[object HTMLBodyElement]" disabled="true">
   <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
@@ -30,50 +74,6 @@ exports[`ODialog test > render correctly 1`] = `
             <!--v-if--><span class="o-button__label">OK</span>
             <!--v-if-->
           </button></footer>
-      </div>
-    </dialog>
-  </transition-stub>
-</teleport-stub>"
-`;
-
-exports[`ODialog test > test alert case 1`] = `
-"<teleport-stub to="[object HTMLBodyElement]" disabled="true">
-  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
-    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="alertdialog" closedby="closerequest" open="">
-      <!-- Backdrop -->
-      <div class="o-dialog__backdrop"></div>
-      <div class="o-dialog__content" style="max-width: 80vw; max-height: 80vh;">
-        <!-- Header -->
-        <!--v-if-->
-        <!-- Body -->
-        <!--v-if-->
-        <!-- Loading -->
-        <transition-stub name="fade" appear="false" persisted="false" css="true">
-          <!--v-if-->
-        </transition-stub><!-- Footer -->
-        <!--v-if-->
-      </div>
-    </dialog>
-  </transition-stub>
-</teleport-stub>"
-`;
-
-exports[`ODialog test > test modal case 1`] = `
-"<teleport-stub to="[object HTMLBodyElement]" disabled="true">
-  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
-    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="dialog" closedby="any" open="">
-      <!-- Backdrop -->
-      <div class="o-dialog__backdrop"></div>
-      <div class="o-dialog__content" style="max-width: 80vw; max-height: 80vh;">
-        <!-- Header -->
-        <!--v-if-->
-        <!-- Body -->
-        <!--v-if-->
-        <!-- Loading -->
-        <transition-stub name="fade" appear="false" persisted="false" css="true">
-          <!--v-if-->
-        </transition-stub><!-- Footer -->
-        <!--v-if-->
       </div>
     </dialog>
   </transition-stub>

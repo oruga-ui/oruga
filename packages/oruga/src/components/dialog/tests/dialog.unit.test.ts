@@ -42,7 +42,7 @@ describe("ODialog test", () => {
         expect(backdrop.exists()).toBeFalsy();
     });
 
-    test("test modal case", () => {
+    test("modal case", () => {
         const wrapper = mount(ODialog, {
             props: {
                 active: true,
@@ -71,7 +71,7 @@ describe("ODialog test", () => {
         expect(backdrop.exists()).toBeTruthy();
     });
 
-    test("test alert case", () => {
+    test("alert case", () => {
         const wrapper = mount(ODialog, {
             props: {
                 active: true,
@@ -118,7 +118,7 @@ describe("ODialog test", () => {
         expect(dialog.classes("o-dialog--active")).toBeFalsy();
     });
 
-    test("test loading", () => {
+    test("loading", () => {
         const wrapper = mount(ODialog, {
             props: { loading: true },
         });
@@ -127,8 +127,8 @@ describe("ODialog test", () => {
         expect(loading.exists()).toBeTruthy();
     });
 
-    describe("test header", () => {
-        test("test header", () => {
+    describe("verify header", () => {
+        test("header", () => {
             const wrapper = mount(ODialog, {
                 props: {
                     title: "Adcanced Title",
@@ -143,7 +143,7 @@ describe("ODialog test", () => {
             );
         });
 
-        test("test header slot", () => {
+        test("header slot", () => {
             const headerSlot = "<div>MY HEADER</div>";
             const wrapper = mount(ODialog, {
                 slots: { header: headerSlot },
@@ -154,7 +154,7 @@ describe("ODialog test", () => {
             expect(header.html()).toContain(headerSlot);
         });
 
-        test("test title prop", () => {
+        test("title prop", () => {
             const title = "<div>TEST_TITLE</div>";
             const wrapper = mount(ODialog, {
                 props: { title },
@@ -162,10 +162,10 @@ describe("ODialog test", () => {
 
             const header = wrapper.find(".o-dialog__header");
             expect(header.exists()).toBeTruthy();
-            expect(header.text()).toEqual(title);
+            expect(header.text()).toStrictEqual(title);
         });
 
-        test("test title slot", () => {
+        test("title slot", () => {
             const titleSlot = "<div>TEST_TITLE</div>";
             const wrapper = mount(ODialog, {
                 slots: { title: titleSlot },
@@ -220,7 +220,7 @@ describe("ODialog test", () => {
             expect(dialog.attributes("aria-describedby")).toBe("desc");
         });
 
-        test("test subtitle prop", () => {
+        test("subtitle prop", () => {
             const subtitle = "<div>TEST_SUBTITLE</div>";
             const wrapper = mount(ODialog, {
                 props: { subtitle },
@@ -228,10 +228,10 @@ describe("ODialog test", () => {
 
             const header = wrapper.find(".o-dialog__header");
             expect(header.exists()).toBeTruthy();
-            expect(header.text()).toEqual(subtitle);
+            expect(header.text()).toStrictEqual(subtitle);
         });
 
-        test("test subtitle slot", () => {
+        test("subtitle slot", () => {
             const subtitleSlot = "<div>TEST_SUBTITLE</div>";
             const wrapper = mount(ODialog, {
                 slots: { subtitle: subtitleSlot },
@@ -242,7 +242,7 @@ describe("ODialog test", () => {
             expect(header.html()).toContain(subtitleSlot);
         });
 
-        test("test header closeable ", async () => {
+        test("header closeable", async () => {
             const onClose = vi.fn();
 
             const wrapper = mount(ODialog, {
@@ -265,8 +265,8 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test body", () => {
-        test("test content prop", () => {
+    describe("verify body", () => {
+        test("content prop", () => {
             const content = "<div>TEST_CONTENT</div>";
             const wrapper = mount(ODialog, {
                 props: { content },
@@ -274,10 +274,10 @@ describe("ODialog test", () => {
 
             const body = wrapper.find(".o-dialog__body");
             expect(body.exists()).toBeTruthy();
-            expect(body.text()).toEqual(content);
+            expect(body.text()).toStrictEqual(content);
         });
 
-        test("test content slot", () => {
+        test("content slot", () => {
             const contentSlot = "<div>TEST_CONTENT</div>";
             const wrapper = mount(ODialog, {
                 slots: { default: contentSlot },
@@ -289,8 +289,8 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test footer", () => {
-        test("test footer buttons", () => {
+    describe("verify footer", () => {
+        test("footer buttons", () => {
             const wrapper = mount(ODialog, {
                 props: {
                     confirmButton: "OK",
@@ -304,7 +304,7 @@ describe("ODialog test", () => {
             expect(footer.findAll("button")).toHaveLength(2);
         });
 
-        test("test footer slot", () => {
+        test("footer slot", () => {
             const footerSlot = "<button>MYBUTTON</button>";
             const wrapper = mount(ODialog, {
                 slots: { footer: footerSlot },
@@ -316,8 +316,8 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test buttons", () => {
-        test("test rendering correct", () => {
+    describe("verify buttons", () => {
+        test("rendering correct", () => {
             const wrapper = mount(ODialog, {
                 props: { confirmButton: "ok", cancelButton: "cancel" },
             });
@@ -331,7 +331,7 @@ describe("ODialog test", () => {
             expect(confirmButton.text()).toBe("ok");
         });
 
-        test("test cancel button event", async () => {
+        test("cancel button event", async () => {
             const wrapper = mount(ODialog, {
                 props: {
                     active: true,
@@ -429,7 +429,7 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test draggable", () => {
+    describe("verify draggable", () => {
         const defaultProps = { active: true, title: "Draggable Dialog" };
         const defaultGlobal = { stubs: { transition: true, teleport: true } };
 
@@ -605,7 +605,7 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test teleport", () => {
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(ODialog, {
                 active: true,

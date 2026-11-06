@@ -41,6 +41,8 @@ import type {
 import type { DropdownItemProps, DropdownProps } from "./props";
 import { injectField } from "../field/fieldInjection";
 
+type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
+
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content.
  * @displayName Dropdown
@@ -53,8 +55,6 @@ defineOptions({
     configField: "dropdown",
     inheritAttrs: false,
 });
-
-type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     override: undefined,
@@ -98,6 +98,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown | unknown[]} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
