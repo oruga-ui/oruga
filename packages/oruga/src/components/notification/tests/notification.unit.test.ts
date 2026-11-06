@@ -37,7 +37,9 @@ describe("ONotification tests", () => {
                     props: { content: "Failed", variant },
                 });
                 expect(
-                    wrapper.find("[data-oruga=notification]").attributes("role"),
+                    wrapper
+                        .find("[data-oruga=notification]")
+                        .attributes("role"),
                 ).toBe("alert");
             },
         );
