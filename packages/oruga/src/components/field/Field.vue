@@ -2,6 +2,7 @@
 import {
     computed,
     ref,
+    useAttrs,
     useSlots,
     watch,
     useId,
@@ -121,6 +122,15 @@ if (parentField.value) parentField.value.addInnerField();
 const slots = useSlots();
 
 const hasLabel = computed(() => props.label || !!slots.label);
+
+const attrs = useAttrs();
+
+/** A field with `role="group"` or `role="radiogroup"` is named by its label. */
+const isGroup = computed(
+    () =>
+        !!hasLabel.value &&
+        (attrs.role === "group" || attrs.role === "radiogroup"),
+);
 
 const hasMessage = computed(
     () =>
@@ -281,7 +291,11 @@ const messageClasses = defineClasses(
 </script>
 
 <template>
-    <div ref="rootElement" data-oruga="field" :class="rootClasses">
+    <div
+        ref="rootElement"
+        data-oruga="field"
+        :class="rootClasses"
+        :aria-labelledby="isGroup ? labelId : undefined">
         <div v-if="horizontal" :class="horizontalLabelClasses">
             <label
                 v-if="hasLabel"
