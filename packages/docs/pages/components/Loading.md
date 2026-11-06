@@ -40,16 +40,15 @@ The **Loading** component allows you to display a loading state for use on a glo
 | iconPack       | Icon pack to use for the close icon                                                                                                                                                                                             | string  | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
 | iconSize       | Icon size                                                                                                                                                                                                                       | string  | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconSize: "medium"<br>}</code>  |
 | iconSpin       | Enable spin effect on icon                                                                                                                                                                                                      | boolean | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconSpin: true<br>}</code>      |
-| label          | Show a label beside the icon, unnecessary when default slot is used                                                                                                                                                             | string  | -                                                 |                                                                                                                                                       |
+| label          | Show a label beside the icon.<br/>When the default slot is used, the label is not rendered but names the loading status for assistive technology.                                                                               | string  | -                                                 |                                                                                                                                                       |
 | override       | Override existing theme classes completely                                                                                                                                                                                      | boolean | -                                                 |                                                                                                                                                       |
 
 ### Events
 
-| Event name      | Properties                                  | Description                      |
-| --------------- | ------------------------------------------- | -------------------------------- |
-| update:active   | **value** `boolean` - updated active prop   | active prop two-way binding      |
-| update:fullPage | **value** `boolean` - updated fullPage prop | fullPage prop two-way binding    |
-| close           | **event** `Event` - native event            | on active state changes to false |
+| Event name    | Properties                                | Description                      |
+| ------------- | ----------------------------------------- | -------------------------------- |
+| update:active | **value** `boolean` - updated active prop | active prop two-way binding      |
+| close         | **event** `Event` - native event          | on active state changes to false |
 
 ### Slots
 

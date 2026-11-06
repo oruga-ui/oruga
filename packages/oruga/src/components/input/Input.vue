@@ -27,6 +27,8 @@ import { injectField } from "../field/fieldInjection";
 
 import type { InputProps, InputNativeProps } from "./props";
 
+type ModelValue = InputProps<IsNumber>["modelValue"];
+
 /**
  * Get user Input. Use with Field to access all functionalities.
  * @displayName Input
@@ -38,8 +40,6 @@ defineOptions({
     configField: "input",
     inheritAttrs: false,
 });
-
-type ModelValue = InputProps<IsNumber>["modelValue"];
 
 const props = withDefaults(
     defineProps<
