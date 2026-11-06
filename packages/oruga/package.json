@@ -68,6 +68,7 @@
     "@types/jest-axe": "^3.5.9",
     "@types/jsdom": "^30.0.0",
     "@vitejs/plugin-vue": "^6.0.10",
+    "@vitest/eslint-plugin": "^1.6.28",
     "@vitest/browser-playwright": "^5.0.5",
     "@vitest/coverage-v8": "^5.0.5",
     "@vue/language-core": "^3.3.13",

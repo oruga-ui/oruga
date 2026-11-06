@@ -7,9 +7,9 @@ import {
 } from "@vue/eslint-config-typescript";
 import pluginVue from "eslint-plugin-vue";
 // import pluginVueA11y from "eslint-plugin-vuejs-accessibility";
-// import pluginVitest from "@vitest/eslint-plugin";
-import skipFormattingConfig from "@vue/eslint-config-prettier/skip-formatting";
+import pluginVitest from "@vitest/eslint-plugin";
 import pluginCompat from "eslint-plugin-compat";
+import skipFormattingConfig from "@vue/eslint-config-prettier/skip-formatting";
 
 import { fileURLToPath } from "node:url";
 
@@ -48,10 +48,10 @@ export default defineConfigWithVueTs([
   // ...pluginVueA11y.configs["flat/recommended"],
 
   // add vitest configs
-  // {
-  //   ...pluginVitest.configs.recommended,
-  //   files: ["src/**/__tests__/*"],
-  // },
+  {
+    files: ["**/*.test.ts"],
+    ...pluginVitest.configs.recommended,
+  },
 
   // add vue prettier lint configs
   // deactivate prettier lint checks as recommended at https://github.com/vuejs/eslint-config-prettier?tab=readme-ov-file#use-separate-commands-for-linting-and-formatting
@@ -63,10 +63,10 @@ export default defineConfigWithVueTs([
     name: "overrides",
     rules: {
       // TypeScript
-      "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/ban-ts-comment": "warn",
       "@typescript-eslint/explicit-function-return-type": "warn",
       "@typescript-eslint/no-base-to-string": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-redundant-type-constituents": "warn",
       "@typescript-eslint/no-unnecessary-type-assertion": [

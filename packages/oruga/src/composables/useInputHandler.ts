@@ -324,7 +324,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
                 (): boolean => props.useHtml5Validation ?? true,
                 ():
                     | string
-                    | ((s: ValidityState, v: any) => string)
+                    | ((s: ValidityState, v: ValidityState) => string)
                     | undefined => props.customValidity,
             ],
             (newData, oldData) => {
