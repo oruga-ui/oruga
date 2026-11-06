@@ -31,14 +31,6 @@ import type { AutocompleteProps } from "./props";
 import type { DropdownItemProps } from "../dropdown/props";
 import type { ComponentExposed } from "vue-component-type-helpers";
 
-/**
- * Values of the header, footer and empty dropdown items.
- * Symbols are used so that they can never be equal to an option value.
- */
-const HeaderOption: unique symbol = Symbol("header");
-const FooterOption: unique symbol = Symbol("footer");
-const EmptyOption: unique symbol = Symbol("empty");
-
 type SpecialOption =
     typeof HeaderOption | typeof FooterOption | typeof EmptyOption;
 
@@ -200,6 +192,14 @@ const slots = defineSlots<{
      */
     option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
 }>();
+
+/**
+ * Values of the header, footer and empty dropdown items.
+ * Symbols are used so that they can never be equal to an option value.
+ */
+const HeaderOption: unique symbol = Symbol("header");
+const FooterOption: unique symbol = Symbol("footer");
+const EmptyOption: unique symbol = Symbol("empty");
 
 const dropdownRef =
     useTemplateRef<ComponentExposed<typeof ODropdown<T>>>("dropdownElement");
