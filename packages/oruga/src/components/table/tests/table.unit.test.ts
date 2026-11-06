@@ -546,7 +546,7 @@ describe("OTable tests", () => {
             await nextTick();
 
             const nav = wrapper.find('nav[data-oruga="pagination"]');
-            expect(nav.attributes("aria-label")).toBe("Table pages");
+            expect(nav.attributes("aria-label")).toBe("Pagination");
         });
 
         test("tests sort default when paginated", async () => {
