@@ -280,7 +280,6 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
             :options="options"
             :allow-autocomplete="true"
             icon="tag"
-            placeholder="Add a tag">
-        </o-taginput>
+            placeholder="Add a tag" />
     </inspector-wrapper>
 </template>

@@ -38,11 +38,11 @@ describe("OSlider tests", () => {
 
         expect(wrapper.findAll('[data-oruga="slider-thumb"]')).toHaveLength(2);
         expect(wrapper.findAll('[role="slider"]')).toHaveLength(2);
-        expect(wrapper.vm.value).toEqual([20, 80]);
+        expect(wrapper.vm.value).toStrictEqual([20, 80]);
 
         await wrapper.setProps({ modelValue: [30, 70] });
 
-        expect(wrapper.vm.value).toEqual([30, 70]);
+        expect(wrapper.vm.value).toStrictEqual([30, 70]);
     });
 
     test("renders ticks when enabled", () => {

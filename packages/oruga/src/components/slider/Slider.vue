@@ -11,6 +11,8 @@ import { defineClasses, useProviderParent } from "@/composables";
 import type { SliderComponent } from "./types";
 import type { SliderProps } from "./props";
 
+type ModelValue = SliderProps<IsRange>["modelValue"];
+
 /**
  * A slider to select a value or range from a given range.
  * @displayName Slider
@@ -22,8 +24,6 @@ defineOptions({
     name: "OSlider",
     configField: "slider",
 });
-
-type ModelValue = SliderProps<IsRange>["modelValue"];
 
 const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     override: undefined,

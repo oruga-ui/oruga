@@ -25,6 +25,8 @@ import {
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
 import type { TabsProps } from "./props";
 
+type ModelValue = TabsProps<T>["modelValue"];
+
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease.
  * @displayName Tabs
@@ -36,8 +38,6 @@ defineOptions({
     name: "OTabs",
     configField: "tabs",
 });
-
-type ModelValue = TabsProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<TabsProps<T>>(), {
     override: undefined,
@@ -69,6 +69,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * on tab change event

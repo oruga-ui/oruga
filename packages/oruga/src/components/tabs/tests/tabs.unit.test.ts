@@ -131,7 +131,7 @@ describe("OTabs tests", () => {
             };
         }
 
-        test("test render correctly", async () => {
+        test("render correctly", async () => {
             const wrapper = mount(
                 genTestcomponent(
                     {},

@@ -19,7 +19,7 @@ describe("OPagination tests", () => {
 
         let currentItem = wrapper.find(".o-pagination__button--current");
         expect(currentItem.exists()).toBeTruthy();
-        expect(currentItem.text()).toEqual("1");
+        expect(currentItem.text()).toStrictEqual("1");
 
         wrapper = mount(OPagination, { props: { modelValue: 0, total: 100 } });
         currentItem = wrapper.find(".o-pagination__button--current");
@@ -28,7 +28,7 @@ describe("OPagination tests", () => {
         wrapper = mount(OPagination, { props: { modelValue: 5, total: 100 } });
         currentItem = wrapper.find(".o-pagination__button--current");
         expect(currentItem.exists()).toBeTruthy();
-        expect(currentItem.text()).toEqual("5");
+        expect(currentItem.text()).toStrictEqual("5");
     });
 
     test("should emit change with value of 1 when calling first", () => {

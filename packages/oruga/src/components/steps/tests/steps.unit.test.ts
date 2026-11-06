@@ -41,10 +41,12 @@ describe("OSteps tests", () => {
                 OStepItem,
             },
             props: {
+                /** props bound to the steps component */
                 stepProps: {
                     type: Object as PropType<StepsProps<unknown>>,
                     default: () => {},
                 },
+                /** props bound to the step item component */
                 itemProps: {
                     type: Object as PropType<StepItemProps<unknown, any>>,
                     default: () => {},
@@ -55,7 +57,7 @@ describe("OSteps tests", () => {
                   </OSteps>`,
         });
 
-        test("test render correctly", () => {
+        test("render correctly", () => {
             const wrapper = mount(Testcomponent, {
                 props: {
                     itemProps: {
