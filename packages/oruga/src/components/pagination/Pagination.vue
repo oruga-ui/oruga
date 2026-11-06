@@ -352,33 +352,32 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
         <slot name="previous" v-bind="prevButton">
             <o-button
                 :tag="buttonTag"
-                v-bind="buttonAttrs"
-                :on-click="prevButton.onClick"
                 :aria-label="prevButton.ariaLabel"
                 :aria-current="prevButton.ariaCurrent"
                 :label="undefined"
-                :disabled="isFirst || disabled"
+                :disabled="prevButton.disabled"
                 :icon-left="iconPrev"
                 :icon-pack="iconPack"
                 :rounded="rounded"
                 :size="size"
-                :class="[...buttonBaseClasses, ...buttonPrevClasses]" />
+                v-bind="buttonAttrs"
+                :class="[...buttonBaseClasses, ...buttonPrevClasses]"
+                @click="prevButton.onClick" />
         </slot>
 
         <slot name="next" v-bind="nextButton">
             <o-button
                 :tag="buttonTag"
-                v-bind="buttonAttrs"
-                :on-click="nextButton.onClick"
                 :aria-label="nextButton.ariaLabel"
-                :aria-current="nextButton.ariaCurrent"
                 :label="undefined"
-                :disabled="isLast || disabled"
+                :disabled="nextButton.disabled"
                 :icon-left="iconNext"
                 :icon-pack="iconPack"
                 :rounded="rounded"
                 :size="size"
-                :class="[...buttonBaseClasses, ...buttonNextClasses]" />
+                v-bind="buttonAttrs"
+                :class="[...buttonBaseClasses, ...buttonNextClasses]"
+                @click="nextButton.onClick" />
         </slot>
 
         <small v-if="simple" :class="infoClasses" aria-live="polite">
@@ -399,8 +398,6 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="firstButton">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="buttonAttrs"
-                        :on-click="firstButton.onClick"
                         :aria-label="firstButton.ariaLabel"
                         :aria-current="firstButton.ariaCurrent"
                         :label="firstButton.label"
@@ -408,12 +405,14 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                         :disabled="disabled"
                         :rounded="rounded"
                         :size="size"
+                        v-bind="buttonAttrs"
                         :class="[
                             ...buttonBaseClasses,
                             ...(firstButton.isCurrent
                                 ? buttonCurrentClasses
                                 : []),
-                        ]" />
+                        ]"
+                        @click="firstButton.onClick" />
                 </slot>
             </li>
 
@@ -429,19 +428,19 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="page">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="buttonAttrs"
-                        :on-click="page.onClick"
                         :aria-label="page.ariaLabel"
                         :aria-current="page.ariaCurrent"
                         :label="page.label"
                         :variant="page.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
+                        v-bind="buttonAttrs"
                         :size="size"
                         :class="[
                             ...buttonBaseClasses,
                             ...(page.isCurrent ? buttonCurrentClasses : []),
-                        ]" />
+                        ]"
+                        @click="page.onClick" />
                 </slot>
             </li>
 
@@ -454,21 +453,21 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="lastButton">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="buttonAttrs"
-                        :on-click="lastButton.onClick"
                         :aria-label="lastButton.ariaLabel"
                         :aria-current="lastButton.ariaCurrent"
                         :label="lastButton.label"
                         :variant="lastButton.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
+                        v-bind="buttonAttrs"
                         :size="size"
                         :class="[
                             ...buttonBaseClasses,
                             ...(lastButton.isCurrent
                                 ? buttonCurrentClasses
                                 : []),
-                        ]" />
+                        ]"
+                        @click="lastButton.onClick" />
                 </slot>
             </li>
         </ul>
