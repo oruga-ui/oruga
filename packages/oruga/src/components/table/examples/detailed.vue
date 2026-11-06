@@ -140,7 +140,7 @@ const detailedRows = ref([data.value[0]]);
                     {{ row.name }}
                 </template>
 
-                <button v-else @click="toggleDetails()">
+                <button v-else type="button" @click="toggleDetails()">
                     {{ row.name }}
                 </button>
             </o-table-column>
@@ -178,7 +178,7 @@ const detailedRows = ref([data.value[0]]);
             <template #detail="{ row }">
                 <!-- when using `custom-detail-row`, make sure that each element in the slot has a unique `key` attribute -->
                 <tr v-for="item in row.items" :key="item.name">
-                    <td v-if="showDetailIcon"></td>
+                    <td v-if="showDetailIcon" />
                     <td v-show="columnsVisible['name'].display">
                         {{ item.name }}
                     </td>

@@ -24,7 +24,6 @@ function getType(item: string): string {
     <section>
         <o-field label="Enter some items">
             <o-taginput
-                ref="input"
                 v-model="tags"
                 icon="tag"
                 placeholder="Add an item"

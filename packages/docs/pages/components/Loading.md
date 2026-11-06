@@ -45,11 +45,10 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 ### Events
 
-| Event name      | Properties                                  | Description                      |
-| --------------- | ------------------------------------------- | -------------------------------- |
-| update:active   | **value** `boolean` - updated active prop   | active prop two-way binding      |
-| update:fullPage | **value** `boolean` - updated fullPage prop | fullPage prop two-way binding    |
-| close           | **event** `Event` - native event            | on active state changes to false |
+| Event name    | Properties                                | Description                      |
+| ------------- | ----------------------------------------- | -------------------------------- |
+| update:active | **value** `boolean` - updated active prop | active prop two-way binding      |
+| close         | **event** `Event` - native event          | on active state changes to false |
 
 ### Slots
 

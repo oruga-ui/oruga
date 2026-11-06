@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { EffectScope, effectScope, nextTick, ref } from "vue";
+import type { EffectScope } from "vue";
+import { effectScope, nextTick, ref } from "vue";
 
 import * as config from "@/utils/config";
 import type { OrugaConfig } from "@/types";
@@ -34,8 +35,8 @@ describe("defineClasses test", () => {
         scope.stop();
     });
 
-    describe("test class definition without config", () => {
-        test("test classes processed correct", () => {
+    describe("verify class definition without config", () => {
+        test("classes processed correct", () => {
             const classes = defineClasses(
                 ["rootClass", "o-button"],
                 ["variantClass", "o-button--", variant, !!variant],
@@ -44,7 +45,7 @@ describe("defineClasses test", () => {
                 { vm: mockVM, scope: scope },
             );
 
-            expect(classes.value).toEqual([
+            expect(classes.value).toStrictEqual([
                 { "o-button": true },
                 { "o-button--small": true },
                 { "o-simple-button": true },
@@ -52,7 +53,7 @@ describe("defineClasses test", () => {
             ]);
         });
 
-        test("test apply can change", () => {
+        test("apply can change", () => {
             scope.run(async () => {
                 const apply = ref(false);
                 const classes = defineClasses(
@@ -62,7 +63,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button": true },
                     { "o-button--small": true },
                     { "o-button--expanded": false },
@@ -79,7 +80,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        test("test suffix can change", () => {
+        test("suffix can change", () => {
             scope.run(async () => {
                 const suffix = ref(variant);
                 const classes = defineClasses(
@@ -89,7 +90,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button": true },
                     { "o-button--small": true },
                     { "o-button--expanded": false },
@@ -106,7 +107,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test with instance classes", () => {
+        describe("verify with instance classes", () => {
             const mockVM = {
                 proxy: {
                     $options: {
@@ -122,7 +123,7 @@ describe("defineClasses test", () => {
                 },
             } as any;
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -131,7 +132,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button instance-button": true },
                     { "o-button--small instance-button--small": true },
                     { "o-simple-button instance-simple-button": true },
@@ -139,7 +140,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -170,7 +171,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -180,7 +181,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button instance-button": true },
                         { "o-button--small instance-button--small": true },
                         {
@@ -191,7 +192,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button instance-button": true },
                         { "o-button--large instance-button--large": true },
                         {
@@ -202,7 +203,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test with instance classes and override", () => {
+        describe("verify with instance classes and override", () => {
             const mockVM = {
                 proxy: {
                     $options: {
@@ -219,7 +220,7 @@ describe("defineClasses test", () => {
                 },
             } as any;
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -228,7 +229,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "instance-button": true },
                     { "instance-button--small": true },
                     { "instance-simple-button": true },
@@ -236,7 +237,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -263,7 +264,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -273,7 +274,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "instance-button": true },
                         { "instance-button--small": true },
                         {
@@ -284,7 +285,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "instance-button": true },
                         { "instance-button--large": true },
                         { "instance-button--expanded": false },
@@ -294,8 +295,8 @@ describe("defineClasses test", () => {
         });
     });
 
-    describe("test class definition with config", () => {
-        describe("test config without override", () => {
+    describe("verify class definition with config", () => {
+        describe("verify config without override", () => {
             beforeEach(() => {
                 vi.spyOn(config, "getConfig").mockImplementation(
                     () =>
@@ -314,7 +315,7 @@ describe("defineClasses test", () => {
                 vi.clearAllMocks();
             });
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -323,7 +324,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button my-button": true },
                     { "o-button--small my-button--small": true },
                     { "o-simple-button my-simple-button": true },
@@ -331,7 +332,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -341,7 +342,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button": true },
                         { "o-button--small my-button--small": true },
                         { "o-button--expanded my-button--expanded": false },
@@ -350,7 +351,7 @@ describe("defineClasses test", () => {
                     apply.value = true;
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button": true },
                         { "o-button--small my-button--small": true },
                         { "o-button--expanded my-button--expanded": true },
@@ -358,7 +359,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -368,7 +369,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button": true },
                         { "o-button--small my-button--small": true },
                         { "o-button--expanded my-button--expanded": false },
@@ -377,7 +378,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button": true },
                         { "o-button--large my-button--large": true },
                         { "o-button--expanded my-button--expanded": false },
@@ -386,7 +387,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test config with override", () => {
+        describe("verify config with override", () => {
             beforeEach(() => {
                 vi.spyOn(config, "getConfig").mockImplementation(
                     () =>
@@ -406,7 +407,7 @@ describe("defineClasses test", () => {
                 vi.clearAllMocks();
             });
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -415,7 +416,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "my-button": true },
                     { "my-button--small": true },
                     { "my-simple-button": true },
@@ -423,7 +424,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -433,7 +434,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "my-button": true },
                         { "my-button--small": true },
                         { "my-button--expanded": false },
@@ -450,7 +451,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -460,7 +461,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "my-button": true },
                         { "my-button--small": true },
                         { "my-button--expanded": false },
@@ -478,7 +479,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test with instance classes", () => {
+        describe("verify with instance classes", () => {
             const mockVM = {
                 proxy: {
                     $options: {
@@ -512,7 +513,7 @@ describe("defineClasses test", () => {
                 vi.clearAllMocks();
             });
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -521,7 +522,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button my-button instance-button": true },
                     {
                         "o-button--small my-button--small instance-button--small": true,
@@ -535,7 +536,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -570,7 +571,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -580,7 +581,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button instance-button": true },
                         {
                             "o-button--small my-button--small instance-button--small": true,
@@ -593,7 +594,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button instance-button": true },
                         {
                             "o-button--large my-button--large instance-button--large": true,
@@ -606,7 +607,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test with instance classes and override", () => {
+        describe("verify with instance classes and override", () => {
             const mockVM = {
                 proxy: {
                     $options: {
@@ -640,7 +641,7 @@ describe("defineClasses test", () => {
                 vi.clearAllMocks();
             });
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -649,7 +650,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "instance-button": true },
                     { "instance-button--small": true },
                     { "instance-simple-button": true },
@@ -657,7 +658,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -684,7 +685,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -694,7 +695,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "instance-button": true },
                         { "instance-button--small": true },
                         {
@@ -705,7 +706,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "instance-button": true },
                         { "instance-button--large": true },
                         { "instance-button--expanded": false },

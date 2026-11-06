@@ -47,11 +47,6 @@ const emits = defineEmits<{
      */
     "update:active": [value: boolean];
     /**
-     * fullPage prop two-way binding
-     * @param value {boolean} - updated fullPage prop
-     */
-    "update:fullPage": [value: boolean];
-    /**
      * on active state changes to false
      * @param event {Event} - native event
      */

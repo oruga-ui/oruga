@@ -18,6 +18,8 @@ import type { Numberish } from "@/types";
 import type { DropdownItemProps } from "../dropdown/props";
 import type { ComponentExposed } from "vue-component-type-helpers";
 
+type ModelValue = TaginputProps<T>["modelValue"];
+
 /**
  * A simple tag input field that can have autocomplete functionality.
  * @displayName Taginput
@@ -29,8 +31,6 @@ defineOptions({
     configField: "taginput",
     inheritAttrs: false,
 });
-
-type ModelValue = TaginputProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<TaginputProps<T>>(), {
     override: undefined,
@@ -357,7 +357,7 @@ defineExpose({
 
 <template>
     <div data-oruga="taginput" :class="rootClasses">
-        <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
+        <div :class="containerClasses">
             <slot
                 name="selected"
                 :items="selectedItems"

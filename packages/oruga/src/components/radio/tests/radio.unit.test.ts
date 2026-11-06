@@ -59,7 +59,7 @@ describe("ORadio tests", () => {
         expect(input.attributes("disabled")).not.toBeUndefined();
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(ORadio);
 
@@ -86,7 +86,7 @@ describe("ORadio tests", () => {
             });
         });
 
-        test("react accordingly when value change ", async () => {
+        test("react accordingly when value change", async () => {
             const value1 = true;
             const value2 = false;
             const model = value2;
@@ -115,23 +115,23 @@ describe("ORadio tests", () => {
             expect(input1.exists()).toBeTruthy();
             const input2 = wrapper2.find("input");
             expect(input2.exists()).toBeTruthy();
-            expect(wrapper1.vm.value).toEqual(model);
-            expect(wrapper2.vm.value).toEqual(model);
+            expect(wrapper1.vm.value).toStrictEqual(model);
+            expect(wrapper2.vm.value).toStrictEqual(model);
 
             await input1.setValue(true);
 
             let emits = wrapper1.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(value1);
-            expect(wrapper1.vm.value).toEqual(value1);
-            expect(wrapper2.vm.value).toEqual(value1);
+            expect(wrapper1.vm.value).toStrictEqual(value1);
+            expect(wrapper2.vm.value).toStrictEqual(value1);
 
             await input2.setValue();
             emits = wrapper2.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(value2);
-            expect(wrapper1.vm.value).toEqual(value2);
-            expect(wrapper2.vm.value).toEqual(value2);
+            expect(wrapper1.vm.value).toStrictEqual(value2);
+            expect(wrapper2.vm.value).toStrictEqual(value2);
         });
 
         test("react accordingly when custom string values are given", async () => {
@@ -162,23 +162,23 @@ describe("ORadio tests", () => {
             expect(input1.exists()).toBeTruthy();
             const input2 = wrapper2.find("input");
             expect(input2.exists()).toBeTruthy();
-            expect(wrapper1.vm.value).toEqual(model);
-            expect(wrapper2.vm.value).toEqual(model);
+            expect(wrapper1.vm.value).toStrictEqual(model);
+            expect(wrapper2.vm.value).toStrictEqual(model);
 
             await input1.setValue(true);
 
             let emits = wrapper1.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(value1);
-            expect(wrapper1.vm.value).toEqual(value1);
-            expect(wrapper2.vm.value).toEqual(value1);
+            expect(wrapper1.vm.value).toStrictEqual(value1);
+            expect(wrapper2.vm.value).toStrictEqual(value1);
 
             await input2.setValue();
             emits = wrapper2.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(value2);
-            expect(wrapper1.vm.value).toEqual(value2);
-            expect(wrapper2.vm.value).toEqual(value2);
+            expect(wrapper1.vm.value).toStrictEqual(value2);
+            expect(wrapper2.vm.value).toStrictEqual(value2);
         });
 
         test("react accordingly when custom object values are given", async () => {
@@ -209,23 +209,23 @@ describe("ORadio tests", () => {
             expect(input1.exists()).toBeTruthy();
             const input2 = wrapper2.find("input");
             expect(input2.exists()).toBeTruthy();
-            expect(wrapper1.vm.value).toEqual(model);
-            expect(wrapper2.vm.value).toEqual(model);
+            expect(wrapper1.vm.value).toStrictEqual(model);
+            expect(wrapper2.vm.value).toStrictEqual(model);
 
             await input1.setValue(true);
 
             let emits = wrapper1.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(value1);
-            expect(wrapper1.vm.value).toEqual(value1);
-            expect(wrapper2.vm.value).toEqual(value1);
+            expect(wrapper1.vm.value).toStrictEqual(value1);
+            expect(wrapper2.vm.value).toStrictEqual(value1);
 
             await input2.setValue();
             emits = wrapper2.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(value2);
-            expect(wrapper1.vm.value).toEqual(value2);
-            expect(wrapper2.vm.value).toEqual(value2);
+            expect(wrapper1.vm.value).toStrictEqual(value2);
+            expect(wrapper2.vm.value).toStrictEqual(value2);
         });
     });
 });
