@@ -3027,17 +3027,17 @@ whether the value of the form's controls can be automatically completed by the b
                  * Accessibility label for the checkbox of a row.
 A string can use the `{value}` placeholder for the row label, a function receives the label.
                  */
-                ariaCheckRowLabel: string | ((label: string) => string);
+                ariaCheckRowLabel: string | ((value: string) => string);
                 /**
                  * Accessibility label for the toggle button of the row detail.
 A string can use the `{value}` placeholder for the row label, a function receives the label.
                  */
-                ariaOpenDetailLabel: string | ((label: string) => string);
+                ariaOpenDetailLabel: string | ((value: string) => string);
                 /**
                  * Accessibility label for the filter input of a column.
 A string can use the `{value}` placeholder for the column label, a function receives the label.
                  */
-                ariaColumnFilterLabel: string | ((label: string) => string);
+                ariaColumnFilterLabel: string | ((value: string) => string);
                 /**
                  * Class of the root element
                  */
