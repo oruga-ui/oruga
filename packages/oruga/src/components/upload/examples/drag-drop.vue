@@ -28,8 +28,7 @@ function deleteDropFile(index): void {
                     icon-left="times"
                     size="small"
                     native-type="button"
-                    @click="deleteDropFile(index)">
-                </o-button>
+                    @click="deleteDropFile(index)" />
             </span>
         </div>
     </section>

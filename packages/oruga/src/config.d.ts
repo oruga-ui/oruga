@@ -201,10 +201,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 activeClass: ClassDefinition;
                 /**
-                 * Class of the item separator element
-                 */
-                seperatorClass: ClassDefinition;
-                /**
                  * Class of the item link element
                  */
                 linkClass: ClassDefinition;
@@ -634,6 +630,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Accessibility next button aria label
                  */
                 ariaNextLabel: string;
+                /**
+                 * Accessibility previous button aria label
+                 */
+                ariaPreviousLabel: string;
                 /**
                  * Accessibility month select aria label
                  */
@@ -1111,7 +1111,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class of the footer confirm button element
                  */
-                confirmButtunClass: ClassDefinition;
+                confirmButtonClass: ClassDefinition;
                 /**
                  * Class of the footer cancel button element
                  */

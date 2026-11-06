@@ -13,6 +13,8 @@ import { useTimepickerMixins } from "./useTimepickerMixins";
 import type { TimepickerProps } from "./props";
 import type { SelectOption } from "../select";
 
+type ModelValue = TimepickerProps["modelValue"];
+
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile.
  * @displayName Timepicker
@@ -23,8 +25,6 @@ defineOptions({
     name: "OTimepicker",
     configField: "timepicker",
 });
-
-type ModelValue = TimepickerProps["modelValue"];
 
 const props = withDefaults(defineProps<TimepickerProps>(), {
     override: undefined,
@@ -81,6 +81,7 @@ defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: Date];
     /**
      * active prop two-way binding

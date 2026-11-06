@@ -33,7 +33,7 @@ describe("OTooltip tests", () => {
         );
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("render default trigger slot correctly", () => {
             const triggerHTML = '<button class="trigger">trigger</button>';
             const wrapper = mount(OTooltip, {
@@ -352,7 +352,7 @@ describe("OTooltip tests", () => {
         });
     });
 
-    describe("test teleport", () => {
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(OTooltip, {
                 props: { teleport: true },

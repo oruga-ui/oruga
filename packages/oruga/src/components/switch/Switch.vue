@@ -8,6 +8,8 @@ import { injectField } from "../field/fieldInjection";
 
 import type { SwitchProps, SwitchNativeProps } from "./props";
 
+type ModelValue = SwitchProps<T>["modelValue"];
+
 /**
  * Switch between two opposing states.
  * @displayName Switch
@@ -19,8 +21,6 @@ defineOptions({
     configField: "switch",
     inheritAttrs: false,
 });
-
-type ModelValue = SwitchProps<T>["modelValue"];
 
 const props = withDefaults(
     defineProps<
