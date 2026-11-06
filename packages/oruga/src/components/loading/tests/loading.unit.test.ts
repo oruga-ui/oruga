@@ -118,6 +118,7 @@ describe("OLoading tests", () => {
             expect(wrapper.emitted("update:active")).toBeUndefined();
         });
     });
+
     describe("accessible name", () => {
         test("without a slot the label is rendered and no aria-label is set", () => {
             const wrapper = mount(OLoading, {
@@ -134,9 +135,11 @@ describe("OLoading tests", () => {
                 props: { active: true, label: "Loading data" },
                 slots: { default: "<span>custom</span>" },
             });
-            expect(wrapper.attributes("role")).toBe("status");
-            expect(wrapper.attributes("aria-label")).toBe("Loading data");
-            expect(wrapper.find(".o-loading__label").exists()).toBe(false);
+            const div = wrapper.find('[data-oruga="loading"]');
+            expect(div.exists()).toBeTruthy();
+            expect(div.attributes("role")).toBe("status");
+            expect(div.attributes("aria-label")).toBe("Loading data");
+            expect(div.find(".o-loading__label").exists()).toBe(false);
         });
     });
 });
