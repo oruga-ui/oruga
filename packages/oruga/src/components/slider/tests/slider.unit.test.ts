@@ -78,17 +78,17 @@ describe("OSlider tests", () => {
 
             // move the start thumb past the end thumb
             await startThumb.trigger("keydown", { key: "End" });
-            expect(wrapper.vm.value).toEqual([80, 100]);
+            expect(wrapper.vm.value).toStrictEqual([80, 100]);
 
             // move the end thumb down to zero
             await endThumb.trigger("keydown", { key: "Home" });
-            expect(wrapper.vm.value).toEqual([0, 100]);
+            expect(wrapper.vm.value).toStrictEqual([0, 100]);
             expect(startThumb.attributes("aria-valuenow")).toBe("100");
             expect(endThumb.attributes("aria-valuenow")).toBe("0");
 
             // move the end thumb up again from where it is
             await endThumb.trigger("keydown", { key: "ArrowRight" });
-            expect(wrapper.vm.value).toEqual([1, 100]);
+            expect(wrapper.vm.value).toStrictEqual([1, 100]);
             expect(startThumb.attributes("aria-valuenow")).toBe("100");
             expect(endThumb.attributes("aria-valuenow")).toBe("1");
         });
@@ -105,13 +105,13 @@ describe("OSlider tests", () => {
 
             // move the start thumb past the end thumb
             await startThumb.trigger("keydown", { key: "End" });
-            expect(wrapper.vm.value).toEqual([20, 50]);
+            expect(wrapper.vm.value).toStrictEqual([20, 50]);
 
             // move the end thumb down through zero
             for (let i = 0; i < 25; i++)
                 await endThumb.trigger("keydown", { key: "ArrowLeft" });
 
-            expect(wrapper.vm.value).toEqual([-5, 50]);
+            expect(wrapper.vm.value).toStrictEqual([-5, 50]);
             expect(startThumb.attributes("aria-valuenow")).toBe("50");
             expect(endThumb.attributes("aria-valuenow")).toBe("-5");
         });

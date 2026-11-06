@@ -71,6 +71,12 @@ function getValue(): T {
 /** Click listener, select the item. */
 function onClick(event: Event): void {
     if (!props.clickable) return;
+    if (event instanceof KeyboardEvent) {
+        // ignore keys pressed inside interactive content of the item
+        if (event.target !== event.currentTarget) return;
+        // prevent scrolling the page with the space key
+        event.preventDefault();
+    }
     if (isActive.value) parent.value.onClick(event);
     const value = getValue();
     parent.value.setActive(value);
@@ -126,6 +132,7 @@ const imageClasses = defineClasses([
         :class="itemClasses"
         :style="itemStyle"
         :role="parent.indicators ? 'tabpanel' : 'group'"
+        :tabindex="clickable ? (isActive ? 0 : -1) : undefined"
         :aria-labelledby="`carousel-${item.identifier}`"
         aria-roledescription="slide"
         :aria-label="`${item.index + 1} of ${itemsCount}`"

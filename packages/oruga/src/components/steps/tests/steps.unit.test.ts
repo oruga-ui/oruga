@@ -111,6 +111,27 @@ describe("OSteps tests", () => {
             });
         });
 
+        test("prefer the item variant over the steps variant", async () => {
+            const wrapper = mount(OSteps, {
+                props: {
+                    variant: "success",
+                    options: [
+                        { label: "Flint", value: "flint" },
+                        { label: "Silver", value: "silver", variant: "danger" },
+                    ],
+                },
+            });
+            await nextTick(); // await child items got rendered
+
+            const steps = wrapper.findAll("[role=tab]");
+            expect(steps).toHaveLength(2);
+
+            // the steps variant is the fallback for items without own variant
+            expect(steps[0].classes("o-steps__step--success")).toBeTruthy();
+            expect(steps[1].classes("o-steps__step--danger")).toBeTruthy();
+            expect(steps[1].classes("o-steps__step--success")).toBeFalsy();
+        });
+
         describe("handle navigation correctly", () => {
             const options: StepsOptions<string> = [
                 { label: "Flint", value: "flint", clickable: true },

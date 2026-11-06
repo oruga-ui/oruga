@@ -113,7 +113,7 @@ describe("ODatepicker", () => {
             .find<HTMLSelectElement>('select[aria-label="Select Month"]')
             .setValue(0);
 
-        expect(wrapper.emitted("change-month")).toEqual([[0]]);
+        expect(wrapper.emitted("change-month")).toStrictEqual([[0]]);
         expect(wrapper.emitted("change-year")).toBeUndefined();
     });
 
@@ -126,8 +126,8 @@ describe("ODatepicker", () => {
             .find<HTMLSelectElement>('select[aria-label="Select Month"]')
             .trigger("keydown", { key: "ArrowLeft" });
 
-        expect(wrapper.emitted("change-month")).toEqual([[11]]);
-        expect(wrapper.emitted("change-year")).toEqual([[2023]]);
+        expect(wrapper.emitted("change-month")).toStrictEqual([[11]]);
+        expect(wrapper.emitted("change-year")).toStrictEqual([[2023]]);
     });
 
     test("keeps the overlay open on first interaction when clicking a nav button in a populated picker", async () => {
