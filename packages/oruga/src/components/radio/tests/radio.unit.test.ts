@@ -229,6 +229,7 @@ describe("ORadio tests", () => {
             expect(wrapper2.vm.value).toStrictEqual(value2);
         });
     });
+
     describe("accessible name within a field", () => {
         const controls = () =>
             mount(OField, {

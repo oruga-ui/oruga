@@ -174,6 +174,7 @@ describe("OSwitch tests", () => {
             expect(wrapper.vm.value).toStrictEqual(falseValue);
         });
     });
+
     describe("accessible name within a field", () => {
         const controls = () =>
             mount(OField, {
