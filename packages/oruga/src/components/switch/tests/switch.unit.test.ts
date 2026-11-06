@@ -1,7 +1,8 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-import { nextTick } from "vue";
+import { h, nextTick } from "vue";
 
+import OField from "@/components/field/Field.vue";
 import OSwitch from "@/components/switch/Switch.vue";
 
 describe("OSwitch tests", () => {
@@ -171,6 +172,69 @@ describe("OSwitch tests", () => {
             expect(emits?.[0]).toContainEqual(trueValue);
             expect(emits?.[1]).toContainEqual(falseValue);
             expect(wrapper.vm.value).toStrictEqual(falseValue);
+        });
+    });
+
+    describe("accessible name within a field", () => {
+        const controls = () =>
+            mount(OField, {
+                props: { label: "Options", role: "group" },
+                slots: {
+                    default: () => [
+                        h(OSwitch, { label: "First" }),
+                        h(OSwitch, { label: "Second" }),
+                    ],
+                },
+            });
+
+        test("each control is named by its own label", () => {
+            const wrapper = controls();
+            const inputs = wrapper.findAll("input");
+            const labels = wrapper.findAll(".o-switch__label");
+            expect(inputs).toHaveLength(2);
+
+            const fieldLabelId = wrapper
+                .find(".o-field__label")
+                .attributes("id");
+            for (const [idx, input] of inputs.entries()) {
+                const labelId = labels[idx].attributes("id");
+                expect(labelId).toBeTruthy();
+                expect(labelId).not.toBe(fieldLabelId);
+                expect(input.attributes("aria-labelledby")).toBe(labelId);
+            }
+            expect(labels[0].attributes("id")).not.toBe(
+                labels[1].attributes("id"),
+            );
+        });
+
+        test("the field names the group", () => {
+            const wrapper = controls();
+            const fieldLabelId = wrapper
+                .find(".o-field__label")
+                .attributes("id");
+            expect(wrapper.attributes("role")).toBe("group");
+            expect(wrapper.attributes("aria-labelledby")).toBe(fieldLabelId);
+        });
+
+        test("a control without own label is named by the field label", () => {
+            const wrapper = mount(OField, {
+                props: { label: "Newsletter" },
+                slots: { default: () => h(OSwitch) },
+            });
+            expect(wrapper.find("input").attributes("aria-labelledby")).toBe(
+                wrapper.find(".o-field__label").attributes("id"),
+            );
+            expect(wrapper.attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("an own aria-label replaces the labels", () => {
+            const wrapper = mount(OSwitch, {
+                props: { label: "Visible" },
+                attrs: { "aria-label": "Own name" },
+            });
+            const input = wrapper.find("input");
+            expect(input.attributes("aria-label")).toBe("Own name");
+            expect(input.attributes("aria-labelledby")).toBeUndefined();
         });
     });
 });

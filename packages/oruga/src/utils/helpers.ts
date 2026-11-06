@@ -411,6 +411,18 @@ export const isMobileAgent = {
 };
 
 /**
+ * Resolve a placeholder which is either a string with a `{value}` placeholder
+ * or a function which receives the value.
+ */
+export function resolvePlaceholder(
+    label: string | ((value: string) => string) | undefined,
+    value: string | number,
+): string | undefined {
+    if (typeof label === "function") return label(String(value));
+    return label?.replaceAll("{value}", String(value));
+}
+
+/**
  * Split an object into two objects by a predicate on its keys.
  *
  * @param obj - Object to split.

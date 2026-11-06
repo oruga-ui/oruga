@@ -14,6 +14,16 @@ describe("OPagination tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    test("should name the nav landmark with the aria-label prop", () => {
+        let wrapper = mount(OPagination, { props: { total: 100 } });
+        expect(wrapper.attributes("aria-label")).toBe("Pagination");
+
+        wrapper = mount(OPagination, {
+            props: { total: 100, ariaLabel: "Search results" },
+        });
+        expect(wrapper.attributes("aria-label")).toBe("Search results");
+    });
+
     test("should select current item correctly", () => {
         let wrapper = mount(OPagination, { props: { total: 100 } });
 

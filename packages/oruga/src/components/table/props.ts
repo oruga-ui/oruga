@@ -175,6 +175,8 @@ export type TableProps<T> = {
     mobileCards?: boolean;
     /** Select placeholder text when nothing is selected (if mobileCards)*/
     mobileSortPlaceholder?: string;
+    /** Accessibility label for the pagination `nav` landmark. */
+    ariaPaginationLabel?: string;
     /** Accessibility label for the pagination next page button. */
     ariaNextLabel?: string;
     /** Accessibility label for the pagination previous page button. */
@@ -183,6 +185,23 @@ export type TableProps<T> = {
     ariaPageLabel?: string;
     /** Accessibility label for the pagination current page button. */
     ariaCurrentLabel?: string;
+    /** Accessibility label for the check all rows checkbox. */
+    ariaCheckAllLabel?: string;
+    /**
+     * Accessibility label for the checkbox of a row.
+     * A string can use the `{value}` placeholder for the row label, a function receives the label.
+     */
+    ariaCheckRowLabel?: string | ((value: string) => string);
+    /**
+     * Accessibility label for the toggle button of the row detail.
+     * A string can use the `{value}` placeholder for the row label, a function receives the label.
+     */
+    ariaOpenDetailLabel?: string | ((value: string) => string);
+    /**
+     * Accessibility label for the filter input of a column.
+     * A string can use the `{value}` placeholder for the column label, a function receives the label.
+     */
+    ariaColumnFilterLabel?: string | ((value: string) => string);
 } & TableClasses;
 
 // class props (will not be displayed in the docs)

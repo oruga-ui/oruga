@@ -12,7 +12,7 @@ import { File } from "@/utils/ssr";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { UploadProps, UploadNativeProps } from "./props";
 
@@ -222,10 +222,9 @@ function onClick(event: Event): void {
 
 const attrs = useAttrs();
 
-const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
-}));
+const inputBind = computed(() =>
+    mergeFieldAttrs(parentField?.value?.inputAttrs, attrs),
+);
 
 const rootClasses = defineClasses(
     ["rootClass", "o-upload"],

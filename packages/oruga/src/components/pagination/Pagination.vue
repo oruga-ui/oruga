@@ -38,6 +38,7 @@ const props = withDefaults(defineProps<PaginationProps>(), {
     iconPrev: () => getDefault("pagination.iconPrev", "chevron-left"),
     iconNext: () => getDefault("pagination.iconNext", "chevron-right"),
     mobileBreakpoint: () => getDefault("pagination.mobileBreakpoint"),
+    ariaLabel: () => getDefault("pagination.ariaLabel", "Pagination"),
     ariaNextLabel: () => getDefault("pagination.ariaNextLabel", "Next page"),
     ariaPreviousLabel: () =>
         getDefault("pagination.ariaPreviousLabel", "Previous page"),
@@ -348,7 +349,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
 </script>
 
 <template>
-    <nav data-oruga="pagination" :class="rootClasses">
+    <nav data-oruga="pagination" :class="rootClasses" :aria-label="ariaLabel">
         <slot name="previous" v-bind="prevButton">
             <o-button
                 :tag="buttonTag"

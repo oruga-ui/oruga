@@ -47,6 +47,8 @@ const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     format: () => getDefault("slider.format", "raw"),
     locale: () => getDefault("locale"),
     ariaLabel: () => getDefault("slider.ariaLabel"),
+    ariaStartLabel: () => getDefault("slider.ariaStartLabel"),
+    ariaEndLabel: () => getDefault("slider.ariaEndLabel"),
 });
 
 const emits = defineEmits<{
@@ -113,6 +115,12 @@ const maxValue = computed(() =>
 );
 
 const isRange = computed(() => isTrueish(props.range));
+
+/** Name of the (start) thumb. Only a range slider has separate start and end names. */
+const startLabel = computed(() =>
+    isRange.value ? (props.ariaStartLabel ?? props.ariaLabel) : props.ariaLabel,
+);
+const endLabel = computed(() => props.ariaEndLabel ?? props.ariaLabel);
 
 const vmodel = computed<ModelValue>(
     () =>
@@ -322,6 +330,7 @@ defineExpose({ value: vmodel });
             <o-slider-thumb
                 ref="thumbStartComponent"
                 v-model="valueStart"
+                :aria-label="startLabel"
                 :slider-props="props"
                 :slider-size="getSliderSize"
                 :thumb-classes="thumbClasses"
@@ -334,6 +343,7 @@ defineExpose({ value: vmodel });
                 v-if="isRange"
                 ref="thumbEndComponent"
                 v-model="valueEnd"
+                :aria-label="endLabel"
                 :slider-props="props"
                 :slider-size="getSliderSize"
                 :thumb-classes="thumbClasses"
