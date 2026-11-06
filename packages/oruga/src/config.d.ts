@@ -363,6 +363,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 ariaPreviousLabel: string;
                 /**
+                 * Accessibility aria label of the slide indicators
+                 */
+                ariaIndicatorsLabel: string;
+                /**
+                 * Accessibility aria label of a slide indicator.
+A string can use the `{value}` placeholder for the slide number, a function receives the number.
+                 */
+                ariaIndicatorLabel: string | ((value: string) => string);
+                /**
                  * Class of the root element
                  */
                 rootClass: ClassDefinition;
@@ -1570,6 +1579,10 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 filterPlaceholder: string;
                 /**
+                 * Accessibility label for the filter input
+                 */
+                ariaFilterLabel: string;
+                /**
                  * Number of milliseconds to delay the filter event
                  */
                 filterDebounce: number;
@@ -2537,9 +2550,18 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 format: "percent" | "raw";
                 /**
-                 * Accessibility aria-label to to be passed to the slider thumb element.
+                 * Accessibility aria-label to be passed to the slider thumb element.
+It replaces the label of a parent field as the name of the thumb.
                  */
                 ariaLabel: string;
+                /**
+                 * Accessibility label for the start thumb of a range slider, falls back to `ariaLabel`.
+                 */
+                ariaStartLabel: string;
+                /**
+                 * Accessibility label for the end thumb of a range slider, falls back to `ariaLabel`.
+                 */
+                ariaEndLabel: string;
                 /**
                  * Class of the root element
                  */
@@ -3014,6 +3036,25 @@ whether the value of the form's controls can be automatically completed by the b
                  * Accessibility label for the pagination current page button.
                  */
                 ariaCurrentLabel: string;
+                /**
+                 * Accessibility label for the check all rows checkbox.
+                 */
+                ariaCheckAllLabel: string;
+                /**
+                 * Accessibility label for the checkbox of a row.
+A string can use the `{value}` placeholder for the row label, a function receives the label.
+                 */
+                ariaCheckRowLabel: string | ((value: string) => string);
+                /**
+                 * Accessibility label for the toggle button of the row detail.
+A string can use the `{value}` placeholder for the row label, a function receives the label.
+                 */
+                ariaOpenDetailLabel: string | ((value: string) => string);
+                /**
+                 * Accessibility label for the filter input of a column.
+A string can use the `{value}` placeholder for the column label, a function receives the label.
+                 */
+                ariaColumnFilterLabel: string | ((value: string) => string);
                 /**
                  * Class of the root element
                  */
@@ -3730,6 +3771,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * A label which is displayed when no options are visible
                  */
                 emptyLabel: string;
+                /**
+                 * Accessibility label for the filter input
+                 */
+                ariaFilterLabel: string;
                 /**
                  * The chevron icon to for the toggle element before each item
                  */

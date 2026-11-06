@@ -672,4 +672,15 @@ describe("OListbox tests", () => {
             expect(wrapper.emitted("filter")?.[0][0]).contain(options[2].value);
         });
     });
+
+    test("label the filter input", async () => {
+        const wrapper = mount(OListbox, {
+            props: { options, filterable: true },
+        });
+        const input = wrapper.find('[data-oruga="input"] input');
+        expect(input.attributes("aria-label")).toBe("listbox filter input");
+
+        await wrapper.setProps({ ariaFilterLabel: "Filter the cities" });
+        expect(input.attributes("aria-label")).toBe("Filter the cities");
+    });
 });

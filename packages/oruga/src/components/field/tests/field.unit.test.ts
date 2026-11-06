@@ -201,4 +201,39 @@ describe("OField tests", () => {
             expect(messages[0].text()).toBe(message);
         });
     });
+
+    describe("accessible name of the control", () => {
+        test("a control uses the label of the field", () => {
+            const wrapper = mount(OField, {
+                props: { label: "Name" },
+                slots: { default: h(OInput) },
+            });
+            const label = wrapper.find("label");
+            expect(wrapper.find("input").attributes("aria-labelledby")).toBe(
+                label.attributes("id"),
+            );
+        });
+
+        test("an own aria-label replaces the label of the field", () => {
+            const wrapper = mount(OField, {
+                props: { label: "Name" },
+                slots: { default: h(OInput, { "aria-label": "First name" }) },
+            });
+            const input = wrapper.find("input");
+            expect(input.attributes("aria-label")).toBe("First name");
+            expect(input.attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("an own aria-labelledby overrides the label of the field", () => {
+            const wrapper = mount(OField, {
+                props: { label: "Name" },
+                slots: {
+                    default: h(OInput, { "aria-labelledby": "other-id" }),
+                },
+            });
+            expect(wrapper.find("input").attributes("aria-labelledby")).toBe(
+                "other-id",
+            );
+        });
+    });
 });

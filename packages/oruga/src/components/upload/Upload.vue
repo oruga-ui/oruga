@@ -12,7 +12,7 @@ import { File } from "@/utils/ssr";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { UploadProps, UploadNativeProps } from "./props";
 
@@ -199,6 +199,16 @@ function checkType(file: File): boolean {
     return false;
 }
 
+/**
+ * Open the file dialog from the keyboard.
+ * A click on the drag zone reaches the input through the surrounding label,
+ * but the Enter and Space keys do not.
+ */
+function openFileDialog(): void {
+    if (props.disabled) return;
+    inputRef.value?.click();
+}
+
 function onClick(event: Event): void {
     if (props.disabled) return;
     // click input only if not drag and drop is used
@@ -212,10 +222,9 @@ function onClick(event: Event): void {
 
 const attrs = useAttrs();
 
-const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
-}));
+const inputBind = computed(() =>
+    mergeFieldAttrs(parentField?.value?.inputAttrs, attrs),
+);
 
 const rootClasses = defineClasses(
     ["rootClass", "o-upload"],
@@ -277,14 +286,17 @@ defineExpose({
         <div
             v-else
             role="button"
-            tabindex="0"
+            :tabindex="disabled ? undefined : 0"
+            :aria-disabled="disabled || undefined"
             :class="dragzoneClasses"
             @pointerenter="updateDragDropFocus(true)"
             @pointerleave="updateDragDropFocus(false)"
             @dragover.prevent="updateDragDropFocus(true)"
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
-            @drop.prevent="onFileChange">
+            @drop.prevent="onFileChange"
+            @keydown.enter.self.prevent="openFileDialog"
+            @keydown.space.self.prevent="openFileDialog">
             <slot :click="onClick" />
         </div>
 

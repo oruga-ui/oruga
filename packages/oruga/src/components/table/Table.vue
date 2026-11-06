@@ -31,6 +31,7 @@ import {
     sortBy,
     isDefined,
     getPropertyValue,
+    resolvePlaceholder,
 } from "@/utils/helpers";
 import {
     defineClasses,
@@ -139,6 +140,13 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     ariaPreviousLabel: () => getDefault("table.ariaPreviousLabel"),
     ariaPageLabel: () => getDefault("table.ariaPageLabel"),
     ariaCurrentLabel: () => getDefault("table.ariaCurrentLabel"),
+    ariaCheckAllLabel: () => getDefault("table.ariaCheckAllLabel", "Check all"),
+    ariaCheckRowLabel: () =>
+        getDefault("table.ariaCheckRowLabel", "Check {value}"),
+    ariaOpenDetailLabel: () =>
+        getDefault("table.ariaOpenDetailLabel", "Open {value} details"),
+    ariaColumnFilterLabel: () =>
+        getDefault("table.ariaColumnFilterLabel", "{value} filter"),
     loadingAttrs: () => getDefault("table.loadingAttrs"),
 });
 
@@ -1286,7 +1294,7 @@ defineExpose({
                     :total="tableTotal"
                     :rounded="paginationRounded"
                     :size="paginationSize"
-                    :order="paginationOrder"
+                    :position="paginationOrder"
                     :simple="paginationSimple"
                     :range-before="paginationRangeBefore"
                     :range-after="paginationRangeAfter"
@@ -1349,7 +1357,7 @@ defineExpose({
                                     name="row_check_all"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
-                                    aria-label="Check all"
+                                    :aria-label="ariaCheckAllLabel"
                                     @update:model-value="
                                         updateCheckedRows(!!$event)
                                     " />
@@ -1377,10 +1385,17 @@ defineExpose({
                                             : 'descending'
                                         : undefined
                                 "
+                                :tabindex="column.sortable ? 0 : undefined"
                                 :aria-colindex="
                                     ariaColIndexStart + column.index
                                 "
                                 @click.stop="sort(column, true, $event)"
+                                @keydown.enter.self.prevent="
+                                    sort(column, true, $event)
+                                "
+                                @keydown.space.self.prevent="
+                                    sort(column, true, $event)
+                                "
                                 @dragstart="
                                     handleColumnDragStart(column, $event)
                                 "
@@ -1439,7 +1454,7 @@ defineExpose({
                                     name="row_check_all"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
-                                    aria-label="Check all"
+                                    :aria-label="ariaCheckAllLabel"
                                     @update:model-value="
                                         updateCheckedRows(!!$event)
                                     " />
@@ -1492,7 +1507,12 @@ defineExpose({
                                         :icon="filterIcon"
                                         :pack="iconPack"
                                         size="small"
-                                        :aria-label="`${column.label} filter`"
+                                        :aria-label="
+                                            resolvePlaceholder(
+                                                ariaColumnFilterLabel,
+                                                column.label ?? '',
+                                            )
+                                        "
                                         @input="
                                             (v, e) =>
                                                 $emit('filter', column, v, e)
@@ -1610,7 +1630,12 @@ defineExpose({
                                     :pack="iconPack"
                                     :rotation="isDetailRowVisible(row) ? 90 : 0"
                                     clickable
-                                    :aria-label="`Open ${row.label} details`"
+                                    :aria-label="
+                                        resolvePlaceholder(
+                                            ariaOpenDetailLabel,
+                                            row.label,
+                                        )
+                                    "
                                     @click.prevent="toggleDetails(row)" />
                             </td>
 
@@ -1627,7 +1652,12 @@ defineExpose({
                                     :name="`row_${row.index}_check`"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
-                                    :aria-label="`Check ${row.label}`"
+                                    :aria-label="
+                                        resolvePlaceholder(
+                                            ariaCheckRowLabel,
+                                            row.label,
+                                        )
+                                    "
                                     @update:model-value="checkRow(row)" />
                             </td>
 
@@ -1680,7 +1710,12 @@ defineExpose({
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
-                                    :aria-label="`Check ${row.label}`"
+                                    :aria-label="
+                                        resolvePlaceholder(
+                                            ariaCheckRowLabel,
+                                            row.label,
+                                        )
+                                    "
                                     @update:model-value="checkRow(row)" />
                             </td>
                         </tr>
@@ -1769,7 +1804,7 @@ defineExpose({
                     :total="tableTotal"
                     :rounded="paginationRounded"
                     :size="paginationSize"
-                    :order="paginationOrder"
+                    :position="paginationOrder"
                     :simple="paginationSimple"
                     :range-before="paginationRangeBefore"
                     :range-after="paginationRangeAfter"

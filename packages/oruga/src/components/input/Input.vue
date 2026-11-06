@@ -23,7 +23,7 @@ import {
     useInputHandler,
 } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { InputProps, InputNativeProps } from "./props";
 
@@ -298,8 +298,7 @@ function togglePasswordVisibility(): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+    ...mergeFieldAttrs(parentField?.value?.inputAttrs, attrs),
     // maxlength and autocomplete are declared Vue props (not in attrs), so must be explicit
     maxlength: props.maxlength,
     autocomplete: props.autocomplete,

@@ -151,6 +151,7 @@ export default defineConfigWithVueTs([
       // tests mock and probe internals, so strict typing adds mostly noise
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-explicit-any": "off",
+      "vue/one-component-per-file": "off",
       "vitest/consistent-test-it": [
         "error",
         { fn: "test", withinDescribe: "test" },

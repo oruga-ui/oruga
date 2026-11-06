@@ -80,12 +80,16 @@ defineSlots<{
      * @param isCurrent {boolean} - if page is current
      * @param onClick {(event: Event): void} - click handler
      * @param ariaLabel {string} - aria-label attribute
+     * @param ariaCurrent {"page" | undefined} - aria-current attribute, `"page"` for the current page
+     * @param disabled {boolean} - if the pagination is disabled
      */
     default?(props: {
         number: number;
         isCurrent: boolean;
         onClick: (event: Event) => void;
         ariaLabel: string;
+        ariaCurrent?: "page";
+        disabled: boolean;
     }): void;
     /**
      * Define a custom previous button here
@@ -93,12 +97,14 @@ defineSlots<{
      * @param isCurrent {boolean} - if page is current
      * @param onClick {(event: Event): void} - click handler
      * @param ariaLabel {string} - aria-label attribute
+     * @param disabled {boolean} - if there is no previous page or the pagination is disabled
      */
     previous?(props: {
         number: number;
         isCurrent: boolean;
         onClick: (event: Event) => void;
         ariaLabel: string;
+        disabled: boolean;
     }): void;
     /**
      * Define a custom next button here
@@ -106,12 +112,14 @@ defineSlots<{
      * @param isCurrent {boolean} - if page is current
      * @param onClick {(event: Event): void} - click handler
      * @param ariaLabel {string} - aria-label attribute
+     * @param disabled {boolean} - if there is no next page or the pagination is disabled
      */
     next?(props: {
         number: number;
         isCurrent: boolean;
         onClick: (event: Event) => void;
         ariaLabel: string;
+        disabled: boolean;
     }): void;
 }>();
 
@@ -183,17 +191,19 @@ const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
     return pages;
 });
 
-const prevButton = computed(() =>
-    getPage(currentPage.value - 1, props.ariaPreviousLabel, (e, v) =>
+const prevButton = computed(() => ({
+    ...getPage(currentPage.value - 1, props.ariaPreviousLabel, (e, v) =>
         emits("previous", e, v),
     ),
-);
+    disabled: isFirst.value || props.disabled,
+}));
 
-const nextButton = computed(() =>
-    getPage(currentPage.value + 1, props.ariaNextLabel, (e, v) =>
+const nextButton = computed(() => ({
+    ...getPage(currentPage.value + 1, props.ariaNextLabel, (e, v) =>
         emits("next", e, v),
     ),
-);
+    disabled: isLast.value || props.disabled,
+}));
 
 const firstButton = computed(() => getPage(1));
 
@@ -210,7 +220,8 @@ function getPage(
     isCurrent: boolean;
     onClick: (event: Event) => void;
     ariaLabel: string;
-    ariaCurrent: boolean;
+    ariaCurrent?: "page";
+    disabled: boolean;
 } {
     const isCurrent = currentPage.value === num;
     return {
@@ -223,7 +234,8 @@ function getPage(
             if (onClick) onClick(event, num);
         },
         ariaLabel: ariaLabel ?? getAriaPageLabel(num, isCurrent),
-        ariaCurrent: isCurrent,
+        ariaCurrent: isCurrent ? "page" : undefined,
+        disabled: props.disabled,
     };
 }
 
@@ -341,27 +353,32 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
         <slot name="previous" v-bind="prevButton">
             <o-button
                 :tag="buttonTag"
-                v-bind="{ ...prevButton, ...buttonAttrs }"
+                :aria-label="prevButton.ariaLabel"
+                :aria-current="prevButton.ariaCurrent"
                 :label="undefined"
-                :disabled="isFirst || disabled"
+                :disabled="prevButton.disabled"
                 :icon-left="iconPrev"
                 :icon-pack="iconPack"
                 :rounded="rounded"
                 :size="size"
-                :class="[...buttonBaseClasses, ...buttonPrevClasses]" />
+                v-bind="buttonAttrs"
+                :class="[...buttonBaseClasses, ...buttonPrevClasses]"
+                @click="prevButton.onClick" />
         </slot>
 
         <slot name="next" v-bind="nextButton">
             <o-button
                 :tag="buttonTag"
-                v-bind="{ ...nextButton, ...buttonAttrs }"
+                :aria-label="nextButton.ariaLabel"
                 :label="undefined"
-                :disabled="isLast || disabled"
+                :disabled="nextButton.disabled"
                 :icon-left="iconNext"
                 :icon-pack="iconPack"
                 :rounded="rounded"
                 :size="size"
-                :class="[...buttonBaseClasses, ...buttonNextClasses]" />
+                v-bind="buttonAttrs"
+                :class="[...buttonBaseClasses, ...buttonNextClasses]"
+                @click="nextButton.onClick" />
         </slot>
 
         <small v-if="simple" :class="infoClasses" aria-live="polite">
@@ -382,17 +399,21 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="firstButton">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="{ ...firstButton, ...buttonAttrs }"
+                        :aria-label="firstButton.ariaLabel"
+                        :aria-current="firstButton.ariaCurrent"
+                        :label="firstButton.label"
                         :variant="firstButton.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
                         :size="size"
+                        v-bind="buttonAttrs"
                         :class="[
                             ...buttonBaseClasses,
                             ...(firstButton.isCurrent
                                 ? buttonCurrentClasses
                                 : []),
-                        ]" />
+                        ]"
+                        @click="firstButton.onClick" />
                 </slot>
             </li>
 
@@ -408,15 +429,19 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="page">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="{ ...page, ...buttonAttrs }"
+                        :aria-label="page.ariaLabel"
+                        :aria-current="page.ariaCurrent"
+                        :label="page.label"
                         :variant="page.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
+                        v-bind="buttonAttrs"
                         :size="size"
                         :class="[
                             ...buttonBaseClasses,
                             ...(page.isCurrent ? buttonCurrentClasses : []),
-                        ]" />
+                        ]"
+                        @click="page.onClick" />
                 </slot>
             </li>
 
@@ -429,17 +454,21 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="lastButton">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="{ ...lastButton, ...buttonAttrs }"
+                        :aria-label="lastButton.ariaLabel"
+                        :aria-current="lastButton.ariaCurrent"
+                        :label="lastButton.label"
                         :variant="lastButton.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
+                        v-bind="buttonAttrs"
                         :size="size"
                         :class="[
                             ...buttonBaseClasses,
                             ...(lastButton.isCurrent
                                 ? buttonCurrentClasses
                                 : []),
-                        ]" />
+                        ]"
+                        @click="lastButton.onClick" />
                 </slot>
             </li>
         </ul>
