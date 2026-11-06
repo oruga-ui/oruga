@@ -76,7 +76,7 @@ describe("OSwitch tests", () => {
         expect(input.attributes("disabled")).toBeDefined();
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OSwitch);
 
@@ -103,7 +103,7 @@ describe("OSwitch tests", () => {
             });
         });
 
-        test("react accordingly when value change ", async () => {
+        test("react accordingly when value change", async () => {
             const wrapper = mount(OSwitch);
 
             const input = wrapper.find("input");
@@ -113,13 +113,13 @@ describe("OSwitch tests", () => {
             let emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(true);
-            expect(wrapper.vm.value).toEqual(true);
+            expect(wrapper.vm.value).toStrictEqual(true);
 
             await input.setValue(false);
             emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(2);
             expect(emits?.[1]).toContainEqual(false);
-            expect(wrapper.vm.value).toEqual(false);
+            expect(wrapper.vm.value).toStrictEqual(false);
         });
 
         test("react accordingly when custom string values are given", async () => {
@@ -136,13 +136,13 @@ describe("OSwitch tests", () => {
             let emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(trueValue);
-            expect(wrapper.vm.value).toEqual(trueValue);
+            expect(wrapper.vm.value).toStrictEqual(trueValue);
 
             await input.setValue(false);
             emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(2);
             expect(emits?.[1]).toContainEqual(falseValue);
-            expect(wrapper.vm.value).toEqual(falseValue);
+            expect(wrapper.vm.value).toStrictEqual(falseValue);
         });
 
         test("react accordingly when custom object values are given", async () => {
@@ -165,13 +165,13 @@ describe("OSwitch tests", () => {
             let emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(trueValue);
-            expect(wrapper.vm.value).toEqual(trueValue);
+            expect(wrapper.vm.value).toStrictEqual(trueValue);
 
             await input.setValue(false);
             emits = wrapper.emitted("update:modelValue");
             expect(emits?.[0]).toContainEqual(trueValue);
             expect(emits?.[1]).toContainEqual(falseValue);
-            expect(wrapper.vm.value).toEqual(falseValue);
+            expect(wrapper.vm.value).toStrictEqual(falseValue);
         });
     });
     describe("accessible name within a field", () => {

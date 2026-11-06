@@ -23,9 +23,13 @@ defineOptions({
 const props = defineProps<{
     /** parent slider component props  */
     sliderProps: WithRequired<SliderProps<IsRange>, "min" | "max" | "step">;
+    /** the value of this thumb */
     modelValue: number;
+    /** returns the current size of the slider track in pixels */
     sliderSize: () => number;
+    /** classes of the thumb wrapper element */
     thumbWrapperClasses: ClassBinding[];
+    /** classes of the thumb element */
     thumbClasses: ClassBinding[];
     /** accessible name of this thumb */
     ariaLabel?: string;

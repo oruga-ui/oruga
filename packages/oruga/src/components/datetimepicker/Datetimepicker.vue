@@ -15,6 +15,8 @@ import type { DatepickerProps } from "../datepicker/props";
 import type { TimepickerProps } from "../timepicker/props";
 import type { DatetimepickerProps } from "./props";
 
+type ModelValue = DatetimepickerProps["modelValue"];
+
 /**
  * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile.
  * @displayName Datetimepicker
@@ -26,8 +28,6 @@ defineOptions({
     configField: "datetimepicker",
     inheritAttrs: false,
 });
-
-type ModelValue = DatetimepickerProps["modelValue"];
 
 const props = withDefaults(defineProps<DatetimepickerProps>(), {
     override: undefined,

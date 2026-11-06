@@ -37,7 +37,7 @@ describe("OField tests", () => {
             });
             const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "messageTag" prop is passed', () => {
@@ -49,7 +49,7 @@ describe("OField tests", () => {
             });
             const messageDiv = wrapper.find(messageTag + ".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "message" prop is changed dynamically', async () => {
@@ -62,7 +62,7 @@ describe("OField tests", () => {
 
             const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "message" is array', () => {
@@ -77,7 +77,7 @@ describe("OField tests", () => {
             const messages = messageDiv.findAll("div");
             expect(message).toHaveLength(2);
             message.forEach((m, idx) => {
-                expect(messages[idx].text()).toEqual(m);
+                expect(messages[idx].text()).toStrictEqual(m);
             });
         });
     });
@@ -137,7 +137,7 @@ describe("OField tests", () => {
         });
     });
 
-    describe("managing default slot ", () => {
+    describe("managing default slot", () => {
         test("react accordingly when child is a text", () => {
             const text = "text";
             const wrapper = mount(OField, {
@@ -147,7 +147,7 @@ describe("OField tests", () => {
         });
     });
 
-    describe("managing horizontal prop ", () => {
+    describe("managing horizontal prop", () => {
         test('react accordingly when "grouped" prop is set', () => {
             const wrapper = mount(OField, {
                 props: { grouped: true, horizontal: true },

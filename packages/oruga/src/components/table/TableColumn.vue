@@ -42,8 +42,6 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     tdAttrs: undefined,
 });
 
-const rootRef = useTemplateRef<HTMLElement>("rootElement");
-
 defineSlots<{
     /**
      * Define the column content here
@@ -84,6 +82,8 @@ defineSlots<{
         filters: Record<string, string>;
     }): VNode[];
 }>();
+
+const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 const slots = useSlots();
 

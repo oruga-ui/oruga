@@ -91,6 +91,22 @@ watch(fieldMessage, (value) => {
     }
 });
 
+/** this can be set from inputs to flag a failed validation */
+const isInvalidFlag = ref(false);
+
+/**
+ * Variant names are theme specific. These are the ones the library itself
+ * uses for errors ("danger" is set by the HTML5 validation).
+ */
+const ERROR_VARIANTS = ["danger", "error"];
+
+/** The field is invalid if an input reported it or an error variant is set. */
+const isInvalid = computed(
+    () =>
+        isInvalidFlag.value ||
+        (!!fieldVariant.value && ERROR_VARIANTS.includes(fieldVariant.value)),
+);
+
 /** this can be set from inputs to update the focus state */
 const isFocused = ref(false);
 /** this can be set from inputs to update the filled state */
@@ -154,6 +170,9 @@ function setFilled(value: boolean): void {
 function setVariant(value?: string): void {
     fieldVariant.value = value;
 }
+function setInvalid(value: boolean): void {
+    isInvalidFlag.value = value;
+}
 function setMessage(value?: string | string[]): void {
     fieldMessage.value = value;
 }
@@ -163,7 +182,10 @@ function setInputId(value: string): void {
 
 const inputAttrs = computed(() => ({
     "aria-labelledby": props.labelId,
-    ...(fieldVariant.value === "error"
+    // aria-errormessage is only evaluated by assistive technology when the
+    // control is also marked as invalid
+    ...(isInvalid.value ? { "aria-invalid": true } : {}),
+    ...(isInvalid.value && hasMessage.value
         ? { "aria-errormessage": props.messageId }
         : {}),
     ...(fieldMessage.value ? { "aria-describedby": props.messageId } : {}),
@@ -184,6 +206,7 @@ const provideData = computed<FieldData>(() => ({
     setFilled,
     setVariant,
     setMessage,
+    setInvalid,
 }));
 
 // Provide field component data via dependency injection.

@@ -2786,7 +2786,7 @@ It replaces the label of a parent field as the name of the thumb.
                 /**
                  * Label position
                  */
-                right: string;
+                position: string;
                 /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.

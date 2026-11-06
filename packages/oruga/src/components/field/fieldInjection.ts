@@ -23,6 +23,7 @@ export type FieldData = {
     setFilled: (value: boolean) => void;
     setVariant: (value?: string) => void;
     setMessage: (value?: string | string[]) => void;
+    setInvalid: (value: boolean) => void;
 };
 
 /** provide/inject type */
