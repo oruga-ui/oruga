@@ -209,14 +209,22 @@ const hasNext = computed(() =>
     isDefined(getFirstViableItem((activeItem.value?.index ?? 0) + 1, true)),
 );
 
-/** Focus the next item if possible. */
-function onNext(index: number): void {
+/** Focus the next item if possible. Only the arrow key of the orientation counts. */
+function onNext(event: KeyboardEvent, index: number): void {
+    if (event.key !== (props.vertical ? "ArrowDown" : "ArrowRight")) return;
+    // prevent scrolling
+    event.preventDefault();
+
     const item = getFirstViableItem(index + 1, true);
     if (isDefined(item)) moveFocus(item);
 }
 
-/** Focus the previous item if possible. */
-function onPrev(index: number): void {
+/** Focus the previous item if possible. Only the arrow key of the orientation counts. */
+function onPrev(event: KeyboardEvent, index: number): void {
+    if (event.key !== (props.vertical ? "ArrowUp" : "ArrowLeft")) return;
+    // prevent scrolling
+    event.preventDefault();
+
     const item = getFirstViableItem(index - 1, false);
     if (isDefined(item)) moveFocus(item);
 }
@@ -361,8 +369,10 @@ const navigationClasses = defineClasses([
                 @click="itemClick(item)"
                 @keydown.enter.prevent="itemClick(item)"
                 @keydown.space.prevent="itemClick(item)"
-                @keydown.left.prevent="onPrev(item.index)"
-                @keydown.right.prevent="onNext(item.index)"
+                @keydown.left="onPrev($event, item.index)"
+                @keydown.right="onNext($event, item.index)"
+                @keydown.up="onPrev($event, item.index)"
+                @keydown.down="onNext($event, item.index)"
                 @keydown.home.prevent="onHomePressed"
                 @keydown.end.prevent="onEndPressed">
                 <span v-if="index > 0" :class="dividerClasses" />
