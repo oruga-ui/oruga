@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, watch, ref, type PropType } from "vue";
+import { computed, watch, ref } from "vue";
 
 import OButton from "@/components/button/Button.vue";
 import OSelect from "@/components/select/Select.vue";
@@ -15,25 +15,33 @@ defineOptions({
     configField: "table",
 });
 
-const props = defineProps({
-    currentSortColumn: {
-        type: Object as PropType<TableColumnItem<T>>,
-        default: undefined,
+const props = withDefaults(
+    defineProps<{
+        /** the column the table is currently sorted by */
+        currentSortColumn?: TableColumnItem<T>;
+        /** all table columns, the sortable ones are selectable */
+        columns: TableColumnItem<T>[];
+        /** placeholder of the sort select */
+        placeholder: string;
+        /** icon pack of the sort icon */
+        iconPack?: string;
+        /** icon of the sort direction button */
+        sortIcon?: string;
+        /** size of the sort direction icon */
+        sortIconSize?: string;
+        /** the current sort direction is ascending */
+        isAsc?: boolean;
+        /** classes of the mobile sort elements */
+        mobileSortClasses: ClassBinding[];
+    }>(),
+    {
+        currentSortColumn: undefined,
+        sortIcon: "arrow-up",
+        sortIconSize: "small",
+        iconPack: undefined,
+        isAsc: false,
     },
-    columns: {
-        type: Array as PropType<TableColumnItem<T>[]>,
-        default: undefined,
-    },
-    placeholder: { type: String, default: undefined },
-    iconPack: { type: String, default: undefined },
-    sortIcon: { type: String, default: "arrow-up" },
-    sortIconSize: { type: String, default: "small" },
-    isAsc: { type: Boolean, default: false },
-    mobileSortClasses: {
-        type: Array as PropType<ClassBinding[]>,
-        required: true,
-    },
-});
+);
 
 const emits = defineEmits<{
     sort: [column: TableColumnItem<T>, event: Event];
