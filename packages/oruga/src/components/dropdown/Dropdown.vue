@@ -335,7 +335,10 @@ if (isClient) {
             onScrollEnd: () => emits("scroll-end"),
             onScrollStart: () => emits("scroll-start"),
         },
-        { passive: true, trigger: () => props.scrollable },
+        {
+            trigger: () => props.scrollable,
+            passive: true,
+        },
     );
 
     // set click outside handler
