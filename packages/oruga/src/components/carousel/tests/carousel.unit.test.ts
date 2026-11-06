@@ -92,4 +92,72 @@ describe("OCarousel tests", () => {
             expect(item.text()).toStrictEqual(slides[index].title);
         });
     });
+
+    describe("clickable items", () => {
+        const mountCarousel = async (clickable: boolean) => {
+            const TestComponent = defineComponent({
+                components: { OCarousel, OCarouselItem },
+                props: { clickable: Boolean },
+                emits: [
+                    // eslint-disable-next-line vue/no-unused-emit-declarations
+                    "click",
+                ],
+                template: `<OCarousel :autoplay="false" @click="$emit('click')">
+                    <OCarouselItem v-for="n in 3" :key="n" :clickable="clickable">
+                        <button class="inner">Slide {{ n }}</button>
+                    </OCarouselItem>
+                </OCarousel>`,
+            });
+
+            const wrapper = mount(TestComponent, { props: { clickable } });
+            await nextTick(); // await subcomponent rendering
+            return wrapper;
+        };
+
+        test("are focusable with a roving tab stop on the active item", async () => {
+            const wrapper = await mountCarousel(true);
+            const items = wrapper.findAll('[data-oruga="carousel-item"]');
+            expect(items.map((i) => i.attributes("tabindex"))).toStrictEqual([
+                "0",
+                "-1",
+                "-1",
+            ]);
+        });
+
+        test("items which are not clickable stay out of the tab order", async () => {
+            const wrapper = await mountCarousel(false);
+            for (const item of wrapper.findAll('[data-oruga="carousel-item"]'))
+                expect(item.attributes("tabindex")).toBeUndefined();
+        });
+
+        test("Enter and Space on the active item emit click", async () => {
+            const wrapper = await mountCarousel(true);
+            const item = wrapper.find('[data-oruga="carousel-item"]');
+
+            await item.trigger("keydown", { key: "Enter" });
+            await item.trigger("keydown", { key: " " });
+            expect(wrapper.emitted("click")).toHaveLength(2);
+        });
+
+        test("Space does not scroll the page", async () => {
+            const wrapper = await mountCarousel(true);
+            const item = wrapper.find('[data-oruga="carousel-item"]');
+
+            const event = new KeyboardEvent("keydown", {
+                key: " ",
+                bubbles: true,
+                cancelable: true,
+            });
+            item.element.dispatchEvent(event);
+            expect(event.defaultPrevented).toBe(true);
+        });
+
+        test("keys pressed inside the item content are ignored", async () => {
+            const wrapper = await mountCarousel(true);
+            const inner = wrapper.find(".inner");
+
+            await inner.trigger("keydown", { key: "Enter" });
+            expect(wrapper.emitted("click")).toBeUndefined();
+        });
+    });
 });
