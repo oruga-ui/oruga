@@ -269,4 +269,69 @@ describe("OInput tests", () => {
             expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
         });
     });
+    describe("clickable icon names", () => {
+        test("the left icon uses ariaIconLabel", () => {
+            const wrapper = mount(OInput, {
+                props: {
+                    icon: "foo",
+                    iconClickable: true,
+                    ariaIconLabel: "Search",
+                },
+            });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("role")).toBe("button");
+            expect(icon.attributes("aria-label")).toBe("Search");
+        });
+
+        test("the right icon uses ariaIconRightLabel", () => {
+            const wrapper = mount(OInput, {
+                props: {
+                    iconRight: "foo",
+                    iconRightClickable: true,
+                    ariaIconRightLabel: "Open calendar",
+                },
+            });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("aria-label")).toBe("Open calendar");
+        });
+
+        test("a decorative icon has no name and stays hidden", () => {
+            const wrapper = mount(OInput, {
+                props: { icon: "foo", ariaIconLabel: "Search" },
+            });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("aria-label")).toBeUndefined();
+            expect(icon.attributes("aria-hidden")).toBe("true");
+        });
+
+        test("the clear button is named and only clickable with a value", async () => {
+            const wrapper = mount(OInput, {
+                props: { clearable: true, modelValue: "" },
+            });
+            expect(wrapper.find("[data-oruga='icon']").exists()).toBe(false);
+
+            await wrapper.setProps({ modelValue: "foo" });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("role")).toBe("button");
+            expect(icon.attributes("aria-label")).toBe("Clear");
+
+            await wrapper.setProps({ ariaClearLabel: "Clear search" });
+            expect(
+                wrapper.find("[data-oruga='icon']").attributes("aria-label"),
+            ).toBe("Clear search");
+        });
+
+        test("the password reveal button name follows its state", async () => {
+            const wrapper = mount(OInput, {
+                props: { type: "password", passwordReveal: true },
+            });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("aria-label")).toBe("Show password");
+
+            await icon.trigger("click");
+            expect(
+                wrapper.find("[data-oruga='icon']").attributes("aria-label"),
+            ).toBe("Hide password");
+        });
+    });
 });

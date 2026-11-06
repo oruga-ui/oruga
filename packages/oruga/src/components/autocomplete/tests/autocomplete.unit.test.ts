@@ -663,4 +663,51 @@ describe("OAutocomplete tests", () => {
             });
         });
     });
+    describe("clickable icon names", () => {
+        test("the clear button is named", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: {
+                    options: OPTIONS,
+                    modelValue: OPTIONS[5],
+                    clearable: true,
+                },
+            });
+            await nextTick();
+
+            const icon = wrapper.find(".o-icon");
+            expect(icon.attributes("role")).toBe("button");
+            expect(icon.attributes("aria-label")).toBe("Clear");
+        });
+
+        test("a clickable right icon uses ariaIconRightLabel", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: {
+                    options: OPTIONS,
+                    iconRight: "magnify",
+                    iconRightClickable: true,
+                    ariaIconRightLabel: "Search",
+                },
+            });
+            await nextTick();
+
+            const icon = wrapper.find(".o-icon");
+            expect(icon.attributes("aria-label")).toBe("Search");
+        });
+
+        test("a clickable left icon uses ariaIconLabel", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: {
+                    options: OPTIONS,
+                    icon: "magnify",
+                    iconClickable: true,
+                    ariaIconLabel: "Search",
+                },
+            });
+            await nextTick();
+
+            const icon = wrapper.find(".o-icon");
+            expect(icon.attributes("role")).toBe("button");
+            expect(icon.attributes("aria-label")).toBe("Search");
+        });
+    });
 });
