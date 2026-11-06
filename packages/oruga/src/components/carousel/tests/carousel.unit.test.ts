@@ -25,7 +25,6 @@ describe("OCarousel tests", () => {
             { text: "Slide 5", color: "#005c98" },
         ];
 
-        // eslint-disable-next-line vue/one-component-per-file
         const TestComponent = defineComponent({
             components: { OCarousel, OCarouselItem },
             data: () => ({ carousels }),
@@ -96,7 +95,6 @@ describe("OCarousel tests", () => {
 
     describe("clickable items", () => {
         const mountCarousel = async (clickable: boolean) => {
-            // eslint-disable-next-line vue/one-component-per-file
             const TestComponent = defineComponent({
                 components: { OCarousel, OCarouselItem },
                 props: { clickable: Boolean },
