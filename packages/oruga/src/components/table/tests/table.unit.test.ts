@@ -620,6 +620,84 @@ describe("OTable tests", () => {
             }
         });
 
+        test("sort a column with the keyboard", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", sortable: true },
+                        { label: "Name", field: "name", sortable: true },
+                        { label: "Note", field: "note" },
+                    ],
+                    data: [
+                        { id: 2, name: "Bob", note: "" },
+                        { id: 1, name: "Tina", note: "" },
+                        { id: 3, name: "Anna", note: "" },
+                    ],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const ths = wrapper.findAll("thead th");
+            expect(ths).toHaveLength(3);
+
+            // only sortable headers are focusable
+            expect(ths[0].attributes("tabindex")).toBe("0");
+            expect(ths[1].attributes("tabindex")).toBe("0");
+            expect(ths[2].attributes("tabindex")).toBeUndefined();
+
+            // the test utils key modifiers do not set `event.key`, so pass it explicitly
+            await ths[1].trigger("keydown", { key: "Enter" });
+            expect(ths[1].attributes("aria-sort")).toBe("ascending");
+            expect(
+                wrapper
+                    .findAll("tbody tr td:nth-child(2)")
+                    .map((td) => td.text()),
+            ).toStrictEqual(["Anna", "Bob", "Tina"]);
+
+            // toggle the direction
+            await ths[1].trigger("keydown", { key: "Enter" });
+            expect(ths[1].attributes("aria-sort")).toBe("descending");
+
+            // space sorts another column and prevents scrolling the page
+            const event = new KeyboardEvent("keydown", {
+                key: " ",
+                bubbles: true,
+                cancelable: true,
+            });
+            ths[0].element.dispatchEvent(event);
+            await nextTick();
+            expect(event.defaultPrevented).toBe(true);
+            expect(ths[0].attributes("aria-sort")).toBe("ascending");
+            expect(ths[1].attributes("aria-sort")).toBeUndefined();
+
+            // an unsortable column ignores the keys
+            await ths[2].trigger("keydown", { key: "Enter" });
+            expect(ths[0].attributes("aria-sort")).toBe("ascending");
+        });
+
+        test("ignore keys of elements inside the sortable header", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "Name", field: "name", sortable: true }],
+                    data: [{ name: "Bob" }, { name: "Anna" }],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const th = wrapper.find("thead th");
+            const event = new KeyboardEvent("keydown", {
+                key: "Enter",
+                bubbles: true,
+                cancelable: true,
+            });
+            // keys pressed on a child (for example a control in the header slot) must not sort
+            th.find("span").element.dispatchEvent(event);
+            await nextTick();
+
+            expect(event.defaultPrevented).toBe(false);
+            expect(th.attributes("aria-sort")).toBeUndefined();
+        });
+
         test("tests sort change when paginated", async () => {
             const perPage = 10;
             let lastId = 1;
