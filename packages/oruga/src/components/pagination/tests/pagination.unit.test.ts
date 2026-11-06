@@ -143,7 +143,8 @@ describe("OPagination tests", () => {
             expect(received.previous.disabled).toBe(true);
             expect(received.next.disabled).toBe(false);
 
-            received = slotProps({ modelValue: 5 });
+            // a middle page: 100 items with 20 per page are 5 pages
+            received = slotProps({ modelValue: 3 });
             expect(received.previous.disabled).toBe(false);
             expect(received.next.disabled).toBe(false);
 
