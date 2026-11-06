@@ -41,6 +41,8 @@ import type {
 import type { DropdownItemProps, DropdownProps } from "./props";
 import { injectField } from "../field/fieldInjection";
 
+type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
+
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content.
  * @displayName Dropdown
@@ -53,8 +55,6 @@ defineOptions({
     configField: "dropdown",
     inheritAttrs: false,
 });
-
-type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     override: undefined,
@@ -98,6 +98,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown | unknown[]} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
@@ -325,30 +326,33 @@ function getFirstViableItem(
 // #region --- Trigger Handler ---
 
 if (isClient) {
+    // The listeners follow their props reactively, so they also work when a
+    // prop is toggled after setup.
+
     // set infinite scroll handler
-    if (props.scrollable)
-        useScrollEvents(
-            menuRef,
-            {
-                onScrollEnd: () => emits("scroll-end"),
-                onScrollStart: () => emits("scroll-start"),
-            },
-            { passive: true },
-        );
+    useScrollEvents(
+        menuRef,
+        {
+            onScrollEnd: () => emits("scroll-end"),
+            onScrollStart: () => emits("scroll-start"),
+        },
+        {
+            trigger: () => props.scrollable,
+            passive: true,
+        },
+    );
 
     // set click outside handler
-    if (props.closeOnOutside)
-        useClickOutside([menuRef, triggerRef], onClickedOutside, {
-            trigger: isActive,
-            passive: true,
-        });
+    useClickOutside([menuRef, triggerRef], onClickedOutside, {
+        trigger: () => isActive.value && props.closeOnOutside,
+        passive: true,
+    });
 
     // set scroll page event
-    if (props.closeOnScroll)
-        useEventListener(window, "scroll", onPageScroll, {
-            trigger: isActive,
-            passive: true,
-        });
+    useEventListener(window, "scroll", onPageScroll, {
+        trigger: () => isActive.value && props.closeOnScroll,
+        passive: true,
+    });
 }
 
 /** Close dropdown if clicked outside. */

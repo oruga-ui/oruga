@@ -25,6 +25,8 @@ import {
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
 import type { TabsProps } from "./props";
 
+type ModelValue = TabsProps<T>["modelValue"];
+
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease.
  * @displayName Tabs
@@ -36,8 +38,6 @@ defineOptions({
     name: "OTabs",
     configField: "tabs",
 });
-
-type ModelValue = TabsProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<TabsProps<T>>(), {
     override: undefined,
@@ -69,6 +69,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * on tab change event
@@ -176,28 +177,26 @@ function itemClick(item: TabItem<T>): void {
     activateItem(item.data.value);
 }
 
-/** Focus the next item or wrap around. */
+/** Focus the next item or wrap around. Only the arrow key of the orientation counts. */
 function onNext(event: KeyboardEvent, index: number): void {
-    if (
-        (props.vertical && event.key == "ArrowDown") ||
-        (!props.vertical && event.key == "ArrowRight")
-    ) {
-        const newIndex = mod(index + 1, itemsCount.value);
-        const item = getFirstViableItem(newIndex, true);
-        if (isDefined(item)) moveFocus(item);
-    }
+    if (event.key !== (props.vertical ? "ArrowDown" : "ArrowRight")) return;
+    // prevent scrolling
+    event.preventDefault();
+
+    const newIndex = mod(index + 1, itemsCount.value);
+    const item = getFirstViableItem(newIndex, true);
+    if (isDefined(item)) moveFocus(item);
 }
 
-/** Focus the previous item or wrap around. */
+/** Focus the previous item or wrap around. Only the arrow key of the orientation counts. */
 function onPrev(event: KeyboardEvent, index: number): void {
-    if (
-        (props.vertical && event.key == "ArrowUp") ||
-        (!props.vertical && event.key == "ArrowLeft")
-    ) {
-        const newIndex = mod(index - 1, itemsCount.value);
-        const item = getFirstViableItem(newIndex, false);
-        if (isDefined(item)) moveFocus(item);
-    }
+    if (event.key !== (props.vertical ? "ArrowUp" : "ArrowLeft")) return;
+    // prevent scrolling
+    event.preventDefault();
+
+    const newIndex = mod(index - 1, itemsCount.value);
+    const item = getFirstViableItem(newIndex, false);
+    if (isDefined(item)) moveFocus(item);
 }
 
 /** Focus to the first viable item. */
@@ -339,10 +338,10 @@ const contentClasses = defineClasses(
                 @click="itemClick(item)"
                 @keydown.enter.prevent="itemClick(item)"
                 @keydown.space.prevent="itemClick(item)"
-                @keydown.left.prevent="onPrev($event, item.index)"
-                @keydown.right.prevent="onNext($event, item.index)"
-                @keydown.up.prevent="onPrev($event, item.index)"
-                @keydown.down.prevent="onNext($event, item.index)"
+                @keydown.left="onPrev($event, item.index)"
+                @keydown.right="onNext($event, item.index)"
+                @keydown.up="onPrev($event, item.index)"
+                @keydown.down="onNext($event, item.index)"
                 @keydown.home.prevent="onHomePressed"
                 @keydown.end.prevent="onEndPressed">
                 <o-icon

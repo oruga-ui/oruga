@@ -1,5 +1,3 @@
-/* eslint-disable vue/one-component-per-file */
-
 import { describe, expect, test } from "vitest";
 import { userEvent, type Locator, type LocatorSelectors } from "vitest/browser";
 import { render } from "vitest-browser-vue";
@@ -26,16 +24,19 @@ type CustomValidityCallback = (
 const NativeForm = defineComponent({
     name: "NativeForm",
     props: {
+        /** custom validity message or callback of the input */
         customValidity: {
             type: [String, Function] as PropType<
                 string | CustomValidityCallback
             >,
             default: undefined,
         },
+        /** disable the input */
         disabled: {
             type: Boolean,
             default: false,
         },
+        /** mark the input as required */
         required: {
             type: Boolean,
             default: true,
@@ -234,6 +235,7 @@ describe("useInputHandler", () => {
         const FieldsetForm = defineComponent({
             name: "FieldsetForm",
             props: {
+                /** disable the wrapping fieldset */
                 disabled: {
                     type: Boolean,
                     default: false,
@@ -279,6 +281,7 @@ describe("useInputHandler", () => {
         const NumberForm = defineComponent({
             name: "NumberForm",
             props: {
+                /** maximum value of the number input */
                 max: {
                     type: Number,
                     default: 1,

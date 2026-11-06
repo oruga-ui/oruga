@@ -38,7 +38,10 @@ export type IconProps = {
     spin?: boolean;
     /** Rotation 0-360 */
     rotation?: number | string;
-    /** Accessibility aria-label needed when clickable */
+    /**
+     * Accessible name of the icon. Required when clickable.
+     * A non-clickable icon without a name is hidden from assistive technology.
+     */
     ariaLabel?: string;
 } & IconClasses;
 

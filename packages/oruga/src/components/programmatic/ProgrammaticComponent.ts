@@ -117,8 +117,16 @@ export const ProgrammaticComponent = defineComponent<
     {
         name: "ProgrammaticApp",
         // manual runtime props declaration is currently still needed.
-        props: ["component", "props", "registry"],
+        props: [
+            /** the component which should be rendered */
+            "component",
+            /** props passed to the rendered component */
+            "props",
+            /** the programmatic instance registry */
+            "registry",
+        ],
         // manual runtime emits declaration
+        // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted via the setup context
         emits: ["close", "destroy"],
         // manual runtime slot declaration
         slots: ["default"],

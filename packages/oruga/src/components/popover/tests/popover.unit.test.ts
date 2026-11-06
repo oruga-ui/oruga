@@ -21,7 +21,7 @@ describe("OPopover tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    test("test closeable ", async () => {
+    test("closeable", async () => {
         const onClose = vi.fn();
 
         const wrapper = mount(OPopover, {
@@ -53,7 +53,7 @@ describe("OPopover tests", () => {
         expect(onClose).toHaveBeenCalledTimes(1);
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("render default trigger slot correctly", () => {
             const triggerHTML = '<button class="trigger">trigger</button>';
             const wrapper = mount(OPopover, {
@@ -120,7 +120,7 @@ describe("OPopover tests", () => {
         });
     });
 
-    describe("test teleport", () => {
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(OPopover, {
                 props: {

@@ -56,29 +56,29 @@ function convertToRoman(num: number): string {
 <template>
     <section>
         <o-pagination v-model="page" :total="200" :per-page="10">
-            <template #default="props">
+            <template #default="_props">
                 <o-button
-                    :label="convertToRoman(props.number)"
-                    :disabled="props.isCurrent"
-                    :aria-label="props.ariaLabel"
-                    :aria-current="props.isCurrent"
-                    @click="props.onClick" />
+                    :label="convertToRoman(_props.number)"
+                    :disabled="_props.isCurrent"
+                    :aria-label="_props.ariaLabel"
+                    :aria-current="_props.ariaCurrent"
+                    @click="_props.onClick" />
             </template>
 
-            <template #previous="props">
+            <template #previous="_props">
                 <o-button
                     label="Previous"
-                    :disabled="props.isCurrent"
-                    :aria-label="props.ariaLabel"
-                    @click="props.onClick" />
+                    :disabled="_props.disabled"
+                    :aria-label="_props.ariaLabel"
+                    @click="_props.onClick" />
             </template>
 
-            <template #next="props">
+            <template #next="_props">
                 <o-button
                     label="Next"
-                    :disabled="props.isCurrent"
-                    :aria-label="props.ariaLabel"
-                    @click="props.onClick" />
+                    :disabled="_props.disabled"
+                    :aria-label="_props.ariaLabel"
+                    @click="_props.onClick" />
             </template>
         </o-pagination>
     </section>
