@@ -139,8 +139,6 @@ export default defineConfigWithVueTs([
         },
       ],
       "vue/require-prop-comment": "warn",
-      // arrow functions are only needed when the handler requires a custom parameter list
-      "vue/v-on-handler-style": ["error", ["method", "inline"]],
     },
   },
 

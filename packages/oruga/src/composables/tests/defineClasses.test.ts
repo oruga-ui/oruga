@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { EffectScope, effectScope, nextTick, ref } from "vue";
+import type { EffectScope } from "vue";
+import { effectScope, nextTick, ref } from "vue";
 
 import * as config from "@/utils/config";
 import type { OrugaConfig } from "@/types";
