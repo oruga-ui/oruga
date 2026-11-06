@@ -403,4 +403,20 @@ describe("OSelect tests", () => {
             });
         });
     });
+    test("clickable icons are named by their aria labels", () => {
+        const wrapper = mount(OSelect, {
+            props: {
+                icon: "foo",
+                iconClickable: true,
+                ariaIconLeftLabel: "Filter",
+                iconRight: "arrow",
+                iconRightClickable: true,
+                ariaIconRightLabel: "Open",
+            },
+        });
+        const icons = wrapper.findAll("[data-oruga='icon']");
+        expect(icons).toHaveLength(2);
+        expect(icons[0].attributes("aria-label")).toBe("Filter");
+        expect(icons[1].attributes("aria-label")).toBe("Open");
+    });
 });

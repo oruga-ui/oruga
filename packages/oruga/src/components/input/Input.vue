@@ -70,6 +70,13 @@ const props = withDefaults(
         iconRightVariant: undefined,
         clearable: () => getDefault("input.clearable", false),
         clearIcon: () => getDefault("input.clearIcon", "close-circle"),
+        ariaIconLeftLabel: () => getDefault("input.ariaIconLeftLabel"),
+        ariaIconRightLabel: () => getDefault("input.ariaIconRightLabel"),
+        ariaClearLabel: () => getDefault("input.ariaClearLabel", "Clear"),
+        ariaPasswordShowLabel: () =>
+            getDefault("input.ariaPasswordShowLabel", "Show password"),
+        ariaPasswordHideLabel: () =>
+            getDefault("input.ariaPasswordHideLabel", "Hide password"),
         statusIcon: () => getDefault("statusIcon", true),
         debounce: () => getDefault("autocomplete.debounce"),
         id: () => useId(),
@@ -236,13 +243,37 @@ const hasIconRight = computed(() => {
     );
 });
 
+/** The clear icon is shown and clickable only when there is a value to clear. */
+const isClearVisible = computed(
+    () => !!(props.clearable && vmodel.value && props.clearIcon),
+);
+
 const computedIconRight = computed(() => {
     if (props.passwordReveal) return passwordVisibleIcon.value;
-    else if (props.clearable && vmodel.value && props.clearIcon)
-        return props.clearIcon;
+    else if (isClearVisible.value) return props.clearIcon;
     else if (props.iconRight) return props.iconRight;
     return statusVariantIcon.value;
 });
+
+/**
+ * Name of the right icon button.
+ * A clickable icon without a name is not usable with assistive technology.
+ */
+const computedIconRightLabel = computed(() => {
+    if (props.passwordReveal)
+        return isPasswordVisible.value
+            ? props.ariaPasswordHideLabel
+            : props.ariaPasswordShowLabel;
+    if (isClearVisible.value) return props.ariaClearLabel;
+    return props.ariaIconRightLabel;
+});
+
+const isIconRightClickable = computed(
+    () =>
+        props.passwordReveal ||
+        isClearVisible.value ||
+        props.iconRightClickable,
+);
 
 const computedIconRightVariant = computed(() =>
     props.passwordReveal || props.iconRight
@@ -392,6 +423,7 @@ defineExpose({
             v-if="icon"
             :class="iconLeftClasses"
             :clickable="iconClickable"
+            :aria-label="iconClickable ? ariaIconLeftLabel : undefined"
             :icon="icon"
             :pack="iconPack"
             :size="size"
@@ -428,7 +460,10 @@ defineExpose({
             :pack="iconPack"
             :size="size"
             :variant="computedIconRightVariant"
-            :clickable="passwordReveal || clearable || iconRightClickable"
+            :clickable="isIconRightClickable"
+            :aria-label="
+                isIconRightClickable ? computedIconRightLabel : undefined
+            "
             @click="rightIconClick" />
 
         <small

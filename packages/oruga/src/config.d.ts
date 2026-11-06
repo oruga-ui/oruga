@@ -80,6 +80,18 @@ declare module "./index" {
                  */
                 clearIcon: string;
                 /**
+                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 */
+                ariaIconLeftLabel: string;
+                /**
+                 * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
+                 */
+                ariaIconRightLabel: string;
+                /**
+                 * Accessibility label for the clear button.
+                 */
+                ariaClearLabel: string;
+                /**
                  * Dropdown content (items) are shown into a modal on mobile
                  */
                 mobileModal: boolean;
@@ -1491,6 +1503,26 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
+                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 */
+                ariaIconLeftLabel: string;
+                /**
+                 * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
+                 */
+                ariaIconRightLabel: string;
+                /**
+                 * Accessibility label for the clear button.
+                 */
+                ariaClearLabel: string;
+                /**
+                 * Accessibility label for the password reveal button while the password is hidden.
+                 */
+                ariaPasswordShowLabel: string;
+                /**
+                 * Accessibility label for the password reveal button while the password is visible.
+                 */
+                ariaPasswordHideLabel: string;
+                /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.
                  */
@@ -2307,6 +2339,14 @@ whether the value of the form's controls can be automatically completed by the b
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 */
+                ariaIconLeftLabel: string;
+                /**
+                 * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
+                 */
+                ariaIconRightLabel: string;
                 /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.

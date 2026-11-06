@@ -83,6 +83,9 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     iconRightVariant: undefined,
     clearable: () => getDefault("autocomplete.clearable", false),
     clearIcon: () => getDefault("autocomplete.clearIcon", "close-circle"),
+    ariaIconLeftLabel: () => getDefault("autocomplete.ariaIconLeftLabel"),
+    ariaIconRightLabel: () => getDefault("autocomplete.ariaIconRightLabel"),
+    ariaClearLabel: () => getDefault("autocomplete.ariaClearLabel", "Clear"),
     statusIcon: () => getDefault("statusIcon", true),
     desktopModal: () => getDefault("dropdown.desktopModal", false),
     mobileModal: () => getDefault("autocomplete.mobileModal", false),
@@ -405,18 +408,25 @@ function onFocus(): void {
 
 // #region --- Icon Feature ---
 
-const computedIconRight = computed(() =>
-    props.clearable && inputValue.value && props.clearIcon
-        ? props.clearIcon
-        : props.iconRight,
+/** The clear icon is shown and clickable only when there is a value to clear. */
+const isClearVisible = computed(
+    () => !!(props.clearable && inputValue.value && props.clearIcon),
 );
 
-const computedIconRightClickable = computed(() =>
-    props.clearable ? true : props.iconRightClickable,
+const computedIconRight = computed(() =>
+    isClearVisible.value ? props.clearIcon : props.iconRight,
+);
+
+const computedIconRightClickable = computed(
+    () => isClearVisible.value || props.iconRightClickable,
+);
+
+const computedIconRightLabel = computed(() =>
+    isClearVisible.value ? props.ariaClearLabel : props.ariaIconRightLabel,
 );
 
 function rightIconClick(event: Event): void {
-    if (props.clearable) {
+    if (isClearVisible.value) {
         inputValue.value = "";
     } else emits("icon-right-click", event);
 }
@@ -513,8 +523,11 @@ defineExpose({
                     :size="size"
                     :rounded="rounded"
                     :icon="icon"
+                    :icon-clickable="iconClickable"
                     :icon-right="computedIconRight"
                     :icon-right-clickable="computedIconRightClickable"
+                    :aria-icon-left-label="ariaIconLeftLabel"
+                    :aria-icon-right-label="computedIconRightLabel"
                     :icon-pack="iconPack"
                     :placeholder="placeholder"
                     :maxlength="maxlength"
