@@ -126,6 +126,7 @@ export const ProgrammaticComponent = defineComponent<
             "registry",
         ],
         // manual runtime emits declaration
+        // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted via the setup context
         emits: ["close", "destroy"],
         // manual runtime slot declaration
         slots: ["default"],

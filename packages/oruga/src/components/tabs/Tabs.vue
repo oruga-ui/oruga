@@ -69,6 +69,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * on tab change event

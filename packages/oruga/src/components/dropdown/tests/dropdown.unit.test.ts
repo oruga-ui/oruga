@@ -682,7 +682,7 @@ describe("ODropdown tests", () => {
             expect(items.length).toBe(options.length);
 
             items.forEach((item, index) => {
-                expect(item.text()).toEqual(options[index].label);
+                expect(item.text()).toStrictEqual(options[index].label);
             });
 
             const item = items[1];

@@ -162,7 +162,7 @@ describe("ODialog test", () => {
 
             const header = wrapper.find(".o-dialog__header");
             expect(header.exists()).toBeTruthy();
-            expect(header.text()).toEqual(title);
+            expect(header.text()).toStrictEqual(title);
         });
 
         test("title slot", () => {
@@ -184,7 +184,7 @@ describe("ODialog test", () => {
 
             const header = wrapper.find(".o-dialog__header");
             expect(header.exists()).toBeTruthy();
-            expect(header.text()).toEqual(subtitle);
+            expect(header.text()).toStrictEqual(subtitle);
         });
 
         test("subtitle slot", () => {
@@ -230,7 +230,7 @@ describe("ODialog test", () => {
 
             const body = wrapper.find(".o-dialog__body");
             expect(body.exists()).toBeTruthy();
-            expect(body.text()).toEqual(content);
+            expect(body.text()).toStrictEqual(content);
         });
 
         test("content slot", () => {

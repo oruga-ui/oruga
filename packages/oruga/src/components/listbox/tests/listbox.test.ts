@@ -133,7 +133,7 @@ describe("OListbox tests", () => {
             expect(items.length).toBe(options.length);
 
             items.forEach((item, index) => {
-                expect(item.text()).toEqual(options[index].label);
+                expect(item.text()).toStrictEqual(options[index].label);
             });
 
             await items[1].trigger("click");
@@ -351,7 +351,7 @@ describe("OListbox tests", () => {
             ).toBe(true);
 
             expect(wrapper.emitted("update:modelValue")).toHaveLength(2);
-            expect(wrapper.emitted("update:modelValue")?.[1][0]).toEqual([
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toStrictEqual([
                 options[0].value,
                 options[2].value,
             ]);

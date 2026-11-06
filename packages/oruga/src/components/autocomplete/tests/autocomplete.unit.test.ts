@@ -447,7 +447,7 @@ describe("OAutocomplete tests", () => {
             expect(icon.exists()).toBeTruthy();
             await icon.trigger("click");
 
-            expect(input.element.value).toEqual("");
+            expect(input.element.value).toStrictEqual("");
         });
 
         test("clear button does not appear when clearable property is not set to true", () => {

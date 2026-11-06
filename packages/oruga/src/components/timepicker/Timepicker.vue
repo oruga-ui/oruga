@@ -81,6 +81,7 @@ defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: Date];
     /**
      * active prop two-way binding

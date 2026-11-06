@@ -813,7 +813,11 @@ describe("OTree tests", () => {
                 .map((item) => item.find(".o-tree__item-label").text());
 
             expect(visibleItems).toHaveLength(3);
-            expect(visibleItems).toEqual(["Documents", "Work", "Resume.doc"]);
+            expect(visibleItems).toStrictEqual([
+                "Documents",
+                "Work",
+                "Resume.doc",
+            ]);
 
             expect(wrapper.emitted("filter")).toBeDefined();
             expect(wrapper.emitted("filter")?.[0][0]).toContain("res");
@@ -891,7 +895,7 @@ describe("OTree tests", () => {
                 .filter((item) => item.attributes("aria-hidden") === "false")
                 .map((item) => item.find(".o-tree__item-label").text());
 
-            expect(visibleItems).toEqual(["USA", "Chicago"]);
+            expect(visibleItems).toStrictEqual(["USA", "Chicago"]);
             expect(wrapper.emitted("filter")?.[0][0]).toContain("ch");
         });
 
@@ -936,7 +940,7 @@ describe("OTree tests", () => {
             expect(items.length).toBe(options.length);
 
             items.forEach((item, index) => {
-                expect(item.text()).toEqual(options[index].label);
+                expect(item.text()).toStrictEqual(options[index].label);
             });
 
             const itemLabel = items[1].find(".o-tree__item-label");

@@ -126,6 +126,7 @@ export default defineConfigWithVueTs([
       ],
       "vue/no-undef-directives": "error",
       "vue/no-undef-properties": "error",
+      "vue/no-unused-emit-declarations": "error",
       "vue/no-unused-refs": "error",
       "vue/prefer-use-template-ref": "error",
       "vue/require-macro-variable-name": [
@@ -154,6 +155,7 @@ export default defineConfigWithVueTs([
         "error",
         { fn: "test", withinDescribe: "test" },
       ],
+      "vitest/prefer-strict-equal": "error",
     },
   },
 ]);

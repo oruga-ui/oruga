@@ -33,7 +33,7 @@ describe("OInput tests", () => {
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-        expect(wrapper.vm.value).toEqual(value);
+        expect(wrapper.vm.value).toStrictEqual(value);
     });
 
     test("render textarea element when type is textarea", () => {
@@ -184,7 +184,7 @@ describe("OInput tests", () => {
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
-        expect(input.element.value).toEqual("");
+        expect(input.element.value).toStrictEqual("");
     });
 
     describe("verify events", () => {
@@ -266,7 +266,7 @@ describe("OInput tests", () => {
 
             const emitted = wrapper.emitted("update:modelValue");
 
-            expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
+            expect(emitted).toStrictEqual([[11], [12], [13], [12], [11]]);
         });
     });
 });

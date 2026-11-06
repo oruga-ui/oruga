@@ -101,7 +101,7 @@ describe("OTimepicker tests", () => {
         // check that update:active event was emitted with false (overlay closes)
         const updateActiveEmits = wrapper.emitted("update:active");
         expect(updateActiveEmits).toBeDefined();
-        expect(updateActiveEmits?.[0]).toEqual([false]);
+        expect(updateActiveEmits?.[0]).toStrictEqual([false]);
     });
 
     test("keeps overlay open on time selection when stayOpen is true", async () => {

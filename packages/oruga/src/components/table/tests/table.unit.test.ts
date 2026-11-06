@@ -884,7 +884,7 @@ describe("OTable tests", () => {
 
             expect(
                 wrapper.findAll("tbody tr").map((row) => row.text()),
-            ).toEqual(
+            ).toStrictEqual(
                 data.slice(perPage, perPage * 2).map((row) => String(row.id)),
             );
             expect(wrapper.find(".o-pagination__button--current").text()).toBe(

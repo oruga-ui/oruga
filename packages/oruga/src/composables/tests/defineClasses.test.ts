@@ -45,7 +45,7 @@ describe("defineClasses test", () => {
                 { vm: mockVM, scope: scope },
             );
 
-            expect(classes.value).toEqual([
+            expect(classes.value).toStrictEqual([
                 { "o-button": true },
                 { "o-button--small": true },
                 { "o-simple-button": true },
@@ -63,7 +63,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button": true },
                     { "o-button--small": true },
                     { "o-button--expanded": false },
@@ -90,7 +90,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button": true },
                     { "o-button--small": true },
                     { "o-button--expanded": false },
@@ -132,7 +132,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button instance-button": true },
                     { "o-button--small instance-button--small": true },
                     { "o-simple-button instance-simple-button": true },
@@ -181,7 +181,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button instance-button": true },
                         { "o-button--small instance-button--small": true },
                         {
@@ -192,7 +192,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button instance-button": true },
                         { "o-button--large instance-button--large": true },
                         {
@@ -229,7 +229,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "instance-button": true },
                     { "instance-button--small": true },
                     { "instance-simple-button": true },
@@ -274,7 +274,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "instance-button": true },
                         { "instance-button--small": true },
                         {
@@ -285,7 +285,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "instance-button": true },
                         { "instance-button--large": true },
                         { "instance-button--expanded": false },
@@ -324,7 +324,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button my-button": true },
                     { "o-button--small my-button--small": true },
                     { "o-simple-button my-simple-button": true },
@@ -342,7 +342,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button": true },
                         { "o-button--small my-button--small": true },
                         { "o-button--expanded my-button--expanded": false },
@@ -351,7 +351,7 @@ describe("defineClasses test", () => {
                     apply.value = true;
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button": true },
                         { "o-button--small my-button--small": true },
                         { "o-button--expanded my-button--expanded": true },
@@ -369,7 +369,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button": true },
                         { "o-button--small my-button--small": true },
                         { "o-button--expanded my-button--expanded": false },
@@ -378,7 +378,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button": true },
                         { "o-button--large my-button--large": true },
                         { "o-button--expanded my-button--expanded": false },
@@ -416,7 +416,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "my-button": true },
                     { "my-button--small": true },
                     { "my-simple-button": true },
@@ -434,7 +434,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "my-button": true },
                         { "my-button--small": true },
                         { "my-button--expanded": false },
@@ -461,7 +461,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "my-button": true },
                         { "my-button--small": true },
                         { "my-button--expanded": false },
@@ -522,7 +522,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "o-button my-button instance-button": true },
                     {
                         "o-button--small my-button--small instance-button--small": true,
@@ -581,7 +581,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button instance-button": true },
                         {
                             "o-button--small my-button--small instance-button--small": true,
@@ -594,7 +594,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "o-button my-button instance-button": true },
                         {
                             "o-button--large my-button--large instance-button--large": true,
@@ -650,7 +650,7 @@ describe("defineClasses test", () => {
                     { vm: mockVM, scope: scope },
                 );
 
-                expect(classes.value).toEqual([
+                expect(classes.value).toStrictEqual([
                     { "instance-button": true },
                     { "instance-button--small": true },
                     { "instance-simple-button": true },
@@ -695,7 +695,7 @@ describe("defineClasses test", () => {
                         { vm: mockVM, scope: scope },
                     );
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "instance-button": true },
                         { "instance-button--small": true },
                         {
@@ -706,7 +706,7 @@ describe("defineClasses test", () => {
                     suffix.value = "large";
                     await nextTick(); // await watcher to run
 
-                    expect(classes.value).toEqual([
+                    expect(classes.value).toStrictEqual([
                         { "instance-button": true },
                         { "instance-button--large": true },
                         { "instance-button--expanded": false },

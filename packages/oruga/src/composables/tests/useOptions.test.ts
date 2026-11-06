@@ -18,14 +18,14 @@ describe("useOptions tests", () => {
     describe("verify normalizeOptions", () => {
         test("empty list", () => {
             const normOptions = normalizeOptions([], indexer);
-            expect(normOptions).toEqual([]);
+            expect(normOptions).toStrictEqual([]);
         });
 
         test("options object", () => {
             const options: OptionsProp = { foo: "bar", a: "b" };
             const normOptions = normalizeOptions(options, indexer);
 
-            expect(normOptions).toEqual([
+            expect(normOptions).toStrictEqual([
                 {
                     key: "0",
                     item: { label: "bar", value: "foo" },
@@ -41,7 +41,7 @@ describe("useOptions tests", () => {
             const options: OptionsProp = ["foo", "bar"];
             const normOptions = normalizeOptions(options, indexer);
 
-            expect(normOptions).toEqual([
+            expect(normOptions).toStrictEqual([
                 {
                     key: "0",
                     item: { label: "foo", value: "foo" },
@@ -61,7 +61,7 @@ describe("useOptions tests", () => {
 
             const normOptions = normalizeOptions(options, indexer);
 
-            expect(normOptions).toEqual([
+            expect(normOptions).toStrictEqual([
                 {
                     key: "0",
                     item: { label: "foo", value: "bar" },

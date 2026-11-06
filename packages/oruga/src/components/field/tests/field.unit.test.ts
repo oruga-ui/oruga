@@ -37,7 +37,7 @@ describe("OField tests", () => {
             });
             const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "messageTag" prop is passed', () => {
@@ -49,7 +49,7 @@ describe("OField tests", () => {
             });
             const messageDiv = wrapper.find(messageTag + ".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "message" prop is changed dynamically', async () => {
@@ -62,7 +62,7 @@ describe("OField tests", () => {
 
             const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "message" is array', () => {
@@ -77,7 +77,7 @@ describe("OField tests", () => {
             const messages = messageDiv.findAll("div");
             expect(message).toHaveLength(2);
             message.forEach((m, idx) => {
-                expect(messages[idx].text()).toEqual(m);
+                expect(messages[idx].text()).toStrictEqual(m);
             });
         });
     });

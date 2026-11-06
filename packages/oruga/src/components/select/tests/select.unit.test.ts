@@ -204,13 +204,13 @@ describe("OSelect tests", () => {
             let emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContain(options[1].value);
-            expect(wrapper.vm.value).toEqual(options[1].value);
+            expect(wrapper.vm.value).toStrictEqual(options[1].value);
 
             await select.setValue(options[2].value);
             emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(2);
             expect(emits?.[1]).toContain(options[2].value);
-            expect(wrapper.vm.value).toEqual(options[2].value);
+            expect(wrapper.vm.value).toStrictEqual(options[2].value);
         });
     });
 
