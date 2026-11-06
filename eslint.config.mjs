@@ -23,7 +23,6 @@ configureVueProject({
 export default defineConfigWithVueTs([
   // define specific ignore patterns
   globalIgnores([
-    "*.d.ts",
     // prevent lint for generated files
     "CHANGELOG.md",
     "**/packages/oruga/src/config.d.ts",
@@ -33,6 +32,11 @@ export default defineConfigWithVueTs([
 
   // include .gitignore ignore patterns
   includeIgnoreFile(gitignorePath),
+
+  // report stale eslint-disable comments
+  {
+    linterOptions: { reportUnusedDisableDirectives: "error" },
+  },
 
   // add js configs
   eslint.configs.recommended,
@@ -64,6 +68,7 @@ export default defineConfigWithVueTs([
     rules: {
       // TypeScript
       "@typescript-eslint/ban-ts-comment": "warn",
+      "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/explicit-function-return-type": "warn",
       "@typescript-eslint/no-base-to-string": "off",
       "@typescript-eslint/no-explicit-any": "warn",
@@ -121,6 +126,7 @@ export default defineConfigWithVueTs([
       ],
       "vue/no-undef-directives": "error",
       "vue/no-undef-properties": "error",
+      "vue/no-unused-refs": "error",
       "vue/prefer-use-template-ref": "error",
       "vue/require-macro-variable-name": [
         "error",
@@ -133,6 +139,23 @@ export default defineConfigWithVueTs([
         },
       ],
       "vue/require-prop-comment": "warn",
+      // arrow functions are only needed when the handler requires a custom parameter list
+      "vue/v-on-handler-style": ["error", ["method", "inline"]],
+    },
+  },
+
+  // test specific modifications
+  {
+    name: "overrides-tests",
+    files: ["**/*.test.ts"],
+    rules: {
+      // tests mock and probe internals, so strict typing adds mostly noise
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "vitest/consistent-test-it": [
+        "error",
+        { fn: "test", withinDescribe: "test" },
+      ],
     },
   },
 ]);

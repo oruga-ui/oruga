@@ -115,7 +115,7 @@ describe("ODropdown tests", () => {
         );
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("render trigger slot correctly", () => {
             const triggerHTML = '<button class="trigger">trigger</button>';
             const wrapper = mount(ODropdown, {
@@ -140,7 +140,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test interactions", () => {
+    describe("verify interactions", () => {
         test("react accordingly when clicking item", async () => {
             const wrapper = mount(ODropdown, {
                 props: { options: simpleOptions, active: true },
@@ -368,7 +368,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test teleport", () => {
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(ODropdown, { props: { teleport: true } });
 
@@ -397,7 +397,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test selectable", () => {
+    describe("verify selectable", () => {
         test("react accordingly when new item is selected", async () => {
             const wrapper = mount(ODropdown, {
                 props: {
@@ -817,12 +817,10 @@ describe("ODropdown tests", () => {
             );
             expect(optionElements).toHaveLength(15);
 
-            optionElements.forEach((el, idx) => {
-                const isGroup = idx % 5 == 0;
-                const g_idx = Math.floor(idx / 5);
-                const o_idx = (idx % 5) - 1;
-
-                if (isGroup) {
+            // every fifth element is a group header
+            optionElements
+                .filter((_, idx) => idx % 5 == 0)
+                .forEach((el, g_idx) => {
                     const option = options[g_idx];
                     expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
@@ -834,22 +832,28 @@ describe("ODropdown tests", () => {
                     expect(
                         el.classes("o-dropdown__item--clickable"),
                     ).toBeFalsy();
+                });
+
+            optionElements.forEach((el, idx) => {
+                // group headers are checked above
+                if (idx % 5 == 0) return;
+
+                const g_idx = Math.floor(idx / 5);
+                const o_idx = (idx % 5) - 1;
+                const g_options = options[g_idx].options;
+
+                let optionLabel;
+                if (idx < 5) {
+                    optionLabel = (
+                        g_options[o_idx] as DropdownItemProps<number>
+                    ).label;
+                } else if (idx < 10) {
+                    optionLabel = Object.entries(g_options)[o_idx][1];
                 } else {
-                    const g_options = options[g_idx].options;
-
-                    let optionLabel;
-                    if (idx < 5) {
-                        optionLabel = (
-                            g_options[o_idx] as DropdownItemProps<number>
-                        ).label;
-                    } else if (idx < 10) {
-                        optionLabel = Object.entries(g_options)[o_idx][1];
-                    } else {
-                        optionLabel = g_options[o_idx];
-                    }
-
-                    expect(el.text()).toBe(optionLabel);
+                    optionLabel = g_options[o_idx];
                 }
+
+                expect(el.text()).toBe(optionLabel);
             });
         });
     });

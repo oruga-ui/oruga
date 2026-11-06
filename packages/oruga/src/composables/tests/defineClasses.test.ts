@@ -34,8 +34,8 @@ describe("defineClasses test", () => {
         scope.stop();
     });
 
-    describe("test class definition without config", () => {
-        test("test classes processed correct", () => {
+    describe("verify class definition without config", () => {
+        test("classes processed correct", () => {
             const classes = defineClasses(
                 ["rootClass", "o-button"],
                 ["variantClass", "o-button--", variant, !!variant],
@@ -52,7 +52,7 @@ describe("defineClasses test", () => {
             ]);
         });
 
-        test("test apply can change", () => {
+        test("apply can change", () => {
             scope.run(async () => {
                 const apply = ref(false);
                 const classes = defineClasses(
@@ -79,7 +79,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        test("test suffix can change", () => {
+        test("suffix can change", () => {
             scope.run(async () => {
                 const suffix = ref(variant);
                 const classes = defineClasses(
@@ -106,7 +106,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test with instance classes", () => {
+        describe("verify with instance classes", () => {
             const mockVM = {
                 proxy: {
                     $options: {
@@ -122,7 +122,7 @@ describe("defineClasses test", () => {
                 },
             } as any;
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -139,7 +139,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -170,7 +170,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -202,7 +202,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test with instance classes and override", () => {
+        describe("verify with instance classes and override", () => {
             const mockVM = {
                 proxy: {
                     $options: {
@@ -219,7 +219,7 @@ describe("defineClasses test", () => {
                 },
             } as any;
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -236,7 +236,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -263,7 +263,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -294,8 +294,8 @@ describe("defineClasses test", () => {
         });
     });
 
-    describe("test class definition with config", () => {
-        describe("test config without override", () => {
+    describe("verify class definition with config", () => {
+        describe("verify config without override", () => {
             beforeEach(() => {
                 vi.spyOn(config, "getConfig").mockImplementation(
                     () =>
@@ -314,7 +314,7 @@ describe("defineClasses test", () => {
                 vi.clearAllMocks();
             });
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -331,7 +331,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -358,7 +358,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -386,7 +386,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test config with override", () => {
+        describe("verify config with override", () => {
             beforeEach(() => {
                 vi.spyOn(config, "getConfig").mockImplementation(
                     () =>
@@ -406,7 +406,7 @@ describe("defineClasses test", () => {
                 vi.clearAllMocks();
             });
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -423,7 +423,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -450,7 +450,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -478,7 +478,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test with instance classes", () => {
+        describe("verify with instance classes", () => {
             const mockVM = {
                 proxy: {
                     $options: {
@@ -512,7 +512,7 @@ describe("defineClasses test", () => {
                 vi.clearAllMocks();
             });
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -535,7 +535,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -570,7 +570,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(
@@ -606,7 +606,7 @@ describe("defineClasses test", () => {
             });
         });
 
-        describe("test with instance classes and override", () => {
+        describe("verify with instance classes and override", () => {
             const mockVM = {
                 proxy: {
                     $options: {
@@ -640,7 +640,7 @@ describe("defineClasses test", () => {
                 vi.clearAllMocks();
             });
 
-            test("test classes processed correct", () => {
+            test("classes processed correct", () => {
                 const classes = defineClasses(
                     ["rootClass", "o-button"],
                     ["variantClass", "o-button--", variant, !!variant],
@@ -657,7 +657,7 @@ describe("defineClasses test", () => {
                 ]);
             });
 
-            test("test apply can change", () => {
+            test("apply can change", () => {
                 scope.run(async () => {
                     const apply = ref(false);
                     const classes = defineClasses(
@@ -684,7 +684,7 @@ describe("defineClasses test", () => {
                 });
             });
 
-            test("test suffix can change", () => {
+            test("suffix can change", () => {
                 scope.run(async () => {
                     const suffix = ref(variant);
                     const classes = defineClasses(

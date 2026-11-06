@@ -13,7 +13,7 @@ import {
 describe("ProgrammaticComponent tests", () => {
     enableAutoUnmount(afterEach);
 
-    test("test render simple div correctly", () => {
+    test("render simple div correctly", () => {
         const wrapper = mount(ProgrammaticComponent, {
             props: {
                 component: "div",
@@ -28,7 +28,7 @@ describe("ProgrammaticComponent tests", () => {
         expect(element.exists()).toBeTruthy();
     });
 
-    test("test render slot correctly", () => {
+    test("render slot correctly", () => {
         const wrapper = mount(ProgrammaticComponent, {
             props: {
                 component: createVNode({
@@ -47,7 +47,7 @@ describe("ProgrammaticComponent tests", () => {
         expect(inner.exists()).toBeTruthy();
     });
 
-    test("test render complex component with props correctly", () => {
+    test("render complex component with props correctly", () => {
         const content = "This is my content";
         const wrapper = mount(ProgrammaticComponent, {
             props: {
@@ -61,7 +61,7 @@ describe("ProgrammaticComponent tests", () => {
         expect(model.text()).toBe(content);
     });
 
-    test("test close is called correctly", async () => {
+    test("close is called correctly", async () => {
         vi.useFakeTimers();
 
         const onClose = vi.fn();
@@ -94,7 +94,7 @@ describe("ProgrammaticComponent tests", () => {
         vi.useRealTimers();
     });
 
-    test("test promise is called correctly", async () => {
+    test("promise is called correctly", async () => {
         const wrapper = mount(ProgrammaticComponent, {
             props: {
                 component: "div",
@@ -120,7 +120,7 @@ describe("ProgrammaticComponent tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test instance registry is called correctly", () => {
+    test("instance registry is called correctly", () => {
         const instanceRegistry = new InstanceRegistry();
 
         expect(instanceRegistry.count()).toBe(0);

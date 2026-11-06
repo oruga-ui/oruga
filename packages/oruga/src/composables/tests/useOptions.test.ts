@@ -15,13 +15,13 @@ describe("useOptions tests", () => {
         indexer = useIndexer();
     });
 
-    describe("test normalizeOptions", () => {
-        test("test empty list", () => {
+    describe("verify normalizeOptions", () => {
+        test("empty list", () => {
             const normOptions = normalizeOptions([], indexer);
             expect(normOptions).toEqual([]);
         });
 
-        test("test options object", () => {
+        test("options object", () => {
             const options: OptionsProp = { foo: "bar", a: "b" };
             const normOptions = normalizeOptions(options, indexer);
 
@@ -37,7 +37,7 @@ describe("useOptions tests", () => {
             ]);
         });
 
-        test("test options array of strings", () => {
+        test("options array of strings", () => {
             const options: OptionsProp = ["foo", "bar"];
             const normOptions = normalizeOptions(options, indexer);
 
@@ -53,7 +53,7 @@ describe("useOptions tests", () => {
             ]);
         });
 
-        test("test options array of objects", () => {
+        test("options array of objects", () => {
             const options: OptionsProp = [
                 { label: "foo", value: "bar" },
                 { label: "a", value: "b" },
@@ -73,7 +73,7 @@ describe("useOptions tests", () => {
             ]);
         });
 
-        test("test can recursively handle options with nested groups", () => {
+        test("can recursively handle options with nested groups", () => {
             const options: OptionsGroupsProp = [
                 {
                     label: "foo",
@@ -129,7 +129,7 @@ describe("useOptions tests", () => {
             ]);
         });
 
-        test("test can recursively handle options with groups of objects", () => {
+        test("can recursively handle options with groups of objects", () => {
             const options: OptionsGroupsProp = [
                 {
                     label: "Foo",
@@ -172,7 +172,7 @@ describe("useOptions tests", () => {
             ]);
         });
 
-        test("test can handle options with inner options but not grouped", () => {
+        test("can handle options with inner options but not grouped", () => {
             const options: OptionsGroupsProp = [
                 {
                     label: "Foo",
@@ -216,13 +216,13 @@ describe("useOptions tests", () => {
         });
     });
 
-    describe("test isGroupOption", () => {
-        test("test is normal option item", () => {
+    describe("verify isGroupOption", () => {
+        test("is normal option item", () => {
             const option = { key: "foo", item: { value: "bar" } };
             expect(isGroupOption(option)).toBeFalsy();
         });
 
-        test("test is group option item", () => {
+        test("is group option item", () => {
             const option = {
                 key: "foo",
                 item: {
@@ -234,7 +234,7 @@ describe("useOptions tests", () => {
         });
     });
 
-    describe("test findOption", () => {
+    describe("verify findOption", () => {
         const options = [
             {
                 key: "0",
@@ -292,12 +292,12 @@ describe("useOptions tests", () => {
             },
         ];
 
-        test("test empty list", () => {
+        test("empty list", () => {
             const foundOption = findOptionIndex([], { key: "0", item: {} });
             expect(foundOption).toBe(-1);
         });
 
-        test("test filter by valid value", () => {
+        test("filter by valid value", () => {
             const foundOption = findOptionIndex(options, {
                 key: "1",
                 item: {
@@ -308,7 +308,7 @@ describe("useOptions tests", () => {
             expect(foundOption).toStrictEqual(1);
         });
 
-        test("test filter by invalid value", () => {
+        test("filter by invalid value", () => {
             const foundOption = findOptionIndex(options, {
                 key: "5",
                 item: {
@@ -319,7 +319,7 @@ describe("useOptions tests", () => {
             expect(foundOption).toBe(-1);
         });
 
-        test("test group options filter by valid value", () => {
+        test("group options filter by valid value", () => {
             const foundOption = findOptionIndex(groupedOptions, {
                 key: "1",
                 item: {
@@ -330,7 +330,7 @@ describe("useOptions tests", () => {
             expect(foundOption).toStrictEqual(1);
         });
 
-        test("test group options filter by invalid value", () => {
+        test("group options filter by invalid value", () => {
             const foundOption = findOptionIndex(groupedOptions, {
                 key: "5",
                 item: {

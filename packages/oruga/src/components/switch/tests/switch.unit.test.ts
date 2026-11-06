@@ -75,7 +75,7 @@ describe("OSwitch tests", () => {
         expect(input.attributes("disabled")).toBeDefined();
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OSwitch);
 
@@ -102,7 +102,7 @@ describe("OSwitch tests", () => {
             });
         });
 
-        test("react accordingly when value change ", async () => {
+        test("react accordingly when value change", async () => {
             const wrapper = mount(OSwitch);
 
             const input = wrapper.find("input");

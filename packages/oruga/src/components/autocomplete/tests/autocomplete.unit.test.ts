@@ -109,7 +109,9 @@ describe("OAutocomplete tests", () => {
 
         // check default selected value
         expect(input.element.value).toBe(OPTIONS[2]);
-        expect(optionElements[2].classes("itemSelectedClass"));
+        expect(
+            optionElements[2].classes("o-dropdown__item--active"),
+        ).toBeTruthy();
         expect(optionElements[2].attributes("aria-selected")).toBeTruthy();
 
         // chenge selection
@@ -118,7 +120,9 @@ describe("OAutocomplete tests", () => {
 
         // check new selected value
         expect(input.element.value).toBe(OPTIONS[0]);
-        expect(optionElements[0].classes("itemSelectedClass"));
+        expect(
+            optionElements[0].classes("o-dropdown__item--active"),
+        ).toBeTruthy();
         expect(optionElements[0].attributes("aria-selected")).toBeTruthy();
     });
 
@@ -233,7 +237,7 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeTruthy();
         const firstItem = dropdown.find('[data-oruga="dropdown-item"]');
         expect(firstItem.exists()).toBeTruthy();
-        expect(firstItem.classes("o-dropdown__item--focused"));
+        expect(firstItem.classes("o-dropdown__item--focused")).toBeTruthy();
     });
 
     test("keepFirst works as input changes", async () => {
@@ -290,7 +294,7 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeFalsy();
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OAutocomplete);
 
@@ -633,33 +637,37 @@ describe("OAutocomplete tests", () => {
             );
             expect(optionElements).toHaveLength(15);
 
-            optionElements.forEach((el, idx) => {
-                const isGroup = idx % 5 == 0;
-                const g_idx = Math.floor(idx / 5);
-                const o_idx = (idx % 5) - 1;
-
-                if (isGroup) {
+            // every fifth element is a group header
+            optionElements
+                .filter((_, idx) => idx % 5 == 0)
+                .forEach((el, g_idx) => {
                     const option = options[g_idx];
                     expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
                         option.disabled ? "true" : "false",
                     );
+                });
+
+            optionElements.forEach((el, idx) => {
+                // group headers are checked above
+                if (idx % 5 == 0) return;
+
+                const g_idx = Math.floor(idx / 5);
+                const o_idx = (idx % 5) - 1;
+                const g_options = options[g_idx].options;
+
+                let optionLabel;
+                if (idx < 5) {
+                    optionLabel = (
+                        g_options[o_idx] as DropdownItemProps<string>
+                    ).label;
+                } else if (idx < 10) {
+                    optionLabel = Object.entries(g_options)[o_idx][1];
                 } else {
-                    const g_options = options[g_idx].options;
-
-                    let optionLabel;
-                    if (idx < 5) {
-                        optionLabel = (
-                            g_options[o_idx] as DropdownItemProps<string>
-                        ).label;
-                    } else if (idx < 10) {
-                        optionLabel = Object.entries(g_options)[o_idx][1];
-                    } else {
-                        optionLabel = g_options[o_idx];
-                    }
-
-                    expect(el.text()).toBe(optionLabel);
+                    optionLabel = g_options[o_idx];
                 }
+
+                expect(el.text()).toBe(optionLabel);
             });
         });
     });

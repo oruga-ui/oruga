@@ -165,7 +165,7 @@ describe("OSelect tests", () => {
         expect(wrapper.classes()).toContain("o-select--expanded");
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OSelect);
 
@@ -192,7 +192,7 @@ describe("OSelect tests", () => {
             });
         });
 
-        test("react accordingly when value change ", async () => {
+        test("react accordingly when value change", async () => {
             const wrapper = mount(OSelect, {
                 props: { options },
             });

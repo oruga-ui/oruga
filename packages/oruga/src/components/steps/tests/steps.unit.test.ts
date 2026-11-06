@@ -57,7 +57,7 @@ describe("OSteps tests", () => {
                   </OSteps>`,
         });
 
-        test("test render correctly", () => {
+        test("render correctly", () => {
             const wrapper = mount(Testcomponent, {
                 props: {
                     itemProps: {

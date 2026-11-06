@@ -59,7 +59,7 @@ describe("ORadio tests", () => {
         expect(input.attributes("disabled")).not.toBeUndefined();
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(ORadio);
 
@@ -86,7 +86,7 @@ describe("ORadio tests", () => {
             });
         });
 
-        test("react accordingly when value change ", async () => {
+        test("react accordingly when value change", async () => {
             const value1 = true;
             const value2 = false;
             const model = value2;

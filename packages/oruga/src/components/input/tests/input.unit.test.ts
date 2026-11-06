@@ -17,7 +17,7 @@ describe("OInput tests", () => {
         expect(wrapper.classes("o-input")).toBeTruthy();
     });
 
-    test("test basic", async () => {
+    test("basic", async () => {
         const wrapper = mount(OInput, {
             props: { icon: "placeholder", iconClickable: true },
         });
@@ -187,7 +187,7 @@ describe("OInput tests", () => {
         expect(input.element.value).toEqual("");
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OInput);
 
@@ -238,7 +238,7 @@ describe("OInput tests", () => {
             expect(wrapper.props("modelValue")).toBe("bar");
         });
 
-        test("check type number ", async () => {
+        test("check type number", async () => {
             const wrapper = shallowMount(OInput, {
                 props: {
                     type: "number",

@@ -59,7 +59,7 @@ describe("OCheckbox tests", () => {
         expect(input.attributes("disabled")).not.toBeUndefined();
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OCheckbox);
 
@@ -86,7 +86,7 @@ describe("OCheckbox tests", () => {
             });
         });
 
-        test("react accordingly when value change ", async () => {
+        test("react accordingly when value change", async () => {
             const wrapper = mount(OCheckbox);
 
             const input = wrapper.find("input");
