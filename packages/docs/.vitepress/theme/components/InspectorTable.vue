@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { computed, ref, type PropType } from "vue";
+import { computed, ref } from "vue";
 import type { InspectData, InspectClassDescription, InspectClass } from "@docs";
 import { VPButton } from "vitepress/theme";
 
-const props = defineProps({
-    inspectData: { type: Object as PropType<InspectData>, required: true },
-});
+const props = defineProps<{
+    /** class descriptions of the inspected component, keyed by class name */
+    inspectData: InspectData;
+}>();
 
 const emits = defineEmits<{
-    (e: "inspect", value: InspectClass): void;
+    inspect: [value: InspectClass];
 }>();
 
 const showSummary = ref(false);
@@ -127,7 +128,7 @@ function inspectClass(
                     <th>Description</th>
                     <th>Props</th>
                     <th>Suffixes</th>
-                    <th></th>
+                    <th />
                 </tr>
                 <tr
                     v-for="(data, index) of classesToInspect"
@@ -172,22 +173,20 @@ function inspectClass(
                             </a>
                         </div>
                         <div v-if="data.info">
-                            👉 <i><span v-html="data.info"></span></i>
+                            👉 <i><span v-html="data.info" /></i>
                         </div>
                     </td>
                     <td>
                         <code
                             v-if="data.properties"
                             style="white-space: nowrap; padding: 0"
-                            v-html="setByProperties(data.properties)">
-                        </code>
+                            v-html="setByProperties(data.properties)" />
                     </td>
                     <td>
                         <code
                             v-if="data.suffixes"
                             style="white-space: nowrap; padding: 0"
-                            v-html="setByProperties(data.suffixes)">
-                        </code>
+                            v-html="setByProperties(data.suffixes)" />
                     </td>
                     <td>
                         <VPButton

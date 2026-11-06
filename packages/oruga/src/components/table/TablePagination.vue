@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { PropType } from "vue";
-
 import OPagination from "@/components/pagination/Pagination.vue";
 
 import type { ComponentClass } from "@/types";
@@ -12,14 +10,14 @@ defineOptions({
     inheritAttrs: false,
 });
 
-defineProps({
-    current: { type: Number, default: undefined },
-    paginated: { type: Boolean, default: false },
-    rootClass: {
-        type: [String, Array, Object] as PropType<ComponentClass>,
-        default: undefined,
-    },
-});
+defineProps<{
+    /** the current page number */
+    current?: number;
+    /** show the pagination */
+    paginated?: boolean;
+    /** class of the pagination root element */
+    rootClass?: ComponentClass;
+}>();
 
 const emits = defineEmits<{
     /**

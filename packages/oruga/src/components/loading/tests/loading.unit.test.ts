@@ -38,7 +38,7 @@ describe("OLoading tests", () => {
         expect(container.classes("o-loading--fullpage")).toBeTruthy();
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("react accordingly when pressing escape with close on escape", async () => {
             const wrapper = mount(OLoading, {
                 props: { active: true, closeOnEscape: true },
@@ -116,6 +116,30 @@ describe("OLoading tests", () => {
             expect(wrapper.find(".o-loading__overlay").exists()).toBeTruthy();
             expect(wrapper.emitted("close")).toBeUndefined();
             expect(wrapper.emitted("update:active")).toBeUndefined();
+        });
+    });
+
+    describe("accessible name", () => {
+        test("without a slot the label is rendered and no aria-label is set", () => {
+            const wrapper = mount(OLoading, {
+                props: { active: true, label: "Loading data" },
+            });
+            expect(wrapper.find(".o-loading__label").text()).toBe(
+                "Loading data",
+            );
+            expect(wrapper.attributes("aria-label")).toBeUndefined();
+        });
+
+        test("with the default slot the label names the status", () => {
+            const wrapper = mount(OLoading, {
+                props: { active: true, label: "Loading data" },
+                slots: { default: "<span>custom</span>" },
+            });
+            const div = wrapper.find('[data-oruga="loading"]');
+            expect(div.exists()).toBeTruthy();
+            expect(div.attributes("role")).toBe("status");
+            expect(div.attributes("aria-label")).toBe("Loading data");
+            expect(div.find(".o-loading__label").exists()).toBe(false);
         });
     });
 });

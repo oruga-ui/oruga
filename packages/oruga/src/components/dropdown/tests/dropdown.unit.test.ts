@@ -115,7 +115,7 @@ describe("ODropdown tests", () => {
         );
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("render trigger slot correctly", () => {
             const triggerHTML = '<button class="trigger">trigger</button>';
             const wrapper = mount(ODropdown, {
@@ -140,7 +140,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test interactions", () => {
+    describe("verify interactions", () => {
         test("react accordingly when clicking item", async () => {
             const wrapper = mount(ODropdown, {
                 props: { options: simpleOptions, active: true },
@@ -368,7 +368,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test teleport", () => {
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(ODropdown, { props: { teleport: true } });
 
@@ -397,7 +397,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test selectable", () => {
+    describe("verify selectable", () => {
         test("react accordingly when new item is selected", async () => {
             const wrapper = mount(ODropdown, {
                 props: {
@@ -682,7 +682,7 @@ describe("ODropdown tests", () => {
             expect(items.length).toBe(options.length);
 
             items.forEach((item, index) => {
-                expect(item.text()).toEqual(options[index].label);
+                expect(item.text()).toStrictEqual(options[index].label);
             });
 
             const item = items[1];
@@ -817,12 +817,10 @@ describe("ODropdown tests", () => {
             );
             expect(optionElements).toHaveLength(15);
 
-            optionElements.forEach((el, idx) => {
-                const isGroup = idx % 5 == 0;
-                const g_idx = Math.floor(idx / 5);
-                const o_idx = (idx % 5) - 1;
-
-                if (isGroup) {
+            // every fifth element is a group header
+            optionElements
+                .filter((_, idx) => idx % 5 == 0)
+                .forEach((el, g_idx) => {
                     const option = options[g_idx];
                     expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
@@ -834,23 +832,109 @@ describe("ODropdown tests", () => {
                     expect(
                         el.classes("o-dropdown__item--clickable"),
                     ).toBeFalsy();
+                });
+
+            optionElements.forEach((el, idx) => {
+                // group headers are checked above
+                if (idx % 5 == 0) return;
+
+                const g_idx = Math.floor(idx / 5);
+                const o_idx = (idx % 5) - 1;
+                const g_options = options[g_idx].options;
+
+                let optionLabel;
+                if (idx < 5) {
+                    optionLabel = (
+                        g_options[o_idx] as DropdownItemProps<number>
+                    ).label;
+                } else if (idx < 10) {
+                    optionLabel = Object.entries(g_options)[o_idx][1];
                 } else {
-                    const g_options = options[g_idx].options;
-
-                    let optionLabel;
-                    if (idx < 5) {
-                        optionLabel = (
-                            g_options[o_idx] as DropdownItemProps<number>
-                        ).label;
-                    } else if (idx < 10) {
-                        optionLabel = Object.entries(g_options)[o_idx][1];
-                    } else {
-                        optionLabel = g_options[o_idx];
-                    }
-
-                    expect(el.text()).toBe(optionLabel);
+                    optionLabel = g_options[o_idx];
                 }
+
+                expect(el.text()).toBe(optionLabel);
             });
+        });
+    });
+
+    describe("props toggled after setup", () => {
+        /** fake the layout of the menu, which jsdom does not compute */
+        function fakeScrollPosition(
+            menu: HTMLElement,
+            scrollTop: number,
+        ): void {
+            Object.defineProperty(menu, "scrollHeight", { value: 300 });
+            Object.defineProperty(menu, "clientHeight", { value: 100 });
+            Object.defineProperty(menu, "scrollTop", { value: scrollTop });
+        }
+
+        test("scroll events are emitted after scrollable is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, scrollable: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+            const menu = wrapper.find(".o-dropdown__menu").element;
+            fakeScrollPosition(menu as HTMLElement, 200);
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toBeUndefined();
+
+            await wrapper.setProps({ scrollable: true });
+            await nextTick(); // await listener registration
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toHaveLength(1);
+        });
+
+        test("scroll events stop after scrollable is disabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, scrollable: true },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+            const menu = wrapper.find(".o-dropdown__menu").element;
+            fakeScrollPosition(menu as HTMLElement, 200);
+
+            await wrapper.setProps({ scrollable: false });
+            await nextTick(); // await listener removal
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toBeUndefined();
+        });
+
+        test("closes on click outside after closeOnOutside is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, closeOnOutside: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+
+            await wrapper.setProps({ closeOnOutside: true });
+            await nextTick(); // await listener registration
+
+            window.dispatchEvent(new Event("click"));
+            await nextTick(); // await dom update
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+
+        test("closes on page scroll after closeOnScroll is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, closeOnScroll: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+
+            await wrapper.setProps({ closeOnScroll: true });
+            await nextTick(); // await listener registration
+
+            window.dispatchEvent(new Event("scroll"));
+            await nextTick(); // await dom update
+            expect(wrapper.emitted("close")).toHaveLength(1);
         });
     });
 });
