@@ -111,7 +111,7 @@ describe("OSteps tests", () => {
             });
         });
 
-        test("prefer the item variant over the steps variant", () => {
+        test("prefer the item variant over the steps variant", async () => {
             const wrapper = mount(OSteps, {
                 props: {
                     variant: "success",
@@ -121,6 +121,7 @@ describe("OSteps tests", () => {
                     ],
                 },
             });
+            await nextTick(); // await child items got rendered
 
             const steps = wrapper.findAll("[role=tab]");
             expect(steps).toHaveLength(2);
