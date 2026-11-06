@@ -671,6 +671,7 @@ describe("OAutocomplete tests", () => {
             });
         });
     });
+
     describe("clickable icon names", () => {
         test("the clear button is named", async () => {
             const wrapper = mount(OAutocomplete, {

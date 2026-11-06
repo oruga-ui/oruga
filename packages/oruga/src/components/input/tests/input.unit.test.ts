@@ -269,6 +269,7 @@ describe("OInput tests", () => {
             expect(emitted).toStrictEqual([[11], [12], [13], [12], [11]]);
         });
     });
+
     describe("clickable icon names", () => {
         test("the left icon uses ariaIconLeftLabel", () => {
             const wrapper = mount(OInput, {
