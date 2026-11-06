@@ -96,9 +96,9 @@ export type DialogProps<C extends Component = Component> = {
     cancelVariant?: string;
     /** Position of the footer buttons */
     buttonPosition?: "center" | "left" | "right";
-    /** Accessibility aria-label to be passed to the div root element */
+    /** Accessibility aria-label to be passed to the div root element - if set, it is used instead of the title as the accessible name */
     ariaLabel?: string;
-    /** Accessibility aria-describedby to be passed to the div root element - if a title is set, it is linked to the title */
+    /** Accessibility aria-describedby to be passed to the div root element - the id of the element which describes the dialog */
     ariaDescribedby?: string;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
