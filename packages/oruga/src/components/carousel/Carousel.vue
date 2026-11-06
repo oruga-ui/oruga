@@ -36,6 +36,8 @@ import type {
 } from "./types";
 import type { CarouselProps } from "./props";
 
+type ModelValue = CarouselProps<T>["modelValue"];
+
 /**
  * A Slideshow for cycling images in confined spaces.
  * @displayName Carousel
@@ -47,8 +49,6 @@ defineOptions({
     name: "OCarousel",
     configField: "carousel",
 });
-
-type ModelValue = CarouselProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<CarouselProps<T>>(), {
     override: undefined,
@@ -95,6 +95,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: number];
     /**
      * on carousel slide change event
