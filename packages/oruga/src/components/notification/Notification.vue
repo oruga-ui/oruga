@@ -149,7 +149,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
 
 <template>
     <transition :name="animation">
-        <article
+        <div
             v-show="isActive"
             :role="liveRegionRole"
             aria-atomic="true"
@@ -198,6 +198,6 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 @click="close($event)">
                 <slot v-if="$slots['close']" name="close" />
             </CloseButton>
-        </article>
+        </div>
     </transition>
 </template>

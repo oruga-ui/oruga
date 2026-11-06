@@ -13,12 +13,14 @@ describe("useNotificationProgrammatic tests", () => {
     });
 
     afterEach(() => {
+        // clear factory items; the instances only leave the registry after the
+        // destroy timers ran, so flush them while the fake timers are active
+        factory.closeAll();
+        vi.runAllTimers();
+
         // clear body after each test
         document.body.innerHTML = "";
         vi.useRealTimers();
-
-        // clear factory items
-        factory.closeAll();
     });
 
     enableAutoUnmount(afterEach);

@@ -16,7 +16,7 @@ describe("ONotification tests", () => {
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.html()).toMatchSnapshot();
-        const element = wrapper.find("article");
+        const element = wrapper.find("[data-oruga=notification]");
         expect(element.attributes("data-oruga")).toBe("notification");
     });
 
@@ -25,7 +25,7 @@ describe("ONotification tests", () => {
             const wrapper = mount(ONotification, {
                 props: { content: "Saved", variant: "success" },
             });
-            const element = wrapper.find("article");
+            const element = wrapper.find("[data-oruga=notification]");
             expect(element.attributes("role")).toBe("status");
             expect(element.attributes("aria-atomic")).toBe("true");
         });
@@ -36,9 +36,9 @@ describe("ONotification tests", () => {
                 const wrapper = mount(ONotification, {
                     props: { content: "Failed", variant },
                 });
-                expect(wrapper.find("article").attributes("role")).toBe(
-                    "alert",
-                );
+                expect(
+                    wrapper.find("[data-oruga=notification]").attributes("role"),
+                ).toBe("alert");
             },
         );
 
@@ -47,7 +47,9 @@ describe("ONotification tests", () => {
                 props: { content: "Failed", variant: "danger" },
                 attrs: { role: "log" },
             });
-            expect(wrapper.find("article").attributes("role")).toBe("log");
+            expect(
+                wrapper.find("[data-oruga=notification]").attributes("role"),
+            ).toBe("log");
         });
     });
 });
