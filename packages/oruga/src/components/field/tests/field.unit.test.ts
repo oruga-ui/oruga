@@ -37,7 +37,7 @@ describe("OField tests", () => {
             });
             const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "messageTag" prop is passed', () => {
@@ -49,7 +49,7 @@ describe("OField tests", () => {
             });
             const messageDiv = wrapper.find(messageTag + ".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "message" prop is changed dynamically', async () => {
@@ -62,7 +62,7 @@ describe("OField tests", () => {
 
             const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
-            expect(messageDiv.text()).toEqual(message);
+            expect(messageDiv.text()).toStrictEqual(message);
         });
 
         test('react accordingly when "message" is array', () => {
@@ -77,7 +77,7 @@ describe("OField tests", () => {
             const messages = messageDiv.findAll("div");
             expect(message).toHaveLength(2);
             message.forEach((m, idx) => {
-                expect(messages[idx].text()).toEqual(m);
+                expect(messages[idx].text()).toStrictEqual(m);
             });
         });
     });
@@ -137,7 +137,7 @@ describe("OField tests", () => {
         });
     });
 
-    describe("managing default slot ", () => {
+    describe("managing default slot", () => {
         test("react accordingly when child is a text", () => {
             const text = "text";
             const wrapper = mount(OField, {
@@ -147,7 +147,7 @@ describe("OField tests", () => {
         });
     });
 
-    describe("managing horizontal prop ", () => {
+    describe("managing horizontal prop", () => {
         test('react accordingly when "grouped" prop is set', () => {
             const wrapper = mount(OField, {
                 props: { grouped: true, horizontal: true },
@@ -199,6 +199,41 @@ describe("OField tests", () => {
             const messages = wrapper.findAll(".o-field__message");
             expect(messages.length).toBe(1);
             expect(messages[0].text()).toBe(message);
+        });
+    });
+
+    describe("accessible name of the control", () => {
+        test("a control uses the label of the field", () => {
+            const wrapper = mount(OField, {
+                props: { label: "Name" },
+                slots: { default: h(OInput) },
+            });
+            const label = wrapper.find("label");
+            expect(wrapper.find("input").attributes("aria-labelledby")).toBe(
+                label.attributes("id"),
+            );
+        });
+
+        test("an own aria-label replaces the label of the field", () => {
+            const wrapper = mount(OField, {
+                props: { label: "Name" },
+                slots: { default: h(OInput, { "aria-label": "First name" }) },
+            });
+            const input = wrapper.find("input");
+            expect(input.attributes("aria-label")).toBe("First name");
+            expect(input.attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("an own aria-labelledby overrides the label of the field", () => {
+            const wrapper = mount(OField, {
+                props: { label: "Name" },
+                slots: {
+                    default: h(OInput, { "aria-labelledby": "other-id" }),
+                },
+            });
+            expect(wrapper.find("input").attributes("aria-labelledby")).toBe(
+                "other-id",
+            );
         });
     });
 });

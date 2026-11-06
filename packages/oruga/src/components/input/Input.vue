@@ -23,9 +23,11 @@ import {
     useInputHandler,
 } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { InputProps, InputNativeProps } from "./props";
+
+type ModelValue = InputProps<IsNumber>["modelValue"];
 
 /**
  * Get user Input. Use with Field to access all functionalities.
@@ -38,8 +40,6 @@ defineOptions({
     configField: "input",
     inheritAttrs: false,
 });
-
-type ModelValue = InputProps<IsNumber>["modelValue"];
 
 const props = withDefaults(
     defineProps<
@@ -298,8 +298,7 @@ function togglePasswordVisibility(): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+    ...mergeFieldAttrs(parentField?.value?.inputAttrs, attrs),
     // maxlength and autocomplete are declared Vue props (not in attrs), so must be explicit
     maxlength: props.maxlength,
     autocomplete: props.autocomplete,

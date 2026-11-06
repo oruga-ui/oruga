@@ -17,7 +17,8 @@ export type NotificationProps<C extends Component = Component> = {
     /** Whether notification is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /**
-     * Type (color) of the notification
+     * Type of the notification, selects the default icon.
+     * It does not change the color, use the `variant` prop for that.
      * @values info, success, warning, danger
      */
     type?: string;
@@ -114,7 +115,9 @@ export type NotificationNoticeProps<C extends Component = Component> = {
     rounded?: boolean;
     /** Hide notification after duration (in miliseconds) */
     duration?: number;
-    /** Pause and show on hover until hover off, if infinite is false. */
+    /**
+     * Pause and show while the pointer is over the notification or focus is inside it, until both are gone. Ignored if infinite is true.
+     */
     pauseOnHover?: boolean;
     /** Show the Notification infinitely until it is dismissed. */
     infinite?: boolean;

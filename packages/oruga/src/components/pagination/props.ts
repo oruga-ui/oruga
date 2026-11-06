@@ -43,6 +43,8 @@ export type PaginationProps = {
     iconNext?: string;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
+    /** Accessibility label for the pagination `nav` landmark. */
+    ariaLabel?: string;
     /** Accessibility label for the next page button. */
     ariaNextLabel?: string;
     /** Accessibility label for the previous page button. */

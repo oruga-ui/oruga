@@ -5,7 +5,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
   <div class="o-datepicker__trigger">
     <!-- Web Picker -->
     <div data-oruga="input" class="o-input">
-      <!--v-if--><input id="v-0" type="text" data-oruga-input="text" class="o-input__input o-datepicker__input o-datetimepicker__date" data-oruga="datetimepicker" autocomplete="off" value="01/01/2000, 00:00">
+      <!--v-if--><input id="v-0" type="text" data-oruga-input="text" class="o-input__input o-datepicker__input" autocomplete="off" value="01/01/2000, 00:00">
       <!--v-if-->
       <!--v-if-->
     </div>

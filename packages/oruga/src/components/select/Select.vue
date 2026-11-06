@@ -20,9 +20,11 @@ import {
     useInputHandler,
 } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { SelectProps, SelectNativeProps } from "./props";
+
+type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
 /**
  * Select an item in a list. Use with Field to access all functionalities.
@@ -35,8 +37,6 @@ defineOptions({
     configField: "select",
     inheritAttrs: false,
 });
-
-type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<
@@ -203,8 +203,7 @@ function rightIconClick(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+    ...mergeFieldAttrs(parentField?.value?.inputAttrs, attrs),
     autocomplete: props.autocomplete,
 }));
 

@@ -11,6 +11,8 @@ import { defineClasses, useProviderParent } from "@/composables";
 import type { SliderComponent } from "./types";
 import type { SliderProps } from "./props";
 
+type ModelValue = SliderProps<IsRange>["modelValue"];
+
 /**
  * A slider to select a value or range from a given range.
  * @displayName Slider
@@ -22,8 +24,6 @@ defineOptions({
     name: "OSlider",
     configField: "slider",
 });
-
-type ModelValue = SliderProps<IsRange>["modelValue"];
 
 const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     override: undefined,
@@ -47,6 +47,8 @@ const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     format: () => getDefault("slider.format", "raw"),
     locale: () => getDefault("locale"),
     ariaLabel: () => getDefault("slider.ariaLabel"),
+    ariaStartLabel: () => getDefault("slider.ariaStartLabel"),
+    ariaEndLabel: () => getDefault("slider.ariaEndLabel"),
 });
 
 const emits = defineEmits<{
@@ -114,6 +116,12 @@ const maxValue = computed(() =>
 
 const isRange = computed(() => isTrueish(props.range));
 
+/** Name of the (start) thumb. Only a range slider has separate start and end names. */
+const startLabel = computed(() =>
+    isRange.value ? (props.ariaStartLabel ?? props.ariaLabel) : props.ariaLabel,
+);
+const endLabel = computed(() => props.ariaEndLabel ?? props.ariaLabel);
+
 const vmodel = computed<ModelValue>(
     () =>
         (isRange.value
@@ -124,10 +132,7 @@ const vmodel = computed<ModelValue>(
 /** update vmodel value on internal value change */
 watch([valueStart, valueEnd], () => {
     if (isRange.value)
-        isThumbReversed.value =
-            valueStart.value && valueEnd.value
-                ? valueStart.value > valueEnd.value
-                : false;
+        isThumbReversed.value = valueStart.value > valueEnd.value;
     if (!props.lazy || !dragging.value)
         emits("update:model-value", vmodel.value); // update external vmodel
     if (dragging.value) emits("dragging", vmodel.value);
@@ -325,6 +330,7 @@ defineExpose({ value: vmodel });
             <o-slider-thumb
                 ref="thumbStartComponent"
                 v-model="valueStart"
+                :aria-label="startLabel"
                 :slider-props="props"
                 :slider-size="getSliderSize"
                 :thumb-classes="thumbClasses"
@@ -337,6 +343,7 @@ defineExpose({ value: vmodel });
                 v-if="isRange"
                 ref="thumbEndComponent"
                 v-model="valueEnd"
+                :aria-label="endLabel"
                 :slider-props="props"
                 :slider-size="getSliderSize"
                 :thumb-classes="thumbClasses"

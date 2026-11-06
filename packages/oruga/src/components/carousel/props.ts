@@ -65,6 +65,13 @@ export type CarouselProps<T> = {
     ariaNextLabel?: string;
     /** Accessibility previous button aria label  */
     ariaPreviousLabel?: string;
+    /** Accessibility aria label of the slide indicators */
+    ariaIndicatorsLabel?: string;
+    /**
+     * Accessibility aria label of a slide indicator.
+     * A string can use the `{value}` placeholder for the slide number, a function receives the number.
+     */
+    ariaIndicatorLabel?: string | ((value: string) => string);
 } & CarouselClasses;
 
 // class props (will not be displayed in the docs)

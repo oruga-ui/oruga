@@ -51,6 +51,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     clipScroll: () => getDefault("sidebar.clipScroll", false),
     mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
     teleport: () => getDefault("sidebar.teleport", false),
+    ariaLabel: () => getDefault("sidebar.ariaLabel"),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -229,6 +230,20 @@ const contentClasses = defineClasses(
         computed(() => !isActive.value),
     ],
 );
+// #region --- Dialog Semantics ---
+
+/**
+ * The overlay makes the sidebar modal, so expose it as a dialog.
+ * The attributes are only set when needed, to not overwrite a role passed by the user.
+ */
+const dialogAttrs = computed(() =>
+    props.overlay && isActive.value
+        ? { role: "dialog", "aria-modal": true }
+        : {},
+);
+
+// #endregion --- Dialog Semantics ---
+
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
@@ -240,10 +255,11 @@ defineExpose({ close });
         <div
             v-show="!hideOnMobile"
             ref="rootElement"
-            v-bind="$attrs"
+            v-bind="{ ...$attrs, ...dialogAttrs }"
             v-trap-focus="trapFocus && isActive && !inline"
             data-oruga="sidebar"
-            :class="rootClasses">
+            :class="rootClasses"
+            :aria-label="ariaLabel">
             <div
                 v-if="overlay && isActive"
                 :class="overlayClasses"

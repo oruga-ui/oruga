@@ -41,6 +41,8 @@ export type TreeProps<T, IsMultiple extends boolean = boolean> = {
     filterDebounce?: number;
     /** Placeholder for the filter input */
     filterPlaceholder?: string;
+    /** Accessibility label for the filter input */
+    ariaFilterLabel?: string;
     /** The chevron icon to for the toggle element before each item */
     toggleIcon?: string;
     /**
