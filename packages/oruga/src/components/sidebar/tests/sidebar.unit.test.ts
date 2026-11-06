@@ -20,10 +20,12 @@ describe("OSidebar tests", () => {
             const wrapper = mount(OSidebar, {
                 props: { active: true, overlay: true, ariaLabel: "Menu" },
             });
+            const sidebar = wrapper.find("[data-oruga=sidebar]");
+            expect(sidebar.exists()).toBeTruthy();
 
-            expect(wrapper.attributes("role")).toBe("dialog");
-            expect(wrapper.attributes("aria-modal")).toBe("true");
-            expect(wrapper.attributes("aria-label")).toBe("Menu");
+            expect(sidebar.attributes("role")).toBe("dialog");
+            expect(sidebar.attributes("aria-modal")).toBe("true");
+            expect(sidebar.attributes("aria-label")).toBe("Menu");
         });
 
         test("not expose a dialog without overlay", () => {
@@ -31,22 +33,28 @@ describe("OSidebar tests", () => {
                 props: { active: true, overlay: false },
             });
 
-            expect(wrapper.attributes("role")).toBeUndefined();
-            expect(wrapper.attributes("aria-modal")).toBeUndefined();
+            const sidebar = wrapper.find("[data-oruga=sidebar]");
+            expect(sidebar.exists()).toBeTruthy();
+
+            expect(sidebar.attributes("role")).toBeUndefined();
+            expect(sidebar.attributes("aria-modal")).toBeUndefined();
         });
 
         test("not expose a dialog while closed", async () => {
             const wrapper = mount(OSidebar, {
                 props: { active: false, overlay: true },
             });
-            expect(wrapper.attributes("role")).toBeUndefined();
+            const sidebar = wrapper.find("[data-oruga=sidebar]");
+            expect(sidebar.exists()).toBeTruthy();
+
+            expect(sidebar.attributes("role")).toBeUndefined();
 
             await wrapper.setProps({ active: true });
-            expect(wrapper.attributes("role")).toBe("dialog");
+            expect(sidebar.attributes("role")).toBe("dialog");
 
             await wrapper.setProps({ active: false });
-            expect(wrapper.attributes("role")).toBeUndefined();
-            expect(wrapper.attributes("aria-modal")).toBeUndefined();
+            expect(sidebar.attributes("role")).toBeUndefined();
+            expect(sidebar.attributes("aria-modal")).toBeUndefined();
         });
 
         test("keep a role passed by the user when no dialog is exposed", () => {
@@ -55,7 +63,10 @@ describe("OSidebar tests", () => {
                 attrs: { role: "navigation" },
             });
 
-            expect(wrapper.attributes("role")).toBe("navigation");
+            const sidebar = wrapper.find("[data-oruga=sidebar]");
+            expect(sidebar.exists()).toBeTruthy();
+
+            expect(sidebar.attributes("role")).toBe("navigation");
         });
     });
 });
