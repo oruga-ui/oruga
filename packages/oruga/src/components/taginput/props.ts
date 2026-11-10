@@ -59,8 +59,18 @@ export type TaginputProps<T> = {
     iconPack?: string;
     /** Icon to be shown */
     icon?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Icon name of close icon on selected item */
     closeIcon?: string;
+    /**
+     * Size of the close icon on selected item
+     * @values small, medium, large
+     */
+    closeIconSize?: string;
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
     /** Native options to use in HTML5 validation */
