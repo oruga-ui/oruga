@@ -13,7 +13,7 @@ describe("OTooltip a11y tests", () => {
         { title: "axe tooltip - base case", props: { label: "Tooltip" } },
         {
             title: "axe tooltip - position",
-            props: { label: "Tooltip", position: "top" },
+            props: { label: "Tooltip", position: "bottom" },
         },
     ];
 

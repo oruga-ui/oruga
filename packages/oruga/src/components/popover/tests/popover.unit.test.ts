@@ -73,20 +73,23 @@ describe("OPopover tests", () => {
             const trigger = wrapper.find(".trigger");
             expect(trigger.exists()).toBeTruthy();
 
+            const content = wrapper.find(".o-popover__content");
+            expect(content.exists()).toBeTruthy();
+            expect(content.isVisible()).toBeFalsy();
+
             // check do not open on right click
             await trigger.trigger("contextmenu");
             await setTimeout(); // await async event is processed
+            expect(content.isVisible()).toBeFalsy();
 
             // check do not open on focus
             await trigger.trigger("focus");
             await setTimeout(); // await async event is processed
+            expect(content.isVisible()).toBeFalsy();
 
             // check do not open on hover
             await trigger.trigger("pointerenter");
             await setTimeout(); // await async event is processed
-
-            const content = wrapper.find(".o-popover__content");
-            expect(content.exists()).toBeTruthy();
             expect(content.isVisible()).toBeFalsy();
 
             expect(wrapper.emitted("open")).toBeUndefined();
