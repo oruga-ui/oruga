@@ -41,3 +41,17 @@ export type TableColumnItem<T, K extends string = FieldKey<T>> = Omit<
         thAttrsData: object;
         tdAttrsData: Array<object>;
     };
+
+export type TableSortColumn<T = unknown> = {
+    /** the sorted column */
+    column: TableColumn<T>;
+    /** the sort direction of the column */
+    direction: "asc" | "desc";
+};
+
+export type TableSortState<T> = {
+    /** the sorted column item */
+    column: TableColumnItem<T>;
+    /** internal definition if the column is sorted in ascending order */
+    isAsc: boolean;
+};
