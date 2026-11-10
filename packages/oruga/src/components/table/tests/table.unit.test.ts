@@ -912,6 +912,327 @@ describe("OTable tests", () => {
         });
     });
 
+    describe("verify multiple sorting", () => {
+        const people = [
+            { id: 1, name: "Tina", team: "B" },
+            { id: 2, name: "Anna", team: "A" },
+            { id: 3, name: "Bob", team: "B" },
+            { id: 4, name: "Carl", team: "A" },
+        ];
+
+        const columns: TableColumn[] = [
+            { label: "ID", field: "id", sortable: true },
+            { label: "Name", field: "name", sortable: true },
+            { label: "Team", field: "team", sortable: true },
+        ];
+
+        function getIds(wrapper: ReturnType<typeof mount>): string[] {
+            return wrapper
+                .findAll("tbody tr td:first-child")
+                .map((td) => td.text());
+        }
+
+        function getPriorities(wrapper: ReturnType<typeof mount>): string[] {
+            return wrapper.findAll("thead th").map((th) => {
+                const priority = th.find(".o-table__th__sort-priority");
+                return priority.exists() ? priority.text() : "";
+            });
+        }
+
+        test("sort by multiple columns in the order they were sorted", async () => {
+            const wrapper = mount(OTable, {
+                props: { columns, data: people, sortMultiple: true },
+            });
+            await nextTick(); // await column rendered
+
+            const ths = wrapper.findAll("thead th");
+
+            await ths[2].trigger("click");
+            expect(getIds(wrapper)).toStrictEqual(["2", "4", "1", "3"]);
+            // the priority is only shown when sorted by more than one column
+            expect(getPriorities(wrapper)).toStrictEqual(["", "", ""]);
+
+            await ths[1].trigger("click");
+            expect(getIds(wrapper)).toStrictEqual(["2", "4", "3", "1"]);
+            expect(getPriorities(wrapper)).toStrictEqual(["", "2", "1"]);
+
+            // all sorted columns are highlighted, but only the first one has `aria-sort`
+            expect(ths[1].classes("o-table__th--sorted")).toBeTruthy();
+            expect(ths[2].classes("o-table__th--sorted")).toBeTruthy();
+            expect(ths[0].classes("o-table__th--sorted")).toBeFalsy();
+            expect(ths[1].attributes("aria-sort")).toBeUndefined();
+            expect(ths[2].attributes("aria-sort")).toBe("ascending");
+
+            expect(wrapper.emitted("sort")).toHaveLength(2);
+            expect(wrapper.emitted("sort")![1][0]).toMatchObject({
+                field: "name",
+            });
+            expect(wrapper.emitted("sort")![1][1]).toBe("asc");
+
+            const sortChanges = wrapper.emitted("sort-change")!;
+            expect(sortChanges).toHaveLength(2);
+            expect(sortChanges[1][0]).toMatchObject([
+                { column: { field: "team" }, direction: "asc" },
+                { column: { field: "name" }, direction: "asc" },
+            ]);
+        });
+
+        test("toggle the direction and remove a column from the sorting", async () => {
+            const wrapper = mount(OTable, {
+                props: { columns, data: people, sortMultiple: true },
+            });
+            await nextTick(); // await column rendered
+
+            const ths = wrapper.findAll("thead th");
+
+            await ths[2].trigger("click");
+            await ths[1].trigger("click");
+
+            // the second click toggles the direction and keeps the priority
+            await ths[2].trigger("click");
+            expect(getIds(wrapper)).toStrictEqual(["3", "1", "2", "4"]);
+            expect(getPriorities(wrapper)).toStrictEqual(["", "2", "1"]);
+            expect(ths[2].attributes("aria-sort")).toBe("descending");
+            expect(ths[2].find(".o-table__th__sort-icon").classes()).toContain(
+                "o-table__th__sort-icon--desc",
+            );
+            expect(ths[1].find(".o-table__th__sort-icon").classes()).toContain(
+                "o-table__th__sort-icon--asc",
+            );
+            expect(wrapper.emitted("sort")![2][1]).toBe("desc");
+
+            // the third click removes the column from the sorting
+            await ths[2].trigger("click");
+            expect(getIds(wrapper)).toStrictEqual(["2", "3", "4", "1"]);
+            expect(getPriorities(wrapper)).toStrictEqual(["", "", ""]);
+            expect(ths[2].classes("o-table__th--sorted")).toBeFalsy();
+            expect(ths[2].attributes("aria-sort")).toBeUndefined();
+            expect(ths[1].attributes("aria-sort")).toBe("ascending");
+
+            // removing a column does not emit `sort`, but `sort-change`
+            expect(wrapper.emitted("sort")).toHaveLength(3);
+            const sortChanges = wrapper.emitted("sort-change")!;
+            expect(sortChanges).toHaveLength(4);
+            expect(sortChanges[3][0]).toMatchObject([
+                { column: { field: "name" }, direction: "asc" },
+            ]);
+
+            // removing the last sorted column restores the original order
+            await ths[1].trigger("click");
+            await ths[1].trigger("click");
+            expect(getIds(wrapper)).toStrictEqual(["1", "2", "3", "4"]);
+            expect(ths[1].attributes("aria-sort")).toBeUndefined();
+            expect(wrapper.emitted("sort-change")![5][0]).toStrictEqual([]);
+        });
+
+        test("remove a column after toggling it away from the defaultSortDirection", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns,
+                    data: people,
+                    sortMultiple: true,
+                    defaultSortDirection: "desc",
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const th = wrapper.findAll("thead th")[1];
+
+            await th.trigger("click");
+            expect(th.attributes("aria-sort")).toBe("descending");
+            await th.trigger("click");
+            expect(th.attributes("aria-sort")).toBe("ascending");
+            await th.trigger("click");
+            expect(th.attributes("aria-sort")).toBeUndefined();
+            expect(th.classes("o-table__th--sorted")).toBeFalsy();
+        });
+
+        test("only add a column to the sorting with the sortMultipleKey pressed", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns,
+                    data: people,
+                    sortMultiple: true,
+                    sortMultipleKey: "shiftKey",
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const ths = wrapper.findAll("thead th");
+
+            await ths[2].trigger("click");
+            await ths[1].trigger("click", { shiftKey: true });
+            expect(getIds(wrapper)).toStrictEqual(["2", "4", "3", "1"]);
+            expect(getPriorities(wrapper)).toStrictEqual(["", "2", "1"]);
+
+            // a modifier click does not select the header text
+            const mousedown = new MouseEvent("mousedown", {
+                bubbles: true,
+                cancelable: true,
+                shiftKey: true,
+            });
+            ths[0].element.dispatchEvent(mousedown);
+            expect(mousedown.defaultPrevented).toBe(true);
+            const plainMousedown = new MouseEvent("mousedown", {
+                bubbles: true,
+                cancelable: true,
+            });
+            ths[0].element.dispatchEvent(plainMousedown);
+            expect(plainMousedown.defaultPrevented).toBe(false);
+
+            // the modifier key works with the keyboard as well
+            await ths[0].trigger("keydown", { key: "Enter", shiftKey: true });
+            expect(getPriorities(wrapper)).toStrictEqual(["3", "2", "1"]);
+
+            // a sort without the key replaces the sorting
+            await ths[1].trigger("click");
+            expect(getIds(wrapper)).toStrictEqual(["1", "4", "3", "2"]);
+            expect(getPriorities(wrapper)).toStrictEqual(["", "", ""]);
+            expect(ths[1].attributes("aria-sort")).toBe("descending");
+            expect(ths[2].classes("o-table__th--sorted")).toBeFalsy();
+            expect(wrapper.emitted("sort-change")!.at(-1)![0]).toMatchObject([
+                { column: { field: "name" }, direction: "desc" },
+            ]);
+
+            // without the key a sorted column is not removed from the sorting
+            await ths[1].trigger("click");
+            expect(ths[1].attributes("aria-sort")).toBe("ascending");
+        });
+
+        test("sort by multiple default sort columns", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns,
+                    data: people,
+                    sortMultiple: true,
+                    defaultSort: [
+                        ["team", "desc"],
+                        ["unknown", "asc"],
+                        ["name", "asc"],
+                        ["team", "asc"],
+                    ],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const ths = wrapper.findAll("thead th");
+            expect(getIds(wrapper)).toStrictEqual(["3", "1", "2", "4"]);
+            expect(getPriorities(wrapper)).toStrictEqual(["", "2", "1"]);
+            expect(ths[2].attributes("aria-sort")).toBe("descending");
+
+            // the initial sort is not a change of the sorting
+            expect(wrapper.emitted("sort")).toBeUndefined();
+            expect(wrapper.emitted("sort-change")).toBeUndefined();
+        });
+
+        test("only use the first default sort column without sortMultiple", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns,
+                    data: people,
+                    defaultSort: [
+                        ["team", "desc"],
+                        ["name", "asc"],
+                    ],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const ths = wrapper.findAll("thead th");
+            expect(getIds(wrapper)).toStrictEqual(["1", "3", "2", "4"]);
+            expect(ths[2].attributes("aria-sort")).toBe("descending");
+            expect(ths[1].classes("o-table__th--sorted")).toBeFalsy();
+
+            // without sortMultiple a click replaces the sorting
+            await ths[1].trigger("click");
+            expect(getIds(wrapper)).toStrictEqual(["2", "3", "4", "1"]);
+            expect(ths[2].classes("o-table__th--sorted")).toBeFalsy();
+            expect(wrapper.emitted("sort-change")![0][0]).toMatchObject([
+                { column: { field: "name" }, direction: "asc" },
+            ]);
+        });
+
+        test("keep the multiple sorting on data change", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns,
+                    data: people,
+                    sortMultiple: true,
+                    defaultSort: [
+                        ["team", "asc"],
+                        ["name", "desc"],
+                    ],
+                },
+            });
+            await nextTick(); // await column rendered
+            expect(getIds(wrapper)).toStrictEqual(["4", "2", "1", "3"]);
+
+            await wrapper.setProps({
+                data: [...people, { id: 5, name: "Dora", team: "A" }],
+            });
+            expect(getIds(wrapper)).toStrictEqual(["5", "4", "2", "1", "3"]);
+        });
+
+        test("emit the sorted columns without sorting the rows when backend sorted", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns,
+                    data: people,
+                    sortMultiple: true,
+                    backendSorting: true,
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const ths = wrapper.findAll("thead th");
+            await ths[2].trigger("click");
+            await ths[1].trigger("click");
+            await ths[1].trigger("click");
+
+            expect(getIds(wrapper)).toStrictEqual(["1", "2", "3", "4"]);
+            expect(getPriorities(wrapper)).toStrictEqual(["", "2", "1"]);
+            expect(wrapper.emitted("sort-change")!.at(-1)![0]).toMatchObject([
+                { column: { field: "team" }, direction: "asc" },
+                { column: { field: "name" }, direction: "desc" },
+            ]);
+        });
+
+        test("replace the multiple sorting with the mobile sort select", async () => {
+            vi.spyOn(window, "matchMedia").mockReturnValueOnce({
+                matches: true,
+                addEventListener: vi.fn(),
+                removeEventListener: vi.fn(),
+            } as unknown as MediaQueryList);
+
+            const wrapper = mount(OTable, {
+                props: {
+                    columns,
+                    data: people,
+                    sortMultiple: true,
+                    mobileBreakpoint: "1000px",
+                    defaultSort: [
+                        ["team", "asc"],
+                        ["name", "asc"],
+                    ],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const select = wrapper.find(".o-table__mobile-sort select");
+            expect(select.exists()).toBeTruthy();
+
+            await select.setValue(
+                (select.element as HTMLSelectElement).options[0].value,
+            );
+            await nextTick();
+
+            expect(getIds(wrapper)).toStrictEqual(["1", "2", "3", "4"]);
+            expect(wrapper.emitted("sort-change")!.at(-1)![0]).toMatchObject([
+                { column: { field: "id" }, direction: "asc" },
+            ]);
+        });
+    });
+
     describe("verify checkable", () => {
         test("tests header has checkAll checkbox", async () => {
             const wrapper = mount(OTable, {
