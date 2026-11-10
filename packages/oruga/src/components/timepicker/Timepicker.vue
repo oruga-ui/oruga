@@ -64,8 +64,10 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     position: () => getDefault("timepicker.position", "bottom"),
     iconPack: () => getDefault("timepicker.iconPack"),
     icon: () => getDefault("timepicker.icon"),
+    iconSize: () => getDefault("timepicker.iconSize"),
     iconRight: () => getDefault("timepicker.iconRight"),
     iconRightClickable: false,
+    iconRightVariant: () => getDefault("timepicker.iconRightVariant"),
     desktopModal: () => getDefault("timepicker.desktopModal", false),
     mobileModal: () => getDefault("timepicker.mobileModal", true),
     mobileNative: () => getDefault("timepicker.mobileNative", true),
@@ -74,11 +76,11 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
     ariaSelectSecondsLabel: () =>
-        getDefault("timepicker.ariaSelectSecondLabel", "Select Second"),
+        getDefault("timepicker.ariaSelectSecondsLabel", "Select Second"),
     ariaSelectMinutesLabel: () =>
-        getDefault("timepicker.ariaSelectMinuteLabel", "Select Minute"),
+        getDefault("timepicker.ariaSelectMinutesLabel", "Select Minute"),
     ariaSelectHoursLabel: () =>
-        getDefault("timepicker.ariaSelectHourLabel", "Select Hour"),
+        getDefault("timepicker.ariaSelectHoursLabel", "Select Hour"),
     inputAttrs: () => getDefault("timepicker.inputAttrs"),
     selectAttrs: () => getDefault("timepicker.selectAttrs"),
 });
@@ -688,8 +690,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :size="size"
             :icon-pack="iconPack"
             :icon="icon"
+            :icon-size="iconSize"
             :icon-right="iconRight"
             :icon-right-clickable="iconRightClickable"
+            :icon-right-variant="iconRightVariant"
             :expanded="expanded"
             :rounded="rounded"
             :disabled="disabled"
