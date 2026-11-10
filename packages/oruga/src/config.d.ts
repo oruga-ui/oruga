@@ -84,9 +84,9 @@ declare module "./index" {
                  */
                 clearIcon: string;
                 /**
-                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 * Accessibility label for the clickable icon. Required when `iconClickable` is set.
                  */
-                ariaIconLeftLabel: string;
+                ariaIconLabel: string;
                 /**
                  * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
                  */
@@ -1531,9 +1531,9 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
-                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 * Accessibility label for the clickable icon. Required when `iconClickable` is set.
                  */
-                ariaIconLeftLabel: string;
+                ariaIconLabel: string;
                 /**
                  * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
                  */
@@ -2368,17 +2368,17 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconRight: string;
                 /**
-                 * Size of the icon
+                 * Accessibility label for the clickable icon. Required when `iconClickable` is set.
                  */
-                iconSize: string;
-                /**
-                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
-                 */
-                ariaIconLeftLabel: string;
+                ariaIconLabel: string;
                 /**
                  * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
                  */
                 ariaIconRightLabel: string;
+                /**
+                 * Size of the icon
+                 */
+                iconSize: string;
                 /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.

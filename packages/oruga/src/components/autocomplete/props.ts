@@ -90,8 +90,8 @@ export type AutocompleteProps<T> = {
     clearable?: boolean;
     /** Icon name to be added on the clear button */
     clearIcon?: string;
-    /** Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set. */
-    ariaIconLeftLabel?: string;
+    /** Accessibility label for the clickable icon. Required when `iconClickable` is set. */
+    ariaIconLabel?: string;
     /** Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set. */
     ariaIconRightLabel?: string;
     /** Accessibility label for the clear button. */

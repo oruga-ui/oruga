@@ -84,7 +84,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     iconRightVariant: undefined,
     clearable: () => getDefault("autocomplete.clearable", false),
     clearIcon: () => getDefault("autocomplete.clearIcon", "close-circle"),
-    ariaIconLeftLabel: () => getDefault("autocomplete.ariaIconLeftLabel"),
+    ariaIconLabel: () => getDefault("autocomplete.ariaIconLabel"),
     ariaIconRightLabel: () => getDefault("autocomplete.ariaIconRightLabel"),
     ariaClearLabel: () => getDefault("autocomplete.ariaClearLabel", "Clear"),
     statusIcon: () => getDefault("statusIcon", true),
@@ -527,7 +527,7 @@ defineExpose({
                     :icon-clickable="iconClickable"
                     :icon-right="computedIconRight"
                     :icon-right-clickable="computedIconRightClickable"
-                    :aria-icon-left-label="ariaIconLeftLabel"
+                    :aria-icon-label="ariaIconLabel"
                     :aria-icon-right-label="computedIconRightLabel"
                     :icon-pack="iconPack"
                     :icon-size="iconSize"

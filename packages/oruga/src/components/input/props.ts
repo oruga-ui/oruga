@@ -128,8 +128,8 @@ export type InputProps<IsNumber extends boolean = boolean> = {
     clearIcon?: string;
     /** Show status icon using field and variant prop */
     statusIcon?: boolean;
-    /** Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set. */
-    ariaIconLeftLabel?: string;
+    /** Accessibility label for the clickable icon. Required when `iconClickable` is set. */
+    ariaIconLabel?: string;
     /** Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set. */
     ariaIconRightLabel?: string;
     /** Accessibility label for the clear button. */

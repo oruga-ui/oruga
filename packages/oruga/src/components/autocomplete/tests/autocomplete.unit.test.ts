@@ -703,13 +703,13 @@ describe("OAutocomplete tests", () => {
             expect(icon.attributes("aria-label")).toBe("Search");
         });
 
-        test("a clickable left icon uses ariaIconLeftLabel", async () => {
+        test("a clickable left icon uses ariaIconLabel", async () => {
             const wrapper = mount(OAutocomplete, {
                 props: {
                     options: OPTIONS,
                     icon: "magnify",
                     iconClickable: true,
-                    ariaIconLeftLabel: "Search",
+                    ariaIconLabel: "Search",
                 },
             });
             await nextTick();

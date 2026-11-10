@@ -65,7 +65,7 @@ const props = withDefaults(
         iconRightClickable: false,
         iconRightVariant: undefined,
         iconSize: () => getDefault("select.iconSize"),
-        ariaIconLeftLabel: () => getDefault("select.ariaIconLeftLabel"),
+        ariaIconLabel: () => getDefault("select.ariaIconLabel"),
         ariaIconRightLabel: () => getDefault("select.ariaIconRightLabel"),
         autocomplete: () => getDefault("select.autocomplete", "off"),
         useHtml5Validation: () => getDefault("useHtml5Validation", true),
@@ -307,7 +307,7 @@ defineExpose({
             v-if="icon"
             :class="iconLeftClasses"
             :clickable="iconClickable"
-            :aria-label="iconClickable ? ariaIconLeftLabel : undefined"
+            :aria-label="iconClickable ? ariaIconLabel : undefined"
             :icon="icon"
             :pack="iconPack"
             :size="iconSize ?? size"
