@@ -1,3 +1,37 @@
+## [0.14.6](https://github.com/oruga-ui/oruga/compare/v0.14.5...v0.14.6) (2026-11-10)
+
+### Bug Fixes
+
+* **a11y:** make hard-coded accessibility labels configurable ([#1816](https://github.com/oruga-ui/oruga/issues/1816)) ([c812d38](https://github.com/oruga-ui/oruga/commit/c812d3818781f47f589eab74676acadf344b3561))
+* **autocomplete:** allow selecting options with the values 0, 1 and 2 ([#1808](https://github.com/oruga-ui/oruga/issues/1808)) ([c7bb863](https://github.com/oruga-ui/oruga/commit/c7bb863c5d30b0fca32bd992e929d213e7a5c704))
+* **breadcrumb:** read `ariaLabel` default from breadcrumb config ([#1801](https://github.com/oruga-ui/oruga/issues/1801)) ([c045f14](https://github.com/oruga-ui/oruga/commit/c045f143eca780ad56133f317a5d9ca23fa624c5))
+* **button:** keep native semantics and keyboard behaviour of links and buttons ([#1809](https://github.com/oruga-ui/oruga/issues/1809)) ([a018039](https://github.com/oruga-ui/oruga/commit/a0180399503cc6e2dd2c0bbe0acc9de89ea65761))
+* **carousel:** make clickable items operable with the keyboard ([#1827](https://github.com/oruga-ui/oruga/issues/1827)) ([5ebd570](https://github.com/oruga-ui/oruga/commit/5ebd570b0cc1cbf819208030da1861956c2d9d1e))
+* **datepicker:** bind picker attributes to the input, not twice ([#1826](https://github.com/oruga-ui/oruga/issues/1826)) ([150a3d6](https://github.com/oruga-ui/oruga/commit/150a3d67e028205a6a3b707f3571187cdd216947))
+* **datepicker:** read `ariaPreviousLabel` default from its own config key ([#1802](https://github.com/oruga-ui/oruga/issues/1802)) ([3798a16](https://github.com/oruga-ui/oruga/commit/3798a169b7ec395398299f3ec9ee4368872353a4))
+* **dialog:** correct `confirmButtonClass` prop name typo ([#1805](https://github.com/oruga-ui/oruga/issues/1805)) ([a20b571](https://github.com/oruga-ui/oruga/commit/a20b5718c422295addaeb05c12f85e9253e9350d))
+* **dialog:** name the dialog with aria-labelledby instead of aria-describedby ([#1810](https://github.com/oruga-ui/oruga/issues/1810)) ([5d75523](https://github.com/oruga-ui/oruga/commit/5d75523f137bde03b71963bdff51d9de9373825f))
+* **dropdown:** correct default `itemDecorativeClass` class ([#1792](https://github.com/oruga-ui/oruga/issues/1792)) ([ca12536](https://github.com/oruga-ui/oruga/commit/ca12536b54ddc3e0008624d376c362b5d421f9b0))
+* **dropdown:** register scroll and close listeners reactively ([#1829](https://github.com/oruga-ui/oruga/issues/1829)) ([cd56f64](https://github.com/oruga-ui/oruga/commit/cd56f649cd6faee7525ddb5669815308fe42d3d4))
+* **field:** expose invalid state with `aria-invalid` and `aria-errormessage` ([#1806](https://github.com/oruga-ui/oruga/issues/1806)) ([420401b](https://github.com/oruga-ui/oruga/commit/420401b833e66802f1125a46cb8fa44f43c45955))
+* **field:** let own accessible names win over the field label ([#1822](https://github.com/oruga-ui/oruga/issues/1822)) ([4e8df2b](https://github.com/oruga-ui/oruga/commit/4e8df2b082096b38fd813a36e8c81394b9e6669a))
+* **icon:** expose a labelled icon as an image ([#1815](https://github.com/oruga-ui/oruga/issues/1815)) ([93cf8db](https://github.com/oruga-ui/oruga/commit/93cf8dbfca3be337548b7701429762d39686b055))
+* **input:** name clickable icons with translatable aria labels ([#1823](https://github.com/oruga-ui/oruga/issues/1823)) ([5e809c3](https://github.com/oruga-ui/oruga/commit/5e809c3f5ad5bef470c4ee841d8e5b7442e3426e))
+* **loading:** use `label` as accessible name when the default slot is used ([#1824](https://github.com/oruga-ui/oruga/issues/1824)) ([f48758c](https://github.com/oruga-ui/oruga/commit/f48758c96f4a1ca0db30c61c03e5c5ac37e1cd71))
+* **notification:** announce notifications and pause the timer on focus ([#1818](https://github.com/oruga-ui/oruga/issues/1818)) ([992c403](https://github.com/oruga-ui/oruga/commit/992c403256927bd4e40c31ab7fa08326426d40c3))
+* **pagination:** add `ariaLabel` prop to name the nav landmark ([#1821](https://github.com/oruga-ui/oruga/issues/1821)) ([254e94a](https://github.com/oruga-ui/oruga/commit/254e94afbb8062516a1e6f167a8be53c2751389c))
+* **pagination:** correct `aria-current` and expose `disabled` in slot props ([#1825](https://github.com/oruga-ui/oruga/issues/1825)) ([cfda077](https://github.com/oruga-ui/oruga/commit/cfda0772240ebd898aecb60fa5a31af90ac80055))
+* **sidebar:** expose a sidebar with overlay as modal dialog ([#1817](https://github.com/oruga-ui/oruga/issues/1817)) ([5ea82b7](https://github.com/oruga-ui/oruga/commit/5ea82b79e74c197d687087780aefa92d7b4f1332))
+* **slider:** keep range thumbs in place when a crossed thumb hits zero ([#1807](https://github.com/oruga-ui/oruga/issues/1807)) ([53174dc](https://github.com/oruga-ui/oruga/commit/53174dc8181116dfd9f13634ea719cc4a74fc305))
+* **steps,tabs:** navigate with the arrow keys of the orientation ([#1811](https://github.com/oruga-ui/oruga/issues/1811)) ([e54fae9](https://github.com/oruga-ui/oruga/commit/e54fae9fed9a0ccbe5a25325a31fd4cc2914d73a))
+* **steps:** let the item variant override the steps variant ([#1812](https://github.com/oruga-ui/oruga/issues/1812)) ([e2a101c](https://github.com/oruga-ui/oruga/commit/e2a101cd255e67bfb2539e87dae865e43fa99207))
+* **switch:** read `position` default from the `position` config key ([#1804](https://github.com/oruga-ui/oruga/issues/1804)) ([18a1cb5](https://github.com/oruga-ui/oruga/commit/18a1cb567d430a713b5bd2544b8f8e1f81283331))
+* **table:** emit `sort` on the first sort of an unsorted table ([#1832](https://github.com/oruga-ui/oruga/issues/1832)) ([4d749a5](https://github.com/oruga-ui/oruga/commit/4d749a59eef6adf2f1df0ca342dfe4d87cefff9b))
+* **table:** make sortable columns keyboard accessible ([#1813](https://github.com/oruga-ui/oruga/issues/1813)) ([a3de289](https://github.com/oruga-ui/oruga/commit/a3de289d65659cdb9d7bd68fb9170b6a23574e24))
+* **table:** pass `paginationOrder` to the pagination as `position` ([#1819](https://github.com/oruga-ui/oruga/issues/1819)) ([8bc2560](https://github.com/oruga-ui/oruga/commit/8bc25602eda9e6a38a1ee87577016da591949c31))
+* **taginput:** handle items with falsy or object values ([#1833](https://github.com/oruga-ui/oruga/issues/1833)) ([391fe0d](https://github.com/oruga-ui/oruga/commit/391fe0dae27bdaf54280b1886b591747220d70a8))
+* **upload:** open the file dialog from the drag zone with the keyboard ([#1814](https://github.com/oruga-ui/oruga/issues/1814)) ([97dfffb](https://github.com/oruga-ui/oruga/commit/97dfffb37c25ae20d165a00f00ee74b2b4f33051))
+
 ## [0.14.5](https://github.com/oruga-ui/oruga/compare/v0.14.4...v0.14.5) (2026-11-02)
 
 ### Bug Fixes
