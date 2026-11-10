@@ -10,7 +10,7 @@ export type CarouselProps<T> = {
     /** Carousel options, unnecessary when default slot is used */
     options?: CarouselOptions<T>;
     /** Enable drag mode */
-    dragable?: boolean;
+    draggable?: boolean;
     /** Move item automaticalls after `interval` */
     autoplay?: boolean;
     /** Timer interval for `autoplay` */
