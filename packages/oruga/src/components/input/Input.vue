@@ -68,9 +68,10 @@ const props = withDefaults(
         iconRight: () => getDefault("input.iconRight"),
         iconRightClickable: false,
         iconRightVariant: undefined,
+        iconSize: () => getDefault("input.iconSize"),
         clearable: () => getDefault("input.clearable", false),
         clearIcon: () => getDefault("input.clearIcon", "close-circle"),
-        ariaIconLeftLabel: () => getDefault("input.ariaIconLeftLabel"),
+        ariaIconLabel: () => getDefault("input.ariaIconLabel"),
         ariaIconRightLabel: () => getDefault("input.ariaIconRightLabel"),
         ariaClearLabel: () => getDefault("input.ariaClearLabel", "Clear"),
         ariaPasswordShowLabel: () =>
@@ -423,10 +424,10 @@ defineExpose({
             v-if="icon"
             :class="iconLeftClasses"
             :clickable="iconClickable"
-            :aria-label="iconClickable ? ariaIconLeftLabel : undefined"
+            :aria-label="iconClickable ? ariaIconLabel : undefined"
             :icon="icon"
             :pack="iconPack"
-            :size="size"
+            :size="iconSize ?? size"
             @click="iconClick" />
 
         <textarea
@@ -458,7 +459,7 @@ defineExpose({
             :class="iconRightClasses"
             :icon="computedIconRight"
             :pack="iconPack"
-            :size="size"
+            :size="iconSize ?? size"
             :variant="computedIconRightVariant"
             :clickable="isIconRightClickable"
             :aria-label="

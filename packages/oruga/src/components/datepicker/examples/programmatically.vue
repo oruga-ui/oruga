@@ -12,7 +12,7 @@ const active = ref(false);
                 expanded
                 placeholder="Select a date" />
             <o-button
-                icon-left="calendar"
+                icon="calendar"
                 variant="primary"
                 aria-label="Open Calendar"
                 @click="active = !active" />

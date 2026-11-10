@@ -1,7 +1,7 @@
 <template>
     <section class="odocs-spaced">
         <p>
-            <o-button icon-left="trash" variant="primary">
+            <o-button icon="trash" variant="primary">
                 Trash <o-tag label="12" />
             </o-button>
             <o-button>

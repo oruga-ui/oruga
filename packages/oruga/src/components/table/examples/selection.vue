@@ -75,7 +75,7 @@ const selected = ref<(typeof data)[number] | undefined>(data[2]);
         <o-button
             variant="danger"
             :disabled="!selected"
-            icon-left="times"
+            icon="times"
             label="Clear selected"
             @click="selected = undefined" />
 
