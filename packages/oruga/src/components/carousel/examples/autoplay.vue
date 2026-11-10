@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const currentSlide = ref(0);
 
-const dragable = ref(false);
+const draggable = ref(false);
 const autoplay = ref(false);
 const pauseHover = ref(false);
 const interval = ref(3000);
@@ -31,7 +31,7 @@ const slides = [
                     label="Pause on hover" />
             </o-field>
             <o-field>
-                <o-switch v-model="dragable" label="Drag event" />
+                <o-switch v-model="draggable" label="Drag event" />
             </o-field>
             <o-field>
                 <o-switch
@@ -63,7 +63,7 @@ const slides = [
 
         <o-carousel
             v-model="currentSlide"
-            :dragable="dragable"
+            :draggable="draggable"
             :autoplay="autoplay"
             :pause-hover="pauseHover"
             :interval="interval"
