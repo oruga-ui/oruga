@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<CarouselProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     options: undefined,
-    dragable: true,
+    draggable: true,
     autoplay: false,
     interval: () => getDefault("carousel.interval", 3500),
     pauseHover: false,
@@ -413,7 +413,7 @@ const translation = computed(
 function onDragStart(event: TouchEvent | DragEvent): void {
     if (
         isDragging.value ||
-        !settings.value.dragable ||
+        !settings.value.draggable ||
         ((event as MouseEvent).button !== 0 && event.type !== "touchstart")
     )
         return;
