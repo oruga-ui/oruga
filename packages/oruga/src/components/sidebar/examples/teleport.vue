@@ -20,7 +20,7 @@ const isActive = ref(false);
             teleport>
             <section style="padding: 15px">
                 <o-button
-                    icon-left="times"
+                    icon="times"
                     label="Close"
                     @click="close($event)" />
                 <p>

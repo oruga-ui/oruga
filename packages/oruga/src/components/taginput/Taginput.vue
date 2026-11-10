@@ -56,7 +56,9 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
+    iconSize: () => getDefault("taginput.iconSize"),
     closeIcon: () => getDefault("taginput.closeIcon", "close"),
+    closeIconSize: () => getDefault("taginput.closeIconSize"),
     ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel", "Remove"),
     autocomplete: () => getDefault("taginput.autocomplete", "off"),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
@@ -374,6 +376,7 @@ defineExpose({
                     :class="itemClasses"
                     :closeable="closeable && !disabled"
                     :close-icon="closeIcon"
+                    :close-icon-size="closeIconSize"
                     :close-icon-pack="iconPack"
                     :aria-close-label="ariaCloseLabel"
                     @close="removeItem(index, $event)" />
@@ -390,6 +393,7 @@ defineExpose({
                 :placeholder="placeholder"
                 :icon="icon"
                 :icon-pack="iconPack"
+                :icon-size="iconSize"
                 :maxlength="maxlength"
                 :size="size"
                 :disabled="disabled"

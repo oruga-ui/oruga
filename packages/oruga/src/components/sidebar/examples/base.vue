@@ -50,7 +50,7 @@ const mobile = ref<
             <section style="padding: 15px">
                 <o-button
                     v-if="fullwidth || fullheight || !overlay || mobile"
-                    icon-left="times"
+                    icon="times"
                     label="Close"
                     @click="close($event)" />
                 <img
