@@ -19,7 +19,7 @@ describe("<Popover>", () => {
         });
 
     test("open on click", async () => {
-        const screen = renderComponent();
+        const screen = await renderComponent();
         await new Promise((r) => setTimeout(r, 100)); // await event handler get set
 
         const trigger = screen.getByTestId("trigger");
@@ -37,7 +37,7 @@ describe("<Popover>", () => {
     });
 
     test("do not open on hover or fucus", async () => {
-        const screen = renderComponent();
+        const screen = await renderComponent();
         await new Promise((r) => setTimeout(r, 100)); // await event handler get set
 
         const trigger = screen.getByTestId("trigger");
@@ -70,7 +70,7 @@ describe("<Popover>", () => {
     });
 
     test("close on escape", async () => {
-        const screen = renderComponent();
+        const screen = await renderComponent();
         await new Promise((r) => setTimeout(r, 100)); // await event handler get set
 
         const trigger = screen.getByTestId("trigger");
@@ -90,7 +90,7 @@ describe("<Popover>", () => {
     });
 
     test("close on click outside", async () => {
-        const screen = renderComponent();
+        const screen = await renderComponent();
         await new Promise((r) => setTimeout(r, 100)); // await event handler get set
 
         const trigger = screen.getByTestId("trigger");

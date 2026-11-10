@@ -5,12 +5,16 @@ import OSteps from "@/components/steps/Steps.vue";
 import OStepItem from "@/components/steps/StepItem.vue";
 import OButton from "@/components/button/Button.vue";
 
-defineProps({
-    isStepsClickable: { type: Boolean, default: false },
-    isProfileSuccess: { type: Boolean, default: false },
-    showSocial: { type: Boolean, default: false },
-    customNavigation: { type: Boolean, default: false },
-});
+defineProps<{
+    /** make the step markers clickable */
+    isStepsClickable?: boolean;
+    /** mark the profile step as successful */
+    isProfileSuccess?: boolean;
+    /** show the social step */
+    showSocial?: boolean;
+    /** use custom navigation buttons instead of the default ones */
+    customNavigation?: boolean;
+}>();
 
 const activeStep = ref(1);
 const enableProfileActivateEvent = ref(false);

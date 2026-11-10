@@ -64,8 +64,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
             modelValue?: unknown;
             useHtml5Validation?: boolean;
             customValidity?:
-                | string
-                | ((currentValue: any, v: ValidityState) => string);
+                string | ((currentValue: any, v: ValidityState) => string);
         }>
     >,
     /** emitted input events */
@@ -176,6 +175,10 @@ export function useInputHandler<T extends ValidatableFormElement>(
     function setFieldValidity(variant?: string, message?: string): void {
         nextTick(() => {
             if (!parentField.value) return;
+
+            // Report the failed validation, so the control is exposed as
+            // invalid even when a custom variant is defined on the field.
+            parentField.value.setInvalid(!!variant);
 
             // Set type only if not defined
             if (!parentField.value.props.variant)
@@ -325,7 +328,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
                 (): boolean => props.useHtml5Validation ?? true,
                 ():
                     | string
-                    | ((s: ValidityState, v: any) => string)
+                    | ((s: ValidityState, v: ValidityState) => string)
                     | undefined => props.customValidity,
             ],
             (newData, oldData) => {

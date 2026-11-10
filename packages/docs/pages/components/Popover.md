@@ -3,7 +3,6 @@
 # Popover
 
 <section class="odocs-head">
-<Badge type="warning" text="experimental" />
 
 The **Popover** component is a wrapper for rich content that floats above other elements on the page. It is shown or hidden by interacting with a trigger element such as a button. Unlike a _tooltip_, it is usually triggered via click instead of hover, and it can contain interactive elements.
 

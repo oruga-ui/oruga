@@ -17,8 +17,7 @@ export type Option<T extends object> = {} & T & Record<string, any>;
  * @public
  */
 export type SimpleOptions =
-    | (string | number)[]
-    | Record<string | number, string>;
+    (string | number)[] | Record<string | number, string>;
 
 /**
  * The types of options that can be passed to the options prop.
@@ -26,8 +25,7 @@ export type SimpleOptions =
  * @public
  */
 export type OptionsProp<T extends object = object> =
-    | SimpleOptions
-    | Option<T>[];
+    SimpleOptions | Option<T>[];
 
 /**
  * Option groups should always be formatted as an array of group objects with nested options.
@@ -45,8 +43,7 @@ export type OptionsGroupsProp<T extends object = object> = (Option<T> & {
  * @public
  */
 export type OptionsOrGroupsProp<T extends object = object> =
-    | OptionsProp<T>
-    | OptionsGroupsProp<T>;
+    OptionsProp<T> | OptionsGroupsProp<T>;
 
 //  --- INTERNAL API ---
 
@@ -85,8 +82,7 @@ type NormalizedGroup<T extends object> = Omit<OptionGroupItem<T>, "options"> & {
 };
 
 type NormalizedItem<T extends object = any> =
-    | NormalizedOption<T>
-    | NormalizedGroup<T>;
+    NormalizedOption<T> | NormalizedGroup<T>;
 
 /**
  * A function to normalize an array of objects, array of strings, or object of

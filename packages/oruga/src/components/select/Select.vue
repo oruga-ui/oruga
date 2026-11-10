@@ -20,9 +20,11 @@ import {
     useInputHandler,
 } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { SelectProps, SelectNativeProps } from "./props";
+
+type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
 /**
  * Select an item in a list. Use with Field to access all functionalities.
@@ -35,8 +37,6 @@ defineOptions({
     configField: "select",
     inheritAttrs: false,
 });
-
-type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<
@@ -65,6 +65,8 @@ const props = withDefaults(
         iconRightClickable: false,
         iconRightVariant: undefined,
         iconSize: () => getDefault("select.iconSize"),
+        ariaIconLeftLabel: () => getDefault("select.ariaIconLeftLabel"),
+        ariaIconRightLabel: () => getDefault("select.ariaIconRightLabel"),
         autocomplete: () => getDefault("select.autocomplete", "off"),
         useHtml5Validation: () => getDefault("useHtml5Validation", true),
         customValidity: "",
@@ -204,8 +206,7 @@ function rightIconClick(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+    ...mergeFieldAttrs(parentField?.value?.inputAttrs, attrs),
     autocomplete: props.autocomplete,
 }));
 
@@ -306,6 +307,7 @@ defineExpose({
             v-if="icon"
             :class="iconLeftClasses"
             :clickable="iconClickable"
+            :aria-label="iconClickable ? ariaIconLeftLabel : undefined"
             :icon="icon"
             :pack="iconPack"
             :size="iconSize ?? size"
@@ -361,6 +363,7 @@ defineExpose({
             :size="iconSize ?? size"
             :variant="rightIconVariant"
             :clickable="iconRightClickable"
+            :aria-label="iconRightClickable ? ariaIconRightLabel : undefined"
             @click="rightIconClick" />
     </div>
 </template>

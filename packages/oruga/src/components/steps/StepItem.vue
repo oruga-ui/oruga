@@ -110,7 +110,7 @@ const prevAnimation = computed(() => {
     return parent.value.animation[idx];
 });
 
-const itemVariant = computed(() => parent.value.variant ?? props.variant);
+const itemVariant = computed(() => props.variant ?? parent.value.variant);
 
 /** Shows if the item is clickable or not. */
 // strongly type this variable to prevent circular type dependency

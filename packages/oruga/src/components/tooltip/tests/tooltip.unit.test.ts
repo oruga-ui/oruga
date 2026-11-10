@@ -17,7 +17,8 @@ describe("OTooltip tests", () => {
     });
 
     test("reset window events before destroy", async () => {
-        window.removeEventListener = vi.fn();
+        const windowDummyListener = vi.fn();
+        window.removeEventListener = windowDummyListener;
 
         const wrapper = mount(OTooltip, { props: { active: true } });
         await setTimeout(); // await event handler get set
@@ -25,14 +26,14 @@ describe("OTooltip tests", () => {
         wrapper.unmount();
 
         // remove click outside listener
-        expect(window.removeEventListener).toBeCalledWith(
+        expect(windowDummyListener).toBeCalledWith(
             "click",
             expect.any(Function),
             expect.any(Object),
         );
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("render default trigger slot correctly", () => {
             const triggerHTML = '<button class="trigger">trigger</button>';
             const wrapper = mount(OTooltip, {
@@ -351,7 +352,7 @@ describe("OTooltip tests", () => {
         });
     });
 
-    describe("test teleport", () => {
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(OTooltip, {
                 props: { teleport: true },

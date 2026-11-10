@@ -129,7 +129,12 @@ export abstract class ProgrammaticFactory {
         let app: App | undefined = createApp(ProgrammaticComponent, {
             registry: options.registry, // programmatic registry instance
             component, // the component which should be rendered
-            props: { ...options.props, container: targetElement }, // component props including the target as `container`
+            // component props including the target as `container`
+            props: {
+                ...options.props,
+                /** the element the component is mounted into */
+                container: targetElement,
+            },
             onClose: options.onClose, // custom onClose handler
             onDestroy, // node destory cleanup handler
         });
@@ -138,17 +143,26 @@ export abstract class ProgrammaticFactory {
         const orugaConfig = getActiveOruga();
         // provide the oruga config to the new app instance
         orugaConfig?.provide(app);
-        // if running inside another app share the current app context to the new app instance
-        if (orugaConfig?._app)
-            app._context = Object.assign(
-                app._context,
-                orugaConfig._app._context,
-            );
 
         // set a prefix for all IDs generated via useId() to prevent duplication in multiple programmatic instances
-        app.config.idPrefix =
+        const idPrefix =
             options.idPrefix ??
             "programmatic-" + options.registry!.getCounter();
+
+        if (orugaConfig?._app) {
+            // if running inside another app share the current app context to the new app instance
+            const baseContext = orugaConfig._app._context;
+            Object.assign(app._context, baseContext, {
+                // keep the reference to the new app instance
+                app,
+                // use an own config object, otherwise the idPrefix would be set on the base app
+                config: { ...baseContext.config, idPrefix },
+                // inherit the provided values, but don't write them back to the base app
+                provides: Object.create(baseContext.provides),
+            });
+        } else {
+            app.config.idPrefix = idPrefix;
+        }
 
         // render the new vue instance into the container element
         const instance = app.mount(container);

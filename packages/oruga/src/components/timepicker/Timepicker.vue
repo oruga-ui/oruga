@@ -1,17 +1,25 @@
 <script setup lang="ts">
-import { computed, ref, useTemplateRef, watch } from "vue";
+import { computed, ref, useAttrs, useTemplateRef, watch } from "vue";
 
 import OSelect from "../select/Select.vue";
 import OPickerInput from "../utils/PickerInput.vue";
 
 import { getDefault, getDefaultFunction } from "@/utils/config";
-import { isDate, isDefined, pad } from "@/utils/helpers";
+import {
+    isDate,
+    isDefined,
+    isRootAttr,
+    pad,
+    splitObject,
+} from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
 import type { TimepickerProps } from "./props";
 import type { SelectOption } from "../select";
+
+type ModelValue = TimepickerProps["modelValue"];
 
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile.
@@ -22,9 +30,8 @@ defineOptions({
     isOruga: true,
     name: "OTimepicker",
     configField: "timepicker",
+    inheritAttrs: false,
 });
-
-type ModelValue = TimepickerProps["modelValue"];
 
 const props = withDefaults(defineProps<TimepickerProps>(), {
     override: undefined,
@@ -83,6 +90,7 @@ defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: Date];
     /**
      * active prop two-way binding
@@ -130,6 +138,7 @@ defineSlots<{
 const pickerRef = useTemplateRef("pickerComponent");
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
+
 const isModal = computed(() =>
     props.inline
         ? false
@@ -137,6 +146,7 @@ const isModal = computed(() =>
           ? props.mobileModal
           : props.desktopModal,
 );
+
 const {
     dtf,
     timeCreator,
@@ -150,6 +160,20 @@ const {
     minuteLiteral,
     secondLiteral,
 } = useTimepickerMixins(props);
+
+const attrs = useAttrs();
+
+/**
+ * Split the fallthrough attributes between the root element and the input.
+ * An inline picker has no input, so all attributes stay on the root.
+ */
+const pickerAttrs = computed(() => {
+    const [root, input] = splitObject(
+        attrs,
+        (key) => props.inline || isRootAttr(key),
+    );
+    return { root, input };
+});
 
 // the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -645,10 +669,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 </script>
 
 <template>
-    <div data-oruga="timepicker" :class="rootClasses">
+    <div data-oruga="timepicker" :class="rootClasses" v-bind="pickerAttrs.root">
         <OPickerInput
             ref="pickerComponent"
-            v-bind="$attrs"
+            v-bind="pickerAttrs.input"
             v-model:active="isActive"
             v-model:value="vmodel"
             :formatter="format"

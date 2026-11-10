@@ -128,6 +128,16 @@ export type InputProps<IsNumber extends boolean = boolean> = {
     clearIcon?: string;
     /** Show status icon using field and variant prop */
     statusIcon?: boolean;
+    /** Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set. */
+    ariaIconLeftLabel?: string;
+    /** Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set. */
+    ariaIconRightLabel?: string;
+    /** Accessibility label for the clear button. */
+    ariaClearLabel?: string;
+    /** Accessibility label for the password reveal button while the password is hidden. */
+    ariaPasswordShowLabel?: string;
+    /** Accessibility label for the password reveal button while the password is visible. */
+    ariaPasswordHideLabel?: string;
     /**
      * Native options to use in HTML5 validation,
      * whether the value of the form's controls can be automatically completed by the browser.

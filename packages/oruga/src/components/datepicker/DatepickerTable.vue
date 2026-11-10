@@ -2,7 +2,7 @@
     setup
     lang="ts"
     generic="IsRange extends boolean, IsMultiple extends boolean">
-import { computed, ref, type PropType } from "vue";
+import { computed, ref } from "vue";
 
 import ODatepickerTableRow from "./DatepickerTableRow.vue";
 
@@ -20,19 +20,18 @@ defineOptions({
     configField: "datepicker",
 });
 
-const props = defineProps({
-    modelValue: {
-        type: [Date, Array] as PropType<Date | Date[]>,
-        default: undefined,
-    },
-    focusedDate: { type: Object as PropType<FocusedDate>, required: true },
-    dayNames: { type: Array as PropType<string[]>, required: true },
-    monthNames: { type: Array as PropType<string[]>, required: true },
-    pickerProps: {
-        type: Object as PropType<DatepickerProps<IsRange, IsMultiple>>,
-        required: true,
-    },
-});
+const props = defineProps<{
+    /** the selected date or dates */
+    modelValue?: Date | Date[];
+    /** the date which currently has the focus */
+    focusedDate: FocusedDate;
+    /** localized names of the weekdays */
+    dayNames: string[];
+    /** localized names of the months */
+    monthNames: string[];
+    /** props of the parent datepicker component */
+    pickerProps: DatepickerProps<IsRange, IsMultiple>;
+}>();
 
 const emits = defineEmits<{
     /** modelValue prop two-way binding */

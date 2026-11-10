@@ -43,6 +43,8 @@ import { injectField } from "@/components/field/fieldInjection";
 import type { ListboxProps } from "./props";
 import type { ListItem, ListboxComponent, ListItemComponent } from "./types";
 
+type ModelValue = ListboxProps<T, IsMultiple>["modelValue"];
+
 /**
  * Listbox is used to select one or more values from a list of items.
  * @displayName Listbox
@@ -54,8 +56,6 @@ defineOptions({
     name: "OListbox",
     configField: "listbox",
 });
-
-type ModelValue = ListboxProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     override: undefined,
@@ -74,6 +74,8 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     filterIcon: () => getDefault("listbox.filterIcon"),
     filterDebounce: () => getDefault("listbox.filterDebounce", 400),
     filterPlaceholder: () => getDefault("listbox.filterPlaceholder"),
+    ariaFilterLabel: () =>
+        getDefault("listbox.ariaFilterLabel", "listbox filter input"),
     iconPack: () => getDefault("listbox.iconPack"),
     animation: () => getDefault("listbox.animation", "fade"),
     id: () => useId(),
@@ -87,6 +89,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown | unknown[]} updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * on select event - fired before update:modelValue
@@ -752,7 +755,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                     :disabled="disabled"
                     expanded
                     size="small"
-                    aria-label="listbox filter input"
+                    :aria-label="ariaFilterLabel"
                     :aria-owns="id + '_list'"
                     :aria-activedescendant="
                         focusedItem

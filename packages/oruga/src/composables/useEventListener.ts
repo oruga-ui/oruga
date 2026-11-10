@@ -13,12 +13,7 @@ import { isObject } from "@/utils/helpers";
 import { unrefElement } from "./unrefElement";
 
 export type EventTarget =
-    | Element
-    | Document
-    | Window
-    | Component
-    | null
-    | undefined;
+    Element | Document | Window | Component | null | undefined;
 
 export type EventListenerOptions = AddEventListenerOptions & {
     /** Register event listener immediate. Otherwise it will be registered on mounted hook. */

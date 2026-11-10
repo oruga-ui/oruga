@@ -59,9 +59,7 @@ export type CheckboxProps<T, IsMultiple extends boolean = boolean> = {
         | string
         | ((
               currentValue:
-                  | (IsMultiple extends true ? T[] : T)
-                  | null
-                  | undefined,
+                  (IsMultiple extends true ? T[] : T) | null | undefined,
               state: ValidityState,
           ) => string);
 } & CheckboxClasses;

@@ -65,6 +65,10 @@ export type SelectProps<T, IsMultiple extends boolean = boolean> = {
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
+    /** Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set. */
+    ariaIconLeftLabel?: string;
+    /** Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set. */
+    ariaIconRightLabel?: string;
     /** Variant of right icon */
     iconRightVariant?: string;
     /**

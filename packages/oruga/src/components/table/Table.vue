@@ -31,6 +31,7 @@ import {
     sortBy,
     isDefined,
     getPropertyValue,
+    resolvePlaceholder,
 } from "@/utils/helpers";
 import {
     defineClasses,
@@ -134,10 +135,18 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     mobileBreakpoint: () => getDefault("table.mobileBreakpoint"),
     mobileCards: () => getDefault("table.mobileCards", true),
     mobileSortPlaceholder: () => getDefault("table.mobileSortPlaceholder"),
+    ariaPaginationLabel: () => getDefault("table.ariaPaginationLabel"),
     ariaNextLabel: () => getDefault("table.ariaNextLabel"),
     ariaPreviousLabel: () => getDefault("table.ariaPreviousLabel"),
     ariaPageLabel: () => getDefault("table.ariaPageLabel"),
     ariaCurrentLabel: () => getDefault("table.ariaCurrentLabel"),
+    ariaCheckAllLabel: () => getDefault("table.ariaCheckAllLabel", "Check all"),
+    ariaCheckRowLabel: () =>
+        getDefault("table.ariaCheckRowLabel", "Check {value}"),
+    ariaOpenDetailLabel: () =>
+        getDefault("table.ariaOpenDetailLabel", "Open {value} details"),
+    ariaColumnFilterLabel: () =>
+        getDefault("table.ariaColumnFilterLabel", "{value} filter"),
     loadingAttrs: () => getDefault("table.loadingAttrs"),
 });
 
@@ -162,7 +171,7 @@ const emits = defineEmits<{
      * @param newRow {unknown} - new select value
      * @param oldRow {unknown} - old select value
      */
-    select: [newRow: T, oldRow: T];
+    select: [newRow: T | undefined, oldRow: T | undefined];
     /**
      * on row checked event
      * @param value {unknown[]} - all checked rows
@@ -534,12 +543,12 @@ function hasCustomFooterSlot(): boolean {
 
 /** check if two rows are equal by a custom compare function or the rowKey attribute */
 function isRowEqual(
-    sourceRow: MaybeRefOrGetter<T>,
-    targetRow: MaybeRefOrGetter<T>,
+    sourceRow: MaybeRefOrGetter<T | undefined>,
+    targetRow: MaybeRefOrGetter<T | undefined>,
 ): boolean {
     const el1 = toRaw(toValue(sourceRow));
     const el2 = toRaw(toValue(targetRow));
-    if (!isDefined(targetRow)) return false;
+    if (!isDefined(el1) || !isDefined(el2)) return false;
     if (typeof props.customCompare === "function")
         return props.customCompare(el1, el2);
     if (props.rowKey)
@@ -688,13 +697,20 @@ function setDefaultSort(): void {
     } else {
         sortField = props.defaultSort;
     }
-    sortByField(sortField, sortDirection);
+
+    const sortColumn = findColumnByField(sortField);
+    if (!sortColumn?.sortable) return;
+    isAsc.value = sortDirection.toLowerCase() === "asc";
+    // the initial sort is not a change of the sorting, so don't emit `sort`
+    applySort(sortColumn);
+}
+
+function findColumnByField(field: string): TableColumnItem<T> | undefined {
+    return tableColumns.value.find((column) => column.field === field);
 }
 
 function sortByField(field: string, direction: "asc" | "desc"): void {
-    const sortColumn = tableColumns.value.find(
-        (column) => column.field === field,
-    );
+    const sortColumn = findColumnByField(field);
     if (sortColumn) {
         isAsc.value = direction.toLowerCase() === "asc";
         sort(sortColumn);
@@ -718,10 +734,13 @@ function sort(
             ? !isAsc.value
             : props.defaultSortDirection.toLowerCase() === "asc";
 
-    // if not first time sort
-    if (currentSortColumn.value)
-        emits("sort", column, isAsc.value ? "asc" : "desc", event);
+    emits("sort", column, isAsc.value ? "asc" : "desc", event);
 
+    applySort(column);
+}
+
+/** set the current sort column and sort the rows by it */
+function applySort(column: TableColumnItem<T>): void {
     currentSortColumn.value = column;
 
     // sort rows by mutating the array
@@ -761,7 +780,9 @@ function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
 
 // #region --- Row Selection Feature ---
 
-const tableSelectedRow = defineModel<T>("selected", { default: undefined });
+const tableSelectedRow = defineModel<T | undefined>("selected", {
+    default: undefined,
+});
 
 /** table arrow keys listener, change selection */
 function onArrowPressed(delta: 1 | -1, event: KeyboardEvent): void {
@@ -816,12 +837,13 @@ function selectRow(row: TableRow<T>, event: Event): void {
 
     if (!props.selectable) return;
 
-    if (isRowEqual(tableSelectedRow, row.value)) return;
+    if (isRowEqual(tableSelectedRow.value, row.value)) return;
     if (!props.isRowSelectable(row.value)) return;
 
-    tableSelectedRow.value = row.value;
     // emit new and old row
     emits("select", row.value, tableSelectedRow.value);
+
+    tableSelectedRow.value = row.value;
 }
 
 // #endregion --- Row Selection Feature ---
@@ -829,7 +851,7 @@ function selectRow(row: TableRow<T>, event: Event): void {
 // #region --- Row Checkable Feature ---
 
 const tableCheckedRows = defineModel<T[]>("checkedRows", {
-    default: [],
+    default: () => [],
 });
 
 /** reset checkedRows whem page props changes */
@@ -921,7 +943,7 @@ function removeCheckedRow(row: TableRow<T>): void {
 // #region --- Detail Row Feature ---
 
 const visibleDetailedRows = defineModel<T[]>("detailedRows", {
-    default: [],
+    default: () => [],
 });
 
 /**
@@ -1282,11 +1304,12 @@ defineExpose({
                     :total="tableTotal"
                     :rounded="paginationRounded"
                     :size="paginationSize"
-                    :order="paginationOrder"
+                    :position="paginationOrder"
                     :simple="paginationSimple"
                     :range-before="paginationRangeBefore"
                     :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
+                    :aria-label="ariaPaginationLabel"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
                     :aria-page-label="ariaPageLabel"
@@ -1344,7 +1367,7 @@ defineExpose({
                                     name="row_check_all"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
-                                    aria-label="Check all"
+                                    :aria-label="ariaCheckAllLabel"
                                     @update:model-value="
                                         updateCheckedRows(!!$event)
                                     " />
@@ -1372,10 +1395,17 @@ defineExpose({
                                             : 'descending'
                                         : undefined
                                 "
+                                :tabindex="column.sortable ? 0 : undefined"
                                 :aria-colindex="
                                     ariaColIndexStart + column.index
                                 "
                                 @click.stop="sort(column, true, $event)"
+                                @keydown.enter.self.prevent="
+                                    sort(column, true, $event)
+                                "
+                                @keydown.space.self.prevent="
+                                    sort(column, true, $event)
+                                "
                                 @dragstart="
                                     handleColumnDragStart(column, $event)
                                 "
@@ -1434,7 +1464,7 @@ defineExpose({
                                     name="row_check_all"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
-                                    aria-label="Check all"
+                                    :aria-label="ariaCheckAllLabel"
                                     @update:model-value="
                                         updateCheckedRows(!!$event)
                                     " />
@@ -1487,7 +1517,12 @@ defineExpose({
                                         :icon="filterIcon"
                                         :pack="iconPack"
                                         size="small"
-                                        :aria-label="`${column.label} filter`"
+                                        :aria-label="
+                                            resolvePlaceholder(
+                                                ariaColumnFilterLabel,
+                                                column.label ?? '',
+                                            )
+                                        "
                                         @input="
                                             (v, e) =>
                                                 $emit('filter', column, v, e)
@@ -1605,7 +1640,12 @@ defineExpose({
                                     :pack="iconPack"
                                     :rotation="isDetailRowVisible(row) ? 90 : 0"
                                     clickable
-                                    :aria-label="`Open ${row.label} details`"
+                                    :aria-label="
+                                        resolvePlaceholder(
+                                            ariaOpenDetailLabel,
+                                            row.label,
+                                        )
+                                    "
                                     @click.prevent="toggleDetails(row)" />
                             </td>
 
@@ -1622,7 +1662,12 @@ defineExpose({
                                     :name="`row_${row.index}_check`"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
-                                    :aria-label="`Check ${row.label}`"
+                                    :aria-label="
+                                        resolvePlaceholder(
+                                            ariaCheckRowLabel,
+                                            row.label,
+                                        )
+                                    "
                                     @update:model-value="checkRow(row)" />
                             </td>
 
@@ -1675,7 +1720,12 @@ defineExpose({
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
-                                    :aria-label="`Check ${row.label}`"
+                                    :aria-label="
+                                        resolvePlaceholder(
+                                            ariaCheckRowLabel,
+                                            row.label,
+                                        )
+                                    "
                                     @update:model-value="checkRow(row)" />
                             </td>
                         </tr>
@@ -1764,11 +1814,12 @@ defineExpose({
                     :total="tableTotal"
                     :rounded="paginationRounded"
                     :size="paginationSize"
-                    :order="paginationOrder"
+                    :position="paginationOrder"
                     :simple="paginationSimple"
                     :range-before="paginationRangeBefore"
                     :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
+                    :aria-label="ariaPaginationLabel"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
                     :aria-page-label="ariaPageLabel"

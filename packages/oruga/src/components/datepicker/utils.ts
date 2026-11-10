@@ -1,10 +1,5 @@
 type MonthType =
-    | "numeric"
-    | "2-digit"
-    | "long"
-    | "short"
-    | "narrow"
-    | undefined;
+    "numeric" | "2-digit" | "long" | "short" | "narrow" | undefined;
 
 /**
  * Return month names according to a specified locale

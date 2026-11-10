@@ -3,3 +3,4 @@ CHANGELOG.md
 packages/oruga/src/config.d.ts
 packages/oruga/src/globals.d.ts
 **/theme-*.md
+packages/docs/pages/components/*.md

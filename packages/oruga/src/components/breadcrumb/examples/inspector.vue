@@ -66,14 +66,6 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
-    seperatorClass: {
-        class: "seperatorClass",
-        description: "Class of the item separator element",
-        properties: ["separator"],
-        action: (data) => {
-            data.separator = "/";
-        },
-    },
     linkClass: {
         class: "linkClass",
         description: "Class of the item link element",

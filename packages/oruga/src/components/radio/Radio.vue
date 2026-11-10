@@ -4,9 +4,11 @@ import { computed, useAttrs, useId, useSlots, useTemplateRef } from "vue";
 import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { RadioProps, RadioNativeProps } from "./props";
+
+type ModelValue = RadioProps<T>["modelValue"];
 
 /**
  * Select an option from a set of options.
@@ -46,13 +48,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown} - updated modelValue prop
      */
-    "update:model-value": [value: T];
+    "update:model-value": [value: ModelValue];
     /**
      * on input change event
      * @param value {unknown} - input value
      * @param event {Event} - native event
      */
-    input: [value: T, event: Event];
+    input: [value: ModelValue, event: Event];
     /**
      * on input focus event
      * @param event {Event} - native event
@@ -87,16 +89,13 @@ const { checkHtml5Validity, setFocus, setBlur } = useInputHandler(
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-// set field labelId or create a unique label id if a label is given
-const labelId =
-    !!parentField.value || !!props.label || !!useSlots().default
-        ? parentField.value?.labelId || useId()
-        : undefined;
+// the own label gets a unique id, it must not reuse the id of the field label
+const labelId = !!props.label || !!useSlots().default ? useId() : undefined;
 
 // if no `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField.value?.setInputId(props.id);
 
-const vmodel = defineModel<T>({ default: undefined });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 const isChecked = computed(() => vmodel.value === props.nativeValue);
 
@@ -109,8 +108,7 @@ function onInput(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+    ...mergeFieldAttrs(parentField.value?.inputAttrs, attrs, labelId),
     autocomplete: props.autocomplete,
 }));
 
@@ -164,7 +162,6 @@ defineExpose({
             :value="nativeValue"
             :disabled="disabled"
             :aria-checked="isChecked"
-            :aria-labelledby="labelId"
             v-bind="inputBind"
             @change="onInput" />
 
