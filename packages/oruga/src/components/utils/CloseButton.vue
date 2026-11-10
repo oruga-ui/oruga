@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import type { PropType } from "vue";
 import type { ClassBinding } from "@/types";
 
 import OIcon from "@/components/icon/Icon.vue";
 
-defineProps({
-    label: { type: String, required: true },
-    icon: { type: String, required: true },
-    size: { type: String, default: undefined },
-    pack: { type: String, default: undefined },
-    classes: { type: Array as PropType<ClassBinding[]>, required: true },
-});
+defineProps<{
+    /** accessible name of the button */
+    label: string;
+    /** icon of the button */
+    icon: string;
+    /** size of the icon */
+    size?: string;
+    /** icon pack of the icon */
+    pack?: string;
+    /** classes of the button */
+    classes: ClassBinding[];
+}>();
 </script>
 
 <template>

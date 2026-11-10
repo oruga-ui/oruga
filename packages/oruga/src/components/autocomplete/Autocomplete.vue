@@ -14,7 +14,7 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { getDefault } from "@/utils/config";
-import { isEqual } from "@/utils/helpers";
+import { isDefined, isEqual } from "@/utils/helpers";
 import {
     defineClasses,
     normalizeOptions,
@@ -25,17 +25,16 @@ import {
     type OptionItem,
 } from "@/composables";
 
-import { injectField } from "../field/fieldInjection";
+import { injectField, mergeFieldAttrs } from "../field/fieldInjection";
 
 import type { AutocompleteProps } from "./props";
 import type { DropdownItemProps } from "../dropdown/props";
 import type { ComponentExposed } from "vue-component-type-helpers";
 
-enum SpecialOption {
-    Header,
-    Footer,
-    EMPTY,
-}
+type SpecialOption =
+    typeof HeaderOption | typeof FooterOption | typeof EmptyOption;
+
+type ModelValue = AutocompleteProps<T>["modelValue"];
 
 /**
  * Extended input that provide suggestions while the user types.
@@ -48,8 +47,6 @@ defineOptions({
     configField: "autocomplete",
     inheritAttrs: false,
 });
-
-type ModelValue = AutocompleteProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     override: undefined,
@@ -86,6 +83,9 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     iconRightVariant: undefined,
     clearable: () => getDefault("autocomplete.clearable", false),
     clearIcon: () => getDefault("autocomplete.clearIcon", "close-circle"),
+    ariaIconLeftLabel: () => getDefault("autocomplete.ariaIconLeftLabel"),
+    ariaIconRightLabel: () => getDefault("autocomplete.ariaIconRightLabel"),
+    ariaClearLabel: () => getDefault("autocomplete.ariaClearLabel", "Clear"),
     statusIcon: () => getDefault("statusIcon", true),
     desktopModal: () => getDefault("dropdown.desktopModal", false),
     mobileModal: () => getDefault("autocomplete.mobileModal", false),
@@ -196,6 +196,14 @@ const slots = defineSlots<{
     option?(props: { option: OptionItem<DropdownItemProps<T>> }): void;
 }>();
 
+/**
+ * Values of the header, footer and empty dropdown items.
+ * Symbols are used so that they can never be equal to an option value.
+ */
+const HeaderOption: unique symbol = Symbol("header");
+const FooterOption: unique symbol = Symbol("footer");
+const EmptyOption: unique symbol = Symbol("empty");
+
 const dropdownRef =
     useTemplateRef<ComponentExposed<typeof ODropdown<T>>>("dropdownElement");
 
@@ -238,9 +246,9 @@ watch(inputValue, (filter: string): void => {
     if (props.backendFiltering) return;
     childItems.value.forEach((item) => {
         // prevent the empty state from hidding
-        if (item.data.value === SpecialOption.Header) return;
-        if (item.data.value === SpecialOption.Footer) return;
-        if (item.data.value === SpecialOption.EMPTY) return;
+        if (item.data.value === HeaderOption) return;
+        if (item.data.value === FooterOption) return;
+        if (item.data.value === EmptyOption) return;
 
         // check if the value matches the filter string
         const containsFilter =
@@ -312,7 +320,7 @@ watch(
 watch(
     childItems,
     () => {
-        if (selectedValue.value) updateInput(selectedValue.value);
+        if (isDefined(selectedValue.value)) updateInput(selectedValue.value);
     },
     { once: true },
 );
@@ -346,13 +354,13 @@ function setSelected(item: T | SpecialOption | undefined): void {
     let value: T | undefined = undefined;
 
     // check if emoty was selected
-    if (item === SpecialOption.EMPTY) return;
+    if (item === EmptyOption) return;
     // Check if header or footer was selected
-    if (item === SpecialOption.Header) {
+    if (item === HeaderOption) {
         emits("select-header");
-    } else if (item === SpecialOption.Footer) {
+    } else if (item === FooterOption) {
         emits("select-footer");
-    } else if (item) {
+    } else {
         value = item;
     }
 
@@ -400,18 +408,25 @@ function onFocus(): void {
 
 // #region --- Icon Feature ---
 
-const computedIconRight = computed(() =>
-    props.clearable && inputValue.value && props.clearIcon
-        ? props.clearIcon
-        : props.iconRight,
+/** The clear icon is shown and clickable only when there is a value to clear. */
+const isClearVisible = computed(
+    () => !!(props.clearable && inputValue.value && props.clearIcon),
 );
 
-const computedIconRightClickable = computed(() =>
-    props.clearable ? true : props.iconRightClickable,
+const computedIconRight = computed(() =>
+    isClearVisible.value ? props.clearIcon : props.iconRight,
+);
+
+const computedIconRightClickable = computed(
+    () => isClearVisible.value || props.iconRightClickable,
+);
+
+const computedIconRightLabel = computed(() =>
+    isClearVisible.value ? props.ariaClearLabel : props.ariaIconRightLabel,
 );
 
 function rightIconClick(event: Event): void {
-    if (props.clearable) {
+    if (isClearVisible.value) {
         inputValue.value = "";
     } else emits("icon-right-click", event);
 }
@@ -423,8 +438,7 @@ function rightIconClick(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
-    ...attrs,
+    ...mergeFieldAttrs(parentField?.value?.inputAttrs, attrs),
     ...props.inputAttrs,
 }));
 
@@ -509,8 +523,11 @@ defineExpose({
                     :size="size"
                     :rounded="rounded"
                     :icon="icon"
+                    :icon-clickable="iconClickable"
                     :icon-right="computedIconRight"
                     :icon-right-clickable="computedIconRightClickable"
+                    :aria-icon-left-label="ariaIconLeftLabel"
+                    :aria-icon-right-label="computedIconRightLabel"
                     :icon-pack="iconPack"
                     :placeholder="placeholder"
                     :maxlength="maxlength"
@@ -532,7 +549,7 @@ defineExpose({
             <template #before="{ toggle }">
                 <o-dropdown-item
                     v-if="$slots.header"
-                    :value="SpecialOption.Header"
+                    :value="HeaderOption"
                     :clickable="selectableHeader"
                     :class="[...itemClasses, ...itemHeaderClasses]">
                     <slot name="header" :toggle />
@@ -580,7 +597,7 @@ defineExpose({
 
             <template v-if="$slots.empty" #empty="{ toggle }">
                 <o-dropdown-item
-                    :value="SpecialOption.EMPTY"
+                    :value="EmptyOption"
                     :clickable="false"
                     :class="[...itemClasses, ...itemEmptyClasses]">
                     <slot name="empty" :toggle />
@@ -590,7 +607,7 @@ defineExpose({
             <template #after="{ toggle }">
                 <o-dropdown-item
                     v-if="$slots.footer"
-                    :value="SpecialOption.Footer"
+                    :value="FooterOption"
                     :clickable="selectableFooter"
                     :class="[...itemClasses, ...itemFooterClasses]">
                     <slot name="footer" :toggle />

@@ -14,12 +14,22 @@ describe("OPagination tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    test("should name the nav landmark with the aria-label prop", () => {
+        let wrapper = mount(OPagination, { props: { total: 100 } });
+        expect(wrapper.attributes("aria-label")).toBe("Pagination");
+
+        wrapper = mount(OPagination, {
+            props: { total: 100, ariaLabel: "Search results" },
+        });
+        expect(wrapper.attributes("aria-label")).toBe("Search results");
+    });
+
     test("should select current item correctly", () => {
         let wrapper = mount(OPagination, { props: { total: 100 } });
 
         let currentItem = wrapper.find(".o-pagination__button--current");
         expect(currentItem.exists()).toBeTruthy();
-        expect(currentItem.text()).toEqual("1");
+        expect(currentItem.text()).toStrictEqual("1");
 
         wrapper = mount(OPagination, { props: { modelValue: 0, total: 100 } });
         currentItem = wrapper.find(".o-pagination__button--current");
@@ -28,7 +38,7 @@ describe("OPagination tests", () => {
         wrapper = mount(OPagination, { props: { modelValue: 5, total: 100 } });
         currentItem = wrapper.find(".o-pagination__button--current");
         expect(currentItem.exists()).toBeTruthy();
-        expect(currentItem.text()).toEqual("5");
+        expect(currentItem.text()).toStrictEqual("5");
     });
 
     test("should emit change with value of 1 when calling first", () => {
@@ -87,5 +97,79 @@ describe("OPagination tests", () => {
 
         const items = wrapper.findAll(".o-pagination__button");
         expect(items).toHaveLength(2);
+    });
+    describe("button attributes", () => {
+        test("the current page is marked with aria-current page", () => {
+            const wrapper = mount(OPagination, {
+                props: { total: 100, modelValue: 3 },
+            });
+            const current = wrapper.find(".o-pagination__button--current");
+            expect(current.attributes("aria-current")).toBe("page");
+
+            const others = wrapper
+                .findAll(".o-pagination__list button")
+                .filter((b) => b.text() !== "3");
+            expect(others.length).toBeGreaterThan(0);
+            for (const button of others)
+                expect(button.attributes("aria-current")).toBeUndefined();
+        });
+
+        test("internal slot props do not leak as DOM attributes", () => {
+            const wrapper = mount(OPagination, {
+                props: { total: 100, modelValue: 3 },
+            });
+            for (const button of wrapper.findAll("button")) {
+                expect(button.attributes("iscurrent")).toBeUndefined();
+                expect(button.attributes("number")).toBeUndefined();
+            }
+        });
+    });
+
+    describe("slot props", () => {
+        const slotProps = (props: Record<string, unknown>) => {
+            const received: Record<string, Record<string, unknown>> = {};
+            mount(OPagination, {
+                props: { total: 100, ...props },
+                slots: {
+                    previous: (p: Record<string, unknown>) => {
+                        received.previous = p;
+                        return "";
+                    },
+                    next: (p: Record<string, unknown>) => {
+                        received.next = p;
+                        return "";
+                    },
+                    default: (p: Record<string, unknown>) => {
+                        if (p.isCurrent) received.current = p;
+                        return "";
+                    },
+                },
+            });
+            return received;
+        };
+
+        test("previous and next expose whether they are disabled", () => {
+            let received = slotProps({ modelValue: 1 });
+            expect(received.previous.disabled).toBe(true);
+            expect(received.next.disabled).toBe(false);
+
+            // a middle page: 100 items with 20 per page are 5 pages
+            received = slotProps({ modelValue: 3 });
+            expect(received.previous.disabled).toBe(false);
+            expect(received.next.disabled).toBe(false);
+
+            received = slotProps({ modelValue: 5, total: 100, perPage: 20 });
+            expect(received.next.disabled).toBe(true);
+
+            received = slotProps({ modelValue: 3, disabled: true });
+            expect(received.previous.disabled).toBe(true);
+            expect(received.next.disabled).toBe(true);
+        });
+
+        test("the current page slot exposes ariaCurrent page", () => {
+            const received = slotProps({ modelValue: 3 });
+            expect(received.current.ariaCurrent).toBe("page");
+            expect(received.previous.ariaCurrent).toBeUndefined();
+        });
     });
 });

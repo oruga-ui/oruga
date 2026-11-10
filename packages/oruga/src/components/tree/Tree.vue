@@ -39,6 +39,8 @@ import { injectField } from "@/components/field/fieldInjection";
 import type { TreeProps } from "./props";
 import type { TreeComponent, TreeItem, TreeItemComponent } from "./types";
 
+type ModelValue = TreeProps<T, IsMultiple>["modelValue"];
+
 /**
  * A simple tree view, for any type of hierarchical list.
  * @displayName Tree
@@ -50,8 +52,6 @@ defineOptions({
     name: "OTree",
     configField: "tree",
 });
-
-type ModelValue = TreeProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     override: undefined,
@@ -70,6 +70,8 @@ const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     filterIcon: undefined,
     filterDebounce: 400,
     filterPlaceholder: undefined,
+    ariaFilterLabel: () =>
+        getDefault("tree.ariaFilterLabel", "tree filter input"),
     toggleIcon: () => getDefault("tree.toggleIcon", "chevron-right"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
@@ -84,6 +86,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * on select event - fired before update:modelValue
@@ -852,7 +855,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
                     :disabled="disabled"
                     expanded
                     size="small"
-                    aria-label="tree filter input"
+                    :aria-label="ariaFilterLabel"
                     :aria-owns="id + '_list'"
                     :aria-activedescendant="
                         focusedItem

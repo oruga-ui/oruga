@@ -133,7 +133,7 @@ describe("OListbox tests", () => {
             expect(items.length).toBe(options.length);
 
             items.forEach((item, index) => {
-                expect(item.text()).toEqual(options[index].label);
+                expect(item.text()).toStrictEqual(options[index].label);
             });
 
             await items[1].trigger("click");
@@ -252,42 +252,44 @@ describe("OListbox tests", () => {
             const items = wrapper.findAll('[data-oruga="listbox-item"]');
             expect(items).toHaveLength(15);
 
-            items.forEach((el, idx) => {
-                const isGroup = idx % 5 == 0;
-                const g_idx = Math.floor(idx / 5);
-                const o_idx = (idx % 5) - 1;
-
-                const option = options[g_idx];
-
-                if (isGroup) {
-                    expect(el.text()).toBe(option.label);
+            // every fifth element is a group header
+            items
+                .filter((_, idx) => idx % 5 == 0)
+                .forEach((el, g_idx) => {
+                    expect(el.text()).toBe(options[g_idx].label);
                     expect(el.attributes("aria-disabled")).toBe("true");
                     expect(el.attributes("aria-hidden")).toBe("false");
                     expect(el.attributes("aria-selected")).toBe("false");
+                });
+
+            items.forEach((el, idx) => {
+                // group headers are checked above
+                if (idx % 5 == 0) return;
+
+                const g_idx = Math.floor(idx / 5);
+                const o_idx = (idx % 5) - 1;
+                const g_options = options[g_idx].options;
+
+                let optionLabel;
+                if (idx < 5) {
+                    optionLabel =
+                        (g_options[o_idx] as ListItemProps<string>).label ||
+                        g_options[o_idx];
+                } else if (idx < 10) {
+                    optionLabel = Object.entries(g_options)[o_idx][1];
                 } else {
-                    const g_options = option.options;
-
-                    let optionLabel;
-                    if (idx < 5) {
-                        optionLabel =
-                            (g_options[o_idx] as ListItemProps<string>).label ||
-                            g_options[o_idx];
-                    } else if (idx < 10) {
-                        optionLabel = Object.entries(g_options)[o_idx][1];
-                    } else {
-                        optionLabel = g_options[o_idx];
-                    }
-
-                    expect(el.text()).toBe(optionLabel);
-                    expect(el.attributes("aria-disabled")).toBe("false");
-                    expect(el.attributes("aria-hidden")).toBe("false");
-                    expect(el.attributes("aria-selected")).toBe("false");
+                    optionLabel = g_options[o_idx];
                 }
+
+                expect(el.text()).toBe(optionLabel);
+                expect(el.attributes("aria-disabled")).toBe("false");
+                expect(el.attributes("aria-hidden")).toBe("false");
+                expect(el.attributes("aria-selected")).toBe("false");
             });
         });
     });
 
-    describe("test checkable", () => {
+    describe("verify checkable", () => {
         test("renders checkboxes and updates selection when checked", async () => {
             const wrapper = mount(OListbox, {
                 props: {
@@ -349,14 +351,14 @@ describe("OListbox tests", () => {
             ).toBe(true);
 
             expect(wrapper.emitted("update:modelValue")).toHaveLength(2);
-            expect(wrapper.emitted("update:modelValue")?.[1][0]).toEqual([
+            expect(wrapper.emitted("update:modelValue")?.[1][0]).toStrictEqual([
                 options[0].value,
                 options[2].value,
             ]);
         });
     });
 
-    describe("test selectable", () => {
+    describe("verify selectable", () => {
         test("react accordingly when new item is selected", async () => {
             const wrapper = mount(OListbox, {
                 props: {
@@ -536,7 +538,7 @@ describe("OListbox tests", () => {
         });
     });
 
-    describe("test filterable", () => {
+    describe("verify filterable", () => {
         test("should have correct custom icon", () => {
             const wrapper = mount(OListbox, {
                 props: {
@@ -634,9 +636,8 @@ describe("OListbox tests", () => {
 
             items.forEach((item, idx) => {
                 // check only "Chicago" is shown
-                if (idx === 6)
-                    expect(item.attributes("aria-hidden")).toBe("false");
-                else expect(item.attributes("aria-hidden")).toBe("true");
+                const expectedHidden = idx === 6 ? "false" : "true";
+                expect(item.attributes("aria-hidden")).toBe(expectedHidden);
             });
 
             expect(wrapper.emitted("filter")).toBeDefined();
@@ -670,5 +671,16 @@ describe("OListbox tests", () => {
             expect(wrapper.emitted("filter")).toBeDefined();
             expect(wrapper.emitted("filter")?.[0][0]).contain(options[2].value);
         });
+    });
+
+    test("label the filter input", async () => {
+        const wrapper = mount(OListbox, {
+            props: { options, filterable: true },
+        });
+        const input = wrapper.find('[data-oruga="input"] input');
+        expect(input.attributes("aria-label")).toBe("listbox filter input");
+
+        await wrapper.setProps({ ariaFilterLabel: "Filter the cities" });
+        expect(input.attributes("aria-label")).toBe("Filter the cities");
     });
 });

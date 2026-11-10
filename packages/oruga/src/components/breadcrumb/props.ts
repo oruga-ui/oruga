@@ -82,8 +82,6 @@ export type BreadcrumbItemClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the item element when active */
     activeClass: ComponentClass;
-    /** Class of the item separator element */
-    seperatorClass: ComponentClass;
     /** Class of the item link element */
     linkClass: ComponentClass;
     /** Class of the item icon element */

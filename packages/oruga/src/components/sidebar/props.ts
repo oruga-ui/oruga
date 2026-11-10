@@ -39,6 +39,8 @@ export type SidebarProps<C extends Component = Component> = {
     clipScroll?: boolean;
     /** Trap focus inside the sidebar */
     trapFocus?: boolean;
+    /** Accessibility aria-label to name the sidebar, used as the dialog name when shown with an overlay */
+    ariaLabel?: string;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**

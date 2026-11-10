@@ -155,8 +155,8 @@ describe("OTable tests", () => {
         expect(bodyRows).toHaveLength(data.length);
     });
 
-    describe("test column props", () => {
-        test("test column label", async () => {
+    describe("verify column props", () => {
+        test("column label", async () => {
             const wrapper = mount<TableType>(OTable, {
                 props: { data, columns },
             });
@@ -172,7 +172,7 @@ describe("OTable tests", () => {
             }
         });
 
-        test("test column field", async () => {
+        test("column field", async () => {
             const wrapper = mount<TableType>(OTable, {
                 props: { data, columns },
             });
@@ -195,7 +195,7 @@ describe("OTable tests", () => {
             }
         });
 
-        test("test column formatter", async () => {
+        test("column formatter", async () => {
             const columns: TableColumn<(typeof data)[number]>[] = [
                 {
                     label: "ID",
@@ -241,7 +241,7 @@ describe("OTable tests", () => {
             }
         });
 
-        test("test column thAttrs and tdAttrs", async () => {
+        test("column thAttrs and tdAttrs", async () => {
             const columns: TableColumn<(typeof data)[number]>[] = [
                 {
                     field: "id",
@@ -284,7 +284,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test filterable", () => {
+    describe("verify filterable", () => {
         const data = [
             { id: 1, name: "Jesse" },
             { id: 2, name: "João" },
@@ -503,7 +503,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test sorting", () => {
+    describe("verify sorting", () => {
         const random_words = [
             "Apfel", // A
             "Ball", // B
@@ -532,6 +532,22 @@ describe("OTable tests", () => {
             "Yacht", // Y
             "Zebra", // Z
         ];
+
+        test("passes ariaPaginationLabel to the pagination nav", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "ID", field: "id" }],
+                    data: [{ id: 1 }, { id: 2 }, { id: 3 }],
+                    perPage: 1,
+                    paginated: true,
+                    ariaPaginationLabel: "Table pages",
+                },
+            });
+            await nextTick();
+
+            const nav = wrapper.find('nav[data-oruga="pagination"]');
+            expect(nav.attributes("aria-label")).toBe("Table pages");
+        });
 
         test("tests sort default when paginated", async () => {
             const perPage = 10;
@@ -618,6 +634,160 @@ describe("OTable tests", () => {
                 expect(tds).toHaveLength(2);
                 expect(tds[1].text()).toBe(data[data.length - 1 - idx].name);
             }
+        });
+
+        test("emit sort on the first sort of an unsorted table", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    backendSorting: true,
+                    columns: [
+                        { label: "ID", field: "id", sortable: true },
+                        { label: "Name", field: "name", sortable: true },
+                    ],
+                    data: [
+                        { id: 2, name: "Bob" },
+                        { id: 1, name: "Tina" },
+                    ],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            expect(wrapper.emitted("sort")).toBeUndefined();
+
+            const ths = wrapper.findAll("thead th");
+
+            await ths[1].trigger("click");
+            expect(wrapper.emitted("sort")).toHaveLength(1);
+            expect(wrapper.emitted("sort")![0][0]).toMatchObject({
+                field: "name",
+            });
+            expect(wrapper.emitted("sort")![0][1]).toBe("asc");
+            expect(wrapper.emitted("sort")![0][2]).toBeInstanceOf(Event);
+
+            await ths[1].trigger("click");
+            expect(wrapper.emitted("sort")).toHaveLength(2);
+            expect(wrapper.emitted("sort")![1][1]).toBe("desc");
+
+            // backend sorted rows keep their order
+            const firstCells = wrapper
+                .findAll("tbody tr")
+                .map((tr) => tr.find("td").text());
+            expect(firstCells).toStrictEqual(["2", "1"]);
+        });
+
+        test("emit sort when the exposed sort function sorts an unsorted table", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "ID", field: "id", sortable: true }],
+                    data: [{ id: 1 }, { id: 2 }],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            wrapper.vm.sort("id", "desc");
+            await nextTick();
+
+            expect(wrapper.emitted("sort")).toHaveLength(1);
+            expect(wrapper.emitted("sort")![0][1]).toBe("desc");
+            expect(wrapper.find("tbody td").text()).toBe("2");
+        });
+
+        test("does not emit sort for the default sort", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "ID", field: "id", sortable: true }],
+                    data: [{ id: 2 }, { id: 1 }],
+                    defaultSort: "id",
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const th = wrapper.find("thead th");
+            expect(th.attributes("aria-sort")).toBe("ascending");
+            expect(wrapper.find("tbody td").text()).toBe("1");
+            expect(wrapper.emitted("sort")).toBeUndefined();
+
+            await th.trigger("click");
+            expect(wrapper.emitted("sort")).toHaveLength(1);
+            expect(wrapper.emitted("sort")![0][1]).toBe("desc");
+        });
+
+        test("sort a column with the keyboard", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", sortable: true },
+                        { label: "Name", field: "name", sortable: true },
+                        { label: "Note", field: "note" },
+                    ],
+                    data: [
+                        { id: 2, name: "Bob", note: "" },
+                        { id: 1, name: "Tina", note: "" },
+                        { id: 3, name: "Anna", note: "" },
+                    ],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const ths = wrapper.findAll("thead th");
+            expect(ths).toHaveLength(3);
+
+            // only sortable headers are focusable
+            expect(ths[0].attributes("tabindex")).toBe("0");
+            expect(ths[1].attributes("tabindex")).toBe("0");
+            expect(ths[2].attributes("tabindex")).toBeUndefined();
+
+            // the test utils key modifiers do not set `event.key`, so pass it explicitly
+            await ths[1].trigger("keydown", { key: "Enter" });
+            expect(ths[1].attributes("aria-sort")).toBe("ascending");
+            expect(
+                wrapper
+                    .findAll("tbody tr td:nth-child(2)")
+                    .map((td) => td.text()),
+            ).toStrictEqual(["Anna", "Bob", "Tina"]);
+
+            // toggle the direction
+            await ths[1].trigger("keydown", { key: "Enter" });
+            expect(ths[1].attributes("aria-sort")).toBe("descending");
+
+            // space sorts another column and prevents scrolling the page
+            const event = new KeyboardEvent("keydown", {
+                key: " ",
+                bubbles: true,
+                cancelable: true,
+            });
+            ths[0].element.dispatchEvent(event);
+            await nextTick();
+            expect(event.defaultPrevented).toBe(true);
+            expect(ths[0].attributes("aria-sort")).toBe("ascending");
+            expect(ths[1].attributes("aria-sort")).toBeUndefined();
+
+            // an unsortable column ignores the keys
+            await ths[2].trigger("keydown", { key: "Enter" });
+            expect(ths[0].attributes("aria-sort")).toBe("ascending");
+        });
+
+        test("ignore keys of elements inside the sortable header", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [{ label: "Name", field: "name", sortable: true }],
+                    data: [{ name: "Bob" }, { name: "Anna" }],
+                },
+            });
+            await nextTick(); // await column rendered
+
+            const th = wrapper.find("thead th");
+            const event = new KeyboardEvent("keydown", {
+                key: "Enter",
+                bubbles: true,
+                cancelable: true,
+            });
+            // keys pressed on a child (for example a control in the header slot) must not sort
+            th.find("span").element.dispatchEvent(event);
+            await nextTick();
+
+            expect(event.defaultPrevented).toBe(false);
+            expect(th.attributes("aria-sort")).toBeUndefined();
         });
 
         test("tests sort change when paginated", async () => {
@@ -742,7 +912,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test checkable", () => {
+    describe("verify checkable", () => {
         test("tests header has checkAll checkbox", async () => {
             const wrapper = mount(OTable, {
                 props: {
@@ -839,7 +1009,91 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test pageable", () => {
+    describe("test accessibility labels", () => {
+        const labelColumns = [
+            { label: "ID", field: "id", numeric: true },
+            { label: "Name", field: "first_name", filterable: true },
+        ];
+
+        function labels(wrapper: ReturnType<typeof mount>): string[] {
+            return [
+                ...wrapper.findAll(
+                    "thead input, tbody input, tbody [role=button]",
+                ),
+            ]
+                .map((el) => el.attributes("aria-label"))
+                .filter((label): label is string => !!label);
+        }
+
+        test("render the default english labels", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: labelColumns,
+                    data: data.slice(0, 1),
+                    checkable: true,
+                    detailed: true,
+                },
+                slots: { detail: "DETAIL" },
+            });
+            await nextTick();
+
+            expect(labels(wrapper)).toStrictEqual([
+                "Check all",
+                "Name filter",
+                "Open row 0 details",
+                "Check row 0",
+            ]);
+        });
+
+        test("render labels from strings with a placeholder", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: labelColumns,
+                    data: data.slice(0, 1),
+                    checkable: true,
+                    detailed: true,
+                    ariaCheckAllLabel: "Alle auswählen",
+                    ariaCheckRowLabel: "{value} auswählen",
+                    ariaOpenDetailLabel: "Details von {value} öffnen",
+                    ariaColumnFilterLabel: "Filter für {value}",
+                },
+                slots: { detail: "DETAIL" },
+            });
+            await nextTick();
+
+            expect(labels(wrapper)).toStrictEqual([
+                "Alle auswählen",
+                "Filter für Name",
+                "Details von row 0 öffnen",
+                "row 0 auswählen",
+            ]);
+        });
+
+        test("render labels from functions", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: labelColumns,
+                    data: data.slice(0, 1),
+                    checkable: true,
+                    detailed: true,
+                    ariaCheckRowLabel: (label) => `select ${label}`,
+                    ariaOpenDetailLabel: (label) => `show ${label}`,
+                    ariaColumnFilterLabel: (label) => `find ${label}`,
+                },
+                slots: { detail: "DETAIL" },
+            });
+            await nextTick();
+
+            expect(labels(wrapper)).toStrictEqual([
+                "Check all",
+                "find Name",
+                "show row 0",
+                "select row 0",
+            ]);
+        });
+    });
+
+    describe("verify pageable", () => {
         test("show correct amount of rows when per page is set to 3", async () => {
             const perPage = 3;
 
@@ -884,13 +1138,39 @@ describe("OTable tests", () => {
 
             expect(
                 wrapper.findAll("tbody tr").map((row) => row.text()),
-            ).toEqual(
+            ).toStrictEqual(
                 data.slice(perPage, perPage * 2).map((row) => String(row.id)),
             );
             expect(wrapper.find(".o-pagination__button--current").text()).toBe(
                 "2",
             );
         });
+
+        test.each(["top", "bottom", "both"] as const)(
+            "pass the pagination order to the pagination at position %s",
+            (paginationPosition) => {
+                const wrapper = mount(OTable, {
+                    props: {
+                        columns: [{ label: "ID", field: "id" }],
+                        paginated: true,
+                        paginationPosition,
+                        paginationOrder: "left",
+                        data,
+                        perPage: 3,
+                    },
+                });
+
+                const paginations = wrapper.findAll(".o-pagination");
+                expect(paginations).toHaveLength(
+                    paginationPosition === "both" ? 2 : 1,
+                );
+                for (const pagination of paginations) {
+                    expect(pagination.classes("o-pagination--left")).toBe(true);
+                    // must not leak as a DOM attribute
+                    expect(pagination.attributes("order")).toBeUndefined();
+                }
+            },
+        );
 
         test("show correct amount of rows when per page is set to 5", async () => {
             const perPage = 5;
@@ -970,7 +1250,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test reactive stability", () => {
+    describe("verify reactive stability", () => {
         test("inline td-attrs object does not cause recursive update warning (issue #1531)", async () => {
             // Spy on console.warn to detect Vue's "Maximum recursive updates exceeded" warning.
             const warnSpy = vi

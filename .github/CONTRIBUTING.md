@@ -217,14 +217,78 @@ const props = withDefaults(defineProps<MyComponentProps>(), {
 
 ### Documentation examples
 
-Each component's `examples/` folder is used to generate the live docs. The folder should contain:
+Each component's `examples/` folder is used to generate the live docs. The pages in `packages/docs/pages/components/` are generated from it, so never edit them by hand. After changing a `readme.md`, an `index.md` or a `props.ts` comment, run `npm run gen` and commit the regenerated files. The folder contains:
 
-- One `.vue` file per scenario (e.g. `base.vue`, `variants.vue`, `sizes.vue`)
-- An `index.md` that imports each example and its raw source, then uses the `<ExampleViewer>` doc component to render them side by side
+| File            | Role                                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------ |
+| `readme.md`     | Intro: what the component is, the APG line, the Field line. No examples.                   |
+| `index.md`      | The example page: imports, `###` sections, prose and `<ExampleViewer>`.                    |
+| `<topic>.vue`   | One runnable demo for one concept (`base.vue`, `variants.vue`, ...). Listed in `index.md`. |
+| `_<name>.vue`   | Helper component used by a demo. Not listed in `index.md`.                                 |
+| `inspector.vue` | Class inspector data for the docs. Not listed in `index.md`.                               |
 
-Each `.vue` example file is a self-contained, runnable snippet — avoid importing from private internals; use the public `o-*` components only.
+To preview examples locally, start the dev server with `npm run dev` and open the component's page at `http://localhost:8080`.
 
-When adding a new feature, add or update the relevant example file and update `index.md` to include it. To preview examples locally, start the dev server with `npm run dev` and navigate to the component's page at `http://localhost:8080`.
+#### `index.md`
+
+```md
+<script setup>
+import Base from "./base.vue";
+import BaseCode from "./base.vue?raw";
+</script>
+
+### Base
+
+One or two sentences: what the section shows, and when to use it.
+
+<ExampleViewer :component="Base" :code="BaseCode" />
+```
+
+- Every demo (except `inspector.vue` and `_`-prefixed helpers) is imported and shown, in page order.
+- Every section has prose before the viewer: what it shows and when to use it. A heading must not just restate itself.
+- `###` headings use Title Case ("Dynamic Component", "With Icons"). Single words stay as they are.
+- Write prose in markdown, not HTML. Put props, slots and events in backticks, and only name ones that exist in `props.ts`.
+- Write prop and event names in kebab-case, as in a template (`full-page`), not camelCase. Use camelCase only when the topic is the global config or TypeScript, and say so. Slot names are written exactly as the component defines them (`cancelButton`), because Vue does not normalise slot names.
+- Link other components as `/components/<Name>` without `.html`.
+
+#### Page order
+
+Standard components: **Base, States** (disabled, loading, readonly), **Variants, Sizes**, component-specific options, **Icons, Templates** (slots), **Programmatically** (if any). Do not add a States section if there is no state demo of its own.
+
+Overlays (dialog, modal, sidebar, popover, tooltip, dropdown): **Base, Position**, behaviour sections (closing, backdrop, triggers, delay, scrolling), **Templates, Dynamic Component, Teleport, Programmatically**. Teleport always has its own heading.
+
+#### Standard wording
+
+Use these sentences as written, so equal concepts read the same on every page:
+
+- **Variants:** "Different styles can be achieved with the `variant` prop. The available values are defined by your theme. Do not rely on colour alone to convey meaning; add text or an icon as well." Components that also take `variant` on child items (tabs, steps) add one sentence about it.
+- **Sizes:** "The component can be displayed in different sizes using the `size` prop. The available values are defined by your theme."
+- **Teleport:** "The `teleport` prop allows the <component> to be teleported into any DOM node outside the DOM hierarchy of that component. By default, if only a boolean is passed, the <component> will be teleported to the document body."
+- **Programmatically:** one shared paragraph on `useOruga()`, the returned instance and `close()`, what the promise resolves with, and the `onClose` option. Component-specific details follow it.
+
+#### `readme.md`
+
+```md
+The **X** component <what it is, in one or two sentences>.
+
+The component implements the W3C ARIA APG [X Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/x/).
+
+Use it with the [Field](/components/Field) component to access all the functionalities.
+```
+
+- The APG sentence uses "implements" and appears only if a matching pattern exists. The Field sentence is for form controls only.
+- Accessibility guidance lives in one `::: info Accessibility Note` block directly after the Base text in `index.md`, with these bullets (leave out any that do not apply): **Name** (label via Field or `aria-label`), **Keyboard** (the real keys, checked against the component source), **Labels** (the `aria-*-label` props for translation).
+
+#### Demo files
+
+- Use `<script setup lang="ts">`, one root `<section>`, and one concept per file. Use only the public `o-*` components; never import from `@/components/...`. In the displayed code `@/oruga` is rewritten to `@oruga-ui/oruga-next` and `../` is stripped.
+- Only pass props that exist in `props.ts`. Components accept unknown attributes, so a wrong prop name does not fail; it silently becomes an HTML attribute.
+- Every control has an accessible name: an `o-field` with `label`, or `aria-label`. A placeholder is not a label. A group of checkboxes or radios gets a group name.
+- Icon-only buttons and clickable icons have an `aria-label`. Decorative icons stay hidden from assistive technology.
+- Labels describe the purpose, not the state ("Newsletter", not `{{ isChecked }}`). Do not convey meaning by colour alone.
+- Do not use headings inside demos that clash with the page outline.
+
+When adding a new feature, add or update the relevant example and update `index.md` to include it.
 
 ### Register in the barrel files
 

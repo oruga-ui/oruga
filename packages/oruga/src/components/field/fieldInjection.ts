@@ -23,6 +23,7 @@ export type FieldData = {
     setFilled: (value: boolean) => void;
     setVariant: (value?: string) => void;
     setMessage: (value?: string | string[]) => void;
+    setInvalid: (value: boolean) => void;
 };
 
 /** provide/inject type */
@@ -37,6 +38,31 @@ const $FieldKey: InjectionKey<ProvidedField> = Symbol("FielData");
  */
 export function provideField(data: ProvidedField): void {
     provide($FieldKey, data);
+}
+
+/**
+ * Merge the attributes of a parent field with the own attributes of a control.
+ * An own `aria-label` replaces the `aria-labelledby` of the field, because
+ * `aria-labelledby` always wins over `aria-label` in the accessible name
+ * computation and the control would otherwise ignore its own name.
+ * An own `aria-labelledby` still overrides the field one.
+ * A control with its own visible label passes its `ownLabelId`, which is used
+ * instead of the field label, so that several controls in one field do not
+ * share the name of the field.
+ */
+export function mergeFieldAttrs(
+    fieldAttrs: object | undefined,
+    attrs: Record<string, unknown>,
+    ownLabelId?: string,
+): Record<string, unknown> {
+    const { "aria-labelledby": labelledby, ...fieldRest } = (fieldAttrs ??
+        {}) as Record<string, unknown>;
+    const hasOwnName = !!attrs["aria-label"] || !!attrs["aria-labelledby"];
+    return {
+        ...fieldRest,
+        ...(hasOwnName ? {} : { "aria-labelledby": ownLabelId ?? labelledby }),
+        ...attrs,
+    };
 }
 
 /** Inject parent field component if used inside one. **/

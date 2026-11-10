@@ -80,6 +80,18 @@ declare module "./index" {
                  */
                 clearIcon: string;
                 /**
+                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 */
+                ariaIconLeftLabel: string;
+                /**
+                 * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
+                 */
+                ariaIconRightLabel: string;
+                /**
+                 * Accessibility label for the clear button.
+                 */
+                ariaClearLabel: string;
+                /**
                  * Dropdown content (items) are shown into a modal on mobile
                  */
                 mobileModal: boolean;
@@ -200,10 +212,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the item element when active
                  */
                 activeClass: ClassDefinition;
-                /**
-                 * Class of the item separator element
-                 */
-                seperatorClass: ClassDefinition;
                 /**
                  * Class of the item link element
                  */
@@ -366,6 +374,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Accessibility previous button aria label
                  */
                 ariaPreviousLabel: string;
+                /**
+                 * Accessibility aria label of the slide indicators
+                 */
+                ariaIndicatorsLabel: string;
+                /**
+                 * Accessibility aria label of a slide indicator.
+A string can use the `{value}` placeholder for the slide number, a function receives the number.
+                 */
+                ariaIndicatorLabel: string | ((value: string) => string);
                 /**
                  * Class of the root element
                  */
@@ -634,6 +651,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Accessibility next button aria label
                  */
                 ariaNextLabel: string;
+                /**
+                 * Accessibility previous button aria label
+                 */
+                ariaPreviousLabel: string;
                 /**
                  * Accessibility month select aria label
                  */
@@ -1111,7 +1132,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Class of the footer confirm button element
                  */
-                confirmButtunClass: ClassDefinition;
+                confirmButtonClass: ClassDefinition;
                 /**
                  * Class of the footer cancel button element
                  */
@@ -1482,6 +1503,26 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
+                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 */
+                ariaIconLeftLabel: string;
+                /**
+                 * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
+                 */
+                ariaIconRightLabel: string;
+                /**
+                 * Accessibility label for the clear button.
+                 */
+                ariaClearLabel: string;
+                /**
+                 * Accessibility label for the password reveal button while the password is hidden.
+                 */
+                ariaPasswordShowLabel: string;
+                /**
+                 * Accessibility label for the password reveal button while the password is visible.
+                 */
+                ariaPasswordHideLabel: string;
+                /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.
                  */
@@ -1569,6 +1610,10 @@ whether the value of the form's controls can be automatically completed by the b
                  * Placeholder of the column search input
                  */
                 filterPlaceholder: string;
+                /**
+                 * Accessibility label for the filter input
+                 */
+                ariaFilterLabel: string;
                 /**
                  * Number of milliseconds to delay the filter event
                  */
@@ -2045,6 +2090,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 mobileBreakpoint: string;
                 /**
+                 * Accessibility label for the pagination `nav` landmark.
+                 */
+                ariaLabel: string;
+                /**
                  * Accessibility label for the next page button.
                  */
                 ariaNextLabel: string;
@@ -2291,6 +2340,14 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconRight: string;
                 /**
+                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 */
+                ariaIconLeftLabel: string;
+                /**
+                 * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
+                 */
+                ariaIconRightLabel: string;
+                /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.
                  */
@@ -2400,6 +2457,10 @@ but will set the body to a fixed position, which may break some layouts.
                  * Trap focus inside the sidebar
                  */
                 trapFocus: boolean;
+                /**
+                 * Accessibility aria-label to name the sidebar, used as the dialog name when shown with an overlay
+                 */
+                ariaLabel: string;
                 /**
                  * Mobile breakpoint as `max-width` value
                  */
@@ -2533,9 +2594,18 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 format: "percent" | "raw";
                 /**
-                 * Accessibility aria-label to to be passed to the slider thumb element.
+                 * Accessibility aria-label to be passed to the slider thumb element.
+It replaces the label of a parent field as the name of the thumb.
                  */
                 ariaLabel: string;
+                /**
+                 * Accessibility label for the start thumb of a range slider, falls back to `ariaLabel`.
+                 */
+                ariaStartLabel: string;
+                /**
+                 * Accessibility label for the end thumb of a range slider, falls back to `ariaLabel`.
+                 */
+                ariaEndLabel: string;
                 /**
                  * Class of the root element
                  */
@@ -2777,7 +2847,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Label position
                  */
-                right: string;
+                position: string;
                 /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.
@@ -2991,6 +3061,10 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 mobileSortPlaceholder: string;
                 /**
+                 * Accessibility label for the pagination `nav` landmark.
+                 */
+                ariaPaginationLabel: string;
+                /**
                  * Accessibility label for the pagination next page button.
                  */
                 ariaNextLabel: string;
@@ -3006,6 +3080,25 @@ whether the value of the form's controls can be automatically completed by the b
                  * Accessibility label for the pagination current page button.
                  */
                 ariaCurrentLabel: string;
+                /**
+                 * Accessibility label for the check all rows checkbox.
+                 */
+                ariaCheckAllLabel: string;
+                /**
+                 * Accessibility label for the checkbox of a row.
+A string can use the `{value}` placeholder for the row label, a function receives the label.
+                 */
+                ariaCheckRowLabel: string | ((value: string) => string);
+                /**
+                 * Accessibility label for the toggle button of the row detail.
+A string can use the `{value}` placeholder for the row label, a function receives the label.
+                 */
+                ariaOpenDetailLabel: string | ((value: string) => string);
+                /**
+                 * Accessibility label for the filter input of a column.
+A string can use the `{value}` placeholder for the column label, a function receives the label.
+                 */
+                ariaColumnFilterLabel: string | ((value: string) => string);
                 /**
                  * Class of the root element
                  */
@@ -3722,6 +3815,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * A label which is displayed when no options are visible
                  */
                 emptyLabel: string;
+                /**
+                 * Accessibility label for the filter input
+                 */
+                ariaFilterLabel: string;
                 /**
                  * The chevron icon to for the toggle element before each item
                  */

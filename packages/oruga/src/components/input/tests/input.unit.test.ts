@@ -17,7 +17,7 @@ describe("OInput tests", () => {
         expect(wrapper.classes("o-input")).toBeTruthy();
     });
 
-    test("test basic", async () => {
+    test("basic", async () => {
         const wrapper = mount(OInput, {
             props: { icon: "placeholder", iconClickable: true },
         });
@@ -33,7 +33,7 @@ describe("OInput tests", () => {
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-        expect(wrapper.vm.value).toEqual(value);
+        expect(wrapper.vm.value).toStrictEqual(value);
     });
 
     test("render textarea element when type is textarea", () => {
@@ -184,10 +184,10 @@ describe("OInput tests", () => {
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
-        expect(input.element.value).toEqual("");
+        expect(input.element.value).toStrictEqual("");
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OInput);
 
@@ -238,7 +238,7 @@ describe("OInput tests", () => {
             expect(wrapper.props("modelValue")).toBe("bar");
         });
 
-        test("check type number ", async () => {
+        test("check type number", async () => {
             const wrapper = shallowMount(OInput, {
                 props: {
                     type: "number",
@@ -266,7 +266,73 @@ describe("OInput tests", () => {
 
             const emitted = wrapper.emitted("update:modelValue");
 
-            expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
+            expect(emitted).toStrictEqual([[11], [12], [13], [12], [11]]);
+        });
+    });
+
+    describe("clickable icon names", () => {
+        test("the left icon uses ariaIconLeftLabel", () => {
+            const wrapper = mount(OInput, {
+                props: {
+                    icon: "foo",
+                    iconClickable: true,
+                    ariaIconLeftLabel: "Search",
+                },
+            });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("role")).toBe("button");
+            expect(icon.attributes("aria-label")).toBe("Search");
+        });
+
+        test("the right icon uses ariaIconRightLabel", () => {
+            const wrapper = mount(OInput, {
+                props: {
+                    iconRight: "foo",
+                    iconRightClickable: true,
+                    ariaIconRightLabel: "Open calendar",
+                },
+            });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("aria-label")).toBe("Open calendar");
+        });
+
+        test("a decorative icon has no name and stays hidden", () => {
+            const wrapper = mount(OInput, {
+                props: { icon: "foo", ariaIconLeftLabel: "Search" },
+            });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("aria-label")).toBeUndefined();
+            expect(icon.attributes("aria-hidden")).toBe("true");
+        });
+
+        test("the clear button is named and only clickable with a value", async () => {
+            const wrapper = mount(OInput, {
+                props: { clearable: true, modelValue: "" },
+            });
+            expect(wrapper.find("[data-oruga='icon']").exists()).toBe(false);
+
+            await wrapper.setProps({ modelValue: "foo" });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("role")).toBe("button");
+            expect(icon.attributes("aria-label")).toBe("Clear");
+
+            await wrapper.setProps({ ariaClearLabel: "Clear search" });
+            expect(
+                wrapper.find("[data-oruga='icon']").attributes("aria-label"),
+            ).toBe("Clear search");
+        });
+
+        test("the password reveal button name follows its state", async () => {
+            const wrapper = mount(OInput, {
+                props: { type: "password", passwordReveal: true },
+            });
+            const icon = wrapper.find("[data-oruga='icon']");
+            expect(icon.attributes("aria-label")).toBe("Show password");
+
+            await icon.trigger("click");
+            expect(
+                wrapper.find("[data-oruga='icon']").attributes("aria-label"),
+            ).toBe("Hide password");
         });
     });
 });

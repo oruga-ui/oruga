@@ -13,17 +13,19 @@ describe("useNotificationProgrammatic tests", () => {
     });
 
     afterEach(() => {
+        // clear factory items; the instances only leave the registry after the
+        // destroy timers ran, so flush them while the fake timers are active
+        factory.closeAll();
+        vi.runAllTimers();
+
         // clear body after each test
         document.body.innerHTML = "";
         vi.useRealTimers();
-
-        // clear factory items
-        factory.closeAll();
     });
 
     enableAutoUnmount(afterEach);
 
-    test("test mounting component correctly", async () => {
+    test("mounting component correctly", async () => {
         const content = "My Fany Message";
 
         // open element
@@ -56,7 +58,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test mounting with target correctly", async () => {
+    test("mounting with target correctly", async () => {
         const container = document.createElement("div");
         container.id = "my-cool-container";
         document.body.appendChild(container);
@@ -106,7 +108,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(1);
     });
 
-    test("test mounting with custom component correctly", () => {
+    test("mounting with custom component correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', 'abc')">Fancy Label</button>`,
         });
@@ -139,7 +141,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(notification).toBeNull();
     });
 
-    test("test close event working correctly", () => {
+    test("close event working correctly", () => {
         const component = createVNode({
             template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
         });
@@ -165,5 +167,91 @@ describe("useNotificationProgrammatic tests", () => {
         expect(el).toBeNull();
 
         expect(onClose).toHaveBeenCalledWith({ action: "ok" });
+    });
+
+    describe("live region and timer", () => {
+        const button = (): HTMLElement =>
+            document.body.querySelector("button") as HTMLElement;
+
+        test("announce the variant of the notice", () => {
+            factory.open({ message: "Saved", variant: "success" });
+            factory.open({ message: "Failed", variant: "danger" });
+
+            const roles = [
+                ...document.body.querySelectorAll(
+                    '[data-oruga="notification"]',
+                ),
+            ].map((el) => el.getAttribute("role"));
+            expect(roles).toContain("status");
+            expect(roles).toContain("alert");
+        });
+
+        test("close after 5 seconds by default", () => {
+            factory.open({ message: "Saved" });
+
+            vi.advanceTimersByTime(4999);
+            expect(factory.count()).toBe(1);
+
+            vi.advanceTimersByTime(1);
+            vi.runAllTimers();
+            expect(factory.count()).toBe(0);
+        });
+
+        test("pause while the focus is inside, then close on leave", () => {
+            const component = createVNode({
+                template: `<button>Undo</button>`,
+            });
+            factory.open({ component, pauseOnHover: true });
+
+            button().dispatchEvent(
+                new FocusEvent("focusin", { bubbles: true }),
+            );
+            vi.advanceTimersByTime(60000);
+            expect(factory.count()).toBe(1);
+
+            button().dispatchEvent(
+                new FocusEvent("focusout", { bubbles: true }),
+            );
+            vi.runAllTimers();
+            expect(factory.count()).toBe(0);
+        });
+
+        test("keep paused while the pointer is still inside", () => {
+            const component = createVNode({
+                template: `<button>Undo</button>`,
+            });
+            factory.open({ component, pauseOnHover: true });
+            const notice = document.body.querySelector(
+                '[data-oruga="notification"]',
+            ) as HTMLElement;
+
+            notice.dispatchEvent(new PointerEvent("pointerenter"));
+            button().dispatchEvent(
+                new FocusEvent("focusin", { bubbles: true }),
+            );
+            button().dispatchEvent(
+                new FocusEvent("focusout", { bubbles: true }),
+            );
+            vi.runAllTimers();
+            expect(factory.count()).toBe(1);
+
+            notice.dispatchEvent(new PointerEvent("pointerleave"));
+            vi.runAllTimers();
+            expect(factory.count()).toBe(0);
+        });
+
+        test("ignore focus when pause on hover is off", () => {
+            const component = createVNode({
+                template: `<button>Undo</button>`,
+            });
+            factory.open({ component });
+
+            button().dispatchEvent(
+                new FocusEvent("focusin", { bubbles: true }),
+            );
+            vi.advanceTimersByTime(5000);
+            vi.runAllTimers();
+            expect(factory.count()).toBe(0);
+        });
     });
 });

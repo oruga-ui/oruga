@@ -5,7 +5,7 @@ import OAutocomplete from "../autocomplete/Autocomplete.vue";
 import OTag from "../tag/Tag.vue";
 
 import { getDefault } from "@/utils/config";
-import { isEqual } from "@/utils/helpers";
+import { isDefined, isEqual } from "@/utils/helpers";
 import {
     defineClasses,
     useInputHandler,
@@ -18,6 +18,8 @@ import type { Numberish } from "@/types";
 import type { DropdownItemProps } from "../dropdown/props";
 import type { ComponentExposed } from "vue-component-type-helpers";
 
+type ModelValue = TaginputProps<T>["modelValue"];
+
 /**
  * A simple tag input field that can have autocomplete functionality.
  * @displayName Taginput
@@ -29,8 +31,6 @@ defineOptions({
     configField: "taginput",
     inheritAttrs: false,
 });
-
-type ModelValue = TaginputProps<T>["modelValue"];
 
 const props = withDefaults(defineProps<TaginputProps<T>>(), {
     override: undefined,
@@ -231,9 +231,9 @@ watch(hasInput, () => {
 });
 
 function addItem(item?: T | string): void {
-    item = item || inputValue.value.trim();
+    item = item ?? inputValue.value.trim();
 
-    if (item) {
+    if (item !== "") {
         const itemToAdd = props.createItem(item);
 
         if (!selectedItems.value?.length) {
@@ -246,7 +246,9 @@ function addItem(item?: T | string): void {
             // Add the item input if it is not blank
             // or previously added (if not allowDuplicates).
             const add = !props.allowDuplicates
-                ? !selectedItems.value.includes(itemToAdd)
+                ? !selectedItems.value.some((selected) =>
+                      isEqual(selected, itemToAdd),
+                  )
                 : true;
 
             if (add && props.validateItem(item)) {
@@ -265,8 +267,8 @@ function addItem(item?: T | string): void {
 
 function removeItem(index: number, event?: Event): void {
     if (!selectedItems.value?.length) return;
+    if (index < 0 || index >= selectedItems.value.length) return;
     const item = selectedItems.value[index];
-    if (!item) return;
     // create a new array without the removed item at index for reactivity
     const items = selectedItems.value.slice();
     items.splice(index, 1);
@@ -279,7 +281,7 @@ function removeItem(index: number, event?: Event): void {
 // #region --- Event Handler ---
 
 function onSelect(option: T | undefined): void {
-    if (!option) return;
+    if (!isDefined(option)) return;
     addItem(option);
 }
 
@@ -357,7 +359,7 @@ defineExpose({
 
 <template>
     <div data-oruga="taginput" :class="rootClasses">
-        <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
+        <div :class="containerClasses">
             <slot
                 name="selected"
                 :items="selectedItems"
