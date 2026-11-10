@@ -16,7 +16,14 @@ export type TabsComponent = {
 
 export type TabItemComponent<T> = Pick<
     TabItemProps<T, Component>,
-    "value" | "label" | "disabled" | "visible" | "tag" | "icon" | "iconPack"
+    | "value"
+    | "label"
+    | "disabled"
+    | "visible"
+    | "tag"
+    | "icon"
+    | "iconPack"
+    | "iconSize"
 > & {
     $slots: Slots;
     tabClasses: ClassBinding[];

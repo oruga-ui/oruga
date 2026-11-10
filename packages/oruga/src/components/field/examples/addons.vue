@@ -24,12 +24,12 @@
         </o-field>
 
         <o-field addons>
-            <o-button icon-left="bold" aria-label="text bold" />
-            <o-button icon-left="italic" aria-label="text italic" />
-            <o-button icon-left="underline" aria-label="text underline" />
-            <o-button icon-left="align-left" aria-label="text align left" />
-            <o-button icon-left="align-center" aria-label="text align center" />
-            <o-button icon-left="align-right" aria-label="text align right" />
+            <o-button icon="bold" aria-label="text bold" />
+            <o-button icon="italic" aria-label="text italic" />
+            <o-button icon="underline" aria-label="text underline" />
+            <o-button icon="align-left" aria-label="text align left" />
+            <o-button icon="align-center" aria-label="text align center" />
+            <o-button icon="align-right" aria-label="text align right" />
 
             <o-input
                 placeholder="Search..."
