@@ -49,7 +49,7 @@ const mobile = ref<
             :mobile="mobile">
             <o-button
                 v-if="fullwidth || fullheight || !overlay || mobile"
-                icon-left="times"
+                icon="times"
                 label="Close"
                 @click="close($event)" />
             <img
