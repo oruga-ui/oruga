@@ -1,5 +1,6 @@
 import { computed } from "vue";
 import { matchWithGroups } from "../datepicker/utils";
+import { isDefined } from "@/utils/helpers";
 import type { TimepickerProps } from "./props";
 
 const AM = "AM" as const;
@@ -158,7 +159,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
                 .formatToParts(sampleTime.value)
                 .map((part) => {
                     if (part.type === "literal") {
-                        return part.value.replace(/ /g, "\\s?");
+                        return part.value.replace(/\s/g, "\\s?");
                     } else if (part.type === "dayPeriod") {
                         return `((?!=<${part.type}>)(${amString.value}|${
                             pmString.value
@@ -181,22 +182,22 @@ export function useTimepickerMixins(props: TimepickerProps) {
                 ? parseInt(timeGroups.second, 10)
                 : null;
             if (
-                timeGroups.hour &&
+                isDefined(timeGroups.hour) &&
                 timeGroups.hour >= 0 &&
                 timeGroups.hour < 24 &&
-                timeGroups.minute &&
+                isDefined(timeGroups.minute) &&
                 timeGroups.minute >= 0 &&
-                timeGroups.minute < 59
+                timeGroups.minute <= 59
             ) {
-                if (
-                    timeGroups.dayPeriod &&
-                    (timeGroups.dayPeriod.toLowerCase() ===
-                        pmString.value.toLowerCase() ||
-                        timeGroups.dayPeriod.toLowerCase() ===
-                            PM.toLowerCase()) &&
-                    timeGroups.hour < 12
-                ) {
-                    timeGroups.hour += 12;
+                if (timeGroups.dayPeriod) {
+                    const isPM = [pmString.value, PM].some(
+                        (pm) =>
+                            pm.toLowerCase() ===
+                            timeGroups.dayPeriod.toLowerCase(),
+                    );
+                    if (isPM && timeGroups.hour < 12) timeGroups.hour += 12;
+                    else if (!isPM && timeGroups.hour === 12)
+                        timeGroups.hour = 0;
                 }
                 const date = new Date(sampleTime.value);
                 date.setHours(timeGroups.hour);

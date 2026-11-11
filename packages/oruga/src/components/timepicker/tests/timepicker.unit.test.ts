@@ -1,7 +1,11 @@
-import { describe, test, expect, afterEach, vi } from "vitest";
+import { describe, test, expect, afterEach, beforeEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 
 import OTimepicker from "@/components/timepicker/Timepicker.vue";
+import type { TimepickerProps } from "@/components/timepicker/props";
+
+// keep the native implementation, the test setup mocks it to the en-GB locale
+const { DateTimeFormat } = Intl;
 
 describe("OTimepicker tests", () => {
     enableAutoUnmount(afterEach);
@@ -76,6 +80,57 @@ describe("OTimepicker tests", () => {
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(input.element.value).toBe("00:00");
+    });
+
+    describe("12-hour keyboard input", () => {
+        async function parse(
+            value: string,
+            props?: TimepickerProps,
+        ): Promise<string> {
+            const wrapper = mount(OTimepicker, { props });
+            const input = wrapper.find("input");
+            await input.setValue(value);
+            await input.trigger("keyup", { key: "Enter" });
+
+            const emits = wrapper.emitted("update:modelValue");
+            expect(emits).toHaveLength(1);
+            const date = emits?.[0][0] as Date;
+            return `${date.getHours()}:${date.getMinutes()}`;
+        }
+
+        describe("of a locale with a 12-hour clock", () => {
+            beforeEach(() => {
+                vi.mocked(Intl.DateTimeFormat).mockImplementation(
+                    function (_?, options?) {
+                        return new DateTimeFormat("en-US", options);
+                    },
+                );
+            });
+
+            test.each([
+                ["12:00 AM", "0:0"],
+                ["12:30 AM", "0:30"],
+                ["9:05 AM", "9:5"],
+                ["12:30 PM", "12:30"],
+                ["10:00 PM", "22:0"],
+                ["11:59 PM", "23:59"],
+                ["10:15 pm", "22:15"],
+                // the formatted value separates the day period with a narrow no-break space
+                ["10:30\u202fPM", "22:30"],
+            ])("parses %s as %s", async (value, expected) => {
+                expect(await parse(value)).toBe(expected);
+            });
+        });
+
+        test.each([
+            ["12:30 am", "0:30"],
+            ["10:00 pm", "22:0"],
+        ])(
+            "parses %s as %s with the `hourFormat` prop",
+            async (value, expected) => {
+                expect(await parse(value, { hourFormat: "12" })).toBe(expected);
+            },
+        );
     });
 
     test("closes overlay on time selection when stayOpen is false", async () => {
