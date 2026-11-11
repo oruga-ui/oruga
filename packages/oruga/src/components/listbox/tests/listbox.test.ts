@@ -536,6 +536,65 @@ describe("OListbox tests", () => {
                 [options[0].value],
             ]);
         });
+
+        test("deselect an object value equal to a selected value with multiple prop", async () => {
+            const objectOptions: ListboxOptions<{ id: number }> = [
+                { label: "Item 1", value: { id: 1 } },
+                { label: "Item 2", value: { id: 2 } },
+            ];
+
+            const wrapper = mount(OListbox, {
+                props: {
+                    options: objectOptions,
+                    // equal to the option values, but different objects
+                    modelValue: [{ id: 1 }, { id: 2 }],
+                    selectable: true,
+                    multiple: true,
+                },
+            });
+
+            const items = wrapper.findAll(".o-listbox__item");
+            expect(items[0].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeTruthy();
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [[{ id: 2 }]],
+            ]);
+        });
+
+        test.each([0, false, ""])(
+            "select the falsy value %o on focus with selectOnFocus",
+            async (value) => {
+                const falsyOptions: ListboxOptions<number | boolean | string> =
+                    [
+                        { label: "Falsy", value },
+                        { label: "Truthy", value: 1 },
+                    ];
+
+                const wrapper = mount(OListbox, {
+                    props: {
+                        options: falsyOptions,
+                        selectable: true,
+                        selectOnFocus: true,
+                    },
+                });
+
+                const list = wrapper.find("ul");
+                await list.trigger("keydown", {
+                    code: "ArrowDown",
+                    key: "Down",
+                });
+
+                expect(wrapper.emitted("select")).toStrictEqual([[value]]);
+                expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                    [value],
+                ]);
+            },
+        );
     });
 
     describe("verify filterable", () => {
