@@ -1,75 +1,66 @@
 # @oruga-ui/nuxt
 
-[![npm version][npm-version-src]][npm-version-href]
-[![npm downloads][npm-downloads-src]][npm-downloads-href]
-[![License][license-src]][license-href]
-[![Nuxt][nuxt-src]][nuxt-href]
+Nuxt module for using [Oruga](https://oruga-ui.com), a Vue 3 component library
+that is independent of any CSS framework.
 
-My new Nuxt module for doing amazing things.
-
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/@oruga-ui/nuxt?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://example.com) -->
-
-## Features
-
-<!-- Highlight some of the features your module provide here -->
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
-
-## Quick Setup
-
-Install the module to your Nuxt application with one command:
+## Installation
 
 ```bash
 npx nuxt module add @oruga-ui/nuxt
 ```
 
-That's it! You can now use @oruga-ui/nuxt in your Nuxt app ✨
+Or install it with your package manager and add `@oruga-ui/nuxt` to the
+`modules` array in `nuxt.config.ts`.
 
+## Usage
 
-## Contribution
+Components and composables are auto-imported by default:
 
-<details>
-  <summary>Local development</summary>
-  
-  ```bash
-  # Install dependencies
-  npm install
-  
-  # Generate type stubs
-  npm run dev:prepare
-  
-  # Develop with the playground
-  npm run dev
-  
-  # Build the playground
-  npm run dev:build
-  
-  # Run ESLint
-  npm run lint
-  
-  # Run Vitest
-  npm run test
-  npm run test:watch
-  
-  # Release new version
-  npm run release
-  ```
+```vue
+<template>
+  <OButton>Save</OButton>
+</template>
+```
 
-</details>
+Configure Oruga in `nuxt.config.ts` with serializable options:
 
+```ts
+export default defineNuxtConfig({
+  modules: ['@oruga-ui/nuxt'],
+  'oruga-ui': {
+    config: {
+      iconPack: 'mdi',
+      locale: 'en-US',
+      useHtml5Validation: true,
+    },
+  },
+})
+```
 
-<!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/@oruga-ui/nuxt/latest.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-version-href]: https://npmjs.com/package/@oruga-ui/nuxt
+The module supports `iconPack`, `locale`, `override`, `useHtml5Validation`,
+`statusIcon`, `mobileBreakpoint`, `customIconPacks`, and `statusVariantIcon`
+under `oruga-ui.config`. Function-valued settings such as `invalidHandler`,
+`transformClasses`, and `iconComponent` cannot be passed through Nuxt runtime
+config; set those from a Nuxt plugin with `useConfigProgrammatic().setConfig()`.
+The module uses `body` as the default teleport target for consistent SSR and
+hydration.
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/@oruga-ui/nuxt.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-downloads-href]: https://npm.chart.dev/@oruga-ui/nuxt
+To limit component auto-imports, pass a list of exported Oruga component names.
+Set `components: false` to disable them. Set `composables: false` to disable
+auto-imports for `useOruga`, `useConfigProgrammatic`, and the programmatic
+component composables.
 
-[license-src]: https://img.shields.io/npm/l/@oruga-ui/nuxt.svg?style=flat&colorA=020420&colorB=00DC82
-[license-href]: https://npmjs.com/package/@oruga-ui/nuxt
+Oruga does not impose a CSS framework or theme. Add the CSS/theme appropriate
+for your application separately; see the [Oruga documentation](https://oruga-ui.com).
 
-[nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt
-[nuxt-href]: https://nuxt.com
+## Development
+
+From the monorepo root:
+
+```bash
+npm install
+npm run dev:prepare --workspace @oruga-ui/nuxt
+npm run dev:nuxt
+npm run test:nuxt
+npm run build:nuxt
+```

@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const count = ref(0);
+const text = ref("");
+</script>
+
 <template>
     <div style="padding: 2rem; font-family: sans-serif">
         <h1>Oruga Nuxt Playground</h1>
@@ -11,8 +16,3 @@
         <p>You typed: {{ text }}</p>
     </div>
 </template>
-
-<script setup lang="ts">
-const count = ref(0);
-const text = ref("");
-</script>

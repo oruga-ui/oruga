@@ -9,14 +9,19 @@ import {
     Programmatic,
     Sidebar,
 } from "@oruga-ui/oruga-next";
+import type { OrugaConfig } from "@oruga-ui/oruga-next";
 
 export default defineNuxtPlugin((nuxtApp) => {
-    const modulePublic = (useRuntimeConfig().public as any)["oruga-ui"] ?? {};
+    const modulePublic =
+        (
+            useRuntimeConfig().public as Record<
+                string,
+                { config?: Partial<OrugaConfig> }
+            >
+        )["oruga-ui"] ?? {};
     const userConfig = modulePublic.config ?? {};
 
-    // Override teleportTarget: the upstream default `() => document.body` is not SSR-safe.
-    // Users needing a function-based override write a separate client plugin via
-    // useConfigProgrammatic().setConfig({ teleportTarget: ... }).
+    // Keep the default target serializable and identical during server rendering and hydration.
     const config = { teleportTarget: "body", ...userConfig };
 
     const oruga = createOruga(config);

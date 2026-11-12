@@ -10,10 +10,13 @@ import type { OrugaConfig } from "@oruga-ui/oruga-next";
 type SerializableOrugaConfig = Pick<
     OrugaConfig,
     | "iconPack"
+    | "locale"
     | "override"
     | "useHtml5Validation"
     | "statusIcon"
     | "mobileBreakpoint"
+    | "customIconPacks"
+    | "statusVariantIcon"
 >;
 
 export interface ModuleOptions {
@@ -119,7 +122,7 @@ export default defineNuxtModule<ModuleOptions>({
             const names: string[] =
                 options.components === true || options.components == null
                     ? [...ALL_COMPONENTS]
-                    : (options.components as string[]);
+                    : options.components;
 
             for (const name of names) {
                 addComponent({
