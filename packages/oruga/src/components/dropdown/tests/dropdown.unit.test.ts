@@ -627,6 +627,26 @@ describe("ODropdown tests", () => {
             expect(dropdown.emitted("close")).toBeUndefined();
         });
 
+        test("ignores a focused option when disabled while open", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { options, selectable: true, selectOnFocus: true },
+                slots: { trigger: "<button>Options</button>" },
+                attachTo: document.body,
+            });
+            const trigger = wrapper.get("button");
+            await trigger.trigger("click");
+            await setTimeout();
+            const items = wrapper.findAllComponents(ODropdownItem);
+            await items[1].trigger("pointerenter");
+            expect(wrapper.classes("o-dropdown--active")).toBe(true);
+
+            await wrapper.setProps({ disabled: true });
+            await trigger.trigger("keydown", { key: "Enter" });
+
+            expect(wrapper.emitted("select")).toBeUndefined();
+            expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+        });
+
         test("react accordingly when selected with keydown", async () => {
             const wrapper = mount(ODropdown, {
                 props: {
