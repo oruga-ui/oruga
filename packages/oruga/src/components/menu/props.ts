@@ -5,7 +5,10 @@ export type MenuOptions<T> = OptionsProp<MenuItemProps<T>>;
 export type MenuProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected item value, use v-model to make it two-way binding */
+    /**
+     * The selected item value, use v-model to make it two-way binding
+     * @type string|number|object
+     */
     modelValue?: T;
     /** Menu options, unnecessary when default slot is used */
     options?: MenuOptions<T>;

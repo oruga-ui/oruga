@@ -4,11 +4,17 @@ import type { TableColumn } from "./types";
 export type TableProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Table data */
+    /**
+     * Table data
+     * @type object[]
+     */
     data?: T[];
     /** Table columns */
     columns?: TableColumn<T>[];
-    /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
+    /**
+     * Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended)
+     * @type string
+     */
     rowKey?: DeepKeys<T>;
     /** Define individual class for a row */
     rowClass?: (row: T, index: number) => string;
@@ -29,7 +35,10 @@ export type TableProps<T> = {
     narrowed?: boolean;
     /** Rows are highlighted when hovering */
     hoverable?: boolean;
-    /** Set which row is selected, use `v-model:selected` to make it two-way binding (if selectable) */
+    /**
+     * Set which row is selected, use `v-model:selected` to make it two-way binding (if selectable)
+     * @type object
+     */
     selected?: T;
     /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */
     selectable?: boolean;
@@ -49,7 +58,10 @@ export type TableProps<T> = {
     height?: number | string;
     /** Allow each row to be checked by a checkbox */
     checkable?: boolean;
-    /** Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable) */
+    /**
+     * Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable)
+     * @type object[]
+     */
     checkedRows?: T[];
     /** Show check/uncheck all checkbox in table header (if checkable) */
     checkableHeader?: boolean;
@@ -101,6 +113,7 @@ export type TableProps<T> = {
     /**
      * Set which rows have opened details, use `v-model:detailedRows` to make it two-way binding (if detailed).
      * Ideal to open details via vue-router. (A unique key is required; check `rowKey` prop)
+     * @type object[]
      */
     detailedRows?: T[];
     /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
@@ -288,7 +301,10 @@ export type FieldKey<T> = unknown extends T ? string : DeepKeys<T>;
 export type TableColumnProps<T, K extends string = FieldKey<T>> = {
     /** Define the column label */
     label?: string;
-    /** Define an object property key if data is an object */
+    /**
+     * Define an object property key if data is an object
+     * @type string
+     */
     field?: K;
     /** Provide a formatter function to edit the output */
     formatter?: (value: DeepType<T, K>, row: T) => string;

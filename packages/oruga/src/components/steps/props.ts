@@ -144,11 +144,20 @@ export type StepItemProps<T, C extends Component = Component> = {
     iconSize?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;
-    /** Component to be injected */
+    /**
+     * Component to be injected
+     * @type Component
+     */
     component?: C;
-    /** Props to be binded to the injected component */
+    /**
+     * Props to be binded to the injected component
+     * @type object
+     */
     props?: ComponentProps<C>;
-    /** Events to be binded to the injected component */
+    /**
+     * Events to be binded to the injected component
+     * @type object
+     */
     events?: ComponentEmits<C>;
 } & StepItemClasses;
 
