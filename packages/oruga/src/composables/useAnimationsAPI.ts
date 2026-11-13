@@ -2,11 +2,7 @@ import { prefersReducedMotion } from "@/utils/helpers";
 
 /** Built-in open/close animation presets, played via the Web Animations API. */
 export type AnimationName =
-    | "fade"
-    | "scale"
-    | "zoom-out"
-    | "slide-up"
-    | "slide-down";
+    "fade" | "scale" | "zoom-out" | "slide-up" | "slide-down";
 
 const ANIMATION_PRESETS: Record<
     AnimationName,
