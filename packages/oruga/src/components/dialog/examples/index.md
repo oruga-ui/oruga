@@ -70,7 +70,7 @@ A modal dialog is opened with the native `showModal()` function: the page behind
 A dialog without a `backdrop` is non-modal. The page stays interactive and the focus is not trapped.
 :::
 
-Setting the `blockScroll` property removes the body scrollbar. However, the body retains a non-scrollable scrollbar to prevent the background from shifting. This will set the body to `position="fixed"`, which may cause some layouts to break.
+Setting the `scroll-lock` prop controls how the background is prevented from scrolling. With `clip` (the default), the body scrollbar is hidden via `overflow: hidden`. With `keep`, the body retains a non-scrollable scrollbar to prevent the background from shifting, but is set to `position: fixed`, which may cause some layouts to break. `off` leaves the page scrollable. When overlays are stacked, the mode of the first one to open is used. The class names applied to the body are set globally with `scrollClipClass` and `scrollKeepClass` in the global config.
 
 <ExampleViewer :component="Modal" :code="ModalCode" />
 

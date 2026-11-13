@@ -70,13 +70,17 @@
     }
 }
 
-// define gloval scroll classes
+// define global scroll classes
 .o-scroll-clip,
-.scroll-hidden {
+.scroll-clipped {
     overflow: hidden;
 }
 
-.o-scroll-keep {
+.o-scroll-keep,
+.scroll-hidden {
     position: fixed;
+    width: 100%;
+    bottom: 0;
+    overflow-x: hidden;
     overflow-y: scroll;
 }
