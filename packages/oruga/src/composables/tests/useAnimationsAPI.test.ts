@@ -22,7 +22,8 @@ describe("useAnimationsAPI test", () => {
     describe("canPlay", () => {
         test("should return false when the element has no `animate` function", () => {
             const { canPlay } = useAnimationsAPI();
-            expect(canPlay({} as HTMLElement, "fade")).toBe(false);
+            // the test setup polyfills `animate` on `HTMLElement.prototype`, so use a plain object
+            expect(canPlay(null, "fade")).toBe(false);
         });
 
         test("should return false when no preset name is given", () => {
@@ -72,7 +73,7 @@ describe("useAnimationsAPI test", () => {
 
             expect(animateSpy).toHaveBeenCalledTimes(1);
             const [keyframes, options] = animateSpy.mock.calls[0];
-            expect(keyframes).toEqual([{ opacity: 0 }, { opacity: 1 }]);
+            expect(keyframes).toStrictEqual([{ opacity: 0 }, { opacity: 1 }]);
             expect(options).toMatchObject({ fill: "both" });
         });
 

@@ -1,5 +1,6 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
 
 import OPopover from "@/components/popover/Popover.vue";
@@ -47,6 +48,7 @@ describe("OPopover tests", () => {
         expect(closeButton.classes("o-popover__close")).toBeTruthy();
 
         await closeButton.trigger("click");
+        await nextTick(); // flush Vue DOM update after async animation → hidePopover → isActive=false chain
 
         expect(wrapper.emitted("close")).toHaveLength(1);
         expect(wrapper.classes("o-popover--active")).toBeFalsy();
