@@ -32,11 +32,13 @@ export type SidebarProps<C extends Component = Component> = {
     /** Close when pressing escape key */
     closeOnEscape?: boolean;
     /**
-     * Set `true` to remove the body scrollbar.
-     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-     * but will set the body to a fixed position, which may break some layouts.
+     * Prevents background scrolling while open.
+     * `clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+     * `keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+     * `off` does not prevent background scrolling.
+     * @values clip, keep, off
      */
-    clipScroll?: boolean;
+    scrollLock?: "clip" | "keep" | "off";
     /** Trap focus inside the sidebar */
     trapFocus?: boolean;
     /** Accessibility aria-label to name the sidebar, used as the dialog name when shown with an overlay */
@@ -93,8 +95,4 @@ export type SidebarClasses = Partial<{
     fullheightClass: ComponentClass;
     /** Class of the content element when is fullwidth */
     fullwidthClass: ComponentClass;
-    /** Class of the body when is visible and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when is visible and scroll is keeped */
-    scrollKeepClass: ComponentClass;
 }>;
