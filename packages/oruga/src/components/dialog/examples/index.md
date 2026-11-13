@@ -65,6 +65,10 @@ An _alert_ dialog box is a type of modal dialog that interrupts the user's workf
 
 Enabling the `draggable` property lets the user reposition the Dialog by dragging it from its header.
 
+::: info Accessibility Note:
+Dragging is a pointer-only enhancement. Never rely on the position of the dialog, and make sure that all of its content and actions stay reachable without moving it.
+:::
+
 <ExampleViewer :component="Draggable" :code="DraggableCode" />
 
 ### Form
