@@ -74,16 +74,24 @@ export type TableProps<T> = {
     /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
     backendSorting?: boolean;
     /**
-     * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc']
-     * @type string | [string, 'asc' | 'desc']
+     * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'], or a list of them (if sortMultiple) — e.g. [['last_name', 'asc'], ['first_name', 'desc']]
+     * @type string | [string, 'asc' | 'desc'] | [string, 'asc' | 'desc'][]
      */
-    defaultSort?: string | [string, "asc" | "desc"];
+    defaultSort?:
+        string | [string, "asc" | "desc"] | [string, "asc" | "desc"][];
     /**
      * Sets the default sort column direction on the first click
      * @type 'asc'|'desc'
      * @values asc, desc
      */
     defaultSortDirection?: "asc" | "desc";
+    /** Allow sorting by multiple columns, ordered by the sequence in which they were sorted */
+    sortMultiple?: boolean;
+    /**
+     * Modifier key which has to be pressed to add a column to the sorting instead of replacing it, every sort adds the column when not set (if sortMultiple)
+     * @values shiftKey, ctrlKey, altKey, metaKey
+     */
+    sortMultipleKey?: "shiftKey" | "ctrlKey" | "altKey" | "metaKey";
     /** Sets the header sorting icon */
     sortIcon?: string;
     /**
@@ -252,6 +260,8 @@ export type TableClasses = Partial<{
     thSortIconClass: ComponentClass;
     /** Class of the table header sort icon element with direction */
     thSortIconDirectionClass: ComponentClass;
+    /** Class of the table header sort priority element (if sortMultiple) */
+    thSortPriorityClass: ComponentClass;
     /** Class of the table `tr` element */
     trClass: ComponentClass;
     /** Class of the table `tr` element when selected */

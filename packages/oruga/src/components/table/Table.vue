@@ -10,6 +10,7 @@ import {
     toRaw,
     triggerRef,
     shallowReadonly,
+    shallowRef,
     type MaybeRefOrGetter,
     type VNode,
 } from "vue";
@@ -28,7 +29,7 @@ import { getDefault, getDefaultFunction } from "@/utils/config";
 import {
     getValueByPath,
     toCssDimension,
-    sortBy,
+    compareValues,
     isDefined,
     getPropertyValue,
     resolvePlaceholder,
@@ -47,6 +48,8 @@ import type {
     TableRow,
     TableColumnItem,
     TableColumnComponent,
+    TableSortColumn,
+    TableSortState,
 } from "./types";
 import type { TableProps } from "./props";
 
@@ -97,6 +100,8 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     backendSorting: () => getDefault("table.backendSorting", false),
     defaultSort: () => getDefault("table.defaultSort"),
     defaultSortDirection: () => getDefault("table.defaultSortDirection", "asc"),
+    sortMultiple: () => getDefault("table.sortMultiple", false),
+    sortMultipleKey: () => getDefault("table.sortMultipleKey"),
     sortIcon: () => getDefault("table.sortIcon", "arrow-up"),
     sortIconSize: () => getDefault("table.sortIconSize", "small"),
     iconPack: () => getDefault("table.iconPack"),
@@ -195,6 +200,11 @@ const emits = defineEmits<{
      * @param event {Event} - native event
      */
     sort: [column: TableColumn<T>, direction: "asc" | "desc", event: Event];
+    /**
+     * on sorted columns change event
+     * @param value {object[]} - sorted columns with their direction, ordered by sort priority
+     */
+    "sort-change": [value: TableSortColumn<T>[]];
     /**
      * on filter change event
      * @param filters {object} - filter object
@@ -667,84 +677,194 @@ function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
 
 // #region --- Sort Feature ---
 
-const currentSortColumn = ref<TableColumnItem<T>>();
-const isAsc = ref(true);
+/** the sorted columns ordered by their sort priority */
+const sortedColumns = shallowRef<TableSortState<T>[]>([]);
+
+/** the column with the highest sort priority */
+const currentSortColumn = computed(() => sortedColumns.value[0]?.column);
+
+/** the sort direction of the column with the highest sort priority */
+const isAsc = computed(() => sortedColumns.value[0]?.isAsc ?? true);
 
 /** check if has any sortable column */
 const hasSortableColumns = computed(() =>
     tableColumns.value.some((column) => column.sortable),
 );
 
-/** check if the column is the current sort column */
+/** get the sort state of the column if it is sorted */
+function getSortState(
+    column: TableColumnItem<T>,
+): TableSortState<T> | undefined {
+    return sortedColumns.value.find(
+        (state) => state.column.identifier === column.identifier,
+    );
+}
+
+/** check if the column is one of the sorted columns */
 function isColumnSorted(column: TableColumnItem<T>): boolean {
-    return currentSortColumn.value?.identifier === column.identifier;
+    return !!getSortState(column);
+}
+
+/** check if the column is sorted in ascending order */
+function isColumnAsc(column: TableColumnItem<T>): boolean {
+    return getSortState(column)?.isAsc ?? true;
+}
+
+/** get the 1-based sort priority of the column, when sorted by multiple columns */
+function getSortPriority(column: TableColumnItem<T>): number | undefined {
+    if (sortedColumns.value.length < 2) return undefined;
+    const index = sortedColumns.value.findIndex(
+        (state) => state.column.identifier === column.identifier,
+    );
+    return index >= 0 ? index + 1 : undefined;
+}
+
+/** check if the event adds the column to the sorting instead of replacing it */
+function isMultiSortEvent(event: Event): boolean {
+    if (!props.sortMultiple) return false;
+    if (!props.sortMultipleKey) return true;
+    return !!(event as MouseEvent | KeyboardEvent)[props.sortMultipleKey];
 }
 
 // calculate default sort on columns change and on initial load
 watch(tableColumns, setDefaultSort, { immediate: true });
 
-/** sort column based on the default-sort prop if not already sorted */
+/** sort columns based on the default-sort prop if not already sorted */
 function setDefaultSort(): void {
     // prevent sort when not columns or already sorted (for example async data)
-    if (!tableColumns.value.length || currentSortColumn.value) return;
+    if (!tableColumns.value.length || sortedColumns.value.length) return;
     if (!props.defaultSort) return;
 
-    let sortField;
-    let sortDirection = props.defaultSortDirection;
-    if (Array.isArray(props.defaultSort)) {
-        sortField = props.defaultSort[0];
-        if (props.defaultSort[1]) sortDirection = props.defaultSort[1];
-    } else {
-        sortField = props.defaultSort;
-    }
+    let defaultSorts: [string, ("asc" | "desc")?][];
+    if (!Array.isArray(props.defaultSort)) defaultSorts = [[props.defaultSort]];
+    else if (Array.isArray(props.defaultSort[0]))
+        defaultSorts = props.defaultSort as [string, "asc" | "desc"][];
+    else defaultSorts = [props.defaultSort as [string, "asc" | "desc"]];
 
-    const sortColumn = findColumnByField(sortField);
-    if (!sortColumn?.sortable) return;
-    isAsc.value = sortDirection.toLowerCase() === "asc";
+    // without multiple sorting only the first default sort is used
+    if (!props.sortMultiple) defaultSorts = defaultSorts.slice(0, 1);
+
+    const sortStates = defaultSorts.reduce<TableSortState<T>[]>(
+        (states, [field, direction]) => {
+            const column = findColumnByField(field);
+            if (
+                column?.sortable &&
+                !states.some(
+                    (state) => state.column.identifier === column.identifier,
+                )
+            )
+                states.push({
+                    column,
+                    isAsc: isAscDirection(
+                        direction || props.defaultSortDirection,
+                    ),
+                });
+            return states;
+        },
+        [],
+    );
+    if (!sortStates.length) return;
+
     // the initial sort is not a change of the sorting, so don't emit `sort`
-    applySort(sortColumn);
+    applySort(sortStates);
 }
 
 function findColumnByField(field: string): TableColumnItem<T> | undefined {
     return tableColumns.value.find((column) => column.field === field);
 }
 
+function isAscDirection(direction: string): boolean {
+    return direction.toLowerCase() === "asc";
+}
+
 function sortByField(field: string, direction: "asc" | "desc"): void {
     const sortColumn = findColumnByField(field);
-    if (sortColumn) {
-        isAsc.value = direction.toLowerCase() === "asc";
-        sort(sortColumn);
-    }
+    if (sortColumn) sort(sortColumn, isAscDirection(direction));
 }
 
 /**
- * Sort the column.
- * Toggle current direction on column if it's sortable
- * and not just updating the prop.
+ * Toggle the sort direction of the column by a user interaction.
+ * When sorting by multiple columns, a column which was toggled
+ * away from the default sort direction is removed from the sorting.
  */
-function sort(
+function toggleSort(
     column: TableColumnItem<T>,
-    updateDirection = false,
-    event: Event = new Event("sort"),
+    event: Event,
+    multiple = isMultiSortEvent(event),
 ): void {
     if (!column?.sortable) return;
 
-    if (updateDirection)
-        isAsc.value = isColumnSorted(column)
-            ? !isAsc.value
-            : props.defaultSortDirection.toLowerCase() === "asc";
+    const defaultAsc = isAscDirection(props.defaultSortDirection);
+    const sortState = getSortState(column);
 
-    emits("sort", column, isAsc.value ? "asc" : "desc", event);
+    if (multiple && sortState && sortState.isAsc !== defaultAsc)
+        return unsort(column);
 
-    applySort(column);
+    sort(column, sortState ? !sortState.isAsc : defaultAsc, event, multiple);
 }
 
-/** set the current sort column and sort the rows by it */
-function applySort(column: TableColumnItem<T>): void {
-    currentSortColumn.value = column;
+/** prevent the text selection of a modifier click, like shift-click, which adds the column to the sorting */
+function onSortMouseDown(column: TableColumnItem<T>, event: MouseEvent): void {
+    if (column.sortable && props.sortMultipleKey && isMultiSortEvent(event))
+        event.preventDefault();
+}
+
+/**
+ * Sort the column in the given direction.
+ * When `multiple` is set, the column is added to the sorted columns
+ * or keeps its sort priority, otherwise it replaces them.
+ */
+function sort(
+    column: TableColumnItem<T>,
+    asc: boolean,
+    event: Event = new Event("sort"),
+    multiple = false,
+): void {
+    if (!column?.sortable) return;
+
+    const sortState = { column, isAsc: asc };
+    let sortStates: TableSortState<T>[] = [sortState];
+    if (multiple) {
+        sortStates = [...sortedColumns.value];
+        const index = sortStates.findIndex(
+            (state) => state.column.identifier === column.identifier,
+        );
+        if (index >= 0) sortStates[index] = sortState;
+        else sortStates.push(sortState);
+    }
+
+    emits("sort", column, asc ? "asc" : "desc", event);
+
+    applySort(sortStates);
+    emitSortChange();
+}
+
+/** remove the column from the sorted columns */
+function unsort(column: TableColumnItem<T>): void {
+    applySort(
+        sortedColumns.value.filter(
+            (state) => state.column.identifier !== column.identifier,
+        ),
+    );
+    emitSortChange();
+}
+
+function emitSortChange(): void {
+    emits(
+        "sort-change",
+        sortedColumns.value.map((state): TableSortColumn<T> => ({
+            column: state.column.value,
+            direction: state.isAsc ? "asc" : "desc",
+        })),
+    );
+}
+
+/** set the sorted columns and sort the rows by them */
+function applySort(sortStates: TableSortState<T>[]): void {
+    sortedColumns.value = sortStates;
 
     // sort rows by mutating the array
-    sortRows(tableRows.value, column);
+    sortRows(tableRows.value);
 
     // Force trigger effects for the base normalized rows after making deep mutations.
     // This forces reactive dependencies to recompute.
@@ -755,25 +875,32 @@ function applySort(column: TableColumnItem<T>): void {
 watch(
     () => props.data,
     () => {
-        if (currentSortColumn.value)
-            sortRows(tableRows.value, currentSortColumn.value);
+        if (sortedColumns.value.length) sortRows(tableRows.value);
     },
 );
 
-/** sort rows by mutating the given array */
-function sortRows(rows: TableRow<T>[], column: TableColumn<T>): TableRow<T>[] {
+/** sort rows by the sorted columns by mutating the given array */
+function sortRows(rows: TableRow<T>[]): TableRow<T>[] {
     if (props.backendSorting) return rows;
 
-    // sort rows by mutating the rows array
-    return sortBy<TableRow<T>, string>(
-        rows,
-        column.field ? "value." + column.field : "",
-        column.customSort
-            ? (a, b, asc): number => column.customSort!(a.value, b.value, asc)
-            : undefined,
-        isAsc.value,
-        true, // mutate the original array
-    );
+    return rows.sort((a, b) => {
+        for (const { column, isAsc: asc } of sortedColumns.value) {
+            const result = column.customSort
+                ? column.customSort(a.value, b.value, asc)
+                : compareValues(
+                      getValueByPath(a.value, column.field ?? ""),
+                      getValueByPath(b.value, column.field ?? ""),
+                      asc,
+                  );
+            if (result) return result;
+        }
+
+        // with multiple sorting, ties fall back to the data order instead of a previous sorting,
+        // which also restores the data order when the last sorted column got removed
+        return props.sortMultiple || !sortedColumns.value.length
+            ? a.index - b.index
+            : 0;
+    });
 }
 
 // #endregion --- Sort Feature ---
@@ -1154,15 +1281,27 @@ const thDetailedClasses = defineClasses([
 
 const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
 
-const thSortIconClasses = defineClasses(
-    ["thSortIconClass", "o-table__th__sort-icon"],
-    [
-        "thSortIconDirectionClass",
-        "o-table__th__sort-icon--",
-        computed(() => (isAsc.value ? "asc" : "desc")),
-        computed(() => !!currentSortColumn.value),
-    ],
-);
+const thSortIconClasses = defineClasses([
+    "thSortIconClass",
+    "o-table__th__sort-icon",
+]);
+
+const thSortIconAscClasses = defineClasses([
+    "thSortIconDirectionClass",
+    "o-table__th__sort-icon--",
+    "asc",
+]);
+
+const thSortIconDescClasses = defineClasses([
+    "thSortIconDirectionClass",
+    "o-table__th__sort-icon--",
+    "desc",
+]);
+
+const thSortPriorityClasses = defineClasses([
+    "thSortPriorityClass",
+    "o-table__th__sort-priority",
+]);
 
 const trBaseClasses = defineClasses(["trClass", "o-table__tr"]);
 
@@ -1218,6 +1357,16 @@ const paginationWrapperRootClasses = computed(() =>
 
 function columnClasses(column: TableColumnItem<T>): ClassBinding[] {
     return isColumnSorted(column) ? thSortedClasses.value : [];
+}
+
+function sortIconClasses(column: TableColumnItem<T>): ClassBinding[] {
+    if (!isColumnSorted(column)) return thSortIconClasses.value;
+    return [
+        ...thSortIconClasses.value,
+        ...(isColumnAsc(column)
+            ? thSortIconAscClasses.value
+            : thSortIconDescClasses.value),
+    ];
 }
 
 function rowClasses(row: TableRow<T>): ClassBinding[] {
@@ -1284,7 +1433,7 @@ defineExpose({
             :sort-icon-size="sortIconSize"
             :is-asc="isAsc"
             :mobile-sort-classes="mobileSortClasses"
-            @sort="(column, event) => sort(column, true, event)" />
+            @sort="(column, event) => toggleSort(column, event, false)" />
 
         <template
             v-if="
@@ -1389,7 +1538,8 @@ defineExpose({
                                 :style="isMobileActive ? {} : column.style"
                                 :draggable="canDragColumn"
                                 :aria-sort="
-                                    isColumnSorted(column)
+                                    currentSortColumn?.identifier ===
+                                    column.identifier
                                         ? isAsc
                                             ? 'ascending'
                                             : 'descending'
@@ -1399,12 +1549,13 @@ defineExpose({
                                 :aria-colindex="
                                     ariaColIndexStart + column.index
                                 "
-                                @click.stop="sort(column, true, $event)"
+                                @mousedown="onSortMouseDown(column, $event)"
+                                @click.stop="toggleSort(column, $event)"
                                 @keydown.enter.self.prevent="
-                                    sort(column, true, $event)
+                                    toggleSort(column, $event)
                                 "
                                 @keydown.space.self.prevent="
-                                    sort(column, true, $event)
+                                    toggleSort(column, $event)
                                 "
                                 @dragstart="
                                     handleColumnDragStart(column, $event)
@@ -1433,13 +1584,21 @@ defineExpose({
                                     <span
                                         v-if="column.sortable"
                                         v-show="isColumnSorted(column)"
-                                        :class="thSortIconClasses"
+                                        :class="sortIconClasses(column)"
                                         :aria-hidden="!isColumnSorted(column)">
                                         <o-icon
                                             :icon="sortIcon"
                                             :pack="iconPack"
                                             :size="sortIconSize"
-                                            :rotation="!isAsc ? 180 : 0" />
+                                            :rotation="
+                                                !isColumnAsc(column) ? 180 : 0
+                                            " />
+                                        <span
+                                            v-if="getSortPriority(column)"
+                                            :class="thSortPriorityClasses"
+                                            aria-hidden="true">
+                                            {{ getSortPriority(column) }}
+                                        </span>
                                     </span>
                                 </template>
                             </th>

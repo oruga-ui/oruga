@@ -2949,13 +2949,21 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 backendSorting: boolean;
                 /**
-                 * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc']
+                 * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'], or a list of them (if sortMultiple) — e.g. [['last_name', 'asc'], ['first_name', 'desc']]
                  */
-                defaultSort: string | [string, "desc" | "asc"];
+                defaultSort: string | [string, "desc" | "asc"] | [string, "desc" | "asc"][];
                 /**
                  * Sets the default sort column direction on the first click
                  */
                 defaultSortDirection: "asc" | "desc";
+                /**
+                 * Allow sorting by multiple columns, ordered by the sequence in which they were sorted
+                 */
+                sortMultiple: boolean;
+                /**
+                 * Modifier key which has to be pressed to add a column to the sorting instead of replacing it, every sort adds the column when not set (if sortMultiple)
+                 */
+                sortMultipleKey: "altKey" | "ctrlKey" | "metaKey" | "shiftKey";
                 /**
                  * Sets the header sorting icon
                  */
@@ -3191,6 +3199,10 @@ A string can use the `{value}` placeholder for the column label, a function rece
                  * Class of the table header sort icon element with direction
                  */
                 thSortIconDirectionClass: ClassDefinition;
+                /**
+                 * Class of the table header sort priority element (if sortMultiple)
+                 */
+                thSortPriorityClass: ClassDefinition;
                 /**
                  * Class of the table `tr` element
                  */
