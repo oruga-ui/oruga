@@ -1,5 +1,9 @@
 import type { Component } from "vue";
-import type { MaybeElement, PopoverPosition } from "@/composables";
+import type {
+    AnimationName,
+    MaybeElement,
+    PopoverPosition,
+} from "@/composables";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
@@ -37,8 +41,14 @@ export type PopoverProps<C extends Component = Component> = {
     role?: "dialog" | "menu" | "tooltip";
     /** Defines if the popover should be shown as centered modal - the position is ignored when `true` */
     modal?: boolean;
-    /** Show and dismiss animation */
-    animation?: string;
+    /**
+     * Open/close animation using the native Web Animations API.
+     * Set to `false` to disable the built-in animation.
+     *
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+     * @default 'fade'
+     */
+    animation?: AnimationName | false;
     /** Adds close button to the content */
     closeable?: boolean;
     /**

@@ -149,6 +149,32 @@ Object.defineProperties(HTMLElement.prototype, {
     },
 });
 
+// add missing Web Animations API jsdom implementation (https://github.com/jsdom/jsdom/issues/3041)
+Object.defineProperty(HTMLElement.prototype, "animate", {
+    value() {
+        const animation = {
+            playState: "running",
+            finished: undefined as unknown as Promise<void>,
+            cancel() {
+                this.playState = "idle";
+            },
+            reverse() {
+                // no-op direction flip - the mock resolves immediately either way
+            },
+            play() {},
+            pause() {},
+        };
+
+        animation.finished = Promise.resolve().then(() => {
+            animation.playState = "finished";
+        });
+
+        return animation;
+    },
+    configurable: true,
+    writable: true,
+});
+
 // create a global oruga instance for all tests
 config.global.plugins = [createTestingOruga()];
 
