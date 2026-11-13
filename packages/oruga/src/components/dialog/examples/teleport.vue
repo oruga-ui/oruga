@@ -8,11 +8,17 @@ const isActive = ref(false);
     <section>
         <o-button
             label="Open Teleported Dialog"
-            size="medium"
             variant="primary"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
-        <o-dialog v-model:active="isActive" teleport backdrop close-on-backdrop>
+        <o-dialog
+            v-model:active="isActive"
+            teleport
+            backdrop
+            close-on-backdrop
+            closeable
+            title="Teleported Dialog">
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
                 sodales leo nec convallis rutrum. Vivamus pharetra molestie arcu
