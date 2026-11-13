@@ -7,7 +7,7 @@ export * from "./useDebounce";
 export * from "./useParentProvider";
 export * from "./useClickOutside";
 export * from "./useOptions";
-export * from "./usePreventScrolling";
+export * from "./useScrollLock";
 export * from "./useScrollHelper";
 export * from "./useIndexer";
 export * from "./useTrapFocus";

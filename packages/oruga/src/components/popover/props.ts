@@ -53,11 +53,13 @@ export type PopoverProps<C extends Component = Component> = {
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
     /**
-     * Set `true` to remove the body scrollbar.
-     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-     * but will set the body to a fixed position, which may break some layouts.
+     * Prevents background scrolling while open.
+     * `clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+     * `keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+     * `off` does not prevent background scrolling.
+     * @values clip, keep, off
      */
-    clipScroll?: boolean;
+    scrollLock?: "clip" | "keep" | "off";
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -106,8 +108,4 @@ export type PopoverClasses = Partial<{
     bodyClass: ComponentClass;
     /** Class of the close element */
     closeClass: ComponentClass;
-    /** Class of the body when popover has backdrop and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when popover has backdrop and scroll is keeped */
-    scrollKeepClass: ComponentClass;
 }>;

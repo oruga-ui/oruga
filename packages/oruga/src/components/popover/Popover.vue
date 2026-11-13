@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="C extends Component">
 import {
     ref,
-    watch,
     computed,
     useId,
     useTemplateRef,
@@ -16,7 +15,7 @@ import {
     defineClasses,
     unrefElement,
     usePopoverAPI,
-    usePreventScrolling,
+    useScrollLock,
     useTeleport,
     type MaybeElement,
 } from "@/composables";
@@ -54,7 +53,7 @@ const props = withDefaults(defineProps<PopoverProps<C>>(), {
     ariaCloseLabel: () => getDefault("popover.ariaCloseLabel", "Close"),
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
-    clipScroll: () => getDefault("popover.clipScroll", false),
+    scrollLock: () => getDefault("popover.scrollLock", "keep"),
     target: undefined,
     component: undefined,
     props: undefined,
@@ -147,14 +146,9 @@ const { open, close, toggle } = usePopoverAPI({
     onBeforeToggle,
 });
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
-
-watch(
-    isActive,
-    (value) => {
-        if (props.backdrop || props.modal) toggleScroll(value);
-    },
-    { flush: "post" },
+useScrollLock(
+    () => isActive.value && (props.backdrop || props.modal),
+    () => props.scrollLock,
 );
 
 // #region --- Event Handler ---
