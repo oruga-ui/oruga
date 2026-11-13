@@ -144,6 +144,7 @@ function generateConfigType(filePath: string): void {
     console.log(`${components.length} components processed.`);
 
     const code = `import type {
+    AnimationName,
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,

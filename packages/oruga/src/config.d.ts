@@ -1,4 +1,5 @@
 import type {
+    AnimationName,
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
@@ -104,9 +105,12 @@ declare module "./index" {
                  */
                 desktopModal: boolean;
                 /**
-                 * Transition name to apply on dropdown list
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
                  */
-                animation: string;
+                animation: AnimationName | false;
                 /**
                  * Native options to use in HTML5 validation
                  */
@@ -1184,9 +1188,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 position: PopoverPosition;
                 /**
-                 * Custom animation (transition name)
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
                  */
-                animation: string;
+                animation: AnimationName | false;
                 /**
                  * Dropdown menu tag name
                  */
@@ -2183,9 +2190,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 position: PopoverPosition;
                 /**
-                 * Show and dismiss animation
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
                  */
-                animation: string;
+                animation: AnimationName | false;
                 /**
                  * Adds close button to the content
                  */
