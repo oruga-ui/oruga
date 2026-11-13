@@ -18,6 +18,10 @@ export type SelectNativeProps = {
 
 export type SelectOption<T = string | number> = {
     label: string;
+    /**
+     * Option value
+     * @type string|number|object
+     */
     value?: T;
 } & Record<string, any>;
 
@@ -26,9 +30,15 @@ export type SelectOptions<T> = OptionsOrGroupsProp<SelectOption<T>>;
 export type SelectProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state, use v-model to make it two-way binding */
+    /**
+     * The input value state, use v-model to make it two-way binding
+     * @type string|number|object
+     */
     modelValue?: ValueType<T, IsMultiple>;
-    /** Allow multiple selection - converts the `modelValue` into an array */
+    /**
+     * Allow multiple selection - converts the `modelValue` into an array
+     * @type boolean
+     */
     multiple?: IsMultiple;
     /** Select options, unnecessary when default slot is used */
     options?: SelectOptions<T>;

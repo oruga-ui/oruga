@@ -6,7 +6,10 @@ export type TaginputOptions<T> = AutocompleteOptions<T>;
 export type TaginputProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected items, use v-model to make it two-way binding */
+    /**
+     * The selected items, use v-model to make it two-way binding
+     * @type (string|number|object)[]
+     */
     modelValue?: T[];
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;

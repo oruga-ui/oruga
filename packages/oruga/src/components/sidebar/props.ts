@@ -59,11 +59,18 @@ export type SidebarProps<C extends Component = Component> = {
     /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
+     * @type Component
      */
     component?: C;
-    /** Props to be binded to the injected component */
+    /**
+     * Props to be binded to the injected component
+     * @type object
+     */
     props?: ComponentProps<C>;
-    /** Events to be binded to the injected component */
+    /**
+     * Events to be binded to the injected component
+     * @type object
+     */
     events?: ComponentEmits<C>;
 } & SidebarClasses;
 
