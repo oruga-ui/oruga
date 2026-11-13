@@ -2,8 +2,6 @@ import {
     createVNode,
     defineComponent,
     h,
-    defineComponent,
-    h,
     markRaw,
     type Component,
     type VNode,
