@@ -1052,15 +1052,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 closeOnConfirm: boolean;
                 /**
-                 * Whether page scrolling should be prevented when the dialog is open
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                lockScroll: boolean;
-                /**
-                 * Strategy used to prevent background scrolling when open.
-`clip` removes the body scrollbar via `overflow: hidden`.
-`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
-                 */
-                scrollStrategy: "clip" | "keep";
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Icon pack to use for the close icon
                  */
@@ -1261,11 +1258,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 teleport: boolean | object | string;
                 /**
-                 * Strategy used to prevent background scrolling when open.
-`clip` removes the body scrollbar via `overflow: hidden`.
-`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                scrollStrategy: "clip" | "keep";
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Class of the root element
                  */
@@ -1748,11 +1746,12 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconSize: string;
                 /**
-                 * Strategy used to prevent background scrolling when fullpage is active.
-`clip` removes the body scrollbar via `overflow: hidden`.
-`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+                 * Prevents background scrolling when fullpage is active.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                scrollStrategy: "clip" | "keep";
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Class of the root element
                  */
@@ -1877,11 +1876,12 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                  */
                 closeOnEscape: boolean;
                 /**
-                 * Strategy used to prevent background scrolling when open.
-`clip` removes the body scrollbar via `overflow: hidden`.
-`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                scrollStrategy: "clip" | "keep";
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Trap focus inside the modal
                  */
@@ -2207,11 +2207,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 ariaCloseLabel: string;
                 /**
-                 * Strategy used to prevent background scrolling when open.
-`clip` removes the body scrollbar via `overflow: hidden`.
-`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                scrollStrategy: "clip" | "keep";
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
@@ -2446,11 +2447,12 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 closeOnEscape: boolean;
                 /**
-                 * Strategy used to prevent background scrolling when open.
-`clip` removes the body scrollbar via `overflow: hidden`.
-`keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                scrollStrategy: "clip" | "keep";
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Trap focus inside the sidebar
                  */

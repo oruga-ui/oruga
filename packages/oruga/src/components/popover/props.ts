@@ -53,12 +53,13 @@ export type PopoverProps<C extends Component = Component> = {
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
     /**
-     * Strategy used to prevent background scrolling when open.
-     * `clip` removes the body scrollbar via `overflow: hidden`.
-     * `keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
-     * @values clip, keep
+     * Prevents background scrolling while open.
+     * `clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+     * `keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+     * `off` does not prevent background scrolling.
+     * @values clip, keep, off
      */
-    scrollStrategy?: "clip" | "keep";
+    scrollLock?: "clip" | "keep" | "off";
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.

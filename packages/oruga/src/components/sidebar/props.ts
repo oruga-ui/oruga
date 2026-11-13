@@ -32,12 +32,13 @@ export type SidebarProps<C extends Component = Component> = {
     /** Close when pressing escape key */
     closeOnEscape?: boolean;
     /**
-     * Strategy used to prevent background scrolling when open.
-     * `clip` removes the body scrollbar via `overflow: hidden`.
-     * `keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
-     * @values clip, keep
+     * Prevents background scrolling while open.
+     * `clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+     * `keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+     * `off` does not prevent background scrolling.
+     * @values clip, keep, off
      */
-    scrollStrategy?: "clip" | "keep";
+    scrollLock?: "clip" | "keep" | "off";
     /** Trap focus inside the sidebar */
     trapFocus?: boolean;
     /** Accessibility aria-label to name the sidebar, used as the dialog name when shown with an overlay */

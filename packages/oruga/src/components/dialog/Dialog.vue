@@ -21,7 +21,7 @@ import {
     unrefElement,
     useEventListener,
     useMatchMedia,
-    usePreventScrolling,
+    useScrollLock,
     useTeleport,
 } from "@/composables";
 
@@ -52,8 +52,7 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     closeOnBackdrop: () => getDefault("dialog.closeOnBackdrop", true),
     closeOnEscape: () => getDefault("dialog.closeOnEscape", true),
     closeOnConfirm: () => getDefault("dialog.closeOnConfirm", false),
-    lockScroll: () => getDefault("dialog.lockScroll", true),
-    scrollStrategy: () => getDefault("dialog.scrollStrategy", "keep"),
+    scrollLock: () => getDefault("dialog.scrollLock", "clip"),
     textPosition: undefined,
     title: undefined,
     subtitle: undefined,
@@ -175,6 +174,13 @@ const hasBackdrop = computed(
     () => props.backdrop || props.alert || rootRef.value?.ariaModal,
 );
 
+// Must stay below `hasBackdrop`: the initial run is synchronous, so a dialog
+// mounted with `active` reads it during setup (temporal dead zone otherwise).
+useScrollLock(
+    () => isActive.value && !!hasBackdrop.value,
+    () => props.scrollLock,
+);
+
 /**
  * Specifies the types of user actions that can be used to close the dialog.
  * See https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog#closedby
@@ -194,20 +200,6 @@ const closedBy = computed(() => {
     // The dialog can only be dismissed with a developer-specified mechanism.
     else return "none";
 });
-
-// #region --- Scroll Feature ---
-
-const toggleScroll = usePreventScrolling(props.scrollStrategy);
-
-watch(
-    isActive,
-    (value) => {
-        if (props.lockScroll && hasBackdrop.value) toggleScroll(value);
-    },
-    { immediate: true, flush: "post" },
-);
-
-// #endregion --- Scroll Feature ---
 
 // #region --- Focus Feature ---
 

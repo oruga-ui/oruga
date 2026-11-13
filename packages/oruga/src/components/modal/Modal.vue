@@ -17,7 +17,7 @@ import {
     defineClasses,
     useClickOutside,
     useMatchMedia,
-    usePreventScrolling,
+    useScrollLock,
     useTrapFocus,
     useEventListener,
     useTeleport,
@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     ariaCloseLabel: () => getDefault("modal.ariaCloseLabel", "Close"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
-    scrollStrategy: () => getDefault("modal.scrollStrategy", "keep"),
+    scrollLock: () => getDefault("modal.scrollLock", "keep"),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -106,20 +106,18 @@ const customStyle = computed(() =>
     !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
 );
 
-const toggleScroll = usePreventScrolling(props.scrollStrategy);
-
-watch(
-    isActive,
-    (value) => {
-        if (props.overlay) toggleScroll(value);
-        // if autoFocus focus the element
-        if (value && props.autoFocus)
-            nextTick(() => {
-                if (rootRef.value) rootRef.value.focus();
-            });
-    },
-    { immediate: true, flush: "post" },
+useScrollLock(
+    () => isActive.value && props.overlay,
+    () => props.scrollLock,
 );
+
+watch(isActive, (value) => {
+    // if autoFocus focus the element
+    if (value && props.autoFocus)
+        nextTick(() => {
+            if (rootRef.value) rootRef.value.focus();
+        });
+});
 
 // #region --- Events Feature ---
 

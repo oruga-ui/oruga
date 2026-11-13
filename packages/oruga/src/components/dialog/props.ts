@@ -38,15 +38,14 @@ export type DialogProps<C extends Component = Component> = {
     closeOnEscape?: boolean;
     /** Close the dialog when the confirm button is preset */
     closeOnConfirm?: boolean;
-    /** Whether page scrolling should be prevented when the dialog is open */
-    lockScroll?: boolean;
     /**
-     * Strategy used to prevent background scrolling when open.
-     * `clip` removes the body scrollbar via `overflow: hidden`.
-     * `keep` maintains a phantom scrollbar via `position: fixed` to prevent layout shift.
-     * @values clip, keep
+     * Prevents background scrolling while open.
+     * `clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+     * `keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+     * `off` does not prevent background scrolling.
+     * @values clip, keep, off
      */
-    scrollStrategy?: "clip" | "keep";
+    scrollLock?: "clip" | "keep" | "off";
     /** Text alignment in its entirely */
     textPosition?: "center" | "left" | "right";
     /** Dialog header title, unnecessary when title slot is used */

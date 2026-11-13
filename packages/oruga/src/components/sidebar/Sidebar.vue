@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="C extends Component">
-import { ref, computed, watch, useTemplateRef, type Component } from "vue";
+import { ref, computed, useTemplateRef, type Component } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
@@ -8,7 +8,7 @@ import {
     useClickOutside,
     useEventListener,
     useMatchMedia,
-    usePreventScrolling,
+    useScrollLock,
     useTrapFocus,
     useTeleport,
 } from "@/composables";
@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     closeOnOutside: () => getDefault("sidebar.closeOnOutside", true),
     closeOnEscape: () => getDefault("sidebar.closeOnEscape", true),
     trapFocus: () => getDefault("sidebar.trapFocus", true),
-    scrollStrategy: () => getDefault("sidebar.scrollStrategy", "keep"),
+    scrollLock: () => getDefault("sidebar.scrollLock", "keep"),
     mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
     teleport: () => getDefault("sidebar.teleport", false),
     ariaLabel: () => getDefault("sidebar.ariaLabel"),
@@ -104,14 +104,9 @@ const hideOnMobile = computed(
     () => props.mobile === "hidden" && isMobile.value,
 );
 
-const toggleScroll = usePreventScrolling(props.scrollStrategy);
-
-watch(
-    isActive,
-    (value) => {
-        if (props.overlay) toggleScroll(value);
-    },
-    { immediate: true, flush: "post" },
+useScrollLock(
+    () => isActive.value && props.overlay,
+    () => props.scrollLock,
 );
 
 // --- Events Feature ---
