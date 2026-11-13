@@ -242,6 +242,8 @@ function setValue(value: string): void {
 
 /** Get the value from html element behind the event and update the external value. */
 function setEventValue(event: Event): void {
+    if (props.disabled) return;
+
     const value = (event.target as HTMLInputElement).value;
     setValue(value);
 }

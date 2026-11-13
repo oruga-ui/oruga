@@ -28,6 +28,25 @@ describe("ODatepicker", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    test("does not commit pending input when disabled while open", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: {
+                active: true,
+                readonly: false,
+                parser: () => new Date(2026, 10, 18),
+            },
+            attachTo: document.body,
+        });
+        const input = wrapper.get("input");
+        await input.setValue("November 18, 2026");
+
+        await wrapper.setProps({ disabled: true });
+        input.element.dispatchEvent(new FocusEvent("blur"));
+        await nextTick();
+
+        expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+    });
+
     test("parses keyboard input", async () => {
         const wrapper = mount(ODatepicker);
 
@@ -156,7 +175,7 @@ describe("ODatepicker", () => {
         ).toBeTruthy();
 
         // blur the input (simulates focus moving away when clicking the nav button)
-        await input.trigger("blur");
+        await input.trigger("focusout");
         await nextTick();
 
         // click the previous month navigation button
