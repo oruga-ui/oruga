@@ -20,7 +20,7 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 
 ### Base
 
-Setting the `clipScroll` prop removes the body scrollbar. By default, the body retains a non scrollable scrollbar to prevent the background from shifting. However, this will set the body to `position="fixed"`, which may cause some layouts to break.
+Setting the `scroll-lock` prop controls how the background is prevented from scrolling. With `clip`, the body scrollbar is hidden via `overflow: hidden`. With `keep` (the default), the body retains a non-scrollable scrollbar to prevent the background from shifting, but is set to `position: fixed`, which may cause some layouts to break. `off` leaves the page scrollable. When overlays are stacked, the mode of the first one to open is used. The class names applied to the body are set globally with `scrollClipClass` and `scrollKeepClass` in the global config.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 

@@ -51,7 +51,7 @@ The main `closeable` property will add a close button to the dialog header. The 
 
 A simple _modal_ dialog box is created by setting the `backdrop` property, which inert the background. By default, attempting to interact with the backdrop closes the dialog box.
 
-Setting the `blockScroll` property removes the body scrollbar. However, the body retains a non-scrollable scrollbar to prevent the background from shifting. This will set the body to `position="fixed"`, which may cause some layouts to break.
+Setting the `scroll-lock` prop controls how the background is prevented from scrolling. With `clip` (the default), the body scrollbar is hidden via `overflow: hidden`. With `keep`, the body retains a non-scrollable scrollbar to prevent the background from shifting, but is set to `position: fixed`, which may cause some layouts to break. `off` leaves the page scrollable. When overlays are stacked, the mode of the first one to open is used. The class names applied to the body are set globally with `scrollClipClass` and `scrollKeepClass` in the global config.
 
 <ExampleViewer :component="Modal" :code="ModalCode" />
 

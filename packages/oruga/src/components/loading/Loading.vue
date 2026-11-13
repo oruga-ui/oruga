@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { computed, useTemplateRef, watch } from "vue";
+import { computed, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import {
-    defineClasses,
-    useEventListener,
-    usePreventScrolling,
-} from "@/composables";
+import { defineClasses, useEventListener, useScrollLock } from "@/composables";
 
 import type { LoadingProps } from "./props";
 
@@ -37,7 +33,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     iconPack: () => getDefault("loading.iconPack"),
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
-    clipScroll: () => getDefault("loading.clipScroll", false),
+    scrollLock: () => getDefault("loading.scrollLock", "keep"),
 });
 
 const emits = defineEmits<{
@@ -65,11 +61,10 @@ const rootRef = useTemplateRef("rootElement");
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
-
-watch(isActive, (value) => {
-    if (props.fullPage) toggleScroll(value);
-});
+useScrollLock(
+    () => isActive.value && props.fullPage,
+    () => props.scrollLock,
+);
 
 // #region --- Events Feature ---
 
