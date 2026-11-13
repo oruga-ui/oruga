@@ -27,6 +27,7 @@ The component implements the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w
 ## Dialog Component
 
 > Dialog is a container to display content in an overlay window.
+> It is based on the native `<dialog>` element.
 
 ```html
 <o-dialog></o-dialog>

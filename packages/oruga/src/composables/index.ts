@@ -11,5 +11,6 @@ export * from "./usePreventScrolling";
 export * from "./useScrollHelper";
 export * from "./useIndexer";
 export * from "./useTrapFocus";
+export * from "./useAnimationsAPI";
 export * from "./usePopoverAPI";
 export * from "./useTeleport";

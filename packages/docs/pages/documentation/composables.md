@@ -96,6 +96,7 @@ Some components come with their own programmatic interface. These interfaces are
 
 List of components with an programmatic interface:
 
+- [`Drawer`](/components/Drawer.html#programmatically)
 - [`Dialog`](/components/Dialog.html#programmatically)
 - [`Loading`](/components/Loading.html#programmatically)
 - [`Modal`](/components/Modal.html#programmatically)
