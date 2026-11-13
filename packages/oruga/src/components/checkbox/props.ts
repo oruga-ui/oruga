@@ -19,9 +19,15 @@ export type CheckboxNativeProps = {
 export type CheckboxProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state, use v-model to make it two-way binding */
+    /**
+     * The input value state, use v-model to make it two-way binding
+     * @type string|number|boolean|object
+     */
     modelValue?: ValueType<T, IsMultiple>;
-    /** Defines the v-model as array of values */
+    /**
+     * Defines the v-model as array of values
+     * @type boolean
+     */
     multiple?: IsMultiple;
     /**
      * Color variant of the control
@@ -37,13 +43,22 @@ export type CheckboxProps<T, IsMultiple extends boolean = boolean> = {
     label?: string;
     /** Same as native indeterminate */
     indeterminate?: boolean;
-    /** Same as native value */
+    /**
+     * Same as native value
+     * @type string|number|boolean|object
+     */
     nativeValue?: T;
     /** Same as native disabled */
     disabled?: boolean;
-    /** Overrides the returned value when it's checked */
+    /**
+     * Overrides the returned value when it's checked
+     * @type string|number|boolean|object
+     */
     trueValue?: T;
-    /** Overrides the returned value when it's not checked */
+    /**
+     * Overrides the returned value when it's not checked
+     * @type string|number|boolean|object
+     */
     falseValue?: T;
     /** Same as native id. Also pass the id to a wrapping `o-field` component. Default is a uuid. */
     id?: string;
