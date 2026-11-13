@@ -1,4 +1,12 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import {
+    afterEach,
+    beforeEach,
+    describe,
+    expect,
+    test,
+    vi,
+    type MockInstance,
+} from "vitest";
 import { defineComponent, nextTick, ref, type Ref } from "vue";
 import { mount, type VueWrapper } from "@vue/test-utils";
 
@@ -28,11 +36,12 @@ function withSetup(
     return {
         active,
         /** set the active state and wait for the post flush watcher */
-        async toggle(value: boolean): Promise<void> {
+        // arrow functions, as the tests destructure them from the result
+        toggle: async (value: boolean): Promise<void> => {
             active.value = value;
             await nextTick();
         },
-        unmount(): void {
+        unmount: (): void => {
             wrappers.splice(wrappers.indexOf(wrapper), 1);
             wrapper.unmount();
         },
@@ -43,8 +52,10 @@ const hasClass = (name: string): boolean =>
     document.body.classList.contains(name);
 
 describe("useScrollLock", () => {
+    let scrollToSpy: MockInstance<Window["scrollTo"]>;
+
     beforeEach(() => {
-        vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+        scrollToSpy = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
         document.body.className = "";
         document.body.style.cssText = "";
     });
@@ -112,7 +123,7 @@ describe("useScrollLock", () => {
 
             expect(hasClass("o-scroll-keep")).toBe(false);
             expect(document.body.style.top).toBe("");
-            expect(window.scrollTo).toHaveBeenCalledWith({
+            expect(scrollToSpy).toHaveBeenCalledWith({
                 top: 300,
                 behavior: "instant",
             });
@@ -127,7 +138,7 @@ describe("useScrollLock", () => {
             expect(document.body.style.top).toBe("0px");
 
             await toggle(false);
-            expect(window.scrollTo).toHaveBeenCalledWith({
+            expect(scrollToSpy).toHaveBeenCalledWith({
                 top: 0,
                 behavior: "instant",
             });
@@ -141,7 +152,7 @@ describe("useScrollLock", () => {
 
             expect(hasClass("o-scroll-keep")).toBe(false);
             expect(document.body.style.top).toBe("");
-            expect(window.scrollTo).toHaveBeenCalledWith({
+            expect(scrollToSpy).toHaveBeenCalledWith({
                 top: 120,
                 behavior: "instant",
             });
@@ -157,7 +168,7 @@ describe("useScrollLock", () => {
             expect(document.body.style.cssText).toBe("");
 
             await toggle(false);
-            expect(window.scrollTo).not.toHaveBeenCalled();
+            expect(scrollToSpy).not.toHaveBeenCalled();
         });
 
         test("does not hold a lock that releases another one", async () => {
@@ -269,7 +280,7 @@ describe("useScrollLock", () => {
 
             await b.toggle(false);
             expect(hasClass("o-scroll-clip")).toBe(false);
-            expect(window.scrollTo).not.toHaveBeenCalled();
+            expect(scrollToSpy).not.toHaveBeenCalled();
         });
 
         test("saves the scroll position only once for stacked keep locks", async () => {
@@ -285,8 +296,8 @@ describe("useScrollLock", () => {
             await a.toggle(false);
 
             expect(document.body.style.top).toBe("");
-            expect(window.scrollTo).toHaveBeenCalledTimes(1);
-            expect(window.scrollTo).toHaveBeenCalledWith({
+            expect(scrollToSpy).toHaveBeenCalledTimes(1);
+            expect(scrollToSpy).toHaveBeenCalledWith({
                 top: 300,
                 behavior: "instant",
             });
