@@ -2,6 +2,9 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Animation from "./animation.vue";
+import AnimationCode from "./animation.vue?raw";
+
 import Closing from "./closing.vue";
 import ClosingCode from "./closing.vue?raw";
 
@@ -83,6 +86,16 @@ Link the message of an alert dialog with the `ariaDescribedby` property, so assi
 :::
 
 <ExampleViewer :component="Alert" :code="AlertCode" />
+
+### Animation
+
+The dialog is animated when it opens and closes. The `animation` property selects one of the built-in presets, or disables the animation with `false`. Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+
+::: info Accessibility Note:
+The animation is skipped when the user prefers reduced motion (`prefers-reduced-motion`).
+:::
+
+<ExampleViewer :component="Animation" :code="AnimationCode" />
 
 ### Closing
 

@@ -49,6 +49,9 @@ export class DialogProgrammaticFactory extends ProgrammaticFactory {
             {
                 props: componentProps, // component specific props
                 onClose: _options.onClose, // on close event handler
+                // define that the component exposes a `close` function
+                // which emits a `close` event, e.g. after a leave animation
+                deferredClose: true,
             },
             target, // target the component get rendered into
         );
