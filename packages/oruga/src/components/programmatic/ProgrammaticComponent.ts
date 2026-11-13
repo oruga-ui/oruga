@@ -4,6 +4,7 @@ import {
     getCurrentInstance,
     onMounted,
     onUnmounted,
+    shallowRef,
     Suspense,
     type ComponentInternalInstance,
     type VNode,
@@ -30,6 +31,14 @@ export type ProgrammaticComponentProps<C extends VNodeTypes> = {
     props?: ComponentProps<C> | { container?: HTMLElement };
     /** Programmatic component registry instance. */
     registry?: InstanceRegistry<ComponentInternalInstance>;
+    /**
+     * Delegate `close()` to a `close` function exposed by the rendered component.
+     * Only set this for components whose exposed `close` emits a `close` event when it is done, e.g. after a leave animation.
+     * Otherwise the programmatic component would never be terminated.
+     * @default false
+     * @internal
+     */
+    deferredClose?: boolean;
 };
 
 export type CloseEventArgs<T extends VNodeTypes> =
@@ -58,7 +67,12 @@ export type ProgrammaticComponentEmits<C extends VNodeTypes> = {
 // >;
 
 export type ProgrammaticComponentExpose<C extends VNodeTypes> = {
-    /** Call the close event of the component. */
+    /**
+     * Close the component.
+     * When the `deferredClose` prop is set and the rendered component exposes a `close` function,
+     * the request is delegated to it, so the component can e.g. play a leave animation before it emits its `close` event.
+     * Otherwise the component is terminated right away.
+     */
     close: CloseFunction<C>;
     /** Promise which get resolved on the close event. */
     promise: Promise<Parameters<CloseFunction<C>>>;
@@ -89,7 +103,11 @@ export const ProgrammaticComponent = defineComponent<
         // remove component instance from instance register
         onUnmounted(() => props.registry?.remove(vm));
 
-        const close: CloseFunction<C> = (...args) => {
+        /** The rendered component instance, which may expose a `close` function. */
+        const child = shallowRef<{ close?: unknown } | null>(null);
+
+        /** Terminate the component. This get called when the component emits `close`. */
+        const onClose: CloseFunction<C> = (...args) => {
             // emit `onClose` event
             emit("close", ...args);
 
@@ -104,6 +122,20 @@ export const ProgrammaticComponent = defineComponent<
             });
         };
 
+        /**
+         * Request the component to close.
+         * With the `deferredClose` prop the request is delegated to the exposed `close` function of the component,
+         * which will emit a `close` event when it is done, e.g. after a leave animation.
+         * Otherwise the component is terminated directly, because an exposed `close` function is not guaranteed to emit `close`
+         * (e.g. it does nothing when the component is not active).
+         */
+        const close: CloseFunction<C> = (...args) => {
+            const childClose = child.value?.close;
+            if (props.deferredClose && typeof childClose === "function")
+                (childClose as (...args: unknown[]) => void)(...args);
+            else onClose(...args);
+        };
+
         /** expose public functionalities for programmatic usage */
         expose({ close, promise } satisfies ProgrammaticComponentExpose<C>);
 
@@ -115,7 +147,11 @@ export const ProgrammaticComponent = defineComponent<
                 default: () =>
                     createVNode(
                         props.component,
-                        { ...props.props, onClose: close },
+                        {
+                            ...props.props,
+                            onClose,
+                            ref: child,
+                        },
                         slots["default"],
                     ),
             });
@@ -130,6 +166,8 @@ export const ProgrammaticComponent = defineComponent<
             "props",
             /** the programmatic instance registry */
             "registry",
+            /** delegate close to the rendered component */
+            "deferredClose",
         ],
         // manual runtime emits declaration
         // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted via the setup context
