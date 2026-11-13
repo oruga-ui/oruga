@@ -118,6 +118,46 @@ describe("ODialog test", () => {
         expect(dialog.classes("o-dialog--active")).toBeFalsy();
     });
 
+    describe("scroll lock", () => {
+        afterEach(() => {
+            document.body.className = "";
+            document.body.style.cssText = "";
+        });
+
+        test("mounting an active modal dialog does not throw and locks the body", () => {
+            mount(ODialog, { props: { active: true, backdrop: true } });
+
+            // `overflow` is the default, as `blockScroll` used to clip the scroll
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                true,
+            );
+        });
+
+        test("does not lock the body without a backdrop", () => {
+            mount(ODialog, { props: { active: true, backdrop: false } });
+
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                false,
+            );
+            expect(document.body.classList.contains("o-scroll-keep")).toBe(
+                false,
+            );
+        });
+
+        test("scrollLock `off` does not lock the body", () => {
+            mount(ODialog, {
+                props: { active: true, backdrop: true, scrollLock: "off" },
+            });
+
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                false,
+            );
+            expect(document.body.classList.contains("o-scroll-keep")).toBe(
+                false,
+            );
+        });
+    });
+
     test("loading", () => {
         const wrapper = mount(ODialog, {
             props: { loading: true },
