@@ -128,6 +128,7 @@ export abstract class ProgrammaticFactory {
         // create a new vue app instance with the ProgrammaticComponent as root
         let app: App | undefined = createApp(ProgrammaticComponent, {
             registry: options.registry, // programmatic registry instance
+            deferredClose: options.deferredClose, // delegate close to the component
             component, // the component which should be rendered
             // component props including the target as `container`
             props: {

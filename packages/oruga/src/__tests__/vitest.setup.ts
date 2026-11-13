@@ -38,7 +38,9 @@ Object.defineProperties(HTMLDialogElement.prototype, {
         writable: true,
     },
     close: {
-        value() {
+        value(returnValue?: string) {
+            if (typeof returnValue !== "undefined")
+                this.returnValue = returnValue;
             this.open = false;
             this.dispatchEvent(new Event("close"));
         },
@@ -154,15 +156,18 @@ Object.defineProperty(HTMLElement.prototype, "animate", {
     value() {
         const animation = {
             playState: "running",
+            // like the real API, a reversed animation has a negative playback rate
+            playbackRate: 1,
             finished: undefined as unknown as Promise<void>,
-            cancel() {
+            cancel(): void {
                 this.playState = "idle";
             },
-            reverse() {
-                // no-op direction flip - the mock resolves immediately either way
+            reverse(): void {
+                // only flips the direction - the mock resolves immediately either way
+                this.playbackRate *= -1;
             },
-            play() {},
-            pause() {},
+            play(): void {},
+            pause(): void {},
         };
 
         animation.finished = Promise.resolve().then(() => {

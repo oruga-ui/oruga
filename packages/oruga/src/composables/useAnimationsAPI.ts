@@ -2,7 +2,7 @@ import { prefersReducedMotion } from "@/utils/helpers";
 
 /** Built-in open/close animation presets, played via the Web Animations API. */
 export type AnimationName =
-    "fade" | "scale" | "zoom-out" | "slide-up" | "slide-down";
+    "fade" | "scale" | "zoom-in" | "zoom-out" | "slide-up" | "slide-down";
 
 const ANIMATION_PRESETS: Record<
     AnimationName,
@@ -15,6 +15,14 @@ const ANIMATION_PRESETS: Record<
     scale: {
         keyframes: [
             { opacity: 0, transform: "scale(0.95)" },
+            { opacity: 1, transform: "scale(1)" },
+        ],
+        options: { duration: 150, easing: "ease-out", fill: "both" },
+    },
+    // grows from a clearly smaller size, in contrast to the subtle `scale`
+    "zoom-in": {
+        keyframes: [
+            { opacity: 0, transform: "scale(0.85)" },
             { opacity: 1, transform: "scale(1)" },
         ],
         options: { duration: 150, easing: "ease-out", fill: "both" },
@@ -40,12 +48,14 @@ const ANIMATION_PRESETS: Record<
         ],
         options: { duration: 150, easing: "ease-out", fill: "both" },
     },
-};
+} as const;
 
 /**
  * Plays named [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)
  * presets on an element, tracking the in-flight animation
  * so a rapid open/close reverses smoothly instead of jump-cutting.
+ * The end state of an opening animation is released once it has finished,
+ * so inline styles of the element apply again while it is open.
  */
 export function useAnimationsAPI(): {
     /** Checks whether a preset would actually play for the given element. */
@@ -59,6 +69,8 @@ export function useAnimationsAPI(): {
         name: AnimationName | false | undefined,
         opening: boolean,
     ) => Promise<void>;
+    /** Cancels the in-flight animation and releases its held end state, e.g. when the element gets unmounted. */
+    cancel: () => void;
 } {
     let current: Animation | undefined;
 
@@ -73,6 +85,26 @@ export function useAnimationsAPI(): {
         );
     }
 
+    /**
+     * Release the held `fill: "both"` effect of an animation once it has finished opening.
+     * An animation effect overrides inline styles, so a held effect would hide e.g. an
+     * inline `transform`, which is set by the consumer while the element is open.
+     * A closing animation keeps its end state until the element gets closed.
+     */
+    function releaseWhenOpened(animation: Animation): void {
+        animation.finished.then(
+            () => {
+                // replaced by another animation
+                if (current !== animation) return;
+                // finished in reverse direction, which means it has been closed
+                if (!(animation.playbackRate > 0)) return;
+                animation.cancel();
+                current = undefined;
+            },
+            () => undefined, // ignore AbortError thrown when an animation is cancelled
+        );
+    }
+
     function play(
         el: HTMLElement | undefined | null,
         name: AnimationName | false | undefined,
@@ -82,14 +114,16 @@ export function useAnimationsAPI(): {
         const preset = ANIMATION_PRESETS[name as AnimationName];
 
         if (current && current.playState !== "finished") {
-            // smoothly reverse an in-flight animation instead of jump-cutting
-            current.reverse();
+            // smoothly reverse an in-flight animation instead of jump-cutting,
+            // but only when it is playing in the opposite direction of the requested one
+            if (current.playbackRate > 0 !== opening) current.reverse();
         } else {
             // release the previous (finished) animation's held `fill: "both"`
             // effect before replacing it
             current?.cancel();
             current = el!.animate(preset.keyframes, preset.options);
             if (!opening) current.reverse();
+            releaseWhenOpened(current);
         }
 
         return current.finished.then(
@@ -98,5 +132,10 @@ export function useAnimationsAPI(): {
         );
     }
 
-    return { canPlay, play };
+    function cancel(): void {
+        current?.cancel();
+        current = undefined;
+    }
+
+    return { canPlay, play, cancel };
 }
