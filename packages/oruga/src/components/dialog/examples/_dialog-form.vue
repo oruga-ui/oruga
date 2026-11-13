@@ -1,16 +1,20 @@
 <script setup lang="ts">
-defineProps({
-    email: { type: String, default: "" },
-});
+withDefaults(
+    defineProps<{
+        /** email default */
+        email?: string;
+    }>(),
+    { email: "" },
+);
 
-const emit = defineEmits<{
+const emits = defineEmits<{
     /** close the dialog with an optional return value */
     close: [returnValue?: string];
 }>();
 
 function onSubmit(): void {
     // the native form validation has already succeeded here
-    emit("close", "login");
+    emits("close", "login");
 }
 </script>
 
@@ -39,7 +43,7 @@ function onSubmit(): void {
             <o-button
                 type="button"
                 label="Cancel"
-                @click="emit('close', 'cancel')" />
+                @click="emits('close', 'cancel')" />
             <o-button type="submit" label="Login" variant="primary" />
         </div>
     </form>
