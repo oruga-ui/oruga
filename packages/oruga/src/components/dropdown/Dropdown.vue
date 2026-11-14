@@ -12,7 +12,14 @@ import {
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { getDefault } from "@/utils/config";
-import { toCssDimension, isMobileAgent, isTrueish, mod } from "@/utils/helpers";
+import {
+    toCssDimension,
+    isDefined,
+    isEqual,
+    isMobileAgent,
+    isTrueish,
+    mod,
+} from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -405,7 +412,11 @@ function onPopoverToggle(event: ToggleEvent): void {
         emits("open", event);
     } else {
         // select item when dropdown closed
-        if (props.selectOnClose && focusedItem.value?.data.value)
+        if (
+            props.selectOnClose &&
+            focusedItem.value &&
+            isDefined(focusedItem.value.data.value)
+        )
             selectItem(focusedItem.value);
 
         // reset focused item
@@ -439,13 +450,13 @@ function selectItem(item: DropdownChildItem<T>): void {
         // set selected option
         if (isTrueish(props.multiple)) {
             if (vmodel.value && Array.isArray(vmodel.value)) {
-                if (!vmodel.value.includes(value)) {
+                if (!vmodel.value.some((val) => isEqual(val, value))) {
                     // add a value
                     vmodel.value = [...vmodel.value, value] as ModelValue;
                 } else {
                     // remove a value
                     vmodel.value = vmodel.value.filter(
-                        (val) => val !== value,
+                        (val) => !isEqual(val, value),
                     ) as ModelValue;
                 }
             } else {
@@ -455,7 +466,7 @@ function selectItem(item: DropdownChildItem<T>): void {
             // emit change after vmodel has changed
             nextTick(() => emits("change", vmodel.value));
         } else {
-            if (vmodel.value !== value) {
+            if (!isEqual(vmodel.value, value)) {
                 // update a single value
 
                 vmodel.value = value as ModelValue;
@@ -495,7 +506,7 @@ function moveFocus(delta: 1 | -1): void {
 
 /** Set focus on a dropdown item. */
 function setFocus(item: DropdownChildItem<T>): void {
-    if (props.selectOnFocus && item.data.value) selectItem(item);
+    if (props.selectOnFocus && isDefined(item.data.value)) selectItem(item);
 
     // set item as focused
     focusedItem.value = item;

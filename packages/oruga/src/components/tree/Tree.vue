@@ -291,7 +291,7 @@ function selectItem(item: TreeItem<T>, selection: boolean): void {
     // set selected option
     if (!isTrueish(props.multiple)) {
         if (!selection) vmodel.value = undefined;
-        else if (vmodel.value !== value) {
+        else if (!isEqual(vmodel.value, value)) {
             // update a single value
             vmodel.value = value as ModelValue;
         }
@@ -321,13 +321,16 @@ function selectItems(items: TreeItem<T>[], selection?: boolean): void {
 
     if (vmodel.value && Array.isArray(vmodel.value)) {
         if (selection === true) {
-            const set = new Set([...vmodel.value, ...values]);
-            // add a value
-            vmodel.value = Array.from(set) as ModelValue;
+            const selected = vmodel.value;
+            // add the values which are not selected yet
+            const newValues = values.filter(
+                (value) => !selected.some((val) => isEqual(val, value)),
+            );
+            vmodel.value = [...selected, ...newValues] as ModelValue;
         } else if (selection === false) {
             // remove a value
             vmodel.value = vmodel.value.filter(
-                (val) => !values.includes(val),
+                (val) => !values.some((value) => isEqual(value, val)),
             ) as ModelValue;
         } else {
             vmodel.value = values as ModelValue;
