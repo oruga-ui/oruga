@@ -3,14 +3,13 @@ import {
     ref,
     computed,
     onMounted,
+    onBeforeUnmount,
     useTemplateRef,
     nextTick,
-    watch,
     type Component,
 } from "vue";
 import MarkdownIt from "markdown-it";
 import MarkdownItHighlightjs from "markdown-it-highlightjs";
-import { useData } from "vitepress/client";
 
 const props = withDefaults(
     defineProps<{
@@ -99,10 +98,8 @@ const tab = ref(
 
 const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 
-const { isDark } = useData();
-
-// change appearance on theme change
-watch(isDark, () => applyAppearance());
+let isDark = false;
+let darkModeObserver: MutationObserver | undefined;
 
 function applyAppearance(): void {
     // get example-showcase root
@@ -116,17 +113,30 @@ function applyAppearance(): void {
 
     // set theme specific attributes to example sections
     sections.forEach((child) => {
-        child.setAttribute("data-theme", isDark.value ? "dark" : "light");
-        child.setAttribute("data-bs-theme", isDark.value ? "dark" : "light");
+        child.setAttribute("data-theme", isDark ? "dark" : "light");
+        child.setAttribute("data-bs-theme", isDark ? "dark" : "light");
     });
 }
 
+onBeforeUnmount(() => darkModeObserver?.disconnect());
+
 onMounted(() => {
+    const root = document.documentElement;
+    const updateAppearance = (): void => {
+        isDark = root.classList.contains("dark");
+        applyAppearance();
+    };
+
+    darkModeObserver = new MutationObserver(updateAppearance);
+    darkModeObserver.observe(root, {
+        attributes: true,
+        attributeFilter: ["class"],
+    });
+    // set default appearance style
+    updateAppearance();
+
     // await component got rendered
     nextTick(() => {
-        // set default appearance style
-        applyAppearance();
-
         if (!styleCode.value || !props.component) return;
 
         // get example-showcase root
