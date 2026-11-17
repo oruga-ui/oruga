@@ -10,8 +10,7 @@ import {
 } from "vue";
 import MarkdownIt from "markdown-it";
 import MarkdownItHighlightjs from "markdown-it-highlightjs";
-// @ts-expect-error types not found
-import { useData } from "vitepress/dist/client/theme-default/composables/data";
+import { useData } from "vitepress/client";
 
 const props = withDefaults(
     defineProps<{
