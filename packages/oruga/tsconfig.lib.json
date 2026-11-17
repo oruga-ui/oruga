@@ -5,7 +5,7 @@
   ],
   "compilerOptions": {
     "composite": true,
-    // Inspector examples import types from the sibling docs workspace.
+    // inspector examples import types from the sibling docs workspace
     "rootDir": "..",
     // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking
     // specified here to keep it out of the root directory
@@ -22,7 +22,7 @@
 
     // path mapping for cleaner imports
     "paths": {
-      // Path used by lib files .
+      // path used by lib files
       "@/*": ["./src/*"],
       // path used by inspector files
       "@docs": ["../docs/src/types"],
