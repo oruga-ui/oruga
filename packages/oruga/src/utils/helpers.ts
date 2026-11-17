@@ -1,6 +1,10 @@
 import { Comment, Fragment, Text } from "vue";
 import type { DeepKeys, DeepType, Numberish } from "@/types";
 
+/** Interactive HTML elements */
+export const INTERACTIVE_SELECTOR =
+    "button, a[href], input, select, textarea, [contenteditable]" as const;
+
 /**
  * +/- function to native math sign
  */

@@ -1,4 +1,11 @@
-import { createApp, createVNode, h, useId } from "vue";
+import {
+    createApp,
+    createVNode,
+    defineComponent,
+    h,
+    markRaw,
+    useId,
+} from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
@@ -54,6 +61,35 @@ describe("useProgrammatic tests", () => {
 
         await flushPromises(); // await promise finished
         expect(handler).toHaveBeenCalledOnce();
+    });
+
+    test("close a component with a pending async setup function", async () => {
+        let resolveSetup!: () => void;
+        const pending = new Promise<void>((r) => (resolveSetup = r));
+
+        const component = markRaw(
+            defineComponent({
+                async setup() {
+                    await pending;
+                    return () => h("button", { id: "mycomp" });
+                },
+            }),
+        );
+
+        const { close, promise } = factory.open(component);
+        expect(factory.count()).toBe(1);
+
+        close("result");
+        vi.runAllTimers();
+
+        await expect(promise).resolves.toStrictEqual(["result"]);
+        expect(factory.count()).toBe(0);
+        expect(document.body.querySelector("#programmatic-app")).toBeNull();
+
+        // the late setup result must not render anything anymore
+        resolveSetup();
+        await flushPromises();
+        expect(document.body.querySelector("#mycomp")).toBeNull();
     });
 
     test("mounting with target correctly", () => {

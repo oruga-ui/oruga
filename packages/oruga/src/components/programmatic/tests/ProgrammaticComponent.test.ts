@@ -1,4 +1,4 @@
-import { createVNode, markRaw, type VNode } from "vue";
+import { createVNode, defineComponent, h, markRaw, type VNode } from "vue";
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 
@@ -59,6 +59,36 @@ describe("ProgrammaticComponent tests", () => {
         const model = wrapper.find('[data-oruga="modal"]');
         expect(model.exists()).toBeTruthy();
         expect(model.text()).toBe(content);
+    });
+
+    test("render a component with an async setup function", async () => {
+        const warn = vi.spyOn(console, "warn");
+
+        let resolveSetup!: () => void;
+        const pending = new Promise<void>((r) => (resolveSetup = r));
+
+        const wrapper = mount(ProgrammaticComponent, {
+            props: {
+                component: markRaw(
+                    defineComponent({
+                        async setup() {
+                            await pending;
+                            return () => h("div", { id: "async-content" });
+                        },
+                    }),
+                ),
+            },
+        });
+
+        expect(wrapper.find("#async-content").exists()).toBeFalsy();
+
+        resolveSetup();
+        await flushPromises();
+
+        expect(wrapper.find("#async-content").exists()).toBeTruthy();
+        expect(warn).not.toHaveBeenCalled();
+
+        warn.mockRestore();
     });
 
     test("close is called correctly", async () => {

@@ -430,6 +430,8 @@ function onPopoverToggle(event: ToggleEvent): void {
  *   3. Close the dropdown.
  */
 function selectItem(item: DropdownChildItem<T>): void {
+    if (props.disabled) return;
+
     const value = item.data.value!;
     emits("select", value);
 

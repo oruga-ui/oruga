@@ -15,11 +15,10 @@ import OButton from "@/components/button/Button.vue";
 import CloseButton from "@/components/utils/CloseButton.vue";
 
 import { getDefault } from "@/utils/config";
-import { toCssDimension } from "@/utils/helpers";
+import { INTERACTIVE_SELECTOR, toCssDimension } from "@/utils/helpers";
 import {
     defineClasses,
     unrefElement,
-    useEventListener,
     useMatchMedia,
     usePreventScrolling,
     useTeleport,
@@ -299,13 +298,31 @@ watch(
 const dragStyle = computed(() =>
     props.draggable && (dragOffset.value.x || dragOffset.value.y)
         ? {
-              transform: `translate(${dragOffset.value.x}px, ${dragOffset.value.y}px)`,
+              // the `translate` property composes with the `transform` of the animation and the theme
+              translate: `${dragOffset.value.x}px ${dragOffset.value.y}px`,
           }
         : {},
 );
 
+/** Whether the dialog can be dragged by the user. */
+const isDraggable = computed(() => props.draggable && !props.fullscreen);
+
+/** The header is the drag handle, so the browser must not scroll the page when it is touched. */
+const headerStyle = computed(() =>
+    isDraggable.value ? { touchAction: "none" } : undefined,
+);
+
 function onDragStart(event: PointerEvent): void {
-    if (!props.draggable || props.fullscreen) return;
+    if (!isDraggable.value || event.button !== 0) return;
+    // interactive elements, which must stay usable instead of starting a drag
+    if ((event.target as Element).closest(INTERACTIVE_SELECTOR)) return;
+
+    // all following pointer events are sent to the header,
+    // even if the pointer leaves it while dragging
+    const handle = event.currentTarget as HTMLElement;
+    if (typeof handle.setPointerCapture === "function")
+        handle.setPointerCapture(event.pointerId);
+
     isDragging.value = true;
     dragStart.value = {
         x: event.clientX - dragOffset.value.x,
@@ -314,6 +331,8 @@ function onDragStart(event: PointerEvent): void {
 }
 
 function onDragMove(event: PointerEvent): void {
+    if (!isDragging.value) return;
+
     const newX = event.clientX - dragStart.value.x;
     const newY = event.clientY - dragStart.value.y;
 
@@ -340,12 +359,17 @@ function onDragMove(event: PointerEvent): void {
     }
 }
 
-function onDragEnd(): void {
+function onDragEnd(event: PointerEvent): void {
+    if (!isDragging.value) return;
     isDragging.value = false;
-}
 
-useEventListener(document, "pointermove", onDragMove, { trigger: isDragging });
-useEventListener(document, "pointerup", onDragEnd, { trigger: isDragging });
+    const handle = event.currentTarget as HTMLElement;
+    if (
+        typeof handle.hasPointerCapture === "function" &&
+        handle.hasPointerCapture(event.pointerId)
+    )
+        handle.releasePointerCapture(event.pointerId);
+}
 
 // #endregion --- Draggable Feature ---
 
@@ -484,7 +508,11 @@ defineExpose({ close, confirm });
                             closeable
                         "
                         :class="headerClasses"
-                        @pointerdown="onDragStart">
+                        :style="headerStyle"
+                        @pointerdown="onDragStart"
+                        @pointermove="onDragMove"
+                        @pointerup="onDragEnd"
+                        @pointercancel="onDragEnd">
                         <slot name="header" :close="close" :confirm="confirm">
                             <h1
                                 v-if="$slots['title'] || title"

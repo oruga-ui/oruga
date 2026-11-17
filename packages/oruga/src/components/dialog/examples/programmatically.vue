@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { h } from "vue";
 import { useOruga } from "@oruga-ui/oruga-next";
+import DialogForm from "./_dialog-form.vue";
 
 const oruga = useOruga();
 
@@ -22,11 +23,24 @@ function openImageDialog(): void {
     ]);
 
     oruga.dialog.open({
+        // a dialog without a title needs an accessible name
+        ariaLabel: "Oruga logo",
         component: vnode,
         closeOnBackdrop: true,
         closeOnEscape: true,
         imageAlt: "Oruga logo",
         imageSrc: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
+    });
+}
+
+function openFormDialog(): void {
+    oruga.dialog.open({
+        title: "Login",
+        backdrop: true,
+        closeable: true,
+        // the component closes the dialog by emitting a `close` event
+        component: DialogForm,
+        props: { email: "oruga@example.com" },
     });
 }
 </script>
@@ -36,15 +50,21 @@ function openImageDialog(): void {
         <p>
             <o-button
                 label="Open Confirm Dialog"
-                size="medium"
                 variant="primary"
+                aria-haspopup="dialog"
                 @click="openConfirmDialog()" />
 
             <o-button
                 label="Open Oruga Image"
-                size="medium"
                 variant="primary"
+                aria-haspopup="dialog"
                 @click="openImageDialog()" />
+
+            <o-button
+                label="Open Form (Component)"
+                variant="primary"
+                aria-haspopup="dialog"
+                @click="openFormDialog()" />
         </p>
     </section>
 </template>

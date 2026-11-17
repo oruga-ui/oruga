@@ -493,13 +493,17 @@ describe("ODialog test", () => {
             // wait for isDragging to become true and the pointermove listener to be registered
             await nextTick();
 
-            document.dispatchEvent(
-                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            header.element.dispatchEvent(
+                new PointerEvent("pointermove", {
+                    clientX: 200,
+                    clientY: 150,
+                    bubbles: true,
+                }),
             );
             await nextTick();
 
             const dialog = wrapper.find("dialog");
-            expect(dialog.element.style.transform).toContain("translate");
+            expect(dialog.element.style.translate).toContain("px");
         });
 
         test("dragging stops and dragging class is removed on pointerup", async () => {
@@ -518,13 +522,19 @@ describe("ODialog test", () => {
             );
             await nextTick();
 
-            const dialog = wrapper.find("dialog");
-            expect(dialog.classes("o-dialog--dragging")).toBeTruthy();
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                true,
+            );
 
-            document.dispatchEvent(new PointerEvent("pointerup"));
+            header.element.dispatchEvent(
+                new PointerEvent("pointerup", { bubbles: true }),
+            );
             await nextTick();
 
-            expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
+            // query the dialog again, because the element is replaced on re-render
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
         });
 
         test("drag position resets when dialog becomes inactive", async () => {
@@ -543,19 +553,23 @@ describe("ODialog test", () => {
             );
             await nextTick();
 
-            document.dispatchEvent(
-                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            header.element.dispatchEvent(
+                new PointerEvent("pointermove", {
+                    clientX: 200,
+                    clientY: 150,
+                    bubbles: true,
+                }),
             );
             await nextTick();
 
             let dialog = wrapper.find("dialog");
-            expect(dialog.element.style.transform).toContain("translate");
+            expect(dialog.element.style.translate).toContain("px");
 
             await wrapper.setProps({ active: false });
             await nextTick();
 
             dialog = wrapper.find("dialog");
-            expect(dialog.element.style.transform).toBeFalsy();
+            expect(dialog.element.style.translate).toBeFalsy();
         });
 
         test("does not start dragging when fullscreen is true", async () => {
@@ -594,14 +608,104 @@ describe("ODialog test", () => {
             );
             await nextTick();
 
-            document.dispatchEvent(
-                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            header.element.dispatchEvent(
+                new PointerEvent("pointermove", {
+                    clientX: 200,
+                    clientY: 150,
+                    bubbles: true,
+                }),
             );
             await nextTick();
 
             const dialog = wrapper.find("dialog");
             expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
-            expect(dialog.element.style.transform).toBeFalsy();
+            expect(dialog.element.style.translate).toBeFalsy();
+        });
+    });
+
+    describe("test draggable input handling", () => {
+        const defaultProps = { active: true, title: "Draggable Dialog" };
+        const defaultGlobal = { stubs: { transition: true, teleport: true } };
+
+        function pointerdown(
+            target: Element,
+            init: PointerEventInit = {},
+        ): void {
+            target.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    clientX: 100,
+                    clientY: 100,
+                    bubbles: true,
+                    ...init,
+                }),
+            );
+        }
+
+        test("captures the pointer on the header while dragging", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header").element;
+            const setPointerCapture = vi.fn();
+            header.setPointerCapture = setPointerCapture;
+
+            pointerdown(header, { pointerId: 7 });
+            await nextTick();
+
+            expect(setPointerCapture).toHaveBeenCalledWith(7);
+        });
+
+        test("does not start dragging from the close button", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true, closeable: true },
+                global: defaultGlobal,
+            });
+
+            pointerdown(wrapper.find("header button").element);
+            await nextTick();
+
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
+        });
+
+        test("does not start dragging with a secondary button", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            pointerdown(wrapper.find(".o-dialog__header").element, {
+                button: 2,
+            });
+            await nextTick();
+
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
+        });
+
+        test("stops dragging on pointercancel", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header").element;
+            pointerdown(header);
+            await nextTick();
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                true,
+            );
+
+            header.dispatchEvent(new PointerEvent("pointercancel"));
+            await nextTick();
+
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
         });
     });
 

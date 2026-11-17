@@ -18,7 +18,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
         <div data-oruga="select" class="">
           <!--v-if--><select class="o-timepicker__select" aria-label="Select Hour" autocomplete="off" id="v-1" data-oruga-input="select">
             <!--v-if-->
-            <option selected="" value="0">00</option>
+            <option value="0">00</option>
             <option value="1">01</option>
             <option value="2">02</option>
             <option value="3">03</option>

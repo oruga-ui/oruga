@@ -195,7 +195,7 @@ const indicatorItems = computed(() =>
 let resizeObserver: ResizeObserver | undefined;
 
 if (isClient && window.ResizeObserver) {
-    resizeObserver = new window.ResizeObserver(onRefresh);
+    resizeObserver = new window.ResizeObserver(onResize);
 }
 
 const windowWidth = ref(0);
@@ -274,6 +274,11 @@ watch(
 
 function onRefresh(): void {
     vmodel.value = childItems.value[0]?.data.getValue();
+    onResize();
+}
+
+/** recalculate the layout without changing the active item */
+function onResize(): void {
     // set HTML element with
     windowWidth.value = window.innerWidth;
     // trigger re creation of settings based on props

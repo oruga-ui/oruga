@@ -179,24 +179,26 @@ function updateDragDropFocus(focus: boolean): void {
     if (!props.disabled) dragDropFocus.value = focus;
 }
 
-/** Check mime type of file s*/
+/** Check the file against the `accept` list the same way the native input does */
 function checkType(file: File): boolean {
     if (!props.accept) return true;
-    const types = props.accept.split(",");
+    const types = props.accept
+        .split(",")
+        .map((type) => type.trim().toLowerCase())
+        .filter((type) => !!type);
     if (types.length === 0) return true;
-    for (let i = 0; i < types.length; i++) {
-        const type = types[i].trim();
-        if (type) {
-            if (type.substring(0, 1) === ".") {
-                const extension = file.name.toLowerCase().slice(-type.length);
-                if (extension === type.toLowerCase()) return true;
-            } else {
-                // check mime type
-                if (file.type.match(type)) return true;
-            }
-        }
-    }
-    return false;
+
+    const name = file.name.toLowerCase();
+    // mime types are case-insensitive
+    const mimeType = file.type.toLowerCase();
+    return types.some((type) => {
+        // file extension, e.g. `.pdf`
+        if (type.startsWith(".")) return name.endsWith(type);
+        // any subtype, e.g. `image/*`
+        if (type.endsWith("/*")) return mimeType.startsWith(type.slice(0, -1));
+        // exact mime type, e.g. `image/svg+xml`
+        return mimeType === type;
+    });
 }
 
 /**

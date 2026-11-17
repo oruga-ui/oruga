@@ -8,12 +8,13 @@ const isActive = ref(false);
     <section>
         <o-button
             label="Open Image Dialog"
-            size="medium"
             variant="primary"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
         <o-dialog
             v-model:active="isActive"
+            aria-label="Oruga Logo"
             image-alt="Oruga Logo"
             image-src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
     </section>

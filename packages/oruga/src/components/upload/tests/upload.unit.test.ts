@@ -63,6 +63,64 @@ describe("OUpload tests", () => {
         });
     });
 
+    describe("accept", () => {
+        const svg = new File(["<svg/>"], "logo.svg", { type: "image/svg+xml" });
+        const png = new File([""], "photo.png", { type: "image/png" });
+        const pdf = new File([""], "Report.PDF", { type: "application/pdf" });
+        const text = new File([""], "notes.txt", { type: "text/plain" });
+        const fakeImage = new File([""], "fake.bin", {
+            type: "application/x-image",
+        });
+
+        async function selectFiles(
+            wrapper: ReturnType<typeof mount>,
+            files: File[],
+        ): Promise<void> {
+            const input = wrapper.find("input");
+            Object.defineProperty(input.element, "files", { value: files });
+            await input.trigger("change");
+        }
+
+        test.each([
+            { accept: "image/svg+xml", file: svg },
+            { accept: "image/png", file: png },
+            { accept: "IMAGE/PNG", file: png },
+            { accept: "image/*", file: svg },
+            { accept: "image/*", file: png },
+            { accept: ".pdf", file: pdf },
+            { accept: ".txt, application/pdf", file: pdf },
+            { accept: " , ", file: text },
+        ])("accept '$accept' for $file.name", async ({ accept, file }) => {
+            const wrapper = mount(OUpload, { props: { accept } });
+            await selectFiles(wrapper, [file]);
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [file],
+            ]);
+        });
+
+        test.each([
+            { accept: "image/svg", file: svg },
+            { accept: "image/*", file: fakeImage },
+            { accept: "image/*", file: pdf },
+            { accept: ".png", file: svg },
+            { accept: "image/png, .pdf", file: text },
+        ])("reject '$accept' for $file.name", async ({ accept, file }) => {
+            const wrapper = mount(OUpload, { props: { accept } });
+            await selectFiles(wrapper, [file]);
+            expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+        });
+
+        test("only keep the accepted files of a multiple selection", async () => {
+            const wrapper = mount(OUpload, {
+                props: { accept: "image/svg+xml, .pdf", multiple: true },
+            });
+            await selectFiles(wrapper, [svg, png, pdf, text]);
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [[svg, pdf]],
+            ]);
+        });
+    });
+
     describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OUpload);

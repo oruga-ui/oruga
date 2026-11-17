@@ -4,6 +4,7 @@ import {
     getCurrentInstance,
     onMounted,
     onUnmounted,
+    Suspense,
     type ComponentInternalInstance,
     type VNode,
     type VNodeTypes,
@@ -108,11 +109,16 @@ export const ProgrammaticComponent = defineComponent<
 
         // return render function which renders given component
         return (): VNode =>
-            createVNode(
-                props.component,
-                { ...props.props, onClose: close },
-                slots["default"],
-            );
+            // the component is rendered into its own app, so no parent can provide
+            // the suspense boundary which components with an async setup require
+            createVNode(Suspense, null, {
+                default: () =>
+                    createVNode(
+                        props.component,
+                        { ...props.props, onClose: close },
+                        slots["default"],
+                    ),
+            });
     },
     {
         name: "ProgrammaticApp",

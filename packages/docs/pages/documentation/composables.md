@@ -189,6 +189,7 @@ The new Vue instance can be seen in the [Vue Devtools](https://devtools.vuejs.or
 The separate Vue instance will have the same context object as the current one and will be rendered into a `div` in the target DOM container (by default, it is rendered into the `body` element).
 The provided component is then rendered into the wrapper component, which handles the Vue lifecycle events of the provided component.
 Closing the instance of the wrapper component, for example by calling `oruga.programmatic.close()` from outside, or by firing a `close` event from inside the provided component, will destroy the wrapper component and the new Vue instance, and clean up the DOM.
+The wrapper component also provides a [`Suspense`](https://vuejs.org/guide/built-ins/suspense.html) boundary, so the provided component can have an async `setup()` function. Everything around it, like the dialog of `oruga.dialog.open()`, is already shown while it is being resolved.
 
 > **_Note:_** For performance reasons, be careful not to open too many programmatic components at once, each of which will create a separate Vue instance.
 

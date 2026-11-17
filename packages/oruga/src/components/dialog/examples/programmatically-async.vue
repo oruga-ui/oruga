@@ -14,12 +14,12 @@ const promptDialog = async (): Promise<void> => {
         closeOnConfirm: true,
     });
 
-    // wait until the dialog got closed
-    await instance.promise;
+    // wait until the dialog got closed, the promise resolves with the arguments of the close event
+    const [, returnValue] = await instance.promise;
 
     oruga.notification.open({
         duration: 5000,
-        content: "Dialog closed",
+        content: `Dialog closed (${String(returnValue || "dismissed")})`,
         variant: "info",
         position: "top",
         closeable: true,
@@ -56,13 +56,14 @@ const promptTimeoutDialog = async (): Promise<void> => {
         <p>
             <o-button
                 label="Open Prompt Dialog"
-                size="medium"
                 variant="primary"
+                aria-haspopup="dialog"
                 @click.prevent="promptDialog()" />
+
             <o-button
                 label="Open Prompt Dialog (with timeout)"
-                size="medium"
                 variant="primary"
+                aria-haspopup="dialog"
                 @click.prevent="promptTimeoutDialog()" />
         </p>
     </section>
