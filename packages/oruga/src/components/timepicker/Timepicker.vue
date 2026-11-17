@@ -449,7 +449,7 @@ function isSecondDisabled(second: number): boolean {
 }
 
 function isMeridienDisabled(meridienString: string): boolean {
-    const offset = meridienString == "AM" ? 0 : 12;
+    const offset = meridienString === pmString.value ? 12 : 0;
     for (let i = 0; i < 12; i++) {
         if (!isHourDisabled(i + offset)) return false;
     }
@@ -719,13 +719,20 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         v-bind="selectAttrs"
                         v-model="hoursSelected"
                         :class="selectClasses"
-                        :options="hours"
                         override
                         :disabled="disabled"
                         placeholder="00"
                         :aria-label="ariaSelectHoursLabel"
                         :use-html5-validation="false"
-                        @change="onHoursChange($event.target.value)" />
+                        @change="onHoursChange($event.target.value)">
+                        <option
+                            v-for="hour in hours"
+                            :key="hour.value"
+                            :value="hour.value"
+                            :disabled="isHourDisabled(hour.value)">
+                            {{ hour.label }}
+                        </option>
+                    </o-select>
 
                     <span :class="separatorClasses">{{ hourLiteral }}</span>
 

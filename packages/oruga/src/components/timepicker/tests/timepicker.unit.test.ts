@@ -1,5 +1,10 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
-import { enableAutoUnmount, mount } from "@vue/test-utils";
+import {
+    enableAutoUnmount,
+    mount,
+    type DOMWrapper,
+    type VueWrapper,
+} from "@vue/test-utils";
 
 import OTimepicker from "@/components/timepicker/Timepicker.vue";
 
@@ -134,6 +139,79 @@ describe("OTimepicker tests", () => {
         expect(contentElement.classes("o-timepicker__content--active")).toBe(
             true,
         );
+    });
+
+    describe("unselectable times", () => {
+        const time = (hours: number, minutes = 0): Date =>
+            new Date(2024, 0, 1, hours, minutes);
+
+        const range = (from: number, to: number): string[] =>
+            Array.from({ length: to - from + 1 }, (_, i) => String(from + i));
+
+        const enabledOptions = (select: DOMWrapper<Element>): string[] =>
+            select
+                .findAll("option")
+                .map((option) => option.element as HTMLOptionElement)
+                .filter((option) => !option.disabled)
+                .map((option) => option.value);
+
+        const enabledHours = (wrapper: VueWrapper): string[] =>
+            enabledOptions(wrapper.find("select[aria-label='Select Hour']"));
+
+        test("disables the hours outside of minTime and maxTime", () => {
+            const wrapper = mount(OTimepicker, {
+                props: { minTime: time(9), maxTime: time(18) },
+            });
+
+            expect(enabledHours(wrapper)).toStrictEqual(range(9, 18));
+        });
+
+        test("disables an hour without any selectable minute left", () => {
+            const wrapper = mount(OTimepicker, {
+                props: { minTime: time(9, 50), incrementMinutes: 15 },
+            });
+
+            expect(enabledHours(wrapper)).toStrictEqual(range(10, 23));
+        });
+
+        test("disables the hours whose minutes are all unselectable", () => {
+            const wrapper = mount(OTimepicker, {
+                props: {
+                    incrementMinutes: 30,
+                    unselectableTimes: [time(10), time(10, 30), time(11)],
+                },
+            });
+
+            const hours = enabledHours(wrapper);
+            expect(hours).not.toContain("10");
+            expect(hours).toContain("11");
+        });
+
+        test("disables the hours rejected by an unselectableTimes function", () => {
+            const wrapper = mount(OTimepicker, {
+                props: {
+                    unselectableTimes: (date: Date) => date.getHours() >= 12,
+                },
+            });
+
+            expect(enabledHours(wrapper)).toStrictEqual(range(0, 11));
+        });
+
+        test("disables a meridiem without any selectable hour", () => {
+            // the meridiem select comes last, the en-GB test locale calls the periods "am" and "pm"
+            const enabledMeridiems = (wrapper: VueWrapper): string[] =>
+                enabledOptions(wrapper.findAll("select").at(-1)!);
+
+            const morning = mount(OTimepicker, {
+                props: { hourFormat: "12", maxTime: time(11) },
+            });
+            expect(enabledMeridiems(morning)).toStrictEqual(["am"]);
+
+            const afternoon = mount(OTimepicker, {
+                props: { hourFormat: "12", minTime: time(13) },
+            });
+            expect(enabledMeridiems(afternoon)).toStrictEqual(["pm"]);
+        });
     });
 
     describe("attribute placement", () => {
