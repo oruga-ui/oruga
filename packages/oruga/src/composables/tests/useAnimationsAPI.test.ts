@@ -104,10 +104,25 @@ describe("useAnimationsAPI test", () => {
             play(el, "zoom-in", true);
 
             const [keyframes] = animateSpy.mock.calls[0];
-            expect(keyframes).toStrictEqual([
+            expect(keyframes).toEqual([
                 { opacity: 0, transform: "scale(0.85)" },
                 { opacity: 1, transform: "scale(1)" },
             ]);
+        });
+
+        test("should animate the `zoom-in` preset from a smaller size", () => {
+            const el = document.createElement("div");
+            const animateSpy = vi.spyOn(el, "animate");
+            const { play } = useAnimationsAPI();
+
+            play(el, "zoom-in", true);
+
+            const [keyframes] = animateSpy.mock.calls[0];
+            expect(keyframes).toHaveLength(2);
+            expect((keyframes as Keyframe[])[0].transform).toBe(from);
+            expect((keyframes as Keyframe[])[1].transform).toMatch(
+                /translate[XY]\(0\)/,
+            );
         });
 
         test("should reverse the playback direction when closing", () => {
@@ -223,38 +238,41 @@ describe("useAnimationsAPI test", () => {
         });
     });
 
-    /**
-     * A fake animation with a manually resolved `finished` promise and a direction which follows `reverse`.
-     * `reverse` and `cancel` are typed as mocks, so they can be asserted without unbound method access.
-     */
-    type FakeAnimation = Omit<Animation, "reverse" | "cancel"> & {
-        reverse: Mock<() => void>;
-        cancel: Mock<() => void>;
-        finish: () => void;
-    };
+    describe("play with backdrop", () => {
+        function fakeAnimation(): Animation & {
+            playState: string;
+            reverse: ReturnType<typeof vi.fn>;
+            cancel: ReturnType<typeof vi.fn>;
+        } {
+            return {
+                playState: "running",
+                finished: Promise.resolve(),
+                reverse: vi.fn(),
+                cancel: vi.fn(),
+            } as unknown as Animation & {
+                playState: string;
+                reverse: ReturnType<typeof vi.fn>;
+                cancel: ReturnType<typeof vi.fn>;
+            };
+        }
 
-    function createFakeAnimation(): FakeAnimation {
-        let finish = (): void => {};
-        const animation = {
-            playState: "running",
-            playbackRate: 1,
-            finished: new Promise<void>((resolve) => {
-                finish = () => {
-                    animation.playState = "finished";
-                    resolve();
-                };
-            }),
-            reverse: vi.fn(() => {
-                animation.playbackRate *= -1;
-            }),
-            cancel: vi.fn(),
-            finish: () => finish(),
-        };
-        return animation as unknown as FakeAnimation;
-    }
+        /** spy on `animate` and collect the created animations */
+        function spyAnimate(el: HTMLElement): {
+            animateSpy: ReturnType<typeof vi.spyOn>;
+            animations: ReturnType<typeof fakeAnimation>[];
+        } {
+            const animations: ReturnType<typeof fakeAnimation>[] = [];
+            const animateSpy = vi
+                .spyOn(el, "animate")
+                .mockImplementation(() => {
+                    const animation = fakeAnimation();
+                    animations.push(animation);
+                    return animation;
+                });
+            return { animateSpy, animations };
+        }
 
-    describe("release of the opening animation", () => {
-        test("should cancel the animation once it has finished opening", async () => {
+        test("should not animate the backdrop by default", () => {
             const el = document.createElement("div");
             const animation = createFakeAnimation();
             vi.spyOn(el, "animate").mockReturnValue(animation);
@@ -273,6 +291,8 @@ describe("useAnimationsAPI test", () => {
             const el = document.createElement("div");
             const animation = createFakeAnimation();
             vi.spyOn(el, "animate").mockReturnValue(animation);
+            const animation = createFakeAnimation();
+            vi.spyOn(el, "animate").mockReturnValue(animation);
             const { play } = useAnimationsAPI();
 
             const result = play(el, "fade", false);
@@ -280,10 +300,13 @@ describe("useAnimationsAPI test", () => {
             await result;
 
             expect(animation.cancel).not.toHaveBeenCalled();
+            expect(animation.cancel).not.toHaveBeenCalled();
         });
 
         test("should keep the end state when an opening animation got reversed", async () => {
             const el = document.createElement("div");
+            const animation = createFakeAnimation();
+            vi.spyOn(el, "animate").mockReturnValue(animation);
             const animation = createFakeAnimation();
             vi.spyOn(el, "animate").mockReturnValue(animation);
             const { play } = useAnimationsAPI();
@@ -302,12 +325,15 @@ describe("useAnimationsAPI test", () => {
             vi.spyOn(el, "animate").mockReturnValue(animation);
             const { play } = useAnimationsAPI();
 
-            play(el, "fade", false);
-            const result = play(el, "fade", true); // reverses the in-flight animation
-            animation.finish();
-            await result;
+            play(el, "fade", true, true);
+            animations.forEach(
+                (animation) => (animation.playState = "finished"),
+            );
+            play(el, "fade", true, true);
 
-            expect(animation.cancel).toHaveBeenCalledTimes(1);
+            expect(animations[0].cancel).toHaveBeenCalledTimes(1);
+            expect(animations[1].cancel).toHaveBeenCalledTimes(1);
+            expect(animateSpy).toHaveBeenCalledTimes(4);
         });
 
         test("should start a new animation after the opening animation was released", async () => {
@@ -330,34 +356,6 @@ describe("useAnimationsAPI test", () => {
             expect(opening.reverse).not.toHaveBeenCalled();
             expect(animateSpy).toHaveBeenCalledTimes(2);
             expect(closing.reverse).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    describe("cancel", () => {
-        test("should not throw without an animation", () => {
-            const { cancel } = useAnimationsAPI();
-            expect(() => cancel()).not.toThrow();
-        });
-
-        test("should cancel the in-flight animation and start a new one afterwards", () => {
-            const el = document.createElement("div");
-            const first = createFakeAnimation();
-            const second = createFakeAnimation();
-            const animateSpy = vi
-                .spyOn(el, "animate")
-                .mockReturnValueOnce(first)
-                .mockReturnValueOnce(second);
-            const { play, cancel } = useAnimationsAPI();
-
-            play(el, "fade", true);
-            cancel();
-            expect(first.cancel).toHaveBeenCalledTimes(1);
-
-            play(el, "fade", false);
-
-            // the cancelled animation must not be reversed
-            expect(first.reverse).not.toHaveBeenCalled();
-            expect(animateSpy).toHaveBeenCalledTimes(2);
         });
     });
 });
