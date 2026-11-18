@@ -1,4 +1,4 @@
-export function renderer(name: string): string {
+function renderer(name: string): string {
     return `
 ## Examples
 

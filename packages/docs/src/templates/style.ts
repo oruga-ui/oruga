@@ -24,7 +24,7 @@ function getVariablesFromContent(content: string): string[] {
         .filter((d) => !!d);
 }
 
-export function renderer(config: SafeDocgenCLIConfig, name: string): string {
+function renderer(config: SafeDocgenCLIConfig, name: string): string {
     const renderThemeVariables = (theme: ThemeConfig): string => {
         const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
 

@@ -10,7 +10,7 @@ import renderStyle from "./style";
 import renderExamples from "./examples";
 import renderClasses from "./classes";
 
-export function renderer(
+function renderer(
     renderedUsage: RenderedUsage,
     doc: ComponentDoc,
     config: SafeDocgenCLIConfig,

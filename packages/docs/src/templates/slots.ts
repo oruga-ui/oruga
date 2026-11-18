@@ -19,7 +19,7 @@ function formatParams(params: SlotDescriptor["bindings"]): string {
         .join("\n");
 }
 
-export function renderer(descriptor: SlotDescriptor[]): string {
+function renderer(descriptor: SlotDescriptor[]): string {
     if (!descriptor.length) return "";
     const slots = descriptor;
 

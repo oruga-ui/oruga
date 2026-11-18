@@ -12,7 +12,7 @@ const META_PROP_IGNORE = ["key", "ref", "ref_for", "ref_key", "class", "style"];
  * @param filePath absolute path of the parsed file
  * @param opts
  */
-export async function parser(
+async function parser(
     checker: ComponentMetaChecker,
     filePath: string,
 ): Promise<ComponentDoc[]> {

@@ -75,7 +75,7 @@ function formatValue(value: string): string {
     return value;
 }
 
-export function renderer(
+function renderer(
     descriptors: PropDescriptor[],
     opt: SubTemplateOptions,
     doc: ComponentDoc,
