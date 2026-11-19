@@ -2,9 +2,11 @@ import {
     createApp,
     createVNode,
     defineComponent,
+    getCurrentInstance,
     h,
     markRaw,
     useId,
+    type App,
 } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
@@ -311,6 +313,48 @@ describe("useProgrammatic tests", () => {
             baseApp.unmount();
 
             // close the programmatic component
+            close();
+            vi.runAllTimers();
+        } finally {
+            setActiveOruga(previousOruga);
+        }
+    });
+
+    test("programmatic app does not invoke base app config accessors", () => {
+        const previousOruga = getActiveOruga();
+        const baseApp = createApp({ render: () => h("div") });
+        // simulate the dev-only accessor of the Vue runtime-only build, which warns on every read
+        const compilerOptions = {};
+        const getter = vi.fn(() => compilerOptions);
+        Object.defineProperty(baseApp.config, "compilerOptions", {
+            get: getter,
+            configurable: true,
+            enumerable: true,
+        });
+        baseApp.use(createOruga());
+
+        try {
+            let programmaticApp: App | null = null;
+            const { close } = factory.open({
+                setup() {
+                    programmaticApp = getCurrentInstance()!.appContext.app;
+                    return () => h("div");
+                },
+            });
+
+            // opening the programmatic component should not read the accessor
+            expect(getter).not.toHaveBeenCalled();
+
+            // the programmatic app config should still share the base app config
+            expect(programmaticApp!.config).not.toBe(baseApp.config);
+            expect(programmaticApp!.config.globalProperties).toBe(
+                baseApp.config.globalProperties,
+            );
+            expect(programmaticApp!.config.compilerOptions).toBe(
+                compilerOptions,
+            );
+            expect(programmaticApp!.config.idPrefix).toMatch(/^programmatic-/);
+
             close();
             vi.runAllTimers();
         } finally {

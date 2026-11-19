@@ -2,6 +2,7 @@ import {
     createApp,
     toValue,
     type App,
+    type AppConfig,
     type ComponentInternalInstance,
     type EmitsToProps,
     type MaybeRefOrGetter,
@@ -152,11 +153,18 @@ export abstract class ProgrammaticFactory {
         if (orugaConfig?._app) {
             // if running inside another app share the current app context to the new app instance
             const baseContext = orugaConfig._app._context;
+            // use an own config object, otherwise the idPrefix would be set on the base app.
+            // copy the property descriptors instead of spreading the config, because spreading
+            // would read accessors like `compilerOptions`, which warns in Vue's runtime-only dev build
+            const config = Object.defineProperties(
+                {} as AppConfig,
+                Object.getOwnPropertyDescriptors(baseContext.config),
+            );
+            config.idPrefix = idPrefix;
             Object.assign(app._context, baseContext, {
                 // keep the reference to the new app instance
                 app,
-                // use an own config object, otherwise the idPrefix would be set on the base app
-                config: { ...baseContext.config, idPrefix },
+                config,
                 // inherit the provided values, but don't write them back to the base app
                 provides: Object.create(baseContext.provides),
             });
