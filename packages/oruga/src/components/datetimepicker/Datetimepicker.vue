@@ -9,7 +9,7 @@ import { getDefault, getDefaultFunction } from "@/utils/config";
 import { isDate, isMobileAgent, pad } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
-import { useDateimepickerMixins } from "./useDatetimepickerMixin";
+import { useDatetimepicker } from "./useDatetimepicker";
 
 import type { DatepickerProps } from "../datepicker/props";
 import type { TimepickerProps } from "../timepicker/props";
@@ -158,7 +158,7 @@ const { checkHtml5Validity, setFocus, setBlur } = useInputHandler(
     emits,
 );
 
-const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
+const { datetimeFormatter, datetimeParser } = useDatetimepicker(props);
 
 // the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
@@ -175,11 +175,14 @@ function updateVModel(value: Date | Date[] | undefined): void {
 
     let date = new Date(value.getTime());
     if (props.modelValue) {
+        const dateChanged =
+            value.getDate() !== props.modelValue.getDate() ||
+            value.getMonth() !== props.modelValue.getMonth() ||
+            value.getFullYear() !== props.modelValue.getFullYear();
+
         // restore time part
         if (
-            (value.getDate() !== props.modelValue.getDate() ||
-                value.getMonth() !== props.modelValue.getMonth() ||
-                value.getFullYear() !== props.modelValue.getFullYear()) &&
+            dateChanged &&
             value.getHours() === 0 &&
             value.getMinutes() === 0 &&
             value.getSeconds() === 0
@@ -192,12 +195,14 @@ function updateVModel(value: Date | Date[] | undefined): void {
             );
         }
     }
+
     // check min and max range
     if (props.minDatetime && date < props.minDatetime) {
         date = props.minDatetime;
     } else if (props.maxDatetime && date > props.maxDatetime) {
         date = props.maxDatetime;
     }
+
     vmodel.value = new Date(date.getTime());
 }
 
@@ -233,9 +238,9 @@ const minTime = computed(() => {
         !props.minDatetime ||
         vmodel.value === null ||
         typeof vmodel.value === "undefined" ||
-        vmodel.value.getFullYear() != props.minDatetime.getFullYear() ||
-        vmodel.value.getMonth() != props.minDatetime.getMonth() ||
-        vmodel.value.getDate() != props.minDatetime.getDate()
+        vmodel.value.getFullYear() !== props.minDatetime.getFullYear() ||
+        vmodel.value.getMonth() !== props.minDatetime.getMonth() ||
+        vmodel.value.getDate() !== props.minDatetime.getDate()
     ) {
         return timepickerProps.value?.minTime;
     }
@@ -247,9 +252,9 @@ const maxTime = computed(() => {
         !props.maxDatetime ||
         vmodel.value === null ||
         typeof vmodel.value === "undefined" ||
-        vmodel.value.getFullYear() != props.maxDatetime.getFullYear() ||
-        vmodel.value.getMonth() != props.maxDatetime.getMonth() ||
-        vmodel.value.getDate() != props.maxDatetime.getDate()
+        vmodel.value.getFullYear() !== props.maxDatetime.getFullYear() ||
+        vmodel.value.getMonth() !== props.maxDatetime.getMonth() ||
+        vmodel.value.getDate() !== props.maxDatetime.getDate()
     ) {
         return timepickerProps.value?.maxTime;
     }
@@ -259,13 +264,11 @@ const maxTime = computed(() => {
 const datepickerSize = computed(
     () => datepickerProps.value?.size || props.size,
 );
-
 const timepickerSize = computed(
     () => timepickerProps.value?.size || props.size,
 );
-
 const timepickerDisabled = computed(
-    () => timepickerProps.value?.disabled || props.disabled,
+    () => !!(timepickerProps.value?.disabled || props.disabled),
 );
 
 // #region --- Formatter / Parser ---
@@ -278,36 +281,27 @@ function format(value: Date | undefined): string {
 /** Parse string into date */
 function parse(value: string): Date | undefined {
     const date = datetimeParser(value);
-
     return isDate(date) ? date : undefined;
 }
 
 function formatNative(value: ModelValue): string {
     const date = value ? new Date(value) : undefined;
-    if (date && isDate(date)) {
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
-        return (
-            year +
-            "-" +
-            pad(month) +
-            "-" +
-            pad(day) +
-            "T" +
-            pad(hours) +
-            ":" +
-            pad(minutes) +
-            ":" +
-            pad(seconds)
-        );
-    }
-    return "";
-}
+    if (!date || !isDate(date)) return "";
 
+    return (
+        date.getFullYear() +
+        "-" +
+        pad(date.getMonth() + 1) +
+        "-" +
+        pad(date.getDate()) +
+        "T" +
+        pad(date.getHours()) +
+        ":" +
+        pad(date.getMinutes()) +
+        ":" +
+        pad(date.getSeconds())
+    );
+}
 // #endregion --- Formatter / Parser ---
 
 // #region --- Event Handler ---

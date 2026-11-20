@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, test, vi } from "vitest";
 import { mount, enableAutoUnmount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
@@ -6,15 +6,6 @@ import ODatepicker from "@/components/datepicker/Datepicker.vue";
 
 describe("ODatepicker", () => {
     enableAutoUnmount(afterEach);
-
-    beforeEach(() => {
-        // vi.useFakeTimers();
-        // vi.setSystemTime(new Date(2000, 0, 1));
-    });
-
-    afterEach(() => {
-        vi.useRealTimers();
-    });
 
     test("render correctly", () => {
         vi.useFakeTimers();
@@ -26,6 +17,94 @@ describe("ODatepicker", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("datepicker");
         expect(wrapper.html()).toMatchSnapshot();
+        vi.useRealTimers();
+    });
+
+    test("does not mutate focusedDate when initializing before maxDate", () => {
+        const focusedDate = new Date(2026, 5, 10);
+        mount(ODatepicker, {
+            props: {
+                focusedDate,
+                maxDate: new Date(2024, 3, 1),
+            },
+        });
+
+        expect(focusedDate.getFullYear()).toBe(2026);
+        expect(focusedDate.getMonth()).toBe(5);
+        expect(focusedDate.getDate()).toBe(10);
+    });
+
+    test("updates calendar descendants when disabled changes", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: {
+                focusedDate: new Date(2024, 0, 1),
+                selectableDates: [new Date(2024, 0, 15)],
+            },
+        });
+
+        expect(
+            wrapper.findAll(".o-datepicker__table__cell--selectable").length,
+        ).toBe(1);
+
+        await wrapper.setProps({
+            selectableDates: [new Date(2024, 0, 16)],
+        });
+
+        const selectableCell = wrapper.get(
+            ".o-datepicker__table__cell--selectable",
+        );
+        expect(selectableCell.text()).toBe("16");
+
+        await wrapper.setProps({ disabled: true });
+
+        expect(
+            wrapper.findAll(".o-datepicker__table__cell--selectable"),
+        ).toHaveLength(0);
+    });
+
+    test("selects month ranges", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: { type: "month", range: true, modelValue: [] },
+        });
+        const selectableMonths = wrapper.findAll(
+            ".o-datepicker__month__cell--selectable",
+        );
+
+        await selectableMonths[1].trigger("click");
+        expect(wrapper.emitted("range-start")).toHaveLength(1);
+        expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+
+        await selectableMonths[0].trigger("click");
+
+        const selectedRange = wrapper.emitted("update:modelValue")?.[0][0] as
+            Date[] | undefined;
+        expect(selectedRange).toHaveLength(2);
+        expect(selectedRange?.[0].getMonth()).toBeLessThan(
+            selectedRange?.[1].getMonth() ?? 0,
+        );
+        expect(wrapper.emitted("range-end")).toHaveLength(1);
+    });
+
+    test("matches selectable dates by month in month view", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: {
+                type: "month",
+                focusedDate: new Date(2024, 5, 1),
+                selectableDates: [new Date(2024, 0, 15)],
+            },
+        });
+
+        const selectableMonths = wrapper.findAll(
+            ".o-datepicker__month__cell--selectable",
+        );
+        expect(selectableMonths).toHaveLength(1);
+
+        await selectableMonths[0].trigger("click");
+
+        const selectedMonth = wrapper.emitted("update:modelValue")?.[0][0] as
+            Date | undefined;
+        expect(selectedMonth?.getFullYear()).toBe(2024);
+        expect(selectedMonth?.getMonth()).toBe(0);
     });
 
     test("does not commit pending input when disabled while open", async () => {
@@ -76,6 +155,30 @@ describe("ODatepicker", () => {
         expect(emits?.[1][0]).toBeInstanceOf(Date);
         expect((emits?.[1][0] as Date).toISOString()).toBe(date.toISOString());
         expect(input.element.value).toBe("18/04/2021");
+    });
+
+    test("uses custom formatter and parser", async () => {
+        const parsedDate = new Date(2026, 1, 3);
+        const formatter = vi.fn(() => "formatted date");
+        const parser = vi.fn(() => parsedDate);
+        const wrapper = mount(ODatepicker, {
+            props: {
+                modelValue: new Date(2026, 1, 1),
+                formatter,
+                parser,
+            },
+        });
+
+        const input = wrapper.get("input");
+        expect(input.element.value).toBe("formatted date");
+
+        await input.setValue("custom input");
+        await input.trigger("keyup", { key: "Enter" });
+
+        expect(parser).toHaveBeenCalledWith("custom input");
+        expect(wrapper.emitted("update:modelValue")?.[0]).toStrictEqual([
+            parsedDate,
+        ]);
     });
 
     test("handles invalid keyboard input", async () => {

@@ -4,6 +4,7 @@ export * from "./useEventListener";
 export * from "./useMatchMedia";
 export * from "./useInputHandler";
 export * from "./useDebounce";
+export * from "./useDateFormater";
 export * from "./useParentProvider";
 export * from "./useClickOutside";
 export * from "./useOptions";
