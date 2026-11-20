@@ -51,10 +51,7 @@ describe("date utilities", () => {
 
     test("returns captures using the format markers", () => {
         expect(
-            matchWithGroups(
-                "((?!=<year>)\\d+)-((?!=<month>)\\d+)",
-                "2024-06",
-            ),
+            matchWithGroups("((?!=<year>)\\d+)-((?!=<month>)\\d+)", "2024-06"),
         ).toStrictEqual({ year: "2024", month: "06" });
     });
 });
