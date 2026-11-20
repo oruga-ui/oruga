@@ -1,19 +1,10 @@
-import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
+import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 
 import ODatetimepicker from "@/components/datetimepicker/Datetimepicker.vue";
 
 describe("ODatetimepicker tests", () => {
     enableAutoUnmount(afterEach);
-
-    beforeEach(() => {
-        // vi.useFakeTimers();
-        // vi.setSystemTime(new Date(2000, 0, 0));
-    });
-
-    afterEach(() => {
-        vi.useRealTimers();
-    });
 
     test("render correctly", () => {
         vi.useFakeTimers();
@@ -25,6 +16,7 @@ describe("ODatetimepicker tests", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("datetimepicker");
         expect(wrapper.html()).toMatchSnapshot();
+        vi.useRealTimers();
     });
 
     test("parses keyboard input", async () => {
@@ -56,6 +48,74 @@ describe("ODatetimepicker tests", () => {
         expect(emits?.[1][0]).toBeInstanceOf(Date);
         expect((emits?.[1][0] as Date).toISOString()).toBe(date.toISOString());
         expect(input.element.value).toBe("21/10/2021, 12:23");
+    });
+
+    test("uses custom formatter and parser", async () => {
+        const parsedDate = new Date(2026, 1, 3, 10, 15);
+        const formatter = vi.fn(() => "formatted datetime");
+        const parser = vi.fn(() => parsedDate);
+        const wrapper = mount(ODatetimepicker, {
+            props: {
+                modelValue: new Date(2026, 1, 3, 10, 0),
+                formatter,
+                parser,
+            },
+        });
+
+        const input = wrapper.get("input");
+        expect(input.element.value).toBe("formatted datetime");
+
+        await input.setValue("custom input");
+        await input.trigger("keyup", { key: "Enter" });
+
+        expect(parser).toHaveBeenCalledWith("custom input");
+        expect(wrapper.emitted("update:modelValue")?.[0]).toStrictEqual([
+            parsedDate,
+        ]);
+    });
+
+    test("preserves the selected time when changing the date", async () => {
+        const wrapper = mount(ODatetimepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 1, 13, 45),
+                active: true,
+            },
+        });
+        const nextDate = wrapper
+            .findAll(".o-datepicker__table__cell--selectable")
+            .find(
+                (cell) => !cell.classes("o-datepicker__table__cell--selected"),
+            );
+
+        expect(nextDate).toBeDefined();
+        await nextDate?.trigger("click");
+
+        const selectedDate = wrapper.emitted("update:modelValue")?.[0][0] as
+            Date | undefined;
+        expect(selectedDate).toBeInstanceOf(Date);
+        expect(selectedDate?.getHours()).toBe(13);
+        expect(selectedDate?.getMinutes()).toBe(45);
+    });
+
+    test("applies same-day datetime minimum to available time options", () => {
+        const wrapper = mount(ODatetimepicker, {
+            props: {
+                modelValue: new Date(2024, 0, 2, 10, 0),
+                minDatetime: new Date(2024, 0, 2, 14, 30),
+                timepicker: { hourFormat: "24" },
+                active: true,
+            },
+        });
+        const hours = wrapper.get('select[aria-label="Select Hour"]');
+
+        expect(
+            hours.find<HTMLOptionElement>('option[value="13"]').element
+                .disabled,
+        ).toBe(true);
+        expect(
+            hours.find<HTMLOptionElement>('option[value="14"]').element
+                .disabled,
+        ).toBe(false);
     });
 
     test("handles invalid keyboard input", async () => {
