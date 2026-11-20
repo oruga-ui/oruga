@@ -599,6 +599,35 @@ describe("OTree tests", () => {
             );
         });
 
+        test("deselect an object value equal to a selected value with multiple prop", async () => {
+            const objectOptions: TreeOptions<{ id: number }> = [
+                { label: "Item 1", value: { id: 1 } },
+                { label: "Item 2", value: { id: 2 } },
+            ];
+
+            const wrapper = mount(OTree, {
+                props: {
+                    options: objectOptions,
+                    // equal to the option values, but different objects
+                    modelValue: [{ id: 1 }, { id: 2 }],
+                    selectable: true,
+                    multiple: true,
+                },
+            });
+
+            const items = wrapper.findAll('[data-oruga="tree-item"]');
+            expect(items[0].classes("o-tree__item--selected")).toBeTruthy();
+            expect(items[1].classes("o-tree__item--selected")).toBeTruthy();
+
+            await items[0].find(".o-tree__item-label").trigger("click");
+
+            expect(items[0].classes("o-tree__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-tree__item--selected")).toBeTruthy();
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [[{ id: 2 }]],
+            ]);
+        });
+
         test("react accordingly when tree is disabled", async () => {
             const wrapper = mount(OTree, {
                 props: { options: options, disabled: true },
@@ -774,6 +803,41 @@ describe("OTree tests", () => {
             );
             expect(wrapper.emitted("select")).toHaveLength(1);
             expect(wrapper.emitted("select")?.[0][0]).toBe("expenses");
+        });
+
+        test("does not add object values equal to a selected value twice", async () => {
+            const objectOptions: TreeOptions<{ id: number }> = [
+                {
+                    label: "Parent",
+                    value: { id: 1 },
+                    options: [
+                        { label: "Child 1", value: { id: 2 } },
+                        { label: "Child 2", value: { id: 3 } },
+                    ],
+                },
+            ];
+
+            const wrapper = mount(OTree, {
+                props: {
+                    options: objectOptions,
+                    checkable: true,
+                    multiple: true,
+                    // equal to the option value, but a different object
+                    modelValue: [{ id: 2 }],
+                },
+            });
+
+            const checkboxes = wrapper.findAll('[data-oruga="checkbox"]');
+            expect(checkboxes.length).toBe(3);
+
+            const parentCheckbox = checkboxes[0].find<HTMLInputElement>(
+                'input[type="checkbox"]',
+            );
+            await parentCheckbox.trigger("click");
+
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [[{ id: 2 }, { id: 3 }, { id: 1 }]],
+            ]);
         });
     });
 

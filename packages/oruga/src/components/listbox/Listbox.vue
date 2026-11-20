@@ -279,13 +279,13 @@ function selectItem(item: ListItem<T>, selection: boolean = true): void {
     // set selected option
     if (isTrueish(props.multiple)) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
-            if (selection && !vmodel.value.includes(value)) {
+            if (selection && !isItemSelected(item)) {
                 // add a value
                 vmodel.value = [...vmodel.value, value] as ModelValue;
             } else if (!selection) {
                 // remove a value
                 vmodel.value = vmodel.value.filter(
-                    (val) => val !== value,
+                    (val) => !isEqual(val, value),
                 ) as ModelValue;
             }
         } else {
@@ -294,7 +294,7 @@ function selectItem(item: ListItem<T>, selection: boolean = true): void {
         }
     } else {
         if (!selection) vmodel.value = undefined;
-        else if (vmodel.value !== value) {
+        else if (!isEqual(vmodel.value, value)) {
             // update a single value
             vmodel.value = value as ModelValue;
         }
@@ -363,7 +363,8 @@ function focusItem(value?: ListItem<T>): void {
 /** Set focus on an item. */
 function setFocus(item: ListItem<T>): void {
     isFocused.value = true;
-    if (props.selectOnFocus && item.data.value) selectItem(item, true);
+    if (props.selectOnFocus && isDefined(item.data.value))
+        selectItem(item, true);
 
     // set item as focused
     focusedItem.value = item;
