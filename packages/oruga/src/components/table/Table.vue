@@ -804,7 +804,10 @@ function toggleSort(
 }
 
 /** prevent the text selection of a modifier click, like shift-click, which adds the column to the sorting */
-function onSortMouseDown(column: TableColumnItem<T>, event: MouseEvent): void {
+function onSortPointerDown(
+    column: TableColumnItem<T>,
+    event: PointerEvent,
+): void {
     if (column.sortable && props.sortMultipleKey && isMultiSortEvent(event))
         event.preventDefault();
 }
@@ -1549,7 +1552,7 @@ defineExpose({
                                 :aria-colindex="
                                     ariaColIndexStart + column.index
                                 "
-                                @mousedown="onSortMouseDown(column, $event)"
+                                @pointerdown="onSortPointerDown(column, $event)"
                                 @click.stop="toggleSort(column, $event)"
                                 @keydown.enter.self.prevent="
                                     toggleSort(column, $event)

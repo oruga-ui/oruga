@@ -1066,19 +1066,19 @@ describe("OTable tests", () => {
             expect(getPriorities(wrapper)).toStrictEqual(["", "2", "1"]);
 
             // a modifier click does not select the header text
-            const mousedown = new MouseEvent("mousedown", {
+            const pointerdown = new MouseEvent("pointerdown", {
                 bubbles: true,
                 cancelable: true,
                 shiftKey: true,
             });
-            ths[0].element.dispatchEvent(mousedown);
-            expect(mousedown.defaultPrevented).toBe(true);
-            const plainMousedown = new MouseEvent("mousedown", {
+            ths[0].element.dispatchEvent(pointerdown);
+            expect(pointerdown.defaultPrevented).toBe(true);
+            const plainPointerdown = new MouseEvent("pointerdown", {
                 bubbles: true,
                 cancelable: true,
             });
-            ths[0].element.dispatchEvent(plainMousedown);
-            expect(plainMousedown.defaultPrevented).toBe(false);
+            ths[0].element.dispatchEvent(plainPointerdown);
+            expect(plainPointerdown.defaultPrevented).toBe(false);
 
             // the modifier key works with the keyboard as well
             await ths[0].trigger("keydown", { key: "Enter", shiftKey: true });

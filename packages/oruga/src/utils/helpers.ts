@@ -185,40 +185,6 @@ export function compareValues(
 }
 
 /**
- * Sort an array by the given `key`.
- * The `key` can be a path to a nested property, when array items are objects.
- * A custom sort function can be provided.
- * By default the original array is not mutated. Set `mutate` to true to sort in place.
- * @param array - Array to sort.
- * @param key - Key or path to sort by.
- * @param fn - Custom sort function.
- * @param isAsc - Whether to sort in ascending order.
- * @param mutate - Whether to mutate the original array.
- * @returns Sorted array.
- */
-export function sortBy<T extends object, K extends string = DeepKeys<T>>(
-    array: T[],
-    key: K,
-    fn?: (a: T, b: T, asc: boolean) => number,
-    isAsc: boolean = false,
-    mutate: boolean = false,
-): T[] {
-    // Sorting without mutating original data
-    if (fn && typeof fn === "function") {
-        return (mutate ? array : [...array]).sort((a, b) => fn(a, b, isAsc));
-    } else {
-        return (mutate ? array : [...array]).sort((a, b) =>
-            compareValues(
-                // Get nested values from objects
-                isObject(a) ? getValueByPath(a, key) : a,
-                isObject(b) ? getValueByPath(b, key) : b,
-                isAsc,
-            ),
-        );
-    }
-}
-
-/**
  * Deeply check if two values are equal
  */
 export function isEqual(valueA: unknown, valueB: unknown): boolean {
