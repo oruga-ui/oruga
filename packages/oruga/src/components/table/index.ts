@@ -9,7 +9,7 @@ import type { FieldKey } from "./props";
 
 /** export table specific types */
 export type * from "./props";
-export type { TableColumn, TableRow } from "./types";
+export type { TableColumn, TableRow, TableSortColumn } from "./types";
 
 /**
  * Returns a locally-typed OTableColumn component for use with a specific row type.

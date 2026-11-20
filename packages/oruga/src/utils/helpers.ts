@@ -153,48 +153,35 @@ export function alternateArray<T>(arr: T[], startIndex: number): T[] {
 }
 
 /**
- * Sort an array by the given `key`.
- * The `key` can be a path to a nested property, when array items are objects.
- * A custom sort function can be provided.
- * By default the original array is not mutated. Set `mutate` to true to sort in place.
- * @param array - Array to sort.
- * @param key - Key or path to sort by.
- * @param fn - Custom sort function.
- * @param isAsc - Whether to sort in ascending order.
- * @param mutate - Whether to mutate the original array.
- * @returns Sorted array.
+ * Compare two values for sorting.
+ * Empty values are always placed last, regardless of the direction.
+ * Strings are compared case-insensitively.
+ * @param a - First value.
+ * @param b - Second value.
+ * @param isAsc - Whether to compare in ascending order.
+ * @returns A negative number if `a` comes first, a positive number if `b` comes first, or 0 if both are equal.
  */
-export function sortBy<T extends object, K extends string = DeepKeys<T>>(
-    array: T[],
-    key: K,
-    fn?: (a: T, b: T, asc: boolean) => number,
+export function compareValues(
+    a: unknown,
+    b: unknown,
     isAsc: boolean = false,
-    mutate: boolean = false,
-): T[] {
-    // Sorting without mutating original data
-    if (fn && typeof fn === "function") {
-        return (mutate ? array : [...array]).sort((a, b) => fn(a, b, isAsc));
-    } else {
-        return (mutate ? array : [...array]).sort((a, b) => {
-            // Get nested values from objects
-            let newA: any = isObject(a) ? getValueByPath(a, key) : a;
-            let newB: any = isObject(b) ? getValueByPath(b, key) : b;
+): number {
+    if (a === b) return 0;
 
-            // sort boolean type
-            if (typeof newA === "boolean" && typeof newB === "boolean") {
-                return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
-            }
+    // sort boolean type
+    if (typeof a === "boolean" && typeof b === "boolean")
+        return isAsc ? (a ? 1 : -1) : a ? -1 : 1;
 
-            if (!newA && newA !== 0) return 1;
-            if (!newB && newB !== 0) return -1;
-            if (newA === newB) return 0;
+    const isEmptyA = !a && a !== 0;
+    const isEmptyB = !b && b !== 0;
+    if (isEmptyA || isEmptyB)
+        return isEmptyA === isEmptyB ? 0 : isEmptyA ? 1 : -1;
 
-            newA = typeof newA === "string" ? newA.toUpperCase() : newA;
-            newB = typeof newB === "string" ? newB.toUpperCase() : newB;
+    const newA: any = typeof a === "string" ? a.toUpperCase() : a;
+    const newB: any = typeof b === "string" ? b.toUpperCase() : b;
+    if (newA === newB) return 0;
 
-            return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
-        });
-    }
+    return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
 }
 
 /**

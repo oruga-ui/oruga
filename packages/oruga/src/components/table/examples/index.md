@@ -11,6 +11,9 @@ import TemplatesCode from "./templates.vue?raw";
 import Sortable from "./sortable.vue";
 import SortableCode from "./sortable.vue?raw";
 
+import SortMultiple from "./sort-multiple.vue";
+import SortMultipleCode from "./sort-multiple.vue?raw";
+
 import Selection from "./selection.vue";
 import SelectionCode from "./selection.vue?raw";
 
@@ -55,6 +58,14 @@ The table allows users to sort the data by a single column in ascending or desce
 To make a column sortable, add the `sortable` property to the column definition or component.
 
 <ExampleViewer :component="Sortable" :code="SortableCode" />
+
+### Sort Multiple
+
+Adding the `sort-multiple` prop allows users to sort the data by multiple columns. Each sorted column is added to the sorting, which is ordered by the sequence in which the columns were sorted, and the sort priority is shown next to the sort icon. Sorting a column a second time toggles its sort direction, and a third time removes it from the sorting.
+Set the `sort-multiple-key` prop to a modifier key like `shiftKey` to only add or remove a column when the key is pressed, while any other sort replaces the sorting with the column.
+To define an initial sorting by multiple columns, pass a list of columns and orders to the `default-sort` prop. Each change of the sorted columns emits a `sort-change` event with all sorted columns and their directions, which can be used to sort the data in your backend together with the `backend-sorting` prop. On mobile, the sort select always replaces the sorting.
+
+<ExampleViewer :component="SortMultiple" :code="SortMultipleCode" />
 
 ### Selection
 
