@@ -19,10 +19,11 @@ defineEmits<{
 </script>
 
 <template>
-    <form action="">
-        <header>
-            <p>Login</p>
+    <form action="" style="padding: 15px;">
+        <header style="margin-bottom: 15px;">
+            <p style="font-size:xx-large;">Login</p>
             <o-icon
+                style="position: absolute; top: .7rem; right: .7rem;"
                 clickable
                 native-type="button"
                 icon="times"
@@ -52,8 +53,9 @@ defineEmits<{
             </o-field>
         </section>
 
-        <footer>
+        <footer style="margin-top: 15px;">
             <o-button
+                style="margin-right: 4px;"
                 label="Close"
                 type="button"
                 @click="$emit('close', $event)" />
