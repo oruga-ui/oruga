@@ -36,7 +36,8 @@ defineEmits<{
                     type="email"
                     :value="email"
                     placeholder="Your email"
-                    required />
+                    required
+                    expanded />
             </o-field>
 
             <o-field label="Password">
@@ -45,7 +46,8 @@ defineEmits<{
                     :value="password"
                     password-reveal
                     placeholder="Your password"
-                    required />
+                    required
+                    expanded />
             </o-field>
 
             <o-field>
@@ -65,12 +67,12 @@ defineEmits<{
 </template>
 
 <style scoped>
-form {
+/* form {
     padding: 15px;
 }
 
 form header {
     display: flex;
     justify-content: space-between;
-}
+} */
 </style>
