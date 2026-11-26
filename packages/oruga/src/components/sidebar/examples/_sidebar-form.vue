@@ -20,8 +20,11 @@ defineEmits<{
 
 <template>
     <form action="" style="padding: 15px;">
-        <header style="margin-bottom: 15px;">
-            <p style="font-size:xx-large;">Login</p>
+        <header style="margin-bottom: 25px;">
+            <p style="font-size:x-large; margin: 0; font-weight: bold;">Login</p>
+            <p>
+                Welcome back !
+            </p>
             <o-icon
                 style="position: absolute; top: .7rem; right: .7rem;"
                 clickable
@@ -67,12 +70,12 @@ defineEmits<{
 </template>
 
 <style scoped>
-/* form {
+form {
     padding: 15px;
 }
 
 form header {
     display: flex;
     justify-content: space-between;
-} */
+}
 </style>
