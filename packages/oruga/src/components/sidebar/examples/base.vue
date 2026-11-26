@@ -47,14 +47,14 @@ const mobile = ref<
             :overlay="overlay"
             :position="position"
             :mobile="mobile">
-            <section style="padding: 15px;">
+            <section style="padding: 15px">
                 <o-button
                     v-if="fullwidth || fullheight || !overlay || mobile"
                     icon-left="times"
                     label="Close"
                     @click="close($event)" />
                 <img
-                    style="width: 100%;"
+                    style="width: 100%"
                     src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
                     alt="Lightweight UI components for Vue.js" />
                 <h3>Example</h3>
