@@ -41,6 +41,13 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
      * See {@link https://vuejs.org/api/application.html#app-config-idprefix}.
      */
     idPrefix?: string;
+    /**
+     * Configure the Vue app created for this programmatic instance.
+     * Called after the active app context is copied and before mounting.
+     * This callback runs for every instance; avoid reinstalling singleton plugins
+     * that attach app-unmount hooks.
+     */
+    configureApp?: (app: App) => void;
 } & Omit<ProgrammaticComponentProps<C>, "component"> & // component props
     EmitsToProps<Pick<Required<ProgrammaticComponentEmits<C>>, "close">>; // component emit props
 
@@ -143,8 +150,6 @@ export abstract class ProgrammaticFactory {
 
         // get the current active oruga instance
         const orugaConfig = getActiveOruga();
-        // provide the oruga config to the new app instance
-        orugaConfig?.provide(app);
 
         // set a prefix for all IDs generated via useId() to prevent duplication in multiple programmatic instances
         const idPrefix =
@@ -172,6 +177,10 @@ export abstract class ProgrammaticFactory {
         } else {
             app.config.idPrefix = idPrefix;
         }
+
+        // provide Oruga after context copying so the programmatic app keeps its own provider
+        orugaConfig?.provide(app);
+        options.configureApp?.(app);
 
         // render the new vue instance into the container element
         const instance = app.mount(container);
