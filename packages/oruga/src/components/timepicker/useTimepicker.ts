@@ -33,7 +33,9 @@ export function parseTimeInput(
         const formatRegex = parts
             .map((part) => {
                 if (part.type === "literal") {
-                    return escapeRegExpChars(part.value).replace(/ /g, "\\s?");
+                    // match any whitespace: newer ICU versions emit a narrow
+                    // no-break space (U+202F) before the day period
+                    return escapeRegExpChars(part.value).replace(/\s/g, "\\s?");
                 }
                 if (part.type === "dayPeriod") {
                     const alternatives = [...new Set(dayPeriods)]

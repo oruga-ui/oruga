@@ -34,7 +34,9 @@ export function parseDatetimeInput(
                     ) {
                         return `[^\\d]+`;
                     }
-                    return part.value.replace(/ /g, "\\s?");
+                    // match any whitespace: newer ICU versions emit a narrow
+                    // no-break space (U+202F) before the day period
+                    return part.value.replace(/\s/g, "\\s?");
                 }
                 if (part.type === "dayPeriod") {
                     return `((?!=<${part.type}>)(${dayPeriods.join("|")})?)`;
