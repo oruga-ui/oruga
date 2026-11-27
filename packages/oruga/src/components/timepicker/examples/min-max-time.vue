@@ -14,7 +14,7 @@ const maxTime = ref(max);
 
 <template>
     <section>
-        <o-field label="Select time">
+        <o-field label="Opening time">
             <o-timepicker
                 placeholder="Click to select..."
                 rounded

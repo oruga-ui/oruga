@@ -38,6 +38,10 @@ const basicRomanNumeral = ref([
     "MMM",
 ]);
 
+const total = 200;
+const perPage = 10;
+const pageCount = Math.ceil(total / perPage);
+
 const page = ref(10);
 
 function convertToRoman(num: number): string {
@@ -55,8 +59,9 @@ function convertToRoman(num: number): string {
 
 <template>
     <section>
-        <o-pagination v-model="page" :total="200" :per-page="10">
+        <o-pagination v-model="page" :total="total" :per-page="perPage">
             <template #default="_props">
+                <!-- aria-current marks the current page; it must stay focusable, so do not disable it -->
                 <o-button
                     :label="convertToRoman(_props.number)"
                     :disabled="_props.isCurrent"
@@ -66,6 +71,7 @@ function convertToRoman(num: number): string {
             </template>
 
             <template #previous="_props">
+                <!-- number is the target page, so it is out of range on the first page -->
                 <o-button
                     label="Previous"
                     :disabled="_props.disabled"

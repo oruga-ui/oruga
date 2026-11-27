@@ -39,7 +39,7 @@ const showWeekNumber = ref(false);
             </o-field>
         </o-field>
 
-        <o-field label="Select a date">
+        <o-field label="Event date">
             <o-datepicker
                 v-model="selected"
                 placeholder="Click to select..."

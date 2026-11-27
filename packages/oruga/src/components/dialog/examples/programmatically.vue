@@ -7,6 +7,7 @@ const oruga = useOruga();
 
 function openConfirmDialog(): void {
     oruga.dialog.open({
+        ariaLabel: "Confirm save",
         title: "Save Dialog",
         content: "Are you sure you want to save this?",
         confirmButton: "Save",

@@ -74,6 +74,7 @@ const slides = [
 
         <o-carousel
             v-model="currentSlide"
+            aria-label="Photo slides with indicators"
             :indicators="indicators"
             :indicator-inside="indicatorInside"
             :indicator-position="indicatorPosition"

@@ -39,6 +39,12 @@ Different styles can be achieved with the `variant` prop.
 
 <ExampleViewer :component="Variants" :code="VariantsCode" />
 
+### Max Width
+
+Sometimes the tooltip label can be very long. Use the `max-width` prop to limit the width of the tooltip content, so that long text wraps onto multiple lines.
+
+<ExampleViewer :component="Multiline" :code="MultilineCode" />
+
 ### Templates
 
 The tooltip label can be customised using the `content` template slot.

@@ -40,7 +40,7 @@ const locale = ref(); // Browser locale
             </o-field>
         </o-field>
 
-        <o-field label="Select time">
+        <o-field label="Alarm time">
             <o-timepicker
                 v-model="selected"
                 placeholder="Click to select..."

@@ -6,6 +6,7 @@ const oruga = useOruga();
 
 const promptModal = async (): Promise<void> => {
     const instance = oruga.modal.open({
+        ariaLabel: "Confirm shipment",
         component: ModalForm,
         props: {
             title: "Ship sprockets?",
@@ -28,6 +29,7 @@ const promptModal = async (): Promise<void> => {
 
 const promptModalCloseAll = async (): Promise<void> => {
     const instance = oruga.modal.open({
+        ariaLabel: "Close all test",
         component: ModalForm,
         props: {
             title: "Close All test",

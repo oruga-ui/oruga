@@ -10,7 +10,7 @@
         </p>
         <p>
             <o-button>
-                Profile <o-tag badge rounded variant="danger" />
+                Profile <o-tag label="3" badge rounded variant="danger" />
             </o-button>
             <o-button>
                 Inbox

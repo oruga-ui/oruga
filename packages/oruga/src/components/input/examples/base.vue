@@ -35,7 +35,10 @@
         </o-field>
 
         <o-field>
-            <o-input model-value="" placeholder="No label" />
+            <o-input
+                model-value=""
+                placeholder="No label"
+                aria-label="Input without visible label" />
         </o-field>
 
         <o-field label="Number">

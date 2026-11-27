@@ -2,10 +2,10 @@
     <section>
         <o-collapse expanded position="top">
             <template #trigger="{ open }">
-                <p class="trigger">
+                <span class="trigger">
                     <o-icon :icon="open ? 'chevron-down' : 'chevron-right'" />
-                    {{ open ? "Close" : "Open" }} Collapse!
-                </p>
+                    Collapse details
+                </span>
             </template>
 
             <div class="notification">
@@ -25,6 +25,7 @@
 
 <style scoped>
 .trigger {
+    display: block;
     padding: 1rem;
     background-color: var(--vp-c-brand-3);
     color: white;

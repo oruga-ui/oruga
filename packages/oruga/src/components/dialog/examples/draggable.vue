@@ -12,7 +12,12 @@ const isActive = ref(false);
             aria-haspopup="dialog"
             @click="isActive = true" />
 
-        <o-dialog v-model:active="isActive" draggable closeable>
+        <o-dialog
+            id="draggable-dialog"
+            v-model:active="isActive"
+            aria-label="Draggable dialog"
+            draggable
+            closeable>
             <template #title>Drag me by the header</template>
 
             <template #subtitle>

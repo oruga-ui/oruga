@@ -230,11 +230,13 @@ const selected = ref();
 
 <template>
     <section>
-        <o-autocomplete
-            v-model="selected"
-            :options="options"
-            placeholder="Find a name..."
-            open-on-focus />
+        <o-field label="Character name">
+            <o-autocomplete
+                v-model="selected"
+                :options="options"
+                placeholder="Find a name..."
+                open-on-focus />
+        </o-field>
 
         <p><b>Selected:</b> {{ selected }}</p>
     </section>

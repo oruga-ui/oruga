@@ -14,11 +14,11 @@ const isActive = ref(false);
 
         <o-dialog
             v-model:active="isActive"
+            aria-label="Teleported dialog"
             teleport
             backdrop
             close-on-backdrop
-            closeable
-            title="Teleported Dialog">
+            closeable>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
                 sodales leo nec convallis rutrum. Vivamus pharetra molestie arcu

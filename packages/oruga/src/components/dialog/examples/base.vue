@@ -12,7 +12,12 @@ const isActive = ref(false);
             aria-haspopup="dialog"
             @click="isActive = true" />
 
-        <o-dialog v-model:active="isActive" closeable :backdrop="false">
+        <o-dialog
+            id="base-dialog"
+            v-model:active="isActive"
+            aria-label="Dialog with lorem ipsum text"
+            closeable
+            :backdrop="false">
             <template #title>Dialog Title</template>
 
             <template #subtitle>Dialog Subtitle</template>

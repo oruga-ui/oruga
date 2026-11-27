@@ -37,7 +37,10 @@ const slides = [
 
 <template>
     <section>
-        <o-carousel v-model="currentSlide" :options="slides" />
+        <o-carousel
+            v-model="currentSlide"
+            :options="slides"
+            aria-label="Photo slides" />
 
         <p><b>Current slide index:</b> {{ currentSlide }}</p>
     </section>

@@ -7,6 +7,7 @@ const options: DropdownOptions<string> = [
         value: "google",
         href: "https://google.com",
         target: "_blank",
+        rel: "noopener noreferrer",
         icon: "information",
     },
     {
@@ -14,20 +15,23 @@ const options: DropdownOptions<string> = [
         value: "yahoo",
         href: "https://yahoo.com",
         target: "_blank",
+        rel: "noopener noreferrer",
         icon: "information",
     },
     {
-        label: "DuckDuckGo ",
+        label: "DuckDuckGo",
         value: "duckduckgo",
         href: "https://duckduckgo.com",
         target: "_blank",
+        rel: "noopener noreferrer",
         icon: "information",
     },
     {
-        label: "Bind",
+        label: "Bing",
         value: "bing",
         href: "https://bing.com",
         target: "_blank",
+        rel: "noopener noreferrer",
         icon: "information",
     },
 ];

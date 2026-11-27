@@ -6,7 +6,7 @@ const time = ref<Date | undefined>(new Date());
 
 <template>
     <section>
-        <o-field label="Select time">
+        <o-field label="Pickup time">
             <o-timepicker v-model="time" placeholder="Click to select...">
                 <template #footer>
                     <o-button

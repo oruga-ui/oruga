@@ -85,6 +85,8 @@ const selected = ref<(typeof data)[number] | undefined>(data[2]);
             v-model:selected="selected"
             :data="data"
             :columns="columns"
-            selectable />
+            selectable>
+            <template #caption>Contacts</template>
+        </o-table>
     </section>
 </template>

@@ -168,7 +168,9 @@ const checkable = ref(true);
             scrollable
             :checkable="checkable"
             :checkable-header="checkable"
-            sticky-checkbox />
+            sticky-checkbox>
+            <template #caption>Contacts</template>
+        </o-table>
     </section>
 </template>
 

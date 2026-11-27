@@ -19,10 +19,12 @@ function getMoreData(): void {
 
 <template>
     <section class="odocs-spaced">
-        <o-listbox
-            v-model="selected"
-            :options="options"
-            @scroll-end="getMoreData" />
+        <o-field label="Select an item">
+            <o-listbox
+                v-model="selected"
+                :options="options"
+                @scroll-end="getMoreData" />
+        </o-field>
 
         <p><b>Selected:</b> {{ selected }}</p>
     </section>

@@ -8,6 +8,7 @@ const oruga = useOruga();
 function imageSidebar(): void {
     const vnode = h("p", { style: { "text-align": "center" } }, [
         h("img", {
+            alt: "Oruga logo",
             src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
         }),
     ]);

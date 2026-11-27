@@ -6,7 +6,7 @@ const dates = ref<[Date, Date] | []>([]);
 
 <template>
     <section>
-        <o-field label="Select a date">
+        <o-field label="Travel dates">
             <o-datepicker
                 v-model="dates"
                 placeholder="Click to select..."

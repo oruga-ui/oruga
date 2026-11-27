@@ -28,6 +28,7 @@ function onClose(_event: Event, returnValue?: string): void {
         <o-dialog
             v-slot="{ close, confirm }"
             v-model:active="isActive"
+            aria-label="Login"
             title="Login"
             closeable
             close-on-confirm

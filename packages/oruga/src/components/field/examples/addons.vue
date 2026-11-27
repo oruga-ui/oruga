@@ -33,6 +33,7 @@
 
             <o-input
                 placeholder="Search..."
+                aria-label="Search"
                 type="search"
                 icon="search"
                 :style="{ 'max-width': '150px' }" />
@@ -45,7 +46,7 @@
                     <o-button
                         variant="primary"
                         icon-right="caret-down"
-                        aria-label="Action Button" />
+                        aria-label="More actions" />
                 </template>
 
                 <o-dropdown-item label="Action" />
@@ -61,7 +62,7 @@
                     <o-button
                         variant="primary"
                         icon-right="caret-down"
-                        aria-label="Action Button" />
+                        aria-label="More actions" />
                 </template>
 
                 <o-dropdown-item label="Action" />
@@ -86,7 +87,11 @@
                     label="Your Pull Requests" />
                 <o-dropdown-item value="everything" label="Everything" />
             </o-dropdown>
-            <o-input icon="search" type="search" placeholder="Search..." />
+            <o-input
+                icon="search"
+                type="search"
+                placeholder="Search..."
+                aria-label="Search issues" />
         </o-field>
     </section>
 </template>

@@ -6,7 +6,7 @@ const radio = ref("Jack");
 
 <template>
     <section>
-        <o-field>
+        <o-field role="group" aria-label="Characters">
             <o-radio
                 v-model="radio"
                 name="base"

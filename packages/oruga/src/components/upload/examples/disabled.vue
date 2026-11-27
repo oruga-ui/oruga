@@ -1,6 +1,6 @@
 <template>
     <section>
-        <o-field>
+        <o-field label="Attachment">
             <o-upload disabled>
                 <o-button tag="button" variant="primary">
                     <o-icon icon="upload" />
@@ -9,7 +9,7 @@
             </o-upload>
         </o-field>
 
-        <o-field>
+        <o-field label="Attachments">
             <o-upload drag-drop disabled>
                 <div style="text-align: center">
                     <p>

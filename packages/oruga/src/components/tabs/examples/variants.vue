@@ -1,6 +1,6 @@
 <template>
     <section>
-        <o-tabs>
+        <o-tabs aria-label="Media categories">
             <o-tab-item label="Pictures" icon="images" variant="success" />
             <o-tab-item label="Music" icon="music" variant="info" />
             <o-tab-item label="Words" variant="warning" />

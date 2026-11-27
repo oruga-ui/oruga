@@ -14,7 +14,10 @@ const slides = [
 
 <template>
     <section>
-        <o-carousel v-model="currentSlide" indicator-inside>
+        <o-carousel
+            v-model="currentSlide"
+            indicator-inside
+            aria-label="Colour slides">
             <o-carousel-item v-for="slide in slides" :key="slide.title">
                 <article
                     :style="{

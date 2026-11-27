@@ -225,11 +225,14 @@ const isPaginated = ref(true);
             :columns="columns"
             :paginated="isPaginated"
             per-page="5"
-            filters-placeholder="Search..." />
+            filter-placeholder="Search...">
+            <template #caption>Contacts</template>
+        </o-table>
 
         <p>You can also customize the search input using a scoped slot.</p>
 
         <o-table :data="data" :paginated="isPaginated" per-page="5">
+            <template #caption>Contacts with custom filter</template>
             <o-table-column
                 v-for="(column, idx) in columns"
                 :key="idx"
@@ -242,7 +245,8 @@ const isPaginated = ref(true);
                         v-model="filters[column.field]"
                         placeholder="Search..."
                         icon="search"
-                        size="small" />
+                        size="small"
+                        :aria-label="`${column.label} filter`" />
                 </template>
             </o-table-column>
         </o-table>

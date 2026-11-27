@@ -5,6 +5,7 @@ const oruga = useOruga();
 
 const promptDialog = async (): Promise<void> => {
     const instance = oruga.dialog.open({
+        ariaLabel: "Confirm shipment",
         backdrop: true,
         title: "Ship sprockets?",
         content: "Do you really want me to ship the selected sprockets?",
@@ -28,6 +29,7 @@ const promptDialog = async (): Promise<void> => {
 
 const promptTimeoutDialog = async (): Promise<void> => {
     const instance = oruga.dialog.open({
+        ariaLabel: "Closed by timeout",
         backdrop: true,
         closeable: true,
         title: "Closed By Timeout",

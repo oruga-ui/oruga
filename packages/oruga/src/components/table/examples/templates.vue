@@ -83,6 +83,8 @@ const Column = defineOTableColumn<(typeof data.value)[number]>();
             :mobile-cards="hasMobileCards"
             empty-label="Table is empty"
             empty-icon="frown">
+            <template #caption>Contacts</template>
+
             <template #before>
                 <Column
                     v-slot="{ row }"
@@ -141,8 +143,8 @@ const Column = defineOTableColumn<(typeof data.value)[number]>();
                 <template #subheading> Male/Female </template>
             </Column>
 
-            <template #footer>
-                <td colspan="5">Custom Footer</td>
+            <template #footer="{ columnCount }">
+                <td :colspan="columnCount">Custom Footer</td>
             </template>
         </o-table>
     </section>

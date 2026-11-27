@@ -67,6 +67,7 @@ function switchGalleryOff(event: KeyboardEvent): void {
     <section>
         <o-carousel
             :autoplay="false"
+            aria-label="Photo slideshow"
             :overlay="gallery"
             :arrows="false"
             @click="switchGallery(true)"
@@ -83,6 +84,7 @@ function switchGalleryOff(event: KeyboardEvent): void {
             <template #indicators="{ activeIndex, switchTo }">
                 <o-carousel
                     :model-value="activeIndex"
+                    aria-label="Slide thumbnails"
                     :indicators="false"
                     :breakpoints="breakpoints"
                     @update:model-value="switchTo($event)"
@@ -105,6 +107,7 @@ function switchGalleryOff(event: KeyboardEvent): void {
                     icon="times"
                     root-class="ex-close-icon"
                     clickable
+                    aria-label="Close slideshow"
                     @click="switchGallery(false)" />
                 <div style="color: #ffffff; text-align: center">
                     Hello, I'm an overlay!

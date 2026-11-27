@@ -143,7 +143,9 @@ function columndrop(column, index, event): void {
             @columndragstart="columndragstart"
             @columndrop="columndrop"
             @columndragover="columndragover"
-            @columndragleave="columndragleave" />
+            @columndragleave="columndragleave">
+            <template #caption>Contacts</template>
+        </o-table>
     </section>
 </template>
 

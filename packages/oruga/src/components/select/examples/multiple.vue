@@ -6,7 +6,7 @@ const selected = ref<string[]>([]);
 
 <template>
     <section>
-        <o-field label="Multiple">
+        <o-field label="Characters">
             <o-select v-model="selected" multiple native-size="8">
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>

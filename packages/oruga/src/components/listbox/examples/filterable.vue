@@ -15,12 +15,14 @@ const selected = ref<string>();
 
 <template>
     <section class="odocs-spaced">
-        <o-listbox
-            v-model="selected"
-            :options="options"
-            filterable
-            filter-placeholder="Search..."
-            empty-label="No Results." />
+        <o-field label="Select a city">
+            <o-listbox
+                v-model="selected"
+                :options="options"
+                filterable
+                filter-placeholder="Search..."
+                empty-label="No Results." />
+        </o-field>
 
         <p><b>Selected:</b> {{ selected }}</p>
     </section>

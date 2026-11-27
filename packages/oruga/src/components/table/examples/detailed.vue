@@ -129,6 +129,8 @@ const detailedRows = ref([data.value[0]]);
             :default-sort="['name', 'asc']"
             :custom-detail-row="showCustomDetail"
             :show-detail-icon="showDetailIcon">
+            <template #caption>Product sales</template>
+
             <o-table-column
                 v-slot="{ row, toggleDetails }"
                 field="name"

@@ -15,6 +15,7 @@ const isActive = ref(false);
         <o-dialog
             v-model:active="isActive"
             alert
+            aria-label="Confirm deletion"
             title="Delete Dialog"
             aria-describedby="alert-dialog-message"
             text-position="center"

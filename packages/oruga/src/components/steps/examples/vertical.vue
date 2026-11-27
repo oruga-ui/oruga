@@ -49,6 +49,7 @@ const variant = ref<string>();
             :label-position="labelPosition"
             :size="size"
             :variant="variant"
+            aria-label="Account setup progress"
             vertical>
             <o-step-item label="Account" icon="user-lock">
                 Account: Lorem ipsum dolor sit amet. <br />

@@ -29,6 +29,7 @@ defineEmits<{
                 style="position: absolute; top: 0.7rem; right: 0.7rem"
                 clickable
                 icon="times"
+                aria-label="Close sidebar"
                 @click="$emit('close', $event)" />
         </header>
 

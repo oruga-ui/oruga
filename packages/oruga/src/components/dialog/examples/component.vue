@@ -18,6 +18,7 @@ const myComponent = h("div", [
 
         <o-dialog
             v-model:active="isActive"
+            aria-label="Advanced dialog"
             title="Advanced Dialog"
             image-alt="Oruga Logo"
             image-src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"

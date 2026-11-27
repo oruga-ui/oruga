@@ -86,6 +86,7 @@ function onProfileActivate(): void {
 
         <o-steps
             v-model="activeStep"
+            aria-label="Account setup progress"
             :vertical="isVertical"
             :animated="isAnimated"
             :rounded="isRounded"
@@ -98,7 +99,7 @@ function onProfileActivate(): void {
                 step="1"
                 label="Account"
                 :clickable="isStepsClickable">
-                <h1 :style="{ 'text-align': 'center' }">Account</h1>
+                <h3 :style="{ 'text-align': 'center' }">Account</h3>
                 Lorem ipsum dolor sit amet.
             </o-step-item>
 
@@ -109,7 +110,7 @@ function onProfileActivate(): void {
                 :clickable="isStepsClickable"
                 :variant="isProfileWarning ? 'warning' : ''"
                 @activate="onProfileActivate">
-                <h1 :style="{ 'text-align': 'center' }">Profile</h1>
+                <h3 :style="{ 'text-align': 'center' }">Profile</h3>
                 Lorem ipsum dolor sit amet.
             </o-step-item>
 
@@ -119,7 +120,7 @@ function onProfileActivate(): void {
                 :visible="showSocial"
                 label="Social"
                 :clickable="isStepsClickable">
-                <h1 :style="{ 'text-align': 'center' }">Social</h1>
+                <h3 :style="{ 'text-align': 'center' }">Social</h3>
                 Lorem ipsum dolor sit amet.
             </o-step-item>
 
@@ -129,7 +130,7 @@ function onProfileActivate(): void {
                 label="Finish"
                 :clickable="isStepsClickable"
                 disabled>
-                <h1 :style="{ 'text-align': 'center' }">Finish</h1>
+                <h3 :style="{ 'text-align': 'center' }">Finish</h3>
                 Lorem ipsum dolor sit amet.
             </o-step-item>
 

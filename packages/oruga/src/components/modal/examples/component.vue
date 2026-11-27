@@ -15,6 +15,7 @@ const isActive = ref(false);
 
         <o-modal
             v-model:active="isActive"
+            aria-label="Confirm shipment"
             :component="ModalForm"
             :props="{
                 title: 'Ship sprockets?',

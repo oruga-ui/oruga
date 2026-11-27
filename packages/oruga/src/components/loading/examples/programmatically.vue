@@ -10,6 +10,7 @@ const isFullPage = ref(true);
 function openLoading(): void {
     const loadingComponent = oruga.loading.open(
         {
+            label: "Loading data",
             fullPage: isFullPage.value,
         },
         isFullPage.value ? null : elementRef.value,

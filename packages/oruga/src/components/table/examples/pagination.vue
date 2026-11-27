@@ -231,7 +231,7 @@ const perPage = ref(3);
                 </o-select>
             </o-field>
             <o-field>
-                <o-select v-model="sortIcon" aria-label="Arrow icon">
+                <o-select v-model="sortIcon" aria-label="Sort icon">
                     <option value="arrow-up">Arrow sort icon</option>
                     <option value="caret-up">Caret sort icon</option>
                     <option value="chevron-up">Chevron sort icon</option>
@@ -269,6 +269,8 @@ const perPage = ref(3);
             :sort-icon-size="sortIconSize"
             :default-sort-direction="defaultSortDirection"
             default-sort="user.first_name">
+            <template #caption>Contacts</template>
+
             <o-table-column
                 v-slot="{ row }"
                 field="id"

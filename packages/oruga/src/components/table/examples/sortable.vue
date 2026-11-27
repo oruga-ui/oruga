@@ -43,6 +43,8 @@ const data = ref([
 <template>
     <section>
         <o-table :data="data">
+            <template #caption>Contacts</template>
+
             <o-table-column field="id" label="Id" width="40" numeric sortable />
             <o-table-column field="first_name" label="First Name" sortable />
             <o-table-column field="last_name" label="Last Name" sortable />

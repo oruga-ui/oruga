@@ -1,6 +1,6 @@
 <template>
     <section>
-        <o-field label="Select timepicker">
+        <o-field label="Reminder time">
             <o-timepicker
                 placeholder="Click to select"
                 icon="clock"
