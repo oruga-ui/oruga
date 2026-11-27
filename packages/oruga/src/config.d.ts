@@ -1,4 +1,5 @@
 import type {
+    AnimationName,
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
@@ -68,6 +69,10 @@ declare module "./index" {
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
@@ -80,9 +85,9 @@ declare module "./index" {
                  */
                 clearIcon: string;
                 /**
-                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 * Accessibility label for the clickable icon. Required when `iconClickable` is set.
                  */
-                ariaIconLeftLabel: string;
+                ariaIconLabel: string;
                 /**
                  * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
                  */
@@ -100,9 +105,12 @@ declare module "./index" {
                  */
                 desktopModal: boolean;
                 /**
-                 * Transition name to apply on dropdown list
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
                  */
-                animation: string;
+                animation: AnimationName | false;
                 /**
                  * Native options to use in HTML5 validation
                  */
@@ -247,6 +255,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Icon pack to use
                  */
                 iconPack: string;
+                /**
+                 * Size of the icon
+                 */
+                iconSize: string;
                 /**
                  * Enable rounded style
                  */
@@ -614,9 +626,17 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Icon name for previous icon
                  */
@@ -955,9 +975,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Overlay content is shown into a modal on mobile
                  */
@@ -988,9 +1016,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
         dialog?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Custom animation (transition name)
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
                  */
-                animation: string;
+                animation: AnimationName | false;
                 /**
                  * Show an backdrop overlay background; make it a modal dialog
                  */
@@ -1016,7 +1047,8 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 closeable: boolean;
                 /**
-                 * Close the dialog when clicked outside of the panel
+                 * Close the dialog when clicked outside of the panel.
+This requires a browser which supports the `closedby` attribute of the dialog element.
                  */
                 closeOnBackdrop: boolean;
                 /**
@@ -1028,9 +1060,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 closeOnConfirm: boolean;
                 /**
-                 * Whether background scrollbar should be blocked/removed when dialog is visible
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                blockScroll: boolean;
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Icon pack to use for the close icon
                  */
@@ -1138,14 +1173,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 cancelButtonClass: ClassDefinition;
                 /**
-                 * Class of the body when modal is open and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when modal is open and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
-                /**
                  * Class of the root element when draggable is enabled
                  */
                 draggableClass: ClassDefinition;
@@ -1165,9 +1192,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 position: PopoverPosition;
                 /**
-                 * Custom animation (transition name)
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
                  */
-                animation: string;
+                animation: AnimationName | false;
                 /**
                  * Dropdown menu tag name
                  */
@@ -1239,11 +1269,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 teleport: boolean | object | string;
                 /**
-                 * Set `true` to remove the body scrollbar.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                clipScroll: boolean;
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Class of the root element
                  */
@@ -1296,14 +1327,6 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class of the content element when should has a backdrop
                  */
                 contentBackdropClass: ClassDefinition;
-                /**
-                 * Class of the body when dropdown is open and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when dropdown is open and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
                 /**
                  * Class of the item element
                  */
@@ -1495,6 +1518,10 @@ See icon library documentation for custom classes.
                  */
                 iconRight: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Add a button/icon to clear the inputed text
                  */
                 clearable: boolean;
@@ -1503,9 +1530,9 @@ See icon library documentation for custom classes.
                  */
                 clearIcon: string;
                 /**
-                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 * Accessibility label for the clickable icon. Required when `iconClickable` is set.
                  */
-                ariaIconLeftLabel: string;
+                ariaIconLabel: string;
                 /**
                  * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
                  */
@@ -1730,11 +1757,12 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconSize: string;
                 /**
-                 * Set `true` to remove the body scrollbar when `fullPage`.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Prevents background scrolling when fullpage is active.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                clipScroll: boolean;
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Class of the root element
                  */
@@ -1755,14 +1783,6 @@ but will set the body to a fixed position, which may break some layouts.
                  * Class for the label element
                  */
                 labelClass: ClassDefinition;
-                /**
-                 * Class of the body when fullpage and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when fullpage and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
             }>;
         menu?: ComponentConfigBase &
             Partial<{
@@ -1867,11 +1887,12 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                  */
                 closeOnEscape: boolean;
                 /**
-                 * Set `true` to remove the body scrollbar.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                clipScroll: boolean;
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Trap focus inside the modal
                  */
@@ -1943,14 +1964,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the close button element
                  */
                 closeClass: ClassDefinition;
-                /**
-                 * Class of the body when modal is open and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when modal is open and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
             }>;
         notification?: ComponentConfigBase &
             Partial<{
@@ -2181,9 +2194,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 position: PopoverPosition;
                 /**
-                 * Show and dismiss animation
+                 * Open/close animation using the native Web Animations API.
+Set to `false` to disable the built-in animation.
+
+Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
                  */
-                animation: string;
+                animation: AnimationName | false;
                 /**
                  * Adds close button to the content
                  */
@@ -2205,11 +2221,12 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 ariaCloseLabel: string;
                 /**
-                 * Set `true` to remove the body scrollbar.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                clipScroll: boolean;
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
@@ -2260,14 +2277,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the close element
                  */
                 closeClass: ClassDefinition;
-                /**
-                 * Class of the body when popover has backdrop and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when popover has backdrop and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
@@ -2340,13 +2349,17 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 iconRight: string;
                 /**
-                 * Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set.
+                 * Accessibility label for the clickable icon. Required when `iconClickable` is set.
                  */
-                ariaIconLeftLabel: string;
+                ariaIconLabel: string;
                 /**
                  * Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set.
                  */
                 ariaIconRightLabel: string;
+                /**
+                 * Size of the icon
+                 */
+                iconSize: string;
                 /**
                  * Native options to use in HTML5 validation,
 whether the value of the form's controls can be automatically completed by the browser.
@@ -2448,11 +2461,12 @@ whether the value of the form's controls can be automatically completed by the b
                  */
                 closeOnEscape: boolean;
                 /**
-                 * Set `true` to remove the body scrollbar.
-When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts.
+                 * Prevents background scrolling while open.
+`clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+`keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+`off` does not prevent background scrolling.
                  */
-                clipScroll: boolean;
+                scrollLock: "clip" | "keep" | "off";
                 /**
                  * Trap focus inside the sidebar
                  */
@@ -2523,14 +2537,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element when is fullwidth
                  */
                 fullwidthClass: ClassDefinition;
-                /**
-                 * Class of the body when is visible and scroll is clipped
-                 */
-                scrollClipClass: ClassDefinition;
-                /**
-                 * Class of the body when is visible and scroll is keeped
-                 */
-                scrollKeepClass: ClassDefinition;
             }>;
         skeleton?: ComponentConfigBase &
             Partial<{
@@ -2681,6 +2687,10 @@ It replaces the label of a parent field as the name of the thumb.
                  * Icon pack
                  */
                 iconPack: string;
+                /**
+                 * Icon size
+                 */
+                iconSize: string;
                 /**
                  * Class of the step item element.
                  */
@@ -3255,6 +3265,10 @@ A string can use the `{value}` placeholder for the column label, a function rece
                  */
                 iconPack: string;
                 /**
+                 * Icon size
+                 */
+                iconSize: string;
+                /**
                  * Tabs item tag name
                  */
                 itemTag: DynamicComponent;
@@ -3394,6 +3408,10 @@ A string can use the `{value}` placeholder for the column label, a function rece
                  */
                 iconPack: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Close icon name
                  */
                 closeIcon: string;
@@ -3485,9 +3503,17 @@ A string can use the `{value}` placeholder for the column label, a function rece
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon name of close icon on selected item
                  */
                 closeIcon: string;
+                /**
+                 * Size of the close icon on selected item
+                 */
+                closeIconSize: string;
                 /**
                  * Accessibility label for the close button
                  */
@@ -3574,9 +3600,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 icon: string;
                 /**
+                 * Size of the icon
+                 */
+                iconSize: string;
+                /**
                  * Icon to be added on the right side
                  */
                 iconRight: string;
+                /**
+                 * Variant of the right icon
+                 */
+                iconRightVariant: string;
                 /**
                  * Overlay content is shown into a modal on mobile
                  */
@@ -3602,15 +3636,15 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Accessibility seconds select aria label
                  */
-                ariaSelectSecondLabel: string;
+                ariaSelectSecondsLabel: string;
                 /**
                  * Accessibility minutes select aria label
                  */
-                ariaSelectMinuteLabel: string;
+                ariaSelectMinutesLabel: string;
                 /**
                  * Accessibility hours select aria label
                  */
-                ariaSelectHourLabel: string;
+                ariaSelectHoursLabel: string;
                 /**
                  * Class of the root element
                  */
@@ -3705,7 +3739,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Position of the Tooltip relative to the trigger
                  */
-                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
+                position: PopoverPosition;
                 /**
                  * Tooltip default animation
                  */
@@ -3714,45 +3748,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Limit the tooltip content width
                  */
                 maxWidth: string;
-                /**
-                 * Tooltip trigger tag name
-                 */
-                triggerTag: DynamicComponent;
-                /**
-                 * Show when hover over the trigger
-                 * @deprecated will be removed
-                 */
-                openOnHover: boolean;
-                /**
-                 * Show when trigger get focused
-                 * @deprecated will be removed
-                 */
-                openOnFocus: boolean;
-                /**
-                 * Show when clicked on the trigger
-                 * @deprecated will be removed - use OPopover instead
-                 */
-                openOnClick: boolean;
-                /**
-                 * Show when right clicked on the trigger
-                 * @deprecated will be removed - use OPopover instead
-                 */
-                openOnContextmenu: boolean;
-                /**
-                 * Close on hover out of the content
-                 * @deprecated will be removed
-                 */
-                closeable: boolean;
-                /**
-                 * Close when clicked outside of the panel
-                 * @deprecated will be removed
-                 */
-                closeOnOutside: boolean;
-                /**
-                 * Close when pressing escape key
-                 * @deprecated will be removed
-                 */
-                closeOnEscape: boolean;
                 /**
                  * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
@@ -3764,42 +3759,33 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 rootClass: ClassDefinition;
                 /**
-                 * Class of the root element when teleported
+                 * Class of the root element when disabled
+                 */
+                disabledClass: ClassDefinition;
+                /**
+                 * Class for the root element when active
+                 */
+                activeClass: ClassDefinition;
+                /**
+                 * Class of the content element when teleported
                  */
                 teleportClass: ClassDefinition;
-                /**
-                 * Class of the trigger element
-                 */
-                triggerClass: ClassDefinition;
                 /**
                  * Class of the content element
                  */
                 contentClass: ClassDefinition;
                 /**
-                 * Class of the content element with position
+                 * Class of the content element when active
                  */
-                positionClass: ClassDefinition;
+                contentActiveClass: ClassDefinition;
                 /**
                  * Class of the content element with variant
                  */
-                variantClass: ClassDefinition;
-                /**
-                 * Class of the content element when is multiline
-                 * @deprecated `multiple` prop will be removed
-                 */
-                multilineClass: ClassDefinition;
-                /**
-                 * Class of the content element when is always visible
-                 */
-                alwaysClass: ClassDefinition;
+                contentVariantClass: ClassDefinition;
                 /**
                  * Class of the arrow element
                  */
                 arrowClass: ClassDefinition;
-                /**
-                 * Class of the arrow element with position
-                 */
-                arrowPositionClass: ClassDefinition;
                 /**
                  * Class of the arrow element with variant
                  */

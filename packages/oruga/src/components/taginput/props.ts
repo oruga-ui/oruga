@@ -6,7 +6,10 @@ export type TaginputOptions<T> = AutocompleteOptions<T>;
 export type TaginputProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected items, use v-model to make it two-way binding */
+    /**
+     * The selected items, use v-model to make it two-way binding
+     * @type (string|number|object)[]
+     */
     modelValue?: T[];
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;
@@ -59,8 +62,18 @@ export type TaginputProps<T> = {
     iconPack?: string;
     /** Icon to be shown */
     icon?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Icon name of close icon on selected item */
     closeIcon?: string;
+    /**
+     * Size of the close icon on selected item
+     * @values small, medium, large
+     */
+    closeIconSize?: string;
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
     /** Native options to use in HTML5 validation */

@@ -2,6 +2,7 @@ import {
     createApp,
     toValue,
     type App,
+    type AppConfig,
     type ComponentInternalInstance,
     type EmitsToProps,
     type MaybeRefOrGetter,
@@ -40,6 +41,13 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
      * See {@link https://vuejs.org/api/application.html#app-config-idprefix}.
      */
     idPrefix?: string;
+    /**
+     * Configure the Vue app created for this programmatic instance.
+     * Called after the active app context is copied and before mounting.
+     * This callback runs for every instance; avoid reinstalling singleton plugins
+     * that attach app-unmount hooks.
+     */
+    configureApp?: (app: App) => void;
 } & Omit<ProgrammaticComponentProps<C>, "component"> & // component props
     EmitsToProps<Pick<Required<ProgrammaticComponentEmits<C>>, "close">>; // component emit props
 
@@ -128,6 +136,7 @@ export abstract class ProgrammaticFactory {
         // create a new vue app instance with the ProgrammaticComponent as root
         let app: App | undefined = createApp(ProgrammaticComponent, {
             registry: options.registry, // programmatic registry instance
+            deferredClose: options.deferredClose, // delegate close to the component
             component, // the component which should be rendered
             // component props including the target as `container`
             props: {
@@ -141,8 +150,6 @@ export abstract class ProgrammaticFactory {
 
         // get the current active oruga instance
         const orugaConfig = getActiveOruga();
-        // provide the oruga config to the new app instance
-        orugaConfig?.provide(app);
 
         // set a prefix for all IDs generated via useId() to prevent duplication in multiple programmatic instances
         const idPrefix =
@@ -152,17 +159,28 @@ export abstract class ProgrammaticFactory {
         if (orugaConfig?._app) {
             // if running inside another app share the current app context to the new app instance
             const baseContext = orugaConfig._app._context;
+            // use an own config object, otherwise the idPrefix would be set on the base app.
+            // copy the property descriptors instead of spreading the config, because spreading
+            // would read accessors like `compilerOptions`, which warns in Vue's runtime-only dev build
+            const config = Object.defineProperties(
+                {} as AppConfig,
+                Object.getOwnPropertyDescriptors(baseContext.config),
+            );
+            config.idPrefix = idPrefix;
             Object.assign(app._context, baseContext, {
                 // keep the reference to the new app instance
                 app,
-                // use an own config object, otherwise the idPrefix would be set on the base app
-                config: { ...baseContext.config, idPrefix },
+                config,
                 // inherit the provided values, but don't write them back to the base app
                 provides: Object.create(baseContext.provides),
             });
         } else {
             app.config.idPrefix = idPrefix;
         }
+
+        // provide Oruga after context copying so the programmatic app keeps its own provider
+        orugaConfig?.provide(app);
+        options.configureApp?.(app);
 
         // render the new vue instance into the container element
         const instance = app.mount(container);

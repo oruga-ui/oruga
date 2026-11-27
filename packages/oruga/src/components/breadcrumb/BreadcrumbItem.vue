@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
     active: false,
     disabled: false,
     hidden: false,
-    iconLeft: undefined,
+    icon: undefined,
     iconRight: undefined,
     iconPack: () => getDefault("breadcrumb.iconPack"),
     iconSize: () => getDefault("breadcrumb.iconSize"),
@@ -95,8 +95,8 @@ const iconRightClasses = defineClasses(
             :active="active"
             :aria-current="active ? 'page' : undefined">
             <o-icon
-                v-if="iconLeft"
-                :icon="iconLeft"
+                v-if="icon"
+                :icon="icon"
                 :pack="iconPack"
                 :size="iconSize"
                 :class="iconLeftClasses" />

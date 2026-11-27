@@ -11,7 +11,7 @@ import {
 } from "@/utils/helpers";
 import { unrefElement, usePopoverAPI } from "@/composables";
 
-import type { ComponentClass, PopoverPosition } from "@/types";
+import type { AnimationName, ComponentClass, PopoverPosition } from "@/types";
 import { useTeleport } from "@/composables/useTeleport";
 
 /**
@@ -51,8 +51,8 @@ const props = withDefaults(
         position: PopoverPosition;
         /** Teleport the content to another DOM node, `true` targets the body */
         teleport?: boolean | string | object;
-        /** Name of the content transition animation */
-        animation?: string;
+        /** Open/close animation, played via the Web Animations API. Set to `false` to disable. */
+        animation?: AnimationName | false;
 
         // input props
         /** Placeholder of the input */
@@ -75,6 +75,10 @@ const props = withDefaults(
         iconRight?: string;
         /** Make the right icon clickable */
         iconRightClickable?: boolean;
+        /** Variant of the right icon */
+        iconRightVariant?: string;
+        /** Size of the icons */
+        iconSize?: string;
         /** Make the input full width */
         expanded?: boolean;
         /** Make the input rounded */
@@ -110,6 +114,7 @@ const props = withDefaults(
         disabled: undefined,
         readonly: undefined,
         teleport: false,
+        animation: undefined,
         inputAttrs: () => ({}),
     },
 );
@@ -162,6 +167,7 @@ if (!props.inline) {
         position: popoverPosition,
         behavior: "auto",
         trigger: isActive,
+        animation: () => props.animation,
         targetRef: triggerRef,
         contentRef: contentRef,
         onToggle,
@@ -368,8 +374,10 @@ defineExpose({ focus: setFocus });
                 :size="size"
                 :icon-pack="iconPack"
                 :icon="icon"
+                :icon-size="iconSize"
                 :icon-right="iconRight"
                 :icon-right-clickable="iconRightClickable"
+                :icon-right-variant="iconRightVariant"
                 :expanded="expanded"
                 :rounded="rounded"
                 :disabled="disabled"
@@ -398,8 +406,10 @@ defineExpose({ focus: setFocus });
                 :size="size"
                 :icon-pack="iconPack"
                 :icon="icon"
+                :icon-size="iconSize"
                 :icon-right="iconRight"
                 :icon-right-clickable="iconRightClickable"
+                :icon-right-variant="iconRightVariant"
                 :rounded="rounded"
                 :disabled="disabled"
                 :readonly="initialNativeType == 'text'"
@@ -418,14 +428,11 @@ defineExpose({ focus: setFocus });
     </div>
 
     <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-        <transition :name="animation">
-            <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
-            <div
-                ref="contentElement"
-                :class="contentClass"
-                :popover="inline ? undefined : ''">
-                <slot />
-            </div>
-        </transition>
+        <div
+            ref="contentElement"
+            :class="contentClass"
+            :popover="inline ? undefined : ''">
+            <slot />
+        </div>
     </Teleport>
 </template>

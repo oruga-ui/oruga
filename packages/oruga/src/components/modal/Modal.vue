@@ -4,7 +4,6 @@ import {
     computed,
     watch,
     nextTick,
-    onMounted,
     useTemplateRef,
     type Component,
 } from "vue";
@@ -18,7 +17,7 @@ import {
     defineClasses,
     useClickOutside,
     useMatchMedia,
-    usePreventScrolling,
+    useScrollLock,
     useTrapFocus,
     useEventListener,
     useTeleport,
@@ -61,7 +60,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     ariaCloseLabel: () => getDefault("modal.ariaCloseLabel", "Close"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
-    clipScroll: () => getDefault("modal.clipScroll", false),
+    scrollLock: () => getDefault("modal.scrollLock", "keep"),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -107,19 +106,17 @@ const customStyle = computed(() =>
     !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
 );
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
+useScrollLock(
+    () => isActive.value && props.overlay,
+    () => props.scrollLock,
+);
 
 watch(isActive, (value) => {
-    if (props.overlay) toggleScroll(value);
     // if autoFocus focus the element
     if (value && props.autoFocus)
         nextTick(() => {
             if (rootRef.value) rootRef.value.focus();
         });
-});
-
-onMounted(() => {
-    if (isActive.value && props.overlay) toggleScroll(isActive.value);
 });
 
 // #region --- Events Feature ---

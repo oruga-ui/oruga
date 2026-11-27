@@ -14,7 +14,10 @@ export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
      * @type string|number|object
      */
     modelValue?: ValueType<T, IsMultiple>;
-    /** Allows multiple selections - converts the `modelValue` into an array */
+    /**
+     * Allows multiple selections - converts the `modelValue` into an array
+     * @type boolean
+     */
     multiple?: IsMultiple;
     /** Listbox options, unnecessary when default slot is used */
     options?: ListboxOptions<T>;

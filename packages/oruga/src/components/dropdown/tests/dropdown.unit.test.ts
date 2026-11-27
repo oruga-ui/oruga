@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, afterEach } from "vitest";
-import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 import { nextTick, type ComponentPublicInstance } from "vue";
 import { setTimeout } from "timers/promises";
 
@@ -158,6 +158,7 @@ describe("ODropdown tests", () => {
             expect(items.length).toBe(simpleOptions.length);
 
             await items[1].trigger("click");
+            await flushPromises(); // drain animation microtask before flushing timers
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
@@ -184,7 +185,7 @@ describe("ODropdown tests", () => {
 
             // click outside
             window.dispatchEvent(new Event("click"));
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             const activeEmits = wrapper.emitted("update:active");
@@ -209,7 +210,7 @@ describe("ODropdown tests", () => {
 
             // click outside
             window.dispatchEvent(new Event("click"));
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             expect(wrapper.emitted("update:active")).toBeUndefined();
@@ -239,6 +240,8 @@ describe("ODropdown tests", () => {
 
             // close on trigger click
             await trigger.trigger("click");
+            await flushPromises(); // drain animation microtask before flushing timers
+
             expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
         });
@@ -356,7 +359,7 @@ describe("ODropdown tests", () => {
             window.dispatchEvent(
                 new CustomEvent("scroll", { detail: "anything" }),
             );
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             const activeEmits = wrapper.emitted("update:active");
@@ -688,6 +691,124 @@ describe("ODropdown tests", () => {
             expect(menu.exists()).toBeTruthy();
             expect(menu.isVisible()).toBeFalsy();
         });
+
+        test("deselect an object value equal to a selected value with multiple prop", async () => {
+            const objectOptions: DropdownOptions<{ id: number }> = [
+                { label: "Item 1", value: { id: 1 } },
+                { label: "Item 2", value: { id: 2 } },
+            ];
+
+            const wrapper = mount(ODropdown, {
+                props: {
+                    active: true,
+                    options: objectOptions,
+                    // equal to the option values, but different objects
+                    modelValue: [{ id: 1 }, { id: 2 }],
+                    selectable: true,
+                    multiple: true,
+                    keepOpen: true,
+                },
+            });
+            await setTimeout(); // await popover open
+
+            const items = wrapper.findAll(".o-dropdown__item");
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeTruthy();
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [[{ id: 2 }]],
+            ]);
+        });
+
+        test("do not update an object value equal to the selected value", async () => {
+            const objectOptions: DropdownOptions<{ id: number }> = [
+                { label: "Item 1", value: { id: 1 } },
+                { label: "Item 2", value: { id: 2 } },
+            ];
+
+            const wrapper = mount(ODropdown, {
+                props: {
+                    active: true,
+                    options: objectOptions,
+                    // equal to the option value, but a different object
+                    modelValue: { id: 1 },
+                    selectable: true,
+                },
+            });
+            await setTimeout(); // await popover open
+
+            const items = wrapper.findAll(".o-dropdown__item");
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(wrapper.emitted("select")).toStrictEqual([[{ id: 1 }]]);
+            expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+        });
+
+        describe.each([0, false, ""])(
+            "handle the falsy option value %o",
+            (value) => {
+                const falsyOptions: DropdownOptions<number | boolean | string> =
+                    [
+                        { label: "Falsy", value },
+                        { label: "Truthy", value: 1 },
+                    ];
+
+                test("select the value on focus with selectOnFocus", async () => {
+                    const wrapper = mount(ODropdown, {
+                        props: {
+                            active: true,
+                            options: falsyOptions,
+                            selectable: true,
+                            selectOnFocus: true,
+                        },
+                        attachTo: document.body,
+                    });
+                    await setTimeout(); // await popover open
+
+                    const trigger = wrapper.find(".o-dropdown__trigger");
+                    await trigger.trigger("keydown", { key: "Down" });
+
+                    expect(wrapper.emitted("select")).toStrictEqual([[value]]);
+                    expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                        [value],
+                    ]);
+                });
+
+                test("select the value on close with selectOnClose", async () => {
+                    const wrapper = mount(ODropdown, {
+                        props: {
+                            active: true,
+                            options: falsyOptions,
+                            selectable: true,
+                            selectOnClose: true,
+                            keepOpen: true,
+                        },
+                        attachTo: document.body,
+                    });
+                    await setTimeout(); // await popover open
+
+                    const trigger = wrapper.find(".o-dropdown__trigger");
+                    await trigger.trigger("keydown", { key: "Down" });
+                    expect(wrapper.emitted("select")).toBeUndefined();
+
+                    await trigger.trigger("keydown", { key: "Escape" });
+                    await nextTick(); // await dom update
+
+                    expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
+                    expect(wrapper.emitted("select")).toStrictEqual([[value]]);
+                    expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                        [value],
+                    ]);
+                });
+            },
+        );
     });
 
     describe("handle options props correctly", () => {
@@ -938,7 +1059,7 @@ describe("ODropdown tests", () => {
             await nextTick(); // await listener registration
 
             window.dispatchEvent(new Event("click"));
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask, `close` is emitted after the native hide
             expect(wrapper.emitted("close")).toHaveLength(1);
         });
 
@@ -953,7 +1074,7 @@ describe("ODropdown tests", () => {
             await nextTick(); // await listener registration
 
             window.dispatchEvent(new Event("scroll"));
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask, `close` is emitted after the native hide
             expect(wrapper.emitted("close")).toHaveLength(1);
         });
     });

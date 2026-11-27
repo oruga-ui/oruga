@@ -1,4 +1,9 @@
-import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
+import type {
+    AnimationName,
+    ComponentClass,
+    DynamicComponent,
+    Numberish,
+} from "@/types";
 import type { InputProps } from "../input/props";
 import type { DropdownOptions } from "../dropdown/props";
 
@@ -73,6 +78,11 @@ export type AutocompleteProps<T> = {
     iconPack?: string;
     /** Icon to be shown */
     icon?: string;
+    /**
+     * Size of the icon
+     * @values small, medium, large
+     */
+    iconSize?: string;
     /** Makes the icon clickable */
     iconClickable?: boolean;
     /** Icon to be added on the right side */
@@ -85,8 +95,8 @@ export type AutocompleteProps<T> = {
     clearable?: boolean;
     /** Icon name to be added on the clear button */
     clearIcon?: string;
-    /** Accessibility label for the clickable icon on the left side. Required when `iconClickable` is set. */
-    ariaIconLeftLabel?: string;
+    /** Accessibility label for the clickable icon. Required when `iconClickable` is set. */
+    ariaIconLabel?: string;
     /** Accessibility label for the clickable icon on the right side. Required when `iconRightClickable` is set. */
     ariaIconRightLabel?: string;
     /** Accessibility label for the clear button. */
@@ -97,8 +107,14 @@ export type AutocompleteProps<T> = {
     mobileModal?: boolean;
     /** Dropdown content (items) are shown into a modal on desktop */
     desktopModal?: boolean;
-    /** Transition name to apply on dropdown list */
-    animation?: string;
+    /**
+     * Open/close animation using the native Web Animations API.
+     * Set to `false` to disable the built-in animation.
+     *
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+     * @default 'fade'
+     */
+    animation?: AnimationName | false;
     /** Native options to use in HTML5 validation */
     autocomplete?: string;
     /** Enable HTML 5 native validation */

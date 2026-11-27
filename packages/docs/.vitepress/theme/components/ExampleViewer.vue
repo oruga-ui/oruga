@@ -3,6 +3,7 @@ import {
     ref,
     computed,
     onMounted,
+    onBeforeUnmount,
     useTemplateRef,
     nextTick,
     type Component,
@@ -97,7 +98,43 @@ const tab = ref(
 
 const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 
+let isDark = false;
+let darkModeObserver: MutationObserver | undefined;
+
+function applyAppearance(): void {
+    // get example-showcase root
+    const shadowRoot = showcaseElement.value?.shadowRoot;
+    if (!shadowRoot) return;
+
+    // get only sections in child nodes
+    const sections = Array.from(shadowRoot.children).filter(
+        (node) => node.tagName === "SECTION",
+    );
+
+    // set theme specific attributes to example sections
+    sections.forEach((child) => {
+        child.setAttribute("data-theme", isDark ? "dark" : "light");
+        child.setAttribute("data-bs-theme", isDark ? "dark" : "light");
+    });
+}
+
+onBeforeUnmount(() => darkModeObserver?.disconnect());
+
 onMounted(() => {
+    const root = document.documentElement;
+    const updateAppearance = (): void => {
+        isDark = root.classList.contains("dark");
+        applyAppearance();
+    };
+
+    darkModeObserver = new MutationObserver(updateAppearance);
+    darkModeObserver.observe(root, {
+        attributes: true,
+        attributeFilter: ["class"],
+    });
+    // set default appearance style
+    updateAppearance();
+
     // await component got rendered
     nextTick(() => {
         if (!styleCode.value || !props.component) return;

@@ -5,7 +5,7 @@ const currentSlide = ref(1);
 
 const arrows = ref(true);
 const arrowsHover = ref(true);
-const dragable = ref(true);
+const draggable = ref(true);
 const itemsToShow = ref(4);
 const itemsToList = ref(1);
 const repeat = ref(false);
@@ -55,7 +55,7 @@ const slides = [
                     label="Arrow on hover" />
             </o-field>
             <o-field>
-                <o-switch v-model="dragable" label="Drag event" />
+                <o-switch v-model="draggable" label="Drag event" />
             </o-field>
             <o-field>
                 <o-switch v-model="repeat" label="Repeat" />
@@ -85,7 +85,7 @@ const slides = [
             v-model="currentSlide"
             :arrows="arrows"
             :arrows-hover="arrowsHover"
-            :dragable="dragable"
+            :draggable="draggable"
             :items-to-show="itemsToShow"
             :items-to-list="itemsToList"
             :repeat="repeat">

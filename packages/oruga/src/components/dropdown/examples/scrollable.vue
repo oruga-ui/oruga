@@ -31,7 +31,7 @@ const currentMenu = ref({ icon: "users", text: "People" });
                     variant="primary"
                     type="button"
                     :label="currentMenu.text"
-                    :icon-left="currentMenu.icon"
+                    :icon="currentMenu.icon"
                     icon-right="caret-down" />
             </template>
 

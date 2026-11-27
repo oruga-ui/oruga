@@ -147,26 +147,6 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.cancelButton = "Cancel";
         },
     },
-    scrollClipClass: {
-        class: "scrollClipClass",
-        description:
-            "Class of the body when dialog is active and has blockScroll.",
-        properties: ["blockScroll"],
-        action: (data): void => {
-            data.active = true;
-            data.blockScroll = true;
-        },
-    },
-    scrollKeepClass: {
-        class: "scrollKeepClass",
-        description:
-            "Class of the body when dialog is active and has not blockScroll.",
-        properties: ["blockScroll"],
-        action: (data): void => {
-            data.active = true;
-            data.blockScroll = false;
-        },
-    },
 };
 
 // there seems to be template parsing problem when having "https://" directly in the template

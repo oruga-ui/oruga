@@ -27,7 +27,10 @@ export type UploadProps<
      * @type object | File
      */
     modelValue?: UploadType<T, IsMultiple>;
-    /** Same as native, also push new item to v-model instead of replacing */
+    /**
+     * Same as native, also push new item to v-model instead of replacing
+     * @type boolean
+     */
     multiple?: IsMultiple;
     /**
      * Color variant of the control

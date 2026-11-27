@@ -1,5 +1,5 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
-import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
 
@@ -167,7 +167,7 @@ describe("OAutocomplete tests", () => {
 
         // click outside
         window.dispatchEvent(new Event("click"));
-        await nextTick(); // await dom update
+        await flushPromises(); // drain animation microtask before flushing timers
 
         expect(dropdown.isVisible()).toBeFalsy();
     });
@@ -269,7 +269,6 @@ describe("OAutocomplete tests", () => {
 
         await input.setValue("v");
         await setTimeout(); // await debounce timer
-        await nextTick();
 
         const updatedFocusedItem = wrapper.find(".o-dropdown__item--focused");
         expect(updatedFocusedItem.exists()).toBeTruthy();
@@ -703,13 +702,13 @@ describe("OAutocomplete tests", () => {
             expect(icon.attributes("aria-label")).toBe("Search");
         });
 
-        test("a clickable left icon uses ariaIconLeftLabel", async () => {
+        test("a clickable left icon uses ariaIconLabel", async () => {
             const wrapper = mount(OAutocomplete, {
                 props: {
                     options: OPTIONS,
                     icon: "magnify",
                     iconClickable: true,
-                    ariaIconLeftLabel: "Search",
+                    ariaIconLabel: "Search",
                 },
             });
             await nextTick();
