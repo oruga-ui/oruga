@@ -1,7 +1,4 @@
-<script
-    setup
-    lang="ts"
-    generic="IsRange extends boolean, IsMultiple extends boolean">
+<script setup lang="ts">
 import {
     computed,
     ref,
@@ -15,10 +12,10 @@ import {
 import { isDefined, isTrueish } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
-import { useDatepickerMixins } from "./useDatepickerMixins";
+import { isDateSelectable } from "./useDatepicker";
+import { injectDatepickerProps } from "./datepickerInjection";
 
 import type { DatepickerEvent, FocusedDate } from "./types";
-import type { DatepickerProps } from "./props";
 import type { ClassBinding } from "@/types";
 
 defineOptions({
@@ -34,8 +31,8 @@ const props = defineProps<{
     monthNames: string[];
     /** the date which currently has the focus */
     focusedDate: FocusedDate;
-    /** props of the parent datepicker component */
-    pickerProps: DatepickerProps<IsRange, IsMultiple>;
+    /** the current date */
+    today: Date;
 }>();
 
 const emits = defineEmits<{
@@ -47,13 +44,41 @@ const emits = defineEmits<{
     "range-end": [value: Date];
 }>();
 
-const { dateCreator } = useDatepickerMixins(props.pickerProps);
+const pickerProps = injectDatepickerProps();
 
+const hoveredEndDate = ref<Date>();
 const selectedBeginDate = ref<Date>();
 const selectedEndDate = ref<Date>();
-const hoveredEndDate = ref<Date>();
 
-const hasEvents = computed(() => !!props.pickerProps.events?.length);
+/*
+ * If both begin and end dates are set, reset the end date and set the begin date.
+ * If only begin date is selected, emit an array of the begin date and the new date.
+ * If not set, only set the begin date.
+ */
+function selectRangeDate(date: Date): void {
+    if (selectedBeginDate.value && selectedEndDate.value) {
+        selectedBeginDate.value = date;
+        selectedEndDate.value = undefined;
+        emits("range-start", date);
+    } else if (selectedBeginDate.value) {
+        if (selectedBeginDate.value > date) {
+            selectedEndDate.value = selectedBeginDate.value;
+            selectedBeginDate.value = date;
+        } else {
+            selectedEndDate.value = date;
+        }
+        emits("range-end", date);
+        emits("update:model-value", [
+            selectedBeginDate.value,
+            selectedEndDate.value,
+        ]);
+    } else {
+        selectedBeginDate.value = date;
+        emits("range-start", date);
+    }
+}
+
+const hasEvents = computed(() => !!pickerProps.events?.length);
 
 const monthRefs = ref(new Map());
 
@@ -81,9 +106,9 @@ watch(
 
 /** Return array of all events in the specified month */
 const eventsInThisYear = computed(() => {
-    if (!props.pickerProps.events) return [];
+    if (!pickerProps.events) return [];
 
-    return props.pickerProps.events
+    return pickerProps.events
         .map((event) => {
             if (!event.date && event instanceof Date) event = { date: event };
             if (!event.type) event.type = "is-primary";
@@ -104,8 +129,7 @@ const monthDates = computed(() => {
 });
 
 const hoveredDateRange = computed(() => {
-    if (!isTrueish(props.pickerProps.range) || !selectedEndDate.value)
-        return [];
+    if (!isTrueish(pickerProps.range) || !selectedEndDate.value) return [];
 
     return (
         hoveredEndDate.value &&
@@ -121,65 +145,6 @@ function eventsDateMatch(day): DatepickerEvent[] {
     return eventsInThisYear.value.filter(
         (event) => event.date.getMonth() === day.getMonth(),
     );
-}
-
-function isDateSelectable(date: Date): boolean {
-    const validity: boolean[] = [];
-
-    if (props.pickerProps.minDate)
-        validity.push(date >= props.pickerProps.minDate);
-    if (props.pickerProps.maxDate)
-        validity.push(date <= props.pickerProps.maxDate);
-
-    validity.push(date.getFullYear() === props.focusedDate.year);
-
-    if (props.pickerProps.selectableDates) {
-        if (typeof props.pickerProps.selectableDates === "function") {
-            if (props.pickerProps.selectableDates(date)) return true;
-            else validity.push(false);
-        } else {
-            for (let i = 0; i < props.pickerProps.selectableDates.length; i++) {
-                const enabledDate = props.pickerProps.selectableDates[i];
-                if (
-                    date.getFullYear() === enabledDate.getFullYear() &&
-                    date.getMonth() === enabledDate.getMonth()
-                )
-                    return true;
-                else validity.push(false);
-            }
-        }
-    }
-
-    if (props.pickerProps.unselectableDates) {
-        if (typeof props.pickerProps.unselectableDates === "function") {
-            validity.push(!props.pickerProps.unselectableDates(date));
-        } else {
-            for (
-                let i = 0;
-                i < props.pickerProps.unselectableDates.length;
-                i++
-            ) {
-                const disabledDate = props.pickerProps.unselectableDates[i];
-                validity.push(
-                    date.getFullYear() !== disabledDate.getFullYear() ||
-                        date.getMonth() !== disabledDate.getMonth(),
-                );
-            }
-        }
-    }
-
-    if (props.pickerProps.unselectableDaysOfWeek) {
-        for (
-            let i = 0;
-            i < props.pickerProps.unselectableDaysOfWeek.length;
-            i++
-        ) {
-            const dayOfWeek = props.pickerProps.unselectableDaysOfWeek[i];
-            validity.push(date.getDay() !== dayOfWeek);
-        }
-    }
-
-    return validity.indexOf(false) < 0;
 }
 
 // --- Event Handlers ---
@@ -227,47 +192,24 @@ function onKeydown(event: KeyboardEvent, weekDay: Date): void {
  * Emit update:modelValue event with selected date as payload for v-model in parent
  */
 function selectDate(date: Date): void {
-    if (props.pickerProps.disabled || props.pickerProps.readonly) return;
-    if (!isDateSelectable(date)) return;
+    if (pickerProps.disabled || pickerProps.readonly) return;
+    if (
+        !isDateSelectable(
+            pickerProps,
+            date,
+            date.getMonth(),
+            props.focusedDate.year,
+        )
+    )
+        return;
 
-    if (isTrueish(props.pickerProps.range)) handleSelectRangeDate(date);
-    else if (isTrueish(props.pickerProps.multiple))
-        handleSelectMultipleDates(date);
+    if (isTrueish(pickerProps.range)) selectRangeDate(date);
+    else if (isTrueish(pickerProps.multiple)) handleSelectMultipleDates(date);
     else emits("update:model-value", date);
 }
 
-/*
- * If both begin and end dates are set, reset the end date and set the begin date.
- * If only begin date is selected, emit an array of the begin date and the new date.
- * If not set, only set the begin date.
- */
-function handleSelectRangeDate(date: Date): void {
-    if (selectedBeginDate.value && selectedEndDate.value) {
-        selectedBeginDate.value = date;
-        selectedEndDate.value = undefined;
-        emits("range-start", date);
-    } else if (selectedBeginDate.value && !selectedEndDate.value) {
-        if (selectedBeginDate.value > date) {
-            selectedEndDate.value = selectedBeginDate.value;
-            selectedBeginDate.value = date;
-        } else {
-            selectedEndDate.value = date;
-        }
-        emits("range-end", date);
-        emits("update:model-value", [
-            selectedBeginDate.value,
-            selectedEndDate.value,
-        ]);
-    } else {
-        selectedBeginDate.value = date;
-        emits("range-start", date);
-    }
-}
-
 const multipleSelectedDates = computed(() =>
-    isTrueish(props.pickerProps.multiple) && props.modelValue
-        ? props.modelValue
-        : [],
+    isTrueish(pickerProps.multiple) && props.modelValue ? props.modelValue : [],
 );
 
 function handleSelectMultipleDates(date: Date): void {
@@ -304,7 +246,7 @@ function changeFocus(month: Date, inc: number): void {
 }
 
 function onRangeHoverEndDate(day: Date): void {
-    if (isTrueish(props.pickerProps.range)) hoveredEndDate.value = day;
+    if (isTrueish(pickerProps.range)) hoveredEndDate.value = day;
 }
 
 // #region --- Computed Component Classes ---
@@ -342,13 +284,13 @@ function dateMultipleSelected(dateOne, dates, multiple = false): boolean {
 const monthClasses = defineClasses(
     ["monthClass", "o-datepicker__month"],
     // passing the picker props will add reactivity to property changes
-    { props: props.pickerProps },
+    { props: pickerProps },
 );
 
 const monthTableClasses = defineClasses(
     ["monthTableClass", "o-datepicker__month__table"],
     // passing the picker props will add reactivity to property changes
-    { props: props.pickerProps },
+    { props: pickerProps },
 );
 
 const monthCellClasses = defineClasses(
@@ -360,7 +302,7 @@ const monthCellClasses = defineClasses(
         hasEvents,
     ],
     // passing the picker props will add reactivity to property changes
-    { props: props.pickerProps },
+    { props: pickerProps },
 );
 
 // Registers a dispose callback on the current active effect scope.
@@ -378,20 +320,16 @@ function cellClasses(day: Date): ClassBinding[] {
             "monthCellSelectedClass",
             "o-datepicker__month__cell--selected",
             null,
-            dateMatch(
-                day,
-                props.modelValue,
-                isTrueish(props.pickerProps.multiple),
-            ) ||
+            dateMatch(day, props.modelValue, isTrueish(pickerProps.multiple)) ||
                 dateWithin(
                     day,
                     props.modelValue,
-                    isTrueish(props.pickerProps.multiple),
+                    isTrueish(pickerProps.multiple),
                 ) ||
                 dateMultipleSelected(
                     day,
                     multipleSelectedDates.value,
-                    isTrueish(props.pickerProps.multiple),
+                    isTrueish(pickerProps.multiple),
                 ),
         ],
         [
@@ -401,18 +339,14 @@ function cellClasses(day: Date): ClassBinding[] {
             dateMatch(
                 day,
                 Array.isArray(props.modelValue) && props.modelValue[0],
-                isTrueish(props.pickerProps.multiple),
+                isTrueish(pickerProps.multiple),
             ),
         ],
         [
             "monthCellWithinSelectedClass",
             "o-datepicker__month__cell--within-selected",
             null,
-            dateWithin(
-                day,
-                props.modelValue,
-                isTrueish(props.pickerProps.multiple),
-            ),
+            dateWithin(day, props.modelValue, isTrueish(pickerProps.multiple)),
         ],
         [
             "monthCellLastSelectedClass",
@@ -421,7 +355,7 @@ function cellClasses(day: Date): ClassBinding[] {
             dateMatch(
                 day,
                 Array.isArray(props.modelValue) && props.modelValue[1],
-                isTrueish(props.pickerProps.multiple),
+                isTrueish(pickerProps.multiple),
             ),
         ],
         [
@@ -463,21 +397,31 @@ function cellClasses(day: Date): ClassBinding[] {
             "monthCellTodayClass",
             "o-datepicker__month__cell--today",
             null,
-            dateMatch(day, dateCreator()),
+            dateMatch(day, props.today),
         ],
         [
             "monthCellSelectableclass",
             "o-datepicker__month__cell--selectable",
             null,
-            isDateSelectable(day) &&
-                !props.pickerProps.disabled &&
-                !props.pickerProps.readonly,
+            isDateSelectable(
+                pickerProps,
+                day,
+                day.getMonth(),
+                props.focusedDate.year,
+            ) &&
+                !pickerProps.disabled &&
+                !pickerProps.readonly,
         ],
         [
             "monthCellUnselectableClass",
             "o-datepicker__month__cell--unselectable",
             null,
-            !isDateSelectable(day) || props.pickerProps.disabled,
+            !isDateSelectable(
+                pickerProps,
+                day,
+                day.getMonth(),
+                props.focusedDate.year,
+            ) || pickerProps.disabled,
         ],
         // pass effect scope for rectivity binding
         { scope },
@@ -488,7 +432,7 @@ function cellClasses(day: Date): ClassBinding[] {
 const monthEventsClasses = defineClasses(
     ["monthEventsClass", "o-datepicker__month__events"],
     // passing the picker props will add reactivity to property changes
-    { props: props.pickerProps },
+    { props: pickerProps },
 );
 
 /**
@@ -506,8 +450,8 @@ function eventClasses(event: DatepickerEvent): ClassBinding[] {
         [
             "monthEventIndicatorClass",
             "o-datepicker__month__event--",
-            props.pickerProps.indicators,
-            !!props.pickerProps.indicators,
+            pickerProps.indicators,
+            !!pickerProps.indicators,
         ],
         // pass effect scope for rectivity binding
         { scope },
@@ -526,7 +470,12 @@ function eventClasses(event: DatepickerEvent): ClassBinding[] {
                     v-if="
                         !pickerProps.disabled &&
                         !pickerProps.readonly &&
-                        isDateSelectable(date)
+                        isDateSelectable(
+                            pickerProps,
+                            date,
+                            date.getMonth(),
+                            props.focusedDate.year,
+                        )
                     "
                     :ref="(el) => setMonthRef(date, el)"
                     :class="cellClasses(date)"
