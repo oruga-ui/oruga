@@ -5,7 +5,7 @@
         IsRange extends boolean = false,
         IsMultiple extends boolean = false
     ">
-import { computed, ref, watch, useTemplateRef } from "vue";
+import { computed, ref, useAttrs, watch, useTemplateRef } from "vue";
 
 import OButton from "../button/Button.vue";
 import OSelect from "../select/Select.vue";
@@ -14,7 +14,7 @@ import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getDefault, getDefaultFunction } from "@/utils/config";
-import { isDate, pad } from "@/utils/helpers";
+import { isDate, isRootAttr, pad, splitObject } from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
@@ -23,6 +23,8 @@ import { getMonthNames, getWeekdayNames } from "./utils";
 import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
 import type { SelectOption } from "../select";
+
+type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile.
@@ -33,9 +35,8 @@ defineOptions({
     isOruga: true,
     name: "ODatepicker",
     configField: "datepicker",
+    inheritAttrs: false,
 });
-
-type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 const props = withDefaults(
     defineProps<DatepickerProps<IsRange, IsMultiple>>(),
@@ -82,8 +83,10 @@ const props = withDefaults(
         position: "bottom",
         iconPack: () => getDefault("datepicker.iconPack"),
         icon: () => getDefault("datepicker.icon"),
+        iconSize: () => getDefault("datepicker.iconSize"),
         iconRight: () => getDefault("datepicker.iconRight"),
         iconRightClickable: false,
+        iconRightVariant: () => getDefault("datepicker.iconRightVariant"),
         iconPrev: () => getDefault("datepicker.iconPrev", "chevron-left"),
         iconNext: () => getDefault("datepicker.iconNext", "chevron-right"),
         desktopModal: () => getDefault("datepicker.desktopModal", false),
@@ -96,7 +99,7 @@ const props = withDefaults(
         ariaNextLabel: () =>
             getDefault("datepicker.ariaNextLabel", "Next Page"),
         ariaPreviousLabel: () =>
-            getDefault("datepicker.ariaNextLabel", "Previous Page"),
+            getDefault("datepicker.ariaPreviousLabel", "Previous Page"),
         ariaSelectMonthLabel: () =>
             getDefault("datepicker.ariaSelectMonthLabel", "Select Month"),
         ariaSelectYearLabel: () =>
@@ -111,6 +114,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date | Date[]} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
@@ -183,6 +187,7 @@ defineSlots<{
 const pickerRef = useTemplateRef("pickerComponent");
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
+
 const isModal = computed(() =>
     props.inline
         ? false
@@ -193,6 +198,20 @@ const isModal = computed(() =>
 
 const { dtf, dateCreator, dateFormatter, dateParser } =
     useDatepickerMixins(props);
+
+const attrs = useAttrs();
+
+/**
+ * Split the fallthrough attributes between the root element and the input.
+ * An inline picker has no input, so all attributes stay on the root.
+ */
+const pickerAttrs = computed(() => {
+    const [root, input] = splitObject(
+        attrs,
+        (key) => props.inline || isRootAttr(key),
+    );
+    return { root, input };
+});
 
 // the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -607,10 +626,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 </script>
 
 <template>
-    <div data-oruga="datepicker" :class="rootClasses">
+    <div data-oruga="datepicker" :class="rootClasses" v-bind="pickerAttrs.root">
         <OPickerInput
             ref="pickerComponent"
-            v-bind="$attrs"
+            v-bind="pickerAttrs.input"
             v-model:active="isActive"
             v-model:value="vmodel"
             :formatter="format"
@@ -627,8 +646,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :size="size"
             :icon-pack="iconPack"
             :icon="icon"
+            :icon-size="iconSize"
             :icon-right="iconRight"
             :icon-right-clickable="iconRightClickable"
+            :icon-right-variant="iconRightVariant"
             :expanded="expanded"
             :rounded="rounded"
             :disabled="disabled"
@@ -657,7 +678,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         :class="prevButtonClasses"
                         :disabled="!showPrev"
                         :icon-pack="iconPack"
-                        :icon-left="iconPrev"
+                        :icon="iconPrev"
                         :size="size"
                         :aria-label="ariaPreviousLabel"
                         @click.prevent="prev"
@@ -669,7 +690,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         :class="nextButtonClasses"
                         :disabled="!showNext"
                         :icon-pack="iconPack"
-                        :icon-left="iconNext"
+                        :icon="iconNext"
                         :size="size"
                         :aria-label="ariaNextLabel"
                         @click.prevent="next"

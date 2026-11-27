@@ -4,9 +4,9 @@ import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 
-import { version } from "../../oruga/package.json";
+import pkg from "../../oruga/package.json" with { type: "json" };
 
-const componentsFolder = path.join(__dirname, "../pages/components/");
+const componentsFolder = path.join(import.meta.dirname, "../pages/components/");
 const components = fs
     .readdirSync(componentsFolder)
     .map((c) => c.replace(".md", ""));
@@ -63,7 +63,6 @@ export default defineConfig({
         ['meta', { name: 'twitter:description', content: "Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly." }],
         ['meta', { name: 'twitter:image', content: 'https://oruga-ui.com/logo-banner.png?v=3' }],
     ],
-    appearance: false,
     srcDir: "./pages",
     themeConfig: {
         logo: "/logo.png",
@@ -106,7 +105,7 @@ export default defineConfig({
             //     items: [{ text: "Ko-fi", link: "https://ko-fi.com/mlmoravek" }],
             // },
             {
-                text: `v${version}`,
+                text: `v${pkg.version}`,
                 items: [
                     {
                         text: "Changelog",

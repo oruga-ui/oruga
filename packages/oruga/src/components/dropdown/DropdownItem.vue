@@ -141,7 +141,7 @@ const rootClasses = defineClasses(
     ["itemSelectedClass", "o-dropdown__item--active", null, isSelected],
     ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
     [
-        "itemSeperatorClass",
+        "itemDecorativeClass",
         "o-dropdown__item--decorative",
         null,
         computed(() => props.decorative),

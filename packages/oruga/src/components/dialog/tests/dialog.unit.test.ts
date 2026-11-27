@@ -1,5 +1,5 @@
-import { describe, test, expect, afterEach, vi } from "vitest";
-import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { describe, test, expect, afterEach, beforeEach, vi } from "vitest";
+import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
 import ODialog from "@/components/dialog/Dialog.vue";
@@ -35,14 +35,14 @@ describe("ODialog test", () => {
         expect(dialog.exists()).toBeTruthy();
         expect(dialog.attributes("data-oruga")).toBe("dialog");
         expect(dialog.classes("o-dialog--active")).toBeTruthy();
-        expect(dialog.attributes("role")).toBe("dialog");
+        expect(dialog.attributes("role")).toBeUndefined();
         expect(wrapper.html()).toMatchSnapshot();
 
         const backdrop = wrapper.find(".o-dialog__backdrop");
         expect(backdrop.exists()).toBeFalsy();
     });
 
-    test("test modal case", () => {
+    test("modal case", () => {
         const wrapper = mount(ODialog, {
             props: {
                 active: true,
@@ -64,14 +64,14 @@ describe("ODialog test", () => {
         expect(dialog.exists()).toBeTruthy();
         expect(dialog.attributes("data-oruga")).toBe("dialog");
         expect(dialog.classes("o-dialog--active")).toBeTruthy();
-        expect(dialog.attributes("role")).toBe("dialog");
+        expect(dialog.attributes("role")).toBeUndefined();
         expect(wrapper.html()).toMatchSnapshot();
 
         const backdrop = wrapper.find(".o-dialog__backdrop");
         expect(backdrop.exists()).toBeTruthy();
     });
 
-    test("test alert case", () => {
+    test("alert case", () => {
         const wrapper = mount(ODialog, {
             props: {
                 active: true,
@@ -101,6 +101,7 @@ describe("ODialog test", () => {
     });
 
     test("hide when active change to false", async () => {
+        const animate = vi.spyOn(HTMLElement.prototype, "animate");
         const wrapper = mount(ODialog, {
             props: {
                 active: true,
@@ -110,15 +111,60 @@ describe("ODialog test", () => {
         const dialog = wrapper.find("dialog");
         expect(dialog.exists()).toBeTruthy();
         expect(dialog.classes("o-dialog--active")).toBeTruthy();
+        expect((dialog.element as HTMLDialogElement).open).toBe(true);
 
         await wrapper.setProps({ active: false });
+        await flushPromises(); // wait for the leave animation
 
+        // the dialog has been animated and closed natively
+        expect(animate).toHaveBeenCalled();
+        expect((dialog.element as HTMLDialogElement).open).toBe(false);
         expect(wrapper.emitted("confirm")).toBeUndefined();
         expect(wrapper.emitted("close")).toHaveLength(1);
         expect(dialog.classes("o-dialog--active")).toBeFalsy();
     });
 
-    test("test loading", () => {
+    describe("scroll lock", () => {
+        afterEach(() => {
+            document.body.className = "";
+            document.body.style.cssText = "";
+        });
+
+        test("mounting an active modal dialog does not throw and locks the body", () => {
+            mount(ODialog, { props: { active: true, backdrop: true } });
+
+            // `overflow` is the default, as `blockScroll` used to clip the scroll
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                true,
+            );
+        });
+
+        test("does not lock the body without a backdrop", () => {
+            mount(ODialog, { props: { active: true, backdrop: false } });
+
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                false,
+            );
+            expect(document.body.classList.contains("o-scroll-keep")).toBe(
+                false,
+            );
+        });
+
+        test("scrollLock `off` does not lock the body", () => {
+            mount(ODialog, {
+                props: { active: true, backdrop: true, scrollLock: "off" },
+            });
+
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                false,
+            );
+            expect(document.body.classList.contains("o-scroll-keep")).toBe(
+                false,
+            );
+        });
+    });
+
+    test("loading", () => {
         const wrapper = mount(ODialog, {
             props: { loading: true },
         });
@@ -127,8 +173,8 @@ describe("ODialog test", () => {
         expect(loading.exists()).toBeTruthy();
     });
 
-    describe("test header", () => {
-        test("test header", () => {
+    describe("verify header", () => {
+        test("header", () => {
             const wrapper = mount(ODialog, {
                 props: {
                     title: "Adcanced Title",
@@ -143,7 +189,7 @@ describe("ODialog test", () => {
             );
         });
 
-        test("test header slot", () => {
+        test("header slot", () => {
             const headerSlot = "<div>MY HEADER</div>";
             const wrapper = mount(ODialog, {
                 slots: { header: headerSlot },
@@ -154,7 +200,7 @@ describe("ODialog test", () => {
             expect(header.html()).toContain(headerSlot);
         });
 
-        test("test title prop", () => {
+        test("title prop", () => {
             const title = "<div>TEST_TITLE</div>";
             const wrapper = mount(ODialog, {
                 props: { title },
@@ -162,10 +208,10 @@ describe("ODialog test", () => {
 
             const header = wrapper.find(".o-dialog__header");
             expect(header.exists()).toBeTruthy();
-            expect(header.text()).toEqual(title);
+            expect(header.text()).toStrictEqual(title);
         });
 
-        test("test title slot", () => {
+        test("title slot", () => {
             const titleSlot = "<div>TEST_TITLE</div>";
             const wrapper = mount(ODialog, {
                 slots: { title: titleSlot },
@@ -176,7 +222,51 @@ describe("ODialog test", () => {
             expect(header.html()).toContain(titleSlot);
         });
 
-        test("test subtitle prop", () => {
+        test("name the dialog by the title prop", () => {
+            const wrapper = mount(ODialog, { props: { title: "TEST_TITLE" } });
+
+            const dialog = wrapper.find("dialog");
+            const title = wrapper.find(".o-dialog__header-title");
+            expect(title.attributes("id")).toBeTruthy();
+            expect(dialog.attributes("aria-labelledby")).toBe(
+                title.attributes("id"),
+            );
+            expect(dialog.attributes("aria-describedby")).toBeUndefined();
+        });
+
+        test("name the dialog by the title slot", () => {
+            const wrapper = mount(ODialog, {
+                slots: { title: "TEST_TITLE" },
+            });
+
+            const dialog = wrapper.find("dialog");
+            const title = wrapper.find(".o-dialog__header-title");
+            expect(title.attributes("id")).toBeTruthy();
+            expect(dialog.attributes("aria-labelledby")).toBe(
+                title.attributes("id"),
+            );
+        });
+
+        test("prefer aria-label over the title as name", () => {
+            const wrapper = mount(ODialog, {
+                props: { title: "TEST_TITLE", ariaLabel: "TEST_LABEL" },
+            });
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.attributes("aria-label")).toBe("TEST_LABEL");
+            expect(dialog.attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("pass aria-describedby through", () => {
+            const wrapper = mount(ODialog, {
+                props: { title: "TEST_TITLE", ariaDescribedby: "desc" },
+            });
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.attributes("aria-describedby")).toBe("desc");
+        });
+
+        test("subtitle prop", () => {
             const subtitle = "<div>TEST_SUBTITLE</div>";
             const wrapper = mount(ODialog, {
                 props: { subtitle },
@@ -184,10 +274,10 @@ describe("ODialog test", () => {
 
             const header = wrapper.find(".o-dialog__header");
             expect(header.exists()).toBeTruthy();
-            expect(header.text()).toEqual(subtitle);
+            expect(header.text()).toStrictEqual(subtitle);
         });
 
-        test("test subtitle slot", () => {
+        test("subtitle slot", () => {
             const subtitleSlot = "<div>TEST_SUBTITLE</div>";
             const wrapper = mount(ODialog, {
                 slots: { subtitle: subtitleSlot },
@@ -198,7 +288,7 @@ describe("ODialog test", () => {
             expect(header.html()).toContain(subtitleSlot);
         });
 
-        test("test header closeable ", async () => {
+        test("header closeable", async () => {
             const onClose = vi.fn();
 
             const wrapper = mount(ODialog, {
@@ -214,6 +304,7 @@ describe("ODialog test", () => {
             expect(closeButton.classes("o-dialog__close")).toBeTruthy();
 
             await closeButton.trigger("click");
+            await flushPromises(); // wait for the leave animation
 
             expect(wrapper.emitted("close")).toHaveLength(1);
             expect(dialog.classes("o-dialog--active")).toBeFalsy();
@@ -221,8 +312,8 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test body", () => {
-        test("test content prop", () => {
+    describe("verify body", () => {
+        test("content prop", () => {
             const content = "<div>TEST_CONTENT</div>";
             const wrapper = mount(ODialog, {
                 props: { content },
@@ -230,10 +321,10 @@ describe("ODialog test", () => {
 
             const body = wrapper.find(".o-dialog__body");
             expect(body.exists()).toBeTruthy();
-            expect(body.text()).toEqual(content);
+            expect(body.text()).toStrictEqual(content);
         });
 
-        test("test content slot", () => {
+        test("content slot", () => {
             const contentSlot = "<div>TEST_CONTENT</div>";
             const wrapper = mount(ODialog, {
                 slots: { default: contentSlot },
@@ -245,8 +336,8 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test footer", () => {
-        test("test footer buttons", () => {
+    describe("verify footer", () => {
+        test("footer buttons", () => {
             const wrapper = mount(ODialog, {
                 props: {
                     confirmButton: "OK",
@@ -260,7 +351,7 @@ describe("ODialog test", () => {
             expect(footer.findAll("button")).toHaveLength(2);
         });
 
-        test("test footer slot", () => {
+        test("footer slot", () => {
             const footerSlot = "<button>MYBUTTON</button>";
             const wrapper = mount(ODialog, {
                 slots: { footer: footerSlot },
@@ -272,8 +363,8 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test buttons", () => {
-        test("test rendering correct", () => {
+    describe("verify buttons", () => {
+        test("rendering correct", () => {
             const wrapper = mount(ODialog, {
                 props: { confirmButton: "ok", cancelButton: "cancel" },
             });
@@ -287,7 +378,7 @@ describe("ODialog test", () => {
             expect(confirmButton.text()).toBe("ok");
         });
 
-        test("test cancel button event", async () => {
+        test("cancel button event", async () => {
             const wrapper = mount(ODialog, {
                 props: {
                     active: true,
@@ -306,7 +397,10 @@ describe("ODialog test", () => {
             expect(cancelButton.exists()).toBeTruthy();
 
             await cancelButton.trigger("click");
+            await flushPromises(); // wait for the leave animation
             expect(wrapper.emitted("close")).toHaveLength(1);
+            // the cancel button is not a user dismissal
+            expect(wrapper.emitted("cancel")).toBeUndefined();
         });
 
         test("close on confirm", async () => {
@@ -326,6 +420,7 @@ describe("ODialog test", () => {
             expect(confirmButton.exists()).toBeTruthy();
 
             await confirmButton.trigger("click");
+            await flushPromises(); // wait for the leave animation
 
             expect(wrapper.emitted("confirm")).toHaveLength(1);
             expect(wrapper.emitted("close")).toHaveLength(1);
@@ -385,7 +480,7 @@ describe("ODialog test", () => {
         });
     });
 
-    describe("test draggable", () => {
+    describe("verify draggable", () => {
         const defaultProps = { active: true, title: "Draggable Dialog" };
         const defaultGlobal = { stubs: { transition: true, teleport: true } };
 
@@ -449,13 +544,17 @@ describe("ODialog test", () => {
             // wait for isDragging to become true and the pointermove listener to be registered
             await nextTick();
 
-            document.dispatchEvent(
-                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            header.element.dispatchEvent(
+                new PointerEvent("pointermove", {
+                    clientX: 200,
+                    clientY: 150,
+                    bubbles: true,
+                }),
             );
             await nextTick();
 
             const dialog = wrapper.find("dialog");
-            expect(dialog.element.style.transform).toContain("translate");
+            expect(dialog.element.style.translate).toContain("px");
         });
 
         test("dragging stops and dragging class is removed on pointerup", async () => {
@@ -474,13 +573,19 @@ describe("ODialog test", () => {
             );
             await nextTick();
 
-            const dialog = wrapper.find("dialog");
-            expect(dialog.classes("o-dialog--dragging")).toBeTruthy();
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                true,
+            );
 
-            document.dispatchEvent(new PointerEvent("pointerup"));
+            header.element.dispatchEvent(
+                new PointerEvent("pointerup", { bubbles: true }),
+            );
             await nextTick();
 
-            expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
+            // query the dialog again, because the element is replaced on re-render
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
         });
 
         test("drag position resets when dialog becomes inactive", async () => {
@@ -499,19 +604,23 @@ describe("ODialog test", () => {
             );
             await nextTick();
 
-            document.dispatchEvent(
-                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            header.element.dispatchEvent(
+                new PointerEvent("pointermove", {
+                    clientX: 200,
+                    clientY: 150,
+                    bubbles: true,
+                }),
             );
             await nextTick();
 
             let dialog = wrapper.find("dialog");
-            expect(dialog.element.style.transform).toContain("translate");
+            expect(dialog.element.style.translate).toContain("px");
 
             await wrapper.setProps({ active: false });
             await nextTick();
 
             dialog = wrapper.find("dialog");
-            expect(dialog.element.style.transform).toBeFalsy();
+            expect(dialog.element.style.translate).toBeFalsy();
         });
 
         test("does not start dragging when fullscreen is true", async () => {
@@ -550,18 +659,613 @@ describe("ODialog test", () => {
             );
             await nextTick();
 
-            document.dispatchEvent(
-                new PointerEvent("pointermove", { clientX: 200, clientY: 150 }),
+            header.element.dispatchEvent(
+                new PointerEvent("pointermove", {
+                    clientX: 200,
+                    clientY: 150,
+                    bubbles: true,
+                }),
             );
             await nextTick();
 
             const dialog = wrapper.find("dialog");
             expect(dialog.classes("o-dialog--dragging")).toBeFalsy();
-            expect(dialog.element.style.transform).toBeFalsy();
+            expect(dialog.element.style.translate).toBeFalsy();
         });
     });
 
-    describe("test teleport", () => {
+    describe("test draggable input handling", () => {
+        const defaultProps = { active: true, title: "Draggable Dialog" };
+        const defaultGlobal = { stubs: { transition: true, teleport: true } };
+
+        function pointerdown(
+            target: Element,
+            init: PointerEventInit = {},
+        ): void {
+            target.dispatchEvent(
+                new PointerEvent("pointerdown", {
+                    clientX: 100,
+                    clientY: 100,
+                    bubbles: true,
+                    ...init,
+                }),
+            );
+        }
+
+        test("captures the pointer on the header while dragging", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header").element;
+            const setPointerCapture = vi.fn();
+            header.setPointerCapture = setPointerCapture;
+
+            pointerdown(header, { pointerId: 7 });
+            await nextTick();
+
+            expect(setPointerCapture).toHaveBeenCalledWith(7);
+        });
+
+        test("does not start dragging from the close button", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true, closeable: true },
+                global: defaultGlobal,
+            });
+
+            pointerdown(wrapper.find("header button").element);
+            await nextTick();
+
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
+        });
+
+        test("does not start dragging with a secondary button", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            pointerdown(wrapper.find(".o-dialog__header").element, {
+                button: 2,
+            });
+            await nextTick();
+
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
+        });
+
+        test("stops dragging on pointercancel", async () => {
+            const wrapper = mount(ODialog, {
+                props: { ...defaultProps, draggable: true },
+                global: defaultGlobal,
+            });
+
+            const header = wrapper.find(".o-dialog__header").element;
+            pointerdown(header);
+            await nextTick();
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                true,
+            );
+
+            header.dispatchEvent(new PointerEvent("pointercancel"));
+            await nextTick();
+
+            expect(wrapper.find("dialog").classes("o-dialog--dragging")).toBe(
+                false,
+            );
+        });
+    });
+
+    describe("test accessibility attributes", () => {
+        test("dialog is labelled by the title prop", () => {
+            const wrapper = mount(ODialog, {
+                props: { active: true, title: "My Title" },
+            });
+
+            const title = wrapper.find(".o-dialog__header-title");
+            expect(title.exists()).toBeTruthy();
+            const dialog = wrapper.find("dialog");
+            expect(dialog.attributes("aria-labelledby")).toBe(
+                title.attributes("id"),
+            );
+            expect(dialog.attributes("aria-describedby")).toBeUndefined();
+        });
+
+        test("dialog is labelled by the title slot", () => {
+            const wrapper = mount(ODialog, {
+                props: { active: true },
+                slots: { title: "Slot Title" },
+            });
+
+            const title = wrapper.find(".o-dialog__header-title");
+            expect(wrapper.find("dialog").attributes("aria-labelledby")).toBe(
+                title.attributes("id"),
+            );
+        });
+
+        test("dialog without title is not labelled", () => {
+            const wrapper = mount(ODialog, { props: { active: true } });
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("ariaDescribedby is passed through unchanged", () => {
+            const wrapper = mount(ODialog, {
+                props: {
+                    active: true,
+                    title: "My Title",
+                    ariaDescribedby: "description-id",
+                },
+            });
+
+            const dialog = wrapper.find("dialog");
+            expect(dialog.attributes("aria-describedby")).toBe(
+                "description-id",
+            );
+            expect(dialog.attributes("aria-labelledby")).toBeDefined();
+        });
+    });
+
+    describe("test closing", () => {
+        /** Replaces the animation of the elements by an animation which is finished manually. */
+        function mockPendingAnimation(): {
+            finish: () => void;
+            animate: ReturnType<typeof vi.fn>;
+            reverse: ReturnType<typeof vi.fn>;
+            cancel: ReturnType<typeof vi.fn>;
+        } {
+            let finish = (): void => {};
+            const reverse = vi.fn();
+            const cancel = vi.fn();
+            const animate = vi.fn(() => {
+                const animation = {
+                    playState: "running",
+                    playbackRate: 1,
+                    finished: new Promise<void>((resolve) => {
+                        finish = resolve;
+                    }),
+                    reverse: () => {
+                        reverse();
+                        animation.playbackRate *= -1;
+                    },
+                    cancel,
+                };
+                return animation as unknown as Animation;
+            });
+            vi.spyOn(HTMLElement.prototype, "animate").mockImplementation(
+                animate,
+            );
+            return { finish: () => finish(), animate, reverse, cancel };
+        }
+
+        /**
+         * Mocks the user preference for reduced motion.
+         * `matchMedia` is already a mock in the test setup, so spying on it would not be restored afterwards.
+         * @returns a function to restore the previous `matchMedia`
+         */
+        function mockReducedMotion(): () => void {
+            // the descriptor is restored, as reading the method would be an unbound method reference
+            const descriptor = Object.getOwnPropertyDescriptor(
+                window,
+                "matchMedia",
+            );
+            window.matchMedia = vi.fn(
+                (query: string) =>
+                    ({
+                        matches: true,
+                        media: query,
+                        addEventListener: vi.fn(),
+                        removeEventListener: vi.fn(),
+                    }) as unknown as MediaQueryList,
+            );
+            return () => {
+                if (descriptor)
+                    Object.defineProperty(window, "matchMedia", descriptor);
+            };
+        }
+
+        type DialogExposed = { close: (value?: string) => void };
+
+        test("an initially active dialog opens with the enter animation", () => {
+            const { animate } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+            expect(dialog.open).toBe(true);
+            expect(animate).toHaveBeenCalledTimes(1);
+        });
+
+        test("an initially active dialog without animation opens immediately", () => {
+            const { animate } = mockPendingAnimation();
+            const wrapper = mount(ODialog, {
+                props: { active: true, animation: false },
+            });
+
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+            expect(dialog.open).toBe(true);
+            expect(animate).not.toHaveBeenCalled();
+        });
+
+        test("close passes the return value after the leave animation", async () => {
+            const { finish, animate } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            (wrapper.vm as unknown as DialogExposed).close("x");
+            await flushPromises();
+
+            // still open while the leave animation is playing (the in-flight enter animation is reversed)
+            expect(animate).toHaveBeenCalledTimes(1);
+            expect(dialog.open).toBe(true);
+            expect(wrapper.emitted("close")).toBeUndefined();
+
+            finish();
+            await flushPromises();
+
+            expect(dialog.open).toBe(false);
+            expect(dialog.returnValue).toBe("x");
+            expect(wrapper.emitted("close")).toHaveLength(1);
+            expect(wrapper.emitted("close")![0][1]).toBe("x");
+            expect(wrapper.emitted("update:active")![0]).toStrictEqual([false]);
+        });
+
+        test("the cancel button closes with the return value 'cancel' after the leave animation", async () => {
+            const { finish } = mockPendingAnimation();
+            const wrapper = mount(ODialog, {
+                props: { active: true, cancelButton: "cancel" },
+            });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            await wrapper.find(".o-dialog__cancel-button").trigger("click");
+            await flushPromises();
+
+            // still open while the leave animation is playing
+            expect(dialog.open).toBe(true);
+            expect(wrapper.emitted("close")).toBeUndefined();
+
+            finish();
+            await flushPromises();
+
+            expect(dialog.open).toBe(false);
+            expect(wrapper.emitted("close")![0][1]).toBe("cancel");
+        });
+
+        test("closeOnConfirm closes with the return value 'confirm' after the leave animation", async () => {
+            const { finish } = mockPendingAnimation();
+            const wrapper = mount(ODialog, {
+                props: {
+                    active: true,
+                    confirmButton: "ok",
+                    closeOnConfirm: true,
+                },
+            });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            await wrapper.find(".o-dialog__confirm-button").trigger("click");
+            await flushPromises();
+
+            expect(dialog.open).toBe(true);
+            expect(wrapper.emitted("confirm")).toHaveLength(1);
+
+            finish();
+            await flushPromises();
+
+            expect(dialog.open).toBe(false);
+            expect(wrapper.emitted("close")![0][1]).toBe("confirm");
+        });
+
+        test("confirming again during the leave animation does not emit confirm twice", async () => {
+            const { finish } = mockPendingAnimation();
+            const wrapper = mount(ODialog, {
+                props: {
+                    active: true,
+                    confirmButton: "ok",
+                    closeOnConfirm: true,
+                },
+            });
+
+            const button = wrapper.find(".o-dialog__confirm-button");
+            await button.trigger("click");
+            await button.trigger("click"); // e.g. a double click
+            await flushPromises();
+
+            expect(wrapper.emitted("confirm")).toHaveLength(1);
+
+            finish();
+            await flushPromises();
+
+            expect(wrapper.emitted("close")).toHaveLength(1);
+            expect(wrapper.emitted("close")![0][1]).toBe("confirm");
+        });
+
+        test("a repeated cancel request during the leave animation does not emit cancel twice", async () => {
+            const { finish } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            dialog.dispatchEvent(new Event("cancel", { cancelable: true }));
+            // e.g. a key repeat of the escape key, which must still not close natively
+            const repeated = new Event("cancel", { cancelable: true });
+            dialog.dispatchEvent(repeated);
+            await flushPromises();
+
+            expect(repeated.defaultPrevented).toBe(true);
+            expect(wrapper.emitted("cancel")).toHaveLength(1);
+
+            finish();
+            await flushPromises();
+
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+
+        test("an explicit return value is kept when the close is requested again without one", async () => {
+            const { finish } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            (wrapper.vm as unknown as DialogExposed).close("a");
+            // the parent closes the dialog while the leave animation is playing
+            await wrapper.setProps({ active: false });
+
+            finish();
+            await flushPromises();
+
+            expect(dialog.returnValue).toBe("a");
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+
+        test("unmounting cancels the animation and does not close afterwards", async () => {
+            const { finish, cancel } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+
+            (wrapper.vm as unknown as DialogExposed).close("x");
+            wrapper.unmount();
+
+            expect(cancel).toHaveBeenCalledTimes(1);
+
+            finish();
+            await flushPromises();
+
+            expect(wrapper.emitted("close")).toBeUndefined();
+        });
+
+        test("reduced motion opens and closes the dialog without an animation", () => {
+            const restoreMatchMedia = mockReducedMotion();
+            try {
+                const animate = vi.spyOn(HTMLElement.prototype, "animate");
+                const wrapper = mount(ODialog, { props: { active: true } });
+                const dialog = wrapper.find("dialog")
+                    .element as HTMLDialogElement;
+
+                expect(dialog.open).toBe(true);
+
+                (wrapper.vm as unknown as DialogExposed).close("x");
+
+                expect(animate).not.toHaveBeenCalled();
+                expect(dialog.open).toBe(false);
+                expect(dialog.returnValue).toBe("x");
+            } finally {
+                restoreMatchMedia();
+            }
+        });
+
+        test("the close button does not pass the click event as return value", async () => {
+            const wrapper = mount(ODialog, {
+                props: { active: true, closeable: true },
+            });
+
+            await wrapper.find("header button").trigger("click");
+            await flushPromises();
+
+            // the native return value is an empty string when none is set
+            expect(wrapper.emitted("close")![0][1]).toBe("");
+        });
+
+        test("closing without an animation closes immediately", () => {
+            const wrapper = mount(ODialog, {
+                props: { active: true, animation: false },
+            });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            (wrapper.vm as unknown as DialogExposed).close("x");
+
+            expect(dialog.open).toBe(false);
+            expect(dialog.returnValue).toBe("x");
+        });
+
+        test("a reopen during the leave animation keeps the dialog open", async () => {
+            const { finish, reverse } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            await wrapper.setProps({ active: false });
+            // the in-flight enter animation is reversed to leave
+            expect(reverse).toHaveBeenCalledTimes(1);
+
+            await wrapper.setProps({ active: true });
+            // the reopen reverses the in-flight leave animation back to visible
+            expect(reverse).toHaveBeenCalledTimes(2);
+
+            finish();
+            await flushPromises();
+
+            expect(dialog.open).toBe(true);
+            expect(wrapper.emitted("close")).toBeUndefined();
+        });
+
+        test("a dialog which is closed from outside updates active", async () => {
+            const { animate } = mockPendingAnimation();
+            const wrapper = mount(ODialog, { props: { active: true } });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            dialog.close();
+            await flushPromises();
+
+            expect(wrapper.emitted("close")).toHaveLength(1);
+            expect(wrapper.emitted("update:active")![0]).toStrictEqual([false]);
+            // the leave animation is not played for a closed dialog
+            expect(animate).toHaveBeenCalledTimes(1); // only the enter animation
+        });
+
+        test("escape is a cancel event, which closes the dialog after the animation", async () => {
+            const wrapper = mount(ODialog, { props: { active: true } });
+            const dialog = wrapper.find("dialog").element as HTMLDialogElement;
+
+            const event = new Event("cancel", { cancelable: true });
+            dialog.dispatchEvent(event);
+            await flushPromises();
+
+            expect(event.defaultPrevented).toBe(true);
+            expect(wrapper.emitted("cancel")).toHaveLength(1);
+            expect(wrapper.emitted("close")).toHaveLength(1);
+            expect(dialog.open).toBe(false);
+        });
+
+        // jsdom has no `closedby` support, like older browsers
+        test.skipIf("closedBy" in HTMLDialogElement.prototype)(
+            "closeOnEscape=false keeps the dialog open without closedby support",
+            async () => {
+                const wrapper = mount(ODialog, {
+                    props: { active: true, closeOnEscape: false },
+                });
+                const dialog = wrapper.find("dialog")
+                    .element as HTMLDialogElement;
+
+                const event = new Event("cancel", { cancelable: true });
+                dialog.dispatchEvent(event);
+                await flushPromises();
+
+                expect(event.defaultPrevented).toBe(true);
+                expect(wrapper.emitted("cancel")).toHaveLength(1);
+                expect(wrapper.emitted("close")).toBeUndefined();
+                expect(dialog.open).toBe(true);
+            },
+        );
+
+        test("closeOnEscape=false does not block the own close paths", async () => {
+            const wrapper = mount(ODialog, {
+                props: {
+                    active: true,
+                    closeOnEscape: false,
+                    closeable: true,
+                },
+            });
+
+            await wrapper.find("header button").trigger("click");
+            await flushPromises();
+
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+
+        describe("with closedby support", () => {
+            // simulate a browser, which supports the `closedby` attribute
+            beforeEach(() => {
+                Object.defineProperty(HTMLDialogElement.prototype, "closedBy", {
+                    value: "",
+                    configurable: true,
+                });
+            });
+            afterEach(() => {
+                delete (HTMLDialogElement.prototype as { closedBy?: string })
+                    .closedBy;
+            });
+
+            function escapeAndCancel(dialog: HTMLDialogElement): Event {
+                dialog.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: "Escape",
+                        bubbles: true,
+                    }),
+                );
+                const event = new Event("cancel", { cancelable: true });
+                dialog.dispatchEvent(event);
+                dialog.dispatchEvent(
+                    new KeyboardEvent("keyup", {
+                        key: "Escape",
+                        bubbles: true,
+                    }),
+                );
+                return event;
+            }
+
+            test("closeOnEscape=false ignores the escape key but allows the light dismiss", async () => {
+                const wrapper = mount(ODialog, {
+                    props: {
+                        active: true,
+                        closeOnEscape: false,
+                        closeOnBackdrop: true,
+                    },
+                });
+                const dialog = wrapper.find("dialog").element;
+
+                // escape key
+                const escape = escapeAndCancel(dialog);
+                await flushPromises();
+                expect(escape.defaultPrevented).toBe(true);
+                expect(wrapper.emitted("close")).toBeUndefined();
+                expect(dialog.open).toBe(true);
+
+                // light dismiss, which is a cancel event without a key event
+                dialog.dispatchEvent(new Event("cancel", { cancelable: true }));
+                await flushPromises();
+                expect(wrapper.emitted("close")).toHaveLength(1);
+                expect(dialog.open).toBe(false);
+            });
+
+            test("closeOnEscape=true closes the dialog with the escape key", async () => {
+                const wrapper = mount(ODialog, {
+                    props: { active: true, closeOnEscape: true },
+                });
+                const dialog = wrapper.find("dialog").element;
+
+                escapeAndCancel(dialog);
+                await flushPromises();
+
+                expect(wrapper.emitted("close")).toHaveLength(1);
+                expect(dialog.open).toBe(false);
+            });
+        });
+    });
+
+    describe("test scroll lock", () => {
+        test("the scroll lock follows backdrop while the dialog is open", async () => {
+            const wrapper = mount(ODialog, {
+                props: { active: true, backdrop: true },
+            });
+            await nextTick();
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                true,
+            );
+
+            await wrapper.setProps({ backdrop: false });
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                false,
+            );
+
+            await wrapper.setProps({ backdrop: true });
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                true,
+            );
+        });
+
+        test("an alert dialog locks the scroll without backdrop", async () => {
+            mount(ODialog, {
+                props: { active: true, backdrop: false, alert: true },
+            });
+            await nextTick();
+
+            expect(document.body.classList.contains("o-scroll-clip")).toBe(
+                true,
+            );
+        });
+    });
+
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(ODialog, {
                 active: true,

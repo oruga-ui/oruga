@@ -131,7 +131,7 @@ describe("OTabs tests", () => {
             };
         }
 
-        test("test render correctly", async () => {
+        test("render correctly", async () => {
             const wrapper = mount(
                 genTestcomponent(
                     {},
@@ -311,6 +311,89 @@ describe("OTabs tests", () => {
                     [options[4].value, options[2].value],
                     [options[0].value, options[4].value],
                 ]);
+            });
+
+            test.each([false, true])(
+                "move focus with the arrow keys of the orientation when vertical is %s",
+                async (vertical) => {
+                    const wrapper = mount(OTabs, {
+                        props: { options, vertical, modelValue: "silver" },
+                        attachTo: document.body,
+                    });
+                    await nextTick(); // await child items got rendered
+
+                    const tabs = wrapper.findAll<HTMLElement>("[role=tab]");
+                    expect(tabs).toHaveLength(options.length);
+
+                    // the key is checked by the component, `keydown.down` of the
+                    // test utils does not set it
+                    const next = vertical ? "ArrowDown" : "ArrowRight";
+                    const prev = vertical ? "ArrowUp" : "ArrowLeft";
+                    const other = vertical ? "ArrowRight" : "ArrowDown";
+
+                    await tabs[1].trigger("keydown", { key: next });
+                    expect(document.activeElement).toBe(tabs[2].element);
+
+                    await tabs[2].trigger("keydown", { key: prev });
+                    expect(document.activeElement).toBe(tabs[1].element);
+
+                    // the arrow keys of the other orientation are ignored
+                    // and keep scrolling the page
+                    const keydown = new KeyboardEvent("keydown", {
+                        key: other,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    tabs[1].element.dispatchEvent(keydown);
+                    expect(keydown.defaultPrevented).toBeFalsy();
+                    expect(document.activeElement).toBe(tabs[1].element);
+
+                    // wrap around at both ends
+                    await tabs[4].trigger("keydown", { key: next });
+                    expect(document.activeElement).toBe(tabs[0].element);
+
+                    await tabs[0].trigger("keydown", { key: prev });
+                    expect(document.activeElement).toBe(tabs[4].element);
+                },
+            );
+
+            test("move focus to the first and last tab with home and end", async () => {
+                const wrapper = mount(OTabs, {
+                    props: { options, modelValue: "silver" },
+                    attachTo: document.body,
+                });
+                await nextTick(); // await child items got rendered
+
+                const tabs = wrapper.findAll<HTMLElement>("[role=tab]");
+
+                await tabs[1].trigger("keydown", { key: "End" });
+                expect(document.activeElement).toBe(tabs[4].element);
+
+                await tabs[4].trigger("keydown", { key: "Home" });
+                expect(document.activeElement).toBe(tabs[0].element);
+            });
+
+            test("skip disabled tabs when moving focus with the arrow keys", async () => {
+                const options: TabsOptions<string> = [
+                    { label: "Flint", value: "flint" },
+                    { label: "Silver", value: "silver" },
+                    { label: "Vane", value: "vane" },
+                    { label: "Billy", value: "billy", disabled: true },
+                    { label: "Jack", value: "jack" },
+                ];
+                const wrapper = mount(OTabs, {
+                    props: { options, modelValue: "flint" },
+                    attachTo: document.body,
+                });
+                await nextTick(); // await child items got rendered
+
+                const tabs = wrapper.findAll<HTMLElement>("[role=tab]");
+
+                await tabs[2].trigger("keydown", { key: "ArrowRight" });
+                expect(document.activeElement).toBe(tabs[4].element);
+
+                await tabs[4].trigger("keydown", { key: "ArrowLeft" });
+                expect(document.activeElement).toBe(tabs[2].element);
             });
         });
 

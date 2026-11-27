@@ -12,8 +12,8 @@ const myComponent = h("div", [
     <section class="odocs-spaced">
         <o-button
             label="Open component modal"
-            size="medium"
             variant="primary"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
         <o-dialog

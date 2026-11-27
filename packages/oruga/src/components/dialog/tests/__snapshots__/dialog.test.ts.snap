@@ -45,11 +45,11 @@ exports[`ODialog test > render correctly 1`] = `
                 @slot Override the footer
                 @binding {(event: Event): void} close - function to emit a \`close\` event
                 @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
-            --><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__cancel-button"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
+            --><button data-oruga="button" type="button" class="o-button o-dialog__cancel-button"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
                     @slot Override the label, default is label prop
                 -->CANCEL</span>
       <!--v-if--></span>
-    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__confirm-button"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
+    </button><button data-oruga="button" type="button" class="o-button o-dialog__confirm-button"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
                     @slot Override the label, default is label prop
                 -->OK</span>
       <!--v-if--></span>

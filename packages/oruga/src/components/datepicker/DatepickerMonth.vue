@@ -9,7 +9,6 @@ import {
     watch,
     effectScope,
     onUnmounted,
-    type PropType,
     type ComponentPublicInstance,
 } from "vue";
 
@@ -28,18 +27,16 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    modelValue: {
-        type: [Date, Array] as PropType<Date | Date[]>,
-        default: undefined,
-    },
-    monthNames: { type: Array as PropType<string[]>, required: true },
-    focusedDate: { type: Object as PropType<FocusedDate>, required: true },
-    pickerProps: {
-        type: Object as PropType<DatepickerProps<IsRange, IsMultiple>>,
-        required: true,
-    },
-});
+const props = defineProps<{
+    /** the selected date or dates */
+    modelValue?: Date | Date[];
+    /** localized names of the months */
+    monthNames: string[];
+    /** the date which currently has the focus */
+    focusedDate: FocusedDate;
+    /** props of the parent datepicker component */
+    pickerProps: DatepickerProps<IsRange, IsMultiple>;
+}>();
 
 const emits = defineEmits<{
     /** modelValue prop two-way binding */

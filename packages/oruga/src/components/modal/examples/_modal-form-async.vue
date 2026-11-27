@@ -3,10 +3,15 @@ defineOptions({
     inheritAttrs: false,
 });
 
-defineProps({
-    title: { type: String, default: "" },
-    message: { type: String, default: "" },
-});
+withDefaults(
+    defineProps<{
+        /** title of the modal card */
+        title?: string;
+        /** message displayed in the modal card */
+        message?: string;
+    }>(),
+    { title: "", message: "" },
+);
 
 defineEmits<{
     close: [event: Event];

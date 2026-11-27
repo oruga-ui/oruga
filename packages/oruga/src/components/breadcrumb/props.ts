@@ -54,7 +54,7 @@ export type BreadcrumbItemProps = {
     /** Define whether the item is visible or not */
     hidden?: boolean;
     /** Icon name to show on the left */
-    iconLeft?: string;
+    icon?: string;
     /** Icon name to show on the right */
     iconRight?: string;
     /**
@@ -82,8 +82,6 @@ export type BreadcrumbItemClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the item element when active */
     activeClass: ComponentClass;
-    /** Class of the item separator element */
-    seperatorClass: ComponentClass;
     /** Class of the item link element */
     linkClass: ComponentClass;
     /** Class of the item icon element */

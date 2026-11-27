@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { useTemplateRef, watch } from "vue";
+import { computed, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import {
-    defineClasses,
-    useEventListener,
-    usePreventScrolling,
-} from "@/composables";
+import { defineClasses, useEventListener, useScrollLock } from "@/composables";
 
 import type { LoadingProps } from "./props";
 
@@ -37,7 +33,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     iconPack: () => getDefault("loading.iconPack"),
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
-    clipScroll: () => getDefault("loading.clipScroll", false),
+    scrollLock: () => getDefault("loading.scrollLock", "keep"),
 });
 
 const emits = defineEmits<{
@@ -46,11 +42,6 @@ const emits = defineEmits<{
      * @param value {boolean} - updated active prop
      */
     "update:active": [value: boolean];
-    /**
-     * fullPage prop two-way binding
-     * @param value {boolean} - updated fullPage prop
-     */
-    "update:fullPage": [value: boolean];
     /**
      * on active state changes to false
      * @param event {Event} - native event
@@ -68,15 +59,12 @@ defineSlots<{
 
 const rootRef = useTemplateRef("rootElement");
 
-const isFullPage = defineModel<boolean>("fullPage", { default: true });
-
 const isActive = defineModel<boolean>("active", { default: false });
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
-
-watch(isActive, (value) => {
-    if (isFullPage.value) toggleScroll(value);
-});
+useScrollLock(
+    () => isActive.value && props.fullPage,
+    () => props.scrollLock,
+);
 
 // #region --- Events Feature ---
 
@@ -113,7 +101,12 @@ function close(event: Event): void {
 
 const rootClasses = defineClasses(
     ["rootClass", "o-loading"],
-    ["fullPageClass", "o-loading--fullpage", null, isFullPage],
+    [
+        "fullPageClass",
+        "o-loading--fullpage",
+        null,
+        computed(() => props.fullPage),
+    ],
 );
 
 const overlayClasses = defineClasses(["overlayClass", "o-loading__overlay"]);
@@ -140,7 +133,8 @@ defineExpose({ close });
             data-oruga="loading"
             :class="rootClasses"
             role="status"
-            aria-live="polite">
+            aria-live="polite"
+            :aria-label="$slots.default ? label : undefined">
             <div
                 :class="overlayClasses"
                 :tabindex="-1"

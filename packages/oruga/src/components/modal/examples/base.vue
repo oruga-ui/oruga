@@ -34,7 +34,7 @@ const isCardModalActive = ref(false);
             v-model:active="isCardModalActive"
             aria-label="Lorem ipsum text"
             :width="640"
-            clip-scroll>
+            scroll-lock="clip">
             <div style="padding: 10px; background-color: white">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.

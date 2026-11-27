@@ -118,6 +118,80 @@ describe("OTaginput tests", () => {
         expect(wrapper.findAll(".o-tag")).toHaveLength(1);
     });
 
+    test.each([0, false])("should add the falsy option %s", async (value) => {
+        const wrapper = mount(OTaginput, {
+            props: { options: [{ label: "Falsy", value }] },
+        });
+
+        const input = wrapper.find("input");
+        await input.trigger("focus");
+        await wrapper.find('[data-oruga="dropdown-item"]').trigger("click");
+
+        expect(wrapper.emitted("update:modelValue")).toStrictEqual([[[value]]]);
+        expect(wrapper.emitted("add")).toStrictEqual([[value]]);
+        expect(wrapper.find(".o-tag").text()).toContain("Falsy");
+    });
+
+    test("should not add blank input", async () => {
+        const wrapper = mount(OTaginput, {
+            props: { allowNew: true, debounce: 0 },
+        });
+
+        const input = wrapper.find("input");
+        await input.setValue("   ");
+        await input.trigger("keydown", { key: "Enter" });
+
+        expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+        expect(wrapper.emitted("add")).toBeUndefined();
+    });
+
+    test("should remove a falsy item with the close icon", async () => {
+        const wrapper = mount(OTaginput, {
+            props: { modelValue: [0, 1], options: [0, 1, 2] },
+        });
+
+        await wrapper.find(".o-tag__close").trigger("click");
+
+        expect(wrapper.emitted("update:modelValue")).toStrictEqual([[[1]]]);
+        expect(wrapper.emitted("remove")).toStrictEqual([[0]]);
+    });
+
+    test("should remove a falsy last item with backspace", async () => {
+        const wrapper = mount(OTaginput, {
+            props: { modelValue: [1, 0], options: [0, 1, 2] },
+        });
+
+        await wrapper.find("input").trigger("keydown", { key: "Backspace" });
+
+        expect(wrapper.emitted("update:modelValue")).toStrictEqual([[[1]]]);
+        expect(wrapper.emitted("remove")).toStrictEqual([[0]]);
+    });
+
+    test("should not add an equal object item twice", async () => {
+        const wrapper = mount(OTaginput, {
+            props: {
+                modelValue: [{ name: "Flint" }],
+                allowNew: true,
+                debounce: 0,
+                createItem: (item: unknown) => ({ name: item }),
+            },
+        });
+
+        const input = wrapper.find("input");
+        await input.setValue("Flint");
+        await input.trigger("keydown", { key: "Enter" });
+
+        expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+        expect(wrapper.emitted("add")).toBeUndefined();
+
+        await input.setValue("Silver");
+        await input.trigger("keydown", { key: "Enter" });
+
+        expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+            [[{ name: "Flint" }, { name: "Silver" }]],
+        ]);
+    });
+
     test("should forward class, style, and id to the autocomplete input", () => {
         const attrs = {
             class: "fallthrough-class",
@@ -143,7 +217,7 @@ describe("OTaginput tests", () => {
         expect(input.attributes("id")).toBe(attrs.id);
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OTaginput);
 
@@ -262,33 +336,37 @@ describe("OTaginput tests", () => {
             );
             expect(optionElements).toHaveLength(15);
 
-            optionElements.forEach((el, idx) => {
-                const isGroup = idx % 5 == 0;
-                const g_idx = Math.floor(idx / 5);
-                const o_idx = (idx % 5) - 1;
-
-                if (isGroup) {
+            // every fifth element is a group header
+            optionElements
+                .filter((_, idx) => idx % 5 == 0)
+                .forEach((el, g_idx) => {
                     const option = options[g_idx];
                     expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
                         option.disabled ? "true" : "false",
                     );
+                });
+
+            optionElements.forEach((el, idx) => {
+                // group headers are checked above
+                if (idx % 5 == 0) return;
+
+                const g_idx = Math.floor(idx / 5);
+                const o_idx = (idx % 5) - 1;
+                const g_options = options[g_idx].options;
+
+                let optionLabel;
+                if (idx < 5) {
+                    optionLabel = (
+                        g_options[o_idx] as DropdownItemProps<string>
+                    ).label;
+                } else if (idx < 10) {
+                    optionLabel = Object.entries(g_options)[o_idx][1];
                 } else {
-                    const g_options = options[g_idx].options;
-
-                    let optionLabel;
-                    if (idx < 5) {
-                        optionLabel = (
-                            g_options[o_idx] as DropdownItemProps<string>
-                        ).label;
-                    } else if (idx < 10) {
-                        optionLabel = Object.entries(g_options)[o_idx][1];
-                    } else {
-                        optionLabel = g_options[o_idx];
-                    }
-
-                    expect(el.text()).toBe(optionLabel);
+                    optionLabel = g_options[o_idx];
                 }
+
+                expect(el.text()).toBe(optionLabel);
             });
         });
     });

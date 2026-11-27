@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OButton tests > render correctly 1`] = `
-"<button role="button" type="button" tabindex="0" data-oruga="button" class="o-button">
+"<button type="button" data-oruga="button" class="o-button">
   <!--v-if-->
   <!--v-if-->
   <!--v-if-->

@@ -67,7 +67,7 @@ describe("OBreadcrumb tests", () => {
         expect(wrapper.classes("o-breadcrumb--centered")).toBeTruthy();
     });
 
-    test("react accordingly when size is large ", () => {
+    test("react accordingly when size is large", () => {
         const wrapper = mount(OBreadcrumb, {
             global: { components: { OBreadcrumb, OBreadcrumbItem } },
             slot: { default: itemsHTML },
@@ -77,7 +77,7 @@ describe("OBreadcrumb tests", () => {
         expect(wrapper.classes("o-breadcrumb--large")).toBeTruthy();
     });
 
-    test("react accordingly when item is active ", async () => {
+    test("react accordingly when item is active", async () => {
         const wrapper = mount(component, {
             global: { components: { OBreadcrumb, OBreadcrumbItem } },
         });
@@ -118,9 +118,9 @@ describe("OBreadcrumb tests", () => {
                 <o-breadcrumb
                     size="medium"
                     position="center">
-                    <o-breadcrumb-item icon-left="home" :active="true">Home</o-breadcrumb-item>
-                    <o-breadcrumb-item icon-left="plus" :disabled="true">Docs</o-breadcrumb-item>
-                    <o-breadcrumb-item icon-left="location">Breadcrumb</o-breadcrumb-item>
+                    <o-breadcrumb-item icon="home" :active="true">Home</o-breadcrumb-item>
+                    <o-breadcrumb-item icon="plus" :disabled="true">Docs</o-breadcrumb-item>
+                    <o-breadcrumb-item icon="location">Breadcrumb</o-breadcrumb-item>
                 </o-breadcrumb>
             `,
         };

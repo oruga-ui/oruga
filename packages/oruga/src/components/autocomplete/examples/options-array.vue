@@ -235,8 +235,7 @@ const selected = ref();
                 v-model="selected"
                 :options="options"
                 placeholder="Find a name..."
-                open-on-focus>
-            </o-autocomplete>
+                open-on-focus />
         </o-field>
 
         <p><b>Selected:</b> {{ selected }}</p>

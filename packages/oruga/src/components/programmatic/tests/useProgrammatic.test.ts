@@ -1,4 +1,15 @@
-import { createApp, createVNode, h, useId } from "vue";
+import {
+    createApp,
+    createVNode,
+    defineComponent,
+    getCurrentInstance,
+    h,
+    inject,
+    markRaw,
+    useId,
+    type App,
+    type InjectionKey,
+} from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
@@ -27,7 +38,7 @@ describe("useProgrammatic tests", () => {
 
     enableAutoUnmount(afterEach);
 
-    test("test mounting component correctly", async () => {
+    test("mounting component correctly", async () => {
         const component = createVNode({
             template: `<button id="mycomp"></button>`,
         });
@@ -56,7 +67,36 @@ describe("useProgrammatic tests", () => {
         expect(handler).toHaveBeenCalledOnce();
     });
 
-    test("test mounting with target correctly", () => {
+    test("close a component with a pending async setup function", async () => {
+        let resolveSetup!: () => void;
+        const pending = new Promise<void>((r) => (resolveSetup = r));
+
+        const component = markRaw(
+            defineComponent({
+                async setup() {
+                    await pending;
+                    return () => h("button", { id: "mycomp" });
+                },
+            }),
+        );
+
+        const { close, promise } = factory.open(component);
+        expect(factory.count()).toBe(1);
+
+        close("result");
+        vi.runAllTimers();
+
+        await expect(promise).resolves.toStrictEqual(["result"]);
+        expect(factory.count()).toBe(0);
+        expect(document.body.querySelector("#programmatic-app")).toBeNull();
+
+        // the late setup result must not render anything anymore
+        resolveSetup();
+        await flushPromises();
+        expect(document.body.querySelector("#mycomp")).toBeNull();
+    });
+
+    test("mounting with target correctly", () => {
         const container = document.createElement("div");
         container.id = "my-cool-container";
         document.body.appendChild(container);
@@ -88,7 +128,7 @@ describe("useProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(1);
     });
 
-    test("test close event working correctly", () => {
+    test("close event working correctly", () => {
         const component = createVNode({
             template: `<button id="mycomp" @click="$emit('close', 'abc')"></button>`,
         });
@@ -113,7 +153,7 @@ describe("useProgrammatic tests", () => {
         expect(onClose).toHaveBeenCalledOnce();
     });
 
-    test("test props working correctly", () => {
+    test("props working correctly", () => {
         const component = createVNode({
             template: `<button id="mycomp"></button>`,
         });
@@ -141,7 +181,7 @@ describe("useProgrammatic tests", () => {
         expect(el).toBeNull();
     });
 
-    test("test using custom instance registry", () => {
+    test("using custom instance registry", () => {
         const instanceRegistry = new InstanceRegistry();
 
         expect(instanceRegistry.count()).toBe(0);
@@ -158,7 +198,31 @@ describe("useProgrammatic tests", () => {
         expect(instanceRegistry.count()).toBe(0);
     });
 
-    test("test closeAll is working correctly", () => {
+    test("configures the programmatic app before mounting", () => {
+        const key: InjectionKey<string> = Symbol("programmatic-provide");
+        let injectedValue: string | undefined;
+
+        const { close } = factory.open(
+            defineComponent({
+                setup() {
+                    injectedValue = inject(key);
+                    return () => h("div");
+                },
+            }),
+            {
+                configureApp(app) {
+                    app.provide(key, "configured");
+                },
+            },
+        );
+
+        expect(injectedValue).toBe("configured");
+
+        close();
+        vi.runAllTimers();
+    });
+
+    test("closeAll is working correctly", () => {
         const root = document.createElement("div");
 
         // open elements
@@ -181,7 +245,7 @@ describe("useProgrammatic tests", () => {
         expect(apps).toHaveLength(0);
     });
 
-    test("test close last is working correctly", () => {
+    test("close last is working correctly", () => {
         // open elements
         factory.open("div");
         factory.open("div");
@@ -210,7 +274,7 @@ describe("useProgrammatic tests", () => {
         expect(bodyElements).toHaveLength(0);
     });
 
-    test("test render slot correctly", () => {
+    test("render slot correctly", () => {
         // create inner slot element
         const slot = h("p", { "data-oruga": "inner-slot" }, "HELP");
 
@@ -239,7 +303,7 @@ describe("useProgrammatic tests", () => {
         vi.runAllTimers();
     });
 
-    test("test programmatic app does not modify the base app config", () => {
+    test("programmatic app does not modify the base app config", () => {
         // create a base app with its own oruga instance
         const previousOruga = getActiveOruga();
         let baseId = "";
@@ -275,6 +339,48 @@ describe("useProgrammatic tests", () => {
             baseApp.unmount();
 
             // close the programmatic component
+            close();
+            vi.runAllTimers();
+        } finally {
+            setActiveOruga(previousOruga);
+        }
+    });
+
+    test("programmatic app does not invoke base app config accessors", () => {
+        const previousOruga = getActiveOruga();
+        const baseApp = createApp({ render: () => h("div") });
+        // simulate the dev-only accessor of the Vue runtime-only build, which warns on every read
+        const compilerOptions = {};
+        const getter = vi.fn(() => compilerOptions);
+        Object.defineProperty(baseApp.config, "compilerOptions", {
+            get: getter,
+            configurable: true,
+            enumerable: true,
+        });
+        baseApp.use(createOruga());
+
+        try {
+            let programmaticApp: App | null = null;
+            const { close } = factory.open({
+                setup() {
+                    programmaticApp = getCurrentInstance()!.appContext.app;
+                    return () => h("div");
+                },
+            });
+
+            // opening the programmatic component should not read the accessor
+            expect(getter).not.toHaveBeenCalled();
+
+            // the programmatic app config should still share the base app config
+            expect(programmaticApp!.config).not.toBe(baseApp.config);
+            expect(programmaticApp!.config.globalProperties).toBe(
+                baseApp.config.globalProperties,
+            );
+            expect(programmaticApp!.config.compilerOptions).toBe(
+                compilerOptions,
+            );
+            expect(programmaticApp!.config.idPrefix).toMatch(/^programmatic-/);
+
             close();
             vi.runAllTimers();
         } finally {

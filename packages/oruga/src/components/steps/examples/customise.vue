@@ -141,7 +141,7 @@ function onProfileActivate(): void {
                         label="Previous"
                         variant="danger"
                         icon-pack="fas"
-                        icon-left="backward"
+                        icon="backward"
                         :disabled="previous.disabled"
                         @click.prevent="previous.action()" />
 

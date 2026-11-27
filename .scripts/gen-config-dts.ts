@@ -3,7 +3,8 @@ import fs from "fs";
 import path from "path";
 import process from "process";
 
-import { createChecker, PropertyMeta } from "vue-component-meta";
+import type { PropertyMeta } from "vue-component-meta";
+import { createChecker } from "vue-component-meta";
 
 import {
     getComponents,
@@ -143,6 +144,7 @@ function generateConfigType(filePath: string): void {
     console.log(`${components.length} components processed.`);
 
     const code = `import type {
+    AnimationName,
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,

@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, afterEach } from "vitest";
-import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 import { nextTick, type ComponentPublicInstance } from "vue";
 import { setTimeout } from "timers/promises";
 
@@ -115,7 +115,7 @@ describe("ODropdown tests", () => {
         );
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("render trigger slot correctly", () => {
             const triggerHTML = '<button class="trigger">trigger</button>';
             const wrapper = mount(ODropdown, {
@@ -140,7 +140,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test interactions", () => {
+    describe("verify interactions", () => {
         test("react accordingly when clicking item", async () => {
             const wrapper = mount(ODropdown, {
                 props: { options: simpleOptions, active: true },
@@ -158,6 +158,7 @@ describe("ODropdown tests", () => {
             expect(items.length).toBe(simpleOptions.length);
 
             await items[1].trigger("click");
+            await flushPromises(); // drain animation microtask before flushing timers
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
@@ -184,7 +185,7 @@ describe("ODropdown tests", () => {
 
             // click outside
             window.dispatchEvent(new Event("click"));
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             const activeEmits = wrapper.emitted("update:active");
@@ -209,7 +210,7 @@ describe("ODropdown tests", () => {
 
             // click outside
             window.dispatchEvent(new Event("click"));
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             expect(wrapper.emitted("update:active")).toBeUndefined();
@@ -239,6 +240,8 @@ describe("ODropdown tests", () => {
 
             // close on trigger click
             await trigger.trigger("click");
+            await flushPromises(); // drain animation microtask before flushing timers
+
             expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
         });
@@ -356,7 +359,7 @@ describe("ODropdown tests", () => {
             window.dispatchEvent(
                 new CustomEvent("scroll", { detail: "anything" }),
             );
-            await nextTick(); // await dom update
+            await flushPromises(); // drain animation microtask before flushing timers
 
             // check dropdown closed
             const activeEmits = wrapper.emitted("update:active");
@@ -368,7 +371,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test teleport", () => {
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(ODropdown, { props: { teleport: true } });
 
@@ -397,7 +400,7 @@ describe("ODropdown tests", () => {
         });
     });
 
-    describe("test selectable", () => {
+    describe("verify selectable", () => {
         test("react accordingly when new item is selected", async () => {
             const wrapper = mount(ODropdown, {
                 props: {
@@ -627,6 +630,26 @@ describe("ODropdown tests", () => {
             expect(dropdown.emitted("close")).toBeUndefined();
         });
 
+        test("ignores a focused option when disabled while open", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { options, selectable: true, selectOnFocus: true },
+                slots: { trigger: "<button>Options</button>" },
+                attachTo: document.body,
+            });
+            const trigger = wrapper.get("button");
+            await trigger.trigger("click");
+            await setTimeout();
+            const items = wrapper.findAllComponents(ODropdownItem);
+            await items[1].trigger("pointerenter");
+            expect(wrapper.classes("o-dropdown--active")).toBe(true);
+
+            await wrapper.setProps({ disabled: true });
+            await trigger.trigger("keydown", { key: "Enter" });
+
+            expect(wrapper.emitted("select")).toBeUndefined();
+            expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+        });
+
         test("react accordingly when selected with keydown", async () => {
             const wrapper = mount(ODropdown, {
                 props: {
@@ -668,6 +691,124 @@ describe("ODropdown tests", () => {
             expect(menu.exists()).toBeTruthy();
             expect(menu.isVisible()).toBeFalsy();
         });
+
+        test("deselect an object value equal to a selected value with multiple prop", async () => {
+            const objectOptions: DropdownOptions<{ id: number }> = [
+                { label: "Item 1", value: { id: 1 } },
+                { label: "Item 2", value: { id: 2 } },
+            ];
+
+            const wrapper = mount(ODropdown, {
+                props: {
+                    active: true,
+                    options: objectOptions,
+                    // equal to the option values, but different objects
+                    modelValue: [{ id: 1 }, { id: 2 }],
+                    selectable: true,
+                    multiple: true,
+                    keepOpen: true,
+                },
+            });
+            await setTimeout(); // await popover open
+
+            const items = wrapper.findAll(".o-dropdown__item");
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeTruthy();
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [[{ id: 2 }]],
+            ]);
+        });
+
+        test("do not update an object value equal to the selected value", async () => {
+            const objectOptions: DropdownOptions<{ id: number }> = [
+                { label: "Item 1", value: { id: 1 } },
+                { label: "Item 2", value: { id: 2 } },
+            ];
+
+            const wrapper = mount(ODropdown, {
+                props: {
+                    active: true,
+                    options: objectOptions,
+                    // equal to the option value, but a different object
+                    modelValue: { id: 1 },
+                    selectable: true,
+                },
+            });
+            await setTimeout(); // await popover open
+
+            const items = wrapper.findAll(".o-dropdown__item");
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(wrapper.emitted("select")).toStrictEqual([[{ id: 1 }]]);
+            expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+        });
+
+        describe.each([0, false, ""])(
+            "handle the falsy option value %o",
+            (value) => {
+                const falsyOptions: DropdownOptions<number | boolean | string> =
+                    [
+                        { label: "Falsy", value },
+                        { label: "Truthy", value: 1 },
+                    ];
+
+                test("select the value on focus with selectOnFocus", async () => {
+                    const wrapper = mount(ODropdown, {
+                        props: {
+                            active: true,
+                            options: falsyOptions,
+                            selectable: true,
+                            selectOnFocus: true,
+                        },
+                        attachTo: document.body,
+                    });
+                    await setTimeout(); // await popover open
+
+                    const trigger = wrapper.find(".o-dropdown__trigger");
+                    await trigger.trigger("keydown", { key: "Down" });
+
+                    expect(wrapper.emitted("select")).toStrictEqual([[value]]);
+                    expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                        [value],
+                    ]);
+                });
+
+                test("select the value on close with selectOnClose", async () => {
+                    const wrapper = mount(ODropdown, {
+                        props: {
+                            active: true,
+                            options: falsyOptions,
+                            selectable: true,
+                            selectOnClose: true,
+                            keepOpen: true,
+                        },
+                        attachTo: document.body,
+                    });
+                    await setTimeout(); // await popover open
+
+                    const trigger = wrapper.find(".o-dropdown__trigger");
+                    await trigger.trigger("keydown", { key: "Down" });
+                    expect(wrapper.emitted("select")).toBeUndefined();
+
+                    await trigger.trigger("keydown", { key: "Escape" });
+                    await nextTick(); // await dom update
+
+                    expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
+                    expect(wrapper.emitted("select")).toStrictEqual([[value]]);
+                    expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                        [value],
+                    ]);
+                });
+            },
+        );
     });
 
     describe("handle options props correctly", () => {
@@ -682,7 +823,7 @@ describe("ODropdown tests", () => {
             expect(items.length).toBe(options.length);
 
             items.forEach((item, index) => {
-                expect(item.text()).toEqual(options[index].label);
+                expect(item.text()).toStrictEqual(options[index].label);
             });
 
             const item = items[1];
@@ -817,12 +958,10 @@ describe("ODropdown tests", () => {
             );
             expect(optionElements).toHaveLength(15);
 
-            optionElements.forEach((el, idx) => {
-                const isGroup = idx % 5 == 0;
-                const g_idx = Math.floor(idx / 5);
-                const o_idx = (idx % 5) - 1;
-
-                if (isGroup) {
+            // every fifth element is a group header
+            optionElements
+                .filter((_, idx) => idx % 5 == 0)
+                .forEach((el, g_idx) => {
                     const option = options[g_idx];
                     expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
@@ -834,23 +973,109 @@ describe("ODropdown tests", () => {
                     expect(
                         el.classes("o-dropdown__item--clickable"),
                     ).toBeFalsy();
+                });
+
+            optionElements.forEach((el, idx) => {
+                // group headers are checked above
+                if (idx % 5 == 0) return;
+
+                const g_idx = Math.floor(idx / 5);
+                const o_idx = (idx % 5) - 1;
+                const g_options = options[g_idx].options;
+
+                let optionLabel;
+                if (idx < 5) {
+                    optionLabel = (
+                        g_options[o_idx] as DropdownItemProps<number>
+                    ).label;
+                } else if (idx < 10) {
+                    optionLabel = Object.entries(g_options)[o_idx][1];
                 } else {
-                    const g_options = options[g_idx].options;
-
-                    let optionLabel;
-                    if (idx < 5) {
-                        optionLabel = (
-                            g_options[o_idx] as DropdownItemProps<number>
-                        ).label;
-                    } else if (idx < 10) {
-                        optionLabel = Object.entries(g_options)[o_idx][1];
-                    } else {
-                        optionLabel = g_options[o_idx];
-                    }
-
-                    expect(el.text()).toBe(optionLabel);
+                    optionLabel = g_options[o_idx];
                 }
+
+                expect(el.text()).toBe(optionLabel);
             });
+        });
+    });
+
+    describe("props toggled after setup", () => {
+        /** fake the layout of the menu, which jsdom does not compute */
+        function fakeScrollPosition(
+            menu: HTMLElement,
+            scrollTop: number,
+        ): void {
+            Object.defineProperty(menu, "scrollHeight", { value: 300 });
+            Object.defineProperty(menu, "clientHeight", { value: 100 });
+            Object.defineProperty(menu, "scrollTop", { value: scrollTop });
+        }
+
+        test("scroll events are emitted after scrollable is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, scrollable: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+            const menu = wrapper.find(".o-dropdown__menu").element;
+            fakeScrollPosition(menu as HTMLElement, 200);
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toBeUndefined();
+
+            await wrapper.setProps({ scrollable: true });
+            await nextTick(); // await listener registration
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toHaveLength(1);
+        });
+
+        test("scroll events stop after scrollable is disabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, scrollable: true },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+            const menu = wrapper.find(".o-dropdown__menu").element;
+            fakeScrollPosition(menu as HTMLElement, 200);
+
+            await wrapper.setProps({ scrollable: false });
+            await nextTick(); // await listener removal
+
+            menu.dispatchEvent(new Event("scroll"));
+            await setTimeout(150); // await debounce
+            expect(wrapper.emitted("scroll-end")).toBeUndefined();
+        });
+
+        test("closes on click outside after closeOnOutside is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, closeOnOutside: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+
+            await wrapper.setProps({ closeOnOutside: true });
+            await nextTick(); // await listener registration
+
+            window.dispatchEvent(new Event("click"));
+            await flushPromises(); // drain animation microtask, `close` is emitted after the native hide
+            expect(wrapper.emitted("close")).toHaveLength(1);
+        });
+
+        test("closes on page scroll after closeOnScroll is enabled", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, closeOnScroll: false },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await popover open
+
+            await wrapper.setProps({ closeOnScroll: true });
+            await nextTick(); // await listener registration
+
+            window.dispatchEvent(new Event("scroll"));
+            await flushPromises(); // drain animation microtask, `close` is emitted after the native hide
+            expect(wrapper.emitted("close")).toHaveLength(1);
         });
     });
 });

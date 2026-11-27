@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, useTemplateRef, type PropType } from "vue";
+import { ref, watch, nextTick, useTemplateRef } from "vue";
 import { setValueByPath } from "@oruga-ui/oruga-next";
 import type { InspectClass, InspectData } from "@docs";
 import InspectorTable from "./InspectorTable.vue";
 
-const INSPECT_CLASS = "odocs-inspected-element";
+defineProps<{
+    /** class descriptions of the inspected component, keyed by class name */
+    inspectData: InspectData;
+}>();
 
-defineProps({
-    inspectData: { type: Object as PropType<InspectData>, required: true },
-});
+const INSPECT_CLASS = "odocs-inspected-element" as const;
 
 const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 

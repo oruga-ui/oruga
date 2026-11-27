@@ -8,10 +8,8 @@ const isActive = ref(false);
     <section>
         <o-button
             label="Open Dialog"
-            size="medium"
             variant="primary"
-            :aria-expanded="isActive"
-            aria-controls="base-dialog"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
         <o-dialog

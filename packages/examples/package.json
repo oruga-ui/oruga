@@ -1,20 +1,20 @@
 {
   "name": "@oruga-ui/examples",
-  "version": "0.14.5",
+  "version": "0.14.6",
   "homepage": "https://oruga-ui.com",
   "description": "Oruga UI component examples",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.umd.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "unpkg": "./dist/index.umd.cjs",
-  "jsdelivr": "./dist/index.umd.cjs",
+  "unpkg": "./dist/index.js",
+  "jsdelivr": "./dist/index.js",
   "typings": "./dist/types/examples/src/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/examples/src/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs"
+      "default": "./dist/index.js"
     },
     "./*": "./dist/*"
   },
@@ -51,7 +51,7 @@
     "prepublishOnly": "cp ../../README.md . && cp ../../LICENSE ."
   },
   "peerDependencies": {
-    "@oruga-ui/oruga-next": "0.14.5",
+    "@oruga-ui/oruga-next": "0.14.6",
     "vue": "^3.0.0"
   },
   "dependencies": {

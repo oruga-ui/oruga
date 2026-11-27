@@ -8,8 +8,8 @@ const isActive = ref(false);
     <section>
         <o-button
             label="Open Image Dialog"
-            size="medium"
             variant="primary"
+            aria-haspopup="dialog"
             @click="isActive = true" />
 
         <o-dialog

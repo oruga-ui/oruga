@@ -1,7 +1,8 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-import { nextTick } from "vue";
+import { h, nextTick } from "vue";
 
+import OField from "@/components/field/Field.vue";
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
 
 describe("OCheckbox tests", () => {
@@ -59,7 +60,7 @@ describe("OCheckbox tests", () => {
         expect(input.attributes("disabled")).not.toBeUndefined();
     });
 
-    describe("test events", () => {
+    describe("verify events", () => {
         test("check emit focus and blur event correctly", async () => {
             const wrapper = mount(OCheckbox);
 
@@ -86,7 +87,7 @@ describe("OCheckbox tests", () => {
             });
         });
 
-        test("react accordingly when value change ", async () => {
+        test("react accordingly when value change", async () => {
             const wrapper = mount(OCheckbox);
 
             const input = wrapper.find("input");
@@ -96,13 +97,13 @@ describe("OCheckbox tests", () => {
             let emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(true);
-            expect(wrapper.vm.value).toEqual(true);
+            expect(wrapper.vm.value).toStrictEqual(true);
 
             await input.setValue(false);
             emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(2);
             expect(emits?.[1]).toContainEqual(false);
-            expect(wrapper.vm.value).toEqual(false);
+            expect(wrapper.vm.value).toStrictEqual(false);
         });
 
         test("react accordingly when custom string values are given", async () => {
@@ -119,13 +120,13 @@ describe("OCheckbox tests", () => {
             let emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(trueValue);
-            expect(wrapper.vm.value).toEqual(trueValue);
+            expect(wrapper.vm.value).toStrictEqual(trueValue);
 
             await input.setValue(false);
             emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(2);
             expect(emits?.[1]).toContainEqual(falseValue);
-            expect(wrapper.vm.value).toEqual(falseValue);
+            expect(wrapper.vm.value).toStrictEqual(falseValue);
         });
 
         test("react accordingly when custom object values are given", async () => {
@@ -142,13 +143,76 @@ describe("OCheckbox tests", () => {
             let emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(1);
             expect(emits?.[0]).toContainEqual(trueValue);
-            expect(wrapper.vm.value).toEqual(trueValue);
+            expect(wrapper.vm.value).toStrictEqual(trueValue);
 
             await input.setValue(false);
             emits = wrapper.emitted("update:modelValue");
             expect(emits).toHaveLength(2);
             expect(emits?.[1]).toContainEqual(falseValue);
-            expect(wrapper.vm.value).toEqual(falseValue);
+            expect(wrapper.vm.value).toStrictEqual(falseValue);
+        });
+    });
+
+    describe("accessible name within a field", () => {
+        const controls = () =>
+            mount(OField, {
+                props: { label: "Options", role: "group" },
+                slots: {
+                    default: () => [
+                        h(OCheckbox, { label: "First" }),
+                        h(OCheckbox, { label: "Second" }),
+                    ],
+                },
+            });
+
+        test("each control is named by its own label", () => {
+            const wrapper = controls();
+            const inputs = wrapper.findAll("input");
+            const labels = wrapper.findAll(".o-checkbox__label");
+            expect(inputs).toHaveLength(2);
+
+            const fieldLabelId = wrapper
+                .find(".o-field__label")
+                .attributes("id");
+            for (const [idx, input] of inputs.entries()) {
+                const labelId = labels[idx].attributes("id");
+                expect(labelId).toBeTruthy();
+                expect(labelId).not.toBe(fieldLabelId);
+                expect(input.attributes("aria-labelledby")).toBe(labelId);
+            }
+            expect(labels[0].attributes("id")).not.toBe(
+                labels[1].attributes("id"),
+            );
+        });
+
+        test("the field names the group", () => {
+            const wrapper = controls();
+            const fieldLabelId = wrapper
+                .find(".o-field__label")
+                .attributes("id");
+            expect(wrapper.attributes("role")).toBe("group");
+            expect(wrapper.attributes("aria-labelledby")).toBe(fieldLabelId);
+        });
+
+        test("a control without own label is named by the field label", () => {
+            const wrapper = mount(OField, {
+                props: { label: "Newsletter" },
+                slots: { default: () => h(OCheckbox) },
+            });
+            expect(wrapper.find("input").attributes("aria-labelledby")).toBe(
+                wrapper.find(".o-field__label").attributes("id"),
+            );
+            expect(wrapper.attributes("aria-labelledby")).toBeUndefined();
+        });
+
+        test("an own aria-label replaces the labels", () => {
+            const wrapper = mount(OCheckbox, {
+                props: { label: "Visible" },
+                attrs: { "aria-label": "Own name" },
+            });
+            const input = wrapper.find("input");
+            expect(input.attributes("aria-label")).toBe("Own name");
+            expect(input.attributes("aria-labelledby")).toBeUndefined();
         });
     });
 });

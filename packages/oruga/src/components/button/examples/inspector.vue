@@ -80,17 +80,17 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
     iconClass: {
         class: "iconClass",
         description: "Class of the icon element.",
-        properties: ["iconLeft", "iconRight"],
+        properties: ["icon", "iconRight"],
         action: (data): void => {
-            data["icon-left"] = "plus";
+            data["icon"] = "plus";
         },
     },
     iconLeftClass: {
         class: "iconLeftClass",
         description: "Class of the icon element on the left.",
-        properties: ["iconLeft"],
+        properties: ["icon"],
         action: (data): void => {
-            data["icon-left"] = "plus";
+            data["icon"] = "plus";
         },
     },
     iconRightClass: {

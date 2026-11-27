@@ -5,9 +5,15 @@ type ValueType<IsRange> = IsRange extends true ? [number, number] : number;
 export type SliderProps<IsRange extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state, use v-model to make it two-way binding */
+    /**
+     * The input value state, use v-model to make it two-way binding
+     * @type number|[number, number]
+     */
     modelValue?: ValueType<IsRange>;
-    /** Enable range slider */
+    /**
+     * Enable range slider
+     * @type boolean
+     */
     range?: IsRange;
     /** Minimum value */
     min?: number;
@@ -55,8 +61,15 @@ export type SliderProps<IsRange extends boolean = boolean> = {
     format?: "raw" | "percent";
     /** Date format locale */
     locale?: string | string[];
-    /** Accessibility aria-label to to be passed to the slider thumb element. */
+    /**
+     * Accessibility aria-label to be passed to the slider thumb element.
+     * It replaces the label of a parent field as the name of the thumb.
+     */
     ariaLabel?: string;
+    /** Accessibility label for the start thumb of a range slider, falls back to `ariaLabel`. */
+    ariaStartLabel?: string;
+    /** Accessibility label for the end thumb of a range slider, falls back to `ariaLabel`. */
+    ariaEndLabel?: string;
 } & SliderClasses;
 
 // class props (will not be displayed in the docs)

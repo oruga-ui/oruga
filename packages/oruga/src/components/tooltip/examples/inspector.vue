@@ -7,6 +7,22 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (data): void => {
+            data.disabled = true;
+        },
+    },
+    activeClass: {
+        class: "activeClass",
+        description: "Class of the root element when the tooltip is active.",
+        properties: ["always"],
+        action: (data): void => {
+            data.always = true;
+        },
+    },
     teleportClass: {
         class: "teleportClass",
         description: "Class of the root element when teleported.",
@@ -15,64 +31,34 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
             data.teleport = true;
         },
     },
-    triggerClass: {
-        class: "triggerClass",
-        description: "Class of the trigger element.",
-    },
     contentClass: {
         class: "contentClass",
         description: "Class of the content element.",
     },
-    positionClass: {
-        class: "positionClass",
-        description: "Class of the content element with position.",
-        properties: ["position"],
-        suffixes: ["top", "bottom", "left", "right"],
+    contentActiveClass: {
+        class: "contentActiveClass",
+        description: "Class of the content element when the tooltip is active.",
+        properties: ["always"],
         action: (data): void => {
-            data.position = "right";
+            data.always = true;
         },
     },
-    variantClass: {
-        class: "variantClass",
-        description: "Class of the content element with variant.",
+    contentVariantClass: {
+        class: "contentVariantClass",
+        description: "Class of the content element with a color variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (data): void => {
             data.variant = "warning";
         },
     },
-    multilineClass: {
-        class: "multilineClass",
-        description: "Class of the content element when is multiline.",
-        properties: ["multiline"],
-        action: (data): void => {
-            data.multiline = true;
-        },
-    },
-    alwaysClass: {
-        class: "alwaysClass",
-        description: "Class of the content element when is always visible.",
-        properties: ["always"],
-        action: (data): void => {
-            data.always = true;
-        },
-    },
     arrowClass: {
         class: "arrowClass",
         description: "Class of the arrow element.",
     },
-    arrowPositionClass: {
-        class: "arrowPositionClass",
-        description: "Class of the arrow element with position.",
-        properties: ["position"],
-        suffixes: ["top", "bottom", "left", "right"],
-        action: (data): void => {
-            data.position = "right";
-        },
-    },
     arrowVariantClass: {
         class: "arrowVariantClass",
-        description: "Class of the arrow element with variant.",
+        description: "Class of the arrow element with a color variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (data): void => {
@@ -85,7 +71,7 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-tooltip label="Tooltip!" always v-bind="props">
-            <o-button label="Delayed" />
+            <o-button label="Hover me" />
         </o-tooltip>
     </inspector-wrapper>
 </template>

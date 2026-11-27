@@ -39,6 +39,8 @@ import { injectField } from "@/components/field/fieldInjection";
 import type { TreeProps } from "./props";
 import type { TreeComponent, TreeItem, TreeItemComponent } from "./types";
 
+type ModelValue = TreeProps<T, IsMultiple>["modelValue"];
+
 /**
  * A simple tree view, for any type of hierarchical list.
  * @displayName Tree
@@ -50,8 +52,6 @@ defineOptions({
     name: "OTree",
     configField: "tree",
 });
-
-type ModelValue = TreeProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     override: undefined,
@@ -70,6 +70,8 @@ const props = withDefaults(defineProps<TreeProps<T, IsMultiple>>(), {
     filterIcon: undefined,
     filterDebounce: 400,
     filterPlaceholder: undefined,
+    ariaFilterLabel: () =>
+        getDefault("tree.ariaFilterLabel", "tree filter input"),
     toggleIcon: () => getDefault("tree.toggleIcon", "chevron-right"),
     iconPack: () => getDefault("tree.iconPack"),
     iconSize: () => getDefault("tree.iconSize"),
@@ -84,6 +86,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * on select event - fired before update:modelValue
@@ -288,7 +291,7 @@ function selectItem(item: TreeItem<T>, selection: boolean): void {
     // set selected option
     if (!isTrueish(props.multiple)) {
         if (!selection) vmodel.value = undefined;
-        else if (vmodel.value !== value) {
+        else if (!isEqual(vmodel.value, value)) {
             // update a single value
             vmodel.value = value as ModelValue;
         }
@@ -318,13 +321,16 @@ function selectItems(items: TreeItem<T>[], selection?: boolean): void {
 
     if (vmodel.value && Array.isArray(vmodel.value)) {
         if (selection === true) {
-            const set = new Set([...vmodel.value, ...values]);
-            // add a value
-            vmodel.value = Array.from(set) as ModelValue;
+            const selected = vmodel.value;
+            // add the values which are not selected yet
+            const newValues = values.filter(
+                (value) => !selected.some((val) => isEqual(val, value)),
+            );
+            vmodel.value = [...selected, ...newValues] as ModelValue;
         } else if (selection === false) {
             // remove a value
             vmodel.value = vmodel.value.filter(
-                (val) => !values.includes(val),
+                (val) => !values.some((value) => isEqual(value, val)),
             ) as ModelValue;
         } else {
             vmodel.value = values as ModelValue;
@@ -852,7 +858,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-tree__empty"]);
                     :disabled="disabled"
                     expanded
                     size="small"
-                    aria-label="tree filter input"
+                    :aria-label="ariaFilterLabel"
                     :aria-owns="id + '_list'"
                     :aria-activedescendant="
                         focusedItem

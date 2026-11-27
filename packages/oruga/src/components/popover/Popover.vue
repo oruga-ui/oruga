@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="C extends Component">
 import {
     ref,
-    watch,
     computed,
     useId,
     useTemplateRef,
@@ -16,7 +15,7 @@ import {
     defineClasses,
     unrefElement,
     usePopoverAPI,
-    usePreventScrolling,
+    useScrollLock,
     useTeleport,
     type MaybeElement,
 } from "@/composables";
@@ -54,7 +53,7 @@ const props = withDefaults(defineProps<PopoverProps<C>>(), {
     ariaCloseLabel: () => getDefault("popover.ariaCloseLabel", "Close"),
     animation: () => getDefault("popover.animation", "fade"),
     teleport: () => getDefault("popover.teleport", false),
-    clipScroll: () => getDefault("popover.clipScroll", false),
+    scrollLock: () => getDefault("popover.scrollLock", "keep"),
     target: undefined,
     component: undefined,
     props: undefined,
@@ -140,6 +139,7 @@ const { open, close, toggle } = usePopoverAPI({
     behavior: props.behavior,
     trigger: isActive,
     disabled: () => props.disabled,
+    animation: () => props.animation,
     targetTrigger: !props.target,
     targetRef: triggerRef,
     contentRef,
@@ -147,14 +147,9 @@ const { open, close, toggle } = usePopoverAPI({
     onBeforeToggle,
 });
 
-const toggleScroll = usePreventScrolling(props.clipScroll);
-
-watch(
-    isActive,
-    (value) => {
-        if (props.backdrop || props.modal) toggleScroll(value);
-    },
-    { flush: "post" },
+useScrollLock(
+    () => isActive.value && (props.backdrop || props.modal),
+    () => props.scrollLock,
 );
 
 // #region --- Event Handler ---
@@ -165,8 +160,7 @@ function onBeforeToggle(event: ToggleEvent): void {
 }
 
 function onToggle(event: ToggleEvent): void {
-    if (event.newState === "open") isActive.value = true;
-    else isActive.value = false;
+    isActive.value = event.newState === "open";
 }
 
 // #endregion --- Event Handler ---
@@ -228,46 +222,43 @@ defineExpose({ close, open, toggle });
         <slot :active="isActive" :open="open" />
 
         <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-            <transition :name="animation">
-                <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
-                <div
-                    :id="id"
-                    ref="contentElement"
-                    :class="contentClasses"
-                    :role="role"
-                    popover>
-                    <div v-if="title || $slots['title']" :class="headerClasses">
-                        <slot name="title" :close="close">
-                            {{ title }}
-                        </slot>
-                    </div>
-
-                    <CloseButton
-                        v-if="closeable"
-                        :pack="iconPack"
-                        :icon="closeIcon"
-                        :size="closeIconSize"
-                        :label="ariaCloseLabel"
-                        :classes="closeClasses"
-                        @click="close">
-                        <slot v-if="$slots['close']" name="close" />
-                    </CloseButton>
-
-                    <div :class="bodyClasses">
-                        <!-- injected component for programmatic usage -->
-                        <component
-                            :is="$props.component"
-                            v-if="$props.component"
-                            v-bind="$props.props"
-                            v-on="$props.events || {}"
-                            @close="close" />
-
-                        <slot name="content" :close="close">
-                            {{ content }}
-                        </slot>
-                    </div>
+            <div
+                :id="id"
+                ref="contentElement"
+                :class="contentClasses"
+                :role="role"
+                popover>
+                <div v-if="title || $slots['title']" :class="headerClasses">
+                    <slot name="title" :close="close">
+                        {{ title }}
+                    </slot>
                 </div>
-            </transition>
+
+                <CloseButton
+                    v-if="closeable"
+                    :pack="iconPack"
+                    :icon="closeIcon"
+                    :size="closeIconSize"
+                    :label="ariaCloseLabel"
+                    :classes="closeClasses"
+                    @click="close">
+                    <slot v-if="$slots['close']" name="close" />
+                </CloseButton>
+
+                <div :class="bodyClasses">
+                    <!-- injected component for programmatic usage -->
+                    <component
+                        :is="$props.component"
+                        v-if="$props.component"
+                        v-bind="$props.props"
+                        v-on="$props.events || {}"
+                        @close="close" />
+
+                    <slot name="content" :close="close">
+                        {{ content }}
+                    </slot>
+                </div>
+            </div>
         </Teleport>
     </div>
 </template>

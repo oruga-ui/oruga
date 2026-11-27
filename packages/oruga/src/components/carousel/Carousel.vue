@@ -18,7 +18,13 @@ import OIcon from "../icon/Icon.vue";
 import OCarouselItem from "./CarouselItem.vue";
 
 import { getDefault } from "@/utils/config";
-import { sign, mod, bound, isDefined } from "@/utils/helpers";
+import {
+    sign,
+    mod,
+    bound,
+    isDefined,
+    resolvePlaceholder,
+} from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -36,6 +42,8 @@ import type {
 } from "./types";
 import type { CarouselProps } from "./props";
 
+type ModelValue = CarouselProps<T>["modelValue"];
+
 /**
  * A Slideshow for cycling images in confined spaces.
  * @displayName Carousel
@@ -48,13 +56,11 @@ defineOptions({
     configField: "carousel",
 });
 
-type ModelValue = CarouselProps<T>["modelValue"];
-
 const props = withDefaults(defineProps<CarouselProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     options: undefined,
-    dragable: true,
+    draggable: true,
     autoplay: false,
     interval: () => getDefault("carousel.interval", 3500),
     pauseHover: false,
@@ -88,6 +94,10 @@ const props = withDefaults(defineProps<CarouselProps<T>>(), {
     ariaNextLabel: () => getDefault("carousel.ariaNextLabel", "Next Slide"),
     ariaPreviousLabel: () =>
         getDefault("carousel.ariaPreviousLabel", "Previous Slide"),
+    ariaIndicatorsLabel: () =>
+        getDefault("carousel.ariaIndicatorsLabel", "Slides"),
+    ariaIndicatorLabel: () =>
+        getDefault("carousel.ariaIndicatorLabel", "Slide {value}"),
 });
 
 const emits = defineEmits<{
@@ -95,6 +105,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: number];
     /**
      * on carousel slide change event
@@ -184,7 +195,7 @@ const indicatorItems = computed(() =>
 let resizeObserver: ResizeObserver | undefined;
 
 if (isClient && window.ResizeObserver) {
-    resizeObserver = new window.ResizeObserver(onRefresh);
+    resizeObserver = new window.ResizeObserver(onResize);
 }
 
 const windowWidth = ref(0);
@@ -263,6 +274,11 @@ watch(
 
 function onRefresh(): void {
     vmodel.value = childItems.value[0]?.data.getValue();
+    onResize();
+}
+
+/** recalculate the layout without changing the active item */
+function onResize(): void {
     // set HTML element with
     windowWidth.value = window.innerWidth;
     // trigger re creation of settings based on props
@@ -402,7 +418,7 @@ const translation = computed(
 function onDragStart(event: TouchEvent | DragEvent): void {
     if (
         isDragging.value ||
-        !settings.value.dragable ||
+        !settings.value.draggable ||
         ((event as MouseEvent).button !== 0 && event.type !== "touchstart")
     )
         return;
@@ -698,7 +714,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                 v-if="indicators"
                 :class="indicatorsClasses"
                 role="tablist"
-                aria-label="Slides">
+                :aria-label="ariaIndicatorsLabel">
                 <div
                     v-for="item in indicatorItems"
                     :id="`carousel-${item.identifier}`"
@@ -708,7 +724,9 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                     :tabindex="
                         item.identifier === activeItem?.identifier ? '0' : '-1'
                     "
-                    :aria-label="`Slide ${item.identifier}`"
+                    :aria-label="
+                        resolvePlaceholder(ariaIndicatorLabel, item.index + 1)
+                    "
                     :aria-controls="`carouselpanel-${item.identifier}`"
                     :aria-selected="item.identifier === activeItem?.identifier"
                     @click="onChange(item)"

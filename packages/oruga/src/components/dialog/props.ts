@@ -1,5 +1,10 @@
 import type { Component } from "vue";
-import type { ComponentClass, ComponentEmits, Numberish } from "@/types";
+import type {
+    AnimationName,
+    ComponentClass,
+    ComponentEmits,
+    Numberish,
+} from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type DialogProps<C extends Component = Component> = {
@@ -7,8 +12,13 @@ export type DialogProps<C extends Component = Component> = {
     override?: boolean;
     /** Whether dialog is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Custom animation (transition name) */
-    animation?: string;
+    /**
+     * Open/close animation using the native Web Animations API.
+     * Set to `false` to disable the built-in animation.
+     *
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+     */
+    animation?: AnimationName | false;
     /** Show an backdrop overlay background; make it a modal dialog */
     backdrop?: boolean;
     /**
@@ -32,14 +42,23 @@ export type DialogProps<C extends Component = Component> = {
     draggable?: boolean;
     /** Adds close button to the header to hide the dialog */
     closeable?: boolean;
-    /** Close the dialog when clicked outside of the panel */
+    /**
+     * Close the dialog when clicked outside of the panel.
+     * This requires a browser which supports the `closedby` attribute of the dialog element.
+     */
     closeOnBackdrop?: boolean;
     /** Close the dialog when pressing escape key */
     closeOnEscape?: boolean;
     /** Close the dialog when the confirm button is preset */
     closeOnConfirm?: boolean;
-    /** Whether background scrollbar should be blocked/removed when dialog is visible */
-    blockScroll?: boolean;
+    /**
+     * Prevents background scrolling while open.
+     * `clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+     * `keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+     * `off` does not prevent background scrolling.
+     * @values clip, keep, off
+     */
+    scrollLock?: "clip" | "keep" | "off";
     /** Text alignment in its entirely */
     textPosition?: "center" | "left" | "right";
     /** Dialog header title, unnecessary when title slot is used */
@@ -70,11 +89,18 @@ export type DialogProps<C extends Component = Component> = {
     /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
+     * @type Component
      */
     component?: C;
-    /** Props to be binded to the injected component */
+    /**
+     * Props to be binded to the injected component
+     * @type object
+     */
     props?: ComponentProps<C>;
-    /** Events to be binded to the injected component */
+    /**
+     * Events to be binded to the injected component
+     * @type object
+     */
     events?: ComponentEmits<C>;
     /** Render a confirm button and set text as label */
     confirmButton?: string;
@@ -96,9 +122,9 @@ export type DialogProps<C extends Component = Component> = {
     cancelVariant?: string;
     /** Position of the footer buttons */
     buttonPosition?: "center" | "left" | "right";
-    /** Accessibility aria-label to be passed to the div root element */
+    /** Accessibility aria-label to be passed to the dialog root element - if set, it is used instead of the title as the accessible name - if a title is set, the dialog is labelled by the title */
     ariaLabel?: string;
-    /** Accessibility aria-describedby to be passed to the div root element - if a title is set, it is linked to the title */
+    /** Accessibility aria-describedby to be passed to the dialog root element - the id of the element which describes the dialog */
     ariaDescribedby?: string;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
@@ -154,13 +180,9 @@ export type DialogClasses = Partial<{
     /** Class of the content footer element with position */
     footerPositionClass: ComponentClass;
     /** Class of the footer confirm button element */
-    confirmButtunClass: ComponentClass;
+    confirmButtonClass: ComponentClass;
     /** Class of the footer cancel button element */
     cancelButtonClass: ComponentClass;
-    /** Class of the body when modal is open and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when modal is open and scroll is keeped */
-    scrollKeepClass: ComponentClass;
     /** Class of the root element when draggable is enabled */
     draggableClass: ComponentClass;
     /** Class of the root element while the dialog is being dragged */

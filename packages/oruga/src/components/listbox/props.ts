@@ -14,7 +14,10 @@ export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
      * @type string|number|object
      */
     modelValue?: ValueType<T, IsMultiple>;
-    /** Allows multiple selections - converts the `modelValue` into an array */
+    /**
+     * Allows multiple selections - converts the `modelValue` into an array
+     * @type boolean
+     */
     multiple?: IsMultiple;
     /** Listbox options, unnecessary when default slot is used */
     options?: ListboxOptions<T>;
@@ -42,6 +45,8 @@ export type ListboxProps<T, IsMultiple extends boolean = boolean> = {
     filterIcon?: string;
     /** Placeholder of the column search input */
     filterPlaceholder?: string;
+    /** Accessibility label for the filter input */
+    ariaFilterLabel?: string;
     /** Number of milliseconds to delay the filter event */
     filterDebounce?: number;
     /**

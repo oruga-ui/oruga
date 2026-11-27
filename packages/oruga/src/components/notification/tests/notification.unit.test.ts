@@ -16,7 +16,42 @@ describe("ONotification tests", () => {
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.html()).toMatchSnapshot();
-        const element = wrapper.find("article");
+        const element = wrapper.find("[data-oruga=notification]");
         expect(element.attributes("data-oruga")).toBe("notification");
+    });
+
+    describe("live region", () => {
+        test("announce politely by default", () => {
+            const wrapper = mount(ONotification, {
+                props: { content: "Saved", variant: "success" },
+            });
+            const element = wrapper.find("[data-oruga=notification]");
+            expect(element.attributes("role")).toBe("status");
+            expect(element.attributes("aria-atomic")).toBe("true");
+        });
+
+        test.each(["warning", "danger"])(
+            "announce the variant %s as alert",
+            (variant) => {
+                const wrapper = mount(ONotification, {
+                    props: { content: "Failed", variant },
+                });
+                expect(
+                    wrapper
+                        .find("[data-oruga=notification]")
+                        .attributes("role"),
+                ).toBe("alert");
+            },
+        );
+
+        test("prefer a role passed by the user", () => {
+            const wrapper = mount(ONotification, {
+                props: { content: "Failed", variant: "danger" },
+                attrs: { role: "log" },
+            });
+            expect(
+                wrapper.find("[data-oruga=notification]").attributes("role"),
+            ).toBe("log");
+        });
     });
 });

@@ -1,5 +1,9 @@
 import type { Component } from "vue";
-import type { MaybeElement, PopoverPosition } from "@/composables";
+import type {
+    AnimationName,
+    MaybeElement,
+    PopoverPosition,
+} from "@/composables";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
@@ -37,8 +41,14 @@ export type PopoverProps<C extends Component = Component> = {
     role?: "dialog" | "menu" | "tooltip";
     /** Defines if the popover should be shown as centered modal - the position is ignored when `true` */
     modal?: boolean;
-    /** Show and dismiss animation */
-    animation?: string;
+    /**
+     * Open/close animation using the native Web Animations API.
+     * Set to `false` to disable the built-in animation.
+     *
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+     * @default 'fade'
+     */
+    animation?: AnimationName | false;
     /** Adds close button to the content */
     closeable?: boolean;
     /**
@@ -53,11 +63,13 @@ export type PopoverProps<C extends Component = Component> = {
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
     /**
-     * Set `true` to remove the body scrollbar.
-     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-     * but will set the body to a fixed position, which may break some layouts.
+     * Prevents background scrolling while open.
+     * `clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+     * `keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+     * `off` does not prevent background scrolling.
+     * @values clip, keep, off
      */
-    clipScroll?: boolean;
+    scrollLock?: "clip" | "keep" | "off";
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -74,11 +86,18 @@ export type PopoverProps<C extends Component = Component> = {
     /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
+     * @type Component
      */
     component?: C;
-    /** Props to be binded to the injected component */
+    /**
+     * Props to be binded to the injected component
+     * @type object
+     */
     props?: ComponentProps<C>;
-    /** Events to be binded to the injected component */
+    /**
+     * Events to be binded to the injected component
+     * @type object
+     */
     events?: ComponentEmits<C>;
 } & PopoverClasses;
 
@@ -106,8 +125,4 @@ export type PopoverClasses = Partial<{
     bodyClass: ComponentClass;
     /** Class of the close element */
     closeClass: ComponentClass;
-    /** Class of the body when popover has backdrop and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when popover has backdrop and scroll is keeped */
-    scrollKeepClass: ComponentClass;
 }>;

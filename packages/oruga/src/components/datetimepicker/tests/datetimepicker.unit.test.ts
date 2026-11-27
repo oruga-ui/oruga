@@ -83,6 +83,26 @@ describe("ODatetimepicker tests", () => {
         expect(input.element.value).toBe("");
     });
 
+    test.each([
+        ["21/10/2021, 10:23 pm", new Date(2021, 9, 21, 22, 23)],
+        ["21/10/2021, 12:05 am", new Date(2021, 9, 21, 0, 5)],
+        ["21/10/2021, 12:05 pm", new Date(2021, 9, 21, 12, 5)],
+    ])("parses 12-hour keyboard input %s", async (value, expected) => {
+        const wrapper = mount(ODatetimepicker, {
+            props: { timepicker: { hourFormat: "12" } },
+        });
+
+        const input = wrapper.find("input");
+        await input.setValue(value);
+        await input.trigger("keyup", { key: "Enter" });
+
+        const emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
+        expect((emits?.[0][0] as Date).toISOString()).toBe(
+            expected.toISOString(),
+        );
+    });
+
     test("closes overlay on datetime selection when stayOpen is false", async () => {
         const wrapper = mount(ODatetimepicker, {
             props: {
@@ -107,7 +127,7 @@ describe("ODatetimepicker tests", () => {
         // check that update:active event was emitted with false (overlay closes)
         const updateActiveEmits = wrapper.emitted("update:active");
         expect(updateActiveEmits).toBeDefined();
-        expect(updateActiveEmits?.[0]).toEqual([false]);
+        expect(updateActiveEmits?.[0]).toStrictEqual([false]);
     });
 
     test("keeps overlay open on datetime selection when stayOpen is true", async () => {

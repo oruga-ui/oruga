@@ -5,12 +5,15 @@ export type CarouselOptions<T> = OptionsProp<CarouselItemProps<T>>;
 export type CarouselProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The index of the current active element, use v-model to make it two-way binding */
+    /**
+     * The index of the current active element, use v-model to make it two-way binding
+     * @type string|number|object
+     */
     modelValue?: T;
     /** Carousel options, unnecessary when default slot is used */
     options?: CarouselOptions<T>;
     /** Enable drag mode */
-    dragable?: boolean;
+    draggable?: boolean;
     /** Move item automaticalls after `interval` */
     autoplay?: boolean;
     /** Timer interval for `autoplay` */
@@ -65,6 +68,13 @@ export type CarouselProps<T> = {
     ariaNextLabel?: string;
     /** Accessibility previous button aria label  */
     ariaPreviousLabel?: string;
+    /** Accessibility aria label of the slide indicators */
+    ariaIndicatorsLabel?: string;
+    /**
+     * Accessibility aria label of a slide indicator.
+     * A string can use the `{value}` placeholder for the slide number, a function receives the number.
+     */
+    ariaIndicatorLabel?: string | ((value: string) => string);
 } & CarouselClasses;
 
 // class props (will not be displayed in the docs)
@@ -106,7 +116,10 @@ export type CarouselClasses = Partial<{
 export type CarouselItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Item value (it will be used as the v-model of the wrapper component) - default is the item index */
+    /**
+     * Item value (it will be used as the v-model of the wrapper component) - default is the item index
+     * @type string|number|object
+     */
     value?: T;
     /** Make item clickable */
     clickable?: boolean;

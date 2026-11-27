@@ -15,7 +15,7 @@ const locale = ref(); // Browser locale
             </o-field>
             <o-field label="Locale">
                 <o-select v-model="locale">
-                    <option :value="undefined"></option>
+                    <option :value="undefined" />
                     <option value="de-DE">de-DE</option>
                     <option value="en-CA">en-CA</option>
                     <option value="en-GB">en-GB</option>
@@ -33,7 +33,7 @@ const locale = ref(); // Browser locale
             </o-field>
             <o-field label="Hour format">
                 <o-select v-model="hourFormat">
-                    <option :value="undefined"></option>
+                    <option :value="undefined" />
                     <option value="12">12</option>
                     <option value="24">24</option>
                 </o-select>

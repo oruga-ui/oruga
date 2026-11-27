@@ -17,7 +17,8 @@ export type NotificationProps<C extends Component = Component> = {
     /** Whether notification is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /**
-     * Type (color) of the notification
+     * Type of the notification, selects the default icon.
+     * It does not change the color, use the `variant` prop for that.
      * @values info, success, warning, danger
      */
     type?: string;
@@ -56,11 +57,18 @@ export type NotificationProps<C extends Component = Component> = {
     /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
+     * @type Component
      */
     component?: C;
-    /** Props to be binded to the injected component */
+    /**
+     * Props to be binded to the injected component
+     * @type object
+     */
     props?: ComponentProps<C>;
-    /** Events to be binded to the injected component */
+    /**
+     * Events to be binded to the injected component
+     * @type object
+     */
     events?: ComponentEmits<C>;
 } & NotificationClasses;
 
@@ -114,7 +122,9 @@ export type NotificationNoticeProps<C extends Component = Component> = {
     rounded?: boolean;
     /** Hide notification after duration (in miliseconds) */
     duration?: number;
-    /** Pause and show on hover until hover off, if infinite is false. */
+    /**
+     * Pause and show while the pointer is over the notification or focus is inside it, until both are gone. Ignored if infinite is true.
+     */
     pauseOnHover?: boolean;
     /** Show the Notification infinitely until it is dismissed. */
     infinite?: boolean;
@@ -123,11 +133,18 @@ export type NotificationNoticeProps<C extends Component = Component> = {
     /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
+     * @type Component
      */
     component?: C;
-    /** Props to be binded to the injected component */
+    /**
+     * Props to be binded to the injected component
+     * @type object
+     */
     props?: ComponentProps<C>;
-    /** Events to be binded to the injected component */
+    /**
+     * Events to be binded to the injected component
+     * @type object
+     */
     events?: ComponentEmits<C>;
 } & NotificationNoticeClasses;
 

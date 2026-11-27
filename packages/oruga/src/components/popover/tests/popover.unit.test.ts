@@ -1,5 +1,6 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
 
 import OPopover from "@/components/popover/Popover.vue";
@@ -21,7 +22,7 @@ describe("OPopover tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    test("test closeable ", async () => {
+    test("closeable", async () => {
         const onClose = vi.fn();
 
         const wrapper = mount(OPopover, {
@@ -47,13 +48,14 @@ describe("OPopover tests", () => {
         expect(closeButton.classes("o-popover__close")).toBeTruthy();
 
         await closeButton.trigger("click");
+        await nextTick(); // flush Vue DOM update after async animation → hidePopover → isActive=false chain
 
         expect(wrapper.emitted("close")).toHaveLength(1);
         expect(wrapper.classes("o-popover--active")).toBeFalsy();
         expect(onClose).toHaveBeenCalledTimes(1);
     });
 
-    describe("test trigger", () => {
+    describe("verify trigger", () => {
         test("render default trigger slot correctly", () => {
             const triggerHTML = '<button class="trigger">trigger</button>';
             const wrapper = mount(OPopover, {
@@ -73,20 +75,23 @@ describe("OPopover tests", () => {
             const trigger = wrapper.find(".trigger");
             expect(trigger.exists()).toBeTruthy();
 
+            const content = wrapper.find(".o-popover__content");
+            expect(content.exists()).toBeTruthy();
+            expect(content.isVisible()).toBeFalsy();
+
             // check do not open on right click
             await trigger.trigger("contextmenu");
             await setTimeout(); // await async event is processed
+            expect(content.isVisible()).toBeFalsy();
 
             // check do not open on focus
             await trigger.trigger("focus");
             await setTimeout(); // await async event is processed
+            expect(content.isVisible()).toBeFalsy();
 
             // check do not open on hover
             await trigger.trigger("pointerenter");
             await setTimeout(); // await async event is processed
-
-            const content = wrapper.find(".o-popover__content");
-            expect(content.exists()).toBeTruthy();
             expect(content.isVisible()).toBeFalsy();
 
             expect(wrapper.emitted("open")).toBeUndefined();
@@ -120,7 +125,7 @@ describe("OPopover tests", () => {
         });
     });
 
-    describe("test teleport", () => {
+    describe("verify teleport", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(OPopover, {
                 props: {

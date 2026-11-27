@@ -25,12 +25,11 @@ function deleteDropFile(index): void {
             <span v-for="(file, index) in dropFiles" :key="file.name">
                 {{ file.name }}
                 <o-button
-                    icon-left="times"
+                    icon="times"
                     :aria-label="`Remove ${file.name}`"
                     size="small"
                     native-type="button"
-                    @click="deleteDropFile(index)">
-                </o-button>
+                    @click="deleteDropFile(index)" />
             </span>
         </div>
     </section>

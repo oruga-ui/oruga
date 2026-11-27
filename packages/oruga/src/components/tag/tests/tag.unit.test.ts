@@ -13,7 +13,7 @@ describe("OTag tests", () => {
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("tag");
-        expect(wrapper.text()).toEqual("My Tag");
+        expect(wrapper.text()).toStrictEqual("My Tag");
         expect(wrapper.html()).toMatchSnapshot();
     });
 
@@ -22,7 +22,7 @@ describe("OTag tests", () => {
             props: { label: "My Tag", icon: "home" },
         });
 
-        expect(wrapper.text()).toEqual("My Tag");
+        expect(wrapper.text()).toStrictEqual("My Tag");
 
         const icon = wrapper.find('[data-oruga="icon"]');
         expect(icon.exists()).toBeTruthy();
@@ -49,7 +49,7 @@ describe("OTag tests", () => {
             props: { label: "My Tag", closeable: true },
         });
 
-        expect(wrapper.text()).toEqual("My Tag");
+        expect(wrapper.text()).toStrictEqual("My Tag");
 
         const closeIcon = wrapper.find('[data-oruga="icon"]');
         expect(closeIcon.exists()).toBeTruthy();

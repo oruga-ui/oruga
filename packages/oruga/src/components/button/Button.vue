@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, useAttrs } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -40,12 +40,13 @@ const props = withDefaults(
         inverted: false,
         type: "button",
         iconPack: () => getDefault("button.iconPack"),
-        iconLeft: undefined,
+        icon: undefined,
         iconRight: undefined,
+        iconSize: () => getDefault("button.iconSize"),
     },
 );
 
-defineEmits<{
+const emits = defineEmits<{
     /**
      * button click event
      * @param event {Event} - native event
@@ -62,9 +63,59 @@ defineSlots<{
     right?(): void;
 }>();
 
-const computedNativeType = computed(() =>
-    props.tag === "button" || props.tag === "input" ? props.type : null,
+const attrs = useAttrs();
+
+const isNativeButton = computed(
+    () => props.tag === "button" || props.tag === "input",
 );
+
+/**
+ * Anchors and components (e.g. router-link) are links:
+ * the browser handles focus and Enter, and they must stay announced as links.
+ */
+const isLink = computed(
+    () => typeof props.tag !== "string" || (props.tag === "a" && attrs["href"]),
+);
+
+/** Any other element needs the button semantics and keyboard support added. */
+const isCustomElement = computed(() => !isNativeButton.value && !isLink.value);
+
+const computedNativeType = computed(() =>
+    isNativeButton.value ? props.type : null,
+);
+
+const computedTabindex = computed(() => {
+    // disabled elements which are not a native control must leave the tab order
+    if (props.disabled && !isNativeButton.value) return -1;
+    return isCustomElement.value ? 0 : null;
+});
+
+function onClick(event: Event): void {
+    // the disabled attribute only blocks native controls
+    if (props.disabled && !isNativeButton.value) {
+        // do not follow links
+        event.preventDefault();
+        return;
+    }
+    emits("click", event);
+}
+
+/**
+ * Keyboard activation which the browser does not provide.
+ * Custom elements need Enter and Space. Links already get Enter,
+ * but would scroll the page on Space, which a button must not do.
+ */
+function onKeydown(event: KeyboardEvent): void {
+    // native buttons are activated by the browser
+    if (isNativeButton.value) return;
+    const keys = isCustomElement.value ? ["Enter", " "] : [" "];
+    if (!keys.includes(event.key)) return;
+    // prevent scrolling on space
+    event.preventDefault();
+    if (props.disabled) return;
+    // dispatches a click, so the link is followed and click is emitted once
+    (event.currentTarget as HTMLElement).click();
+}
 
 // #region --- Computed Component Classes ---
 
@@ -127,23 +178,22 @@ const iconRightClasses = defineClasses([
 <template>
     <component
         :is="tag"
-        role="button"
+        :role="isCustomElement ? 'button' : null"
         :type="computedNativeType"
-        tabindex="0"
+        :tabindex="computedTabindex"
         data-oruga="button"
         :class="rootClasses"
-        :disabled="disabled ? true : null"
+        :disabled="isNativeButton && disabled ? true : null"
         :aria-disabled="disabled ? true : null"
         v-bind="$attrs"
-        @click="$emit('click', $event)"
-        @keydown.enter.prevent="$emit('click', $event)"
-        @keydown.space.prevent="$emit('click', $event)">
+        @click="onClick"
+        @keydown="onKeydown">
         <slot name="left">
             <o-icon
-                v-if="iconLeft"
+                v-if="icon"
                 :pack="iconPack"
-                :icon="iconLeft"
-                :size="size"
+                :icon="icon"
+                :size="iconSize ?? size"
                 :class="[...iconClasses, ...iconLeftClasses]" />
         </slot>
 
@@ -156,7 +206,7 @@ const iconRightClasses = defineClasses([
                 v-if="iconRight"
                 :pack="iconPack"
                 :icon="iconRight"
-                :size="size"
+                :size="iconSize ?? size"
                 :class="[...iconClasses, ...iconRightClasses]" />
         </slot>
     </component>

@@ -1,16 +1,35 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, useTemplateRef, nextTick } from "vue";
+import {
+    ref,
+    computed,
+    onMounted,
+    onBeforeUnmount,
+    useTemplateRef,
+    nextTick,
+    type Component,
+} from "vue";
 import MarkdownIt from "markdown-it";
 import MarkdownItHighlightjs from "markdown-it-highlightjs";
 
-const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
+const props = withDefaults(
+    defineProps<{
+        /** raw source code of the example, displayed in the code tabs */
+        code: string;
+        /** the example component to render in the preview */
+        component?: Component;
+        /** show the code tabs below the preview */
+        showCode?: boolean;
+        /** expand the code tabs initially */
+        open?: boolean;
+    }>(),
+    {
+        component: undefined,
+        showCode: true,
+        open: false,
+    },
+);
 
-const props = defineProps({
-    code: { type: String, required: true },
-    component: { type: Object, default: undefined },
-    showCode: { type: Boolean, default: true },
-    open: { type: Boolean, default: false },
-});
+const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
 
 const uid = Date.now().toString(36) + Math.random().toString(36).substring(2);
 
@@ -79,7 +98,43 @@ const tab = ref(
 
 const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 
+let isDark = false;
+let darkModeObserver: MutationObserver | undefined;
+
+function applyAppearance(): void {
+    // get example-showcase root
+    const shadowRoot = showcaseElement.value?.shadowRoot;
+    if (!shadowRoot) return;
+
+    // get only sections in child nodes
+    const sections = Array.from(shadowRoot.children).filter(
+        (node) => node.tagName === "SECTION",
+    );
+
+    // set theme specific attributes to example sections
+    sections.forEach((child) => {
+        child.setAttribute("data-theme", isDark ? "dark" : "light");
+        child.setAttribute("data-bs-theme", isDark ? "dark" : "light");
+    });
+}
+
+onBeforeUnmount(() => darkModeObserver?.disconnect());
+
 onMounted(() => {
+    const root = document.documentElement;
+    const updateAppearance = (): void => {
+        isDark = root.classList.contains("dark");
+        applyAppearance();
+    };
+
+    darkModeObserver = new MutationObserver(updateAppearance);
+    darkModeObserver.observe(root, {
+        attributes: true,
+        attributeFilter: ["class"],
+    });
+    // set default appearance style
+    updateAppearance();
+
     // await component got rendered
     nextTick(() => {
         if (!styleCode.value || !props.component) return;
@@ -175,6 +230,7 @@ function copy(val: string): void {
                         class="language-html"
                         :class="{ active: tab === 'HTML' }">
                         <button
+                            type="button"
                             title="Copy Code"
                             class="copy"
                             @click="copy(templateCode)" />
@@ -191,6 +247,7 @@ function copy(val: string): void {
                         class="language-js"
                         :class="{ active: tab === 'SCRIPT' }">
                         <button
+                            type="button"
                             title="Copy Code"
                             class="copy"
                             @click="copy(scriptCode)" />
@@ -205,6 +262,7 @@ function copy(val: string): void {
                         class="language-css"
                         :class="{ active: tab === 'STYLE' }">
                         <button
+                            type="button"
                             title="Copy Code"
                             class="copy"
                             @click="copy(styleCode)" />

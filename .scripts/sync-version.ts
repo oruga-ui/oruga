@@ -1,4 +1,5 @@
-import { ReplaceInFileConfig, replaceInFileSync } from "replace-in-file";
+import type { ReplaceInFileConfig } from "replace-in-file";
+import { replaceInFileSync } from "replace-in-file";
 
 const jsonPaths = [
     "package-lock.json",

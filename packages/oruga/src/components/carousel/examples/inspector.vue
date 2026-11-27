@@ -42,7 +42,7 @@ const inspectData: InspectData<
     itemsDraggingClass: {
         class: "itemsDraggingClass",
         description: "Class of the items container element when dragging.",
-        properties: ["dragable"],
+        properties: ["draggable"],
     },
     iconClass: {
         class: "iconClass",

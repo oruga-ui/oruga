@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
     container: undefined,
     variant: undefined,
     position: () => getDefault("notification.position", "top"),
-    duration: () => getDefault("notification.duration", 2000),
+    duration: () => getDefault("notification.duration", 5000),
     infinite: false,
     pauseOnHover: false,
     queue: () => getDefault("notification.queue"),
@@ -146,10 +146,6 @@ const shouldQueue = computed(() =>
         : false,
 );
 
-const isAlert = computed(
-    () => props.variant === "warning" || props.variant === "danger",
-);
-
 /** move the rendered component template into the correct parent container */
 function showNotice(): void {
     if (!correctParent.value) return;
@@ -178,18 +174,44 @@ function setAutoClose(): void {
 }
 
 let isPaused = false;
+let isHovered = false;
+let isFocused = false;
 
-function onHoverEnter(): void {
-    if (!props.pauseOnHover || props.infinite) return;
+/** stop the auto close timeout until the pointer and the focus have left */
+function pause(): void {
     isPaused = true;
-    // stop auto close timeout
     clearTimeout(timeout);
 }
 
+/** close when the notice was paused and neither the pointer nor the focus is inside anymore */
+function resume(event: Event): void {
+    if (isPaused && !isHovered && !isFocused) close(event);
+}
+
+function onHoverEnter(): void {
+    if (!props.pauseOnHover || props.infinite) return;
+    isHovered = true;
+    pause();
+}
+
 function onHoverLeave(event: PointerEvent): void {
-    if (isPaused)
-        // close when mouse leave and is paused before
-        close(event);
+    isHovered = false;
+    resume(event);
+}
+
+// keyboard users cannot hover, so focus inside the notice pauses the timer as well
+function onFocusEnter(): void {
+    if (!props.pauseOnHover || props.infinite) return;
+    isFocused = true;
+    pause();
+}
+
+function onFocusLeave(event: FocusEvent): void {
+    // focus moves between elements inside the notice
+    const root = event.currentTarget as HTMLElement | null;
+    if (root?.contains(event.relatedTarget as Node | null)) return;
+    isFocused = false;
+    resume(event);
 }
 
 /** set active to false and emit close event */
@@ -246,15 +268,15 @@ defineExpose({ close });
         :override="override"
         :position="position"
         :variant="variant"
-        :role="isAlert ? 'alert' : 'status'"
-        :aria-atomic="true"
         :component="$props.component"
         :props="$props.props"
         :events="$props.events"
         :class="notificationClasses"
         @close="close"
         @pointerenter="onHoverEnter"
-        @pointerleave="onHoverLeave">
+        @pointerleave="onHoverLeave"
+        @focusin="onFocusEnter"
+        @focusout="onFocusLeave">
         <slot />
     </o-notification>
 </template>

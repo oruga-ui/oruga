@@ -21,6 +21,7 @@ const selected = ref<Date | undefined>(new Date());
 const selectedString = computed(() => selected.value?.toDateString() || "");
 
 function selectMonth(month: number | undefined): void {
+    // January is 0, so only check for a missing value
     if (month === undefined || month === null) return;
 
     const date = selected.value ? new Date(selected.value) : new Date();
@@ -38,7 +39,7 @@ function selectMonth(month: number | undefined): void {
                 placeholder="Click to select...">
                 <template #trigger>
                     <o-button
-                        icon-left="calendar"
+                        icon="calendar"
                         variant="primary"
                         aria-label="Open Calendar" />
                 </template>
@@ -61,13 +62,13 @@ function selectMonth(month: number | undefined): void {
                     <div class="footer-container">
                         <o-button
                             variant="primary"
-                            icon-left="calendar"
+                            icon="calendar"
                             label="Today"
                             @click="selected = new Date()" />
 
                         <o-button
                             variant="danger"
-                            icon-left="times"
+                            icon="times"
                             label="Clear"
                             @click="selected = undefined" />
                     </div>

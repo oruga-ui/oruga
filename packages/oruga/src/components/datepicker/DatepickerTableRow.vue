@@ -9,7 +9,6 @@ import {
     ref,
     effectScope,
     onUnmounted,
-    type PropType,
     type ComponentPublicInstance,
 } from "vue";
 
@@ -28,21 +27,22 @@ defineOptions({
     configField: "datepicker",
 });
 
-const props = defineProps({
-    day: { type: Number, required: true },
-    week: { type: Array as PropType<Date[]>, required: true },
-    month: { type: Number, required: true },
-    selectedDate: {
-        type: [Date, Array] as PropType<Date | Date[]>,
-        default: undefined,
-    },
-    events: { type: Array as PropType<DatepickerEvent[]>, required: true },
-    hoveredDateRange: { type: Array as PropType<Date[]>, required: true },
-    pickerProps: {
-        type: Object as PropType<DatepickerProps<IsRange, IsMultiple>>,
-        required: true,
-    },
-});
+const props = defineProps<{
+    /** the focused day of the month */
+    day: number;
+    /** the dates of the week displayed in this row */
+    week: Date[];
+    /** the currently displayed month */
+    month: number;
+    /** the selected date or dates */
+    selectedDate?: Date | Date[];
+    /** events to display on the dates */
+    events: DatepickerEvent[];
+    /** the date range currently hovered while selecting a range */
+    hoveredDateRange: Date[];
+    /** props of the parent datepicker component */
+    pickerProps: DatepickerProps<IsRange, IsMultiple>;
+}>();
 
 const emits = defineEmits<{
     select: [value: Date];

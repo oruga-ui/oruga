@@ -28,6 +28,25 @@ describe("ODatepicker", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    test("does not commit pending input when disabled while open", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: {
+                active: true,
+                readonly: false,
+                parser: () => new Date(2026, 10, 18),
+            },
+            attachTo: document.body,
+        });
+        const input = wrapper.get("input");
+        await input.setValue("November 18, 2026");
+
+        await wrapper.setProps({ disabled: true });
+        input.element.dispatchEvent(new FocusEvent("blur"));
+        await nextTick();
+
+        expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+    });
+
     test("parses keyboard input", async () => {
         const wrapper = mount(ODatepicker);
 
@@ -104,6 +123,32 @@ describe("ODatepicker", () => {
         ).toBeTruthy();
     });
 
+    test("emit change-month with 0 when January is selected", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2024, 1, 10), active: true },
+        });
+
+        await wrapper
+            .find<HTMLSelectElement>('select[aria-label="Select Month"]')
+            .setValue(0);
+
+        expect(wrapper.emitted("change-month")).toStrictEqual([[0]]);
+        expect(wrapper.emitted("change-year")).toBeUndefined();
+    });
+
+    test("emit change-month and change-year when wrapping to the previous year", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2024, 0, 10), active: true },
+        });
+
+        await wrapper
+            .find<HTMLSelectElement>('select[aria-label="Select Month"]')
+            .trigger("keydown", { key: "ArrowLeft" });
+
+        expect(wrapper.emitted("change-month")).toStrictEqual([[11]]);
+        expect(wrapper.emitted("change-year")).toStrictEqual([[2023]]);
+    });
+
     test("keeps the overlay open on first interaction when clicking a nav button in a populated picker", async () => {
         vi.useFakeTimers();
 
@@ -130,7 +175,7 @@ describe("ODatepicker", () => {
         ).toBeTruthy();
 
         // blur the input (simulates focus moving away when clicking the nav button)
-        await input.trigger("blur");
+        await input.trigger("focusout");
         await nextTick();
 
         // click the previous month navigation button
@@ -354,7 +399,7 @@ describe("ODatepicker", () => {
         // check that update:active event was emitted with false (overlay closes)
         const updateActiveEmits = wrapper.emitted("update:active");
         expect(updateActiveEmits).toBeDefined();
-        expect(updateActiveEmits?.[0]).toEqual([false]);
+        expect(updateActiveEmits?.[0]).toStrictEqual([false]);
     });
 
     test("keeps overlay open on date selection when stayOpen is true", async () => {
@@ -388,5 +433,57 @@ describe("ODatepicker", () => {
         expect(contentElement.classes("o-datepicker__content--active")).toBe(
             true,
         );
+    });
+
+    describe("attribute placement", () => {
+        test("input attributes land on the input only", () => {
+            const wrapper = mount(ODatepicker, {
+                attrs: {
+                    "aria-label": "Birthday",
+                    name: "when",
+                    required: true,
+                },
+            });
+            const input = wrapper.find("input");
+            expect(input.attributes("aria-label")).toBe("Birthday");
+            expect(input.attributes("name")).toBe("when");
+            expect(wrapper.attributes("aria-label")).toBeUndefined();
+            expect(wrapper.attributes("name")).toBeUndefined();
+            expect(wrapper.findAll("[aria-label='Birthday']")).toHaveLength(1);
+        });
+
+        test("class, style and data attributes land on the root only", () => {
+            const wrapper = mount(ODatepicker, {
+                attrs: {
+                    class: "custom",
+                    style: "margin: 1px",
+                    "data-testid": "picker",
+                },
+            });
+            expect(wrapper.classes("custom")).toBe(true);
+            expect(wrapper.attributes("data-testid")).toBe("picker");
+            expect(wrapper.attributes("data-oruga")).toBe("datepicker");
+
+            const input = wrapper.find("input");
+            expect(input.classes("custom")).toBe(false);
+            expect(input.attributes("data-testid")).toBeUndefined();
+            expect(input.attributes("style")).toBeUndefined();
+        });
+
+        test("listeners are called once", async () => {
+            const onKeydown = vi.fn();
+            const wrapper = mount(ODatepicker, { attrs: { onKeydown } });
+            await wrapper.find("input").trigger("keydown", { key: "a" });
+            expect(onKeydown).toHaveBeenCalledTimes(1);
+        });
+
+        test("an inline picker keeps all attributes on the root", () => {
+            const wrapper = mount(ODatepicker, {
+                props: { inline: true },
+                attrs: { "aria-label": "Birthday" },
+            });
+            expect(wrapper.find("input").exists()).toBe(false);
+            expect(wrapper.attributes("aria-label")).toBe("Birthday");
+        });
     });
 });

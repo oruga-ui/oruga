@@ -119,7 +119,7 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
                         ) {
                             return `[^\\d]+`;
                         }
-                        return part.value.replace(/ /g, "\\s?");
+                        return part.value.replace(/\s/g, "\\s?");
                     } else if (part.type === "dayPeriod") {
                         return `((?!=<${part.type}>)(${dayPeriods.join(
                             "|",
@@ -146,11 +146,21 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
                 datetimeGroups.minute >= 0 &&
                 datetimeGroups.minute <= 59
             ) {
+                let hours = Number(datetimeGroups.hour);
+                if (datetimeGroups.dayPeriod) {
+                    const isPM = [pmString.value, PM].some(
+                        (pm) =>
+                            pm.toLowerCase() ===
+                            datetimeGroups.dayPeriod.toLowerCase(),
+                    );
+                    if (isPM && hours < 12) hours += 12;
+                    else if (!isPM && hours === 12) hours = 0;
+                }
                 return new Date(
                     datetimeGroups.year,
                     datetimeGroups.month - 1,
                     datetimeGroups.day,
-                    datetimeGroups.hour,
+                    hours,
                     datetimeGroups.minute,
                     datetimeGroups.second || 0,
                 );

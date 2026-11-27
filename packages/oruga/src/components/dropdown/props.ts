@@ -1,4 +1,5 @@
 import type {
+    AnimationName,
     ComponentClass,
     DynamicComponent,
     Numberish,
@@ -13,9 +14,15 @@ export type DropdownOptions<T> = OptionsOrGroupsProp<DropdownItemProps<T>>;
 export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected option value, use v-model to make it two-way binding */
+    /**
+     * The selected option value, use v-model to make it two-way binding
+     * @type string|number|object
+     */
     modelValue?: ValueType<T, IsMultiple>;
-    /** Allows multiple selections - converts the `modelValue` into an array */
+    /**
+     * Allows multiple selections - converts the `modelValue` into an array
+     * @type boolean
+     */
     multiple?: IsMultiple;
     /** Dropdown options, unnecessary when default slot is used */
     options?: DropdownOptions<T>;
@@ -38,8 +45,14 @@ export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
      * @values top, bottom, left, right, center, [top, right], [top, left], [bottom, left], [bottom, right]
      */
     position?: PopoverPosition;
-    /** Custom animation (transition name) */
-    animation?: string;
+    /**
+     * Open/close animation using the native Web Animations API.
+     * Set to `false` to disable the built-in animation.
+     *
+     * Alternatively, a fully custom transition can be implemented using a `@starting-style` CSS at-rule, with no JS needed.
+     * @default 'fade'
+     */
+    animation?: AnimationName | false;
     /** Dropdown will be expanded (full-width) */
     expanded?: boolean;
     /** HTML element Id of the dropdown menu element */
@@ -85,11 +98,13 @@ export type DropdownProps<T, IsMultiple extends boolean = boolean> = {
      */
     teleport?: boolean | string | object;
     /**
-     * Set `true` to remove the body scrollbar.
-     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-     * but will set the body to a fixed position, which may break some layouts.
+     * Prevents background scrolling while open.
+     * `clip` clips the page at the viewport and hides the body scrollbar via `overflow: hidden`.
+     * `keep` keeps an inert scrollbar via `position: fixed` to prevent layout shift, which may break some layouts.
+     * `off` does not prevent background scrolling.
+     * @values clip, keep, off
      */
-    clipScroll?: boolean;
+    scrollLock?: "clip" | "keep" | "off";
     /** Ensures that each input has an accessible name. */
     labelledby?: string;
     /** Accessibility aria-label to be passed to the trigger element - usefull if selectable */
@@ -124,10 +139,6 @@ export type DropdownClasses = Partial<{
     contentModalClass: ComponentClass;
     /** Class of the content element when should has a backdrop */
     contentBackdropClass: ComponentClass;
-    /** Class of the body when dropdown is open and scroll is clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when dropdown is open and scroll is keeped */
-    scrollKeepClass: ComponentClass;
 }>;
 
 export type DropdownItemProps<T> = {

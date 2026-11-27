@@ -60,30 +60,31 @@ function convertToRoman(num: number): string {
 <template>
     <section>
         <o-pagination v-model="page" :total="total" :per-page="perPage">
-            <template #default="props">
+            <template #default="_props">
                 <!-- aria-current marks the current page; it must stay focusable, so do not disable it -->
                 <o-button
-                    :label="convertToRoman(props.number)"
-                    :aria-label="`Page ${convertToRoman(props.number)}`"
-                    :aria-current="props.isCurrent ? 'page' : undefined"
-                    @click="props.onClick" />
+                    :label="convertToRoman(_props.number)"
+                    :disabled="_props.isCurrent"
+                    :aria-label="_props.ariaLabel"
+                    :aria-current="_props.ariaCurrent"
+                    @click="_props.onClick" />
             </template>
 
-            <template #previous="props">
+            <template #previous="_props">
                 <!-- number is the target page, so it is out of range on the first page -->
                 <o-button
                     label="Previous"
-                    :disabled="props.number < 1"
-                    :aria-label="props.ariaLabel"
-                    @click="props.onClick" />
+                    :disabled="_props.disabled"
+                    :aria-label="_props.ariaLabel"
+                    @click="_props.onClick" />
             </template>
 
-            <template #next="props">
+            <template #next="_props">
                 <o-button
                     label="Next"
-                    :disabled="props.number > pageCount"
-                    :aria-label="props.ariaLabel"
-                    @click="props.onClick" />
+                    :disabled="_props.disabled"
+                    :aria-label="_props.ariaLabel"
+                    @click="_props.onClick" />
             </template>
         </o-pagination>
     </section>

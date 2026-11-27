@@ -43,6 +43,8 @@ import { injectField } from "@/components/field/fieldInjection";
 import type { ListboxProps } from "./props";
 import type { ListItem, ListboxComponent, ListItemComponent } from "./types";
 
+type ModelValue = ListboxProps<T, IsMultiple>["modelValue"];
+
 /**
  * Listbox is used to select one or more values from a list of items.
  * @displayName Listbox
@@ -54,8 +56,6 @@ defineOptions({
     name: "OListbox",
     configField: "listbox",
 });
-
-type ModelValue = ListboxProps<T, IsMultiple>["modelValue"];
 
 const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     override: undefined,
@@ -74,6 +74,8 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     filterIcon: () => getDefault("listbox.filterIcon"),
     filterDebounce: () => getDefault("listbox.filterDebounce", 400),
     filterPlaceholder: () => getDefault("listbox.filterPlaceholder"),
+    ariaFilterLabel: () =>
+        getDefault("listbox.ariaFilterLabel", "listbox filter input"),
     iconPack: () => getDefault("listbox.iconPack"),
     animation: () => getDefault("listbox.animation", "fade"),
     id: () => useId(),
@@ -87,6 +89,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {unknown | unknown[]} updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: ModelValue];
     /**
      * on select event - fired before update:modelValue
@@ -276,13 +279,13 @@ function selectItem(item: ListItem<T>, selection: boolean = true): void {
     // set selected option
     if (isTrueish(props.multiple)) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
-            if (selection && !vmodel.value.includes(value)) {
+            if (selection && !isItemSelected(item)) {
                 // add a value
                 vmodel.value = [...vmodel.value, value] as ModelValue;
             } else if (!selection) {
                 // remove a value
                 vmodel.value = vmodel.value.filter(
-                    (val) => val !== value,
+                    (val) => !isEqual(val, value),
                 ) as ModelValue;
             }
         } else {
@@ -291,7 +294,7 @@ function selectItem(item: ListItem<T>, selection: boolean = true): void {
         }
     } else {
         if (!selection) vmodel.value = undefined;
-        else if (vmodel.value !== value) {
+        else if (!isEqual(vmodel.value, value)) {
             // update a single value
             vmodel.value = value as ModelValue;
         }
@@ -360,7 +363,8 @@ function focusItem(value?: ListItem<T>): void {
 /** Set focus on an item. */
 function setFocus(item: ListItem<T>): void {
     isFocused.value = true;
-    if (props.selectOnFocus && item.data.value) selectItem(item, true);
+    if (props.selectOnFocus && isDefined(item.data.value))
+        selectItem(item, true);
 
     // set item as focused
     focusedItem.value = item;
@@ -752,7 +756,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                     :disabled="disabled"
                     expanded
                     size="small"
-                    aria-label="listbox filter input"
+                    :aria-label="ariaFilterLabel"
                     :aria-owns="id + '_list'"
                     :aria-activedescendant="
                         focusedItem

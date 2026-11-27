@@ -55,26 +55,6 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
             data.active = true;
         },
     },
-    scrollClipClass: {
-        class: "scrollClipClass",
-        description: "Class of the body when fullpage and scroll is clipped.",
-        properties: ["clipScroll"],
-        action: (data): void => {
-            data.fullPage = true;
-            data.active = true;
-            data.clipScroll = true;
-        },
-    },
-    scrollKeepClass: {
-        class: "scrollKeepClass",
-        description: "Class of the body when fullpage and scroll is kept.",
-        properties: ["clipScroll"],
-        action: (data): void => {
-            data.fullPage = true;
-            data.active = true;
-            data.clipScroll = false;
-        },
-    },
 };
 </script>
 
@@ -88,8 +68,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
                 icon="sync-alt"
                 :icon-spin="true"
                 label="Loading..."
-                v-bind="props">
-            </o-loading>
+                v-bind="props" />
         </p>
         <b>Click on "Inspect" button to open the loading</b>
     </inspector-wrapper>

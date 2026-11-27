@@ -131,8 +131,8 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.buttonPosition = "center";
         },
     },
-    confirmButtunClass: {
-        class: "confirmButtunClass",
+    confirmButtonClass: {
+        class: "confirmButtonClass",
         description: "Class of the footer confirm button element.",
         properties: ["confirmButton"],
         action: (data) => {
@@ -145,26 +145,6 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         properties: ["cancelButton"],
         action: (data) => {
             data.cancelButton = "Cancel";
-        },
-    },
-    scrollClipClass: {
-        class: "scrollClipClass",
-        description:
-            "Class of the body when dialog is active and has blockScroll.",
-        properties: ["blockScroll"],
-        action: (data): void => {
-            data.active = true;
-            data.blockScroll = true;
-        },
-    },
-    scrollKeepClass: {
-        class: "scrollKeepClass",
-        description:
-            "Class of the body when dialog is active and has not blockScroll.",
-        properties: ["blockScroll"],
-        action: (data): void => {
-            data.active = true;
-            data.blockScroll = false;
         },
     },
 };

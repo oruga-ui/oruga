@@ -1,5 +1,10 @@
 import { Comment, Fragment, Text } from "vue";
+import { isClient } from "@/utils/ssr";
 import type { DeepKeys, DeepType, Numberish } from "@/types";
+
+/** Interactive HTML elements */
+export const INTERACTIVE_SELECTOR =
+    "button, a[href], input, select, textarea, [contenteditable]" as const;
 
 /**
  * +/- function to native math sign
@@ -37,6 +42,14 @@ export function bound(val: number, min: number, max: number): number {
  */
 export const isObject = (value: unknown): value is object =>
     !!value && typeof value === "object" && !Array.isArray(value);
+
+/**
+ * checks if the user prefers reduced motion (OS/browser level a11y setting).
+ * Environments without `matchMedia` support are treated as not preferring reduced motion.
+ */
+export const prefersReducedMotion = (): boolean =>
+    isClient &&
+    !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
 /**
  * checks if the value is of type date
@@ -409,3 +422,41 @@ export const isMobileAgent = {
         isMobileAgent.Opera() ||
         isMobileAgent.Windows(),
 };
+
+/**
+ * Resolve a placeholder which is either a string with a `{value}` placeholder
+ * or a function which receives the value.
+ */
+export function resolvePlaceholder(
+    label: string | ((value: string) => string) | undefined,
+    value: string | number,
+): string | undefined {
+    if (typeof label === "function") return label(String(value));
+    return label?.replaceAll("{value}", String(value));
+}
+
+/**
+ * Split an object into two objects by a predicate on its keys.
+ *
+ * @param obj - Object to split.
+ * @param predicate - Called with each key, returns `true` to put the entry into the first object.
+ * @returns A tuple of the entries matching the predicate and the remaining entries.
+ */
+export function splitObject<T extends object>(
+    obj: T,
+    predicate: (key: string) => boolean,
+): [Partial<T>, Partial<T>] {
+    const picked: Partial<T> = {};
+    const rest: Partial<T> = {};
+    for (const key of Object.keys(obj))
+        (predicate(key) ? picked : rest)[key] = obj[key];
+    return [picked, rest];
+}
+
+/**
+ * Checks if a fallthrough attribute belongs to the root element of a component
+ * which forwards all other attributes to an inner element.
+ * These are `class`, `style` and `data-*` attributes.
+ */
+export const isRootAttr = (key: string): boolean =>
+    key === "class" || key === "style" || key.startsWith("data-");

@@ -29,7 +29,10 @@ export {
 } from "./composables";
 
 import * as plugins from "./components/plugins";
-const OrugaComponentPlugins = Object.values(plugins) as OrugaComponentPlugin[];
+// Marks plugin collection as side-effect-free so unused exports do not pull every component into the bundle.
+const OrugaComponentPlugins = /* @__PURE__ */ Object.values(
+    plugins,
+) as OrugaComponentPlugin[];
 export { OrugaComponentPlugins };
 
 // default export main oruga vue plugin

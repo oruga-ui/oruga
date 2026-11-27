@@ -1,17 +1,25 @@
 <script setup lang="ts">
-import { computed, ref, useTemplateRef, watch } from "vue";
+import { computed, ref, useAttrs, useTemplateRef, watch } from "vue";
 
 import OSelect from "../select/Select.vue";
 import OPickerInput from "../utils/PickerInput.vue";
 
 import { getDefault, getDefaultFunction } from "@/utils/config";
-import { isDate, isDefined, pad } from "@/utils/helpers";
+import {
+    isDate,
+    isDefined,
+    isRootAttr,
+    pad,
+    splitObject,
+} from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
 import type { TimepickerProps } from "./props";
 import type { SelectOption } from "../select";
+
+type ModelValue = TimepickerProps["modelValue"];
 
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile.
@@ -22,9 +30,8 @@ defineOptions({
     isOruga: true,
     name: "OTimepicker",
     configField: "timepicker",
+    inheritAttrs: false,
 });
-
-type ModelValue = TimepickerProps["modelValue"];
 
 const props = withDefaults(defineProps<TimepickerProps>(), {
     override: undefined,
@@ -57,8 +64,10 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     position: () => getDefault("timepicker.position", "bottom"),
     iconPack: () => getDefault("timepicker.iconPack"),
     icon: () => getDefault("timepicker.icon"),
+    iconSize: () => getDefault("timepicker.iconSize"),
     iconRight: () => getDefault("timepicker.iconRight"),
     iconRightClickable: false,
+    iconRightVariant: () => getDefault("timepicker.iconRightVariant"),
     desktopModal: () => getDefault("timepicker.desktopModal", false),
     mobileModal: () => getDefault("timepicker.mobileModal", true),
     mobileNative: () => getDefault("timepicker.mobileNative", true),
@@ -67,11 +76,11 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
     ariaSelectSecondsLabel: () =>
-        getDefault("timepicker.ariaSelectSecondLabel", "Select Second"),
+        getDefault("timepicker.ariaSelectSecondsLabel", "Select Second"),
     ariaSelectMinutesLabel: () =>
-        getDefault("timepicker.ariaSelectMinuteLabel", "Select Minute"),
+        getDefault("timepicker.ariaSelectMinutesLabel", "Select Minute"),
     ariaSelectHoursLabel: () =>
-        getDefault("timepicker.ariaSelectHourLabel", "Select Hour"),
+        getDefault("timepicker.ariaSelectHoursLabel", "Select Hour"),
     inputAttrs: () => getDefault("timepicker.inputAttrs"),
     selectAttrs: () => getDefault("timepicker.selectAttrs"),
 });
@@ -81,6 +90,7 @@ defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} - updated modelValue prop
      */
+    // eslint-disable-next-line vue/no-unused-emit-declarations -- emitted by defineModel
     "update:model-value": [value: Date];
     /**
      * active prop two-way binding
@@ -128,6 +138,7 @@ defineSlots<{
 const pickerRef = useTemplateRef("pickerComponent");
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
+
 const isModal = computed(() =>
     props.inline
         ? false
@@ -135,6 +146,7 @@ const isModal = computed(() =>
           ? props.mobileModal
           : props.desktopModal,
 );
+
 const {
     dtf,
     timeCreator,
@@ -148,6 +160,20 @@ const {
     minuteLiteral,
     secondLiteral,
 } = useTimepickerMixins(props);
+
+const attrs = useAttrs();
+
+/**
+ * Split the fallthrough attributes between the root element and the input.
+ * An inline picker has no input, so all attributes stay on the root.
+ */
+const pickerAttrs = computed(() => {
+    const [root, input] = splitObject(
+        attrs,
+        (key) => props.inline || isRootAttr(key),
+    );
+    return { root, input };
+});
 
 // the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -425,7 +451,7 @@ function isSecondDisabled(second: number): boolean {
 }
 
 function isMeridienDisabled(meridienString: string): boolean {
-    const offset = meridienString == "AM" ? 0 : 12;
+    const offset = meridienString === pmString.value ? 12 : 0;
     for (let i = 0; i < 12; i++) {
         if (!isHourDisabled(i + offset)) return false;
     }
@@ -643,10 +669,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 </script>
 
 <template>
-    <div data-oruga="timepicker" :class="rootClasses">
+    <div data-oruga="timepicker" :class="rootClasses" v-bind="pickerAttrs.root">
         <OPickerInput
             ref="pickerComponent"
-            v-bind="$attrs"
+            v-bind="pickerAttrs.input"
             v-model:active="isActive"
             v-model:value="vmodel"
             :formatter="format"
@@ -664,8 +690,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             :size="size"
             :icon-pack="iconPack"
             :icon="icon"
+            :icon-size="iconSize"
             :icon-right="iconRight"
             :icon-right-clickable="iconRightClickable"
+            :icon-right-variant="iconRightVariant"
             :expanded="expanded"
             :rounded="rounded"
             :disabled="disabled"
@@ -695,13 +723,20 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         v-bind="selectAttrs"
                         v-model="hoursSelected"
                         :class="selectClasses"
-                        :options="hours"
                         override
                         :disabled="disabled"
                         placeholder="00"
                         :aria-label="ariaSelectHoursLabel"
                         :use-html5-validation="false"
-                        @change="onHoursChange($event.target.value)" />
+                        @change="onHoursChange($event.target.value)">
+                        <option
+                            v-for="hour in hours"
+                            :key="hour.value"
+                            :value="hour.value"
+                            :disabled="isHourDisabled(hour.value)">
+                            {{ hour.label }}
+                        </option>
+                    </o-select>
 
                     <span :class="separatorClasses">{{ hourLiteral }}</span>
 

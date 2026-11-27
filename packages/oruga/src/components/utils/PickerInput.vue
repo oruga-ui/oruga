@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-    computed,
-    ref,
-    watch,
-    nextTick,
-    useTemplateRef,
-    type PropType,
-} from "vue";
+import { computed, ref, watch, nextTick, useTemplateRef } from "vue";
 
 import OInput from "../input/Input.vue";
 
@@ -18,7 +11,7 @@ import {
 } from "@/utils/helpers";
 import { unrefElement, usePopoverAPI } from "@/composables";
 
-import type { ComponentClass, PopoverPosition } from "@/types";
+import type { AnimationName, ComponentClass, PopoverPosition } from "@/types";
 import { useTeleport } from "@/composables/useTeleport";
 
 /**
@@ -30,71 +23,101 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** the internal input value */
-    value: {
-        type: [Date, Array] as PropType<Date | Date[] | undefined>,
-        default: undefined,
-    },
-    /** the active state of the content */
-    active: { type: Boolean, default: false },
-    /** format props value to input value */
-    formatter: {
-        type: Function as PropType<
-            (value: Date | Date[] | undefined, isNative: boolean) => string
-        >,
-        required: true,
-    },
-    /** parse input value to props value */
-    parser: {
-        type: Function as PropType<
-            (value: string, isNative: boolean) => Date | Date[] | undefined
-        >,
-        required: true,
-    },
-    /** the DateTimeFormat object to watch for to update the parsed input value */
-    dtf: { type: Object, default: undefined },
+const props = withDefaults(
+    defineProps<{
+        /** the internal input value */
+        value?: Date | Date[];
+        /** the active state of the content */
+        active?: boolean;
+        /** format props value to input value */
+        formatter: (
+            value: Date | Date[] | undefined,
+            isNative: boolean,
+        ) => string;
+        /** parse input value to props value */
+        parser: (value: string, isNative: boolean) => Date | Date[] | undefined;
+        /** the DateTimeFormat object to watch for to update the parsed input value */
+        dtf?: object;
 
-    /** Show content inline */
-    inline: { type: Boolean, default: false },
-    modal: { type: Boolean, default: false },
-    enableMobileNative: { type: Boolean, default: undefined },
-    openOnFocus: { type: Boolean, default: false },
-    position: { type: String as PropType<PopoverPosition>, required: true },
-    teleport: { type: [Boolean, String, Object], default: false },
-    animation: { type: String, default: undefined },
+        /** Show content inline */
+        inline?: boolean;
+        /** Show the content in a centered modal instead of a popover */
+        modal?: boolean;
+        /** Use the native browser picker on mobile devices */
+        enableMobileNative?: boolean;
+        /** Open the content when the input receives focus */
+        openOnFocus?: boolean;
+        /** Position of the content relative to the input */
+        position: PopoverPosition;
+        /** Teleport the content to another DOM node, `true` targets the body */
+        teleport?: boolean | string | object;
+        /** Open/close animation, played via the Web Animations API. Set to `false` to disable. */
+        animation?: AnimationName | false;
 
-    // input props
-    placeholder: { type: String, default: undefined },
-    type: { type: String, required: true },
-    step: { type: String, default: undefined },
-    min: { type: Date, default: undefined },
-    max: { type: Date, default: undefined },
-    size: { type: String, default: undefined },
-    iconPack: { type: String, default: undefined },
-    icon: { type: String, default: undefined },
-    iconRight: { type: String, default: undefined },
-    iconRightClickable: { type: Boolean, default: undefined },
-    expanded: { type: Boolean, default: undefined },
-    rounded: { type: Boolean, default: undefined },
-    disabled: { type: Boolean, default: undefined },
-    readonly: { type: Boolean, default: undefined },
-    /** Enable HTML 5 native validation */
-    useHtml5Validation: { type: Boolean, required: true },
-    /** Custom HTML 5 validation error to set on the form control */
-    customValidity: {
-        type: [String, Function] as PropType<
-            string | ((currentValue: any, state: ValidityState) => string)
-        >,
-        default: undefined,
+        // input props
+        /** Placeholder of the input */
+        placeholder?: string;
+        /** Type of the input */
+        type: string;
+        /** Step of the native input */
+        step?: string;
+        /** Minimum selectable date */
+        min?: Date;
+        /** Maximum selectable date */
+        max?: Date;
+        /** Size of the input */
+        size?: string;
+        /** Icon pack of the icons */
+        iconPack?: string;
+        /** Icon displayed on the left of the input */
+        icon?: string;
+        /** Icon displayed on the right of the input */
+        iconRight?: string;
+        /** Make the right icon clickable */
+        iconRightClickable?: boolean;
+        /** Variant of the right icon */
+        iconRightVariant?: string;
+        /** Size of the icons */
+        iconSize?: string;
+        /** Make the input full width */
+        expanded?: boolean;
+        /** Make the input rounded */
+        rounded?: boolean;
+        /** Disable the input */
+        disabled?: boolean;
+        /** Make the input readonly */
+        readonly?: boolean;
+        /** Enable HTML 5 native validation */
+        useHtml5Validation: boolean;
+        /** Custom HTML 5 validation error to set on the form control */
+        customValidity?:
+            | string
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            | ((currentValue: any, state: ValidityState) => string);
+
+        // class props
+        /** Classes of the trigger element */
+        triggerClass: ComponentClass;
+        /** Classes of the content element */
+        contentClass: ComponentClass;
+        /** Classes of the input element */
+        inputClass: ComponentClass;
+        /** Additional attributes passed to the input element */
+        inputAttrs?: object;
+    }>(),
+    {
+        // keep `undefined` for the optional booleans so they don't cast to false
+        enableMobileNative: undefined,
+        iconRightClickable: undefined,
+        expanded: undefined,
+        rounded: undefined,
+        disabled: undefined,
+        readonly: undefined,
+        teleport: false,
+        animation: undefined,
+        inputAttrs: () => ({}),
     },
-
-    // class props
-    triggerClass: { type: Array as PropType<ComponentClass>, required: true },
-    contentClass: { type: Array as PropType<ComponentClass>, required: true },
-    inputClass: { type: Array as PropType<ComponentClass>, required: true },
-    inputAttrs: { type: Object, default: () => ({}) },
-});
+);
 
 const emits = defineEmits<{
     /**
@@ -144,6 +167,7 @@ if (!props.inline) {
         position: popoverPosition,
         behavior: "auto",
         trigger: isActive,
+        animation: () => props.animation,
         targetRef: triggerRef,
         contentRef: contentRef,
         onToggle,
@@ -224,6 +248,8 @@ function setValue(value: string): void {
 
 /** Get the value from html element behind the event and update the external value. */
 function setEventValue(event: Event): void {
+    if (props.disabled) return;
+
     const value = (event.target as HTMLInputElement).value;
     setValue(value);
 }
@@ -348,8 +374,10 @@ defineExpose({ focus: setFocus });
                 :size="size"
                 :icon-pack="iconPack"
                 :icon="icon"
+                :icon-size="iconSize"
                 :icon-right="iconRight"
                 :icon-right-clickable="iconRightClickable"
+                :icon-right-variant="iconRightVariant"
                 :expanded="expanded"
                 :rounded="rounded"
                 :disabled="disabled"
@@ -378,8 +406,10 @@ defineExpose({ focus: setFocus });
                 :size="size"
                 :icon-pack="iconPack"
                 :icon="icon"
+                :icon-size="iconSize"
                 :icon-right="iconRight"
                 :icon-right-clickable="iconRightClickable"
+                :icon-right-variant="iconRightVariant"
                 :rounded="rounded"
                 :disabled="disabled"
                 :readonly="initialNativeType == 'text'"
@@ -398,14 +428,11 @@ defineExpose({ focus: setFocus });
     </div>
 
     <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-        <transition :name="animation">
-            <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
-            <div
-                ref="contentElement"
-                :class="contentClass"
-                :popover="inline ? undefined : ''">
-                <slot />
-            </div>
-        </transition>
+        <div
+            ref="contentElement"
+            :class="contentClass"
+            :popover="inline ? undefined : ''">
+            <slot />
+        </div>
     </Teleport>
 </template>

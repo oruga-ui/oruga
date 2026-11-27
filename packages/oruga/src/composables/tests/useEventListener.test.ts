@@ -7,7 +7,8 @@ import {
     vi,
     type MockInstance,
 } from "vitest";
-import { EffectScope, effectScope, nextTick, ref } from "vue";
+import type { EffectScope } from "vue";
+import { effectScope, nextTick, ref } from "vue";
 
 import { useEventListener } from "../";
 
