@@ -19,10 +19,14 @@ defineEmits<{
 </script>
 
 <template>
-    <form action="">
-        <header>
-            <p>Login</p>
+    <form action="" style="padding: 15px">
+        <header style="margin-bottom: 25px">
+            <p style="font-size: x-large; margin: 0; font-weight: bold">
+                Login
+            </p>
+            <p>Welcome back !</p>
             <o-icon
+                style="position: absolute; top: 0.7rem; right: 0.7rem"
                 clickable
                 native-type="button"
                 icon="times"
@@ -35,7 +39,8 @@ defineEmits<{
                     type="email"
                     :value="email"
                     placeholder="Your email"
-                    required />
+                    required
+                    expanded />
             </o-field>
 
             <o-field label="Password">
@@ -44,7 +49,8 @@ defineEmits<{
                     :value="password"
                     password-reveal
                     placeholder="Your password"
-                    required />
+                    required
+                    expanded />
             </o-field>
 
             <o-field>
@@ -52,8 +58,9 @@ defineEmits<{
             </o-field>
         </section>
 
-        <footer>
+        <footer style="margin-top: 15px">
             <o-button
+                style="margin-right: 4px"
                 label="Close"
                 type="button"
                 @click="$emit('close', $event)" />
