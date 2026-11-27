@@ -15,10 +15,11 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getDefault, getDefaultFunction } from "@/utils/config";
 import { isDate, isRootAttr, pad, splitObject } from "@/utils/helpers";
+import { getMonthNames, getWeekdayNames } from "@/utils/dateUtils";
 import { defineClasses, useMatchMedia } from "@/composables";
 
-import { useDatepickerMixins } from "./useDatepickerMixins";
-import { getMonthNames, getWeekdayNames } from "./utils";
+import { useDatepicker } from "./useDatepicker";
+import { provideDatepickerProps } from "./datepickerInjection";
 
 import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
@@ -196,8 +197,12 @@ const isModal = computed(() =>
           : props.desktopModal,
 );
 
-const { dtf, dateCreator, dateFormatter, dateParser } =
-    useDatepickerMixins(props);
+const datepicker = useDatepicker(props);
+provideDatepickerProps(props);
+
+const { dtf, dateCreator, dateFormatter, dateParser } = datepicker;
+
+const today = dateCreator();
 
 const attrs = useAttrs();
 
@@ -226,33 +231,32 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 const isTypeMonth = computed(() => props.type === "month");
 
-/**
- * When v-model is changed:
- *   1. Update internal value.
- */
+function getLastModelDate(value: ModelValue): Date | undefined {
+    if (isDate(value)) return value;
+    if (Array.isArray(value)) {
+        const lastValue: unknown = value[value.length - 1];
+        return isDate(lastValue) ? lastValue : undefined;
+    }
+    return undefined;
+}
+
 watch(
     () => props.modelValue,
     (value: ModelValue) => {
-        const isArray = Array.isArray(value);
-        const currentDate: Date = isArray
-            ? value.length
-                ? value[value.length - 1]
-                : dateCreator()
-            : value
-              ? value
-              : dateCreator();
-        if (
-            !isArray ||
-            (isArray &&
-                Array.isArray(vmodel.value) &&
-                value.length > vmodel.value.length)
-        )
+        const modelDates = Array.isArray(value) ? value : undefined;
+        const currentDate = getLastModelDate(value) || dateCreator();
+        const currentModelLength = Array.isArray(vmodel.value)
+            ? vmodel.value.length
+            : 0;
+
+        if (!modelDates || modelDates.length > currentModelLength) {
             // update internal state
             focusedDateData.value = {
                 day: currentDate.getDate(),
                 month: currentDate.getMonth(),
                 year: currentDate.getFullYear(),
             };
+        }
     },
 );
 
@@ -269,25 +273,23 @@ watch(
     },
 );
 
-const _initialDate: Date =
-    (Array.isArray(props.modelValue)
-        ? props.modelValue[0]
-        : props.modelValue) ||
-    props.focusedDate ||
-    dateCreator();
+const initialModelValue = getLastModelDate(props.modelValue);
+const initialDate = new Date(
+    (initialModelValue || props.focusedDate || today).getTime(),
+);
 
 if (
     !props.modelValue &&
     props.maxDate &&
-    props.maxDate.getFullYear() < _initialDate.getFullYear()
+    props.maxDate.getFullYear() < initialDate.getFullYear()
 ) {
-    _initialDate.setFullYear(props.maxDate.getFullYear());
+    initialDate.setFullYear(props.maxDate.getFullYear());
 }
 
 const focusedDateData = ref<FocusedDate>({
-    day: _initialDate.getDate(),
-    month: _initialDate.getMonth(),
-    year: _initialDate.getFullYear(),
+    day: initialDate.getDate(),
+    month: initialDate.getMonth(),
+    year: initialDate.getFullYear(),
 });
 
 /*
@@ -345,7 +347,7 @@ const listOfMonths = computed<SelectOption<number>[]>(() => {
  * dates are set by props, range of years will fall within those dates.
  */
 const listOfYears = computed<SelectOption<number>[]>(() => {
-    let latestYear = _initialDate.getFullYear() + (props.yearsRange[1] ?? 0);
+    let latestYear = initialDate.getFullYear() + (props.yearsRange[1] ?? 0);
     if (props.maxDate && props.maxDate.getFullYear() < latestYear) {
         latestYear = Math.max(
             props.maxDate.getFullYear(),
@@ -353,7 +355,7 @@ const listOfYears = computed<SelectOption<number>[]>(() => {
         );
     }
 
-    let earliestYear = _initialDate.getFullYear() + (props.yearsRange[0] ?? 0);
+    let earliestYear = initialDate.getFullYear() + (props.yearsRange[0] ?? 0);
     if (props.minDate && props.minDate.getFullYear() > earliestYear) {
         earliestYear = Math.min(
             props.minDate.getFullYear(),
@@ -363,7 +365,7 @@ const listOfYears = computed<SelectOption<number>[]>(() => {
 
     return Array.from(
         { length: latestYear - earliestYear + 1 || 1 },
-        (value, index) => earliestYear + index,
+        (_, index) => earliestYear + index,
     )
         .reverse()
         .map((year) => ({
@@ -377,15 +379,31 @@ const showPrev = computed<boolean>(() => {
     if (isTypeMonth.value)
         return focusedDateData.value.year > props.minDate.getFullYear();
 
-    const dateToCheck = new Date(
+    const displayedMonth = new Date(
         focusedDateData.value.year,
         focusedDateData.value.month,
     );
-    const date = new Date(
+    const minimumMonth = new Date(
         props.minDate.getFullYear(),
         props.minDate.getMonth(),
     );
-    return dateToCheck > date;
+    return displayedMonth > minimumMonth;
+});
+
+const showNext = computed<boolean>(() => {
+    if (!props.maxDate) return true;
+    if (isTypeMonth.value)
+        return focusedDateData.value.year < props.maxDate.getFullYear();
+
+    const displayedMonth = new Date(
+        focusedDateData.value.year,
+        focusedDateData.value.month,
+    );
+    const maximumMonth = new Date(
+        props.maxDate.getFullYear(),
+        props.maxDate.getMonth(),
+    );
+    return displayedMonth < maximumMonth;
 });
 
 /**
@@ -397,31 +415,13 @@ function prev(): void {
 
     if (isTypeMonth.value) {
         focusedDateData.value.year -= 1;
+    } else if (focusedDateData.value.month > 0) {
+        focusedDateData.value.month -= 1;
     } else {
-        if (focusedDateData.value.month > 0) {
-            focusedDateData.value.month -= 1;
-        } else {
-            focusedDateData.value.month = 11;
-            focusedDateData.value.year -= 1;
-        }
+        focusedDateData.value.month = 11;
+        focusedDateData.value.year -= 1;
     }
 }
-
-const showNext = computed<boolean>(() => {
-    if (!props.maxDate) return true;
-    if (isTypeMonth.value)
-        return focusedDateData.value.year < props.maxDate.getFullYear();
-
-    const dateToCheck = new Date(
-        focusedDateData.value.year,
-        focusedDateData.value.month,
-    );
-    const date = new Date(
-        props.maxDate.getFullYear(),
-        props.maxDate.getMonth(),
-    );
-    return dateToCheck < date;
-});
 
 /**
  * Either increment month by 1 if not December or increment year by 1
@@ -429,16 +429,53 @@ const showNext = computed<boolean>(() => {
  */
 function next(): void {
     if (props.disabled) return;
+
     if (isTypeMonth.value) {
         focusedDateData.value.year += 1;
+    } else if (focusedDateData.value.month < 11) {
+        focusedDateData.value.month += 1;
     } else {
-        if (focusedDateData.value.month < 11) {
-            focusedDateData.value.month += 1;
-        } else {
-            focusedDateData.value.month = 0;
-            focusedDateData.value.year += 1;
-        }
+        focusedDateData.value.month = 0;
+        focusedDateData.value.year += 1;
     }
+}
+
+function prevDate(): void {
+    if (props.disabled) return;
+
+    if (isTypeMonth.value) {
+        focusedDateData.value.year -= 1;
+        return;
+    }
+
+    const date = new Date(
+        focusedDateData.value.year,
+        focusedDateData.value.month,
+        focusedDateData.value.day,
+    );
+    date.setDate(date.getDate() - 1);
+    focusedDateData.value.day = date.getDate();
+    focusedDateData.value.month = date.getMonth();
+    focusedDateData.value.year = date.getFullYear();
+}
+
+function nextDate(): void {
+    if (props.disabled) return;
+
+    if (isTypeMonth.value) {
+        focusedDateData.value.year += 1;
+        return;
+    }
+
+    const date = new Date(
+        focusedDateData.value.year,
+        focusedDateData.value.month,
+        focusedDateData.value.day,
+    );
+    date.setDate(date.getDate() + 1);
+    focusedDateData.value.day = date.getDate();
+    focusedDateData.value.month = date.getMonth();
+    focusedDateData.value.year = date.getFullYear();
 }
 
 // #region --- Formatter / Parser ---
@@ -504,50 +541,6 @@ function parseNative(value: string): Date | undefined {
 // #endregion --- Formatter / Parser ---
 
 // #region --- Event Handler ---
-
-/** move to the previous focused date */
-function prevDate(): void {
-    if (props.disabled) return;
-
-    if (isTypeMonth.value) {
-        focusedDateData.value.year -= 1;
-    } else {
-        const date = new Date(
-            focusedDateData.value.year,
-            focusedDateData.value.month,
-            focusedDateData.value.day,
-        );
-        date.setDate(date.getDate() - 1);
-        focusedDateData.value.day = date.getDate();
-        focusedDateData.value.month = date.getMonth();
-        focusedDateData.value.year = date.getFullYear();
-
-        // todo: show selected hovered date
-        // vmodel.value = date as ModelValue;
-    }
-}
-
-/** move to the next focused date */
-function nextDate(): void {
-    if (props.disabled) return;
-
-    if (isTypeMonth.value) {
-        focusedDateData.value.year += 1;
-    } else {
-        const date = new Date(
-            focusedDateData.value.year,
-            focusedDateData.value.month,
-            focusedDateData.value.day,
-        );
-        date.setDate(date.getDate() + 1);
-        focusedDateData.value.day = date.getDate();
-        focusedDateData.value.month = date.getMonth();
-        focusedDateData.value.year = date.getFullYear();
-
-        // todo: show selected hovered date
-        // vmodel.value = date as ModelValue;
-    }
-}
 
 // #endregion --- Event Handler ---
 
@@ -735,8 +728,8 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                     v-if="isTypeMonth"
                     v-model="vmodel"
                     v-model:focused-date="focusedDateData"
+                    :today="today"
                     :month-names="computedMonthNames"
-                    :picker-props="props"
                     @range-start="$emit('range-start', $event)"
                     @range-end="$emit('range-end', $event)" />
 
@@ -744,9 +737,9 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                     v-else
                     v-model="vmodel"
                     v-model:focused-date="focusedDateData"
+                    :today="today"
                     :day-names="computedDayNames"
                     :month-names="computedMonthNames"
-                    :picker-props="props"
                     @week-number-click="$emit('week-number-click', $event)"
                     @range-start="$emit('range-start', $event)"
                     @range-end="$emit('range-end', $event)" />

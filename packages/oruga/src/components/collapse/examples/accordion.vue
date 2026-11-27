@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const collapses = ref([
     {
-        title: "Open to read something interesting written for you!",
+        title: "Open to read something intereesting written for you!",
         text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`,
     },
     {

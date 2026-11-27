@@ -62,6 +62,67 @@ describe("OTimepicker tests", () => {
         expect(input.element.value).toBe("12:03");
     });
 
+    test("uses custom formatter and parser", async () => {
+        const parsedTime = new Date(2026, 1, 3, 10, 15);
+        const formatter = vi.fn(() => "formatted time");
+        const parser = vi.fn(() => parsedTime);
+        const wrapper = mount(OTimepicker, {
+            props: {
+                modelValue: new Date(2026, 1, 3, 10, 0),
+                formatter,
+                parser,
+            },
+        });
+
+        const input = wrapper.get("input");
+        expect(input.element.value).toBe("formatted time");
+
+        await input.setValue("custom input");
+        await input.trigger("keyup", { key: "Enter" });
+
+        expect(parser).toHaveBeenCalledWith("custom input");
+        expect(wrapper.emitted("update:modelValue")?.[0]).toStrictEqual([
+            parsedTime,
+        ]);
+    });
+
+    test("parses localized 12-hour input", async () => {
+        const wrapper = mount(OTimepicker, {
+            props: { locale: "en-US", hourFormat: "12" },
+        });
+
+        const input = wrapper.get("input");
+        await input.setValue("1:30 PM");
+        await input.trigger("keyup", { key: "Enter" });
+
+        const parsedTime = wrapper.emitted("update:modelValue")?.[0][0] as
+            Date | undefined;
+        expect(parsedTime).toBeInstanceOf(Date);
+        expect(parsedTime?.getHours()).toBe(13);
+        expect(parsedTime?.getMinutes()).toBe(30);
+    });
+
+    test("parses midnight and noon in 12-hour input", async () => {
+        const wrapper = mount(OTimepicker, {
+            props: { locale: "en-US", hourFormat: "12" },
+        });
+        const input = wrapper.get("input");
+
+        await input.setValue("12:00 AM");
+        await input.trigger("keyup", { key: "Enter" });
+        let parsedTime = wrapper.emitted("update:modelValue")?.[0][0] as
+            Date | undefined;
+        expect(parsedTime?.getHours()).toBe(0);
+        expect(parsedTime?.getMinutes()).toBe(0);
+
+        await input.setValue("12:00 PM");
+        await input.trigger("keyup", { key: "Enter" });
+        parsedTime = wrapper.emitted("update:modelValue")?.[1][0] as
+            Date | undefined;
+        expect(parsedTime?.getHours()).toBe(12);
+        expect(parsedTime?.getMinutes()).toBe(0);
+    });
+
     test("handles invalid keyboard input", async () => {
         const wrapper = mount(OTimepicker, {
             props: { modelValue: new Date() },
