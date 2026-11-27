@@ -38,7 +38,7 @@ Different styles can be achieved with the `variant` prop.
 
 <ExampleViewer :component="Customise" :code="CustomiseCode" />
 
-### Tick and label
+### Tick and Label
 
 Customise the labels using slots.
 
@@ -46,6 +46,6 @@ Customise the labels using slots.
 
 ### Range
 
-When the `range` prop is set, the `modelValue` property will be an array of two values instead of a single value.
+When the `range` prop is set, the `model-value` prop will be an array of two values instead of a single value.
 
 <ExampleViewer :component="Range" :code="RangeCode" />

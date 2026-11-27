@@ -11,7 +11,7 @@ import SizesCode from "./sizes.vue?raw";
 
 ### Base
 
-A radio component will render one selection at a time. Use the `native-value` property to specify the value that will be used as the `modelValue` property when the specific radio is checked.
+A radio component will render one selection at a time. Use the `native-value` property to specify the value that will be used as the `model-value` prop when the specific radio is checked.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 

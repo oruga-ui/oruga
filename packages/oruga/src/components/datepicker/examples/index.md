@@ -28,7 +28,7 @@ import MonthPickerCode from "./month-picker.vue?raw";
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
-### Min/Max date
+### Min/Max Date
 
 Use the `min-date` and `max-date` props to define a limited date range for the user to choose from.
 
@@ -42,15 +42,13 @@ Let the user select a date range by setting the `range` prop.
 
 ### Multiple
 
-When the `multiple` prop is set, the user can select multiple dates at once. Also, the `modelValue` prop will be an array of date objects instead of a single date object.
+When the `multiple` prop is set, the user can select multiple dates at once. Also, the `model-value` prop will be an array of date objects instead of a single date object.
 
 <ExampleViewer :component="Multiple" :code="MultipleCode" />
 
 ### Events
 
-To render the component inline instead of a dropdown/modal use the `inline` prop.
-
-The calendar can display indicators for events on specific dates by passing a list to the `events` prop.
+The calendar can display indicators for events on specific dates by passing a list to the `events` prop. The example below also uses the `inline` prop to render the calendar directly instead of in a dropdown/modal.
 
 <ExampleViewer :component="Events" :code="EventsCode" />
 
@@ -62,12 +60,12 @@ The component can be customized through several template slots, e.g. the HTML in
 
 ### Programmatically
 
-The dorpdown/modal can be opened programmatically setting the `active` prop, which is also two-way bindable.
+The dropdown/modal can be opened programmatically setting the `active` prop, which is also two-way bindable.
 
 <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 
-### Month picker
+### Month Picker
 
-Instead of picking a full date by setting the `type` prop to "month", the component will only render a month selector.
+Set the `type` prop to `"month"` to render only a month selector instead of a full date picker.
 
 <ExampleViewer :component="MonthPicker" :code="MonthPickerCode" />

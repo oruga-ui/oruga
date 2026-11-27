@@ -55,7 +55,7 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 
 As dialogs are generally placed as an overlay on top of the rest of the page content, every dialog needs a mechanism that allows users to close it. The most reliable way is to include an explicit button for this purpose, such as a _Confirm_, _Cancel_ or _Close_ button. The component itself can handle different types of user actions that can be used to close the dialog box.
 
-The main `closeable` property will add a close button to the dialog header. The `closeOnBackdrop` property adds a light dismiss user action, which closes the dialog box when the user clicks or taps outside of it (this requires a browser which supports the `closedby` attribute of the dialog element). The `closeOnEscape` property allows platform-specific user actions, such as pressing the <kbd>ESC</kbd> key on desktop platforms, or performing a "back" or "dismiss" gesture on mobile platforms, to close the dialog box. Furthermore, by setting the `cancelButton` or `confirmButton` properties, associated buttons will be rendered in the footer section. With `closeOnConfirm`, the confirm button can also be used to close the dialog.
+The main `closeable` property will add a close button to the dialog header. The `close-on-backdrop` property adds a light dismiss user action, which closes the dialog box when the user clicks or taps outside of it (this requires a browser which supports the `closedby` attribute of the dialog element). The `close-on-escape` property allows platform-specific user actions, such as pressing the <kbd>ESC</kbd> key on desktop platforms, or performing a "back" or "dismiss" gesture on mobile platforms, to close the dialog box. Furthermore, by setting the `cancel-button` or `confirm-button` properties, associated buttons will be rendered in the footer section. With `close-on-confirm`, the confirm button can also be used to close the dialog.
 
 ::: info Accessibility Note:
 A dialog needs an accessible name. The `title` labels the dialog through `aria-labelledby`. Without a title, set the `ariaLabel` property. Use `ariaDescribedby` to reference an element, which describes the dialog.
@@ -157,14 +157,20 @@ Trigger the `confirm()` function from the `submit` event of the form instead of 
 
 ### Image
 
-The component provides a separate image section in the _body_ where an image can be placed using the `imageSrc` property. For accessibility reasons, don't forget to add an `imageAlt` property too.
+The component provides a separate image section in the _body_ where an image can be placed using the `image-src` property. For accessibility reasons, don't forget to add an `image-alt` property too.
 A dialog with only an image has no title, so also set an `ariaLabel`.
 
 <ExampleViewer :component="Image" :code="ImageCode" />
 
+### Position
+
+You can quickly change the alignment of all the text in the dialog box using the `text-position` property. Additionally, you can align the footer buttons independently using the `button-position` property.
+
+<ExampleViewer :component="Position" :code="PositionCode" />
+
 ### Templates
 
-The dialog container is seperated into a _header_, _body_ and _footer_ section, which can be defined separately either through properties or template slots. Therefore, the component provides a `header`, `title`, `subtitle`, `content`, `footer` as well as `confirmButton` and `cancelButton` named template slots, which can be used to customise HTML content.
+The dialog container is separated into a _header_, _body_ and _footer_ section, which can be defined separately either through properties or template slots. Therefore, the component provides a `header`, `title`, `subtitle`, `content`, `footer` as well as `confirmButton` and `cancelButton` named template slots, which can be used to customise HTML content.
 
 ::: info Accessibility Note:
 The content of the `cancelButton` and `confirmButton` slots is rendered inside a button. Do not place other interactive elements, such as links, in these slots to avoid [nested-interactive](https://accessibilityinsights.io/info-examples/web/nested-interactive/) accessibility problems.

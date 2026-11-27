@@ -3,14 +3,14 @@ import { ref } from "vue";
 
 const collapses = ref([
     {
-        title: "Open to read something intersting written for you!",
+        title: "Open to read something interesting written for you!",
         text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
           Nulla accumsan, metus ultrices eleifend gravida, <br />
           nulla nunc varius lectus, nec rutrum justo nibh eu lectus. <br />
           Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`,
     },
     {
-        title: "What the different between Oruga and Buefy?",
+        title: "What is the difference between Oruga and Buefy?",
         text: "Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. <br />",
     },
     {

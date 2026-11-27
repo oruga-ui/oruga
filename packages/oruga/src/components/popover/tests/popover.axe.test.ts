@@ -36,7 +36,7 @@ describe("OPopover a11y tests", () => {
             props: {
                 ...props,
                 content:
-                    "Lorem ipsum dolor sit amet, consectetur warning elit.",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             },
             slots: { default: "<p> Open Popover! </p>" },
             attachTo: document.body,

@@ -14,7 +14,7 @@ import CustomiseCode from "./customise.vue?raw";
 
 ### Base
 
-The default value of a checkbox is `false` when unchecked and `true` wenn checked. Use the `true-value` and `false-value` properties to specify different value that will be used as the `modelValue` property when the specific radio is checked and unchecked
+The default value of a switch is `false` when it is off and `true` when it is on. Use the `true-value` and `false-value` props to specify different values that will be used as the `model-value` when the switch is on and off.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 

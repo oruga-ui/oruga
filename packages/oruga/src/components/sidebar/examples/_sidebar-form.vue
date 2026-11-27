@@ -28,7 +28,6 @@ defineEmits<{
             <o-icon
                 style="position: absolute; top: 0.7rem; right: 0.7rem"
                 clickable
-                native-type="button"
                 icon="times"
                 @click="$emit('close', $event)" />
         </header>

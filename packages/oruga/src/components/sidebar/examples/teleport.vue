@@ -19,10 +19,7 @@ const isActive = ref(false);
             overlay
             teleport>
             <section style="padding: 15px">
-                <o-button
-                    icon="times"
-                    label="Close"
-                    @click="close($event)" />
+                <o-button icon="times" label="Close" @click="close($event)" />
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Etiam sodales leo nec convallis rutrum. Vivamus pharetra

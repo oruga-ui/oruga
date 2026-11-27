@@ -22,7 +22,7 @@ To render the component inline instead of a dropdown/modal use the `inline` prop
 
 <ExampleViewer :component="Inline" :code="InlineCode" />
 
-### Footer slot
+### Footer Slot
 
 The component has an additional `footer` slot for customization.
 

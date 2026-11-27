@@ -23,7 +23,7 @@ import TemplatesCode from "./templates.vue?raw";
 
 ### Base
 
-The component uses three main properties: the `current` prop, which is two-way bindable and shows the active page; the `total` prop, which defines the total number of pages; and the `per-page` prop, which is used to define the number of elements per page. The current page is marked with `aria-current` set to "page" as well. In addition, since pages likely have more than one navigation section, it is advisable to provide a descriptive `aria-label` for the `nav` element to reflect its purpose.
+The component uses three main properties: the `v-model` binding (`model-value` prop), which is two-way bindable and holds the active page; the `total` prop, which defines the total number of items; and the `per-page` prop, which is used to define the number of elements per page. The number of pages results from `total` divided by `per-page`. The current page is marked with `aria-current` as well. In addition, since pages likely have more than one navigation section, it is advisable to provide a descriptive `aria-label` for the `nav` element to reflect its purpose.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
@@ -35,7 +35,7 @@ The component can be displayed in a simplified state by using the `simple` prop.
 
 ### Positions
 
-The compoponent can be positioned by the `position` prop.
+The component can be positioned by the `position` prop.
 
 <ExampleViewer :component="Positions" :code="PositionsCode" />
 

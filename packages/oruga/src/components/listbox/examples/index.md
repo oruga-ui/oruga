@@ -105,14 +105,6 @@ A custom header and footer can be added before and after the options list by usi
 
 ### Infinite Scroll & Async Data
 
-<p>
-    When having to many options, consider adding a max height using the
-    <code>scrollHeight</code> property, which allows to cap the list at a
-    fixed <code>max-height</code>. This will render a long list of options
-    with a scrollbar. The component will emit a <code>scroll-start</code> or
-    <code>scroll-end</code> event, when the top or bottom of the list is
-    reached. These events can be used to load more options as needed.
-    Consider adding <code>backend-filtering</code> when updating options
-    manually in response to changes in the filter value.
-</p>
+When having too many options, consider adding a max height using the `scroll-height` prop, which allows to cap the list at a fixed `max-height`. This will render a long list of options with a scrollbar. The component will emit a `scroll-start` or `scroll-end` event, when the top or bottom of the list is reached. These events can be used to load more options as needed. Consider adding `backend-filtering` when updating options manually in response to changes in the filter value.
+
 <ExampleViewer :component="Scroll" :code="ScrollCode" />

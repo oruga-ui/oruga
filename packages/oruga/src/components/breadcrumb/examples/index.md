@@ -32,8 +32,8 @@ Since breadcrumbs provide a navigation, it's a good idea to add a meaningful lab
 
 ### Separators
 
-Dividers are automatically added in CSS by the theme. In addition, the component allows you to customise the sperator using the `seperator` prop.
-The `seperator` slot can be used if further customisation is needed.
+Dividers are automatically added in CSS by the theme. In addition, the component allows you to customise the separator using the `separator` prop.
+The `separator` slot can be used if further customisation is needed.
 
 <ExampleViewer :component="Separators" :code="SeparatorsCode" />
 
