@@ -4,21 +4,32 @@
 
 .theme-oruga {
     .theme-bulma,
-    .theme-bootstrap {
+    .theme-bootstrap,
+    .theme-tailwind {
         display: none;
     }
 }
 
 .theme-bulma {
     .theme-oruga,
-    .theme-bootstrap {
+    .theme-bootstrap,
+    .theme-tailwind {
         display: none;
     }
 }
 
 .theme-bootstrap {
     .theme-oruga,
-    .theme-bulma {
+    .theme-bulma,
+    .theme-tailwind {
+        display: none;
+    }
+}
+
+.theme-tailwind {
+    .theme-oruga,
+    .theme-bulma,
+    .theme-bootstrap {
         display: none;
     }
 }
@@ -70,7 +81,7 @@
     }
 }
 
-// define gloval scroll classes
+// define global scroll classes
 .o-scroll-clip,
 .scroll-hidden {
     overflow: hidden;
