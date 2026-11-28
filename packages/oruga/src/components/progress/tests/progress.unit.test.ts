@@ -14,44 +14,55 @@ describe("OProgress tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    test("sets progressbar aria attributes", () => {
-        const wrapper = mount(OProgress, {
-            props: { value: 3, min: 1, max: 5 },
-            attrs: { "aria-label": "Upload" },
-        });
+    test("renders a native progress element", () => {
+        const wrapper = mount(OProgress, { props: { value: 40 } });
 
-        expect(wrapper.attributes("role")).toBe("progressbar");
-        expect(wrapper.attributes("aria-label")).toBe("Upload");
-        expect(wrapper.attributes("aria-valuemin")).toBe("1");
-        expect(wrapper.attributes("aria-valuemax")).toBe("5");
-        expect(wrapper.attributes("aria-valuenow")).toBe("3");
-        expect(wrapper.attributes("aria-valuetext")).toBeUndefined();
+        const progress = wrapper.find("progress");
+        expect(progress.exists()).toBeTruthy();
+        expect(progress.classes()).toContain("o-progress__bar");
+        expect(progress.attributes("max")).toBe("100");
+        expect(progress.attributes("value")).toBe("40");
+        expect(progress.attributes("aria-valuetext")).toBeUndefined();
     });
 
-    test("sets the bar width relative to the range", () => {
+    test("passes attributes to the progress element", () => {
+        const wrapper = mount(OProgress, {
+            props: { value: 40 },
+            attrs: {
+                id: "upload",
+                class: "custom-class",
+                "aria-label": "Upload",
+            },
+        });
+
+        const progress = wrapper.find("progress");
+        expect(progress.attributes("id")).toBe("upload");
+        expect(progress.attributes("aria-label")).toBe("Upload");
+        expect(progress.classes()).toStrictEqual(
+            expect.arrayContaining(["o-progress__bar", "custom-class"]),
+        );
+        expect(wrapper.attributes("aria-label")).toBeUndefined();
+        expect(wrapper.classes()).not.toContain("custom-class");
+    });
+
+    test("shifts the value and the maximum by the minimum", () => {
         const wrapper = mount(OProgress, {
             props: { value: 3, min: 1, max: 5 },
         });
 
-        const bar = wrapper.find(".o-progress__bar");
-        expect(bar.exists()).toBeTruthy();
-        expect(bar.attributes("style")).toBe("width: 50%;");
+        const progress = wrapper.find("progress");
+        expect(progress.attributes("max")).toBe("4");
+        expect(progress.attributes("value")).toBe("2");
     });
 
     test("clamps the value into the range", async () => {
         const wrapper = mount(OProgress, { props: { value: 150 } });
 
-        expect(wrapper.attributes("aria-valuenow")).toBe("100");
-        expect(wrapper.find(".o-progress__bar").attributes("style")).toBe(
-            "width: 100%;",
-        );
+        expect(wrapper.find("progress").attributes("value")).toBe("100");
 
         await wrapper.setProps({ value: -20 });
 
-        expect(wrapper.attributes("aria-valuenow")).toBe("0");
-        expect(wrapper.find(".o-progress__bar").attributes("style")).toBe(
-            "width: 0%;",
-        );
+        expect(wrapper.find("progress").attributes("value")).toBe("0");
     });
 
     test("handles an empty range", () => {
@@ -59,9 +70,9 @@ describe("OProgress tests", () => {
             props: { value: 5, min: 5, max: 5, showValue: true },
         });
 
-        expect(wrapper.find(".o-progress__bar").attributes("style")).toBe(
-            "width: 0%;",
-        );
+        const progress = wrapper.find("progress");
+        expect(progress.attributes("max")).toBeUndefined();
+        expect(progress.attributes("value")).toBe("0");
         expect(wrapper.find(".o-progress__label").text()).toBe("5");
     });
 
@@ -73,19 +84,29 @@ describe("OProgress tests", () => {
             });
 
             expect(wrapper.classes()).toContain("o-progress--indeterminate");
-            expect(wrapper.attributes("aria-valuenow")).toBeUndefined();
             expect(
-                wrapper.find(".o-progress__bar").attributes("style"),
+                wrapper.find("progress").attributes("value"),
             ).toBeUndefined();
             expect(wrapper.find(".o-progress__label").exists()).toBeFalsy();
         },
     );
 
+    test("becomes indeterminate when the value is removed", async () => {
+        const wrapper = mount(OProgress, { props: { value: 40 } });
+
+        expect(wrapper.find("progress").attributes("value")).toBe("40");
+
+        await wrapper.setProps({ value: undefined });
+
+        expect(wrapper.classes()).toContain("o-progress--indeterminate");
+        expect(wrapper.find("progress").attributes("value")).toBeUndefined();
+    });
+
     test("is determinate when value is zero", () => {
         const wrapper = mount(OProgress, { props: { value: 0 } });
 
         expect(wrapper.classes()).not.toContain("o-progress--indeterminate");
-        expect(wrapper.attributes("aria-valuenow")).toBe("0");
+        expect(wrapper.find("progress").attributes("value")).toBe("0");
     });
 
     test("does not render the label by default", () => {
@@ -114,7 +135,9 @@ describe("OProgress tests", () => {
         });
 
         expect(wrapper.find(".o-progress__label").text()).toBe("75%");
-        expect(wrapper.attributes("aria-valuetext")).toBeUndefined();
+        expect(
+            wrapper.find("progress").attributes("aria-valuetext"),
+        ).toBeUndefined();
     });
 
     test("renders the label with a custom formatter", () => {
@@ -129,7 +152,9 @@ describe("OProgress tests", () => {
         });
 
         expect(wrapper.find(".o-progress__label").text()).toBe("128 MB");
-        expect(wrapper.attributes("aria-valuetext")).toBe("128 MB");
+        expect(wrapper.find("progress").attributes("aria-valuetext")).toBe(
+            "128 MB",
+        );
     });
 
     test("renders the default slot with slot props", () => {

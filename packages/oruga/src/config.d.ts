@@ -2308,7 +2308,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 indeterminateClass: ClassDefinition;
                 /**
-                 * Class of the bar element
+                 * Class of the native progress element
                  */
                 barClass: ClassDefinition;
                 /**

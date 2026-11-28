@@ -34,18 +34,20 @@ onBeforeUnmount(() => clearInterval(timer));
             @click="startLoading" />
 
         <Teleport to="body">
-            <o-progress
+            <div
                 v-if="isLoading"
-                :value="progress"
-                size="small"
-                aria-label="Page loading"
                 style="
                     position: fixed;
                     top: 0;
                     right: 0;
                     left: 0;
                     z-index: 100;
-                " />
+                ">
+                <o-progress
+                    :value="progress"
+                    size="small"
+                    aria-label="Page loading" />
+            </div>
         </Teleport>
     </section>
 </template>

@@ -46,7 +46,7 @@ export type ProgressClasses = Partial<{
     roundedClass: ComponentClass;
     /** Class of the root element when indeterminate */
     indeterminateClass: ComponentClass;
-    /** Class of the bar element */
+    /** Class of the native progress element */
     barClass: ComponentClass;
     /** Class of the label element */
     labelClass: ComponentClass;

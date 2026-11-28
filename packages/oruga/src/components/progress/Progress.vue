@@ -16,6 +16,7 @@ defineOptions({
     isOruga: true,
     name: "OProgress",
     configField: "progress",
+    inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<ProgressProps>(), {
@@ -56,6 +57,22 @@ const ratio = computed(() => {
     return (currentValue.value - props.min) / (props.max - props.min);
 });
 
+/**
+ * The native progress element always starts at 0,
+ * so its value and maximum are shifted by the minimum.
+ * An empty range removes the maximum to fall back to the native default.
+ */
+const nativeMax = computed(() =>
+    props.max > props.min ? props.max - props.min : undefined,
+);
+
+/** without a value the native progress element is indeterminate */
+const nativeValue = computed(() =>
+    currentValue.value !== undefined
+        ? currentValue.value - props.min
+        : undefined,
+);
+
 const formattedValue = computed(() => {
     if (currentValue.value === undefined) return "";
 
@@ -75,10 +92,6 @@ const ariaValueText = computed(() =>
     props.formatter && !isIndeterminate.value
         ? formattedValue.value
         : undefined,
-);
-
-const barStyle = computed(() =>
-    isIndeterminate.value ? undefined : { width: `${ratio.value * 100}%` },
 );
 
 // #region --- Computed Component Classes ---
@@ -114,15 +127,13 @@ const labelClasses = defineClasses(["labelClass", "o-progress__label"]);
 </script>
 
 <template>
-    <div
-        data-oruga="progress"
-        :class="rootClasses"
-        role="progressbar"
-        :aria-valuemin="min"
-        :aria-valuemax="max"
-        :aria-valuenow="currentValue"
-        :aria-valuetext="ariaValueText">
-        <div :class="barClasses" :style="barStyle" />
+    <div data-oruga="progress" :class="rootClasses">
+        <progress
+            :class="barClasses"
+            :max="nativeMax"
+            :value="nativeValue"
+            :aria-valuetext="ariaValueText"
+            v-bind="$attrs" />
 
         <span
             v-if="$slots.default || (showValue && !isIndeterminate)"

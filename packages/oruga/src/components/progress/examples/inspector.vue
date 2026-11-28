@@ -43,7 +43,7 @@ const inspectData: InspectData<ProgressClasses, ProgressProps> = {
     },
     barClass: {
         class: "barClass",
-        description: "Class of the bar element.",
+        description: "Class of the native progress element.",
     },
     labelClass: {
         class: "labelClass",

@@ -27,7 +27,7 @@ The `value` prop sets the current progress. By default it is a number between `0
 
 ::: info Accessibility Note
 
-- **Name**: Give each progress an accessible name with `aria-label` or `aria-labelledby`, which are passed to the element with the `progressbar` role.
+- **Name**: Give each progress an accessible name with `aria-label` or `aria-labelledby`, which are passed to the native `progress` element together with all other attributes.
 
 :::
 
