@@ -19,6 +19,7 @@ import Notification from "./notification";
 import Pagination from "./pagination";
 import Popover from "./popover";
 import Programmatic from "./programmatic";
+import Progress from "./progress";
 import Radio from "./radio";
 import Select from "./select";
 import Skeleton from "./skeleton";
@@ -57,6 +58,7 @@ export {
     Pagination,
     Popover,
     Programmatic,
+    Progress,
     Radio,
     Select,
     Skeleton,

@@ -19,6 +19,7 @@ export * from "./notification";
 export * from "./pagination";
 export * from "./popover";
 export * from "./programmatic";
+export * from "./progress";
 export * from "./radio";
 export * from "./select";
 export * from "./skeleton";
