@@ -44,6 +44,7 @@ const columns: TableColumn[] = [
         field: "last_name",
         label: "Last Name",
         filterable: true,
+        sortable: true,
     },
     {
         field: "date",
@@ -231,6 +232,16 @@ const inspectData: InspectData<
             "Class of the table header sort icon element with direction",
         properties: ["sortable"],
         info: "Click on 'First Name' header to sort elements and see it in action!",
+    },
+    thSortPriorityClass: {
+        class: "thSortPriorityClass",
+        description:
+            "Class of the table header sort priority element when sorted by multiple columns.",
+        properties: ["sortMultiple"],
+        info: "Click on 'Last Name' and then on 'First Name' header to sort elements by both columns and see it in action!",
+        action: (data): void => {
+            data.sortMultiple = true;
+        },
     },
     trClass: {
         class: "trClass",

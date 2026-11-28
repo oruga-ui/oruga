@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest";
 
-import { resolvePlaceholder } from "@/utils/helpers";
+import { compareValues, resolvePlaceholder } from "@/utils/helpers";
 
 describe("resolvePlaceholder", () => {
     test("replace the value placeholder", () => {
@@ -24,5 +24,31 @@ describe("resolvePlaceholder", () => {
 
     test("return an undefined label unchanged", () => {
         expect(resolvePlaceholder(undefined, "x")).toBeUndefined();
+    });
+});
+
+describe("compareValues", () => {
+    test("compare values in the given direction", () => {
+        expect(compareValues(1, 2, true)).toBe(-1);
+        expect(compareValues(1, 2, false)).toBe(1);
+        expect(compareValues("b", "a", true)).toBe(1);
+        expect(compareValues(false, true, true)).toBe(-1);
+        expect(compareValues(false, true, false)).toBe(1);
+    });
+
+    test("treat equal values as equal", () => {
+        expect(compareValues(1, 1, true)).toBe(0);
+        expect(compareValues(true, true, true)).toBe(0);
+        expect(compareValues(false, false, false)).toBe(0);
+        expect(compareValues("Anna", "anna", true)).toBe(0);
+        expect(compareValues(null, undefined, true)).toBe(0);
+        expect(compareValues("", null, false)).toBe(0);
+    });
+
+    test("place empty values last in both directions", () => {
+        expect(compareValues(null, 1, true)).toBe(1);
+        expect(compareValues(null, 1, false)).toBe(1);
+        expect(compareValues(1, undefined, true)).toBe(-1);
+        expect(compareValues(0, "", false)).toBe(-1);
     });
 });
