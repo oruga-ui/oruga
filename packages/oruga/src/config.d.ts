@@ -2269,6 +2269,53 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 scrollKeepClass: ClassDefinition;
             }>;
+        progress?: ComponentConfigBase &
+            Partial<{
+                /**
+                 * Color variant of the control
+                 */
+                variant: string;
+                /**
+                 * Size of the control
+                 */
+                size: string;
+                /**
+                 * Enable rounded style
+                 */
+                rounded: boolean;
+                /**
+                 * Define the label format
+                 */
+                format: "percent" | "raw";
+                /**
+                 * Class of the root element
+                 */
+                rootClass: ClassDefinition;
+                /**
+                 * Class of the root element with variant
+                 */
+                variantClass: ClassDefinition;
+                /**
+                 * Class of the root element with size
+                 */
+                sizeClass: ClassDefinition;
+                /**
+                 * Class of the root element when rounded
+                 */
+                roundedClass: ClassDefinition;
+                /**
+                 * Class of the root element when indeterminate
+                 */
+                indeterminateClass: ClassDefinition;
+                /**
+                 * Class of the native progress element
+                 */
+                barClass: ClassDefinition;
+                /**
+                 * Class of the label element
+                 */
+                labelClass: ClassDefinition;
+            }>;
         radio?: ComponentConfigBase &
             Partial<{
                 /**

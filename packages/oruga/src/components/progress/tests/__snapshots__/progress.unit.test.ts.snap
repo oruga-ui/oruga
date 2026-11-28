@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OProgress tests > render correctly 1`] = `
+"<div data-oruga="progress" class="o-progress"><progress class="o-progress__bar" max="100" value="40"></progress>
+  <!--v-if-->
+</div>"
+`;
