@@ -132,7 +132,7 @@ const detailedRows = ref([data.value[0]]);
             <o-table-column
                 v-slot="{ row, toggleDetails }"
                 field="name"
-                :visible="columnsVisible['name'].display"
+                :hidden="!columnsVisible['name'].display"
                 :label="columnsVisible['name'].title"
                 width="300"
                 sortable>
@@ -148,7 +148,7 @@ const detailedRows = ref([data.value[0]]);
             <o-table-column
                 v-slot="{ row }"
                 field="sold"
-                :visible="columnsVisible['sold'].display"
+                :hidden="!columnsVisible['sold'].display"
                 :label="columnsVisible['sold'].title"
                 sortable
                 position="centered">
@@ -158,7 +158,7 @@ const detailedRows = ref([data.value[0]]);
             <o-table-column
                 v-slot="{ row }"
                 field="available"
-                :visible="columnsVisible['available'].display"
+                :hidden="!columnsVisible['available'].display"
                 :label="columnsVisible['available'].title"
                 sortable
                 position="centered">
@@ -167,7 +167,7 @@ const detailedRows = ref([data.value[0]]);
 
             <o-table-column
                 v-slot="{ row }"
-                :visible="columnsVisible['cleared'].display"
+                :hidden="!columnsVisible['cleared'].display"
                 :label="columnsVisible['cleared'].title"
                 position="centered">
                 <span>

@@ -1,5 +1,6 @@
-type MonthType =
-    "numeric" | "2-digit" | "long" | "short" | "narrow" | undefined;
+type DateTimeFormatOptions = NonNullable<
+    ConstructorParameters<typeof Intl.DateTimeFormat>[1]
+>;
 
 /**
  * Return month names according to a specified locale
@@ -9,7 +10,7 @@ type MonthType =
  */
 export function getMonthNames(
     locale?: string,
-    format: MonthType = "long",
+    format: DateTimeFormatOptions["month"] = "long",
 ): string[] {
     const dates: Date[] = [];
     for (let i = 0; i < 12; i++) {
@@ -21,8 +22,6 @@ export function getMonthNames(
     return dates.map((d) => dtf.format(d));
 }
 
-type WeekdayType = "long" | "short" | "narrow" | undefined;
-
 /**
  * Return weekday names according to a specified locale
  * @param  {String} locale A bcp47 localerouter. undefined will use the user browser locale
@@ -33,7 +32,7 @@ type WeekdayType = "long" | "short" | "narrow" | undefined;
 export function getWeekdayNames(
     locale?: string,
     firstDayOfWeek: number = 0,
-    format: WeekdayType = "narrow",
+    format: DateTimeFormatOptions["weekday"] = "narrow",
 ): string[] {
     const dates: Date[] = [];
     for (let i = 1, j = 0; j < 7; i++) {
@@ -48,44 +47,6 @@ export function getWeekdayNames(
         weekday: format,
     });
     return dates.map((d) => dtf.format(d));
-}
-
-/**
- * Accept a regex with group names and return an object
- * ex. matchWithGroups(/((?!=<year>)\d+)\/((?!=<month>)\d+)\/((?!=<day>)\d+)/, '2000/12/25')
- * will return { year: 2000, month: 12, day: 25 }
- * @param  {String} includes injections of (?!={groupname}) for each group
- * @param  {String} the string to run regex
- * @return {Object} an object with a property for each group having the group's match as the value
- */
-export function matchWithGroups(pattern: string, str: string): any {
-    const matches = str.match(pattern);
-    return (
-        // get the pattern as a string
-        pattern
-            .toString()
-            // suss out the groups
-            .match(/<(.+?)>/g)
-            // remove the braces
-            ?.map((group) => {
-                const groupMatches = group.match(/<(.+)>/);
-                if (!groupMatches || groupMatches.length <= 0) {
-                    return null;
-                }
-                const match = group.match(/<(.+)>/);
-                return match && match?.length > 1 ? match[1] : null;
-            })
-            // create an object with a property for each group having the group's match as the value
-            .reduce((acc, curr, index) => {
-                if (curr === null) return acc;
-                if (matches && matches.length > index) {
-                    acc[curr] = matches[index + 1];
-                } else {
-                    acc[curr] = null;
-                }
-                return acc;
-            }, {} as any)
-    );
 }
 
 /** Return array of all days in the week that the startingDate is within */
@@ -129,7 +90,11 @@ export function weekBuilder(
     return thisWeek;
 }
 
-export function firstWeekOffset(year, dow, doy): number {
+export function firstWeekOffset(
+    year: number,
+    dow: number,
+    doy: number,
+): number {
     // first-week day -- which january is always in the first week (4 for iso, 1 for other)
     const fwd = 7 + dow - doy;
     // first-week day local weekday -- which local weekday is fwd
@@ -139,13 +104,34 @@ export function firstWeekOffset(year, dow, doy): number {
 }
 
 /** Return the number of days in a specific year */
-export function daysInYear(year): number {
+export function daysInYear(year: number): number {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 366 : 365;
 }
 
 /** Return the number of weeks in a specific year */
-export function weeksInYear(year, dow, doy): number {
+export function weeksInYear(year: number, dow: number, doy: number): number {
     const weekOffset = firstWeekOffset(year, dow, doy);
     const weekOffsetNext = firstWeekOffset(year + 1, dow, doy);
     return (daysInYear(year) - weekOffset + weekOffsetNext) / 7;
+}
+
+/**
+ * Match a format pattern containing pseudo-named capture markers and return
+ * the captured values indexed by marker name.
+ */
+export function matchWithGroups(
+    pattern: string,
+    value: string,
+): Record<string, string | null> {
+    const matches = value.match(pattern);
+    const groupNames =
+        pattern.match(/<([^>]+)>/g)?.map((group) => group.slice(1, -1)) ?? [];
+
+    return groupNames.reduce<Record<string, string | null>>(
+        (groups, groupName, index) => {
+            groups[groupName] = matches?.[index + 1] ?? null;
+            return groups;
+        },
+        {},
+    );
 }

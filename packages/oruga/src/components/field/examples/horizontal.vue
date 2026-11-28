@@ -21,7 +21,7 @@
         </o-field>
 
         <o-field horizontal label="Topic">
-            <o-select placeholder="Select a topic">
+            <o-select placeholder="Select a topic" expanded>
                 <option value="1">Oruga</option>
                 <option value="2">Vue.js</option>
                 <option value="3">UI</option>
@@ -29,7 +29,10 @@
         </o-field>
 
         <o-field horizontal label="Message">
-            <o-input type="textarea" placeholder="Enter a messasge..." />
+            <o-input
+                type="textarea"
+                placeholder="Enter a message..."
+                expanded />
         </o-field>
 
         <o-field horizontal>

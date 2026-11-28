@@ -20,13 +20,13 @@ const customIconConfig = {
     }
 }
 
-import Oruga from "@oruga-ui/oruga";
+import Oruga from "@oruga-ui/oruga-next";
 app.use(Oruga, {
     iconComponent: "vue-fontawesome",
     iconPack: "fas",
     ...customIconConfig
 });
-/script>
+<\/script>
 `;
 
 const faIconConfigCode = `
@@ -69,12 +69,12 @@ app.component("vue-fontawesome", FontAwesomeIcon);
 
 // ...
 
-import Oruga from "@oruga-ui/oruga";
+import Oruga from "@oruga-ui/oruga-next";
 app.use(Oruga, {
     iconComponent: "vue-fontawesome",
     iconPack: "fas"
 });
-/script>
+<\/script>
 `;
 </script>
 
@@ -89,23 +89,23 @@ Always provide an `aria-label` property when the icon has the `clickable` proper
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
-### Custom icon pack
+### Custom Icon Pack
 
-You can also add it during Oruga import as default config.
+A custom icon pack can be registered with the `customIconPacks` option of the global config, for example when installing Oruga.
 
 ::: tip TIP
-Take a look at below example code (click on "Show code") to know all internal icons to replace with the releated icons of your custom icon pack
+Take a look at the example code below (click on "Show code") to see all internal icons that have to be mapped to the related icons of your custom icon pack.
 :::
 
 <ExampleViewer :component="CustomIconPack" :code="CustomIconPackCode" />
 
-### Override icon pack
+### Override Icon Pack
 
 You can also customize some properties of the default icon packs. In this example, default sizes for FontAwesome have been modified.
 
 <ExampleViewer :code="customIconConfigCode" :open="true" />
 
-### Custom icon component
+### Custom Icon Component
 
 ::: tip TIP
 You can set the `iconComponent` config option to render icons with the vue-fontawesome component (it should work with other Vue icon components as well).

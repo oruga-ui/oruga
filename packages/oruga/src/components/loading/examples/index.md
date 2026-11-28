@@ -11,7 +11,7 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
 
 ### Base
 
-The loading state is displayed across the entire page if the `full-page` prop is added. Otherwise, the overlay will be aligned to the next wrapper element with `style="position: relative"`.
+By default, the loading state is displayed across the entire page. Setting `:full-page="false"` aligns the overlay to the nearest wrapper element with `style="position: relative"` instead.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
@@ -30,5 +30,7 @@ import { useOruga } from "@oruga-ui/oruga-next";
 const oruga = useOruga();
 oruga.loading.open({...});
 ```
+
+Unlike the component, the programmatic `open()` method does not use full-page mode by default. Pass `fullPage: true` in the options to cover the whole page.
 
 <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />

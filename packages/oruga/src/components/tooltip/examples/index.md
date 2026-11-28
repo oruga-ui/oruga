@@ -23,7 +23,7 @@ While a tooltip can be placed on any content, they generally are tips for tools 
 
 ### Triggers
 
-The tooltip opens on hover and focus by default, providing accessible hover text for any trigger element. The `always` prop keeps it permanently visible, and the `active` prop allows external control via `v-model:active`. For click-triggered overlays, use the [`OPopover`](/components/Popover) component instead.
+The tooltip opens on hover and focus by default, providing accessible hover text for any trigger element. The `always` prop keeps it permanently visible, and the `active` property allows external control via `v-model:active`. For click-triggered overlays, use the [`OPopover`](/components/Popover) component instead.
 
 <ExampleViewer :component="Triggers" :code="TriggersCode" />
 

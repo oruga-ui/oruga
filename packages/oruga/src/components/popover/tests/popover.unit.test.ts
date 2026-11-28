@@ -12,7 +12,7 @@ describe("OPopover tests", () => {
         const wrapper = mount(OPopover, {
             props: {
                 content:
-                    "Lorem ipsum dolor sit amet, consectetur warning elit.",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             },
             slots: { default: "<p> Open Popover! </p>" },
         });
@@ -31,7 +31,7 @@ describe("OPopover tests", () => {
                 closeable: true,
                 onClose,
                 content:
-                    "Lorem ipsum dolor sit amet, consectetur warning elit.",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             },
             slots: { default: "<p> Open Popover! </p>" },
         });
@@ -131,7 +131,7 @@ describe("OPopover tests", () => {
                 props: {
                     teleport: true,
                     content:
-                        "Lorem ipsum dolor sit amet, consectetur warning elit.",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 },
                 slots: { default: "<p> Open Popover! </p>" },
                 attachTo: document.body,
@@ -158,7 +158,7 @@ describe("OPopover tests", () => {
                 props: {
                     teleport: wrapperDiv,
                     content:
-                        "Lorem ipsum dolor sit amet, consectetur warning elit.",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 },
                 slots: { default: "<p> Open Popover! </p>" },
                 attachTo: document.body,

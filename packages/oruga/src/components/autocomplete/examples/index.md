@@ -30,14 +30,14 @@ By default, the labels of the list options are compared with the text entered us
 ### Selection
 
 The autocomplete input can only contain one item at a time.
-For the multiple selection version, see the [Taginput](/components/Taginput.html) component.
+For the multiple selection version, see the [Taginput](/components/Taginput) component.
 
 <ExampleViewer :component="Selection" :code="SelectionCode" />
 
 ### Options
 
 There are several ways to define options for the component.
-They are similiar to the options definition of the [Dropdown](/components/Dropdown.html) component:
+They are similar to the options definition of the [Dropdown](/components/Dropdown) component:
 
 - An array of primitives `['A', 'B', 'C']`
 - An object literal with key-value pairs `{ a: 'A', b: 'B', c: 'C' }`
@@ -46,7 +46,7 @@ They are similiar to the options definition of the [Dropdown](/components/Dropdo
 - Using the `<o-dropdown-item>` component directly inside the default template slot
 
 ::: info TypeScript
-The options property type is defined by the <code>AutocompleteOptions</code> type.
+The options property type is defined by the `AutocompleteOptions` type.
 :::
 
 #### Array of objects
@@ -82,6 +82,6 @@ Due to the way the Vue reactivity system works, it is not possible to define a J
 
 ### Infinite Scroll & Async Data
 
-When `check-scroll` prop is set, the component will emits the `scroll-start` and `scroll-end` events. These events can be used to load more options as needed. Consider adding `backend-filtering` when manually updating options on input values changes.
+The component will emit the `scroll-start` and `scroll-end` events when the top or bottom of the options list is reached while scrolling. These events can be used to load more options as needed. Consider adding `backend-filtering` when manually updating options on input values changes.
 
 <ExampleViewer :component="Scroll" :code="ScrollCode" />

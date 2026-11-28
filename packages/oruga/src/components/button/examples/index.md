@@ -26,13 +26,13 @@ import TagsCode from "./tags.vue?raw";
 
 ### Base
 
-The `label` property is used to populate the text of the button. Alternatively, you can naturaly use the `default` slot instead.
+The `label` property is used to populate the text of the button. Alternatively, you can naturally use the `default` slot instead.
 
 <ExampleViewer :component="Base" :code="BaseCode" />
 
 ### States
 
-You can disable the button by using the the `disabled` property.  
+You can disable the button by using the `disabled` property.  
 You can use the `rounded` property to curve the edges.
 <ExampleViewer :component="States" :code="StatesCode" />
 
@@ -62,7 +62,8 @@ The component can be displayed in different sizes using the `size` prop.
 
 ### Icons
 
-<p>Add an icon to the button to explain its function more visually.</p>
+Add an icon to the button to explain its function more visually.
+
 <ExampleViewer :component="Icons" :code="IconsCode" />
 
 ### Tags

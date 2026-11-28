@@ -13,7 +13,7 @@
             <o-upload drag-drop disabled>
                 <div style="text-align: center">
                     <p>
-                        <o-icon icon="upload" size="is-large" />
+                        <o-icon icon="upload" size="large" />
                     </p>
                     <p>Drop your files here or click to upload</p>
                 </div>

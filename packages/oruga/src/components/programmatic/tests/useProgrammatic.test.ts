@@ -4,9 +4,11 @@ import {
     defineComponent,
     getCurrentInstance,
     h,
+    inject,
     markRaw,
     useId,
     type App,
+    type InjectionKey,
 } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
@@ -194,6 +196,30 @@ describe("useProgrammatic tests", () => {
         vi.runAllTimers();
 
         expect(instanceRegistry.count()).toBe(0);
+    });
+
+    test("configures the programmatic app before mounting", () => {
+        const key: InjectionKey<string> = Symbol("programmatic-provide");
+        let injectedValue: string | undefined;
+
+        const { close } = factory.open(
+            defineComponent({
+                setup() {
+                    injectedValue = inject(key);
+                    return () => h("div");
+                },
+            }),
+            {
+                configureApp(app) {
+                    app.provide(key, "configured");
+                },
+            },
+        );
+
+        expect(injectedValue).toBe("configured");
+
+        close();
+        vi.runAllTimers();
     });
 
     test("closeAll is working correctly", () => {

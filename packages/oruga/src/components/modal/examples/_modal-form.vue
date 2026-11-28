@@ -25,7 +25,6 @@ defineEmits<{
                 <p class="modal-card-title">Login</p>
                 <o-icon
                     clickable
-                    type="button"
                     icon="times"
                     @click.prevent="$emit('close', $event)" />
             </header>

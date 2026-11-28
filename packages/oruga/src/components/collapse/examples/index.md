@@ -11,7 +11,7 @@ import AccordionCode from "./accordion.vue?raw";
 
 ### Base
 
-A custom trigger can be passed in the `trigger` slot oder by the `label` property.
+A custom trigger can be passed in the `trigger` slot or by the `label` property.
 When the controlled content is hidden, the trigger is often styled as a typical push button with a right-pointing arrow or triangle, to indicate that activating the trigger will display the hidden content.
 When the content is visible, the arrow or triangle usually points down.
 

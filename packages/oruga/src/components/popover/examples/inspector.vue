@@ -91,8 +91,8 @@ const inspectData: InspectData<PopoverClasses, PopoverProps> = {
             <template #content>
                 <h4>Heading</h4>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur warning elit. Fusce
-                    id fermentum quam
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Fusce id fermentum quam
                 </p>
                 <a href="#">Some Link</a>
             </template>

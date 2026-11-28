@@ -125,6 +125,7 @@ export function checkMinMaxDate(
     else if (max && date > max) date = max;
     return date;
 }
+
 /**
  * Reorders an array starting from a given index, alternating between
  * the next and previous elements in a zigzag pattern.
